@@ -139,7 +139,7 @@ void JThread::Start() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JThread.Start", kairo);
     {
         if (!is_null(thread_)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(thread_)->Start(); });
+            PLS_API(require(thread_)->Start());
         }
     }
 }
@@ -149,8 +149,7 @@ void JThread::Sleep(pls::cs::Int64 millis) {
     JThread::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JThread.Sleep(System.Int64)", kairo);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::Thread::Sleep(pls::cs::to_int32(millis)); });
+        PLS_API(pls::cs::Thread::Sleep(pls::cs::to_int32(millis)));
     }
 }
 
@@ -159,7 +158,7 @@ void JThread::Yield() {
     JThread::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JThread.Yield", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::Thread::Sleep(0); });
+        PLS_API(pls::cs::Thread::Sleep(0));
     }
 }
 
@@ -182,8 +181,7 @@ pls::cs::Ref<JThread> JThread::CurrentThread() {
                  --num) {
                 if (require(require(JThread::threadBuffer_().get_Item(num))->thread_)->get_ThreadState() !=
                     static_cast<pls::cs::ThreadState>(0) /* ThreadState.Running */) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return JThread::threadBuffer_().RemoveAt(num); });
+                    PLS_API(JThread::threadBuffer_().RemoveAt(num));
                 }
             }
         }
@@ -193,7 +191,7 @@ pls::cs::Ref<JThread> JThread::CurrentThread() {
             auto cs_value = pls::cs::Thread::get_CurrentThread();
             require(cs_target)->thread_ = cs_value;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return JThread::threadBuffer_().Add(jThread); });
+        PLS_API(JThread::threadBuffer_().Add(jThread));
         return jThread;
     }
 }
@@ -226,12 +224,10 @@ bool JThread::Equals(pls::cs::Ref<JThread> self, pls::cs::Ref<pls::cs::Object> o
 std::int32_t JThread::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JThread.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace java::lang

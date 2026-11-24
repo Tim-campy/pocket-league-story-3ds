@@ -14,12 +14,7 @@ ByteArray GetBytes(pls::cs::String str, pls::cs::String enc) {
     kl_lang::StringEx::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.StringEx.GetBytes(System.String,System.String)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return pls::cs::RuntimeEncoding::GetEncoding(enc);
-                   }))
-                ->GetBytes(str);
-        });
+        return PLS_API(require(PLS_API(pls::cs::RuntimeEncoding::GetEncoding(enc)))->GetBytes(str));
     }
 }
 } // namespace java::lang::StringEx

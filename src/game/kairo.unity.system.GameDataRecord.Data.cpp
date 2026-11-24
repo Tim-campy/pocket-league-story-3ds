@@ -37,8 +37,7 @@ void GameDataRecord_Data::create_init(pls::cs::Ref<GameDataRecord_Data> self, pl
         "KairoLibrary",
         "M:kairo.unity.system.GameDataRecord.Data.#ctor(System.String,System.Byte[],System.Boolean)", kairo);
     {
-        self->name_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::SecureString::ValueOf(name); });
+        self->name_ = PLS_API(kl_util::SecureString::ValueOf(name));
         self->value_ = util::SecureByteArray::ValueOf(value);
         self->toset_ = toset;
     }
@@ -59,9 +58,8 @@ pls::cs::Ref<GameDataRecord_Data> GameDataRecord_Data::Clone() {
     {
         {
             auto cs_init_312 = ([&]() -> pls::cs::Ref<GameDataRecord_Data> {
-                pls::cs::String cs_arg0_312 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_util::SecureString::ToStringSecureStringStatic(name_);
-                });
+                pls::cs::String cs_arg0_312 =
+                    PLS_API(kl_util::SecureString::ToStringSecureStringStatic(name_));
                 ByteArray cs_arg1_312 = util::SecureByteArray::ToArray(value_);
                 bool cs_arg2_312 = toset_;
                 return GameDataRecord_Data::create(cs_arg0_312, cs_arg1_312, cs_arg2_312);

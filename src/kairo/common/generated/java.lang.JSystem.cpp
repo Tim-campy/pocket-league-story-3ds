@@ -29,16 +29,14 @@ void Arraycopy(pls::cs::Ref<pls::cs::Object> src, pls::cs::Int32 src_position,
         "M:java.lang.JSystem.Arraycopy(System.Object,System.Int32,System.Object,System.Int32,System.Int32)",
         kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_arg0 = pls::cs::array_cast(src);
-                auto cs_arg1 = src_position;
-                auto cs_arg2 = pls::cs::array_cast(dst);
-                auto cs_arg3 = dst_position;
-                auto cs_arg4 = length;
-                pls::cs::array_copy(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            auto cs_arg0 = pls::cs::array_cast(src);
+            auto cs_arg1 = src_position;
+            auto cs_arg2 = pls::cs::array_cast(dst);
+            auto cs_arg3 = dst_position;
+            auto cs_arg4 = length;
+            pls::cs::array_copy(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4);
+        }()));
     }
 }
 

@@ -92,20 +92,14 @@ pls::cs::Array<ByteArray> Connect(pls::cs::String url, ByteArray send, bool chec
             auto cs_flow_51 = pls::cs::run_finally(
                 [&]() -> pls::cs::Flow<pls::cs::Array<ByteArray>> {
                     {
-                        if (kl_cfg::Config::DEBUG() && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::IApplication::GetCurrentApp();
-                                       }))
-                                    ->CheckUiThread();
-                            })) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return PlsPortGeneratedBootstrap::Source::ShowToast(
-                                    pls::cs::String::concat(
-                                        literal(
-                                            u"UIスレッドで通信が行われました。\niOS版ではフリーズします。\n"),
-                                        url),
-                                    0);
-                            });
+                        if (kl_cfg::Config::DEBUG() &&
+                            PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))
+                                        ->CheckUiThread())) {
+                            PLS_API(PlsPortGeneratedBootstrap::Source::ShowToast(
+                                pls::cs::String::concat(
+                                    literal(u"UIスレッドで通信が行われました。\niOS版ではフリーズします。\n"),
+                                    url),
+                                0));
                         }
                         return pls::cs::flow_return(
                             require(require(httpThread)->http_)->Connect(url, send, check, split));
@@ -116,11 +110,8 @@ pls::cs::Array<ByteArray> Connect(pls::cs::String url, ByteArray send, bool chec
                     {
                         pls::cs::MonitorScope cs_monitor_50(Http::lock_());
                         {
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return Http::httpThreads_().Remove(httpThread); });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return Http::httpThreads_().Insert(0, httpThread);
-                            });
+                            PLS_API(Http::httpThreads_().Remove(httpThread));
+                            PLS_API(Http::httpThreads_().Insert(0, httpThread));
                         }
                     }
                     require(httpThread)->connect_ = false;
@@ -213,11 +204,8 @@ pls::cs::Ref<Http_HttpThread> MakeHttp() {
                             return java::lang::JThread::op_Inequality(cs_left, cs_right);
                         }()))) {
                         if (i != 0) {
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return Http::httpThreads_().RemoveAt(i); });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return Http::httpThreads_().Insert(0, httpThread2);
-                            });
+                            PLS_API(Http::httpThreads_().RemoveAt(i));
+                            PLS_API(Http::httpThreads_().Insert(0, httpThread2));
                         }
                         httpThread = httpThread2;
                         break;
@@ -237,14 +225,12 @@ pls::cs::Ref<Http_HttpThread> MakeHttp() {
                         HttpObject::set_IsRetryEnable(cs_receiver, cs_value);
                     }
                     require(httpThread)->thread_ = jThread;
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return Http::httpThreads_().Insert(0, httpThread); });
+                    PLS_API(Http::httpThreads_().Insert(0, httpThread));
                     if (Http::httpThreads_().get_Count() > 20) {
                         for (pls::cs::Int32 num = pls::cs::Int32(Http::httpThreads_().get_Count()) - 1;
                              num >= 0; --num) {
                             if (!require(Http::httpThreads_().get_Item(num))->connect_) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return Http::httpThreads_().RemoveAt(num); });
+                                PLS_API(Http::httpThreads_().RemoveAt(num));
                                 break;
                             }
                         }

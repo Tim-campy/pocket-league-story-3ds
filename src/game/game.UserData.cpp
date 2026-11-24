@@ -447,21 +447,11 @@ static PLS_NOINLINE void cs_init_75707aa3f1629c85_slow(pls::cs::TypeInitFlag& fl
             });
         UserData_EDITMEM_PARAM_COLOR_storage =
             pls::cs::evaluate_type_initializer_field("F:game.UserData.EDITMEM_PARAM_COLOR", [&]() {
-                return IntArray::from({pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::Graphics::GetColorOfRGB(255, 84, 84);
-                                       }),
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::Graphics::GetColorOfRGB(0, 128, 255);
-                                       }),
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::Graphics::GetColorOfRGB(191, 255, 127);
-                                       }),
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::Graphics::GetColorOfRGB(207, 143, 79);
-                                       }),
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::Graphics::GetColorOfRGB(224, 224, 0);
-                                       })});
+                return IntArray::from({PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 84, 84)),
+                                       PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 128, 255)),
+                                       PLS_API(pls::kairo::Graphics::GetColorOfRGB(191, 255, 127)),
+                                       PLS_API(pls::kairo::Graphics::GetColorOfRGB(207, 143, 79)),
+                                       PLS_API(pls::kairo::Graphics::GetColorOfRGB(224, 224, 0))});
             });
         UserData_FORMATIONTYPE_STR_storage =
             pls::cs::evaluate_type_initializer_field("F:game.UserData.FORMATIONTYPE_STR", [&]() {
@@ -535,9 +525,7 @@ static PLS_NOINLINE void cs_init_75707aa3f1629c85_slow(pls::cs::TypeInitFlag& fl
             "F:game.UserData.EF_COMMENT", [&]() { return IntArray::make(3); });
         UserData_EF_COMMENT_SETTING_storage =
             pls::cs::evaluate_type_initializer_field("F:game.UserData.EF_COMMENT_SETTING", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 2}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 2})));
             });
         UserData_EF_FEELPT_COMMENT__storage =
             pls::cs::evaluate_type_initializer_field("F:game.UserData.EF_FEELPT_COMMENT_", [&]() {
@@ -840,31 +828,24 @@ IntArray2& UserData::WARPSUB_BATTLESCORE_PLUS() {
 
 void UserData::create_init(pls::cs::Ref<UserData> self) {
     UserData::ensure_initialized();
-    self->cpuPlayerDatas_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<data::PlayerData>>>>(
-            IntArray::from({2, 11}));
-    });
+    self->cpuPlayerDatas_ = PLS_API(
+        kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<data::PlayerData>>>>(
+            IntArray::from({2, 11})));
     self->memberPDataist_ = kl_java_util::Vector::create();
-    self->tpplay_stock = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({15, 9}));
-    });
+    self->tpplay_stock = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({15, 9})));
     self->tpplay_battleRecode = kl_java_util::Vector::create();
     self->matchResult_ = IntArray::make(3);
     self->busSDirect = IntArray::make(2);
     self->busCPos = IntArray::make(2);
     self->customer_month_ = IntArray::make(12);
-    self->records_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray3>(IntArray::from({12, 5, 2}));
-    });
+    self->records_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray3>(IntArray::from({12, 5, 2})));
     self->record_customer = kl_java_util::Vector::create();
     self->moveScreenPX = kl_java_util::Vector::create();
     self->moveScreenPY = kl_java_util::Vector::create();
     self->chMoveP_YOKO = kl_java_util::Vector::create();
     self->chMoveP_TATE = kl_java_util::Vector::create();
     self->base_spos = IntArray::make(2);
-    self->temp_collisionData = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({10, 4}));
-    });
+    self->temp_collisionData = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({10, 4})));
     self->retNextBattleData = IntArray::make(2);
     self->et_cur = IntArray::make(7);
     self->editTest_fw = kl_java_util::Vector::create();
@@ -873,12 +854,8 @@ void UserData::create_init(pls::cs::Ref<UserData> self) {
     self->editTest_gk = kl_java_util::Vector::create();
     self->editTest_temp = kl_java_util::Vector::create();
     self->editTest_category = kl_java_util::Vector::create();
-    self->editForPos = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 3}));
-    });
-    self->editForPosEnemy = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 3}));
-    });
+    self->editForPos = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 3})));
+    self->editForPosEnemy = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 3})));
     self->EMDM_ANIME_TIME = IntArray::from({4, 49});
     self->MENU_STR = StringArray::from({literal(u"ﾌｫｰﾒｰｼｮﾝ"), literal(u"試合ﾒﾝﾊﾞｰ"), literal(u"ﾒﾝﾊﾞｰ情報")});
     self->HELP_STR =
@@ -888,53 +865,28 @@ void UserData::create_init(pls::cs::Ref<UserData> self) {
     self->editTest_formation = kl_java_util::Vector::create();
     self->d1 = IntArray::make(2);
     self->d2 = IntArray::make(2);
-    self->CR_COLOR = IntArray::from({pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                         return pls::kairo::Graphics::GetColorOfRGB(255, 164, 0);
-                                     }),
-                                     pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                         return pls::kairo::Graphics::GetColorOfRGB(255, 206, 16);
-                                     }),
-                                     pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                         return pls::kairo::Graphics::GetColorOfRGB(255, 248, 64);
-                                     }),
-                                     pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                         return pls::kairo::Graphics::GetColorOfRGB(255, 206, 16);
-                                     })});
+    self->CR_COLOR = IntArray::from({PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 164, 0)),
+                                     PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 206, 16)),
+                                     PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 248, 64)),
+                                     PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 206, 16))});
     self->tenantList = kl_java_util::Vector::create();
     self->MENUGRAPH_POINTPOS = IntArray2::from(
         {IntArray::from({0, -16}),
-         IntArray::from({pls::cs::to_int32((16.0 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_lang::JMath::Cos(0.3141592653589793);
-                                            }))),
-                         -pls::cs::to_int32((16.0 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return kl_lang::JMath::Sin(0.3141592653589793);
-                                             })))}),
-         IntArray::from({pls::cs::to_int32((16.0 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_lang::JMath::Cos(-0.9424777960769379);
-                                            }))),
-                         -pls::cs::to_int32((16.0 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return kl_lang::JMath::Sin(-0.9424777960769379);
-                                             })))}),
-         IntArray::from({pls::cs::to_int32((16.0 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_lang::JMath::Cos(-2.199114857512855);
-                                            }))),
-                         -pls::cs::to_int32((16.0 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return kl_lang::JMath::Sin(-2.199114857512855);
-                                             })))}),
-         IntArray::from({pls::cs::to_int32((16.0 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_lang::JMath::Cos(-3.455751918948773);
-                                            }))),
-                         -pls::cs::to_int32((16.0 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return kl_lang::JMath::Sin(-3.455751918948773);
-                                             })))}),
+         IntArray::from({pls::cs::to_int32((16.0 * PLS_API(kl_lang::JMath::Cos(0.3141592653589793)))),
+                         -pls::cs::to_int32((16.0 * PLS_API(kl_lang::JMath::Sin(0.3141592653589793))))}),
+         IntArray::from({pls::cs::to_int32((16.0 * PLS_API(kl_lang::JMath::Cos(-0.9424777960769379)))),
+                         -pls::cs::to_int32((16.0 * PLS_API(kl_lang::JMath::Sin(-0.9424777960769379))))}),
+         IntArray::from({pls::cs::to_int32((16.0 * PLS_API(kl_lang::JMath::Cos(-2.199114857512855)))),
+                         -pls::cs::to_int32((16.0 * PLS_API(kl_lang::JMath::Sin(-2.199114857512855))))}),
+         IntArray::from({pls::cs::to_int32((16.0 * PLS_API(kl_lang::JMath::Cos(-3.455751918948773)))),
+                         -pls::cs::to_int32((16.0 * PLS_API(kl_lang::JMath::Sin(-3.455751918948773))))}),
          IntArray::make(2)});
     self->MENUGRAPH_OFF = IntArray2::from(
         {IntArray::from({0, -1}), IntArray::from({1, 0}), IntArray::from({0, 1}), IntArray::from({-1, 0})});
     self->playerParam1 = IntArray::make(5);
     self->playerParam2 = IntArray::make(5);
-    self->clear_point = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<pls::cs::Array<LongArray>>(IntArray::from({7, 2}));
-    });
+    self->clear_point =
+        PLS_API(kl_java_util::JTool::MakeArray<pls::cs::Array<LongArray>>(IntArray::from({7, 2})));
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.#ctor", game);
     {
         self->Init();
@@ -966,20 +918,18 @@ void UserData::PrintOut() {
     UserData::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.PrintOut", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::Log::Info(
+        PLS_API(kl_unity_util::Log::Info(
+            pls::cs::String::concat(
                 pls::cs::String::concat(
                     pls::cs::String::concat(
                         pls::cs::String::concat(
-                            pls::cs::String::concat(
-                                pls::cs::String::concat(literal(u"VALUE1="),
-                                                        integer_string(UserData::TEST_VALUE1())),
-                                literal(u", VALUE2=")),
-                            integer_string(UserData::TEST_VALUE2())),
-                        literal(u", VALUE3 = ")),
-                    integer_string(UserData::TEST_VALUE3())),
-                pls::cs::Ref<pls::cs::ExceptionObject>{});
-        });
+                            pls::cs::String::concat(literal(u"VALUE1="),
+                                                    integer_string(UserData::TEST_VALUE1())),
+                            literal(u", VALUE2=")),
+                        integer_string(UserData::TEST_VALUE2())),
+                    literal(u", VALUE3 = ")),
+                integer_string(UserData::TEST_VALUE3())),
+            pls::cs::Ref<pls::cs::ExceptionObject>{}));
     }
 }
 
@@ -988,18 +938,10 @@ void UserData::Update_45v1() {
     UserData::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.Update_45v1", game);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::diagnostic::api_call(
-                                   [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); }))
-                    ->CheckKeyRepeat(16);
-            })) {
+        if (PLS_API(require(PLS_API(pls::kairo::Canvas::GetInstance()))->CheckKeyRepeat(16))) {
             --UserData::TEST_VALUE1();
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::diagnostic::api_call(
-                                   [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); }))
-                    ->CheckKeyRepeat(32);
-            })) {
+        if (PLS_API(require(PLS_API(pls::kairo::Canvas::GetInstance()))->CheckKeyRepeat(32))) {
             ++UserData::TEST_VALUE1();
         }
     }
@@ -1010,18 +952,10 @@ void UserData::Update_78v2() {
     UserData::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.Update_78v2", game);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::diagnostic::api_call(
-                                   [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); }))
-                    ->CheckKeyRepeat(128);
-            })) {
+        if (PLS_API(require(PLS_API(pls::kairo::Canvas::GetInstance()))->CheckKeyRepeat(128))) {
             --UserData::TEST_VALUE2();
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::diagnostic::api_call(
-                                   [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); }))
-                    ->CheckKeyRepeat(256);
-            })) {
+        if (PLS_API(require(PLS_API(pls::kairo::Canvas::GetInstance()))->CheckKeyRepeat(256))) {
             ++UserData::TEST_VALUE2();
         }
     }
@@ -1032,18 +966,10 @@ void UserData::Update_12v3() {
     UserData::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.Update_12v3", game);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::diagnostic::api_call(
-                                   [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); }))
-                    ->CheckKeyRepeat(2);
-            })) {
+        if (PLS_API(require(PLS_API(pls::kairo::Canvas::GetInstance()))->CheckKeyRepeat(2))) {
             --UserData::TEST_VALUE3();
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::diagnostic::api_call(
-                                   [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); }))
-                    ->CheckKeyRepeat(4);
-            })) {
+        if (PLS_API(require(PLS_API(pls::kairo::Canvas::GetInstance()))->CheckKeyRepeat(4))) {
             ++UserData::TEST_VALUE3();
         }
     }
@@ -1055,320 +981,175 @@ void UserData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     {
         data::TrainingData::ensure_initialized();
 
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(teamEvaRank_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, ticketPrice_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(selectFormationId_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(selectFormationType_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(selectSupervisorId_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(selectUniform_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(selectLeagueId_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(selectQmId_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(selectTrainingPolicy_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(battleQmIndex_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(matchInfoJoin_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, eventActFlg_); });
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(teamEvaRank_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, ticketPrice_));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(selectFormationId_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(selectFormationType_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(selectSupervisorId_)));
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(selectUniform_)));
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(selectLeagueId_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(selectQmId_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(selectTrainingPolicy_)));
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(battleQmIndex_)));
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(matchInfoJoin_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, eventActFlg_));
         for (pls::cs::Int32 i = 0; i < data::TrainingData::TRA_PLAYER().length(); ++i) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(
-                    os, pls::cs::cast_integral<std::int16_t>(data::TrainingData::TRA_PLAYER()[i]));
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                os, pls::cs::cast_integral<std::int16_t>(data::TrainingData::TRA_PLAYER()[i])));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(data::TrainingData::TRA_SELECT_TRA()));
-        });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(data::TrainingData::TRA_SELECT_TRA())));
         for (pls::cs::Int32 j = 0; j < researchPoint_.length(); ++j) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(
-                    os, pls::cs::cast_integral<std::int16_t>(researchPoint_[j]));
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                os, pls::cs::cast_integral<std::int16_t>(researchPoint_[j])));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(memberPDataist_));
-                })));
-        });
-        for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(memberPDataist_));
-                                   });
-             ++k) {
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(
+                    PLS_API(kl_java_util::Vector_2_Size(require(memberPDataist_))))));
+        for (pls::cs::Int32 k = 0; k < PLS_API(kl_java_util::Vector_2_Size(require(memberPDataist_))); ++k) {
             pls::cs::Ref<data::PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), k);
-                }));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(
-                    os, pls::cs::cast_integral<std::int16_t>(require(playerData)->id_));
-            });
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(memberPDataist_), k)));
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                os, pls::cs::cast_integral<std::int16_t>(require(playerData)->id_)));
         }
         for (pls::cs::Int32 l = 0; l < tpplay_stock.length(); ++l) {
             for (pls::cs::Int32 m = 0; m < tpplay_stock[l].length(); ++m) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StreamUtil::WriteInt(os, tpplay_stock[l][m]);
-                });
+                PLS_API(kl_unity_util::StreamUtil::WriteInt(os, tpplay_stock[l][m]));
             }
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, tpplay_battleNum); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(os, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                           return kl_java_util::Vector_2_Size(
-                                                               require(tpplay_battleRecode));
-                                                       }));
-        });
-        for (pls::cs::Int32 n = 0; n < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(tpplay_battleRecode));
-                                   });
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, tpplay_battleNum));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(
+            os, PLS_API(kl_java_util::Vector_2_Size(require(tpplay_battleRecode)))));
+        for (pls::cs::Int32 n = 0; n < PLS_API(kl_java_util::Vector_2_Size(require(tpplay_battleRecode)));
              ++n) {
-            IntArray array = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_ElementAt(require(tpplay_battleRecode), n);
-            }));
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, array[0]); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, array[1]); });
+            IntArray array = pls::cs::unbox<IntArray>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(tpplay_battleRecode), n)));
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, array[0]));
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, array[1]));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(matchInfoWeek_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(matchFlgVictory_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(league_setu_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(league_teamNum_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(league_data_.length()));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(league_data_[0].length()));
-        });
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(matchInfoWeek_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(matchFlgVictory_)));
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(league_setu_)));
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(league_teamNum_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(league_data_.length())));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(league_data_[0].length())));
         for (pls::cs::Int32 num = 0; num < league_data_.length(); ++num) {
             for (pls::cs::Int32 num2 = 0; num2 < league_data_[num].length(); ++num2) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StreamUtil::WriteInt(os, league_data_[num][num2]);
-                });
+                PLS_API(kl_unity_util::StreamUtil::WriteInt(os, league_data_[num][num2]));
             }
         }
         for (pls::cs::Int32 num3 = 0; num3 < league_dispOlder_.length(); ++num3) {
             for (pls::cs::Int32 num4 = 0; num4 < league_dispOlder_[num3].length(); ++num4) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StreamUtil::WriteInt(os, league_dispOlder_[num3][num4]);
-                });
+                PLS_API(kl_unity_util::StreamUtil::WriteInt(os, league_dispOlder_[num3][num4]));
             }
         }
         for (pls::cs::Int32 num5 = 0; num5 < matchResult_.length(); ++num5) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteInt(os, matchResult_[num5]);
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, matchResult_[num5]));
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, matchGetGoalTotal_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, busState_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteVector3D(os, busPos_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteVector3D(os, busV_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteVector3D(os, busGoalPos_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(busMovePoint_));
-                })));
-        });
-        for (pls::cs::Int32 num6 = 0; num6 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return kl_java_util::Vector_2_Size(require(busMovePoint_));
-                                      });
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, matchGetGoalTotal_));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, busState_));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, busPos_));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, busV_));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, busGoalPos_));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(
+                    PLS_API(kl_java_util::Vector_2_Size(require(busMovePoint_))))));
+        for (pls::cs::Int32 num6 = 0; num6 < PLS_API(kl_java_util::Vector_2_Size(require(busMovePoint_)));
              ++num6) {
             pls::cs::Ref<kl_util3d::Vector3D> value = pls::cs::unbox<pls::cs::Ref<kl_util3d::Vector3D>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(busMovePoint_), num6);
-                }));
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteVector3D(os, value); });
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(busMovePoint_), num6)));
+            PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, value));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(busDirect_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, busSDirect[0]); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, busSDirect[1]); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, busCPos[0]); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, busCPos[1]); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, busCnt); });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(busDirect_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, busSDirect[0]));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, busSDirect[1]));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, busCPos[0]));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, busCPos[1]));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, busCnt));
         for (pls::cs::Int32 num7 = 0; num7 < fanParam_.length(); ++num7) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, fanParam_[num7]); });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, fanParam_[num7]));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(os, game_winConsecutive_);
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteLong(os, customer_total_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, game_winConsecutive_));
+        PLS_API(kl_unity_util::StreamUtil::WriteLong(os, customer_total_));
         for (pls::cs::Int32 num8 = 0; num8 < customer_month_.length(); ++num8) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteInt(os, customer_month_[num8]);
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, customer_month_[num8]));
         }
         require(tp_svisor_)->Serialize(os);
         for (pls::cs::Int32 num9 = 0; num9 < records_.length(); ++num9) {
             for (pls::cs::Int32 num10 = 0; num10 < records_[num9].length(); ++num10) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StreamUtil::WriteInt(os, records_[num9][num10][0]);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StreamUtil::WriteInt(os, records_[num9][num10][1]);
-                });
+                PLS_API(kl_unity_util::StreamUtil::WriteInt(os, records_[num9][num10][0]));
+                PLS_API(kl_unity_util::StreamUtil::WriteInt(os, records_[num9][num10][1]));
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(os, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                           return kl_java_util::Vector_2_Size(
-                                                               require(record_customer));
-                                                       }));
-        });
-        for (pls::cs::Int32 num11 = 0; num11 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(record_customer));
-                                       });
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(
+            os, PLS_API(kl_java_util::Vector_2_Size(require(record_customer)))));
+        for (pls::cs::Int32 num11 = 0; num11 < PLS_API(kl_java_util::Vector_2_Size(require(record_customer)));
              ++num11) {
             pls::cs::Ref<kl_lang::JInteger> jInteger = pls::cs::unbox<pls::cs::Ref<kl_lang::JInteger>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(record_customer), num11);
-                }));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteInt(os,
-                                                           pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                               return require(jInteger)->IntValue();
-                                                           }));
-            });
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(record_customer), num11)));
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, PLS_API(require(jInteger)->IntValue())));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(tAreaRootNum_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(tAreaLv_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, tModeList_.length()); });
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(tAreaRootNum_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(tAreaLv_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, tModeList_.length()));
         if (tModeList_.length() > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteInt(os, tModeList_[0].length());
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, tModeList_[0].length()));
         } else {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, 0); });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, 0));
         }
         for (pls::cs::Int32 num12 = 0; num12 < tModeList_.length(); ++num12) {
             for (pls::cs::Int32 num13 = 0; num13 < tModeList_[num12].length(); ++num13) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StreamUtil::WriteInt(os, tModeList_[num12][num13]);
-                });
+                PLS_API(kl_unity_util::StreamUtil::WriteInt(os, tModeList_[num12][num13]));
             }
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, tAreas_.length()); });
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, tAreas_.length()));
         if (tModeList_.length() > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteInt(os, tAreas_[0].length());
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, tAreas_[0].length()));
         } else {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, 0); });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, 0));
         }
         for (pls::cs::Int32 num14 = 0; num14 < tAreas_.length(); ++num14) {
             for (pls::cs::Int32 num15 = 0; num15 < tAreas_[num14].length(); ++num15) {
                 require(tAreas_[num14].get_Item(num15))->Serialize(os);
             }
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, tPlayers_.length()); });
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, tPlayers_.length()));
         for (pls::cs::Int32 num16 = 0; num16 < tPlayers_.length(); ++num16) {
             require(tPlayers_.get_Item(num16))->Serialize(os);
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, tBalls_.length()); });
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, tBalls_.length()));
         for (pls::cs::Int32 num17 = 0; num17 < tBalls_.length(); ++num17) {
             require(tBalls_.get_Item(num17))->Serialize(os);
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(os, pDataIdOlderList_.length());
-        });
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, pDataIdOlderList_.length()));
         for (pls::cs::Int32 num18 = 0; num18 < pDataIdOlderList_.length(); ++num18) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteInt(os, pDataIdOlderList_[num18]);
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, pDataIdOlderList_[num18]));
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, save_tAreaRootNum_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, trainig_appearWait); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(os, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                           return kl_java_util::Vector_2_Size(
-                                                               require(restTPlayers_));
-                                                       }));
-        });
-        for (pls::cs::Int32 num19 = 0; num19 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(restTPlayers_));
-                                       });
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, save_tAreaRootNum_));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, trainig_appearWait));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(
+            os, PLS_API(kl_java_util::Vector_2_Size(require(restTPlayers_)))));
+        for (pls::cs::Int32 num19 = 0; num19 < PLS_API(kl_java_util::Vector_2_Size(require(restTPlayers_)));
              ++num19) {
-            pls::cs::Ref<TPlayer> tPlayer =
-                pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(restTPlayers_), num19);
-                }));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteInt(os, require(tPlayer)->trainingId_[0]);
-            });
+            pls::cs::Ref<TPlayer> tPlayer = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(restTPlayers_), num19)));
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, require(tPlayer)->trainingId_[0]));
         }
     }
 }
@@ -1379,126 +1160,107 @@ void UserData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     {
         data::TrainingData::ensure_initialized();
 
-        teamEvaRank_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        ticketPrice_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        selectFormationId_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        selectFormationType_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        selectSupervisorId_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        selectUniform_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        selectLeagueId_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        selectQmId_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        selectTrainingPolicy_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        battleQmIndex_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        matchInfoJoin_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        eventActFlg_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        teamEvaRank_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        ticketPrice_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        selectFormationId_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        selectFormationType_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        selectSupervisorId_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        selectUniform_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        selectLeagueId_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        selectQmId_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        selectTrainingPolicy_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        battleQmIndex_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        matchInfoJoin_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        eventActFlg_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         for (pls::cs::Int32 i = 0; i < data::TrainingData::TRA_PLAYER().length(); ++i) {
             {
                 auto cs_target = data::TrainingData::TRA_PLAYER();
                 auto cs_index = i;
-                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
+                    PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
         data::TrainingData::TRA_SELECT_TRA() =
-            pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
         for (pls::cs::Int32 j = 0; j < researchPoint_.length(); ++j) {
             {
                 auto cs_target = researchPoint_;
                 auto cs_index = j;
-                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
+                    PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
         memberPDataist_ = kl_java_util::Vector::create();
-        pls::cs::Int32 num = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+        pls::cs::Int32 num =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
         for (pls::cs::Int32 k = 0; k < num; ++k) {
             auto cs_array_248 = require(apdat_)->pData_;
-            auto cs_index_248 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); });
+            auto cs_index_248 = PLS_API(kl_unity_util::StreamUtil::ReadShort(stream));
             pls::cs::Ref<data::PlayerData> obj = cs_array_248.get_Item(cs_index_248);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_AddElement(require(memberPDataist_), pls::cs::box(obj));
-            });
+            PLS_API(kl_java_util::Vector_2_AddElement(require(memberPDataist_), pls::cs::box(obj)));
         }
         for (pls::cs::Int32 l = 0; l < tpplay_stock.length(); ++l) {
             for (pls::cs::Int32 m = 0; m < tpplay_stock[l].length(); ++m) {
                 {
                     auto cs_target = tpplay_stock[l];
                     auto cs_index = m;
-                    auto cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                    auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
         }
-        tpplay_battleNum = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        tpplay_battleNum = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         tpplay_battleRecode = kl_java_util::Vector::create();
-        pls::cs::Int32 num2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        pls::cs::Int32 num2 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         for (pls::cs::Int32 n = 0; n < num2; ++n) {
             IntArray obj2 = IntArray::make(2);
-            obj2[0] = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-            obj2[1] = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_AddElement(require(tpplay_battleRecode), pls::cs::box(obj2));
-            });
+            obj2[0] = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+            obj2[1] = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+            PLS_API(kl_java_util::Vector_2_AddElement(require(tpplay_battleRecode), pls::cs::box(obj2)));
         }
         League_init();
-        matchInfoWeek_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        matchFlgVictory_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        league_setu_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        league_teamNum_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        pls::cs::Int32 num3 = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        pls::cs::Int32 num4 = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        league_data_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({num3, num4}));
-        });
+        matchInfoWeek_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        matchFlgVictory_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        league_setu_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        league_teamNum_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        pls::cs::Int32 num3 =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        pls::cs::Int32 num4 =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        league_data_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({num3, num4})));
         for (pls::cs::Int32 num5 = 0; num5 < league_data_.length(); ++num5) {
             for (pls::cs::Int32 num6 = 0; num6 < league_data_[num5].length(); ++num6) {
                 {
                     auto cs_target = league_data_[num5];
                     auto cs_index = num6;
-                    auto cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                    auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
         }
-        league_dispOlder_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({num3, 3}));
-        });
+        league_dispOlder_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({num3, 3})));
         for (pls::cs::Int32 num7 = 0; num7 < league_dispOlder_.length(); ++num7) {
             for (pls::cs::Int32 num8 = 0; num8 < league_dispOlder_[num7].length(); ++num8) {
                 {
                     auto cs_target = league_dispOlder_[num7];
                     auto cs_index = num8;
-                    auto cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                    auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
@@ -1507,83 +1269,65 @@ void UserData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
             {
                 auto cs_target = matchResult_;
                 auto cs_index = num9;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        matchGetGoalTotal_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        busState_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        busPos_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-        busV_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-        busGoalPos_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
+        matchGetGoalTotal_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        busState_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        busPos_ = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        busV_ = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        busGoalPos_ = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
         busMovePoint_ = kl_java_util::Vector::create();
-        pls::cs::Int32 num10 = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+        pls::cs::Int32 num10 =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
         for (pls::cs::Int32 num11 = 0; num11 < num10; ++num11) {
-            pls::cs::Ref<kl_util3d::Vector3D> obj3 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_AddElement(require(busMovePoint_), pls::cs::box(obj3));
-            });
+            pls::cs::Ref<kl_util3d::Vector3D> obj3 = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+            PLS_API(kl_java_util::Vector_2_AddElement(require(busMovePoint_), pls::cs::box(obj3)));
         }
-        busDirect_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+        busDirect_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
         {
             auto cs_target = busSDirect;
             auto cs_index = 0;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = busSDirect;
             auto cs_index = 1;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = busCPos;
             auto cs_index = 0;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = busCPos;
             auto cs_index = 1;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
-        busCnt = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        busCnt = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         fanParam_ = IntArray::make(3);
         for (pls::cs::Int32 num12 = 0; num12 < fanParam_.length(); ++num12) {
             {
                 auto cs_target = fanParam_;
                 auto cs_index = num12;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        game_winConsecutive_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        customer_total_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadLong(stream); });
+        game_winConsecutive_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        customer_total_ = PLS_API(kl_unity_util::StreamUtil::ReadLong(stream));
         for (pls::cs::Int32 num13 = 0; num13 < customer_month_.length(); ++num13) {
             {
                 auto cs_target = customer_month_;
                 auto cs_index = num13;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -1600,63 +1344,48 @@ void UserData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
                 {
                     auto cs_target = records_[num14][num15];
                     auto cs_index = 0;
-                    auto cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                    auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                     cs_target.set_Item(cs_index, cs_value);
                 }
                 {
                     auto cs_target = records_[num14][num15];
                     auto cs_index = 1;
-                    auto cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                    auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
         }
-        pls::cs::Int32 num16 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        pls::cs::Int32 num16 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         record_customer = kl_java_util::Vector::create();
         for (pls::cs::Int32 num17 = 0; num17 < num16; ++num17) {
-            pls::cs::Int32 value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = record_customer;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(value));
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
+            pls::cs::Int32 value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+            PLS_API(([&]() -> void {
+                auto cs_receiver = record_customer;
+                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(value));
+                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+            }()));
         }
-        tAreaRootNum_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        tAreaLv_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        pls::cs::Int32 num18 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        pls::cs::Int32 num19 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        tModeList_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({num18, num19}));
-        });
+        tAreaRootNum_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        tAreaLv_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        pls::cs::Int32 num18 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        pls::cs::Int32 num19 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        tModeList_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({num18, num19})));
         for (pls::cs::Int32 num20 = 0; num20 < tModeList_.length(); ++num20) {
             for (pls::cs::Int32 num21 = 0; num21 < tModeList_[num20].length(); ++num21) {
                 {
                     auto cs_target = tModeList_[num20];
                     auto cs_index = num21;
-                    auto cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                    auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
         }
-        pls::cs::Int32 num22 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        pls::cs::Int32 num23 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        tAreas_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<TArea>>>>(
-                IntArray::from({num22, num23}));
-        });
+        pls::cs::Int32 num22 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        pls::cs::Int32 num23 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        tAreas_ = PLS_API(kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<TArea>>>>(
+            IntArray::from({num22, num23})));
         for (pls::cs::Int32 num24 = 0; num24 < tAreas_.length(); ++num24) {
             for (pls::cs::Int32 num25 = 0; num25 < tAreas_[num24].length(); ++num25) {
                 {
@@ -1678,8 +1407,7 @@ void UserData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
                 require(tAreas_[num26].get_Item(num27))->Deserialize(stream);
             }
         }
-        pls::cs::Int32 num28 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        pls::cs::Int32 num28 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         tPlayers_ = pls::cs::Array<pls::cs::Ref<TPlayer>>::make(num28);
         for (pls::cs::Int32 num29 = 0; num29 < tPlayers_.length(); ++num29) {
             {
@@ -1691,8 +1419,7 @@ void UserData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
             require(tPlayers_.get_Item(num29))->Init_training(0, 0);
             require(tPlayers_.get_Item(num29))->Deserialize(stream);
         }
-        pls::cs::Int32 num30 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        pls::cs::Int32 num30 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         tBalls_ = pls::cs::Array<pls::cs::Ref<TBall>>::make(num30);
         for (pls::cs::Int32 num31 = 0; num31 < tBalls_.length(); ++num31) {
             {
@@ -1704,31 +1431,25 @@ void UserData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
             require(tBalls_.get_Item(num31))->Init();
             require(tBalls_.get_Item(num31))->Deserialize(stream);
         }
-        pls::cs::Int32 num32 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        pls::cs::Int32 num32 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         pDataIdOlderList_ = IntArray::make(num32);
         for (pls::cs::Int32 num33 = 0; num33 < pDataIdOlderList_.length(); ++num33) {
             {
                 auto cs_target = pDataIdOlderList_;
                 auto cs_index = num33;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        save_tAreaRootNum_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        trainig_appearWait = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        num32 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        save_tAreaRootNum_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        trainig_appearWait = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        num32 = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         temp_testTPlayersId_ = IntArray::make(num32);
         for (pls::cs::Int32 num34 = 0; num34 < temp_testTPlayersId_.length(); ++num34) {
             {
                 auto cs_target = temp_testTPlayersId_;
                 auto cs_index = num34;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -1740,18 +1461,12 @@ void UserData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
 void UserData::Deserialize2() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.Deserialize2", game);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(restTPlayers_));
-            }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(restTPlayers_));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(restTPlayers_))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(restTPlayers_)));
         }
         for (pls::cs::Int32 i = 0; i < temp_testTPlayersId_.length(); ++i) {
             pls::cs::Ref<TPlayer> obj = tPlayers_.get_Item(temp_testTPlayersId_[i]);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_AddElement(require(restTPlayers_), pls::cs::box(obj));
-            });
+            PLS_API(kl_java_util::Vector_2_AddElement(require(restTPlayers_), pls::cs::box(obj)));
         }
         for (pls::cs::Int32 j = 0; j < tAreas_.length(); ++j) {
             for (pls::cs::Int32 k = 0; k < tAreas_[j].length(); ++k) {
@@ -1774,8 +1489,7 @@ void UserData::Init() {
         GameManager::ensure_initialized();
 
         apdat_ = main::AppData::GetInstance();
-        canvas_ =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        canvas_ = PLS_API(pls::kairo::Canvas::GetInstance());
         formMan_ = form::FormManager::GetInstance();
         gm_ = GameManager::GetInstance();
         GameManager::udat_() = this;
@@ -1808,18 +1522,12 @@ void UserData::NewGame() {
         MapMain::ensure_initialized();
         Camera::ensure_initialized();
 
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(memberPDataist_));
-            }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(memberPDataist_));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(memberPDataist_))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(memberPDataist_)));
         }
         for (pls::cs::Int32 i = 0; i < require(apdat_)->pData_.length(); ++i) {
             pls::cs::Ref<data::PlayerData> playerData = require(apdat_)->pData_.get_Item(i);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(playerData)->flag_, 1);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(playerData)->flag_, 1))) {
                 data::PlayerData::Employ(require(playerData)->id_);
                 require(playerData)->new_ = false;
             }
@@ -1862,9 +1570,7 @@ void UserData::NewGame() {
         selectLeagueId_ = 0;
         for (pls::cs::Int32 k = 0; k < require(apdat_)->leagueData_.length(); ++k) {
             pls::cs::Ref<data::LeagueData> leagueData = require(apdat_)->leagueData_.get_Item(k);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(leagueData)->flag_, 1);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(leagueData)->flag_, 1))) {
                 selectLeagueId_ = k;
                 break;
             }
@@ -1931,7 +1637,7 @@ void UserData::NewGame() {
         } catch (const pls::cs::Exception& cs_caught_130) {
             auto t = pls::cs::capture_exception(cs_caught_130);
             {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                PLS_API(kl_unity_util::Log::Info(t));
             }
         }
         data::FormationData::UpdateStamemRole();
@@ -1971,13 +1677,11 @@ void UserData::NewGame() {
         require(tp_svisor_)->faceImg_ = require(supervisorData)->headImg_;
         require(tp_svisor_)->bodyImg_ = require(supervisorData)->bodyImg_;
         require(tp_svisor_)->tData_id_ = 0;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = require(tp_svisor_)->pos_;
-                pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = MapMain::MOVE_POINT().get_Item(8);
-                require(cs_receiver)->Set(cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = require(tp_svisor_)->pos_;
+            pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = MapMain::MOVE_POINT().get_Item(8);
+            require(cs_receiver)->Set(cs_arg0);
+        }()));
         require(tp_svisor_)->direct_ = 2;
         require(tp_svisor_)->role_ = 3;
         require(tp_svisor_)->AddCommandSvisorAct();
@@ -1998,18 +1702,14 @@ void UserData::ProcCommonMethod() {
         pls::cs::Int32 num2 = 0;
         for (pls::cs::Int32 i = 0; i < require(apdat_)->pData_.length(); ++i) {
             pls::cs::Ref<data::PlayerData> playerData = require(apdat_)->pData_.get_Item(i);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(playerData)->flag_, 4);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(playerData)->flag_, 4))) {
                 {
                     auto cs_target = cpuPlayerDatas_[0];
                     auto cs_index = num++;
                     auto cs_value = playerData;
                     cs_target.set_Item(cs_index, cs_value);
                 }
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(playerData)->flag_, 8);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(playerData)->flag_, 8))) {
                 {
                     auto cs_target = cpuPlayerDatas_[1];
                     auto cs_index = num2++;
@@ -2094,8 +1794,7 @@ void UserData::DrawDispPlayer(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int
 void UserData::ChTime1() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.ChTime1", game);
     {
-        chTime1 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        chTime1 = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
     }
 }
 
@@ -2103,8 +1802,7 @@ void UserData::ChTime1() {
 void UserData::ChTime2() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.ChTime2", game);
     {
-        chTime2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        chTime2 = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
     }
 }
 
@@ -2177,9 +1875,7 @@ void UserData::SetCollisionPos() {
             {
                 auto cs_target = UserData::COLLISION_SPOS();
                 auto cs_index = i;
-                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-                });
+                auto cs_value = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
                 cs_target.set_Item(cs_index, cs_value);
             }
             for (pls::cs::Int32 j = 0; j < UserData::COLLISION_SPOS()[i].length(); ++j) {
@@ -2215,18 +1911,14 @@ void UserData::League_init() {
         matchInfoWeek_ = 0;
         league_setu_ = 0;
         league_teamNum_ = require(leagueData)->matchEnemy_.length();
-        league_fightCombi_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({league_teamNum_ / 2, 2}));
-        });
-        league_fightResult_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({league_teamNum_ / 2, 2}));
-        });
-        league_data_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({league_teamNum_, 9}));
-        });
-        league_dispOlder_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({league_teamNum_, 3}));
-        });
+        league_fightCombi_ =
+            PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({league_teamNum_ / 2, 2})));
+        league_fightResult_ =
+            PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({league_teamNum_ / 2, 2})));
+        league_data_ =
+            PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({league_teamNum_, 9})));
+        league_dispOlder_ =
+            PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({league_teamNum_, 3})));
         for (pls::cs::Int32 i = 0; i < league_dispOlder_.length(); ++i) {
             league_dispOlder_[i][0] = require(leagueData)->matchEnemyNext_[i];
         }
@@ -2337,14 +2029,9 @@ bool UserData::League_update() {
 void UserData::League_resetScore() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.League_resetScore", game);
     {
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(memberPDataist_));
-                                   });
-             ++i) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(memberPDataist_))); ++i) {
             pls::cs::Ref<data::PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), i);
-                }));
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(memberPDataist_), i)));
             require(playerData)->game_goalInLeague_ = 0;
         }
         for (pls::cs::Int32 j = 0; j < require(apdat_)->tData_.length(); ++j) {
@@ -2376,13 +2063,11 @@ void UserData::League_finish() {
                                                    pls::cs::String{}, IntArray{}, 0, 0, -1);
                 }
                 if (kl_cfg::Config::DEBUG_CMD()) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::Log::Info(
-                            pls::cs::String::concat(
-                                literal(u"■UserData.java league_finish() league_data.trophy_ = "),
-                                integer_string(require(leagueData)->trophy_)),
-                            pls::cs::Ref<pls::cs::ExceptionObject>{});
-                    });
+                    PLS_API(kl_unity_util::Log::Info(
+                        pls::cs::String::concat(
+                            literal(u"■UserData.java league_finish() league_data.trophy_ = "),
+                            integer_string(require(leagueData)->trophy_)),
+                        pls::cs::Ref<pls::cs::ExceptionObject>{}));
                 }
                 pls::cs::Ref<data::FanBonusData> fanBonusData = pls::cs::Ref<data::FanBonusData>{};
                 if (require(leagueData)->id_ == 0) {
@@ -2425,12 +2110,10 @@ void UserData::League_finish() {
                 }
             }
             if (kl_cfg::Config::DEBUG_CMD()) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::Log::Info(
-                        pls::cs::String::concat(literal(u"■UserData.java league_finish() 最終順位 = "),
-                                                integer_string(leagueData2[7])),
-                        pls::cs::Ref<pls::cs::ExceptionObject>{});
-                });
+                PLS_API(kl_unity_util::Log::Info(
+                    pls::cs::String::concat(literal(u"■UserData.java league_finish() 最終順位 = "),
+                                            integer_string(leagueData2[7])),
+                    pls::cs::Ref<pls::cs::ExceptionObject>{}));
             }
             {
                 auto cs_target = leagueData;
@@ -2789,24 +2472,16 @@ void UserData::Update_gameParam() {
         }
         for (pls::cs::Int32 i = 0; i < 11; ++i) {
             pls::cs::Ref<data::PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), i);
-                }));
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(memberPDataist_), i)));
             ++require(playerData)->matchNum_;
             pls::cs::Int32 num3 = 0;
             for (pls::cs::Int32 j = 0;
-                 j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return kl_java_util::Vector_2_Size(require(require(gm_)->scorerListUserTeam));
-                 });
-                 ++j) {
-                pls::cs::Int32 num4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require((pls::cs::unbox<pls::cs::Ref<kl_lang::JInteger>>(
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_ElementAt(
-                                               require(require(gm_)->scorerListUserTeam), j);
-                                       }))))
-                        ->IntValue();
-                });
+                 j < PLS_API(kl_java_util::Vector_2_Size(require(require(gm_)->scorerListUserTeam))); ++j) {
+                pls::cs::Int32 num4 = PLS_API(
+                    require(
+                        (pls::cs::unbox<pls::cs::Ref<kl_lang::JInteger>>(PLS_API(
+                            kl_java_util::Vector_2_ElementAt(require(require(gm_)->scorerListUserTeam), j)))))
+                        ->IntValue());
                 if (num4 == require(playerData)->id_) {
                     ++num3;
                 }
@@ -2857,66 +2532,48 @@ void UserData::ChangeEditPhase(pls::cs::Int32 next_phase, bool isSoccerForm) {
         if (phase_ == 0) {
             data::FormationData::UpdateStamemRole();
             if (!isSoccerForm) {
-                pls::cs::Ref<pls::kairo::FormBase> topForm = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
-                        pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                        require(topForm)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
-                                                       pls::cs::String{});
-                    }());
-                });
-            } else {
-                pls::cs::Ref<pls::kairo::FormBase> topForm2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
-                        pls::cs::String cs_arg1 = main::AppData::softLabels_()[0];
-                        require(topForm2)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
-                                                        pls::cs::String{});
-                    }());
-                });
-            }
-        } else if (phase_ == 6) {
-            pls::cs::Ref<pls::kairo::FormBase> topForm3 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[6];
-                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                    require(topForm3)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                }());
-            });
-            emdm_cnt = 0;
-        } else if (phase_ == 7) {
-            pls::cs::Ref<pls::kairo::FormBase> topForm4 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[11];
-                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                    require(topForm4)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                }());
-            });
-        } else if (phase_ == 1) {
-            pls::cs::Ref<pls::kairo::FormBase> topForm5 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
+                pls::cs::Ref<pls::kairo::FormBase> topForm = PLS_API(require(formMan_)->GetTopForm());
+                PLS_API(([&]() -> void {
                     pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
                     pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                    require(topForm5)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                }());
-            });
+                    require(topForm)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                }()));
+            } else {
+                pls::cs::Ref<pls::kairo::FormBase> topForm2 = PLS_API(require(formMan_)->GetTopForm());
+                PLS_API(([&]() -> void {
+                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
+                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[0];
+                    require(topForm2)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                }()));
+            }
+        } else if (phase_ == 6) {
+            pls::cs::Ref<pls::kairo::FormBase> topForm3 = PLS_API(require(formMan_)->GetTopForm());
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = main::AppData::softLabels_()[6];
+                pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                require(topForm3)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+            }()));
+            emdm_cnt = 0;
+        } else if (phase_ == 7) {
+            pls::cs::Ref<pls::kairo::FormBase> topForm4 = PLS_API(require(formMan_)->GetTopForm());
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = main::AppData::softLabels_()[11];
+                pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                require(topForm4)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+            }()));
+        } else if (phase_ == 1) {
+            pls::cs::Ref<pls::kairo::FormBase> topForm5 = PLS_API(require(formMan_)->GetTopForm());
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
+                pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                require(topForm5)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+            }()));
         }
         if (phase_ == 0) {
             pls::cs::Ref<data::FormationData> elem =
                 require(apdat_)->formationData_.get_Item(selectFormationId_);
-            pls::cs::Int32 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_IndexOf(require(editTest_formation), pls::cs::box(elem));
-            });
+            pls::cs::Int32 num =
+                PLS_API(kl_java_util::Vector_2_IndexOf(require(editTest_formation), pls::cs::box(elem)));
             if (num != -1) {
                 et_cur[1] = num;
                 pls::cs::Int32 num2 = 3;
@@ -2938,9 +2595,8 @@ void UserData::ChangeEditPhase(pls::cs::Int32 next_phase, bool isSoccerForm) {
         } else if (phase_ == 9) {
             pls::cs::Ref<data::FormationData> elem2 =
                 require(apdat_)->formationData_.get_Item(selectFormationId_);
-            pls::cs::Int32 num3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_IndexOf(require(editTest_formation), pls::cs::box(elem2));
-            });
+            pls::cs::Int32 num3 =
+                PLS_API(kl_java_util::Vector_2_IndexOf(require(editTest_formation), pls::cs::box(elem2)));
             if (num3 != -1) {
                 et_cur[1] = num3;
                 pls::cs::Int32 num4 = 3;
@@ -2962,43 +2618,29 @@ void UserData::ChangeEditPhase(pls::cs::Int32 next_phase, bool isSoccerForm) {
         }
         if (phase_ == 1 && ([&]() -> bool {
                 auto cs_left = et_cur[1];
-                auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(editTest_formation));
-                });
+                auto cs_right = PLS_API(kl_java_util::Vector_2_Size(require(editTest_formation)));
                 return cs_left < cs_right;
             }())) {
             pls::cs::Ref<data::FormationData> formationData =
                 pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                            pls::cs::Int32 cs_arg0 = et_cur[1];
-                            return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
-                        }());
-                    }));
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(formationData)->flag_, 2);
-                })) {
-                pls::cs::Ref<pls::kairo::FormBase> topForm6 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::String cs_arg0 = main::AppData::softLabels_()[12];
-                        pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                        require(topForm6)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
-                                                        pls::cs::String{});
-                    }());
-                });
+                    PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                        pls::cs::Int32 cs_arg0 = et_cur[1];
+                        return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
+                    }())));
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(formationData)->flag_, 2))) {
+                pls::cs::Ref<pls::kairo::FormBase> topForm6 = PLS_API(require(formMan_)->GetTopForm());
+                PLS_API(([&]() -> void {
+                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[12];
+                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                    require(topForm6)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                }()));
             } else {
-                pls::cs::Ref<pls::kairo::FormBase> topForm7 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::String cs_arg0 = main::AppData::softLabels_()[13];
-                        pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                        require(topForm7)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
-                                                        pls::cs::String{});
-                    }());
-                });
+                pls::cs::Ref<pls::kairo::FormBase> topForm7 = PLS_API(require(formMan_)->GetTopForm());
+                PLS_API(([&]() -> void {
+                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[13];
+                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                    require(topForm7)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                }()));
             }
         }
     }
@@ -3008,135 +2650,88 @@ void UserData::ChangeEditPhase(pls::cs::Int32 next_phase, bool isSoccerForm) {
 void UserData::SetMemberChangeList() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.SetMemberChangeList", game);
     {
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(editTest_fw)); }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(editTest_fw));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(editTest_fw)));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(editTest_mf)); }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(editTest_mf));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(editTest_mf)));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(editTest_df)); }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(editTest_df));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(editTest_df)));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(editTest_gk)); }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(editTest_gk));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_gk))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(editTest_gk)));
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(editTest_temp));
-            }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(editTest_temp));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(editTest_temp)));
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(editTest_category));
-            }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(editTest_category));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_category))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(editTest_category)));
         }
         IntArray2 formation_ =
             require(require(apdat_)->formationData_.get_Item(selectFormationId_))->formation_;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = editTest_gk;
-                pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                    pls::cs::box(IntArray::from({formation_[0][0], formation_[0][1], 0}));
-                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = editTest_gk;
+            pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                pls::cs::box(IntArray::from({formation_[0][0], formation_[0][1], 0}));
+            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+        }()));
         for (pls::cs::Int32 i = 1; i < formation_.length(); ++i) {
             if (formation_[i][1] >= 6 && formation_[i][1] <= 8) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = editTest_df;
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                            pls::cs::box(IntArray::from({formation_[i][0], formation_[i][1], i}));
-                        kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = editTest_df;
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                        pls::cs::box(IntArray::from({formation_[i][0], formation_[i][1], i}));
+                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+                }()));
             }
             if (formation_[i][1] >= 3 && formation_[i][1] <= 5) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = editTest_mf;
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                            pls::cs::box(IntArray::from({formation_[i][0], formation_[i][1], i}));
-                        kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = editTest_mf;
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                        pls::cs::box(IntArray::from({formation_[i][0], formation_[i][1], i}));
+                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+                }()));
             }
             if (formation_[i][1] >= 0 && formation_[i][1] <= 2) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = editTest_fw;
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                            pls::cs::box(IntArray::from({formation_[i][0], formation_[i][1], i}));
-                        kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = editTest_fw;
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                        pls::cs::box(IntArray::from({formation_[i][0], formation_[i][1], i}));
+                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+                }()));
             }
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(editTest_df)); }) == 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = editTest_df;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(IntArray::from({0, 0, -1}));
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) == 0) {
+            PLS_API(([&]() -> void {
+                auto cs_receiver = editTest_df;
+                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(IntArray::from({0, 0, -1}));
+                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+            }()));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(editTest_mf)); }) == 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = editTest_mf;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(IntArray::from({0, 0, -1}));
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) == 0) {
+            PLS_API(([&]() -> void {
+                auto cs_receiver = editTest_mf;
+                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(IntArray::from({0, 0, -1}));
+                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+            }()));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(editTest_fw)); }) == 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = editTest_fw;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(IntArray::from({0, 0, -1}));
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) == 0) {
+            PLS_API(([&]() -> void {
+                auto cs_receiver = editTest_fw;
+                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(IntArray::from({0, 0, -1}));
+                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+            }()));
         }
         pls::cs::Int32 num = 4;
-        for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(editTest_df));
-                                       }) - 1;
-             ++j) {
-            for (pls::cs::Int32 num2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(editTest_df));
-                                       }) -
-                                       1;
+        for (pls::cs::Int32 j = 0; j < PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) - 1; ++j) {
+            for (pls::cs::Int32 num2 = PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) - 1;
                  num2 > j; --num2) {
-                IntArray array = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(editTest_df), j);
-                }));
-                IntArray array2 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(editTest_df), num2);
-                }));
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_df));
-                    }) <= num) {
+                IntArray array = pls::cs::unbox<IntArray>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_df), j)));
+                IntArray array2 = pls::cs::unbox<IntArray>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_df), num2)));
+                if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) <= num) {
                     if (([&]() -> bool {
                             auto cs_left = array2[0];
                             auto cs_right = array[0];
@@ -3152,14 +2747,10 @@ void UserData::SetMemberChangeList() {
                              auto cs_right = array[1];
                              return cs_left < cs_right;
                          }()))) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_SetElementAt(require(editTest_df),
-                                                                       pls::cs::box(array2), j);
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_SetElementAt(require(editTest_df),
-                                                                       pls::cs::box(array), num2);
-                        });
+                        PLS_API(kl_java_util::Vector_2_SetElementAt(require(editTest_df),
+                                                                    pls::cs::box(array2), j));
+                        PLS_API(kl_java_util::Vector_2_SetElementAt(require(editTest_df), pls::cs::box(array),
+                                                                    num2));
                     }
                 } else if (([&]() -> bool {
                                auto cs_left = array2[1];
@@ -3176,35 +2767,21 @@ void UserData::SetMemberChangeList() {
                                 auto cs_right = array[0];
                                 return cs_left < cs_right;
                             }()))) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_SetElementAt(require(editTest_df), pls::cs::box(array2),
-                                                                   j);
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_SetElementAt(require(editTest_df), pls::cs::box(array),
-                                                                   num2);
-                    });
+                    PLS_API(
+                        kl_java_util::Vector_2_SetElementAt(require(editTest_df), pls::cs::box(array2), j));
+                    PLS_API(
+                        kl_java_util::Vector_2_SetElementAt(require(editTest_df), pls::cs::box(array), num2));
                 }
             }
         }
-        for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(editTest_mf));
-                                       }) - 1;
-             ++k) {
-            for (pls::cs::Int32 num3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(editTest_mf));
-                                       }) -
-                                       1;
+        for (pls::cs::Int32 k = 0; k < PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) - 1; ++k) {
+            for (pls::cs::Int32 num3 = PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) - 1;
                  num3 > k; --num3) {
-                IntArray array3 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(editTest_mf), k);
-                }));
-                IntArray array4 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(editTest_mf), num3);
-                }));
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_mf));
-                    }) <= num) {
+                IntArray array3 = pls::cs::unbox<IntArray>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_mf), k)));
+                IntArray array4 = pls::cs::unbox<IntArray>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_mf), num3)));
+                if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) <= num) {
                     if (([&]() -> bool {
                             auto cs_left = array4[0];
                             auto cs_right = array3[0];
@@ -3220,14 +2797,10 @@ void UserData::SetMemberChangeList() {
                              auto cs_right = array3[1];
                              return cs_left < cs_right;
                          }()))) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_SetElementAt(require(editTest_mf),
-                                                                       pls::cs::box(array4), k);
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_SetElementAt(require(editTest_mf),
-                                                                       pls::cs::box(array3), num3);
-                        });
+                        PLS_API(kl_java_util::Vector_2_SetElementAt(require(editTest_mf),
+                                                                    pls::cs::box(array4), k));
+                        PLS_API(kl_java_util::Vector_2_SetElementAt(require(editTest_mf),
+                                                                    pls::cs::box(array3), num3));
                     }
                 } else if (([&]() -> bool {
                                auto cs_left = array4[1];
@@ -3244,35 +2817,21 @@ void UserData::SetMemberChangeList() {
                                 auto cs_right = array3[0];
                                 return cs_left < cs_right;
                             }()))) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_SetElementAt(require(editTest_mf), pls::cs::box(array4),
-                                                                   k);
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_SetElementAt(require(editTest_mf), pls::cs::box(array3),
-                                                                   num3);
-                    });
+                    PLS_API(
+                        kl_java_util::Vector_2_SetElementAt(require(editTest_mf), pls::cs::box(array4), k));
+                    PLS_API(kl_java_util::Vector_2_SetElementAt(require(editTest_mf), pls::cs::box(array3),
+                                                                num3));
                 }
             }
         }
-        for (pls::cs::Int32 l = 0; l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(editTest_fw));
-                                       }) - 1;
-             ++l) {
-            for (pls::cs::Int32 num4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(editTest_fw));
-                                       }) -
-                                       1;
+        for (pls::cs::Int32 l = 0; l < PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) - 1; ++l) {
+            for (pls::cs::Int32 num4 = PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) - 1;
                  num4 > l; --num4) {
-                IntArray array5 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(editTest_fw), l);
-                }));
-                IntArray array6 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(editTest_fw), num4);
-                }));
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_fw));
-                    }) <= num) {
+                IntArray array5 = pls::cs::unbox<IntArray>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_fw), l)));
+                IntArray array6 = pls::cs::unbox<IntArray>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_fw), num4)));
+                if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) <= num) {
                     if (([&]() -> bool {
                             auto cs_left = array6[0];
                             auto cs_right = array5[0];
@@ -3288,14 +2847,10 @@ void UserData::SetMemberChangeList() {
                              auto cs_right = array5[1];
                              return cs_left < cs_right;
                          }()))) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_SetElementAt(require(editTest_fw),
-                                                                       pls::cs::box(array6), l);
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_SetElementAt(require(editTest_fw),
-                                                                       pls::cs::box(array5), num4);
-                        });
+                        PLS_API(kl_java_util::Vector_2_SetElementAt(require(editTest_fw),
+                                                                    pls::cs::box(array6), l));
+                        PLS_API(kl_java_util::Vector_2_SetElementAt(require(editTest_fw),
+                                                                    pls::cs::box(array5), num4));
                     }
                 } else if (([&]() -> bool {
                                auto cs_left = array6[1];
@@ -3312,117 +2867,75 @@ void UserData::SetMemberChangeList() {
                                 auto cs_right = array5[0];
                                 return cs_left < cs_right;
                             }()))) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_SetElementAt(require(editTest_fw), pls::cs::box(array6),
-                                                                   l);
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_SetElementAt(require(editTest_fw), pls::cs::box(array5),
-                                                                   num4);
-                    });
+                    PLS_API(
+                        kl_java_util::Vector_2_SetElementAt(require(editTest_fw), pls::cs::box(array6), l));
+                    PLS_API(kl_java_util::Vector_2_SetElementAt(require(editTest_fw), pls::cs::box(array5),
+                                                                num4));
                 }
             }
         }
         bool flag = true;
         pls::cs::Int32 num5 = 4;
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(editTest_df));
-            }) > num ||
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(editTest_mf));
-            }) > num ||
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(editTest_fw));
-            }) > num) {
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) > num ||
+            PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) > num ||
+            PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) > num) {
             num5 = 5;
             flag = false;
         }
         editTest_team = pls::cs::Array<pls::cs::Ref<kl_java_util::Vector>>::make(num5);
         pls::cs::Int32 num6 = 0;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = editTest_category;
-                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(0));
-                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = editTest_category;
+            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(0));
+            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+        }()));
         {
             auto cs_target = editTest_team;
             auto cs_index = num6++;
             auto cs_value = editTest_gk;
             cs_target.set_Item(cs_index, cs_value);
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
+        PLS_API(([&]() -> void {
+            auto cs_receiver = editTest_category;
+            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(1));
+            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+        }()));
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) > num && !flag) {
+            for (pls::cs::Int32 m = 0; m < 3; ++m) {
+                for (pls::cs::Int32 num7 = PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) - 1;
+                     num7 >= 0; --num7) {
+                    IntArray array7 = pls::cs::unbox<IntArray>(
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_df), num7)));
+                    if (array7[1] == 8 - m) {
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = editTest_temp;
+                            pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                                PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_df), num7));
+                            kl_java_util::Vector_2_InsertElementAt(require(cs_receiver), cs_arg0, 0);
+                        }()));
+                        PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(editTest_df), num7));
+                    }
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) == 5) {
+                        break;
+                    }
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) == 1) {
+                        break;
+                    }
+                }
+                if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) == 5) {
+                    break;
+                }
+                if ((PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) > 0 &&
+                     PLS_API(kl_java_util::Vector_2_Size(require(editTest_df))) <= 5)) {
+                    break;
+                }
+            }
+            PLS_API(([&]() -> void {
                 auto cs_receiver = editTest_category;
                 pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(1));
                 kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-            }());
-        });
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(editTest_df));
-            }) > num &&
-            !flag) {
-            for (pls::cs::Int32 m = 0; m < 3; ++m) {
-                for (pls::cs::Int32 num7 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(require(editTest_df));
-                                           }) -
-                                           1;
-                     num7 >= 0; --num7) {
-                    IntArray array7 =
-                        pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(editTest_df), num7);
-                        }));
-                    if (array7[1] == 8 - m) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = editTest_temp;
-                                pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_ElementAt(require(editTest_df), num7);
-                                    });
-                                kl_java_util::Vector_2_InsertElementAt(require(cs_receiver), cs_arg0, 0);
-                            }());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_RemoveElementAt(require(editTest_df), num7);
-                        });
-                    }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_temp));
-                        }) == 5) {
-                        break;
-                    }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_df));
-                        }) == 1) {
-                        break;
-                    }
-                }
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_temp));
-                    }) == 5) {
-                    break;
-                }
-                if ((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return kl_java_util::Vector_2_Size(require(editTest_temp));
-                     }) > 0 &&
-                     pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return kl_java_util::Vector_2_Size(require(editTest_df));
-                     }) <= 5)) {
-                    break;
-                }
-            }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = editTest_category;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(1));
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(editTest_temp));
-                }) > 0) {
+            }()));
+            if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) > 0) {
                 {
                     auto cs_target = editTest_team;
                     auto cs_index = num6++;
@@ -3445,77 +2958,47 @@ void UserData::SetMemberChangeList() {
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
+        PLS_API(([&]() -> void {
+            auto cs_receiver = editTest_category;
+            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(2));
+            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+        }()));
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) > num && !flag) {
+            for (pls::cs::Int32 n = 0; n < 3; ++n) {
+                for (pls::cs::Int32 num8 = PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) - 1;
+                     num8 >= 0; --num8) {
+                    IntArray array8 = pls::cs::unbox<IntArray>(
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_mf), num8)));
+                    if (array8[1] == 5 - n) {
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = editTest_temp;
+                            pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                                PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_mf), num8));
+                            kl_java_util::Vector_2_InsertElementAt(require(cs_receiver), cs_arg0, 0);
+                        }()));
+                        PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(editTest_mf), num8));
+                    }
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) == 5) {
+                        break;
+                    }
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) == 1) {
+                        break;
+                    }
+                }
+                if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) == 5) {
+                    break;
+                }
+                if ((PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) > 0 &&
+                     PLS_API(kl_java_util::Vector_2_Size(require(editTest_mf))) <= 5)) {
+                    break;
+                }
+            }
+            PLS_API(([&]() -> void {
                 auto cs_receiver = editTest_category;
                 pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(2));
                 kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-            }());
-        });
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(editTest_mf));
-            }) > num &&
-            !flag) {
-            for (pls::cs::Int32 n = 0; n < 3; ++n) {
-                for (pls::cs::Int32 num8 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(require(editTest_mf));
-                                           }) -
-                                           1;
-                     num8 >= 0; --num8) {
-                    IntArray array8 =
-                        pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(editTest_mf), num8);
-                        }));
-                    if (array8[1] == 5 - n) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = editTest_temp;
-                                pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_ElementAt(require(editTest_mf), num8);
-                                    });
-                                kl_java_util::Vector_2_InsertElementAt(require(cs_receiver), cs_arg0, 0);
-                            }());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_RemoveElementAt(require(editTest_mf), num8);
-                        });
-                    }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_temp));
-                        }) == 5) {
-                        break;
-                    }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_mf));
-                        }) == 1) {
-                        break;
-                    }
-                }
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_temp));
-                    }) == 5) {
-                    break;
-                }
-                if ((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return kl_java_util::Vector_2_Size(require(editTest_temp));
-                     }) > 0 &&
-                     pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return kl_java_util::Vector_2_Size(require(editTest_mf));
-                     }) <= 5)) {
-                    break;
-                }
-            }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = editTest_category;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(2));
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(editTest_temp));
-                }) > 0) {
+            }()));
+            if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) > 0) {
                 {
                     auto cs_target = editTest_team;
                     auto cs_index = num6++;
@@ -3538,77 +3021,47 @@ void UserData::SetMemberChangeList() {
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = editTest_category;
-                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(3));
-                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-            }());
-        });
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(editTest_fw));
-            }) > num &&
-            !flag) {
+        PLS_API(([&]() -> void {
+            auto cs_receiver = editTest_category;
+            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(3));
+            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+        }()));
+        if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) > num && !flag) {
             for (pls::cs::Int32 num9 = 0; num9 < 3; ++num9) {
-                for (pls::cs::Int32 num10 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_java_util::Vector_2_Size(require(editTest_fw));
-                                            }) -
-                                            1;
+                for (pls::cs::Int32 num10 = PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) - 1;
                      num10 >= 0; --num10) {
-                    IntArray array9 =
-                        pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(editTest_fw), num10);
-                        }));
+                    IntArray array9 = pls::cs::unbox<IntArray>(
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_fw), num10)));
                     if (array9[1] == 2 - num9) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = editTest_temp;
-                                pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_ElementAt(require(editTest_fw), num10);
-                                    });
-                                kl_java_util::Vector_2_InsertElementAt(require(cs_receiver), cs_arg0, 0);
-                            }());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_RemoveElementAt(require(editTest_fw), num10);
-                        });
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = editTest_temp;
+                            pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                                PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_fw), num10));
+                            kl_java_util::Vector_2_InsertElementAt(require(cs_receiver), cs_arg0, 0);
+                        }()));
+                        PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(editTest_fw), num10));
                     }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_temp));
-                        }) == 5) {
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) == 5) {
                         break;
                     }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_fw));
-                        }) == 1) {
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) == 1) {
                         break;
                     }
                 }
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_temp));
-                    }) == 5) {
+                if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) == 5) {
                     break;
                 }
-                if ((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return kl_java_util::Vector_2_Size(require(editTest_temp));
-                     }) > 0 &&
-                     pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return kl_java_util::Vector_2_Size(require(editTest_fw));
-                     }) <= 5)) {
+                if ((PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) > 0 &&
+                     PLS_API(kl_java_util::Vector_2_Size(require(editTest_fw))) <= 5)) {
                     break;
                 }
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = editTest_category;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(3));
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(editTest_temp));
-                }) > 0) {
+            PLS_API(([&]() -> void {
+                auto cs_receiver = editTest_category;
+                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(3));
+                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+            }()));
+            if (PLS_API(kl_java_util::Vector_2_Size(require(editTest_temp))) > 0) {
                 {
                     auto cs_target = editTest_team;
                     auto cs_index = num6++;
@@ -3644,8 +3097,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
         phaseCnt_ = ((phaseCnt_ + 1) % 2147483647 /* Int32.MaxValue */);
         if (phase_ == 0) {
             if (!isSoccerForm) {
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); })) {
+                if (PLS_API(require(canvas_)->CheckKeyRepeat(65536))) {
                     if (et_cur[0] % 3 == 0) {
                         {
                             auto cs_target = et_cur;
@@ -3667,8 +3119,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                         }());
                     }
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); })) {
+                if (PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                     if (et_cur[0] % 3 == 2) {
                         {
                             auto cs_target = et_cur;
@@ -3690,17 +3141,13 @@ bool UserData::Update_edit(bool isSoccerForm) {
                         }());
                     }
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                     if (et_cur[0] == 4) {
-                        pls::cs::Ref<pls::kairo::FormBase> topForm = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> bool {
-                                pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::SubForm::create(53);
-                                return require(topForm)->Push(cs_arg0);
-                            }());
-                        });
+                        pls::cs::Ref<pls::kairo::FormBase> topForm = PLS_API(require(formMan_)->GetTopForm());
+                        PLS_API(([&]() -> bool {
+                            pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::SubForm::create(53);
+                            return require(topForm)->Push(cs_arg0);
+                        }()));
                         return false;
                     }
                     if (et_cur[0] == 2) {
@@ -3728,14 +3175,12 @@ bool UserData::Update_edit(bool isSoccerForm) {
                             }
                             ChangeEditPhase(10, isSoccerForm);
                         } else if (et_cur[0] == 3) {
-                            pls::cs::Ref<pls::kairo::FormBase> topForm2 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> bool {
-                                    pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::SubForm::create(50);
-                                    return require(topForm2)->Push(cs_arg0);
-                                }());
-                            });
+                            pls::cs::Ref<pls::kairo::FormBase> topForm2 =
+                                PLS_API(require(formMan_)->GetTopForm());
+                            PLS_API(([&]() -> bool {
+                                pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::SubForm::create(50);
+                                return require(topForm2)->Push(cs_arg0);
+                            }()));
                             return false;
                         }
                     }
@@ -3747,34 +3192,27 @@ bool UserData::Update_edit(bool isSoccerForm) {
                 if (et_cur[0] == 0) {
                     et_cur[0] = 1;
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); }) &&
-                    et_cur[0] >= 2) {
+                if (PLS_API(require(canvas_)->CheckKeyRepeat(131072)) && et_cur[0] >= 2) {
                     et_cur[0] = 1;
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+                if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                     if (et_cur[0] == 0) {
                         et_cur[0] = 1;
                     } else if (et_cur[0] == 1) {
                         et_cur[0] = 2;
                     }
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); }) &&
-                    et_cur[0] >= 3) {
+                if (PLS_API(require(canvas_)->CheckKeyRepeat(65536)) && et_cur[0] >= 3) {
                     et_cur[0]--;
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); })) {
+                if (PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                     if (et_cur[0] == 1) {
                         ChangeEditPhase(15, isSoccerForm);
                     } else if (et_cur[0] == 2 || et_cur[0] == 3) {
                         et_cur[0]++;
                     }
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                     if (et_cur[0] == 0) {
                         ChangeEditPhase(15, isSoccerForm);
                     } else {
@@ -3787,26 +3225,21 @@ bool UserData::Update_edit(bool isSoccerForm) {
                         } else if (et_cur[0] == 3) {
                             ChangeEditPhase(10, isSoccerForm);
                         } else if (et_cur[0] == 4) {
-                            pls::cs::Ref<pls::kairo::FormBase> topForm3 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> bool {
-                                    pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::SubForm::create(27);
-                                    return require(topForm3)->Push(cs_arg0);
-                                }());
-                            });
+                            pls::cs::Ref<pls::kairo::FormBase> topForm3 =
+                                PLS_API(require(formMan_)->GetTopForm());
+                            PLS_API(([&]() -> bool {
+                                pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::SubForm::create(27);
+                                return require(topForm3)->Push(cs_arg0);
+                            }()));
                             return false;
                         }
                     }
                 }
             }
         } else if (phase_ == 1) {
-            pls::cs::Int32 num = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(editTest_formation)); });
+            pls::cs::Int32 num = PLS_API(kl_java_util::Vector_2_Size(require(editTest_formation)));
             pls::cs::Int32 num2 = et_cur[1];
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); }) &&
-                et_cur[1] / 3 > 0) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072)) && et_cur[1] / 3 > 0) {
                 {
                     auto cs_target = et_cur;
                     auto cs_index = 1;
@@ -3816,8 +3249,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 pls::cs::Int32 num3 = et_cur[1] / 3;
                 pls::cs::Int32 num4 = et_cur[1];
                 {
@@ -3835,13 +3267,10 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     et_cur[1] = num4;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); }) &&
-                et_cur[1] % 3 != 0) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(65536)) && et_cur[1] % 3 != 0) {
                 et_cur[1]--;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                 et_cur[1]++;
                 if (et_cur[1] >= num) {
                     et_cur[1] = num - 1;
@@ -3866,60 +3295,44 @@ bool UserData::Update_edit(bool isSoccerForm) {
                 SetEditForPos(isSoccerForm);
                 pls::cs::Ref<data::FormationData> formationData =
                     pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                pls::cs::Int32 cs_arg0 = et_cur[1];
-                                return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
-                            }());
-                        }));
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::BitUtil::Check(require(formationData)->flag_, 2);
-                    })) {
-                    pls::cs::Ref<pls::kairo::FormBase> topForm4 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = main::AppData::softLabels_()[12];
-                            pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                            require(topForm4)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
-                                                            pls::cs::String{});
-                        }());
-                    });
+                        PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                            pls::cs::Int32 cs_arg0 = et_cur[1];
+                            return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
+                        }())));
+                if (PLS_API(kl_unity_util::BitUtil::Check(require(formationData)->flag_, 2))) {
+                    pls::cs::Ref<pls::kairo::FormBase> topForm4 = PLS_API(require(formMan_)->GetTopForm());
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = main::AppData::softLabels_()[12];
+                        pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                        require(topForm4)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
+                                                        pls::cs::String{});
+                    }()));
                 } else {
-                    pls::cs::Ref<pls::kairo::FormBase> topForm5 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = main::AppData::softLabels_()[13];
-                            pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                            require(topForm5)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
-                                                            pls::cs::String{});
-                        }());
-                    });
+                    pls::cs::Ref<pls::kairo::FormBase> topForm5 = PLS_API(require(formMan_)->GetTopForm());
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = main::AppData::softLabels_()[13];
+                        pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                        require(topForm5)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
+                                                        pls::cs::String{});
+                    }()));
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); }) ||
-                require(apdat_)->IsPushSoftLabel(13)) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576)) || require(apdat_)->IsPushSoftLabel(13)) {
                 ChangeEditPhase(5, isSoccerForm);
             } else if (require(apdat_)->IsPushSoftLabel(2)) {
                 ChangeEditPhase(11, isSoccerForm);
             } else if (require(apdat_)->IsPushSoftLabel(12)) {
                 pls::cs::Ref<data::FormationData> formationData2 =
                     pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                pls::cs::Int32 cs_arg0 = et_cur[1];
-                                return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
-                            }());
-                        }));
+                        PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                            pls::cs::Int32 cs_arg0 = et_cur[1];
+                            return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
+                        }())));
                 selectFormationId_ = require(formationData2)->id_;
                 ChangeEditPhase(2, isSoccerForm);
             }
         } else if (phase_ == 2) {
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); }) &&
-                et_cur[2] / 10 > 0) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072)) && et_cur[2] / 10 > 0) {
                 {
                     auto cs_target = et_cur;
                     auto cs_index = 2;
@@ -3929,9 +3342,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); }) &&
-                et_cur[2] + 10 < 90) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288)) && et_cur[2] + 10 < 90) {
                 {
                     auto cs_target = et_cur;
                     auto cs_index = 2;
@@ -3941,27 +3352,20 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); }) &&
-                et_cur[2] % 10 != 8) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(65536)) && et_cur[2] % 10 != 8) {
                 et_cur[2]++;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); }) &&
-                et_cur[2] % 10 != 0) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(262144)) && et_cur[2] % 10 != 0) {
                 et_cur[2]--;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 et_cur[3] = et_cur[2];
                 ChangeEditPhase(3, isSoccerForm);
             } else if (require(apdat_)->IsPushSoftLabel(2)) {
                 ChangeEditPhase(1, isSoccerForm);
             }
         } else if (phase_ == 3) {
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); }) &&
-                et_cur[3] / 10 > 0) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072)) && et_cur[3] / 10 > 0) {
                 {
                     auto cs_target = et_cur;
                     auto cs_index = 3;
@@ -3971,9 +3375,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); }) &&
-                et_cur[3] + 10 < 90) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288)) && et_cur[3] + 10 < 90) {
                 {
                     auto cs_target = et_cur;
                     auto cs_index = 3;
@@ -3983,26 +3385,19 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); }) &&
-                et_cur[3] % 10 != 8) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(65536)) && et_cur[3] % 10 != 8) {
                 et_cur[3]++;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); }) &&
-                et_cur[3] % 10 != 0) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(262144)) && et_cur[3] % 10 != 0) {
                 et_cur[3]--;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 pls::cs::Ref<data::FormationData> formationData3 =
                     pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                pls::cs::Int32 cs_arg0 = et_cur[1];
-                                return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
-                            }());
-                        }));
+                        PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                            pls::cs::Int32 cs_arg0 = et_cur[1];
+                            return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
+                        }())));
                 IntArray2 formation_ = require(formationData3)->formation_;
                 IntArray array = IntArray{};
                 IntArray array2 = IntArray{};
@@ -4056,12 +3451,10 @@ bool UserData::Update_edit(bool isSoccerForm) {
             if (phaseCnt_ >= 6) {
                 pls::cs::Ref<data::FormationData> formationData4 =
                     pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                pls::cs::Int32 cs_arg0 = et_cur[1];
-                                return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
-                            }());
-                        }));
+                        PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                            pls::cs::Int32 cs_arg0 = et_cur[1];
+                            return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
+                        }())));
                 IntArray2 formation_2 = require(formationData4)->formation_;
                 IntArray array3 = IntArray{};
                 IntArray array4 = IntArray{};
@@ -4128,25 +3521,19 @@ bool UserData::Update_edit(bool isSoccerForm) {
             }
         } else if (phase_ == 5) {
             pls::cs::Int32 num7 = 3;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 et_cur[4] = (et_cur[4] - 1 + 3) % 3;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 et_cur[4] = (et_cur[4] + 1 + 3) % 3;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); }) ||
-                require(apdat_)->IsPushSoftLabel(13)) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576)) || require(apdat_)->IsPushSoftLabel(13)) {
                 pls::cs::Ref<data::FormationData> formationData5 =
                     pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                pls::cs::Int32 cs_arg0 = et_cur[1];
-                                return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
-                            }());
-                        }));
+                        PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                            pls::cs::Int32 cs_arg0 = et_cur[1];
+                            return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
+                        }())));
                 selectFormationId_ = require(formationData5)->id_;
                 selectFormationType_ = et_cur[4];
                 SetEditForPos(isSoccerForm);
@@ -4166,19 +3553,13 @@ bool UserData::Update_edit(bool isSoccerForm) {
             }
         } else if (phase_ == 6) {
             ++emdm_cnt;
-            pls::cs::Ref<pls::kairo::FormBase> topForm6 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(topForm6)->GetLeftSoftLabel();
-                }) == literal(u"ベンチ")) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::String cs_arg0 = main::AppData::softLabels_()[6];
-                        pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                        require(topForm6)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
-                                                        pls::cs::String{});
-                    }());
-                });
+            pls::cs::Ref<pls::kairo::FormBase> topForm6 = PLS_API(require(formMan_)->GetTopForm());
+            if (PLS_API(require(topForm6)->GetLeftSoftLabel()) == literal(u"ベンチ")) {
+                PLS_API(([&]() -> void {
+                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[6];
+                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                    require(topForm6)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                }()));
             }
             pls::cs::Int32 num8 = et_cur[5] / 10;
             if (num8 >= editTest_team.length()) {
@@ -4186,18 +3567,13 @@ bool UserData::Update_edit(bool isSoccerForm) {
             }
             et_cur[5] = et_cur[5] % 10 + num8 * 10;
             num8 = et_cur[5] % 10;
-            if (num8 >= pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10)));
-                })) {
+            if (num8 >=
+                PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10))))) {
                 num8 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10)));
-                    }) -
-                    1;
+                    PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10)))) - 1;
                 et_cur[5] = et_cur[5] / 10 * 10 + num8;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 pls::cs::Int32 num9 = et_cur[5] / 10;
                 et_cur[5] = et_cur[5] % 10;
                 {
@@ -4206,14 +3582,12 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     auto cs_value = ([&]() -> pls::cs::Int32 {
                         auto cs_left = (([&]() -> pls::cs::Int32 {
                             auto cs_left = et_cur[5] - 1;
-                            auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num9)));
-                            });
+                            auto cs_right =
+                                PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num9))));
                             return cs_left + cs_right;
                         }()));
-                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num9)));
-                        });
+                        auto cs_right =
+                            PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num9))));
                         return cs_left % cs_right;
                     }());
                     cs_target.set_Item(cs_index, cs_value);
@@ -4227,8 +3601,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 pls::cs::Int32 num10 = et_cur[5] / 10;
                 et_cur[5] = et_cur[5] % 10;
                 {
@@ -4237,14 +3610,12 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     auto cs_value = ([&]() -> pls::cs::Int32 {
                         auto cs_left = (([&]() -> pls::cs::Int32 {
                             auto cs_left = et_cur[5] + 1;
-                            auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num10)));
-                            });
+                            auto cs_right =
+                                PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num10))));
                             return cs_left + cs_right;
                         }()));
-                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num10)));
-                        });
+                        auto cs_right =
+                            PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num10))));
                         return cs_left % cs_right;
                     }());
                     cs_target.set_Item(cs_index, cs_value);
@@ -4258,8 +3629,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(65536))) {
                 pls::cs::Int32 num11 = et_cur[5] % 10;
                 et_cur[5] = et_cur[5] / 10;
                 et_cur[5] = ([&]() -> pls::cs::Int32 {
@@ -4272,13 +3642,10 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     return cs_left % cs_right;
                 }());
                 et_cur[5] = et_cur[5] * 10;
-                if (num11 >= pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10)));
-                    })) {
-                    num11 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(
-                                    require(editTest_team.get_Item(et_cur[5] / 10)));
-                            }) -
+                if (num11 >=
+                    PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10))))) {
+                    num11 = PLS_API(kl_java_util::Vector_2_Size(
+                                require(editTest_team.get_Item(et_cur[5] / 10)))) -
                             1;
                 }
                 {
@@ -4290,8 +3657,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                 pls::cs::Int32 num12 = et_cur[5] % 10;
                 et_cur[5] = et_cur[5] / 10;
                 et_cur[5] = ([&]() -> pls::cs::Int32 {
@@ -4304,13 +3670,10 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     return cs_left % cs_right;
                 }());
                 et_cur[5] = et_cur[5] * 10;
-                if (num12 >= pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10)));
-                    })) {
-                    num12 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(
-                                    require(editTest_team.get_Item(et_cur[5] / 10)));
-                            }) -
+                if (num12 >=
+                    PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10))))) {
+                    num12 = PLS_API(kl_java_util::Vector_2_Size(
+                                require(editTest_team.get_Item(et_cur[5] / 10)))) -
                             1;
                 }
                 {
@@ -4322,15 +3685,12 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
-                IntArray array5 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                        auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
-                        pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
-                        return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                    }());
-                }));
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
+                IntArray array5 = pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                    auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
+                    pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
+                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                }())));
                 if (array5[2] != -1) {
                     ChangeEditPhase(7, isSoccerForm);
                     et_cur[6] = et_cur[5];
@@ -4342,8 +3702,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                 emdm_cnt = 0;
             }
         } else if (phase_ == 7) {
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 pls::cs::Int32 num13 = et_cur[6] / 10;
                 et_cur[6] = et_cur[6] % 10;
                 {
@@ -4352,14 +3711,12 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     auto cs_value = ([&]() -> pls::cs::Int32 {
                         auto cs_left = (([&]() -> pls::cs::Int32 {
                             auto cs_left = et_cur[6] - 1;
-                            auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num13)));
-                            });
+                            auto cs_right =
+                                PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num13))));
                             return cs_left + cs_right;
                         }()));
-                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num13)));
-                        });
+                        auto cs_right =
+                            PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num13))));
                         return cs_left % cs_right;
                     }());
                     cs_target.set_Item(cs_index, cs_value);
@@ -4373,8 +3730,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 pls::cs::Int32 num14 = et_cur[6] / 10;
                 et_cur[6] = et_cur[6] % 10;
                 {
@@ -4383,14 +3739,12 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     auto cs_value = ([&]() -> pls::cs::Int32 {
                         auto cs_left = (([&]() -> pls::cs::Int32 {
                             auto cs_left = et_cur[6] + 1;
-                            auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num14)));
-                            });
+                            auto cs_right =
+                                PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num14))));
                             return cs_left + cs_right;
                         }()));
-                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num14)));
-                        });
+                        auto cs_right =
+                            PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(num14))));
                         return cs_left % cs_right;
                     }());
                     cs_target.set_Item(cs_index, cs_value);
@@ -4404,8 +3758,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(65536))) {
                 pls::cs::Int32 num15 = et_cur[6] % 10;
                 et_cur[6] = et_cur[6] / 10;
                 et_cur[6] = ([&]() -> pls::cs::Int32 {
@@ -4418,13 +3771,10 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     return cs_left % cs_right;
                 }());
                 et_cur[6] = et_cur[6] * 10;
-                if (num15 >= pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[6] / 10)));
-                    })) {
-                    num15 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(
-                                    require(editTest_team.get_Item(et_cur[6] / 10)));
-                            }) -
+                if (num15 >=
+                    PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[6] / 10))))) {
+                    num15 = PLS_API(kl_java_util::Vector_2_Size(
+                                require(editTest_team.get_Item(et_cur[6] / 10)))) -
                             1;
                 }
                 {
@@ -4436,8 +3786,7 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                 pls::cs::Int32 num16 = et_cur[6] % 10;
                 et_cur[6] = et_cur[6] / 10;
                 et_cur[6] = ([&]() -> pls::cs::Int32 {
@@ -4450,13 +3799,10 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     return cs_left % cs_right;
                 }());
                 et_cur[6] = et_cur[6] * 10;
-                if (num16 >= pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[6] / 10)));
-                    })) {
-                    num16 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(
-                                    require(editTest_team.get_Item(et_cur[6] / 10)));
-                            }) -
+                if (num16 >=
+                    PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[6] / 10))))) {
+                    num16 = PLS_API(kl_java_util::Vector_2_Size(
+                                require(editTest_team.get_Item(et_cur[6] / 10)))) -
                             1;
                 }
                 {
@@ -4468,88 +3814,66 @@ bool UserData::Update_edit(bool isSoccerForm) {
                     cs_target.at(cs_index) = cs_value;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
-                IntArray array6 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                        auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
-                        pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
-                        return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                    }());
-                }));
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
+                IntArray array6 = pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                    auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
+                    pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
+                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                }())));
                 if (array6[2] != -1) {
                     ChangeEditPhase(8, isSoccerForm);
                 }
             } else if (require(apdat_)->IsPushSoftLabel(2)) {
                 ChangeEditPhase(6, isSoccerForm);
             } else if (require(apdat_)->IsPushSoftLabel(11)) {
-                pls::cs::Ref<pls::kairo::FormBase> topForm7 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
+                pls::cs::Ref<pls::kairo::FormBase> topForm7 = PLS_API(require(formMan_)->GetTopForm());
                 pls::cs::Ref<form::SubForm> subForm = form::SubForm::create(28);
                 pls::cs::Int32 num17 = et_cur[5] / 10;
                 pls::cs::Int32 index = et_cur[5] % 10;
                 pls::cs::Ref<kl_java_util::Vector> vector = editTest_team.get_Item(num17);
-                IntArray array7 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(vector), index);
-                }));
+                IntArray array7 = pls::cs::unbox<IntArray>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), index)));
                 if (array7[2] != -1) {
                     pls::cs::Int32 index2 = array7[2];
                     pls::cs::Ref<data::PlayerData> playerData_ =
                         pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), index2);
-                            }));
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(memberPDataist_), index2)));
                     require(subForm)->playerData_ = playerData_;
                 }
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(topForm7)->Push(subForm); });
+                PLS_API(require(topForm7)->Push(subForm));
             }
         } else if (phase_ == 8) {
             SetEditForPos(isSoccerForm);
             if (phaseCnt_ >= 6) {
-                IntArray array8 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                        auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
-                        pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
-                        return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                    }());
-                }));
+                IntArray array8 = pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                    auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
+                    pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
+                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                }())));
                 if (array8[2] != -1) {
                     IntArray array9 =
-                        pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
-                                pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
-                                return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                            }());
-                        }));
-                    pls::cs::Int32 index3 = array9[2];
-                    array9 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                            auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
-                            pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
+                        pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                            auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
+                            pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
                             return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                        }());
-                    }));
+                        }())));
+                    pls::cs::Int32 index3 = array9[2];
+                    array9 = pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                        auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
+                        pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
+                        return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                    }())));
                     pls::cs::Int32 index4 = array9[2];
                     pls::cs::Ref<data::PlayerData> obj = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), index4);
-                        }));
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = memberPDataist_;
-                            pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), index3);
-                                });
-                            kl_java_util::Vector_2_SetElementAt(require(cs_receiver), cs_arg0, index4);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_SetElementAt(require(memberPDataist_),
-                                                                   pls::cs::box(obj), index3);
-                    });
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(memberPDataist_), index4)));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = memberPDataist_;
+                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(memberPDataist_), index3));
+                        kl_java_util::Vector_2_SetElementAt(require(cs_receiver), cs_arg0, index4);
+                    }()));
+                    PLS_API(kl_java_util::Vector_2_SetElementAt(require(memberPDataist_), pls::cs::box(obj),
+                                                                index3));
                     SetMemberChangeList();
                     ChangeEditPhase(6, isSoccerForm);
                     SetEditForPos(isSoccerForm);
@@ -4557,12 +3881,10 @@ bool UserData::Update_edit(bool isSoccerForm) {
                 }
             }
         } else if (phase_ == 14) {
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(65536))) {
                 ChangeEditPhase(16, isSoccerForm);
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 ChangeEditPhase(16, isSoccerForm);
             }
         }
@@ -4620,8 +3942,7 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
             num4 = form::GameForm::VIEW_Y();
             require(apdat_)->DrawWindow2(g, 240, 240 - form::GameForm::VIEW_Y(), 11, num4);
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->ClipRect(4.0f, num4, 232.0f, 236 - num4, true); });
+        PLS_API(require(g)->ClipRect(4.0f, num4, 232.0f, 236 - num4, true));
         if (phase_ == 0 || phase_ == 9 || phase_ == 10 || phase_ == 11 || phase_ == 12 || phase_ == 13 ||
             phase_ == 14 || phase_ == 15 || phase_ == 16) {
             pls::cs::Int32 num5 = 64;
@@ -4654,24 +3975,18 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                     } else {
                         Draw_editButton(g, num2, num3, num5, num7, false, 0, i, true, false);
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                    });
+                    PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
                     form::SubForm::SetFontSize(g, 10);
                     if (kairo::unity::util::Language::English()) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::String cs_arg0 = MENU_STR[i];
-                                require(g)->DrawString(cs_arg0, num2 + num5 / 2, num3 + 4 + 1, 2);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::String cs_arg0 = MENU_STR[i];
+                            require(g)->DrawString(cs_arg0, num2 + num5 / 2, num3 + 4 + 1, 2);
+                        }()));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::String cs_arg0 = MENU_STR[i];
-                                require(g)->DrawString(cs_arg0, num2 + num5 / 2, num3 + 4, 2);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::String cs_arg0 = MENU_STR[i];
+                            require(g)->DrawString(cs_arg0, num2 + num5 / 2, num3 + 4, 2);
+                        }()));
                     }
                     form::SubForm::ResetFontSize(g);
                     if (i == 0 && data::FormationData::IsExistNew()) {
@@ -4725,12 +4040,8 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                 num2 = num9 + 26;
                 num3 = num;
                 if (et_cur[0] == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(form::SubForm::SC_WINDOW_SELECT());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(num2, num3 + 2, 164.0f, 17.0f);
-                    });
+                    PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_SELECT()));
+                    PLS_API(require(g)->FillRect(num2, num3 + 2, 164.0f, 17.0f));
                     {
                         auto cs_receiver = require(require(apdat_)->resCom2_)->seb.get_Item(60);
                         pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> cs_arg3 =
@@ -4740,12 +4051,8 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                 }
                 pls::cs::Ref<data::TeamData> teamData2 =
                     require(apdat_)->tData_.get_Item(require(gm_)->teamId_[1]);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawString(require(teamData)->name_, num2 + 81, num3 + 4, 2);
-                });
+                PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
+                PLS_API(require(g)->DrawString(require(teamData)->name_, num2 + 81, num3 + 4, 2));
                 if (phase_ == 0) {
                     if (et_cur[0] == 1) {
                         {
@@ -4781,18 +4088,11 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                 } else {
                     Draw_editButton(g, num2, num3, 164, 21, false, 0, 1, true, false);
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 60, 183); }));
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 60, 183))));
                 if (!require(gm_)->halfTime) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->DrawString(literal(u"前半キックオフ"), num2 + 81, num3 + 4, 2);
-                    });
+                    PLS_API(require(g)->DrawString(literal(u"前半キックオフ"), num2 + 81, num3 + 4, 2));
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->DrawString(literal(u"後半キックオフ"), num2 + 81, num3 + 4, 2);
-                    });
+                    PLS_API(require(g)->DrawString(literal(u"後半キックオフ"), num2 + 81, num3 + 4, 2));
                 }
                 {
                     pls::cs::Ref<kairo::unity::ui::Seb> cs_arg3 =
@@ -4816,24 +4116,18 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                     } else {
                         Draw_editButton(g, num2, num3, num5, num7, false, 0, j + 2, true, false);
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                    });
+                    PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
                     form::SubForm::SetFontSize(g, 10);
                     if (kairo::unity::util::Language::English()) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::String cs_arg0 = MENU_STR[j];
-                                require(g)->DrawString(cs_arg0, num2 + num5 / 2, num3 + 4 + 1, 2);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::String cs_arg0 = MENU_STR[j];
+                            require(g)->DrawString(cs_arg0, num2 + num5 / 2, num3 + 4 + 1, 2);
+                        }()));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::String cs_arg0 = MENU_STR[j];
-                                require(g)->DrawString(cs_arg0, num2 + num5 / 2, num3 + 4, 2);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::String cs_arg0 = MENU_STR[j];
+                            require(g)->DrawString(cs_arg0, num2 + num5 / 2, num3 + 4, 2);
+                        }()));
                     }
                     form::SubForm::ResetFontSize(g);
                     if (j == 0 && data::FormationData::IsExistNew()) {
@@ -4913,15 +4207,12 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                 }
             }
             require(apdat_)->DrawBox(g, num9 - 2, num - 11, num9 - 2 + 213, num - 11 + 22);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                        require(require(apdat_)->resCom2_)->img.get_Item(172);
-                    require(g)->DrawImage(cs_arg0, num9 + 5, num, 0, 0, 16, 21);
-                }());
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()); });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                    require(require(apdat_)->resCom2_)->img.get_Item(172);
+                require(g)->DrawImage(cs_arg0, num9 + 5, num, 0, 0, 16, 21);
+            }()));
+            PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
             if (phase_ == 1 || phase_ == 2 || phase_ == 3 || phase_ == 4 || phase_ == 5 || phase_ == 12) {
                 if (phase_ == 5 || phase_ == 12) {
                     pls::cs::String empty = pls::cs::String(u"");
@@ -4936,16 +4227,11 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                 } else if (phase_ == 1) {
                     pls::cs::Ref<data::FormationData> formationData =
                         pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                    pls::cs::Int32 cs_arg0 = et_cur[1];
-                                    return kl_java_util::Vector_2_ElementAt(require(editTest_formation),
-                                                                            cs_arg0);
-                                }());
-                            }));
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::BitUtil::Check(require(formationData)->flag_, 2);
-                        })) {
+                            PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                                pls::cs::Int32 cs_arg0 = et_cur[1];
+                                return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
+                            }())));
+                    if (PLS_API(kl_unity_util::BitUtil::Check(require(formationData)->flag_, 2))) {
                         kairo::unity::ui::Graphics::DrawString2(
                             require(g), literal(u"左ｿﾌﾄｷｰで編集できます。"), num9 + 28, num + 6);
                     } else {
@@ -5013,19 +4299,14 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                 isTouch = true;
             }
             for (pls::cs::Int32 k = scrollValue_ * 3;
-                 k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return kl_java_util::Vector_2_Size(require(editTest_formation));
-                 });
-                 ++k) {
+                 k < PLS_API(kl_java_util::Vector_2_Size(require(editTest_formation))); ++k) {
                 pls::cs::Int32 num14 = k - scrollValue_ * 3;
                 if (num14 / 3 >= 3) {
                     break;
                 }
                 pls::cs::Ref<data::FormationData> formationData2 =
                     pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(editTest_formation), k);
-                        }));
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(editTest_formation), k)));
                 num2 = num9 + (num10 + num11) * (num14 % 3);
                 num3 = num + (num12 + num13) * (num14 / 3);
                 if (k == et_cur[1]) {
@@ -5033,13 +4314,9 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                 } else {
                     Draw_editButton(g, num2, num3, num10, num12, false, 1, k, isTouch, true);
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawString(require(formationData2)->name_, num2 + num10 / 2, num3 + 4,
-                                                  2);
-                });
+                PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
+                PLS_API(
+                    require(g)->DrawString(require(formationData2)->name_, num2 + num10 / 2, num3 + 4, 2));
                 if (require(formationData2)->IsNew()) {
                     form::SubForm::Draw_newMark(g, num2 + 20, num3 - 5, phaseCnt_);
                 }
@@ -5069,11 +4346,7 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                     pls::cs::Int32 cs_arg2 = num;
                     pls::cs::Int32 cs_arg5 = scrollValue_;
                     pls::cs::Int32 cs_arg6 =
-                        (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(editTest_formation));
-                         }) +
-                         2) /
-                        3;
+                        (PLS_API(kl_java_util::Vector_2_Size(require(editTest_formation))) + 2) / 3;
                     require(cs_receiver)
                         ->DrawVerticalScroll3(cs_arg0, 221, cs_arg2, 3, 59, cs_arg5, cs_arg6, 3);
                 }
@@ -5108,14 +4381,10 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                 pls::cs::Int32 num19 =
                     GameUtil::RateConvert(l, 0, cs_arg2_132, cs_arg3_132, cs_arg4_132, true);
                 pls::cs::Ref<kl_java_util::Vector> vector = editTest_team.get_Item(l);
-                num17 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require((pls::cs::unbox<pls::cs::Ref<kl_lang::JInteger>>(
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_ElementAt(require(editTest_category),
-                                                                                   l);
-                                       }))))
-                        ->IntValue();
-                });
+                num17 =
+                    PLS_API(require((pls::cs::unbox<pls::cs::Ref<kl_lang::JInteger>>(PLS_API(
+                                        kl_java_util::Vector_2_ElementAt(require(editTest_category), l)))))
+                                ->IntValue());
                 {
                     pls::cs::Ref<kairo::unity::ui::Seb> cs_arg3 =
                         require(require(apdat_)->resCom2_)->seb.get_Item(47);
@@ -5124,37 +4393,26 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                     require(apdat_)->DrawSeb(g, num19 - 12, num + 3, cs_arg3, cs_arg4, num17);
                 }
                 pls::cs::Int32 num20 = pls::cs::Int32(212) / editTest_team.length() - 2;
-                for (pls::cs::Int32 m = 0; m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(require(vector));
-                                           });
-                     ++m) {
-                    IntArray array =
-                        pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(vector), m);
-                        }));
+                for (pls::cs::Int32 m = 0; m < PLS_API(kl_java_util::Vector_2_Size(require(vector))); ++m) {
+                    IntArray array = pls::cs::unbox<IntArray>(
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), m)));
                     num2 = num19 - num20 / 2;
                     num3 = num + (num15 + num16) * (m + 1) - 2;
                     if (array[2] != -1) {
                         pls::cs::Int32 num21 = array[2];
                         if (phase_ == 8) {
                             IntArray array2 =
-                                pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                        auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
-                                        pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
-                                        return kl_java_util::Vector_2_ElementAt(require(cs_receiver),
-                                                                                cs_arg0);
-                                    }());
-                                }));
+                                pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                                    auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
+                                    pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
+                                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                                }())));
                             IntArray array3 =
-                                pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                        auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
-                                        pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
-                                        return kl_java_util::Vector_2_ElementAt(require(cs_receiver),
-                                                                                cs_arg0);
-                                    }());
-                                }));
+                                pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                                    auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
+                                    pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
+                                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                                }())));
                             if (num21 == array2[2]) {
                                 num21 = array3[2];
                             } else if (num21 == array3[2]) {
@@ -5163,9 +4421,7 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                         }
                         pls::cs::Ref<data::PlayerData> playerData =
                             pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), num21);
-                                }));
+                                PLS_API(kl_java_util::Vector_2_ElementAt(require(memberPDataist_), num21)));
                         bool flag = false;
                         if (editMemDispMode == 0) {
                             if (phase_ == 6 && l == et_cur[5] / 10 && m == et_cur[5] % 10) {
@@ -5180,79 +4436,58 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                                 Draw_editButton(g, num2, num3, num20, num15, false, type, l * 10 + m, true,
                                                 flag);
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                            });
-                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::Language::Japanese();
-                                })) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(g)->DrawString(require(playerData)->name_,
-                                                                  num2 + num20 / 2, num3 + 3, 2);
-                                });
+                            PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
+                            if (PLS_API(kl_unity_util::Language::Japanese())) {
+                                PLS_API(require(g)->DrawString(require(playerData)->name_, num2 + num20 / 2,
+                                                               num3 + 3, 2));
                             } else {
                                 if (editTest_team.length() == 4) {
                                     form::SubForm::SetFontSize(g, 10);
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return require(g)->DrawString(require(playerData)->name_,
-                                                                      num2 + num20 / 2, num3 + 3 + 1, 2);
-                                    });
+                                    PLS_API(require(g)->DrawString(require(playerData)->name_,
+                                                                   num2 + num20 / 2, num3 + 3 + 1, 2));
                                 } else {
                                     form::SubForm::SetFontSize(g, 8);
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return require(g)->DrawString(require(playerData)->name_,
-                                                                      num2 + num20 / 2, num3 + 3 + 1 + 1, 2);
-                                    });
+                                    PLS_API(require(g)->DrawString(require(playerData)->name_,
+                                                                   num2 + num20 / 2, num3 + 3 + 1 + 1, 2));
                                 }
                                 form::SubForm::ResetFontSize(g);
                             }
                         } else if (editMemDispMode == 1) {
                             if (editTest_team.length() == 4) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                        require(g)->DrawImage(cs_arg0, num2, num3, 0, 0, 51, 18);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                        require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                    require(g)->DrawImage(cs_arg0, num2, num3, 0, 0, 51, 18);
+                                }()));
                             } else {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                        require(g)->DrawImage(cs_arg0, num2, num3, 51, 0, 40, 18);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                        require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                    require(g)->DrawImage(cs_arg0, num2, num3, 51, 0, 40, 18);
+                                }()));
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->ClipRect(num2, num3, 13.0f, 17.0f, true);
-                            });
+                            PLS_API(require(g)->ClipRect(num2, num3, 13.0f, 17.0f, true));
                             SetDispPlayerData(0, selectUniform_, require(playerData)->faceImg_, 0, 1,
                                               require(playerData)->role_, 0);
                             DrawDispPlayer(g, num2 + 7, num3 + 16 + 5);
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->PopClip(); });
+                            PLS_API(require(g)->PopClip());
                             if (num21 == 0) {
                                 num18 = data::PlayerData::GetPhyParamBarW(
                                     require(playerData)->paramPhysical_[4], num20 - 11);
                                 if (editTest_team.length() == 4) {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> void {
-                                            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                                require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                            require(g)->DrawImage(cs_arg0, num2 + 13, num3 + 1 + 5, 13, 52,
-                                                                  num18, 6);
-                                        }());
-                                    });
+                                    PLS_API(([&]() -> void {
+                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                        require(g)->DrawImage(cs_arg0, num2 + 13, num3 + 1 + 5, 13, 52, num18,
+                                                              6);
+                                    }()));
                                 } else {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> void {
-                                            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                                require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                            require(g)->DrawImage(cs_arg0, num2 + 13, num3 + 1 + 5, 64, 52,
-                                                                  num18, 6);
-                                        }());
-                                    });
+                                    PLS_API(([&]() -> void {
+                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                        require(g)->DrawImage(cs_arg0, num2 + 13, num3 + 1 + 5, 64, 52, num18,
+                                                              6);
+                                    }()));
                                 }
                             } else {
                                 num18 = 0;
@@ -5260,66 +4495,49 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                                     num18 = data::PlayerData::GetPhyParamBarW(
                                         require(playerData)->paramPhysical_[n], num20 - 11);
                                     if (editTest_team.length() == 4) {
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return ([&]() -> void {
-                                                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                                    require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                                require(g)->DrawImage(cs_arg0, num2 + 13, num3 + 1 + n * 4,
-                                                                      13, 36 + n * 4, num18, 4);
-                                            }());
-                                        });
+                                        PLS_API(([&]() -> void {
+                                            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                                require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                            require(g)->DrawImage(cs_arg0, num2 + 13, num3 + 1 + n * 4, 13,
+                                                                  36 + n * 4, num18, 4);
+                                        }()));
                                     } else {
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return ([&]() -> void {
-                                                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                                    require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                                require(g)->DrawImage(cs_arg0, num2 + 13, num3 + 1 + n * 4,
-                                                                      64, 36 + n * 4, num18, 4);
-                                            }());
-                                        });
+                                        PLS_API(([&]() -> void {
+                                            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                                require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                            require(g)->DrawImage(cs_arg0, num2 + 13, num3 + 1 + n * 4, 64,
+                                                                  36 + n * 4, num18, 4);
+                                        }()));
                                     }
                                 }
                             }
                         } else if (editMemDispMode == 2) {
                             if (editTest_team.length() == 4) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                        require(g)->DrawImage(cs_arg0, num2, num3, 0, 18, 51, 18);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                        require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                    require(g)->DrawImage(cs_arg0, num2, num3, 0, 18, 51, 18);
+                                }()));
                             } else if (kairo::unity::util::Language::English()) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                        require(g)->DrawImage(cs_arg0, num2, num3, 51, 18, 40, 18);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                        require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                    require(g)->DrawImage(cs_arg0, num2, num3, 51, 18, 40, 18);
+                                }()));
                             } else {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                        require(g)->DrawImage(cs_arg0, num2, num3, 51, 18, 51, 18);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                        require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                    require(g)->DrawImage(cs_arg0, num2, num3, 51, 18, 51, 18);
+                                }()));
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->ClipRect(num2, num3, 13.0f, 17.0f, true);
-                            });
+                            PLS_API(require(g)->ClipRect(num2, num3, 13.0f, 17.0f, true));
                             SetDispPlayerData(0, selectUniform_, require(playerData)->faceImg_, 0, 1,
                                               require(playerData)->role_, 0);
                             DrawDispPlayer(g, num2 + 7, num3 + 16 + 5);
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->PopClip(); });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->SetColor(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::Graphics::GetColorOfRGB(208, 237, 246);
-                                    }));
-                            });
+                            PLS_API(require(g)->PopClip());
+                            PLS_API(require(g)->SetColor(
+                                PLS_API(pls::kairo::Graphics::GetColorOfRGB(208, 237, 246))));
                             require(apdat_)->DrawPositionStatus(g, num17, -1, num2 + 13 + 2, num3 + 3);
                             pls::cs::Int32 positionRank =
                                 data::PlayerData::GetPositionRank(num17, playerData);
@@ -5344,44 +4562,31 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                             }
                         } else if (editMemDispMode == 3) {
                             if (editTest_team.length() == 4) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                        require(g)->DrawImage(cs_arg0, num2, num3, 0, 18, 51, 18);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                        require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                    require(g)->DrawImage(cs_arg0, num2, num3, 0, 18, 51, 18);
+                                }()));
                             } else if (kairo::unity::util::Language::English()) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                        require(g)->DrawImage(cs_arg0, num2, num3, 51, 18, 40, 18);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                        require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                    require(g)->DrawImage(cs_arg0, num2, num3, 51, 18, 40, 18);
+                                }()));
                             } else {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                            require(require(apdat_)->resCom2_)->img.get_Item(127);
-                                        require(g)->DrawImage(cs_arg0, num2, num3, 51, 18, 51, 18);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                        require(require(apdat_)->resCom2_)->img.get_Item(127);
+                                    require(g)->DrawImage(cs_arg0, num2, num3, 51, 18, 51, 18);
+                                }()));
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->ClipRect(num2, num3, 13.0f, 17.0f, true);
-                            });
+                            PLS_API(require(g)->ClipRect(num2, num3, 13.0f, 17.0f, true));
                             SetDispPlayerData(0, selectUniform_, require(playerData)->faceImg_, 0, 1,
                                               require(playerData)->role_, 0);
                             DrawDispPlayer(g, num2 + 7, num3 + 16 + 5);
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->PopClip(); });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->SetColor(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::Graphics::GetColorOfRGB(208, 237, 246);
-                                    }));
-                            });
+                            PLS_API(require(g)->PopClip());
+                            PLS_API(require(g)->SetColor(
+                                PLS_API(pls::kairo::Graphics::GetColorOfRGB(208, 237, 246))));
                             if (editTest_team.length() == 4) {
                                 {
                                     auto cs_receiver = apdat_;
@@ -5390,16 +4595,14 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                                     require(cs_receiver)
                                         ->DrawLv(cs_arg0, cs_arg1, num2 + 13 + 2 + 2, num3 + 3);
                                 }
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::String cs_arg0 = ([&]() {
-                                            auto cs_left = integer_string(require(playerData)->lv_);
-                                            auto cs_right = pls::cs::String(u"");
-                                            return pls::cs::String::concat(cs_left, cs_right);
-                                        }());
-                                        require(g)->DrawString(cs_arg0, num2 + num20 - 1 - 3, num3 + 3, 4);
+                                PLS_API(([&]() -> void {
+                                    pls::cs::String cs_arg0 = ([&]() {
+                                        auto cs_left = integer_string(require(playerData)->lv_);
+                                        auto cs_right = pls::cs::String(u"");
+                                        return pls::cs::String::concat(cs_left, cs_right);
                                     }());
-                                });
+                                    require(g)->DrawString(cs_arg0, num2 + num20 - 1 - 3, num3 + 3, 4);
+                                }()));
                             } else {
                                 {
                                     auto cs_receiver = apdat_;
@@ -5409,24 +4612,20 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                                         num2 + 15 - (kairo::unity::util::Language::English() ? 2 : 0);
                                     require(cs_receiver)->DrawLv(cs_arg0, cs_arg1, cs_arg2, num3 + 3);
                                 }
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::String cs_arg0 = ([&]() {
-                                            auto cs_left = integer_string(require(playerData)->lv_);
-                                            auto cs_right = pls::cs::String(u"");
-                                            return pls::cs::String::concat(cs_left, cs_right);
-                                        }());
-                                        require(g)->DrawString(cs_arg0, num2 + num20 - 1, num3 + 3, 4);
+                                PLS_API(([&]() -> void {
+                                    pls::cs::String cs_arg0 = ([&]() {
+                                        auto cs_left = integer_string(require(playerData)->lv_);
+                                        auto cs_right = pls::cs::String(u"");
+                                        return pls::cs::String::concat(cs_left, cs_right);
                                     }());
-                                });
+                                    require(g)->DrawString(cs_arg0, num2 + num20 - 1, num3 + 3, 4);
+                                }()));
                             }
                         } else if (editMemDispMode == 4) {
                             Draw_editButton(g, num2, num3, num20, num15, false, 0, m, false, false);
                             pls::cs::Int32 sallay = require(playerData)->GetSallay();
                             if (editTest_team.length() == 4) {
-                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::Language::Japanese();
-                                    })) {
+                                if (PLS_API(kl_unity_util::Language::Japanese())) {
                                     require(apdat_)->DrawNumImageLongIntInt(
                                         g, 78, pls::cs::cast_integral<pls::cs::Int64>(sallay),
                                         num2 + num20 - 2 - 9 - 2, num3 + 4, 0, 4);
@@ -5460,9 +4659,7 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                                             num2 + num20 - 2 - 9 - 2 + 10 + num22, num3 + 4, 0, 0, 4);
                                     }
                                 }
-                            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_unity_util::Language::Japanese();
-                                       })) {
+                            } else if (PLS_API(kl_unity_util::Language::Japanese())) {
                                 require(apdat_)->DrawNumImageLongIntInt(
                                     g, 78, pls::cs::cast_integral<pls::cs::Int64>(sallay),
                                     num2 + num20 - 2 - 2, num3 + 4, 0, 4);
@@ -5526,7 +4723,7 @@ void UserData::Draw_edit(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerForm
                 }
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopClip(); });
+        PLS_API(require(g)->PopClip());
     }
 }
 
@@ -5550,8 +4747,7 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
         } else {
             num4 = form::GameForm::VIEW_Y();
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->ClipRect(13.0f, num4, 221.0f, 236 - num4, true); });
+        PLS_API(require(g)->ClipRect(13.0f, num4, 221.0f, 236 - num4, true));
         if (phase_ == 0 || phase_ == 1 || phase_ == 9 || phase_ == 11 || phase_ == 12 || phase_ == 6 ||
             phase_ == 10 || phase_ == 13 || phase_ == 7 || phase_ == 8 || phase_ == 2 || phase_ == 3 ||
             phase_ == 4 || phase_ == 5 || phase_ == 14 || phase_ == 16 || phase_ == 15) {
@@ -5668,104 +4864,49 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                     require(require(apdat_)->resCom2_)->img.get_Item(49);
                 require(apdat_)->DrawSeb(g, coalescedValue + 107 - 107 + 198, num, cs_arg3, cs_arg4, 1);
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255); }));
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
             pls::cs::Int32 num6 = 16;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawArc(coalescedValue + 107 - 1 - num6 / 2 - 1, num + 47 - num6 / 2 - 1,
-                                           num6 + 2, num6 + 2, 0.0f, 360.0f, 1.0f);
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawLine(coalescedValue + 107 - 1, num, coalescedValue + 107 - 1,
-                                            num + 94 - 1, 1.0f);
-            });
+            PLS_API(require(g)->DrawArc(coalescedValue + 107 - 1 - num6 / 2 - 1, num + 47 - num6 / 2 - 1,
+                                        num6 + 2, num6 + 2, 0.0f, 360.0f, 1.0f));
+            PLS_API(require(g)->DrawLine(coalescedValue + 107 - 1, num, coalescedValue + 107 - 1,
+                                         num + 94 - 1, 1.0f));
             pls::cs::Int32 num7 = 35;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawRect(coalescedValue, num + 47 - 32, num7, 65.0f);
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawRect(coalescedValue, num + 47 - 16, num7 / 2, 32.0f);
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawRect(coalescedValue + 214 - num7, num + 47 - 32, num7 - 1, 65.0f);
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawRect(coalescedValue + 214 - num7 / 2, num + 47 - 16, num7 / 2 - 1,
-                                            32.0f);
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
+            PLS_API(require(g)->DrawRect(coalescedValue, num + 47 - 32, num7, 65.0f));
+            PLS_API(require(g)->DrawRect(coalescedValue, num + 47 - 16, num7 / 2, 32.0f));
+            PLS_API(require(g)->DrawRect(coalescedValue + 214 - num7, num + 47 - 32, num7 - 1, 65.0f));
+            PLS_API(
+                require(g)->DrawRect(coalescedValue + 214 - num7 / 2, num + 47 - 16, num7 / 2 - 1, 32.0f));
             if (phase_ == 2 || phase_ == 3 || phase_ == 4) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(219, 255, 109);
-                    }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->FillRect(coalescedValue + 35, num + 2, 48.0f, 90.0f);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(255, 156, 40);
-                    }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->FillRect(coalescedValue + 35 + 48, num + 2, 48.0f, 90.0f);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(255, 56, 49);
-                    }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->FillRect(coalescedValue + 35 + 96, num + 2, 48.0f, 90.0f);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(85, 85, 85); }));
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(219, 255, 109))));
+                PLS_API(require(g)->FillRect(coalescedValue + 35, num + 2, 48.0f, 90.0f));
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 156, 40))));
+                PLS_API(require(g)->FillRect(coalescedValue + 35 + 48, num + 2, 48.0f, 90.0f));
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 56, 49))));
+                PLS_API(require(g)->FillRect(coalescedValue + 35 + 96, num + 2, 48.0f, 90.0f));
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(85, 85, 85))));
                 for (pls::cs::Int32 unusedOriginalSlot8, j = 0; j <= 9; ++j) {
                     num3 = GameUtil::RateConvert(j, 0, 9, num + 2, num + 94 - 1 - 2, true);
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->DrawLine(coalescedValue + 35, num3, coalescedValue + 214 - 1 - 35,
-                                                    num3, 1.0f);
-                    });
+                    PLS_API(require(g)->DrawLine(coalescedValue + 35, num3, coalescedValue + 214 - 1 - 35,
+                                                 num3, 1.0f));
                 }
                 for (pls::cs::Int32 k = 0; k <= 9; ++k) {
                     num2 = GameUtil::RateConvert(k, 0, 9, coalescedValue + 214 - 1 - 35, coalescedValue + 35,
                                                  true);
                     if (k % 3 == 0 && k != 0 && k != 9) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Graphics::GetColorOfRGB(59, 228, 255);
-                            }));
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->FillRect(coalescedValue - 13 + num2 - 1, num + 2, 3.0f, 90.0f);
-                        });
+                        PLS_API(
+                            require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(59, 228, 255))));
+                        PLS_API(require(g)->FillRect(coalescedValue - 13 + num2 - 1, num + 2, 3.0f, 90.0f));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Graphics::GetColorOfRGB(85, 85, 85);
-                            }));
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->DrawLine(coalescedValue - 13 + num2, num + 2, num2,
-                                                        num + 94 - 1 - 2, 1.0f);
-                        });
+                        PLS_API(
+                            require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(85, 85, 85))));
+                        PLS_API(require(g)->DrawLine(coalescedValue - 13 + num2, num + 2, num2,
+                                                     num + 94 - 1 - 2, 1.0f));
                     }
                 }
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255); }));
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawRect(coalescedValue, num, 213.0f, 93.0f); });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
+            PLS_API(require(g)->DrawRect(coalescedValue, num, 213.0f, 93.0f));
             IntArray array = IntArray{};
             IntArray array2 = IntArray{};
             if (phase_ == 6 && ([&]() -> bool {
@@ -5775,18 +4916,15 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                 }()) &&
                 ([&]() -> bool {
                     auto cs_left = et_cur[5] % 10;
-                    auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10)));
-                    });
+                    auto cs_right =
+                        PLS_API(kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10))));
                     return cs_left < cs_right;
                 }())) {
-                array = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                        auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
-                        pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
-                        return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                    }());
-                }));
+                array = pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                    auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
+                    pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
+                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                }())));
             }
             if (phase_ == 7) {
                 if (([&]() -> bool {
@@ -5796,19 +4934,15 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                     }()) &&
                     ([&]() -> bool {
                         auto cs_left = et_cur[5] % 10;
-                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(
-                                require(editTest_team.get_Item(et_cur[5] / 10)));
-                        });
+                        auto cs_right = PLS_API(
+                            kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[5] / 10))));
                         return cs_left < cs_right;
                     }())) {
-                    array2 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                            auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
-                            pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
-                            return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                        }());
-                    }));
+                    array2 = pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                        auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
+                        pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
+                        return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                    }())));
                 }
                 if (([&]() -> bool {
                         auto cs_left = et_cur[6] / 10;
@@ -5817,19 +4951,15 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                     }()) &&
                     ([&]() -> bool {
                         auto cs_left = et_cur[6] % 10;
-                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(
-                                require(editTest_team.get_Item(et_cur[6] / 10)));
-                        });
+                        auto cs_right = PLS_API(
+                            kl_java_util::Vector_2_Size(require(editTest_team.get_Item(et_cur[6] / 10))));
                         return cs_left < cs_right;
                     }())) {
-                    array = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                            auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
-                            pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
-                            return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                        }());
-                    }));
+                    array = pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                        auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
+                        pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
+                        return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                    }())));
                 }
             }
             if (phase_ == 2 || phase_ == 3) {
@@ -5844,27 +4974,17 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                     num10 = 100;
                     Draw_colorRect(g, num2 - num8, num3, phaseCnt_, num8 - 1, num9 - 1, num10);
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(154, 234, 255);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(num2 - num8, num3 + 1, num8, num9);
-                    });
+                    PLS_API(
+                        require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(154, 234, 255))));
+                    PLS_API(require(g)->FillRect(num2 - num8, num3 + 1, num8, num9));
                 }
                 if (phase_ == 3 && et_cur[2] != et_cur[3]) {
                     num2 = GameUtil::RateConvert(et_cur[3] % 10, 0, 9, coalescedValue + 214 - 1 - 35,
                                                  coalescedValue + 35, true);
                     num3 = GameUtil::RateConvert(et_cur[3] / 10, 0, 9, num + 2, num + 94 - 1 - 2, true);
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(154, 234, 255);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(num2 - num8, num3 + 1, num8, num9);
-                    });
+                    PLS_API(
+                        require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(154, 234, 255))));
+                    PLS_API(require(g)->FillRect(num2 - num8, num3 + 1, num8, num9));
                 }
                 pls::cs::Int32 num11 = 0;
                 pls::cs::Int32 num12 = 0;
@@ -5895,41 +5015,33 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
             if (phase_ != 2 && phase_ != 3 && phase_ != 4 && phase_ != 14) {
                 num2 = coalescedValue + 161;
                 num3 = num + 84;
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                            require(require(apdat_)->resCom2_)->img.get_Item(128);
-                        require(g)->DrawImage(cs_arg0, num2, num3 - 2);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                        require(require(apdat_)->resCom2_)->img.get_Item(128);
+                    require(g)->DrawImage(cs_arg0, num2, num3 - 2);
+                }()));
                 StringArray array3 =
                     StringArray::from({literal(u"通常"), literal(u"攻め"), literal(u"守り")});
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                });
+                PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
                 form::SubForm::SetFontSize(g, 10);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::String cs_arg0 = ([&]() {
-                            auto cs_left = form::MyFormBase::LT(literal(u"ﾀｲﾌﾟ"));
-                            auto cs_right = form::MyFormBase::LT(array3[selectFormationType_]);
-                            return pls::cs::String::concat(cs_left, cs_right);
-                        }());
-                        require(g)->DrawString(cs_arg0, num2 + 5 + 24, num3 + 2, 2);
+                PLS_API(([&]() -> void {
+                    pls::cs::String cs_arg0 = ([&]() {
+                        auto cs_left = form::MyFormBase::LT(literal(u"ﾀｲﾌﾟ"));
+                        auto cs_right = form::MyFormBase::LT(array3[selectFormationType_]);
+                        return pls::cs::String::concat(cs_left, cs_right);
                     }());
-                });
+                    require(g)->DrawString(cs_arg0, num2 + 5 + 24, num3 + 2, 2);
+                }()));
                 form::SubForm::ResetFontSize(g);
             }
             pls::cs::Int32 seb = 0;
             pls::cs::Int32 num15 = 0;
             for (pls::cs::Int32 n = 0; n < editForPos.length(); ++n) {
                 pls::cs::Ref<data::PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                            pls::cs::Int32 cs_arg0 = editForPos[n][2];
-                            return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), cs_arg0);
-                        }());
-                    }));
+                    PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                        pls::cs::Int32 cs_arg0 = editForPos[n][2];
+                        return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), cs_arg0);
+                    }())));
                 num2 = editForPos[n][0];
                 num3 = editForPos[n][1];
                 num2 += coalescedValue - 13;
@@ -5977,12 +5089,8 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                 for (pls::cs::Int32 num18 = 0; num18 < UserData::FORMATIONTYPE_STR().length(); ++num18) {
                     num3 = num + num18 * 18;
                     if (num18 == et_cur[4]) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(form::SubForm::SC_WINDOW_SELECT());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->FillRect(70.0f, num3 - 2, 100.0f, 17.0f);
-                        });
+                        PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_SELECT()));
+                        PLS_API(require(g)->FillRect(70.0f, num3 - 2, 100.0f, 17.0f));
                         {
                             auto cs_receiver = require(require(apdat_)->resCom2_)->seb.get_Item(60);
                             pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> cs_arg3 =
@@ -5991,15 +5099,11 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                         }
                     }
                     surface::GameView::AddTouch(g, 11, 60, num3 - 2, 120, 17, 0x100000 | num18);
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = UserData::FORMATIONTYPE_STR()[num18];
-                            require(g)->DrawString(cs_arg0, 120.0f, num3, 2);
-                        }());
-                    });
+                    PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = UserData::FORMATIONTYPE_STR()[num18];
+                        require(g)->DrawString(cs_arg0, 120.0f, num3, 2);
+                    }()));
                 }
             }
             if (phase_ == 14 || phase_ == 15 || phase_ == 16) {
@@ -6030,14 +5134,8 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                                          num - 13 + 74);
                 require(apdat_)->DrawBox(g, coalescedValue + 2, num - 9, coalescedValue + 2 + 204,
                                          num - 9 + 66);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(246, 249, 187);
-                    }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->FillRect(coalescedValue + 6, num + 5, 90.0f, 60.0f);
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(246, 249, 187))));
+                PLS_API(require(g)->FillRect(coalescedValue + 6, num + 5, 90.0f, 60.0f));
                 num2 = coalescedValue + 49;
                 num3 = num + 36;
                 DrawGraph_menuElement(g, num2, num3, playerParam1, playerParam2, 100);
@@ -6054,43 +5152,26 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                 }
                 num2 = coalescedValue + 108;
                 num3 = num + 12;
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(form::SubForm::SC_WINDOW_BLUE());
-                });
+                PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLUE()));
                 if (matchInfoJoin_ == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->DrawString(literal(u"リーグ"), num2 - 1, num3 + 7);
-                    });
+                    PLS_API(require(g)->DrawString(literal(u"リーグ"), num2 - 1, num3 + 7));
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->DrawString(literal(u"ﾁｰﾑ評価"), num2 - 1, num3 + 7);
-                    });
+                    PLS_API(require(g)->DrawString(literal(u"ﾁｰﾑ評価"), num2 - 1, num3 + 7));
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawString(literal(u"観客数"), num2 - 1, num3 + 3 + 26);
-                });
+                PLS_API(require(g)->DrawString(literal(u"観客数"), num2 - 1, num3 + 3 + 26));
                 if (matchInfoJoin_ == 0) {
-                    if (pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Language::Japanese(); })) {
+                    if (PLS_API(kl_unity_util::Language::Japanese())) {
                         {
                             pls::cs::Int64 cs_arg2 = pls::cs::cast_integral<pls::cs::Int64>(array4[7]);
                             require(apdat_)->DrawNumImageComma(g, 35, cs_arg2, num2 + 75, num3 + 1 + 7, 0, 0,
                                                                4);
                         }
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->DrawString(literal(u"位"), num2 + 75 + 2, num3 + 7);
-                        });
+                        PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
+                        PLS_API(require(g)->DrawString(literal(u"位"), num2 + 75 + 2, num3 + 7));
                     } else {
                         pls::cs::Int32 num20 = 78;
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->DrawString(literal(u"位"), num2 + num20 - 30, num3 + 7);
-                        });
+                        PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
+                        PLS_API(require(g)->DrawString(literal(u"位"), num2 + num20 - 30, num3 + 7));
                         {
                             pls::cs::Int64 cs_arg2 = pls::cs::cast_integral<pls::cs::Int64>(array4[7]);
                             require(apdat_)->DrawNumImageComma(g, 35, cs_arg2, num2 + num20 + 9, num3 + 7 + 1,
@@ -6106,27 +5187,22 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                         g, 35, pls::cs::cast_integral<pls::cs::Int64>(require(teamData)->warPotential_),
                         num2 + 75 + 14, num3 + 1 + 7, 0, 0, 4);
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::Language::Japanese(); })) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = form::MyFormBase::LT(
-                                literal(u"<0>人"),
-                                main::AppData::CommaSeparate(pls::cs::cast_integral<pls::cs::Int64>(
-                                    require(require(apdat_)->frmSoccer_)->customerNum[1])));
-                            require(g)->DrawString(cs_arg0, num2 + 76 + 14, num3 + 3 + 26, 4);
-                        }());
-                    });
+                if (PLS_API(kl_unity_util::Language::Japanese())) {
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = form::MyFormBase::LT(
+                            literal(u"<0>人"),
+                            main::AppData::CommaSeparate(pls::cs::cast_integral<pls::cs::Int64>(
+                                require(require(apdat_)->frmSoccer_)->customerNum[1])));
+                        require(g)->DrawString(cs_arg0, num2 + 76 + 14, num3 + 3 + 26, 4);
+                    }()));
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = form::MyFormBase::LT(
-                                literal(u"<0>"),
-                                main::AppData::CommaSeparate(pls::cs::cast_integral<pls::cs::Int64>(
-                                    require(require(apdat_)->frmSoccer_)->customerNum[1])));
-                            require(g)->DrawString(cs_arg0, num2 + 76 + 14 - 2, num3 + 3 + 26, 4);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = form::MyFormBase::LT(
+                            literal(u"<0>"),
+                            main::AppData::CommaSeparate(pls::cs::cast_integral<pls::cs::Int64>(
+                                require(require(apdat_)->frmSoccer_)->customerNum[1])));
+                        require(g)->DrawString(cs_arg0, num2 + 76 + 14 - 2, num3 + 3 + 26, 4);
+                    }()));
                 }
             }
             if (phase_ == 14 || phase_ == 16 || phase_ == 15) {
@@ -6166,155 +5242,81 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                         require(require(apdat_)->resCom2_)->img.get_Item(49);
                     require(apdat_)->DrawSeb(g, coalescedValue + 107 - 107 + 198, num, cs_arg3, cs_arg4, 1);
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                    }));
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
                 pls::cs::Int32 num22 = 16;
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawArc(coalescedValue + 107 - 1 - num22 / 2 - 1,
-                                               num + 47 - num22 / 2 - 1, num22 + 2, num22 + 2, 0.0f, 360.0f,
-                                               1.0f);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawLine(coalescedValue + 107 - 1, num, coalescedValue + 107 - 1,
-                                                num + 94 - 1, 1.0f);
-                });
+                PLS_API(require(g)->DrawArc(coalescedValue + 107 - 1 - num22 / 2 - 1,
+                                            num + 47 - num22 / 2 - 1, num22 + 2, num22 + 2, 0.0f, 360.0f,
+                                            1.0f));
+                PLS_API(require(g)->DrawLine(coalescedValue + 107 - 1, num, coalescedValue + 107 - 1,
+                                             num + 94 - 1, 1.0f));
                 pls::cs::Int32 num23 = 35;
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                    }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawRect(coalescedValue, num + 47 - 32, num23, 65.0f);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawRect(coalescedValue, num + 47 - 16, num23 / 2, 32.0f);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawRect(coalescedValue + 214 - num23, num + 47 - 32, num23 - 1,
-                                                65.0f);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawRect(coalescedValue + 214 - num23 / 2, num + 47 - 16,
-                                                num23 / 2 - 1, 32.0f);
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
+                PLS_API(require(g)->DrawRect(coalescedValue, num + 47 - 32, num23, 65.0f));
+                PLS_API(require(g)->DrawRect(coalescedValue, num + 47 - 16, num23 / 2, 32.0f));
+                PLS_API(require(g)->DrawRect(coalescedValue + 214 - num23, num + 47 - 32, num23 - 1, 65.0f));
+                PLS_API(require(g)->DrawRect(coalescedValue + 214 - num23 / 2, num + 47 - 16, num23 / 2 - 1,
+                                             32.0f));
                 if (phase_ == 2 || phase_ == 3 || phase_ == 4) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(219, 255, 109);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(coalescedValue + 35, num + 2, 48.0f, 90.0f);
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(255, 156, 40);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(coalescedValue + 35 + 48, num + 2, 48.0f, 90.0f);
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(255, 56, 49);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(coalescedValue + 35 + 96, num + 2, 48.0f, 90.0f);
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(85, 85, 85);
-                        }));
-                    });
+                    PLS_API(
+                        require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(219, 255, 109))));
+                    PLS_API(require(g)->FillRect(coalescedValue + 35, num + 2, 48.0f, 90.0f));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 156, 40))));
+                    PLS_API(require(g)->FillRect(coalescedValue + 35 + 48, num + 2, 48.0f, 90.0f));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 56, 49))));
+                    PLS_API(require(g)->FillRect(coalescedValue + 35 + 96, num + 2, 48.0f, 90.0f));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(85, 85, 85))));
                     for (pls::cs::Int32 unusedOriginalSlot38, num24 = 0; num24 <= 9; ++num24) {
                         num3 = GameUtil::RateConvert(num24, 0, 9, num + 2, num + 94 - 1 - 2, true);
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->DrawLine(coalescedValue + 35, num3,
-                                                        coalescedValue + 214 - 1 - 35, num3, 1.0f);
-                        });
+                        PLS_API(require(g)->DrawLine(coalescedValue + 35, num3, coalescedValue + 214 - 1 - 35,
+                                                     num3, 1.0f));
                     }
                     for (pls::cs::Int32 num25 = 0; num25 <= 9; ++num25) {
                         num2 = GameUtil::RateConvert(num25, 0, 9, coalescedValue + 214 - 1 - 35,
                                                      coalescedValue + 35, true);
                         if (num25 % 3 == 0 && num25 != 0 && num25 != 9) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->SetColor(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::Graphics::GetColorOfRGB(59, 228, 255);
-                                    }));
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->FillRect(coalescedValue - 13 + num2 - 1, num + 2, 3.0f,
-                                                            90.0f);
-                            });
+                            PLS_API(require(g)->SetColor(
+                                PLS_API(pls::kairo::Graphics::GetColorOfRGB(59, 228, 255))));
+                            PLS_API(
+                                require(g)->FillRect(coalescedValue - 13 + num2 - 1, num + 2, 3.0f, 90.0f));
                         } else {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->SetColor(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::Graphics::GetColorOfRGB(85, 85, 85);
-                                    }));
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->DrawLine(coalescedValue - 13 + num2, num + 2, num2,
-                                                            num + 94 - 1 - 2, 1.0f);
-                            });
+                            PLS_API(require(g)->SetColor(
+                                PLS_API(pls::kairo::Graphics::GetColorOfRGB(85, 85, 85))));
+                            PLS_API(require(g)->DrawLine(coalescedValue - 13 + num2, num + 2, num2,
+                                                         num + 94 - 1 - 2, 1.0f));
                         }
                     }
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                    }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawRect(coalescedValue, num, 213.0f, 93.0f);
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
+                PLS_API(require(g)->DrawRect(coalescedValue, num, 213.0f, 93.0f));
                 num2 = coalescedValue + 161;
                 num3 = num + 84;
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                            require(require(apdat_)->resCom2_)->img.get_Item(128);
-                        require(g)->DrawImage(cs_arg0, num2, num3 - 2);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                        require(require(apdat_)->resCom2_)->img.get_Item(128);
+                    require(g)->DrawImage(cs_arg0, num2, num3 - 2);
+                }()));
                 StringArray array5 =
                     StringArray::from({literal(u"通常"), literal(u"攻め"), literal(u"守り")});
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::String cs_arg0 = ([&]() {
-                            auto cs_left = form::MyFormBase::LT(literal(u"ﾀｲﾌﾟ"));
-                            auto cs_right = form::MyFormBase::LT(array5[require(teamData2)->formationType_]);
-                            return pls::cs::String::concat(cs_left, cs_right);
-                        }());
-                        require(g)->DrawString(cs_arg0, num2 + 5 + 24, num3 + 2, 2);
+                PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
+                PLS_API(([&]() -> void {
+                    pls::cs::String cs_arg0 = ([&]() {
+                        auto cs_left = form::MyFormBase::LT(literal(u"ﾀｲﾌﾟ"));
+                        auto cs_right = form::MyFormBase::LT(array5[require(teamData2)->formationType_]);
+                        return pls::cs::String::concat(cs_left, cs_right);
                     }());
-                });
+                    require(g)->DrawString(cs_arg0, num2 + 5 + 24, num3 + 2, 2);
+                }()));
                 num2 = coalescedValue + 1;
                 num3 = num + 84;
                 pls::cs::Ref<data::FormationData> formationData =
                     require(apdat_)->formationData_.get_Item(require(teamData2)->formation_);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                            require(require(apdat_)->resCom2_)->img.get_Item(128);
-                        require(g)->DrawImage(cs_arg0, num2, num3 - 2);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawString(require(formationData)->name_, num2 + 36, num3 + 2, 2);
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                        require(require(apdat_)->resCom2_)->img.get_Item(128);
+                    require(g)->DrawImage(cs_arg0, num2, num3 - 2);
+                }()));
+                PLS_API(require(g)->SetColor(form::SubForm::SC_WINDOW_BLACK()));
+                PLS_API(require(g)->DrawString(require(formationData)->name_, num2 + 36, num3 + 2, 2));
                 pls::cs::Int32 seb2 = 0;
                 pls::cs::Int32 num26 = 0;
                 for (pls::cs::Int32 num27 = 0; num27 < editForPosEnemy.length(); ++num27) {
@@ -6343,20 +5345,17 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                 }
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopClip(); });
+        PLS_API(require(g)->PopClip());
         if (phase_ == 7) {
             pls::cs::Int32 num28 = GameUtil::RateConvert(phaseCnt_, 0, 3, 19, 0, true);
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetClip(2.0f, 220.0f, 126.0f, 19.0f); });
+            PLS_API(require(g)->SetClip(2.0f, 220.0f, 126.0f, 19.0f));
             form::SubForm::Draw_chara(g, 172, 0, 0, 0, 11, 247 + num28);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                        require(require(apdat_)->resCom2_)->img.get_Item(180);
-                    require(g)->DrawImage(cs_arg0, 17.0f, 223 + num28);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->ClearClip(); });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                    require(require(apdat_)->resCom2_)->img.get_Item(180);
+                require(g)->DrawImage(cs_arg0, 17.0f, 223 + num28);
+            }()));
+            PLS_API(require(g)->ClearClip());
         } else if (phase_ == 6 && editMemDispMode != 0 && ([&]() -> bool {
                        auto cs_left = emdm_cnt;
                        auto cs_right = EMDM_ANIME_TIME[1];
@@ -6368,20 +5367,10 @@ void UserData::Draw_edit2(pls::cs::Ref<pls::kairo::Graphics> g, bool isSoccerFor
                 pls::cs::Int32 cs_arg2 = EMDM_ANIME_TIME[0];
                 return GameUtil::RateConvert(cs_arg0, 0, cs_arg2, -60, 0, true);
             }());
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(11, 192, 245); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawRect((-1 + coalescedValue), 121.0f, 56.0f, 16.0f);
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(15, 154, 255); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->FillRect((-1 + coalescedValue) + 1, 122.0f, 55.0f, 15.0f);
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(11, 192, 245))));
+            PLS_API(require(g)->DrawRect((-1 + coalescedValue), 121.0f, 56.0f, 16.0f));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(15, 154, 255))));
+            PLS_API(require(g)->FillRect((-1 + coalescedValue) + 1, 122.0f, 55.0f, 15.0f));
             {
                 pls::cs::Ref<kairo::unity::ui::Seb> cs_arg3 =
                     require(require(apdat_)->resCom2_)->seb.get_Item(99);
@@ -6415,34 +5404,22 @@ void UserData::Draw_editButton(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::In
         "M:game.UserData.Draw_editButton(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.Int32,System.Int32,System.Boolean,System.Boolean)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(223, 223, 220); }));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(dx, dy, W - 1, H - 1); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(153, 152, 145); }));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(dx + 1, dy + 1, W - 2 - 1, H - 2 - 1); });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(223, 223, 220))));
+        PLS_API(require(g)->DrawRect(dx, dy, W - 1, H - 1));
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(153, 152, 145))));
+        PLS_API(require(g)->DrawRect(dx + 1, dy + 1, W - 2 - 1, H - 2 - 1));
         if (select) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                        require(require(apdat_)->resCom2_)->img.get_Item(61);
-                    require(g)->DrawImage(cs_arg0, dx + 2, dy + 2, 0, (19 - (H - 4)) / 2 + 19, W - 4, H - 4);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                    require(require(apdat_)->resCom2_)->img.get_Item(61);
+                require(g)->DrawImage(cs_arg0, dx + 2, dy + 2, 0, (19 - (H - 4)) / 2 + 19, W - 4, H - 4);
+            }()));
         } else {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                        require(require(apdat_)->resCom2_)->img.get_Item(61);
-                    require(g)->DrawImage(cs_arg0, dx + 2, dy + 2, 0, (19 - (H - 4)) / 2, W - 4, H - 4);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                    require(require(apdat_)->resCom2_)->img.get_Item(61);
+                require(g)->DrawImage(cs_arg0, dx + 2, dy + 2, 0, (19 - (H - 4)) / 2, W - 4, H - 4);
+            }()));
         }
         if (isTouch) {
             pls::cs::Int32 num = 786432;
@@ -6500,21 +5477,16 @@ void UserData::Draw_colorRect(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int
     {
         pls::cs::Int32 num = W * 2 + H * 2;
         pls::cs::Int32 num2 = num / 16 + 1;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0); }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->DrawRect(ox, oy, W, H); });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0))));
+        PLS_API(require(g)->DrawRect(ox, oy, W, H));
         for (pls::cs::Int32 i = 0; i < num2; ++i) {
             for (pls::cs::Int32 j = i * 4; j < 4 + i * 4; ++j) {
                 GetPoint(ox, oy, (cnt + 4 * j) * speed / 100, d1, W, H);
                 GetPoint(ox, oy, (cnt + 4 * (j + 1)) * speed / 100, d2, W, H);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Int32 cs_arg0 = CR_COLOR[j % 4];
-                        require(g)->SetColor(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Int32 cs_arg0 = CR_COLOR[j % 4];
+                    require(g)->SetColor(cs_arg0);
+                }()));
                 if (([&]() -> bool {
                         auto cs_left = d1[0];
                         auto cs_right = d2[0];
@@ -6526,158 +5498,128 @@ void UserData::Draw_colorRect(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int
                         return cs_left != cs_right;
                     }())) {
                     if (d2[1] == oy || d2[1] == oy + H) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Single cs_arg0 = d1[0];
-                                pls::cs::Single cs_arg1 = d1[1];
-                                pls::cs::Single cs_arg2 = d1[0];
-                                pls::cs::Single cs_arg3 = d2[1];
-                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                            }());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Single cs_arg0 = d2[0];
-                                pls::cs::Single cs_arg1 = d2[1];
-                                pls::cs::Single cs_arg2 = d1[0];
-                                pls::cs::Single cs_arg3 = d2[1];
-                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::Single cs_arg0 = d1[0];
+                            pls::cs::Single cs_arg1 = d1[1];
+                            pls::cs::Single cs_arg2 = d1[0];
+                            pls::cs::Single cs_arg3 = d2[1];
+                            require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                        }()));
+                        PLS_API(([&]() -> void {
+                            pls::cs::Single cs_arg0 = d2[0];
+                            pls::cs::Single cs_arg1 = d2[1];
+                            pls::cs::Single cs_arg2 = d1[0];
+                            pls::cs::Single cs_arg3 = d2[1];
+                            require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                        }()));
                         if (d2[1] == oy) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = d1[0] + 1;
-                                    pls::cs::Single cs_arg1 = d1[1];
-                                    pls::cs::Single cs_arg2 = d1[0] + 1;
-                                    pls::cs::Single cs_arg3 = d2[1];
-                                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                                }());
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = d1[0];
-                                    pls::cs::Single cs_arg1 = d2[1] + 1;
-                                    pls::cs::Single cs_arg2 = d2[0];
-                                    pls::cs::Single cs_arg3 = d2[1] + 1;
-                                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = d1[0] + 1;
+                                pls::cs::Single cs_arg1 = d1[1];
+                                pls::cs::Single cs_arg2 = d1[0] + 1;
+                                pls::cs::Single cs_arg3 = d2[1];
+                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                            }()));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = d1[0];
+                                pls::cs::Single cs_arg1 = d2[1] + 1;
+                                pls::cs::Single cs_arg2 = d2[0];
+                                pls::cs::Single cs_arg3 = d2[1] + 1;
+                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                            }()));
                         } else {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = d1[0] - 1;
-                                    pls::cs::Single cs_arg1 = d1[1];
-                                    pls::cs::Single cs_arg2 = d1[0] - 1;
-                                    pls::cs::Single cs_arg3 = d2[1];
-                                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                                }());
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = d1[0];
-                                    pls::cs::Single cs_arg1 = d2[1] - 1;
-                                    pls::cs::Single cs_arg2 = d2[0];
-                                    pls::cs::Single cs_arg3 = d2[1] - 1;
-                                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = d1[0] - 1;
+                                pls::cs::Single cs_arg1 = d1[1];
+                                pls::cs::Single cs_arg2 = d1[0] - 1;
+                                pls::cs::Single cs_arg3 = d2[1];
+                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                            }()));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = d1[0];
+                                pls::cs::Single cs_arg1 = d2[1] - 1;
+                                pls::cs::Single cs_arg2 = d2[0];
+                                pls::cs::Single cs_arg3 = d2[1] - 1;
+                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                            }()));
                         }
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Single cs_arg0 = d1[0];
-                                pls::cs::Single cs_arg1 = d1[1];
-                                pls::cs::Single cs_arg2 = d2[0];
-                                pls::cs::Single cs_arg3 = d1[1];
-                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                            }());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Single cs_arg0 = d2[0];
-                                pls::cs::Single cs_arg1 = d2[1];
-                                pls::cs::Single cs_arg2 = d2[0];
-                                pls::cs::Single cs_arg3 = d1[1];
-                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::Single cs_arg0 = d1[0];
+                            pls::cs::Single cs_arg1 = d1[1];
+                            pls::cs::Single cs_arg2 = d2[0];
+                            pls::cs::Single cs_arg3 = d1[1];
+                            require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                        }()));
+                        PLS_API(([&]() -> void {
+                            pls::cs::Single cs_arg0 = d2[0];
+                            pls::cs::Single cs_arg1 = d2[1];
+                            pls::cs::Single cs_arg2 = d2[0];
+                            pls::cs::Single cs_arg3 = d1[1];
+                            require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                        }()));
                         if (d1[1] == oy) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = d2[0] - 1;
-                                    pls::cs::Single cs_arg1 = d1[1];
-                                    pls::cs::Single cs_arg2 = d2[0] - 1;
-                                    pls::cs::Single cs_arg3 = d2[1];
-                                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                                }());
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = d1[0];
-                                    pls::cs::Single cs_arg1 = d1[1] + 1;
-                                    pls::cs::Single cs_arg2 = d2[0];
-                                    pls::cs::Single cs_arg3 = d1[1] + 1;
-                                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = d2[0] - 1;
+                                pls::cs::Single cs_arg1 = d1[1];
+                                pls::cs::Single cs_arg2 = d2[0] - 1;
+                                pls::cs::Single cs_arg3 = d2[1];
+                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                            }()));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = d1[0];
+                                pls::cs::Single cs_arg1 = d1[1] + 1;
+                                pls::cs::Single cs_arg2 = d2[0];
+                                pls::cs::Single cs_arg3 = d1[1] + 1;
+                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                            }()));
                         } else {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = d2[0] + 1;
-                                    pls::cs::Single cs_arg1 = d1[1];
-                                    pls::cs::Single cs_arg2 = d2[0] + 1;
-                                    pls::cs::Single cs_arg3 = d2[1];
-                                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                                }());
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = d1[0];
-                                    pls::cs::Single cs_arg1 = d1[1] - 1;
-                                    pls::cs::Single cs_arg2 = d2[0];
-                                    pls::cs::Single cs_arg3 = d1[1] - 1;
-                                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = d2[0] + 1;
+                                pls::cs::Single cs_arg1 = d1[1];
+                                pls::cs::Single cs_arg2 = d2[0] + 1;
+                                pls::cs::Single cs_arg3 = d2[1];
+                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                            }()));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = d1[0];
+                                pls::cs::Single cs_arg1 = d1[1] - 1;
+                                pls::cs::Single cs_arg2 = d2[0];
+                                pls::cs::Single cs_arg3 = d1[1] - 1;
+                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                            }()));
                         }
                     }
                     continue;
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = d1[0];
-                        pls::cs::Single cs_arg1 = d1[1];
-                        pls::cs::Single cs_arg2 = d2[0];
-                        pls::cs::Single cs_arg3 = d2[1];
-                        require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = d1[0];
+                    pls::cs::Single cs_arg1 = d1[1];
+                    pls::cs::Single cs_arg2 = d2[0];
+                    pls::cs::Single cs_arg3 = d2[1];
+                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                }()));
                 if ([&]() -> bool {
                         auto cs_left = d1[0];
                         auto cs_right = d2[0];
                         return cs_left == cs_right;
                     }()) {
                     if (d1[0] == ox) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Single cs_arg0 = d1[0] + 1;
-                                pls::cs::Single cs_arg1 = d1[1];
-                                pls::cs::Single cs_arg2 = d2[0] + 1;
-                                pls::cs::Single cs_arg3 = d2[1];
-                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::Single cs_arg0 = d1[0] + 1;
+                            pls::cs::Single cs_arg1 = d1[1];
+                            pls::cs::Single cs_arg2 = d2[0] + 1;
+                            pls::cs::Single cs_arg3 = d2[1];
+                            require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                        }()));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Single cs_arg0 = d1[0] - 1;
-                                pls::cs::Single cs_arg1 = d1[1];
-                                pls::cs::Single cs_arg2 = d2[0] - 1;
-                                pls::cs::Single cs_arg3 = d2[1];
-                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::Single cs_arg0 = d1[0] - 1;
+                            pls::cs::Single cs_arg1 = d1[1];
+                            pls::cs::Single cs_arg2 = d2[0] - 1;
+                            pls::cs::Single cs_arg3 = d2[1];
+                            require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                        }()));
                     }
                 } else if ([&]() -> bool {
                                auto cs_left = d1[1];
@@ -6685,25 +5627,21 @@ void UserData::Draw_colorRect(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int
                                return cs_left == cs_right;
                            }()) {
                     if (d1[1] == oy) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Single cs_arg0 = d1[0];
-                                pls::cs::Single cs_arg1 = d1[1] + 1;
-                                pls::cs::Single cs_arg2 = d2[0];
-                                pls::cs::Single cs_arg3 = d2[1] + 1;
-                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::Single cs_arg0 = d1[0];
+                            pls::cs::Single cs_arg1 = d1[1] + 1;
+                            pls::cs::Single cs_arg2 = d2[0];
+                            pls::cs::Single cs_arg3 = d2[1] + 1;
+                            require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                        }()));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Single cs_arg0 = d1[0];
-                                pls::cs::Single cs_arg1 = d1[1] - 1;
-                                pls::cs::Single cs_arg2 = d2[0];
-                                pls::cs::Single cs_arg3 = d2[1] - 1;
-                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::Single cs_arg0 = d1[0];
+                            pls::cs::Single cs_arg1 = d1[1] - 1;
+                            pls::cs::Single cs_arg2 = d2[0];
+                            pls::cs::Single cs_arg3 = d2[1] - 1;
+                            require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                        }()));
                     }
                 }
             }
@@ -6752,12 +5690,10 @@ void UserData::SetEditForPos(bool isSoccerForm) {
         array = IntArray2{};
         array2 = IntArray2{};
         formationData = pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                    pls::cs::Int32 cs_arg0 = et_cur[1];
-                    return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
-                }());
-            }));
+            PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                pls::cs::Int32 cs_arg0 = et_cur[1];
+                return kl_java_util::Vector_2_ElementAt(require(editTest_formation), cs_arg0);
+            }())));
         array = require(formationData)->formation_;
         formationData2 = require(apdat_)->formationData_.get_Item(require(teamData2)->formation_);
         array2 = require(formationData2)->formation_;
@@ -6935,20 +5871,16 @@ void UserData::SetEditForPos(bool isSoccerForm) {
             editForPosEnemy[j][1] = num3;
         }
         if (phase_ == 8) {
-            IntArray array3 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                    auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
-                    pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
-                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                }());
-            }));
-            IntArray array4 = pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                    auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
-                    pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
-                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                }());
-            }));
+            IntArray array3 = pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                auto cs_receiver = editTest_team.get_Item(et_cur[5] / 10);
+                pls::cs::Int32 cs_arg0 = et_cur[5] % 10;
+                return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+            }())));
+            IntArray array4 = pls::cs::unbox<IntArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                auto cs_receiver = editTest_team.get_Item(et_cur[6] / 10);
+                pls::cs::Int32 cs_arg0 = et_cur[6] % 10;
+                return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+            }())));
             pls::cs::Int32 num7 = array3[2];
             pls::cs::Int32 num8 = array4[2];
             pls::cs::Int32 num9 = editForPos[num7][0];
@@ -7109,23 +6041,17 @@ void UserData::SetEditForPos(bool isSoccerForm) {
 void UserData::SetTrainingData3() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.SetTrainingData3", game);
     {
-        pDataIdOlderList_ = IntArray::make(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(memberPDataist_)); }));
+        pDataIdOlderList_ = IntArray::make(PLS_API(kl_java_util::Vector_2_Size(require(memberPDataist_))));
         for (pls::cs::Int32 i = 0; i < pDataIdOlderList_.length(); ++i) {
             pls::cs::Ref<data::PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(memberPDataist_), i);
-                }));
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(memberPDataist_), i)));
             pDataIdOlderList_[i] = require(playerData)->id_;
         }
         save_tAreaRootNum_ = tAreaRootNum_;
-        tAreas_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<TArea>>>>(
-                IntArray::from({save_tAreaRootNum_, 4}));
-        });
-        tModeList_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({save_tAreaRootNum_, 4}));
-        });
+        tAreas_ = PLS_API(kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<TArea>>>>(
+            IntArray::from({save_tAreaRootNum_, 4})));
+        tModeList_ =
+            PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({save_tAreaRootNum_, 4})));
         for (pls::cs::Int32 j = 0; j < tAreas_.length(); ++j) {
             for (pls::cs::Int32 k = 0; k < tAreas_[j].length(); ++k) {
                 {
@@ -7152,13 +6078,10 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.SetTrainingCommonMethod(System.Boolean)", game);
     {
         for (pls::cs::Int32 i = 0; i < tenants_.length(); ++i) {
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(require(tenants_.get_Item(i))->useTPlayers_));
-                }) > 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_RemoveAllElements(
-                        require(require(tenants_.get_Item(i))->useTPlayers_));
-                });
+            if (PLS_API(kl_java_util::Vector_2_Size(require(require(tenants_.get_Item(i))->useTPlayers_))) >
+                0) {
+                PLS_API(kl_java_util::Vector_2_RemoveAllElements(
+                    require(require(tenants_.get_Item(i))->useTPlayers_)));
             }
         }
         if (isInit) {
@@ -7177,9 +6100,8 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
                     pls::cs::Int32 cs_arg1 = require(playerData)->id_;
                     require(cs_receiver)->Init_training(j, cs_arg1);
                 }
-                pls::cs::Int32 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_IndexOf(require(memberPDataist_), pls::cs::box(playerData));
-                });
+                pls::cs::Int32 num = PLS_API(
+                    kl_java_util::Vector_2_IndexOf(require(memberPDataist_), pls::cs::box(playerData)));
                 if (num < 11) {
                     {
                         auto cs_target = tPlayers_.get_Item(j);
@@ -7197,20 +6119,14 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
                     pls::cs::Ref<Player> cs_arg0 = tPlayers_.get_Item(j);
                     require(playerData)->SetGameData(cs_arg0);
                 }
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::BitUtil::Check(require(playerData)->flag_, 2);
-                    })) {
+                if (PLS_API(kl_unity_util::BitUtil::Check(require(playerData)->flag_, 2))) {
                     require(tPlayers_.get_Item(j))->role_ = 0;
                 } else {
                     require(tPlayers_.get_Item(j))->role_ = 3;
                 }
             }
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(restTPlayers_));
-                }) > 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_RemoveAllElements(require(restTPlayers_));
-                });
+            if (PLS_API(kl_java_util::Vector_2_Size(require(restTPlayers_))) > 0) {
+                PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(restTPlayers_)));
             }
         }
         pls::cs::Int32 num2 = 0;
@@ -7218,9 +6134,7 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
         for (pls::cs::Int32 k = 0; k < pDataIdOlderList_.length(); ++k) {
             pls::cs::Ref<data::PlayerData> playerData2 =
                 require(apdat_)->pData_.get_Item(pDataIdOlderList_[k]);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(playerData2)->flag_, 2);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(playerData2)->flag_, 2))) {
                 if (k < pls::cs::Int32(pDataIdOlderList_.length()) / 2 || save_tAreaRootNum_ == 1) {
                     ++num2;
                 } else {
@@ -7275,48 +6189,31 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
         for (pls::cs::Int32 num7 = 0; num7 < tPlayers_.length(); ++num7) {
             pls::cs::Ref<TPlayer> obj = tPlayers_.get_Item(num7);
             if (num7 < pls::cs::Int32(tPlayers_.length()) / 2 || save_tAreaRootNum_ == 1) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_AddElement(require(array.get_Item(0)), pls::cs::box(obj));
-                });
+                PLS_API(kl_java_util::Vector_2_AddElement(require(array.get_Item(0)), pls::cs::box(obj)));
             } else {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_AddElement(require(array.get_Item(1)), pls::cs::box(obj));
-                });
+                PLS_API(kl_java_util::Vector_2_AddElement(require(array.get_Item(1)), pls::cs::box(obj)));
             }
         }
-        array2[0] = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(array.get_Item(0))); });
-        array2[1] = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(array.get_Item(1))); });
+        array2[0] = PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(0))));
+        array2[1] = PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(1))));
         for (pls::cs::Int32 num8 = 0; num8 < tModeList_.length(); ++num8) {
             for (pls::cs::Int32 num9 = 0; num9 < tModeList_[num8].length(); ++num9) {
                 if (tModeList_[num8][num9] != 3) {
                     continue;
                 }
                 for (pls::cs::Int32 num10 =
-                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(array.get_Item(num8)));
-                         }) -
-                         1;
+                         PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(num8)))) - 1;
                      num10 >= 0; --num10) {
                     pls::cs::Ref<TPlayer> tPlayer = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(array.get_Item(num8)), num10);
-                        }));
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(array.get_Item(num8)), num10)));
                     if (require(tPlayer)->role_ != 0) {
 
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_AddElement(
-                                require(
-                                    require(require(tAreas_[num8].get_Item(num9))->tGroupAreas_.get_Item(0))
+                        PLS_API(kl_java_util::Vector_2_AddElement(
+                            require(require(require(tAreas_[num8].get_Item(num9))->tGroupAreas_.get_Item(0))
                                         ->tPlayerList_),
-                                pls::cs::box(tPlayer));
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_RemoveElementAt(require(array.get_Item(num8)),
-                                                                          num10);
-                        });
+                            pls::cs::box(tPlayer)));
+                        PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(array.get_Item(num8)), num10));
                         break;
                     }
                 }
@@ -7324,33 +6221,19 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
         }
         for (pls::cs::Int32 num11 = 0; num11 < array.length(); ++num11) {
             for (pls::cs::Int32 num12 = 0;
-                 num12 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(array.get_Item(num11)));
-                         }) - 1;
-                 ++num12) {
+                 num12 < PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(num11)))) - 1; ++num12) {
                 for (pls::cs::Int32 num13 =
-                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(array.get_Item(num11)));
-                         }) -
-                         1;
+                         PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(num11)))) - 1;
                      num13 > num12; --num13) {
                     pls::cs::Ref<TPlayer> tPlayer2 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(array.get_Item(num11)), num12);
-                        }));
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(array.get_Item(num11)), num12)));
                     pls::cs::Ref<TPlayer> tPlayer3 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(array.get_Item(num11)), num13);
-                        }));
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(array.get_Item(num11)), num13)));
                     if (require(tPlayer3)->trainingPriority_ < require(tPlayer2)->trainingPriority_) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_SetElementAt(require(array.get_Item(num11)),
-                                                                       pls::cs::box(tPlayer3), num12);
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_SetElementAt(require(array.get_Item(num11)),
-                                                                       pls::cs::box(tPlayer2), num13);
-                        });
+                        PLS_API(kl_java_util::Vector_2_SetElementAt(require(array.get_Item(num11)),
+                                                                    pls::cs::box(tPlayer3), num12));
+                        PLS_API(kl_java_util::Vector_2_SetElementAt(require(array.get_Item(num11)),
+                                                                    pls::cs::box(tPlayer2), num13));
                     }
                 }
             }
@@ -7359,20 +6242,11 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
             pls::cs::Int32 num15 = 0;
             pls::cs::Int32 num16 = 0;
             if (selectTrainingPolicy_ == 0) {
-                num16 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(array.get_Item(num14)));
-                        }) *
-                        50 / 100;
+                num16 = PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(num14)))) * 50 / 100;
             } else if (selectTrainingPolicy_ == 1) {
-                num16 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(array.get_Item(num14)));
-                        }) *
-                        100 / 100;
+                num16 = PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(num14)))) * 100 / 100;
             } else if (selectTrainingPolicy_ == 2) {
-                num16 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(array.get_Item(num14)));
-                        }) *
-                        20 / 100;
+                num16 = PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(num14)))) * 20 / 100;
             }
             for (pls::cs::Int32 num17 = 0; num17 < tModeList_[num14].length(); ++num17) {
                 if (tModeList_[num14][num17] == 4 || tModeList_[num14][num17] == 5) {
@@ -7383,36 +6257,25 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
                 pls::cs::Int32 areaMaxNum = require(cs_receiver_86)->GetAreaMaxNum(cs_arg0_86);
                 for (pls::cs::Int32 num18 = 0;
                      num18 < areaMaxNum &&
-                     pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return kl_java_util::Vector_2_Size(require(array.get_Item(num14)));
-                     }) > 0;
+                     PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(num14)))) > 0;
                      ++num18) {
                     pls::cs::Int32 areaMaxNum2 = TGroupArea::GetAreaMaxNum(tModeList_[num14][num17]);
                     for (pls::cs::Int32 num19 = 0;
                          num19 < require(tAreas_[num14].get_Item(num17))->tGroupAreas_.length(); ++num19) {
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(
+                        if (PLS_API(kl_java_util::Vector_2_Size(require(
+                                require(require(tAreas_[num14].get_Item(num17))->tGroupAreas_.get_Item(num19))
+                                    ->tPlayerList_))) < areaMaxNum2) {
+                            PLS_API(([&]() -> void {
+                                auto cs_receiver =
                                     require(
                                         require(tAreas_[num14].get_Item(num17))->tGroupAreas_.get_Item(num19))
-                                        ->tPlayerList_));
-                            }) < areaMaxNum2) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    auto cs_receiver = require(require(tAreas_[num14].get_Item(num17))
-                                                                   ->tGroupAreas_.get_Item(num19))
-                                                           ->tPlayerList_;
-                                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_java_util::Vector_2_FirstElement(
-                                                require(array.get_Item(num14)));
-                                        });
-                                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                                }());
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_RemoveElementAt(require(array.get_Item(num14)),
-                                                                              0);
-                            });
+                                        ->tPlayerList_;
+                                pls::cs::Ref<pls::cs::Object> cs_arg0 = PLS_API(
+                                    kl_java_util::Vector_2_FirstElement(require(array.get_Item(num14))));
+                                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+                            }()));
+                            PLS_API(
+                                kl_java_util::Vector_2_RemoveElementAt(require(array.get_Item(num14)), 0));
                             ++num15;
                             break;
                         }
@@ -7431,57 +6294,38 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
                 for (pls::cs::Int32 num22 = 0;
                      num22 < require(tAreas_[num20].get_Item(num21))->tGroupAreas_.length(); ++num22) {
                     if ((tModeList_[num20][num21] == 0 || tModeList_[num20][num21] == 1) &&
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(
-                                require(require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
-                                    ->tPlayerList_));
-                        }) % 2 ==
+                        PLS_API(kl_java_util::Vector_2_Size(require(
+                            require(require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
+                                ->tPlayerList_))) %
+                                2 ==
                             1) {
                         pls::cs::Ref<TPlayer> obj2 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_FirstElement(require(
-                                    require(
-                                        require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
-                                        ->tPlayerList_));
-                            }));
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_RemoveElementAt(
-                                require(
-                                    require(
-                                        require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
-                                        ->tPlayerList_),
-                                0);
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_AddElement(require(array.get_Item(num20)),
-                                                                     pls::cs::box(obj2));
-                        });
+                            PLS_API(kl_java_util::Vector_2_FirstElement(require(
+                                require(require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
+                                    ->tPlayerList_))));
+                        PLS_API(kl_java_util::Vector_2_RemoveElementAt(
+                            require(
+                                require(require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
+                                    ->tPlayerList_),
+                            0));
+                        PLS_API(kl_java_util::Vector_2_AddElement(require(array.get_Item(num20)),
+                                                                  pls::cs::box(obj2)));
                     }
                     if (tModeList_[num20][num21] == 3 &&
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(
-                                require(require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
-                                    ->tPlayerList_));
-                        }) == 1) {
+                        PLS_API(kl_java_util::Vector_2_Size(require(
+                            require(require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
+                                ->tPlayerList_))) == 1) {
                         pls::cs::Ref<TPlayer> obj3 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_FirstElement(require(
-                                    require(
-                                        require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
-                                        ->tPlayerList_));
-                            }));
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_RemoveElementAt(
-                                require(
-                                    require(
-                                        require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
-                                        ->tPlayerList_),
-                                0);
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_AddElement(require(array.get_Item(num20)),
-                                                                     pls::cs::box(obj3));
-                        });
+                            PLS_API(kl_java_util::Vector_2_FirstElement(require(
+                                require(require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
+                                    ->tPlayerList_))));
+                        PLS_API(kl_java_util::Vector_2_RemoveElementAt(
+                            require(
+                                require(require(tAreas_[num20].get_Item(num21))->tGroupAreas_.get_Item(num22))
+                                    ->tPlayerList_),
+                            0));
+                        PLS_API(kl_java_util::Vector_2_AddElement(require(array.get_Item(num20)),
+                                                                  pls::cs::box(obj3)));
                     }
                 }
             }
@@ -7503,38 +6347,27 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
                 num26 = array2[num24] * 80 / 100;
             }
             for (pls::cs::Int32 num27 =
-                     pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return kl_java_util::Vector_2_Size(require(array.get_Item(num24)));
-                     }) -
-                     1;
+                     PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(num24)))) - 1;
                  num27 >= 0; --num27) {
-                pls::cs::Ref<TPlayer> obj4 =
-                    pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(require(array.get_Item(num24)), num27);
-                    }));
+                pls::cs::Ref<TPlayer> obj4 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(array.get_Item(num24)), num27)));
                 if (num25 < num26) {
                     num23 = 0;
                 } else {
                     num23 = GameUtil::Random(2);
                 }
                 if (num23 == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_AddElement(
-                            require(require(require(tAreas_[num24].get_Item(0))->tGroupAreas_.get_Item(0))
-                                        ->tPlayerList_),
-                            pls::cs::box(obj4));
-                    });
+                    PLS_API(kl_java_util::Vector_2_AddElement(
+                        require(require(require(tAreas_[num24].get_Item(0))->tGroupAreas_.get_Item(0))
+                                    ->tPlayerList_),
+                        pls::cs::box(obj4)));
                 } else if (num23 == 1) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_AddElement(
-                            require(require(require(tAreas_[num24].get_Item(1))->tGroupAreas_.get_Item(0))
-                                        ->tPlayerList_),
-                            pls::cs::box(obj4));
-                    });
+                    PLS_API(kl_java_util::Vector_2_AddElement(
+                        require(require(require(tAreas_[num24].get_Item(1))->tGroupAreas_.get_Item(0))
+                                    ->tPlayerList_),
+                        pls::cs::box(obj4)));
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_RemoveElementAt(require(array.get_Item(num24)), num27);
-                });
+                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(array.get_Item(num24)), num27));
             }
         }
         for (pls::cs::Int32 num28 = 0; num28 < tAreas_.length(); ++num28) {
@@ -7542,27 +6375,21 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
                 pls::cs::Int32 num30 = 0;
                 for (pls::cs::Int32 num31 = 0;
                      num31 < require(tAreas_[num28].get_Item(num29))->tGroupAreas_.length(); ++num31) {
-                    num30 += pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(
-                            require(require(tAreas_[num28].get_Item(num29))->tGroupAreas_.get_Item(num31))
-                                ->tPlayerList_));
-                    });
+                    num30 += PLS_API(kl_java_util::Vector_2_Size(
+                        require(require(require(tAreas_[num28].get_Item(num29))->tGroupAreas_.get_Item(num31))
+                                    ->tPlayerList_)));
                     for (pls::cs::Int32 num32 = 0;
-                         num32 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(
-                                 require(
-                                     require(tAreas_[num28].get_Item(num29))->tGroupAreas_.get_Item(num31))
-                                     ->tPlayerList_));
-                         });
+                         num32 <
+                         PLS_API(kl_java_util::Vector_2_Size(require(
+                             require(require(tAreas_[num28].get_Item(num29))->tGroupAreas_.get_Item(num31))
+                                 ->tPlayerList_)));
                          ++num32) {
-                        pls::cs::Ref<TPlayer> tPlayer4 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(
-                                    require(require(require(tAreas_[num28].get_Item(num29))
-                                                        ->tGroupAreas_.get_Item(num31))
-                                                ->tPlayerList_),
-                                    num32);
-                            }));
+                        pls::cs::Ref<TPlayer> tPlayer4 =
+                            pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                                require(require(require(tAreas_[num28].get_Item(num29))
+                                                    ->tGroupAreas_.get_Item(num31))
+                                            ->tPlayerList_),
+                                num32)));
                         require(tPlayer4)->SetTrainingId(num28, num29, num31, num32);
                         {
                             auto cs_target = tPlayer4;
@@ -7610,16 +6437,13 @@ void UserData::SetTrainingCommonMethod(bool isInit) {
                     pls::cs::Int32 cs_arg0_87 = require(tAreas_[num39].get_Item(num40))->tMode_;
                     pls::cs::Int32 areaBallNum = require(cs_receiver_87)->GetAreaBallNum(cs_arg0_87);
                     for (pls::cs::Int32 num42 = 0; num42 < areaBallNum; ++num42) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver =
-                                    require(
-                                        require(tAreas_[num39].get_Item(num40))->tGroupAreas_.get_Item(num41))
-                                        ->tBallList_;
-                                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(tBalls_.get_Item(num38));
-                                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver =
+                                require(require(tAreas_[num39].get_Item(num40))->tGroupAreas_.get_Item(num41))
+                                    ->tBallList_;
+                            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(tBalls_.get_Item(num38));
+                            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+                        }()));
                         {
                             auto cs_target = tBalls_.get_Item(num38);
                             auto cs_value =
@@ -7639,117 +6463,75 @@ bool UserData::SetTenantIn(pls::cs::Ref<TPlayer> tPlayer) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.SetTenantIn(game.TPlayer)", game);
     {
         require(tPlayer)->useTenantCnt_ = 0;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(tenantList)); }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(tenantList));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(tenantList))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(tenantList)));
         }
         for (pls::cs::Int32 i = 0; i < tenants_.length(); ++i) {
             if (require(tenants_.get_Item(i))->state_ != 1) {
                 continue;
             }
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(require(tenants_.get_Item(i))->useTPlayers_));
-                }) > 3) {
+            if (PLS_API(kl_java_util::Vector_2_Size(require(require(tenants_.get_Item(i))->useTPlayers_))) >
+                3) {
                 continue;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(tenants_.get_Item(i));
-                    kl_java_util::Vector_2_AddElement(require(tenantList), cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(tenants_.get_Item(i));
+                kl_java_util::Vector_2_AddElement(require(tenantList), cs_arg0);
+            }()));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(tenantList)); }) == 0) {
+        if (PLS_API(kl_java_util::Vector_2_Size(require(tenantList))) == 0) {
             for (pls::cs::Int32 j = 0; j < tenants_.length(); ++j) {
                 if (require(tenants_.get_Item(j))->state_ != 1) {
                     continue;
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(tenants_.get_Item(j));
-                        kl_java_util::Vector_2_AddElement(require(tenantList), cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(tenants_.get_Item(j));
+                    kl_java_util::Vector_2_AddElement(require(tenantList), cs_arg0);
+                }()));
             }
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(tenantList));
-                }) == 0) {
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_IndexOf(require(restTPlayers_), pls::cs::box(tPlayer));
-                    }) == -1) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_AddElement(require(restTPlayers_),
-                                                                 pls::cs::box(tPlayer));
-                    });
+            if (PLS_API(kl_java_util::Vector_2_Size(require(tenantList))) == 0) {
+                if (PLS_API(kl_java_util::Vector_2_IndexOf(require(restTPlayers_), pls::cs::box(tPlayer))) ==
+                    -1) {
+                    PLS_API(kl_java_util::Vector_2_AddElement(require(restTPlayers_), pls::cs::box(tPlayer)));
                 }
                 return false;
             }
         }
-        for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(tenantList));
-                                       }) - 1;
-             ++k) {
-            for (pls::cs::Int32 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return kl_java_util::Vector_2_Size(require(tenantList));
-                                      }) -
-                                      1;
-                 num > k; --num) {
-                pls::cs::Ref<Tenant> tenant =
-                    pls::cs::unbox<pls::cs::Ref<Tenant>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(require(tenantList), k);
-                    }));
-                pls::cs::Ref<Tenant> tenant2 =
-                    pls::cs::unbox<pls::cs::Ref<Tenant>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(require(tenantList), num);
-                    }));
+        for (pls::cs::Int32 k = 0; k < PLS_API(kl_java_util::Vector_2_Size(require(tenantList))) - 1; ++k) {
+            for (pls::cs::Int32 num = PLS_API(kl_java_util::Vector_2_Size(require(tenantList))) - 1; num > k;
+                 --num) {
+                pls::cs::Ref<Tenant> tenant = pls::cs::unbox<pls::cs::Ref<Tenant>>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(tenantList), k)));
+                pls::cs::Ref<Tenant> tenant2 = pls::cs::unbox<pls::cs::Ref<Tenant>>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(tenantList), num)));
                 pls::cs::Ref<data::TenantData> tenantData =
                     require(apdat_)->tenantData_.get_Item(require(tenant)->tenantDataId_);
                 pls::cs::Ref<data::TenantData> tenantData2 =
                     require(apdat_)->tenantData_.get_Item(require(tenant2)->tenantDataId_);
                 if (require(tenantData2)->charm_ > require(tenantData)->charm_) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_SetElementAt(require(tenantList), pls::cs::box(tenant2),
-                                                                   k);
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_SetElementAt(require(tenantList), pls::cs::box(tenant),
-                                                                   num);
-                    });
+                    PLS_API(
+                        kl_java_util::Vector_2_SetElementAt(require(tenantList), pls::cs::box(tenant2), k));
+                    PLS_API(
+                        kl_java_util::Vector_2_SetElementAt(require(tenantList), pls::cs::box(tenant), num));
                 }
             }
         }
-        IntArray array = IntArray::make(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(tenantList)); }));
+        IntArray array = IntArray::make(PLS_API(kl_java_util::Vector_2_Size(require(tenantList))));
         pls::cs::Int32 num2 = 0;
-        for (pls::cs::Int32 l = 0; l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(tenantList));
-                                   });
-             ++l) {
-            pls::cs::Ref<Tenant> tenant3 =
-                pls::cs::unbox<pls::cs::Ref<Tenant>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(tenantList), l);
-                }));
+        for (pls::cs::Int32 l = 0; l < PLS_API(kl_java_util::Vector_2_Size(require(tenantList))); ++l) {
+            pls::cs::Ref<Tenant> tenant3 = pls::cs::unbox<pls::cs::Ref<Tenant>>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(tenantList), l)));
             num2 = num2 +
                    require(require(apdat_)->tenantData_.get_Item(require(tenant3)->tenantDataId_))->charm_;
             array[l] = num2;
         }
         pls::cs::Int32 num3 = GameUtil::Random(num2);
-        for (pls::cs::Int32 m = 0; m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(tenantList));
-                                   });
-             ++m) {
-            pls::cs::Ref<Tenant> tenant4 =
-                pls::cs::unbox<pls::cs::Ref<Tenant>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(tenantList), m);
-                }));
+        for (pls::cs::Int32 m = 0; m < PLS_API(kl_java_util::Vector_2_Size(require(tenantList))); ++m) {
+            pls::cs::Ref<Tenant> tenant4 = pls::cs::unbox<pls::cs::Ref<Tenant>>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(tenantList), m)));
             if (num3 < array[m]) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_AddElement(require(require(tenant4)->useTPlayers_),
-                                                             pls::cs::box(tPlayer));
-                });
+                PLS_API(kl_java_util::Vector_2_AddElement(require(require(tenant4)->useTPlayers_),
+                                                          pls::cs::box(tPlayer)));
                 break;
             }
         }
@@ -7769,9 +6551,8 @@ void UserData::ChangeTraining() {
         for (pls::cs::Int32 k = 0; k < tPlayers_.length(); ++k) {
             {
                 auto cs_target = tPlayers_.get_Item(k);
-                pls::cs::Int32 cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Off(require(tPlayers_.get_Item(k))->flag_, 131072);
-                });
+                pls::cs::Int32 cs_value =
+                    PLS_API(kl_unity_util::BitUtil::Off(require(tPlayers_.get_Item(k))->flag_, 131072));
                 require(cs_target)->flag_ = cs_value;
             }
         }
@@ -7817,19 +6598,15 @@ void UserData::Init_bus() {
         MapMain::ensure_initialized();
         form::GameForm::ensure_initialized();
 
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = MapMain::MOVE_POINT().get_Item(0);
-                require(busPos_)->Set(cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = MapMain::MOVE_POINT().get_Item(0);
+            require(busPos_)->Set(cs_arg0);
+        }()));
         busState_ = 0;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(MapMain::MOVE_POINT().get_Item(1));
-                kl_java_util::Vector_2_AddElement(require(busMovePoint_), cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(MapMain::MOVE_POINT().get_Item(1));
+            kl_java_util::Vector_2_AddElement(require(busMovePoint_), cs_arg0);
+        }()));
         busCnt = 0;
         form::GameForm::busgather_ph_cnt() = 0;
     }
@@ -7845,17 +6622,12 @@ void UserData::Update_bus() {
             busCnt = ((busCnt + 1) % 2147483647 /* Int32.MaxValue */);
             IntArray collisionData = GetCollisionData(0, 5);
             IntArray collisionData2 = GetCollisionData(1, 5);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = busGoalPos_;
-                    pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 =
-                        pls::cs::unbox<pls::cs::Ref<kl_util3d::Vector3D>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_FirstElement(require(busMovePoint_));
-                            }));
-                    require(cs_receiver)->Set(cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = busGoalPos_;
+                pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = pls::cs::unbox<pls::cs::Ref<kl_util3d::Vector3D>>(
+                    PLS_API(kl_java_util::Vector_2_FirstElement(require(busMovePoint_))));
+                require(cs_receiver)->Set(cs_arg0);
+            }()));
             if ([&]() -> bool {
                     pls::cs::Single cs_arg0 = ([&]() -> pls::cs::FloatEval {
                         auto cs_left = require(busPos_)->x_;
@@ -7884,23 +6656,18 @@ void UserData::Update_bus() {
                     return GameUtil::ChRectHitRectFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5,
                                                         cs_arg6, cs_arg7, true);
                 }()) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_RemoveElementAt(require(busMovePoint_), 0);
-                });
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(busMovePoint_));
-                    }) == 0) {
+                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(busMovePoint_), 0));
+                if (PLS_API(kl_java_util::Vector_2_Size(require(busMovePoint_))) == 0) {
                     busState_ = 1;
                     SetTrainingData3();
                 }
             } else {
                 pls::cs::Single num = 10.0f;
-                pls::cs::Single num2 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::Sqrt((require(busGoalPos_)->x_ - require(busPos_)->x_) *
-                                                    (require(busGoalPos_)->x_ - require(busPos_)->x_) +
-                                                (require(busGoalPos_)->z_ - require(busPos_)->z_) *
-                                                    (require(busGoalPos_)->z_ - require(busPos_)->z_));
-                }));
+                pls::cs::Single num2 = pls::cs::Single(
+                    PLS_API(kl_lang::JMath::Sqrt((require(busGoalPos_)->x_ - require(busPos_)->x_) *
+                                                     (require(busGoalPos_)->x_ - require(busPos_)->x_) +
+                                                 (require(busGoalPos_)->z_ - require(busPos_)->z_) *
+                                                     (require(busGoalPos_)->z_ - require(busPos_)->z_))));
                 require(busV_)->x_ = (require(busGoalPos_)->x_ - require(busPos_)->x_) * num / num2;
                 require(busV_)->z_ = (require(busGoalPos_)->z_ - require(busPos_)->z_) * num / num2;
                 require(busPos_)->x_ = require(busPos_)->x_ + require(busV_)->x_;
@@ -7993,29 +6760,21 @@ void UserData::DrawGraph_menuElement(pls::cs::Ref<pls::kairo::Graphics> g, pls::
         pls::cs::Int32 num, num2, num3, num4;
         for (pls::cs::Int32 i = 0; i < MENUGRAPH_POINTPOS.length(); ++i) {
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(214, 214, 214); }));
-        });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(214, 214, 214))));
         for (pls::cs::Int32 j = 0; j < 5; ++j) {
             num = ox + MENUGRAPH_POINTPOS[5][0];
             num2 = oy + MENUGRAPH_POINTPOS[5][1];
             num3 = ox + MENUGRAPH_POINTPOS[j][0];
             num4 = oy + MENUGRAPH_POINTPOS[j][1];
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawLine(num, num2, num3, num4, 1.0f); });
+            PLS_API(require(g)->DrawLine(num, num2, num3, num4, 1.0f));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(160, 160, 160); }));
-        });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(160, 160, 160))));
         for (pls::cs::Int32 k = 0; k < 5; ++k) {
             num = ox + MENUGRAPH_POINTPOS[k][0];
             num2 = oy + MENUGRAPH_POINTPOS[k][1];
             num3 = ox + MENUGRAPH_POINTPOS[(k + 1) % 5][0];
             num4 = oy + MENUGRAPH_POINTPOS[(k + 1) % 5][1];
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawLine(num, num2, num3, num4, 1.0f); });
+            PLS_API(require(g)->DrawLine(num, num2, num3, num4, 1.0f));
         }
         pls::cs::Int32 x, x2;
         pls::cs::Int32 c1max = 25;
@@ -8058,20 +6817,12 @@ void UserData::DrawGraph_menuElement(pls::cs::Ref<pls::kairo::Graphics> g, pls::
                     num4 += MENUGRAPH_OFF[num5 - 1][1];
                 }
                 if (num5 == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(199, 0, 46);
-                        }));
-                    });
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(199, 0, 46))));
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(255, 128, 100);
-                        }));
-                    });
+                    PLS_API(
+                        require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 128, 100))));
                 }
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->DrawLine(num, num2, num3, num4, 1.0f); });
+                PLS_API(require(g)->DrawLine(num, num2, num3, num4, 1.0f));
             }
         }
     }
@@ -8157,24 +6908,18 @@ void UserData::Training_init() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.Training_init", game);
     {
         for (pls::cs::Int32 i = 0; i < tenants_.length(); ++i) {
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(require(tenants_.get_Item(i))->useTPlayers_));
-                }) > 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_RemoveAllElements(
-                        require(require(tenants_.get_Item(i))->useTPlayers_));
-                });
+            if (PLS_API(kl_java_util::Vector_2_Size(require(require(tenants_.get_Item(i))->useTPlayers_))) >
+                0) {
+                PLS_API(kl_java_util::Vector_2_RemoveAllElements(
+                    require(require(tenants_.get_Item(i))->useTPlayers_)));
             }
         }
-        tAreas_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<TArea>>>>(
-                IntArray::make(2));
-        });
+        tAreas_ = PLS_API(kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<TArea>>>>(
+            IntArray::make(2)));
         tPlayers_ = pls::cs::Array<pls::cs::Ref<TPlayer>>::make(0);
         tBalls_ = pls::cs::Array<pls::cs::Ref<TBall>>::make(0);
         pDataIdOlderList_ = IntArray::make(0);
-        tModeList_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::make(2)); });
+        tModeList_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::make(2)));
         restTPlayers_ = kl_java_util::Vector::create();
         require(apdat_)->RemoveeEffect();
     }
@@ -8348,15 +7093,9 @@ void UserData::AddTPlayBattleRecode(pls::cs::Int32 teamId, pls::cs::Int32 user_s
         ++tpplay_battleNum;
         pls::cs::Int32 num = teamId * 10000 + user_score * 100 + enemy_score;
         IntArray obj = IntArray::from({tpplay_battleNum, num});
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_AddElement(require(tpplay_battleRecode), pls::cs::box(obj));
-        });
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(tpplay_battleRecode));
-            }) >= 50) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveElementAt(require(tpplay_battleRecode), 0);
-            });
+        PLS_API(kl_java_util::Vector_2_AddElement(require(tpplay_battleRecode), pls::cs::box(obj)));
+        if (PLS_API(kl_java_util::Vector_2_Size(require(tpplay_battleRecode))) >= 50) {
+            PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(tpplay_battleRecode), 0));
         }
     }
 }
@@ -8365,8 +7104,7 @@ void UserData::AddTPlayBattleRecode(pls::cs::Int32 teamId, pls::cs::Int32 user_s
 void UserData::OnEventFlg(pls::cs::Int32 id) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.OnEventFlg(System.Int32)", game);
     {
-        eventActFlg_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(eventActFlg_, id); });
+        eventActFlg_ = PLS_API(kl_unity_util::BitUtil::On(eventActFlg_, id));
     }
 }
 
@@ -8374,8 +7112,7 @@ void UserData::OnEventFlg(pls::cs::Int32 id) {
 bool UserData::ChEventFlg(pls::cs::Int32 id) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.ChEventFlg(System.Int32)", game);
     {
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(eventActFlg_, id); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(eventActFlg_, id))) {
             return true;
         }
         return false;
@@ -8664,19 +7401,13 @@ void UserData::RecordReset() {
 void UserData::RecordAddCustomerNum(pls::cs::Int32 value) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.UserData.RecordAddCustomerNum(System.Int32)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = record_customer;
-                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(value));
-                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-            }());
-        });
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(record_customer));
-            }) > 10) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveElementAt(require(record_customer), 0);
-            });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = record_customer;
+            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(kl_lang::JInteger::create(value));
+            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+        }()));
+        if (PLS_API(kl_java_util::Vector_2_Size(require(record_customer))) > 10) {
+            PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(record_customer), 0));
         }
     }
 }
@@ -8745,11 +7476,9 @@ void UserData::SetContinueGameData() {
         IntArray2 array2 = IntArray2{};
         if (require(require(apdat_)->sysSave_)->bins[0].length() > 0) {
             array = IntArray::make(require(apdat_)->pData_.length());
-            array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::JTool::MakeArray<IntArray2>(
-                    IntArray::from({require(apdat_)->pData_.length(),
-                                    require(require(apdat_)->pData_.get_Item(0))->trainingPoint_.length()}));
-            });
+            array2 = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(
+                IntArray::from({require(apdat_)->pData_.length(),
+                                require(require(apdat_)->pData_.get_Item(0))->trainingPoint_.length()})));
             pls::cs::Ref<kl_io::ByteArrayInputStream> byteArrayInputStream =
                 pls::cs::Ref<kl_io::ByteArrayInputStream>{};
             pls::cs::run_finally(
@@ -8758,16 +7487,13 @@ void UserData::SetContinueGameData() {
                         byteArrayInputStream =
                             kl_io::ByteArrayInputStream::create(require(require(apdat_)->sysSave_)->bins[0]);
                         for (pls::cs::Int32 i = 0; i < require(apdat_)->pData_.length(); ++i) {
-                            array[i] = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                            });
+                            array[i] = PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                             for (pls::cs::Int32 j = 0; j < array2[i].length(); ++j) {
                                 {
                                     auto cs_target = array2[i];
                                     auto cs_index = j;
-                                    auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                                    });
+                                    auto cs_value =
+                                        PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                                     cs_target.set_Item(cs_index, cs_value);
                                 }
                             }
@@ -8776,8 +7502,7 @@ void UserData::SetContinueGameData() {
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
+                        PLS_API(require(byteArrayInputStream)->Close());
                     }
                     byteArrayInputStream = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -8795,18 +7520,14 @@ void UserData::SetContinueGameData() {
                                 auto cs_right = pls::cs::box(IntArray{});
                                 return cs_left == cs_right;
                             }()) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteInt(
-                                    static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
-                                    require(playerData)->lv_);
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
+                                require(playerData)->lv_));
                             for (pls::cs::Int32 l = 0; l < require(playerData)->trainingPoint_.length();
                                  ++l) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::WriteInt(
-                                        static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
-                                        require(playerData)->trainingPoint_[l]);
-                                });
+                                PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                                    static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
+                                    require(playerData)->trainingPoint_[l]));
                             }
                             continue;
                         }
@@ -8820,10 +7541,8 @@ void UserData::SetContinueGameData() {
                         } else {
                             num = (array[k]);
                         }
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::WriteInt(
-                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream), num);
-                        });
+                        PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                            static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream), num));
                         for (pls::cs::Int32 m = 0; m < require(playerData)->trainingPoint_.length(); ++m) {
                             if ((([&]() -> bool {
                                     auto cs_left = require(playerData)->trainingPoint_[m];
@@ -8834,27 +7553,21 @@ void UserData::SetContinueGameData() {
                             } else {
                                 num = (array2[k][m]);
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteInt(
-                                    static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
-                                    num);
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream), num));
                         }
                     }
                     {
                         auto cs_target = require(require(apdat_)->sysSave_)->bins;
                         auto cs_index = 0;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream)->ToByteArray();
-                        });
+                        auto cs_value = PLS_API(require(byteArrayOutputStream)->ToByteArray());
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
             },
             [&]() {
                 if (!is_null(byteArrayOutputStream)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream)->Close(); });
+                    PLS_API(require(byteArrayOutputStream)->Close());
                 }
                 byteArrayOutputStream = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
                 array = IntArray{};
@@ -8871,16 +7584,14 @@ void UserData::SetContinueGameData() {
                             kl_io::ByteArrayInputStream::create(require(require(apdat_)->sysSave_)->bins[1]);
                         array3 = BoolArray::make(require(apdat_)->formationData_.length());
                         for (pls::cs::Int32 n = 0; n < require(apdat_)->formationData_.length(); ++n) {
-                            array3[n] = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadBoolean(byteArrayInputStream2);
-                            });
+                            array3[n] =
+                                PLS_API(kl_unity_util::StreamUtil::ReadBoolean(byteArrayInputStream2));
                         }
                     }
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream2)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream2)->Close(); });
+                        PLS_API(require(byteArrayInputStream2)->Close());
                     }
                     byteArrayInputStream2 = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -8900,40 +7611,29 @@ void UserData::SetContinueGameData() {
                                 return cs_left == cs_right;
                             }()) {
                             if (require(formationData)->state_ == 1) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream2,
-                                                                                   true);
-                                });
+                                PLS_API(
+                                    kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream2, true));
                             } else {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream2,
-                                                                                   false);
-                                });
+                                PLS_API(
+                                    kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream2, false));
                             }
                         } else if (require(formationData)->state_ == 1 || array3[num2]) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream2, true);
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream2, true));
                         } else {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream2, false);
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream2, false));
                         }
                     }
                     {
                         auto cs_target = require(require(apdat_)->sysSave_)->bins;
                         auto cs_index = 1;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream2)->ToByteArray();
-                        });
+                        auto cs_value = PLS_API(require(byteArrayOutputStream2)->ToByteArray());
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
             },
             [&]() {
                 if (!is_null(byteArrayOutputStream2)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream2)->Close(); });
+                    PLS_API(require(byteArrayOutputStream2)->Close());
                 }
                 byteArrayOutputStream2 = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
                 array3 = BoolArray{};
@@ -8949,16 +7649,13 @@ void UserData::SetContinueGameData() {
                             kl_io::ByteArrayInputStream::create(require(require(apdat_)->sysSave_)->bins[2]);
                         array4 = IntArray::make(require(apdat_)->tenantData_.length());
                         for (pls::cs::Int32 num3 = 0; num3 < require(apdat_)->tenantData_.length(); ++num3) {
-                            array4[num3] = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream3);
-                            });
+                            array4[num3] = PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream3));
                         }
                     }
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream3)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream3)->Close(); });
+                        PLS_API(require(byteArrayInputStream3)->Close());
                     }
                     byteArrayInputStream3 = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -8975,11 +7672,8 @@ void UserData::SetContinueGameData() {
                         if (require(tenantData)->id_ == data::TenantData::TENANT_ID_TRAININGAREA() ||
                             require(tenantData)->id_ == data::TenantData::TENANT_ID_TRAININGAREA_SPRED() ||
                             require(tenantData)->id_ == data::TenantData::TENANT_ID_STADIUM()) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteInt(
-                                    static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream3),
-                                    1);
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream3), 1));
                             continue;
                         }
                         if ([&]() {
@@ -8987,11 +7681,9 @@ void UserData::SetContinueGameData() {
                                 auto cs_right = pls::cs::box(IntArray{});
                                 return cs_left == cs_right;
                             }()) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteInt(
-                                    static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream3),
-                                    require(tenantData)->lv_);
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream3),
+                                require(tenantData)->lv_));
                             continue;
                         }
                         pls::cs::Int32 num5 = 0;
@@ -9004,25 +7696,20 @@ void UserData::SetContinueGameData() {
                         } else {
                             num5 = (array4[num4]);
                         }
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::WriteInt(
-                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream3), num5);
-                        });
+                        PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                            static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream3), num5));
                     }
                     {
                         auto cs_target = require(require(apdat_)->sysSave_)->bins;
                         auto cs_index = 2;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream3)->ToByteArray();
-                        });
+                        auto cs_value = PLS_API(require(byteArrayOutputStream3)->ToByteArray());
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
             },
             [&]() {
                 if (!is_null(byteArrayOutputStream3)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream3)->Close(); });
+                    PLS_API(require(byteArrayOutputStream3)->Close());
                 }
                 byteArrayOutputStream3 = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
                 array4 = IntArray{};
@@ -9038,16 +7725,13 @@ void UserData::SetContinueGameData() {
                             kl_io::ByteArrayInputStream::create(require(require(apdat_)->sysSave_)->bins[3]);
                         array5 = IntArray::make(require(apdat_)->svisorData_.length());
                         for (pls::cs::Int32 num6 = 0; num6 < require(apdat_)->svisorData_.length(); ++num6) {
-                            array5[num6] = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream4);
-                            });
+                            array5[num6] = PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream4));
                         }
                     }
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream4)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream4)->Close(); });
+                        PLS_API(require(byteArrayInputStream4)->Close());
                     }
                     byteArrayInputStream4 = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -9066,11 +7750,9 @@ void UserData::SetContinueGameData() {
                                 auto cs_right = pls::cs::box(IntArray{});
                                 return cs_left == cs_right;
                             }()) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteInt(
-                                    static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream4),
-                                    require(supervisorData)->lv_);
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream4),
+                                require(supervisorData)->lv_));
                             continue;
                         }
                         pls::cs::Int32 num8 = 0;
@@ -9083,25 +7765,20 @@ void UserData::SetContinueGameData() {
                         } else {
                             num8 = (array5[num7]);
                         }
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::WriteInt(
-                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream4), num8);
-                        });
+                        PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                            static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream4), num8));
                     }
                     {
                         auto cs_target = require(require(apdat_)->sysSave_)->bins;
                         auto cs_index = 3;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream4)->ToByteArray();
-                        });
+                        auto cs_value = PLS_API(require(byteArrayOutputStream4)->ToByteArray());
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
             },
             [&]() {
                 if (!is_null(byteArrayOutputStream4)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream4)->Close(); });
+                    PLS_API(require(byteArrayOutputStream4)->Close());
                 }
                 byteArrayOutputStream4 = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
                 array5 = IntArray{};
@@ -9119,16 +7796,14 @@ void UserData::SetContinueGameData() {
                         for (pls::cs::Int32 num9 = 0; num9 < require(apdat_)->tradeData_.length(); ++num9) {
                             pls::cs::Ref<data::TradeData> tradeData =
                                 require(apdat_)->tradeData_.get_Item(num9);
-                            array6[num9] = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadBoolean(byteArrayInputStream5);
-                            });
+                            array6[num9] =
+                                PLS_API(kl_unity_util::StreamUtil::ReadBoolean(byteArrayInputStream5));
                         }
                     }
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream5)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream5)->Close(); });
+                        PLS_API(require(byteArrayInputStream5)->Close());
                     }
                     byteArrayInputStream5 = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -9148,40 +7823,29 @@ void UserData::SetContinueGameData() {
                                 return cs_left == cs_right;
                             }()) {
                             if (require(tradeData2)->state_ != 0) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream5,
-                                                                                   true);
-                                });
+                                PLS_API(
+                                    kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream5, true));
                             } else {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream5,
-                                                                                   false);
-                                });
+                                PLS_API(
+                                    kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream5, false));
                             }
                         } else if (require(tradeData2)->state_ != 0 || array6[num10]) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream5, true);
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream5, true));
                         } else {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream5, false);
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteBoolean(byteArrayOutputStream5, false));
                         }
                     }
                     {
                         auto cs_target = require(require(apdat_)->sysSave_)->bins;
                         auto cs_index = 4;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream5)->ToByteArray();
-                        });
+                        auto cs_value = PLS_API(require(byteArrayOutputStream5)->ToByteArray());
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
             },
             [&]() {
                 if (!is_null(byteArrayOutputStream5)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream5)->Close(); });
+                    PLS_API(require(byteArrayOutputStream5)->Close());
                 }
                 byteArrayOutputStream5 = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
             });
@@ -9205,9 +7869,8 @@ void UserData::ReflectContinueGameData() {
                             pls::cs::Ref<data::PlayerData> playerData = require(apdat_)->pData_.get_Item(i);
                             {
                                 auto cs_target = playerData;
-                                pls::cs::Int32 cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                                });
+                                pls::cs::Int32 cs_value =
+                                    PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                                 require(cs_target)->lv_ = cs_value;
                             }
                             for (pls::cs::Int32 j = 0; j < require(playerData)->trainingPoint_.length();
@@ -9215,9 +7878,8 @@ void UserData::ReflectContinueGameData() {
                                 {
                                     auto cs_target = require(playerData)->trainingPoint_;
                                     auto cs_index = j;
-                                    auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                                    });
+                                    auto cs_value =
+                                        PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                                     cs_target.set_Item(cs_index, cs_value);
                                 }
                             }
@@ -9227,8 +7889,7 @@ void UserData::ReflectContinueGameData() {
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
+                        PLS_API(require(byteArrayInputStream)->Close());
                     }
                     byteArrayInputStream = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -9246,9 +7907,7 @@ void UserData::ReflectContinueGameData() {
                                 require(apdat_)->formationData_.get_Item(k);
                             {
                                 bool recoveredCondition_173183 =
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StreamUtil::ReadBoolean(byteArrayInputStream2);
-                                    });
+                                    PLS_API(kl_unity_util::StreamUtil::ReadBoolean(byteArrayInputStream2));
                                 if (recoveredCondition_173183) {
                                     require(formationData)->ChangeState(1);
                                     require(formationData)->new_ = false;
@@ -9259,8 +7918,7 @@ void UserData::ReflectContinueGameData() {
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream2)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream2)->Close(); });
+                        PLS_API(require(byteArrayInputStream2)->Close());
                     }
                     byteArrayInputStream2 = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -9276,17 +7934,15 @@ void UserData::ReflectContinueGameData() {
                         for (pls::cs::Int32 l = 0; l < require(apdat_)->tenantData_.length(); ++l) {
                             pls::cs::Ref<data::TenantData> tenantData =
                                 require(apdat_)->tenantData_.get_Item(l);
-                            pls::cs::Int32 lv = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream3);
-                            });
+                            pls::cs::Int32 lv =
+                                PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream3));
                             require(tenantData)->SetLv(lv);
                         }
                     }
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream3)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream3)->Close(); });
+                        PLS_API(require(byteArrayInputStream3)->Close());
                     }
                     byteArrayInputStream3 = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -9302,17 +7958,15 @@ void UserData::ReflectContinueGameData() {
                         for (pls::cs::Int32 m = 0; m < require(apdat_)->svisorData_.length(); ++m) {
                             pls::cs::Ref<data::SupervisorData> supervisorData =
                                 require(apdat_)->svisorData_.get_Item(m);
-                            pls::cs::Int32 lv2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream4);
-                            });
+                            pls::cs::Int32 lv2 =
+                                PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream4));
                             require(supervisorData)->SetLv(lv2);
                         }
                     }
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream4)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream4)->Close(); });
+                        PLS_API(require(byteArrayInputStream4)->Close());
                     }
                     byteArrayInputStream4 = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -9327,9 +7981,8 @@ void UserData::ReflectContinueGameData() {
                             kl_io::ByteArrayInputStream::create(require(require(apdat_)->sysSave_)->bins[4]);
                         for (pls::cs::Int32 n = 0; n < require(apdat_)->tradeData_.length(); ++n) {
                             pls::cs::Ref<data::TradeData> tradeData = require(apdat_)->tradeData_.get_Item(n);
-                            bool recoveredTradePresent = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadBoolean(byteArrayInputStream5);
-                            });
+                            bool recoveredTradePresent =
+                                PLS_API(kl_unity_util::StreamUtil::ReadBoolean(byteArrayInputStream5));
                             if (recoveredTradePresent) {
                                 if (require(tradeData)->IsPlayerInMember()) {
                                     require(tradeData)->ChangeState(2);
@@ -9344,8 +7997,7 @@ void UserData::ReflectContinueGameData() {
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream5)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream5)->Close(); });
+                        PLS_API(require(byteArrayInputStream5)->Close());
                     }
                     byteArrayInputStream5 = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });

@@ -831,9 +831,7 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                 {
                     pls::cs::String text = array2[0];
                     pls::cs::Ref<pls::cs::RegexMatchCollection> matchCollection =
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::cs::RuntimeRegex::Matches(text, literal(u"<co=([0-9A-F]+)>"));
-                        });
+                        PLS_API(pls::cs::RuntimeRegex::Matches(text, literal(u"<co=([0-9A-F]+)>")));
                     if (require(matchCollection)->get_Count() > 0) {
                         pls::cs::Ref<pls::cs::StringBuilder> stringBuilder = ([&]() {
                             return pls::cs::make_ref<pls::cs::StringBuilder>();
@@ -844,35 +842,27 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                             pls::cs::Ref<pls::cs::RegexMatch> match =
                                 require(cs_receiver_17)->get_Item(cs_index_17);
                             if (j == 0) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                                        auto cs_receiver = stringBuilder;
-                                        auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return substring2(text, 0, require(match)->get_Index());
-                                        });
-                                        return require(cs_receiver)->Append(cs_arg0);
-                                    }());
-                                });
-                            }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                                PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
                                     auto cs_receiver = stringBuilder;
-                                    auto cs_arg0 = pls::cs::String::concat(
-                                        pls::cs::String::concat(
-                                            literal(u"<co="),
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::culture_to_lower(
-                                                    require(([&]() {
-                                                        auto cs_receiver = require(match)->get_Groups();
-                                                        auto cs_index = 1;
-                                                        return require(cs_receiver)->get_Item(cs_index);
-                                                    }()))
-                                                        ->get_Value());
-                                            })),
-                                        literal(u">"));
+                                    auto cs_arg0 = PLS_API(substring2(text, 0, require(match)->get_Index()));
                                     return require(cs_receiver)->Append(cs_arg0);
-                                }());
-                            });
+                                }()));
+                            }
+                            PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                                auto cs_receiver = stringBuilder;
+                                auto cs_arg0 = pls::cs::String::concat(
+                                    pls::cs::String::concat(
+                                        literal(u"<co="),
+                                        PLS_API(pls::cs::culture_to_lower(
+                                            require(([&]() {
+                                                auto cs_receiver = require(match)->get_Groups();
+                                                auto cs_index = 1;
+                                                return require(cs_receiver)->get_Item(cs_index);
+                                            }()))
+                                                ->get_Value()))),
+                                    literal(u">"));
+                                return require(cs_receiver)->Append(cs_arg0);
+                            }()));
                             pls::cs::Int32 num = text.length();
                             if (j + 1 < require(matchCollection)->get_Count()) {
                                 num = require(([&]() {
@@ -882,37 +872,30 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                                       }()))
                                           ->get_Index();
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                                    auto cs_receiver = stringBuilder;
-                                    auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> pls::cs::String {
-                                            auto cs_arg0 = text;
-                                            auto cs_arg1 = ([&]() -> pls::cs::Int32 {
-                                                auto cs_left = pls::cs::Int32(require(match)->get_Index());
-                                                auto cs_right = require(match)->get_Length();
-                                                return cs_left + cs_right;
-                                            }());
-                                            auto cs_arg2 = num - (([&]() -> pls::cs::Int32 {
-                                                               auto cs_left = pls::cs::Int32(
-                                                                   require(match)->get_Index());
-                                                               auto cs_right = require(match)->get_Length();
-                                                               return cs_left + cs_right;
-                                                           }()));
-                                            return substring2(cs_arg0, cs_arg1, cs_arg2);
-                                        }());
-                                    });
-                                    return require(cs_receiver)->Append(cs_arg0);
-                                }());
-                            });
+                            PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                                auto cs_receiver = stringBuilder;
+                                auto cs_arg0 = PLS_API(([&]() -> pls::cs::String {
+                                    auto cs_arg0 = text;
+                                    auto cs_arg1 = ([&]() -> pls::cs::Int32 {
+                                        auto cs_left = pls::cs::Int32(require(match)->get_Index());
+                                        auto cs_right = require(match)->get_Length();
+                                        return cs_left + cs_right;
+                                    }());
+                                    auto cs_arg2 = num - (([&]() -> pls::cs::Int32 {
+                                                       auto cs_left =
+                                                           pls::cs::Int32(require(match)->get_Index());
+                                                       auto cs_right = require(match)->get_Length();
+                                                       return cs_left + cs_right;
+                                                   }()));
+                                    return substring2(cs_arg0, cs_arg1, cs_arg2);
+                                }()));
+                                return require(cs_receiver)->Append(cs_arg0);
+                            }()));
                         }
-                        text = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(stringBuilder)->ToString(); });
+                        text = PLS_API(require(stringBuilder)->ToString());
                     }
-                    matchCollection = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::cs::RuntimeRegex::Matches(
-                            text, literal(u"<co=([0-9\\s]+),([0-9\\s]+),([0-9\\s]+)>"));
-                    });
+                    matchCollection = PLS_API(pls::cs::RuntimeRegex::Matches(
+                        text, literal(u"<co=([0-9\\s]+),([0-9\\s]+),([0-9\\s]+)>")));
                     if (require(matchCollection)->get_Count() > 0) {
                         pls::cs::Ref<pls::cs::StringBuilder> stringBuilder2 = ([&]() {
                             return pls::cs::make_ref<pls::cs::StringBuilder>();
@@ -923,52 +906,33 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                             pls::cs::Ref<pls::cs::RegexMatch> match2 =
                                 require(cs_receiver_18)->get_Item(cs_index_18);
                             if (k == 0) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                                        auto cs_receiver = stringBuilder2;
-                                        auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return substring2(text, 0, require(match2)->get_Index());
-                                        });
-                                        return require(cs_receiver)->Append(cs_arg0);
-                                    }());
-                                });
+                                PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                                    auto cs_receiver = stringBuilder2;
+                                    auto cs_arg0 = PLS_API(substring2(text, 0, require(match2)->get_Index()));
+                                    return require(cs_receiver)->Append(cs_arg0);
+                                }()));
                             }
-                            auto cs_hole0_19 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::int32_parse(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::string_trim(
-                                            require(([&]() {
-                                                auto cs_receiver_19 = require(match2)->get_Groups();
-                                                auto cs_index_19 = 1;
-                                                return require(cs_receiver_19)->get_Item(cs_index_19);
-                                            }()))
-                                                ->get_Value());
-                                    }));
-                            });
-                            auto cs_hole1_19 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::int32_parse(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::string_trim(
-                                            require(([&]() {
-                                                auto cs_receiver_19 = require(match2)->get_Groups();
-                                                auto cs_index_19 = 2;
-                                                return require(cs_receiver_19)->get_Item(cs_index_19);
-                                            }()))
-                                                ->get_Value());
-                                    }));
-                            });
-                            auto cs_hole2_19 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::int32_parse(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::string_trim(
-                                            require(([&]() {
-                                                auto cs_receiver_19 = require(match2)->get_Groups();
-                                                auto cs_index_19 = 3;
-                                                return require(cs_receiver_19)->get_Item(cs_index_19);
-                                            }()))
-                                                ->get_Value());
-                                    }));
-                            });
+                            auto cs_hole0_19 = PLS_API(pls::cs::int32_parse(PLS_API(pls::cs::string_trim(
+                                require(([&]() {
+                                    auto cs_receiver_19 = require(match2)->get_Groups();
+                                    auto cs_index_19 = 1;
+                                    return require(cs_receiver_19)->get_Item(cs_index_19);
+                                }()))
+                                    ->get_Value()))));
+                            auto cs_hole1_19 = PLS_API(pls::cs::int32_parse(PLS_API(pls::cs::string_trim(
+                                require(([&]() {
+                                    auto cs_receiver_19 = require(match2)->get_Groups();
+                                    auto cs_index_19 = 2;
+                                    return require(cs_receiver_19)->get_Item(cs_index_19);
+                                }()))
+                                    ->get_Value()))));
+                            auto cs_hole2_19 = PLS_API(pls::cs::int32_parse(PLS_API(pls::cs::string_trim(
+                                require(([&]() {
+                                    auto cs_receiver_19 = require(match2)->get_Groups();
+                                    auto cs_index_19 = 3;
+                                    return require(cs_receiver_19)->get_Item(cs_index_19);
+                                }()))
+                                    ->get_Value()))));
                             pls::cs::String cs_text_19(u"");
                             cs_text_19 = pls::cs::String::concat(
                                 cs_text_19, pls::cs::format_i32_hex(cs_hole0_19, 2, false));
@@ -977,11 +941,10 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                             cs_text_19 = pls::cs::String::concat(
                                 cs_text_19, pls::cs::format_i32_hex(cs_hole2_19, 2, false));
                             pls::cs::String text2 = cs_text_19;
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(stringBuilder2)
+                            PLS_API(
+                                require(stringBuilder2)
                                     ->Append(pls::cs::String::concat(
-                                        pls::cs::String::concat(literal(u"<co="), text2), literal(u">")));
-                            });
+                                        pls::cs::String::concat(literal(u"<co="), text2), literal(u">"))));
                             pls::cs::Int32 num2 = text.length();
                             if (k + 1 < require(matchCollection)->get_Count()) {
                                 num2 = require(([&]() {
@@ -991,32 +954,27 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                                        }()))
                                            ->get_Index();
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                                    auto cs_receiver = stringBuilder2;
-                                    auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> pls::cs::String {
-                                            auto cs_arg0 = text;
-                                            auto cs_arg1 = ([&]() -> pls::cs::Int32 {
-                                                auto cs_left = pls::cs::Int32(require(match2)->get_Index());
-                                                auto cs_right = require(match2)->get_Length();
-                                                return cs_left + cs_right;
-                                            }());
-                                            auto cs_arg2 = num2 - (([&]() -> pls::cs::Int32 {
-                                                               auto cs_left = pls::cs::Int32(
-                                                                   require(match2)->get_Index());
-                                                               auto cs_right = require(match2)->get_Length();
-                                                               return cs_left + cs_right;
-                                                           }()));
-                                            return substring2(cs_arg0, cs_arg1, cs_arg2);
-                                        }());
-                                    });
-                                    return require(cs_receiver)->Append(cs_arg0);
-                                }());
-                            });
+                            PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                                auto cs_receiver = stringBuilder2;
+                                auto cs_arg0 = PLS_API(([&]() -> pls::cs::String {
+                                    auto cs_arg0 = text;
+                                    auto cs_arg1 = ([&]() -> pls::cs::Int32 {
+                                        auto cs_left = pls::cs::Int32(require(match2)->get_Index());
+                                        auto cs_right = require(match2)->get_Length();
+                                        return cs_left + cs_right;
+                                    }());
+                                    auto cs_arg2 = num2 - (([&]() -> pls::cs::Int32 {
+                                                       auto cs_left =
+                                                           pls::cs::Int32(require(match2)->get_Index());
+                                                       auto cs_right = require(match2)->get_Length();
+                                                       return cs_left + cs_right;
+                                                   }()));
+                                    return substring2(cs_arg0, cs_arg1, cs_arg2);
+                                }()));
+                                return require(cs_receiver)->Append(cs_arg0);
+                            }()));
                         }
-                        text = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(stringBuilder2)->ToString(); });
+                        text = PLS_API(require(stringBuilder2)->ToString());
                     }
                     array2[0] = text;
                 }
@@ -1030,34 +988,26 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                 StringArray array3 = cs_each27.get_Item(cs_i27);
                 {
                     for (pls::cs::Int32 l = 0; l < array3.length(); ++l) {
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::culture_starts_with(array3[l], literal(u"<po="));
-                            })) {
-                            pls::cs::Int32 num3 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return index_char1(array3[l], u'>'); });
+                        if (PLS_API(pls::cs::culture_starts_with(array3[l], literal(u"<po=")))) {
+                            pls::cs::Int32 num3 = PLS_API(index_char1(array3[l], u'>'));
                             if (num3 != -1) {
-                                array3[l] = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return substring1(array3[l], num3 + 1); });
+                                array3[l] = PLS_API(substring1(array3[l], num3 + 1));
                             }
                             if (l != 0) {
                                 array3[l] = Language::AdjustMacroScope(array3[l]);
                             }
                         }
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(array3); });
+                    PLS_API(list.Add(array3));
                     pls::cs::String text3 = array3[0];
                     pls::cs::String src = text3;
                     src = Language::AdjustMacroScope(src);
                     pls::cs::Ref<pls::cs::RegexMatchCollection> matchCollection2 =
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::cs::RuntimeRegex::Matches(src, literal(u"<co=([0-9a-f]+)>"));
-                        });
+                        PLS_API(pls::cs::RuntimeRegex::Matches(src, literal(u"<co=([0-9a-f]+)>")));
                     bool flag = require(matchCollection2)->get_Count() > 0;
                     if (require(matchCollection2)->get_Count() == 0) {
-                        matchCollection2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::cs::RuntimeRegex::Matches(
-                                src, literal(u"<co=([0-9\\s]+),([0-9\\s]+),([0-9\\s]+)>"));
-                        });
+                        matchCollection2 = PLS_API(pls::cs::RuntimeRegex::Matches(
+                            src, literal(u"<co=([0-9\\s]+),([0-9\\s]+),([0-9\\s]+)>")));
                     }
                     if (require(matchCollection2)->get_Count() > 0) {
                         pls::cs::Ref<pls::cs::StringBuilder> stringBuilder3 = ([&]() {
@@ -1069,15 +1019,11 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                             pls::cs::Ref<pls::cs::RegexMatch> match3 =
                                 require(cs_receiver_20)->get_Item(cs_index_20);
                             if (m == 0) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                                        auto cs_receiver = stringBuilder3;
-                                        auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return substring2(src, 0, require(match3)->get_Index());
-                                        });
-                                        return require(cs_receiver)->Append(cs_arg0);
-                                    }());
-                                });
+                                PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                                    auto cs_receiver = stringBuilder3;
+                                    auto cs_arg0 = PLS_API(substring2(src, 0, require(match3)->get_Index()));
+                                    return require(cs_receiver)->Append(cs_arg0);
+                                }()));
                             }
                             pls::cs::String text4 = literal(u"");
                             if (flag) {
@@ -1085,109 +1031,68 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                                     auto cs_left = pls::cs::String::concat(
                                         ([&]() {
                                             auto cs_left = pls::cs::String::concat(
-                                                integer_string(
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return ([&]() {
-                                                            auto cs_value = pls::diagnostic::api_call(
-                                                                [&]() -> decltype(auto) {
-                                                                    return substring2(
-                                                                        require(([&]() {
-                                                                            auto cs_receiver =
-                                                                                require(match3)->get_Groups();
-                                                                            auto cs_index = 1;
-                                                                            return require(cs_receiver)
-                                                                                ->get_Item(cs_index);
-                                                                        }()))
-                                                                            ->get_Value(),
-                                                                        0, 2);
-                                                                });
-                                                            return pls::cs::int32_parse_hex_number(cs_value,
-                                                                                                   true);
-                                                        }());
-                                                    })),
+                                                integer_string(PLS_API(([&]() {
+                                                    auto cs_value = PLS_API(substring2(
+                                                        require(([&]() {
+                                                            auto cs_receiver = require(match3)->get_Groups();
+                                                            auto cs_index = 1;
+                                                            return require(cs_receiver)->get_Item(cs_index);
+                                                        }()))
+                                                            ->get_Value(),
+                                                        0, 2));
+                                                    return pls::cs::int32_parse_hex_number(cs_value, true);
+                                                }()))),
                                                 literal(u","));
-                                            auto cs_right = integer_string(
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return ([&]() {
-                                                        auto cs_value = pls::diagnostic::api_call(
-                                                            [&]() -> decltype(auto) {
-                                                                return substring2(
-                                                                    require(([&]() {
-                                                                        auto cs_receiver =
-                                                                            require(match3)->get_Groups();
-                                                                        auto cs_index = 1;
-                                                                        return require(cs_receiver)
-                                                                            ->get_Item(cs_index);
-                                                                    }()))
-                                                                        ->get_Value(),
-                                                                    2, 2);
-                                                            });
-                                                        return pls::cs::int32_parse_hex_number(cs_value,
-                                                                                               true);
-                                                    }());
-                                                }));
-                                            return pls::cs::String::concat(cs_left, cs_right);
-                                        }()),
-                                        literal(u","));
-                                    auto cs_right =
-                                        integer_string(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return ([&]() {
-                                                auto cs_value =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return substring2(
-                                                            require(([&]() {
-                                                                auto cs_receiver =
-                                                                    require(match3)->get_Groups();
-                                                                auto cs_index = 1;
-                                                                return require(cs_receiver)
-                                                                    ->get_Item(cs_index);
-                                                            }()))
-                                                                ->get_Value(),
-                                                            4, 2);
-                                                    });
-                                                return pls::cs::int32_parse_hex_number(cs_value, true);
-                                            }());
-                                        }));
-                                    return pls::cs::String::concat(cs_left, cs_right);
-                                }()));
-                            } else {
-                                text4 = ([&]() {
-                                    auto cs_hole0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::int32_parse(
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::string_trim(
+                                            auto cs_right = integer_string(PLS_API(([&]() {
+                                                auto cs_value = PLS_API(substring2(
                                                     require(([&]() {
                                                         auto cs_receiver = require(match3)->get_Groups();
                                                         auto cs_index = 1;
                                                         return require(cs_receiver)->get_Item(cs_index);
                                                     }()))
-                                                        ->get_Value());
-                                            }));
-                                    });
-                                    auto cs_hole1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::int32_parse(
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::string_trim(
-                                                    require(([&]() {
-                                                        auto cs_receiver = require(match3)->get_Groups();
-                                                        auto cs_index = 2;
-                                                        return require(cs_receiver)->get_Item(cs_index);
-                                                    }()))
-                                                        ->get_Value());
-                                            }));
-                                    });
-                                    auto cs_hole2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::int32_parse(
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::string_trim(
-                                                    require(([&]() {
-                                                        auto cs_receiver = require(match3)->get_Groups();
-                                                        auto cs_index = 3;
-                                                        return require(cs_receiver)->get_Item(cs_index);
-                                                    }()))
-                                                        ->get_Value());
-                                            }));
-                                    });
+                                                        ->get_Value(),
+                                                    2, 2));
+                                                return pls::cs::int32_parse_hex_number(cs_value, true);
+                                            }())));
+                                            return pls::cs::String::concat(cs_left, cs_right);
+                                        }()),
+                                        literal(u","));
+                                    auto cs_right = integer_string(PLS_API(([&]() {
+                                        auto cs_value = PLS_API(
+                                            substring2(require(([&]() {
+                                                           auto cs_receiver = require(match3)->get_Groups();
+                                                           auto cs_index = 1;
+                                                           return require(cs_receiver)->get_Item(cs_index);
+                                                       }()))
+                                                           ->get_Value(),
+                                                       4, 2));
+                                        return pls::cs::int32_parse_hex_number(cs_value, true);
+                                    }())));
+                                    return pls::cs::String::concat(cs_left, cs_right);
+                                }()));
+                            } else {
+                                text4 = ([&]() {
+                                    auto cs_hole0 = PLS_API(pls::cs::int32_parse(PLS_API(pls::cs::string_trim(
+                                        require(([&]() {
+                                            auto cs_receiver = require(match3)->get_Groups();
+                                            auto cs_index = 1;
+                                            return require(cs_receiver)->get_Item(cs_index);
+                                        }()))
+                                            ->get_Value()))));
+                                    auto cs_hole1 = PLS_API(pls::cs::int32_parse(PLS_API(pls::cs::string_trim(
+                                        require(([&]() {
+                                            auto cs_receiver = require(match3)->get_Groups();
+                                            auto cs_index = 2;
+                                            return require(cs_receiver)->get_Item(cs_index);
+                                        }()))
+                                            ->get_Value()))));
+                                    auto cs_hole2 = PLS_API(pls::cs::int32_parse(PLS_API(pls::cs::string_trim(
+                                        require(([&]() {
+                                            auto cs_receiver = require(match3)->get_Groups();
+                                            auto cs_index = 3;
+                                            return require(cs_receiver)->get_Item(cs_index);
+                                        }()))
+                                            ->get_Value()))));
                                     pls::cs::String cs_text(u"");
                                     cs_text = pls::cs::String::concat(
                                         cs_text, pls::cs::format_i32_hex(cs_hole0, 2, true));
@@ -1198,11 +1103,10 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                                     return cs_text;
                                 }());
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(stringBuilder3)
+                            PLS_API(
+                                require(stringBuilder3)
                                     ->Append(pls::cs::String::concat(
-                                        pls::cs::String::concat(literal(u"<co="), text4), literal(u">")));
-                            });
+                                        pls::cs::String::concat(literal(u"<co="), text4), literal(u">"))));
                             pls::cs::Int32 num4 = src.length();
                             if (m + 1 < require(matchCollection2)->get_Count()) {
                                 num4 = require(([&]() {
@@ -1212,62 +1116,51 @@ pls::cs::Array<StringArray2> MakeTextTable(StringArray2 textTable) {
                                        }()))
                                            ->get_Index();
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                                    auto cs_receiver = stringBuilder3;
-                                    auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> pls::cs::String {
-                                            auto cs_arg0 = src;
-                                            auto cs_arg1 = ([&]() -> pls::cs::Int32 {
-                                                auto cs_left = pls::cs::Int32(require(match3)->get_Index());
-                                                auto cs_right = require(match3)->get_Length();
-                                                return cs_left + cs_right;
-                                            }());
-                                            auto cs_arg2 = num4 - (([&]() -> pls::cs::Int32 {
-                                                               auto cs_left = pls::cs::Int32(
-                                                                   require(match3)->get_Index());
-                                                               auto cs_right = require(match3)->get_Length();
-                                                               return cs_left + cs_right;
-                                                           }()));
-                                            return substring2(cs_arg0, cs_arg1, cs_arg2);
-                                        }());
-                                    });
-                                    return require(cs_receiver)->Append(cs_arg0);
-                                }());
-                            });
+                            PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                                auto cs_receiver = stringBuilder3;
+                                auto cs_arg0 = PLS_API(([&]() -> pls::cs::String {
+                                    auto cs_arg0 = src;
+                                    auto cs_arg1 = ([&]() -> pls::cs::Int32 {
+                                        auto cs_left = pls::cs::Int32(require(match3)->get_Index());
+                                        auto cs_right = require(match3)->get_Length();
+                                        return cs_left + cs_right;
+                                    }());
+                                    auto cs_arg2 = num4 - (([&]() -> pls::cs::Int32 {
+                                                       auto cs_left =
+                                                           pls::cs::Int32(require(match3)->get_Index());
+                                                       auto cs_right = require(match3)->get_Length();
+                                                       return cs_left + cs_right;
+                                                   }()));
+                                    return substring2(cs_arg0, cs_arg1, cs_arg2);
+                                }()));
+                                return require(cs_receiver)->Append(cs_arg0);
+                            }()));
                         }
-                        src = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(stringBuilder3)->ToString(); });
+                        src = PLS_API(require(stringBuilder3)->ToString());
                     }
                     if (src != text3) {
                         StringArray array4 = StringArray::make(array3.length());
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() {
-                                auto cs_source = array3;
-                                auto cs_dest = array4;
-                                auto cs_count = array3.length();
-                                StringArray::copy(cs_source, 0, cs_dest, 0, cs_count);
-                            }());
-                        });
+                        PLS_API(([&]() {
+                            auto cs_source = array3;
+                            auto cs_dest = array4;
+                            auto cs_count = array3.length();
+                            StringArray::copy(cs_source, 0, cs_dest, 0, cs_count);
+                        }()));
                         array4[0] = src;
-                        pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(array4); });
+                        PLS_API(list.Add(array4));
                     }
                     text3 = src;
-                    src = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::cs::string_replace(src, literal(u"～"), literal(u"〜"));
-                    });
+                    src = PLS_API(pls::cs::string_replace(src, literal(u"～"), literal(u"〜")));
                     if (src != text3) {
                         StringArray array5 = StringArray::make(array3.length());
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() {
-                                auto cs_source = array3;
-                                auto cs_dest = array5;
-                                auto cs_count = array3.length();
-                                StringArray::copy(cs_source, 0, cs_dest, 0, cs_count);
-                            }());
-                        });
+                        PLS_API(([&]() {
+                            auto cs_source = array3;
+                            auto cs_dest = array5;
+                            auto cs_count = array3.length();
+                            StringArray::copy(cs_source, 0, cs_dest, 0, cs_count);
+                        }()));
                         array5[0] = src;
-                        pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(array5); });
+                        PLS_API(list.Add(array5));
                     }
                 }
             }
@@ -1345,8 +1238,7 @@ pls::cs::String AdjustMacroScope(pls::cs::String src) {
         pls::cs::List<pls::cs::String> list = pls::cs::List<pls::cs::String>{};
         pls::cs::Int32 startIndex = 0;
         while (true) {
-            startIndex = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return index_char2(src, u'<', startIndex); });
+            startIndex = PLS_API(index_char2(src, u'<', startIndex));
             if (startIndex == -1) {
                 break;
             }
@@ -1356,27 +1248,21 @@ pls::cs::String AdjustMacroScope(pls::cs::String src) {
                 if (is_null(list)) {
                     list = pls::cs::List<pls::cs::String>::make();
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = list;
-                        auto cs_arg0 = pls::cs::String::concat(
-                            pls::cs::String::concat(literal(u"</"),
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return substring2(src, startIndex + 1, 2);
-                                                    })),
-                            literal(u">"));
-                        cs_receiver.Add(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = list;
+                    auto cs_arg0 = pls::cs::String::concat(
+                        pls::cs::String::concat(literal(u"</"), PLS_API(substring2(src, startIndex + 1, 2))),
+                        literal(u">"));
+                    cs_receiver.Add(cs_arg0);
+                }()));
             } else if ((java::lang::StringEx::StartsWith(src, literal(u"</co>"), startIndex) ||
                         java::lang::StringEx::StartsWith(src, literal(u"</si>"), startIndex) ||
                         java::lang::StringEx::StartsWith(src, literal(u"</st>"), startIndex)) &&
                        !is_null(list)) {
-                pls::cs::String text = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return substring2(src, startIndex, 5); });
+                pls::cs::String text = PLS_API(substring2(src, startIndex, 5));
                 for (pls::cs::Int32 num = pls::cs::Int32(list.get_Count()) - 1; num >= 0; --num) {
                     if (list.get_Item(num) == text) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) { return list.RemoveAt(num); });
+                        PLS_API(list.RemoveAt(num));
                         break;
                     }
                 }
@@ -1414,9 +1300,7 @@ pls::cs::String TranslateSoftLabel(pls::cs::String softlabel) {
                         auto cs_right = Language::softlabelTable_()[i][0].length();
                         return cs_left == cs_right;
                     }()) &&
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return string_equals(softLabelInput, Language::softlabelTable_()[i][0]);
-                    })) {
+                    PLS_API(string_equals(softLabelInput, Language::softlabelTable_()[i][0]))) {
                     return Language::softlabelTable_()[i][1];
                 }
             }
@@ -1430,9 +1314,7 @@ pls::cs::String TranslateSoftLabel(pls::cs::String softlabel) {
                             auto cs_right = Language::BUILTIN_SOFTLABEL_TABLE()[j][0].length();
                             return cs_left == cs_right;
                         }()) &&
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return string_equals(softLabelInput, Language::BUILTIN_SOFTLABEL_TABLE()[j][0]);
-                        })) {
+                        PLS_API(string_equals(softLabelInput, Language::BUILTIN_SOFTLABEL_TABLE()[j][0]))) {
                         if (num >= Language::BUILTIN_SOFTLABEL_TABLE()[j].length()) {
                             num = 1;
                         }
@@ -1465,17 +1347,13 @@ pls::cs::String TranslateText(pls::cs::String text, bool tabCheck) {
                      "M:kairo.unity.util.Language.TranslateText(System.String,System.Boolean)", kairo);
     {
         text = StringUtil::Replace(text, literal(u"\\"), literal(u"¥"));
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return index_char1(text, char16_t(8)); }) !=
-            -1) {
+        if (PLS_API(index_char1(text, char16_t(8))) != -1) {
             text = StringUtil::Replace(text, literal(u"\010"), literal(u""));
             return text;
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_index_of(text, literal(u"<")); }) != -1) {
+        if (PLS_API(pls::cs::culture_index_of(text, literal(u"<"))) != -1) {
             pls::cs::Ref<pls::cs::RegexMatchCollection> matchCollection =
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::cs::RuntimeRegex::Matches(text, literal(u"<co=[0-9A-Z]+>"));
-                });
+                PLS_API(pls::cs::RuntimeRegex::Matches(text, literal(u"<co=[0-9A-Z]+>")));
             if (require(matchCollection)->get_Count() > 0) {
                 pls::cs::Ref<pls::cs::StringBuilder> stringBuilder = ([&]() {
                     return pls::cs::make_ref<pls::cs::StringBuilder>();
@@ -1485,25 +1363,17 @@ pls::cs::String TranslateText(pls::cs::String text, bool tabCheck) {
                     auto cs_index_16 = i;
                     pls::cs::Ref<pls::cs::RegexMatch> match = require(cs_receiver_16)->get_Item(cs_index_16);
                     if (i == 0) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                                auto cs_receiver = stringBuilder;
-                                auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return substring2(text, 0, require(match)->get_Index());
-                                });
-                                return require(cs_receiver)->Append(cs_arg0);
-                            }());
-                        });
-                    }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                        PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
                             auto cs_receiver = stringBuilder;
-                            auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::culture_to_lower(require(match)->get_Value());
-                            });
+                            auto cs_arg0 = PLS_API(substring2(text, 0, require(match)->get_Index()));
                             return require(cs_receiver)->Append(cs_arg0);
-                        }());
-                    });
+                        }()));
+                    }
+                    PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                        auto cs_receiver = stringBuilder;
+                        auto cs_arg0 = PLS_API(pls::cs::culture_to_lower(require(match)->get_Value()));
+                        return require(cs_receiver)->Append(cs_arg0);
+                    }()));
                     pls::cs::Int32 num = text.length();
                     if (i + 1 < require(matchCollection)->get_Count()) {
                         num = require(([&]() {
@@ -1513,36 +1383,29 @@ pls::cs::String TranslateText(pls::cs::String text, bool tabCheck) {
                               }()))
                                   ->get_Index();
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                            auto cs_receiver = stringBuilder;
-                            auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::String {
-                                    auto cs_arg0 = text;
-                                    auto cs_arg1 = ([&]() -> pls::cs::Int32 {
-                                        auto cs_left = pls::cs::Int32(require(match)->get_Index());
-                                        auto cs_right = require(match)->get_Length();
-                                        return cs_left + cs_right;
-                                    }());
-                                    auto cs_arg2 = num - (([&]() -> pls::cs::Int32 {
-                                                       auto cs_left =
-                                                           pls::cs::Int32(require(match)->get_Index());
-                                                       auto cs_right = require(match)->get_Length();
-                                                       return cs_left + cs_right;
-                                                   }()));
-                                    return substring2(cs_arg0, cs_arg1, cs_arg2);
-                                }());
-                            });
-                            return require(cs_receiver)->Append(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                        auto cs_receiver = stringBuilder;
+                        auto cs_arg0 = PLS_API(([&]() -> pls::cs::String {
+                            auto cs_arg0 = text;
+                            auto cs_arg1 = ([&]() -> pls::cs::Int32 {
+                                auto cs_left = pls::cs::Int32(require(match)->get_Index());
+                                auto cs_right = require(match)->get_Length();
+                                return cs_left + cs_right;
+                            }());
+                            auto cs_arg2 = num - (([&]() -> pls::cs::Int32 {
+                                               auto cs_left = pls::cs::Int32(require(match)->get_Index());
+                                               auto cs_right = require(match)->get_Length();
+                                               return cs_left + cs_right;
+                                           }()));
+                            return substring2(cs_arg0, cs_arg1, cs_arg2);
+                        }()));
+                        return require(cs_receiver)->Append(cs_arg0);
+                    }()));
                 }
-                text = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(stringBuilder)->ToString(); });
+                text = PLS_API(require(stringBuilder)->ToString());
             }
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return contains_string(text, literal(u"\t")); })) {
+        if (PLS_API(contains_string(text, literal(u"\t")))) {
             pls::cs::String text2 = StringUtil::Replace(text, literal(u"\t"), literal(u"¥t"));
             pls::cs::String comparisonSource = text2;
             pls::cs::String text3 = Language::_translateText(comparisonSource);
@@ -1591,15 +1454,11 @@ pls::cs::String _translateText(pls::cs::String text) {
     {
         pls::cs::String text2 = text;
         pls::cs::String text3 = pls::cs::String{};
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_starts_with(text2, literal(u"<po=")); })) {
-            pls::cs::Int32 num =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return index_char1(text2, u'>'); });
+        if (PLS_API(pls::cs::culture_starts_with(text2, literal(u"<po=")))) {
+            pls::cs::Int32 num = PLS_API(index_char1(text2, u'>'));
             if (num != -1) {
-                text3 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return substring2(text2, 0, num + 1); });
-                text2 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return substring1(text2, num + 1); });
+                text3 = PLS_API(substring2(text2, 0, num + 1));
+                text2 = PLS_API(substring1(text2, num + 1));
             }
         }
         pls::cs::Int32 num2 = java::lang::StringEx::Length(text2);
@@ -1614,9 +1473,7 @@ pls::cs::String _translateText(pls::cs::String text) {
                 return cs_left != cs_right;
             }())) {
             for (pls::cs::Int32 i = 0; i < Language::textTable_()[num2].length(); ++i) {
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return string_equals(text2, Language::textTable_()[num2][i][0]);
-                    })) {
+                if (PLS_API(string_equals(text2, Language::textTable_()[num2][i][0]))) {
                     if (!is_null(text3)) {
                         return pls::cs::String::concat(text3, Language::textTable_()[num2][i][1]);
                     }
@@ -1657,9 +1514,7 @@ pls::cs::String _translateText(pls::cs::String text) {
                         return cs_left != cs_right;
                     }())) {
                     for (pls::cs::Int32 l = 0; l < Language::builtInTextTable_()[num2].length(); ++l) {
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return string_equals(text2, Language::builtInTextTable_()[num2][l][0]);
-                            })) {
+                        if (PLS_API(string_equals(text2, Language::builtInTextTable_()[num2][l][0]))) {
                             if (num3 >= Language::builtInTextTable_()[num2][l].length()) {
                                 num3 = 1;
                             }
@@ -1726,76 +1581,61 @@ ByteArray ConvertLanguagePack(pls::cs::String file, ByteArray data) {
                 auto cs_right = pls::cs::box(pls::cs::Array<pls::cs::Ref<Language_LangPackRecord>>{});
                 return cs_left == cs_right;
             }()) ||
-            !pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_ends_with(file, literal(u".txt")); })) {
+            !PLS_API(pls::cs::culture_ends_with(file, literal(u".txt")))) {
             return data;
         }
-        file = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::culture_to_lower(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::RuntimePath::GetFileNameWithoutExtension(file); }));
-        });
+        file = PLS_API(
+            pls::cs::culture_to_lower(PLS_API(pls::cs::RuntimePath::GetFileNameWithoutExtension(file))));
         pls::cs::Array<pls::cs::List<Language_RecordPosition>> value =
             pls::cs::Array<pls::cs::List<Language_RecordPosition>>{};
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_dictionary = Language::langPackLines_();
-                    auto cs_key = file;
-                    return cs_dictionary.TryGetValue(cs_key, value);
-                }());
-            })) {
+        if (!PLS_API(([&]() {
+                auto cs_dictionary = Language::langPackLines_();
+                auto cs_key = file;
+                return cs_dictionary.TryGetValue(cs_key, value);
+            }()))) {
             return data;
         }
         pls::cs::Ref<Language_LangPackFormat> value2 = pls::cs::Ref<Language_LangPackFormat>{};
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_dictionary = Language::langPackFormats_();
-                    auto cs_key = file;
-                    return cs_dictionary.TryGetValue(cs_key, value2);
-                }());
-            })) {
+        if (!PLS_API(([&]() {
+                auto cs_dictionary = Language::langPackFormats_();
+                auto cs_key = file;
+                return cs_dictionary.TryGetValue(cs_key, value2);
+            }()))) {
             return data;
         }
         pls::cs::String text = StringUtil::GetString(data);
         if (is_null(text)) {
             return data;
         }
-        StringArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_text = text;
-                auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                cs_separators.at(0) = require(value2)->LineCode;
-                return pls::cs::string_split(cs_text, cs_separators);
-            }());
-        });
+        StringArray array = PLS_API(([&]() {
+            auto cs_text = text;
+            auto cs_separators = pls::cs::Array<char16_t>::make(1);
+            cs_separators.at(0) = require(value2)->LineCode;
+            return pls::cs::string_split(cs_text, cs_separators);
+        }()));
         text = pls::cs::String{};
         pls::cs::Ref<pls::cs::StringBuilder> stringBuilder = ([&]() {
             return pls::cs::make_ref<pls::cs::StringBuilder>();
         }());
         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
             if (i != 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(stringBuilder)->Append(require(value2)->LineCode);
-                });
+                PLS_API(require(stringBuilder)->Append(require(value2)->LineCode));
             }
             if (i >= value.length() || is_null(value.get_Item(i)) || (value.get_Item(i).get_Count() <= 0)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                        auto cs_receiver = stringBuilder;
-                        auto cs_arg0 = array[i];
-                        return require(cs_receiver)->Append(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                    auto cs_receiver = stringBuilder;
+                    auto cs_arg0 = array[i];
+                    return require(cs_receiver)->Append(cs_arg0);
+                }()));
                 array[i] = pls::cs::String{};
                 continue;
             }
-            auto cs_values_13 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_text_13 = array[i];
-                    auto cs_separators_13 = pls::cs::Array<char16_t>::make(1);
-                    cs_separators_13.at(0) = require(value2)->SegCode;
-                    return pls::cs::string_split(cs_text_13, cs_separators_13);
-                }());
-            });
+            auto cs_values_13 = PLS_API(([&]() {
+                auto cs_text_13 = array[i];
+                auto cs_separators_13 = pls::cs::Array<char16_t>::make(1);
+                cs_separators_13.at(0) = require(value2)->SegCode;
+                return pls::cs::string_split(cs_text_13, cs_separators_13);
+            }()));
             if (cs_values_13.is_null())
                 throw pls::cs::ArgumentNullException();
             auto cs_list_13 = pls::cs::List<pls::cs::String>::make(cs_values_13.length());
@@ -1805,41 +1645,32 @@ ByteArray ConvertLanguagePack(pls::cs::String file, ByteArray data) {
             for (pls::cs::Int32 num = pls::cs::Int32(value.get_Item(i).get_Count()) - 1; num >= 0; --num) {
                 Language_RecordPosition recordPosition = value.get_Item(i).get_Item(num);
                 if (require(recordPosition.Record)->To.get_Count() > 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = list;
-                            auto cs_arg0 = recordPosition.Segment;
-                            auto cs_arg1 = require(recordPosition.Record)->From.get_Count();
-                            cs_receiver.RemoveRange(cs_arg0, cs_arg1);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_list = list;
-                            auto cs_arg0 = recordPosition.Segment;
-                            auto cs_arg1 = require(recordPosition.Record)->To;
-                            cs_list.InsertRange(cs_arg0, cs_arg1);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = list;
+                        auto cs_arg0 = recordPosition.Segment;
+                        auto cs_arg1 = require(recordPosition.Record)->From.get_Count();
+                        cs_receiver.RemoveRange(cs_arg0, cs_arg1);
+                    }()));
+                    PLS_API(([&]() {
+                        auto cs_list = list;
+                        auto cs_arg0 = recordPosition.Segment;
+                        auto cs_arg1 = require(recordPosition.Record)->To;
+                        cs_list.InsertRange(cs_arg0, cs_arg1);
+                    }()));
                 }
             }
             for (pls::cs::Int32 j = 0; j < list.get_Count(); ++j) {
                 if (j != 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(stringBuilder)->Append(require(value2)->SegCode);
-                    });
+                    PLS_API(require(stringBuilder)->Append(require(value2)->SegCode));
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                        auto cs_receiver = stringBuilder;
-                        auto cs_arg0 = list.get_Item(j);
-                        return require(cs_receiver)->Append(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                    auto cs_receiver = stringBuilder;
+                    auto cs_arg0 = list.get_Item(j);
+                    return require(cs_receiver)->Append(cs_arg0);
+                }()));
             }
         }
-        return java::lang::StringEx::GetBytes(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(stringBuilder)->ToString(); }));
+        return java::lang::StringEx::GetBytes(PLS_API(require(stringBuilder)->ToString()));
     }
 }
 } // namespace kairo::unity::util::Language

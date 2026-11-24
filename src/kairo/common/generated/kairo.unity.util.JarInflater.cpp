@@ -129,8 +129,7 @@ void JarInflater::_load(pls::cs::Ref<java::io::InputStream> stream) {
                 auto cs_value = array4[l];
                 require(cs_target)->Flag = cs_value;
             }
-            pls::cs::String key = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_to_lower(array[l]); });
+            pls::cs::String key = PLS_API(pls::cs::culture_to_lower(array[l]));
             {
                 auto cs_target = files_;
                 auto cs_index = key;
@@ -149,7 +148,7 @@ void JarInflater::Close() {
         data_ = ByteArray{};
         directory_ = pls::cs::String{};
         if (!is_null(files_)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return files_.Clear(); });
+            PLS_API(files_.Clear());
         }
         files_ = pls::cs::Dictionary<pls::cs::String, pls::cs::Ref<JarInflater_FileInfo>>{};
     }
@@ -227,9 +226,8 @@ pls::cs::Int64 JarInflater::GetSize(pls::cs::String name) {
     {
         name = ConvertExtension(name);
         if (!is_null(directory_)) {
-            ByteArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::kairo::Storage::Read(3, false, pls::cs::String::concat(directory_, name));
-            });
+            ByteArray array =
+                PLS_API(pls::kairo::Storage::Read(3, false, pls::cs::String::concat(directory_, name)));
             if ([&]() {
                     auto cs_left = pls::cs::box(array);
                     auto cs_right = pls::cs::box(ByteArray{});
@@ -254,9 +252,8 @@ ByteArray JarInflater::GetData(pls::cs::String name) {
 
         name = ConvertExtension(name);
         if (!is_null(directory_)) {
-            ByteArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::kairo::Storage::Read(3, false, pls::cs::String::concat(directory_, name));
-            });
+            ByteArray array =
+                PLS_API(pls::kairo::Storage::Read(3, false, pls::cs::String::concat(directory_, name)));
             if ([&]() {
                     auto cs_left = pls::cs::box(array);
                     auto cs_right = pls::cs::box(ByteArray{});
@@ -329,22 +326,15 @@ pls::cs::Ref<JarInflater_FileInfo> JarInflater::_search(pls::cs::String name) {
         if (is_null(name) || is_null(files_)) {
             return pls::cs::Ref<JarInflater_FileInfo>{};
         }
-        name = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::culture_to_lower(ConvertExtension(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::string_trim(name); })));
-        });
+        name = PLS_API(pls::cs::culture_to_lower(ConvertExtension(PLS_API(pls::cs::string_trim(name)))));
         StringArray accessFilesList = io::AssetReader::GetAccessFilesList(name);
         for (pls::cs::Int32 i = 0; i < accessFilesList.length(); ++i) {
             pls::cs::Ref<JarInflater_FileInfo> value = pls::cs::Ref<JarInflater_FileInfo>{};
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() {
-                        auto cs_dictionary = files_;
-                        auto cs_key = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::cs::culture_to_lower(accessFilesList[i]);
-                        });
-                        return cs_dictionary.TryGetValue(cs_key, value);
-                    }());
-                })) {
+            if (PLS_API(([&]() {
+                    auto cs_dictionary = files_;
+                    auto cs_key = PLS_API(pls::cs::culture_to_lower(accessFilesList[i]));
+                    return cs_dictionary.TryGetValue(cs_key, value);
+                }()))) {
                 return value;
             }
         }
@@ -384,17 +374,14 @@ pls::cs::String JarInflater::ConvertExtension(pls::cs::String file) {
         }
         file = common::cfg::Config::ConvertExtension(file);
         if (!is_null(directory_)) {
-            pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::culture_to_lower(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::RuntimePath::GetExtension(file); }));
-            });
+            pls::cs::String text =
+                PLS_API(pls::cs::culture_to_lower(PLS_API(pls::cs::RuntimePath::GetExtension(file))));
             pls::cs::String text2 = text;
             if (text == literal(u".inf") || text == literal(u".ini")) {
                 text = literal(u".txt");
             }
             if (text != text2) {
-                file = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::RuntimePath::ChangeExtension(file, text); });
+                file = PLS_API(pls::cs::RuntimePath::ChangeExtension(file, text));
             }
         }
         return file;

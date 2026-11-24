@@ -244,16 +244,12 @@ void GameManager::StartSoccerForm(bool isUserBattle) {
             array.set_Item(1, require(GameManager::apdat_())->tData_.get_Item(teamId_[0]));
         }
         if (isUserBattle) {
-            for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(
-                                               require(require(GameManager::udat_())->memberPDataist_));
-                                       });
+            for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(
+                                               require(require(GameManager::udat_())->memberPDataist_)));
                  ++i) {
-                pls::cs::Ref<data::PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(
-                            require(require(GameManager::udat_())->memberPDataist_), i);
-                    }));
+                pls::cs::Ref<data::PlayerData> playerData =
+                    pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                        require(require(GameManager::udat_())->memberPDataist_), i)));
                 require(playerData)->SetGameParamData(require(playerData)->paramPhysical_);
             }
             if (!halfTime) {
@@ -387,15 +383,12 @@ void GameManager::StartSoccerMatch() {
             require(require(GameManager::apdat_())->pData_.get_Item(i))->actscoreScore_ = 0;
         }
         for (pls::cs::Int32 k = 0;
-             k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                 return kl_java_util::Vector_2_Size(require(require(GameManager::udat_())->memberPDataist_));
-             });
+             k <
+             PLS_API(kl_java_util::Vector_2_Size(require(require(GameManager::udat_())->memberPDataist_)));
              ++k) {
-            pls::cs::Ref<data::PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(
-                        require(require(GameManager::udat_())->memberPDataist_), k);
-                }));
+            pls::cs::Ref<data::PlayerData> playerData =
+                pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                    require(require(GameManager::udat_())->memberPDataist_), k)));
             require(playerData)->pri_game_goalTotal_ = require(playerData)->game_goalTotal_;
         }
         SetBallTeam(0);
@@ -476,7 +469,7 @@ void GameManager::ChangeState(pls::cs::Int32 next_state) {
             require(require(GameManager::apdat_())->frmSoccer_)->SetAllDraw();
             {
                 pls::cs::GcCallSite gc_site("M:game.GameManager.ChangeState(System.Int32)");
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_lang::JSystem::Gc(); });
+                PLS_API(kl_lang::JSystem::Gc());
             }
             require(require(GameManager::apdat_())->frmSoccer_)->SetAllDraw();
             require(require(GameManager::udat_())->teams_.get_Item(0))->Amefto_start();
@@ -520,23 +513,13 @@ void GameManager::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             pls::cs::Int32 num2 = stateCnt_ - num;
             pls::cs::Int32 num3 = GameUtil::RateConvert(num2, 0, 6, 255, 0, true);
             if (num3 > 0 && num2 >= 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0, num3);
-                    }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg2 = require(gameView)->GetGameWidth();
-                        pls::cs::Single cs_arg3 = require(gameView)->GetGameHeight();
-                        require(g)->FillRect(0.0f, 0.0f, cs_arg2, cs_arg3);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0, 255);
-                    }));
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0, num3))));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg2 = require(gameView)->GetGameWidth();
+                    pls::cs::Single cs_arg3 = require(gameView)->GetGameHeight();
+                    require(g)->FillRect(0.0f, 0.0f, cs_arg2, cs_arg3);
+                }()));
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0, 255))));
             }
             if (num2 > 6 && num2 <= 36) {
                 pls::cs::Int32 num4 = 0;
@@ -550,22 +533,13 @@ void GameManager::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     num4 = 0;
                 }
                 if (num4 == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(78, 137, 255, 194);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Single cs_arg2 = require(gameView)->GetGameWidth();
-                            require(g)->FillRect(0.0f, 73.0f, cs_arg2, 13.0f);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0, 255);
-                        }));
-                    });
+                    PLS_API(require(g)->SetColor(
+                        PLS_API(pls::kairo::Graphics::GetColorOfRGB(78, 137, 255, 194))));
+                    PLS_API(([&]() -> void {
+                        pls::cs::Single cs_arg2 = require(gameView)->GetGameWidth();
+                        require(g)->FillRect(0.0f, 73.0f, cs_arg2, 13.0f);
+                    }()));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0, 255))));
                     pls::cs::Int32 num5 = 0;
                     if (kairo::unity::util::Language::English()) {
                         num5 = ([&]() -> pls::cs::Int32 {
@@ -682,14 +656,9 @@ void GameManager::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
             }
         } else if (state_ == 10) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0, 128); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->FillRect(0.0f, form::SoccerForm::VIEW_Y(), 240.0f,
-                                            form::SoccerForm::VIEW_H());
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0, 128))));
+            PLS_API(
+                require(g)->FillRect(0.0f, form::SoccerForm::VIEW_Y(), 240.0f, form::SoccerForm::VIEW_H()));
             {
                 auto cs_receiver = GameManager::apdat_();
                 pls::cs::Ref<kairo::unity::ui::Seb> cs_arg3 =
@@ -833,13 +802,8 @@ void GameManager::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
                 require(GameManager::udat_())->DrawDispPlayer(g, 137 + num14, 141);
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255, 128);
-                }));
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->FillRect(5.0f, 169.0f, 230.0f, 61.0f); });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255, 128))));
+            PLS_API(require(g)->FillRect(5.0f, 169.0f, 230.0f, 61.0f));
             for (pls::cs::Int32 i = 0; i < 3; ++i) {
                 Draw_timeMessageWindow(g, 172 + 18 * i, 222, i % 2, 120);
             }
@@ -857,47 +821,38 @@ void GameManager::Draw_timeMessageWindow(pls::cs::Ref<pls::kairo::Graphics> g, p
     {
         pls::cs::Int32 num = centerX - W / 2;
         pls::cs::Int32 num2 = 224;
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, num2, 255 - num2); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                    require(require(GameManager::apdat_())->resCom2_)->img.get_Item(37);
-                require(g)->DrawImage(cs_arg0, num, oy, 0, index * 18, 5, 18);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                    require(require(GameManager::apdat_())->resCom2_)->img.get_Item(37);
-                require(g)->DrawImage(cs_arg0, num + W - 5, oy, 115, index * 18, 5, 18);
-            }());
-        });
+        PLS_API(require(g)->SetRenderMode(1, num2, 255 - num2));
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                require(require(GameManager::apdat_())->resCom2_)->img.get_Item(37);
+            require(g)->DrawImage(cs_arg0, num, oy, 0, index * 18, 5, 18);
+        }()));
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                require(require(GameManager::apdat_())->resCom2_)->img.get_Item(37);
+            require(g)->DrawImage(cs_arg0, num + W - 5, oy, 115, index * 18, 5, 18);
+        }()));
         if (W - 10 <= 110) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                        require(require(GameManager::apdat_())->resCom2_)->img.get_Item(37);
-                    require(g)->DrawImage(cs_arg0, num + 5, oy, 5, index * 18, W - 10, 18);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                    require(require(GameManager::apdat_())->resCom2_)->img.get_Item(37);
+                require(g)->DrawImage(cs_arg0, num + 5, oy, 5, index * 18, W - 10, 18);
+            }()));
         } else {
             pls::cs::Int32 num3 = W - 10;
             pls::cs::Int32 num4 = 0;
             while (num3 > 0) {
                 pls::cs::Int32 num5 = main::AppData::ClampMax(num3, 110);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                            require(require(GameManager::apdat_())->resCom2_)->img.get_Item(37);
-                        require(g)->DrawImage(cs_arg0, num + 5 + num4, oy, 5, index * 18, num5, 18);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                        require(require(GameManager::apdat_())->resCom2_)->img.get_Item(37);
+                    require(g)->DrawImage(cs_arg0, num + 5 + num4, oy, 5, index * 18, num5, 18);
+                }()));
                 num3 -= num5;
                 num4 += num5;
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
+        PLS_API(require(g)->SetRenderMode(0, 255, 0));
     }
 }
 
@@ -973,9 +928,8 @@ void GameManager::Collision() {
                 }
             }
         }
-        if (state_ == 0 && gameState_ == 2 && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::Check(require(require(GameManager::udat_())->ball_)->flag_, 8);
-            })) {
+        if (state_ == 0 && gameState_ == 2 &&
+            PLS_API(kl_unity_util::BitUtil::Check(require(require(GameManager::udat_())->ball_)->flag_, 8))) {
             for (pls::cs::Int32 num3 = 0; num3 < 2; ++num3) {
                 for (pls::cs::Int32 num4 = 0;
                      num4 < require(require(GameManager::udat_())->teams_.get_Item(num3))->players_.length();
@@ -996,20 +950,12 @@ void GameManager::Collision_updateCollisionState(pls::cs::Ref<Player> player) {
                      game);
     {
         require(player)->coliState_ = 1 + require(player)->team_id_;
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::Check(require(player)->flag_, 16384);
-            })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 16384))) {
             require(player)->coliState_ = 0;
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_unity_util::BitUtil::Check(require(player)->flag_, 4);
-                   })) {
+        } else if (PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 4))) {
             require(player)->coliState_ = 3 + require(player)->team_id_;
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_unity_util::BitUtil::Check(require(player)->flag_, 16);
-                   })) {
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(player)->flag_, 32);
-                })) {
+        } else if (PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 16))) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 32))) {
                 require(player)->coliState_ = 5 + require(player)->team_id_;
             } else {
                 require(player)->coliState_ = 0;
@@ -1018,9 +964,7 @@ void GameManager::Collision_updateCollisionState(pls::cs::Ref<Player> player) {
             require(player)->coliState_ = 7 + require(player)->team_id_;
         } else if (require(player)->p_id_ == 0) {
             require(player)->coliState_ = 0;
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_unity_util::BitUtil::Check(require(player)->flag_, 14400);
-                   })) {
+        } else if (PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 14400))) {
             require(player)->coliState_ = 0;
         }
     }
@@ -1032,20 +976,12 @@ void GameManager::Collision_updateCollisionBallState(pls::cs::Ref<Player> player
                      game);
     {
         require(player)->coliBallState_ = 3;
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::Check(require(player)->flag_, 8);
-            })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 8))) {
             require(player)->coliBallState_ = 0;
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_unity_util::BitUtil::Check(require(player)->flag_, 16384);
-                   })) {
+        } else if (PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 16384))) {
             require(player)->coliBallState_ = 4;
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_unity_util::BitUtil::Check(require(player)->flag_, 64);
-                   })) {
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(player)->flag_, 128);
-                })) {
+        } else if (PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 64))) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 128))) {
                 require(player)->coliBallState_ = 1;
             } else {
                 require(player)->coliBallState_ = 4;

@@ -130,12 +130,16 @@ arquivo; um nome legível serve). Constantes (`const` do C#) são
 
 ### Chamada à plataforma ou à KairoLibrary
 
-Embrulhe em `api_call` (mede o tempo no diagnóstico; não muda o resultado):
+Embrulhe em `PLS_API(...)` (no build de diagnóstico, mede o tempo da chamada como
+"plataforma"; não muda o resultado):
 
 ```cpp
-pls::cs::Int32 n = pls::diagnostic::api_call(
-    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(texto); });
+pls::cs::Int32 n = PLS_API(kl_lang::JInteger::ParseInt(texto));
 ```
+
+`PLS_API(X)` se expande exatamente para
+`pls::diagnostic::api_call([&]() -> decltype(auto) { return X; })` (definição em
+`src/kairo/common/diagnostic_profile.hpp`); vírgulas dentro de `X` são permitidas.
 
 Os apelidos `kl_*` são `namespace` declarados no topo de cada `.cpp`
 (ex.: `namespace kl_lang = pls::generated::java::lang;`). A API disponível está nos
@@ -169,7 +173,7 @@ cabeçalhos de `src/kairo/common/generated/` (KairoLibrary) e `src/kairo/api/`
 | `PLS_MANAGED_CLASS(nome C#, Classe, Base, interfaces...)` | identidade do tipo: `GetType()`, `is`/`as`, casts, mensagens | `src/kairo/common/semantic_runtime.hpp` |
 | `PLS_DELEGATE_SLOTS(Base, {slot, "M:..."}, ...)` | para cada `override`, o método C# que um delegate criado a partir dele representa (igualdade e remoção de delegates). Slots não redefinidos vão para a base; classe sem `override` não tem a linha | idem |
 | `PLS_METHOD_SCOPE(assembly, DocID, área)` | build de diagnóstico: conta a chamada, mede o tempo, alimenta a cobertura dos roteiros e a salvaguarda de métodos inalcançáveis. No build normal some | `src/kairo/common/diagnostic_profile.hpp` |
-| `pls::diagnostic::api_call(lambda)` | build de diagnóstico: mede o tempo da chamada à plataforma; senão só chama | idem |
+| `PLS_API(expr)` | chamada à plataforma ou à KairoLibrary; no build de diagnóstico separa o tempo dela do tempo do jogo (`PLS_FRAME_PROFILE`, tempo exclusivo por método); nos outros builds é a própria chamada | idem |
 | `pls::cs::GcCallSite gc_site("M:...")` | marca a origem de uma coleta explícita (`GC.Collect` do jogo) para a classificação do benchmark | `semantic_runtime.hpp` |
 | `PLS_NOINLINE` | mantém fora de linha o caminho lento da inicialização de tipos | `managed_type_init.hpp` |
 | blocos `{ auto cs_target = ...; auto cs_index = ...; auto cs_value = ...; ... }` | atribuição a elemento/campo na ordem do C#: alvo, índice, valor, e só então a escrita | — |

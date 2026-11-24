@@ -84,13 +84,10 @@ void EventData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.EventData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         name_ = array[num++];
-        type_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        type_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         termsScript_ = EventData::ReadScript(array[num++]);
         execsScript_ = EventData::ReadScript(array[num++]);
     }
@@ -104,19 +101,16 @@ IntArray2 EventData::ReadScript(pls::cs::String source) {
         if (is_null(source) || kl_lang::StringEx::Length(source) == 0) {
             return IntArray2::make(0);
         }
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StringUtil::Split(source, literal(u"&")); });
+        StringArray array = PLS_API(kl_util::StringUtil::Split(source, literal(u"&")));
         IntArray2 array2 = IntArray2::make(array.length());
         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
-            StringArray array3 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::StringUtil::Split(array[i], literal(u",")); });
+            StringArray array3 = PLS_API(kl_util::StringUtil::Split(array[i], literal(u",")));
             array2[i] = IntArray::make(array3.length());
             for (pls::cs::Int32 j = 0; j < array3.length(); ++j) {
                 {
                     auto cs_target = array2[i];
                     auto cs_index = j;
-                    auto cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array3[j]); });
+                    auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array3[j]));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
@@ -158,8 +152,7 @@ void EventData::LoadStringTable(pls::cs::String src) {
     EventData::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.EventData.LoadStringTable(System.String)", game);
     {
-        EventData::stringTable_() = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StringUtil::Split(src, literal(u"\n")); });
+        EventData::stringTable_() = PLS_API(kl_util::StringUtil::Split(src, literal(u"\n")));
     }
 }
 } // namespace data

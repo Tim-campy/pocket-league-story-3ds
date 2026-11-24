@@ -107,7 +107,7 @@ void InputStream::Close() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.io.InputStream.Close", kairo);
     {
         if (!is_null(Wrapped)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(Wrapped)->Close(); });
+            PLS_API(require(Wrapped)->Close());
         }
     }
 }
@@ -155,7 +155,7 @@ pls::cs::Int32 InputStream::Read() {
         if (is_null(Wrapped)) {
             throw pls::cs::NotImplementedException();
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return require(Wrapped)->ReadByte(); });
+        return PLS_API(require(Wrapped)->ReadByte());
     }
 }
 
@@ -178,8 +178,7 @@ pls::cs::Int32 InputStream::Read(ByteArray b, pls::cs::Int32 off, pls::cs::Int32
                 ->Read(b, off, len);
         }
         if (!is_null(Wrapped)) {
-            pls::cs::Int32 num = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(Wrapped)->Read(b, off, len); });
+            pls::cs::Int32 num = PLS_API(require(Wrapped)->Read(b, off, len));
             if (num > 0) {
                 return num;
             }

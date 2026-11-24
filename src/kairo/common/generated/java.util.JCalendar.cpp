@@ -80,12 +80,10 @@ bool JCalendar::Equals(pls::cs::Ref<JCalendar> self, pls::cs::Ref<pls::cs::Objec
 std::int32_t JCalendar::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.JCalendar.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 
@@ -95,12 +93,11 @@ pls::cs::Int32 JCalendar::Get(pls::cs::Int32 field) {
     {
         pls::cs::Ref<pls::cs::TimeZoneInfo> timeZoneInfo = require(timezone_)->GetTimeZoneInfo();
         auto cs_arg0_2 = ([&]() -> pls::cs::Int64 {
-            auto cs_left_2 = pls::cs::Int64(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return ([&]() -> pls::cs::DateTime {
-                                                    auto cs_receiver_2 = require(date_)->GetDateTime();
-                                                    return cs_receiver_2.ToUniversalTime();
-                                                }());
-                                            }).get_Ticks());
+            auto cs_left_2 = pls::cs::Int64(PLS_API(([&]() -> pls::cs::DateTime {
+                                                auto cs_receiver_2 = require(date_)->GetDateTime();
+                                                return cs_receiver_2.ToUniversalTime();
+                                            }()))
+                                                .get_Ticks());
             auto cs_right_2 = require(timeZoneInfo)->get_BaseUtcOffset().get_Ticks();
             return cs_left_2 + cs_right_2;
         }());

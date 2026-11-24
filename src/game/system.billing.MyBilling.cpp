@@ -76,8 +76,7 @@ void MyBilling::create_init(pls::cs::Ref<MyBilling> self) {
     BillingManager::create_init(pls::cs::static_pointer_cast<BillingManager>(self));
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.MyBilling.#ctor", game);
     {
-        MyBilling::app_() = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
+        MyBilling::app_() = PLS_API(pls::kairo::IApplication::GetCurrentApp());
         MyBilling::fm_() = pls::cs::unbox<pls::cs::Ref<pls::game::form::FormManager>>(
             pls::cs::box(require(MyBilling::app_())->GetFormManager()));
         MyBilling::apdat_() = main::AppData::GetInstance();
@@ -98,8 +97,7 @@ pls::cs::Ref<MyBilling> MyBilling::create() {
 StringArray2 MyBilling::GetBillingTable() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.MyBilling.GetBillingTable", game);
     {
-        bool flag =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Language::Japanese(); });
+        bool flag = PLS_API(kl_util::Language::Japanese());
         return StringArray2::from(
             {StringArray::from({literal(u"00"), literal(u"0000"), literal(u"ad_off_case0"),
                                 (flag) ? literal(u"広告OFF+横回転") : literal(u"Remove ads"),
@@ -172,12 +170,9 @@ bool MyBilling::CheckPlayingGame() {
         if (BillingManager::CheckPlayingGame()) {
             return true;
         }
-        pls::cs::Ref<pls::kairo::FormBase> form = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(MyBilling::fm_())->GetForm(0); });
-        if (!is_null(form) &&
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(form)->IsAlive(); })) {
-            pls::cs::Int32 id =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(form)->GetId(); });
+        pls::cs::Ref<pls::kairo::FormBase> form = PLS_API(require(MyBilling::fm_())->GetForm(0));
+        if (!is_null(form) && PLS_API(require(form)->IsAlive())) {
+            pls::cs::Int32 id = PLS_API(require(form)->GetId());
             if (id != 0 && id != 1) {
                 return true;
             }

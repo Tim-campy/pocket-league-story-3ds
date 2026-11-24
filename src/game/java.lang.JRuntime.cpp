@@ -13,8 +13,7 @@ pls::cs::Int64 FreeMemory(pls::cs::Ref<kl_lang::JRuntime> self) {
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JRuntime.FreeMemory", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return PlsPortGeneratedBootstrap::Source::FreeHeapMemory(); });
+        return PLS_API(PlsPortGeneratedBootstrap::Source::FreeHeapMemory());
     }
 }
 
@@ -23,8 +22,7 @@ pls::cs::Int64 TotalMemory(pls::cs::Ref<kl_lang::JRuntime> self) {
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JRuntime.TotalMemory", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return PlsPortGeneratedBootstrap::Source::TotalHeapMemory(); });
+        return PLS_API(PlsPortGeneratedBootstrap::Source::TotalHeapMemory());
     }
 }
 } // namespace java::lang::JRuntime

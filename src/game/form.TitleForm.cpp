@@ -145,12 +145,8 @@ void TitleForm::create_init(pls::cs::Ref<TitleForm> self) {
     TitleForm::ensure_initialized();
     self->x_ = 60;
     self->y_ = 60;
-    self->ta_data = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({20, 6}));
-    });
-    self->zsort_mhobj = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({20, 2}));
-    });
+    self->ta_data = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({20, 6})));
+    self->zsort_mhobj = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({20, 2})));
     MyFormBase::create_init(pls::cs::static_pointer_cast<MyFormBase>(self), 1);
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.TitleForm.#ctor", game);
     {
@@ -182,11 +178,8 @@ bool TitleForm::Init() {
 
         MyFormBase::Init();
         udat_ = game::UserData::GetInstance();
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(canvas_)->SetBackground(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255); }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(canvas_)->DecideKeyState(); });
+        PLS_API(require(canvas_)->SetBackground(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
+        PLS_API(require(canvas_)->DecideKeyState());
         if (!is_null(require(require(apdat_)->frmTitle_)->resTitle_)) {
             require(require(require(apdat_)->frmTitle_)->resTitle_)->Dispose();
         }
@@ -199,8 +192,7 @@ bool TitleForm::Init() {
         }
         {
             auto cs_receiver = require(require(apdat_)->frmTitle_)->resTitle_;
-            ByteArray cs_arg0 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::RecordStore::ReadRecord(1, 7); });
+            ByteArray cs_arg0 = PLS_API(pls::kairo::RecordStore::ReadRecord(1, 7));
             require(cs_receiver)->Load(cs_arg0, 3);
         }
         pls::cs::Ref<data::TeamData> teamData = require(apdat_)->tData_.get_Item(0);
@@ -211,44 +203,33 @@ bool TitleForm::Init() {
         selectSave_ = require(require(apdat_)->sysSave_)->ints[8];
         currentSave_ = require(require(apdat_)->sysSave_)->ints[8];
         selectSaveType_ = 1;
-        pls::cs::Ref<pls::kairo::SoundPlayer> instance = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::SoundPlayer::GetInstance(); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg1 = require(require(apdat_)->sysSave_)->ints[3] * 51;
-                require(instance)->SetVolume(0, cs_arg1);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                bool cs_arg1 = require(require(apdat_)->sysSave_)->ints[3] == 0;
-                require(instance)->SetMute(0, cs_arg1);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg1 = require(require(apdat_)->sysSave_)->ints[4] * 51;
-                require(instance)->SetVolume(1, cs_arg1);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                bool cs_arg1 = require(require(apdat_)->sysSave_)->ints[4] == 0;
-                require(instance)->SetMute(1, cs_arg1);
-            }());
-        });
+        pls::cs::Ref<pls::kairo::SoundPlayer> instance = PLS_API(pls::kairo::SoundPlayer::GetInstance());
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg1 = require(require(apdat_)->sysSave_)->ints[3] * 51;
+            require(instance)->SetVolume(0, cs_arg1);
+        }()));
+        PLS_API(([&]() -> void {
+            bool cs_arg1 = require(require(apdat_)->sysSave_)->ints[3] == 0;
+            require(instance)->SetMute(0, cs_arg1);
+        }()));
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg1 = require(require(apdat_)->sysSave_)->ints[4] * 51;
+            require(instance)->SetVolume(1, cs_arg1);
+        }()));
+        PLS_API(([&]() -> void {
+            bool cs_arg1 = require(require(apdat_)->sysSave_)->ints[4] == 0;
+            require(instance)->SetMute(1, cs_arg1);
+        }()));
         require(apdat_)->PlayBgm(4);
         POUND_PRESS_CNT = 0;
         STAR = false;
         titleFrame_ = 0;
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(app_)->ResetOrientation(); });
+        PLS_API(require(app_)->ResetOrientation());
         pls::cs::Int32 num = 0;
-        pls::cs::Ref<pls::kairo::IApplication> currentApp = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(currentApp)->GetWidth(); }) <=
-                480 ||
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(currentApp)->GetHeight(); }) <=
-                480) {
+        pls::cs::Ref<pls::kairo::IApplication> currentApp =
+            PLS_API(pls::kairo::IApplication::GetCurrentApp());
+        if (PLS_API(require(currentApp)->GetWidth()) <= 480 ||
+            PLS_API(require(currentApp)->GetHeight()) <= 480) {
             num = 1;
         }
         kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), num == 1);
@@ -259,8 +240,7 @@ bool TitleForm::Init() {
             } catch (const pls::cs::Exception& cs_caught_133) {
                 auto t = pls::cs::capture_exception(cs_caught_133);
                 {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                    PLS_API(kl_unity_util::Log::Info(t));
                 }
             }
         }
@@ -280,8 +260,7 @@ bool TitleForm::Update() {
         frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
         Update_titleAnime();
         pls::cs::Int32 pOUND_PRESS_CNT = POUND_PRESS_CNT;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(2048); })) {
+        if (PLS_API(require(canvas_)->CheckKeyState(2048))) {
             ++POUND_PRESS_CNT;
             if (POUND_PRESS_CNT > 40) {
                 STAR = true;
@@ -295,9 +274,8 @@ bool TitleForm::Update() {
                 {
                     auto cs_target = require(require(apdat_)->sysSave_)->ints;
                     auto cs_index = 1;
-                    auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::BitUtil::Off(require(require(apdat_)->sysSave_)->ints[1], 1);
-                    });
+                    auto cs_value =
+                        PLS_API(kl_unity_util::BitUtil::Off(require(require(apdat_)->sysSave_)->ints[1], 1));
                     cs_target.set_Item(cs_index, cs_value);
                 }
                 require(require(apdat_)->sysSave_)->ints[2] = 0;
@@ -305,18 +283,14 @@ bool TitleForm::Update() {
                 pls::cs::run_finally(
                     [&]() {
                         try {
-                            recordStore = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::RecordStore::OpenRecordStore(1);
-                            });
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(recordStore)->RemoveAllRecord(); });
+                            recordStore = PLS_API(pls::kairo::RecordStore::OpenRecordStore(1));
+                            PLS_API(require(recordStore)->RemoveAllRecord());
                             require(apdat_)->SaveSystem();
                         } catch (const pls::cs::Exception& cs_caught_137) {
                             auto t = pls::cs::capture_exception(cs_caught_137);
                             {
                                 if (kl_cfg::Config::PRINT()) {
-                                    pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                                    PLS_API(kl_unity_util::Log::Info(t));
                                 }
                             }
                         }
@@ -324,9 +298,7 @@ bool TitleForm::Update() {
                     [&]() {
                         if (!is_null(recordStore)) {
                             try {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(recordStore)->CloseRecordStore();
-                                });
+                                PLS_API(require(recordStore)->CloseRecordStore());
                             } catch (const pls::cs::Exception& cs_caught_136) {
                                 pls::cs::capture_exception(cs_caught_136);
                                 {
@@ -335,24 +307,19 @@ bool TitleForm::Update() {
                         }
                         recordStore = pls::cs::Ref<pls::kairo::RecordStore>{};
                     });
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(formMan_)->ChangeCurrentForm(require(apdat_)->frmBoot_);
-                });
+                return PLS_API(require(formMan_)->ChangeCurrentForm(require(apdat_)->frmBoot_));
             }
             require(require(require(apdat_)->resCom2_)->seb.get_Item(61))->Frame();
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 selMenu_ = (selMenu_ - 1 + 2) % 2;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 selMenu_ = (selMenu_ + 1 + 2) % 2;
             }
             if (!is_null(dialog_)) {
                 if (require(dialog_)->value1_ == 0 && require(dialog_)->result__SubForm == 0) {
                     dialog_ = pls::cs::Ref<SubForm>{};
-                    return pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(formMan_)->RemoveAllForms(); });
+                    return PLS_API(require(formMan_)->RemoveAllForms());
                 }
                 if (require(dialog_)->value1_ == 1 && require(dialog_)->result__SubForm == 0) {
                     dialog_ = pls::cs::Ref<SubForm>{};
@@ -364,33 +331,25 @@ bool TitleForm::Update() {
                 pls::cs::String buttons = literal(u"はい\tいいえ");
                 dialog_ = SubForm::MakeDialog(literal(u"ゲームを終了します"), buttons, 1);
                 require(dialog_)->value1_ = 0;
-                return pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->Push(dialog_); });
+                return PLS_API(require(formMan_)->Push(dialog_));
             }
             if (require(apdat_)->IsPushSoftLabel(5)) {
                 kairo::unity::ui::Canvas::OpenBrowser(kl_cfg::Config::URL_SITE());
                 return true;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (!kl_cfg::Config::TRIAL_VERSION()) {
                     if (selMenu_ == 0) {
                         ChangeState(1);
                     } else if (selMenu_ == 1) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                RankForm::create());
-                        });
+                        return PLS_API(
+                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(RankForm::create()));
                     }
                 } else if (selMenu_ == 0) {
                     ChangeState(1);
                 } else if (selMenu_ == 1) {
-                    pls::cs::String packageName = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                   return pls::kairo::IApplication::GetCurrentApp();
-                               }))
-                            ->GetPackageName();
-                    });
+                    pls::cs::String packageName = PLS_API(
+                        require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetPackageName());
                     packageName = kl_lang::StringEx::SubstringJ(packageName, 0,
                                                                 kl_lang::StringEx::Length(packageName) - 1);
                     kairo::unity::ui::Canvas::OpenBrowser(pls::cs::String::concat(
@@ -403,8 +362,7 @@ bool TitleForm::Update() {
                         literal(u"_lite%26utm_campaign%3Dbanner")));
                 }
             }
-            if (STAR && pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(2); })) {
+            if (STAR && PLS_API(require(canvas_)->CheckKeyPulse(2))) {
                 main::AppData::currentSaveSlot_() = selectSave_;
                 {
                     pls::cs::String cs_arg0 = pls::cs::String::concat(
@@ -412,8 +370,7 @@ bool TitleForm::Update() {
                     require(apdat_)->SendSaveData(cs_arg0, true);
                 }
             } else if (kl_cfg::Config::DEBUG_CMD_DEV() && !kl_cfg::Config::PTW() &&
-                       pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(2); })) {
+                       PLS_API(require(canvas_)->CheckKeyPulse(2))) {
                 pls::cs::Ref<pls::kairo::RecordStore> recordStore2 = pls::cs::Ref<pls::kairo::RecordStore>{};
                 pls::cs::String url = pls::cs::String::concat(
                     pls::cs::String::concat(
@@ -424,13 +381,9 @@ bool TitleForm::Update() {
                     [&]() {
                         try {
                             ByteArray data = kairo::unity::io::Http::Connect(url, ByteArray{}, false);
-                            recordStore2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::RecordStore::OpenRecordStore(0);
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(recordStore2)
-                                    ->WriteRecord(1 + main::AppData::currentSaveSlot_(), data);
-                            });
+                            recordStore2 = PLS_API(pls::kairo::RecordStore::OpenRecordStore(0));
+                            PLS_API(require(recordStore2)
+                                        ->WriteRecord(1 + main::AppData::currentSaveSlot_(), data));
                             require(require(apdat_)->sysSave_)->ints[6 + main::AppData::currentSaveSlot_()] =
                                 300;
                             require(require(apdat_)->sysSave_)->strs[4 + main::AppData::currentSaveSlot_()] =
@@ -455,9 +408,7 @@ bool TitleForm::Update() {
                     [&]() {
                         if (!is_null(recordStore2)) {
                             try {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(recordStore2)->CloseRecordStore();
-                                });
+                                PLS_API(require(recordStore2)->CloseRecordStore());
                             } catch (const pls::cs::Exception& cs_caught_138) {
                                 pls::cs::capture_exception(cs_caught_138);
                                 {
@@ -470,20 +421,16 @@ bool TitleForm::Update() {
         } else if (state_ == 1) {
             require(require(require(apdat_)->resCom2_)->seb.get_Item(61))->Frame();
             pls::cs::Int32 num = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(65536))) {
                 selectSave_ = (selectSave_ - 1 + num) % num;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                 selectSave_ = (selectSave_ + 1 + num) % num;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 selectSaveType_ = (selectSaveType_ - 1 + 2) % 2;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 selectSaveType_ = (selectSaveType_ + 1 + 2) % 2;
             }
             if (selectSaveType_ == 0 && require(require(apdat_)->sysSave_)->ints[11 + selectSave_] == -1) {
@@ -508,8 +455,7 @@ bool TitleForm::Update() {
                 dialog_ = pls::cs::Ref<SubForm>{};
                 return false;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (require(require(apdat_)->sysSave_)
                         ->ints[((selectSaveType_ == 0) ? 11 : 6) + selectSave_] != -1) {
                     if (selectSaveType_ == 0) {
@@ -518,15 +464,12 @@ bool TitleForm::Update() {
                     }
                     dialog_ = SubForm::create(22, 136, 97 + selectSaveType_ * 47);
                     require(dialog_)->value1_ = selectSave_;
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(dialog_);
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(dialog_));
                 }
                 NewGame();
             } else if (require(apdat_)->IsPushSoftLabel(2)) {
                 ChangeState(0);
-            } else if (STAR && pls::diagnostic::api_call(
-                                   [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(2); })) {
+            } else if (STAR && PLS_API(require(canvas_)->CheckKeyPulse(2))) {
                 main::AppData::currentSaveSlot_() = selectSave_;
                 {
                     pls::cs::String cs_arg0 = pls::cs::String::concat(
@@ -535,17 +478,14 @@ bool TitleForm::Update() {
                 }
             }
         }
-        if (STAR && pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1024); })) {
+        if (STAR && PLS_API(require(canvas_)->CheckKeyPulse(1024))) {
             pls::cs::Ref<kairo::unity::ui::Dialog> dialog3 =
                 kairo::unity::ui::Dialog::create(3, literal(u"データの再ダウンロード"));
             require(dialog3)->SetText(
                 literal(u"データを再ダウンロードしますか？\n※セーブデータは消えません"));
             if (require(dialog3)->Show() == 4) {
                 require(apdat_)->ResourceReDownload();
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(formMan_)->ChangeCurrentForm(require(apdat_)->frmBoot_);
-                });
+                return PLS_API(require(formMan_)->ChangeCurrentForm(require(apdat_)->frmBoot_));
             }
         }
         return true;
@@ -560,48 +500,38 @@ void TitleForm::ContinueGame() {
 
         if (require(require(apdat_)->sysSave_)->ints[((selectSaveType_ == 0) ? 11 : 6) + selectSave_] != -1) {
             try {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = canvas_;
-                        pls::cs::String cs_arg0 = pls::cs::String(u"");
-                        pls::cs::String cs_arg1 = pls::cs::String(u"");
-                        require(cs_receiver)
-                            ->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                    }());
-                });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->UpdateSoftLabel(); });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = canvas_;
+                    pls::cs::String cs_arg0 = pls::cs::String(u"");
+                    pls::cs::String cs_arg1 = pls::cs::String(u"");
+                    require(cs_receiver)
+                        ->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                }()));
+                PLS_API(require(canvas_)->UpdateSoftLabel());
                 require(apdat_)->LoadGame(selectSave_, selectSaveType_ == 0);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(formMan_)->ChangeCurrentForm(require(apdat_)->frmGame_);
-                });
+                PLS_API(require(formMan_)->ChangeCurrentForm(require(apdat_)->frmGame_));
             } catch (const pls::cs::Exception& cs_caught_131) {
                 auto t = pls::cs::capture_exception(cs_caught_131);
                 {
                     require(apdat_)->save_ = pls::cs::Ref<kl_unity_util::Property>{};
                     if (kl_cfg::Config::PRINT()) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                        PLS_API(kl_unity_util::Log::Info(t));
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> bool {
-                            auto cs_receiver = formMan_;
-                            pls::cs::Ref<pls::kairo::FormBase> cs_arg0 =
-                                SubForm::MakeDialog(literal(u"ロードに失敗しました"));
-                            return require(cs_receiver)->Push(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> bool {
+                        auto cs_receiver = formMan_;
+                        pls::cs::Ref<pls::kairo::FormBase> cs_arg0 =
+                            SubForm::MakeDialog(literal(u"ロードに失敗しました"));
+                        return require(cs_receiver)->Push(cs_arg0);
+                    }()));
                 }
             }
         } else {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> bool {
-                    auto cs_receiver = formMan_;
-                    pls::cs::Ref<pls::kairo::FormBase> cs_arg0 =
-                        SubForm::MakeDialog(literal(u"セーブデータがありません"));
-                    return require(cs_receiver)->Push(cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> bool {
+                auto cs_receiver = formMan_;
+                pls::cs::Ref<pls::kairo::FormBase> cs_arg0 =
+                    SubForm::MakeDialog(literal(u"セーブデータがありません"));
+                return require(cs_receiver)->Push(cs_arg0);
+            }()));
         }
     }
 }
@@ -611,9 +541,7 @@ void TitleForm::NewGame() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.TitleForm.NewGame", game);
     {
         dialog_ = SubForm::create(71);
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(dialog_);
-        });
+        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(dialog_));
     }
 }
 
@@ -621,23 +549,16 @@ void TitleForm::NewGame() {
 void TitleForm::SmartBeginPaint(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.TitleForm.SmartBeginPaint(kairo.unity.ui.Graphics)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0); }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Single cs_arg2 = require(view_)->GetGameWidth();
-                pls::cs::Single cs_arg3 = require(view_)->GetGameHeight();
-                require(g)->FillRect(0.0f, 0.0f, cs_arg2, cs_arg3);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg0 = (require(view_)->GetGameWidth() - 240) / 2;
-                require(g)->SetOrigin(cs_arg0, 0);
-            }());
-        });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0))));
+        PLS_API(([&]() -> void {
+            pls::cs::Single cs_arg2 = require(view_)->GetGameWidth();
+            pls::cs::Single cs_arg3 = require(view_)->GetGameHeight();
+            require(g)->FillRect(0.0f, 0.0f, cs_arg2, cs_arg3);
+        }()));
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg0 = (require(view_)->GetGameWidth() - 240) / 2;
+            require(g)->SetOrigin(cs_arg0, 0);
+        }()));
     }
 }
 
@@ -650,7 +571,7 @@ void TitleForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         } catch (const pls::cs::Exception& cs_caught_132) {
             auto t = pls::cs::capture_exception(cs_caught_132);
             {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                PLS_API(kl_unity_util::Log::Info(t));
             }
         }
     }
@@ -665,19 +586,15 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
 
         pls::cs::Ref<surface::GameView> instance = surface::GameView::GetInstance();
         SmartBeginPaint(g);
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(0);
-                pls::cs::Single cs_arg2 = ([&]() -> pls::cs::Int32 {
-                    auto cs_left = require(instance)->GetGameHeight();
-                    auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(require(resTitle_)->img.get_Item(0))->GetHeight();
-                    });
-                    return cs_left - cs_right;
-                }());
-                require(g)->DrawImage(cs_arg0, 0.0f, cs_arg2);
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(0);
+            pls::cs::Single cs_arg2 = ([&]() -> pls::cs::Int32 {
+                auto cs_left = require(instance)->GetGameHeight();
+                auto cs_right = PLS_API(require(require(resTitle_)->img.get_Item(0))->GetHeight());
+                return cs_left - cs_right;
             }());
-        });
+            require(g)->DrawImage(cs_arg0, 0.0f, cs_arg2);
+        }()));
         pls::cs::Int32 num20, num, num2, num3;
         num3 = 0;
         num2 = num3;
@@ -715,49 +632,33 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 pls::cs::Int32 num10 = pls::cs::to_int32(game::GameUtil::SetAStop(-6000.0f, num4));
                 num8 = num9 * num7 + num10 * num7 * (num7 + 1) / 2;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(2);
-                    require(g)->DrawImage(cs_arg0, 0.0f, num3 + num + num8 / 1000);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(2);
+                require(g)->DrawImage(cs_arg0, 0.0f, num3 + num + num8 / 1000);
+            }()));
             if (!MyFormBase::Jp() && !is_null(kairo::unity::util::Language::GetLanguageCode()) &&
                 kairo::unity::util::Language::GetLanguageCode() != literal(u"en-US") &&
-                !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::cs::culture_starts_with(kairo::unity::util::Language::GetLanguageCode(),
-                                                        literal(u"*"));
-                })) {
+                !PLS_API(pls::cs::culture_starts_with(kairo::unity::util::Language::GetLanguageCode(),
+                                                      literal(u"*")))) {
                 pls::cs::String text = MyFormBase::LT(literal(u"サッカークラブ物語"));
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PushFont(9); });
-                pls::cs::Int32 num11 =
-                    main::AppData::ClampMin(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(g)->StringWidth(text);
-                                            }),
-                                            80);
+                PLS_API(require(g)->PushFont(9));
+                pls::cs::Int32 num11 = main::AppData::ClampMin(PLS_API(require(g)->StringWidth(text)), 80);
                 pls::cs::Int32 num12 = num3 + num + 120 - 2;
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetColor(0, 0, 0, 96); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = 120 - num11 / 2 - 1;
-                        pls::cs::Single cs_arg1 = pls::cs::Single(num12) - 0.5f;
-                        pls::cs::Single cs_arg2 = num11 + 2;
-                        pls::cs::Single cs_arg3 =
-                            pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{});
-                                       }))
-                                    ->GetHeight();
-                            })) +
-                            1;
-                        require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
-                    }());
-                });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 255); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->DrawString(text, 120.0f, num12, 2); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopFont(); });
+                PLS_API(require(g)->SetColor(0, 0, 0, 96));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = 120 - num11 / 2 - 1;
+                    pls::cs::Single cs_arg1 = pls::cs::Single(num12) - 0.5f;
+                    pls::cs::Single cs_arg2 = num11 + 2;
+                    pls::cs::Single cs_arg3 =
+                        pls::cs::Int32(
+                            PLS_API(require(PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{})))
+                                        ->GetHeight())) +
+                        1;
+                    require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                }()));
+                PLS_API(require(g)->SetColor(255, 255, 255));
+                PLS_API(require(g)->DrawString(text, 120.0f, num12, 2));
+                PLS_API(require(g)->PopFont());
             }
         }
         if (MyFormBase::Jp() && !cfg::MyConfig::SMART_PASS() && !cfg::MyConfig::AMAZON() &&
@@ -770,30 +671,23 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             if (MyFormBase::En()) {
                 num14 = -8;
             }
-            num14 += pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return require(require(resTitle_)->img.get_Item(2))->GetHeight();
-                     })) -
-                     5;
+            num14 += pls::cs::Int32(PLS_API(require(require(resTitle_)->img.get_Item(2))->GetHeight())) - 5;
             if (MyFormBase::En()) {
                 num14 += -8;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(3);
-                    require(g)->DrawImage(cs_arg0, num2, num3 + num + num14);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(3);
+                require(g)->DrawImage(cs_arg0, num2, num3 + num + num14);
+            }()));
             surface::GameView::AddTouch(
                 g, 27, num2, num3 + num + num14, 240, 63, 1441792,
                 require(kairo::unity::surface::TouchOption::Create())->Margin(-15, -15, 0, 0));
             pls::cs::Int32 num15 = num2 + 180 + 20 + 3;
             pls::cs::Int32 num16 = num3 + num + num14 - 12 + 9;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(4);
-                    require(g)->DrawImage(cs_arg0, num15, num16);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(4);
+                require(g)->DrawImage(cs_arg0, num15, num16);
+            }()));
             surface::GameView::AddTouch(
                 g, 27, num15, num16, 30, 30, 1507328,
                 require(kairo::unity::surface::TouchOption::Create())->Margin(10, 10, 10, 10));
@@ -810,32 +704,22 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 pls::cs::Int32 num18 = num17 - 14 + 2;
                 pls::cs::Int32 num19 = 22;
                 num20 = 67;
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(1);
-                        require(g)->DrawImage(cs_arg0, num20, num18 - 7, 0, 0, 106, 31);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(1);
-                        require(g)->DrawImage(cs_arg0, num20, num18 + 24, 0, 36, 106, 25);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(1);
+                    require(g)->DrawImage(cs_arg0, num20, num18 - 7, 0, 0, 106, 31);
+                }()));
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(1);
+                    require(g)->DrawImage(cs_arg0, num20, num18 + 24, 0, 36, 106, 25);
+                }()));
                 pls::cs::Int32 num21 = 94;
                 pls::cs::Int32 num22 = 0;
                 for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
                     pls::cs::Int32 num23 = 120;
                     if (i == selMenu_) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Graphics::GetColorOfRGB(44, 138, 255);
-                            }));
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->FillRect(num23 - num21 / 2, num18 + num19 * i + 4, num21,
-                                                        16.0f);
-                        });
+                        PLS_API(
+                            require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(44, 138, 255))));
+                        PLS_API(require(g)->FillRect(num23 - num21 / 2, num18 + num19 * i + 4, num21, 16.0f));
                         if ((kl_cfg::Config::TRIAL_VERSION()) && (kairo::unity::util::Language::English())) {
 
                         } else {
@@ -858,70 +742,44 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         }
                     }
                     if (i == selMenu_) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Graphics::GetColorOfRGB(255, 255, 224);
-                            }));
-                        });
+                        PLS_API(require(g)->SetColor(
+                            PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 224))));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Graphics::GetColorOfRGB(255, 255, 224);
-                            }));
-                        });
+                        PLS_API(require(g)->SetColor(
+                            PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 224))));
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = array[i];
-                            require(g)->DrawString(cs_arg0, num23, num18 + num19 * i + 6, 2);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = array[i];
+                        require(g)->DrawString(cs_arg0, num23, num18 + num19 * i + 6, 2);
+                    }()));
                     surface::GameView::AddTouch(g, 0, num23 - 50, num18 + num19 * i + 1, 100, num19, i);
                 }
             }
             if (kl_cfg::Config::DEBUG() && kl_cfg::Config::SHOW_DEBUG() &&
-                !pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->IsCapturing(); })) {
+                !PLS_API(require(formMan_)->IsCapturing())) {
                 pls::cs::String text2 = kairo::unity::util::Language::GetLanguageCode();
                 if (is_null(text2)) {
                     text2 = literal(u" null ");
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 0, 0); }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawString(
-                        pls::cs::String::concat(pls::cs::String::concat(literal(u"DEBUG MODE["), text2),
-                                                literal(u"]")),
-                        2.0f, 2.0f);
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 0, 0))));
+                PLS_API(require(g)->DrawString(
+                    pls::cs::String::concat(pls::cs::String::concat(literal(u"DEBUG MODE["), text2),
+                                            literal(u"]")),
+                    2.0f, 2.0f));
                 kairo::unity::ui::Graphics::DrawStringBold(
                     require(g), literal(u"2017/02/03 12:01:57"), 2.0f, 18.0f,
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                    }),
-                    1);
+                    PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255)), 1);
             }
         }
         if (STAR) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 0, 0); }));
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawString(literal(u"☆"), 2.0f, 16.0f); });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 0, 0))));
+            PLS_API(require(g)->DrawString(literal(u"☆"), 2.0f, 16.0f));
         }
-        if (state_ == 1 &&
-            (require(apdat_)->IsTopForm(this) ||
-             (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                  return require(pls::diagnostic::api_call(
-                                     [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); }))
-                      ->GetId();
-              }) == 4 &&
-              require((pls::cs::unbox<pls::cs::Ref<SubForm>>(pls::cs::box(pls::diagnostic::api_call(
-                          [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); })))))
-                  ->IsMenu()))) {
+        if (state_ == 1 && (require(apdat_)->IsTopForm(this) ||
+                            (PLS_API(require(PLS_API(require(formMan_)->GetTopForm()))->GetId()) == 4 &&
+                             require((pls::cs::unbox<pls::cs::Ref<SubForm>>(
+                                         pls::cs::box(PLS_API(require(formMan_)->GetTopForm())))))
+                                 ->IsMenu()))) {
             pls::cs::Int32 num24 = (require(instance)->GetGameHeight() - 240) / 2;
             {
                 auto cs_receiver = apdat_;
@@ -947,24 +805,18 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
             }
             pls::cs::Int32 num25 = num24 + 74 + 6;
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(60, 100, 200); });
+            PLS_API(require(g)->SetColor(60, 100, 200));
             pls::cs::Int32 dx = 42;
             pls::cs::Int32 dx2 = 199;
             pls::cs::Int32 num26 = 93 + num24;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->ClipRect(0.0f, num26 - 28, 240.0f, 20.0f, true);
-            });
+            PLS_API(require(g)->ClipRect(0.0f, num26 - 28, 240.0f, 20.0f, true));
             SubForm::Draw_chara(g, 171, 0, 0, frame_, dx, num26);
             SubForm::Draw_chara(g, 172, 0, 1, frame_, dx2, num26);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopClip(); });
+            PLS_API(require(g)->PopClip());
             if (selectSaveType_ == 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawString(literal(u"中断データから再開"), 120.0f, num25 - 11, 2);
-                });
+                PLS_API(require(g)->DrawString(literal(u"中断データから再開"), 120.0f, num25 - 11, 2));
             } else {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawString(literal(u"セーブデータを読込"), 120.0f, num25 - 11, 2);
-                });
+                PLS_API(require(g)->DrawString(literal(u"セーブデータを読込"), 120.0f, num25 - 11, 2));
             }
             pls::cs::Int32 num27 = 29;
             pls::cs::Int32 num28 = 181;
@@ -975,37 +827,24 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 pls::cs::Int32 num30 =
                     require(require(apdat_)->sysSave_)->ints[((j == 0) ? 11 : 6) + selectSave_];
                 if (num30 == -1 && j == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                require(require(apdat_)->resCom2_)->img.get_Item(193);
-                            pls::cs::Single cs_arg1 = num27 + 10 + TitleForm::IMG_SL()[1][0];
-                            pls::cs::Single cs_arg2 = num25 + 15 + TitleForm::IMG_SL()[1][1];
-                            pls::cs::Int32 cs_arg3 = TitleForm::IMG_SL()[1][2];
-                            pls::cs::Int32 cs_arg4 = TitleForm::IMG_SL()[1][3];
-                            pls::cs::Int32 cs_arg5 = TitleForm::IMG_SL()[1][4];
-                            pls::cs::Int32 cs_arg6 = TitleForm::IMG_SL()[1][5];
-                            require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5,
-                                                  cs_arg6);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(30, 30, 30);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->DrawString(literal(u"中断データなし"), 7 + num27 + num28 / 2,
-                                                      num25 + 15, 2);
-                    });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 128); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(0, 0, 0); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->FillRect(num27, num25, num28, num29); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetRenderMode(); });
+                    PLS_API(([&]() -> void {
+                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                            require(require(apdat_)->resCom2_)->img.get_Item(193);
+                        pls::cs::Single cs_arg1 = num27 + 10 + TitleForm::IMG_SL()[1][0];
+                        pls::cs::Single cs_arg2 = num25 + 15 + TitleForm::IMG_SL()[1][1];
+                        pls::cs::Int32 cs_arg3 = TitleForm::IMG_SL()[1][2];
+                        pls::cs::Int32 cs_arg4 = TitleForm::IMG_SL()[1][3];
+                        pls::cs::Int32 cs_arg5 = TitleForm::IMG_SL()[1][4];
+                        pls::cs::Int32 cs_arg6 = TitleForm::IMG_SL()[1][5];
+                        require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
+                    }()));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(30, 30, 30))));
+                    PLS_API(require(g)->DrawString(literal(u"中断データなし"), 7 + num27 + num28 / 2,
+                                                   num25 + 15, 2));
+                    PLS_API(require(g)->SetRenderMode(1, 128));
+                    PLS_API(require(g)->SetColor(0, 0, 0));
+                    PLS_API(require(g)->FillRect(num27, num25, num28, num29));
+                    PLS_API(require(g)->SetRenderMode());
                     if (selectSaveType_ == j && require(apdat_)->IsTopForm(this)) {
                         {
                             auto cs_receiver = require(require(apdat_)->resCom2_)->seb.get_Item(61);
@@ -1016,40 +855,26 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     }
                 } else if (num30 == -1 && j == 1) {
                     if (selectSaveType_ == j) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Graphics::GetColorOfRGB(200, 200, 255);
-                            }));
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->FillRect(7 + num27 + num28 / 2 - 36 - 5, num25 + 15 - 1, 82.0f,
-                                                        14.0f);
-                        });
+                        PLS_API(require(g)->SetColor(
+                            PLS_API(pls::kairo::Graphics::GetColorOfRGB(200, 200, 255))));
+                        PLS_API(require(g)->FillRect(7 + num27 + num28 / 2 - 36 - 5, num25 + 15 - 1, 82.0f,
+                                                     14.0f));
                     }
                     surface::GameView::AddTouch(g, 3, 0, num25 - 5, 240, num29 + 10, 0x20000 | j);
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                require(require(apdat_)->resCom2_)->img.get_Item(193);
-                            pls::cs::Single cs_arg1 = num27 + 10 + TitleForm::IMG_SL()[0][0];
-                            pls::cs::Single cs_arg2 = num25 + 15 + TitleForm::IMG_SL()[0][1];
-                            pls::cs::Int32 cs_arg3 = TitleForm::IMG_SL()[0][2];
-                            pls::cs::Int32 cs_arg4 = TitleForm::IMG_SL()[0][3];
-                            pls::cs::Int32 cs_arg5 = TitleForm::IMG_SL()[0][4];
-                            pls::cs::Int32 cs_arg6 = TitleForm::IMG_SL()[0][5];
-                            require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5,
-                                                  cs_arg6);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(30, 30, 30);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->DrawString(literal(u"空きスロット"), 7 + num27 + num28 / 2,
-                                                      num25 + 15, 2);
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                            require(require(apdat_)->resCom2_)->img.get_Item(193);
+                        pls::cs::Single cs_arg1 = num27 + 10 + TitleForm::IMG_SL()[0][0];
+                        pls::cs::Single cs_arg2 = num25 + 15 + TitleForm::IMG_SL()[0][1];
+                        pls::cs::Int32 cs_arg3 = TitleForm::IMG_SL()[0][2];
+                        pls::cs::Int32 cs_arg4 = TitleForm::IMG_SL()[0][3];
+                        pls::cs::Int32 cs_arg5 = TitleForm::IMG_SL()[0][4];
+                        pls::cs::Int32 cs_arg6 = TitleForm::IMG_SL()[0][5];
+                        require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
+                    }()));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(30, 30, 30))));
+                    PLS_API(require(g)->DrawString(literal(u"空きスロット"), 7 + num27 + num28 / 2,
+                                                   num25 + 15, 2));
                     if (selectSaveType_ == j && require(apdat_)->IsTopForm(this)) {
                         {
                             auto cs_receiver = require(require(apdat_)->resCom2_)->seb.get_Item(61);
@@ -1060,51 +885,33 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     }
                 } else {
                     if (selectSaveType_ == j) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Graphics::GetColorOfRGB(200, 200, 255);
-                            }));
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->FillRect(7 + num27 + 90 - 42 - 5, num25 + 7 - 1, 94.0f, 14.0f);
-                        });
+                        PLS_API(require(g)->SetColor(
+                            PLS_API(pls::kairo::Graphics::GetColorOfRGB(200, 200, 255))));
+                        PLS_API(require(g)->FillRect(7 + num27 + 90 - 42 - 5, num25 + 7 - 1, 94.0f, 14.0f));
                     }
                     surface::GameView::AddTouch(g, 3, 0, num25 - 5, 240, num29 + 10, 0x20000 | j);
                     pls::cs::Int32 num31 = 1 - j;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                require(require(apdat_)->resCom2_)->img.get_Item(193);
-                            pls::cs::Single cs_arg1 = num27 + 10 + TitleForm::IMG_SL()[num31][0];
-                            pls::cs::Single cs_arg2 = num25 + 6 + TitleForm::IMG_SL()[num31][1];
-                            pls::cs::Int32 cs_arg3 = TitleForm::IMG_SL()[num31][2];
-                            pls::cs::Int32 cs_arg4 = TitleForm::IMG_SL()[num31][3];
-                            pls::cs::Int32 cs_arg5 = TitleForm::IMG_SL()[num31][4];
-                            pls::cs::Int32 cs_arg6 = TitleForm::IMG_SL()[num31][5];
-                            require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5,
-                                                  cs_arg6);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(30, 30, 30);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 =
-                                require(require(apdat_)->sysSave_)->strs[((j == 0) ? 6 : 2) + selectSave_];
-                            require(g)->DrawString(cs_arg0, 7 + num27 + 90, num25 + 7, 2);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                            require(require(apdat_)->resCom2_)->img.get_Item(193);
+                        pls::cs::Single cs_arg1 = num27 + 10 + TitleForm::IMG_SL()[num31][0];
+                        pls::cs::Single cs_arg2 = num25 + 6 + TitleForm::IMG_SL()[num31][1];
+                        pls::cs::Int32 cs_arg3 = TitleForm::IMG_SL()[num31][2];
+                        pls::cs::Int32 cs_arg4 = TitleForm::IMG_SL()[num31][3];
+                        pls::cs::Int32 cs_arg5 = TitleForm::IMG_SL()[num31][4];
+                        pls::cs::Int32 cs_arg6 = TitleForm::IMG_SL()[num31][5];
+                        require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
+                    }()));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(30, 30, 30))));
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 =
+                            require(require(apdat_)->sysSave_)->strs[((j == 0) ? 6 : 2) + selectSave_];
+                        require(g)->DrawString(cs_arg0, 7 + num27 + 90, num25 + 7, 2);
+                    }()));
                     pls::cs::Int32 num32 = num30 / 10000;
                     pls::cs::Int32 num33 = num30 % 10000 / 100;
                     pls::cs::Int32 num34 = num30 % 100;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(30, 30, 30);
-                        }));
-                    });
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(30, 30, 30))));
                     {
                         pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+2"));
                         pls::cs::String cs_arg1 = MyFormBase::LT(
@@ -1112,43 +919,28 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 auto cs_left = pls::cs::String::concat(
                                     ([&]() {
                                         auto cs_left = pls::cs::String::concat(
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_unity_util::StringUtil::FormatString(
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_lang::JString::ValueOfInt(num32 + 1);
-                                                    }),
-                                                    2, u' ');
-                                            }),
+                                            PLS_API(kl_unity_util::StringUtil::FormatString(
+                                                PLS_API(kl_lang::JString::ValueOfInt(num32 + 1)), 2, u' ')),
                                             literal(u"\t"));
-                                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_unity_util::StringUtil::FormatString(
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return kl_lang::JString::ValueOfInt(num33 + 1);
-                                                }),
-                                                2, u' ', false);
-                                        });
+                                        auto cs_right = PLS_API(kl_unity_util::StringUtil::FormatString(
+                                            PLS_API(kl_lang::JString::ValueOfInt(num33 + 1)), 2, u' ',
+                                            false));
                                         return pls::cs::String::concat(cs_left, cs_right);
                                     }()),
                                     literal(u"\t"));
-                                auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JString::ValueOfInt(num34 + 1);
-                                });
+                                auto cs_right = PLS_API(kl_lang::JString::ValueOfInt(num34 + 1));
                                 return pls::cs::String::concat(cs_left, cs_right);
                             }()));
                         kairo::unity::ui::Graphics::DrawStringTextFormatStringFloat(
                             require(g), cs_arg0, cs_arg1, 7 + num27 + 70 - 72, num25 + 24);
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = MyFormBase::YEN(
-                                literal(u"万円"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JLong::ParseLong(
-                                        require(require(apdat_)->sysSave_)
-                                            ->strs[((j == 0) ? 8 : 4) + selectSave_]);
-                                }));
-                            require(g)->DrawString(cs_arg0, num27 + 172, num25 + 24, 4);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = MyFormBase::YEN(
+                            literal(u"万円"),
+                            PLS_API(kl_lang::JLong::ParseLong(
+                                require(require(apdat_)->sysSave_)->strs[((j == 0) ? 8 : 4) + selectSave_])));
+                        require(g)->DrawString(cs_arg0, num27 + 172, num25 + 24, 4);
+                    }()));
                     if (selectSaveType_ == j && require(apdat_)->IsTopForm(this)) {
                         {
                             auto cs_receiver = require(require(apdat_)->resCom2_)->seb.get_Item(61);
@@ -1161,39 +953,25 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 num25 += 47;
             }
             num25 -= 2;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(125, 158, 116); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawString(literal(u"データを選択してください"), 120.0f, num25, 2);
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(125, 158, 116))));
+            PLS_API(require(g)->DrawString(literal(u"データを選択してください"), 120.0f, num25, 2));
         }
         if (kl_cfg::Config::TRIAL_VERSION()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255); }));
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
             kairo::unity::ui::Graphics::DrawStringBold(require(g), literal(u"Lite Version"), 235.0f, 5.0f,
-                                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                           return pls::kairo::Graphics::GetColorOfRGB(0, 0,
-                                                                                                      0);
-                                                       }),
+                                                       PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0)),
                                                        4);
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::Language::Japanese(); })) {
+        PLS_API(require(g)->SetOrigin(0, 0));
+        if (!PLS_API(kl_unity_util::Language::Japanese())) {
             system::form::LanguageForm::DrawButton(
                 g,
                 pls::cs::Delegate<void()>::from_closure(
                     pls::cs::raw(this), std::string("M:form.TitleForm._draw(kairo.unity.ui.Graphics):20130"),
                     [self = this]() -> void {
                         {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(self->formMan_)
-                                    ->ChangeCurrentForm(require(self->apdat_)->frmBoot_);
-                            });
+                            PLS_API(
+                                require(self->formMan_)->ChangeCurrentForm(require(self->apdat_)->frmBoot_));
                         }
                     },
                     this),
@@ -1238,13 +1016,11 @@ void TitleForm::ChangeState(pls::cs::Int32 state) {
                 auto cs_right = pls::cs::box(IntArray{});
                 return cs_left != cs_right;
             }()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[array[0]];
-                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[array[1]];
-                    this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = main::AppData::softLabels_()[array[0]];
+                pls::cs::String cs_arg1 = main::AppData::softLabels_()[array[1]];
+                this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+            }()));
         }
         state_ = state;
     }
@@ -1443,8 +1219,7 @@ bool TitleForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) 
                         } catch (const pls::cs::Exception& cs_caught_134) {
                             auto t = pls::cs::capture_exception(cs_caught_134);
                             {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                                PLS_API(kl_unity_util::Log::Info(t));
                             }
                         }
                         if (!cfg::MyConfig::SMART_PASS() && !cfg::MyConfig::AMAZON() &&
@@ -1459,8 +1234,7 @@ bool TitleForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) 
                         } catch (const pls::cs::Exception& cs_caught_135) {
                             auto t2 = pls::cs::capture_exception(cs_caught_135);
                             {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t2); });
+                                PLS_API(kl_unity_util::Log::Info(t2));
                             }
                         }
                     }
@@ -1493,15 +1267,12 @@ void TitleForm::LoadKiaroAdClickNum() {
                         byteArrayInputStream =
                             kl_io::ByteArrayInputStream::create(require(require(apdat_)->sysSave_)->bins[5]);
                         kairoAdClickNum_ = pls::cs::cast_integral<pls::cs::Int32>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                            }));
+                            PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                     }
                 },
                 [&]() {
                     if (!is_null(byteArrayInputStream)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
+                        PLS_API(require(byteArrayInputStream)->Close());
                     }
                     byteArrayInputStream = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 });
@@ -1533,25 +1304,20 @@ void TitleForm::UpdateKairoAdClickNum(pls::cs::Int32 addClickNum) {
             [&]() {
                 {
                     byteArrayOutputStream = kl_io::ByteArrayOutputStream::create();
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StreamUtil::WriteShort(
-                            static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
-                            pls::cs::cast_integral<std::int16_t>(kairoAdClickNum_));
-                    });
+                    PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                        static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
+                        pls::cs::cast_integral<std::int16_t>(kairoAdClickNum_)));
                     {
                         auto cs_target = require(require(apdat_)->sysSave_)->bins;
                         auto cs_index = 5;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream)->ToByteArray();
-                        });
+                        auto cs_value = PLS_API(require(byteArrayOutputStream)->ToByteArray());
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
             },
             [&]() {
                 if (!is_null(byteArrayOutputStream)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream)->Close(); });
+                    PLS_API(require(byteArrayOutputStream)->Close());
                 }
                 byteArrayOutputStream = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
             });
@@ -1562,12 +1328,10 @@ void TitleForm::UpdateKairoAdClickNum(pls::cs::Int32 addClickNum) {
 std::int32_t TitleForm::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.TitleForm.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace form

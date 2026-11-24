@@ -66,7 +66,7 @@ void OutputStream::Close() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.io.OutputStream.Close", kairo);
     {
         if (!is_null(Wrapped)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(Wrapped)->Close(); });
+            PLS_API(require(Wrapped)->Close());
         }
     }
 }
@@ -76,7 +76,7 @@ void OutputStream::Flush() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.io.OutputStream.Flush", kairo);
     {
         if (!is_null(Wrapped)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(Wrapped)->Flush(); });
+            PLS_API(require(Wrapped)->Flush());
         }
     }
 }
@@ -94,9 +94,7 @@ void OutputStream::Write(pls::cs::Int32 b) {
         if (is_null(Wrapped)) {
             throw pls::cs::NotImplementedException();
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(Wrapped)->WriteByte(pls::cs::cast_integral<std::uint8_t>(b));
-        });
+        PLS_API(require(Wrapped)->WriteByte(pls::cs::cast_integral<std::uint8_t>(b)));
     }
 }
 
@@ -120,8 +118,7 @@ void OutputStream::Write(ByteArray b, pls::cs::Int32 offset, pls::cs::Int32 len)
             return;
         }
         if (!is_null(Wrapped)) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(Wrapped)->Write(b, offset, len); });
+            PLS_API(require(Wrapped)->Write(b, offset, len));
             return;
         }
         for (pls::cs::Int32 i = 0; i < len; ++i) {

@@ -19,8 +19,7 @@ void DrawRect2(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Single x, pls::
         "M:kairo.unity.ui.Graphics.DrawRect2(System.Single,System.Single,System.Single,System.Single)",
         kairo);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return self->DrawRect(x, y, width - 1.0f, height - 1.0f); });
+        PLS_API(self->DrawRect(x, y, width - 1.0f, height - 1.0f));
     }
 }
 
@@ -31,11 +30,9 @@ void DrawString(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Int64 v, pls::
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.ui.Graphics.DrawString(System.Int64,System.Single,System.Single)", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return PlsPortGeneratedBootstrap::Source::DrawGraphicsText(
-                self, static_cast<pls::cs::Ref<TextFormat>>(pls::cs::Ref<TextFormat>{}),
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return integer_string(v); }), x, y, 17);
-        });
+        PLS_API(PlsPortGeneratedBootstrap::Source::DrawGraphicsText(
+            self, static_cast<pls::cs::Ref<TextFormat>>(pls::cs::Ref<TextFormat>{}),
+            PLS_API(integer_string(v)), x, y, 17));
     }
 }
 
@@ -47,12 +44,9 @@ void DrawString(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Int64 v, pls::
         "KairoLibrary",
         "M:kairo.unity.ui.Graphics.DrawString(System.Int64,System.Single,System.Single,System.Int32)", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return PlsPortGeneratedBootstrap::Source::DrawGraphicsText(
-                self, static_cast<pls::cs::Ref<TextFormat>>(pls::cs::Ref<TextFormat>{}),
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return integer_string(v); }), x, y,
-                anchor);
-        });
+        PLS_API(PlsPortGeneratedBootstrap::Source::DrawGraphicsText(
+            self, static_cast<pls::cs::Ref<TextFormat>>(pls::cs::Ref<TextFormat>{}),
+            PLS_API(integer_string(v)), x, y, anchor));
     }
 }
 
@@ -65,9 +59,7 @@ void DrawStringTextFormatStringFloat(pls::cs::Ref<pls::kairo::Graphics> self, pl
         "M:kairo.unity.ui.Graphics.DrawString(kairo.unity.ui.TextFormat,System.String,System.Single,System.Single)",
         kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return PlsPortGeneratedBootstrap::Source::DrawGraphicsText(self, lf, str, x, y, 17);
-        });
+        PLS_API(PlsPortGeneratedBootstrap::Source::DrawGraphicsText(self, lf, str, x, y, 17));
     }
 }
 
@@ -98,62 +90,42 @@ void DrawText(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextFormat> 
             anchor = (anchor | 0x20);
         }
         pls::cs::Int32 num2 = -1;
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Language::Japanese(); }) &&
-            !is_null(lf)) {
+        if (!PLS_API(kl_util::Language::Japanese()) && !is_null(lf)) {
             if (require(lf)->GetFont() != -1 && ([&]() -> bool {
                     auto cs_left = require(lf)->GetFont();
-                    auto cs_right = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(self->source_font())->GetSize(); });
+                    auto cs_right = PLS_API(require(self->source_font())->GetSize());
                     return cs_left != cs_right;
                 }())) {
-                num2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(self->source_font())->GetSize(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = self->source_font();
-                        pls::cs::Int32 cs_arg0 = require(lf)->GetFont();
-                        require(cs_receiver)->SetSize(cs_arg0, true);
-                    }());
-                });
+                num2 = PLS_API(require(self->source_font())->GetSize());
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = self->source_font();
+                    pls::cs::Int32 cs_arg0 = require(lf)->GetFont();
+                    require(cs_receiver)->SetSize(cs_arg0, true);
+                }()));
             }
             x = require(lf)->GetX(x);
             y = require(lf)->GetY(y);
             anchor = require(lf)->GetAnchor(anchor);
         }
         bool num3 = (is_null(lf) || require(lf)->GetFont() == -1) &&
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(self->source_font())->IsNeedLocalizeScale();
-                    });
+                    PLS_API(require(self->source_font())->IsNeedLocalizeScale());
         if (num3) {
-            num2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->GetSize(); });
-            pls::cs::Int32 height = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->GetHeight(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = self->source_font();
-                    pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(self->source_font())->GetLocalizeScale(); });
-                    require(cs_receiver)->SetSize(cs_arg0, true);
-                }());
-            });
+            num2 = PLS_API(require(self->source_font())->GetSize());
+            pls::cs::Int32 height = PLS_API(require(self->source_font())->GetHeight());
+            PLS_API(([&]() -> void {
+                auto cs_receiver = self->source_font();
+                pls::cs::Int32 cs_arg0 = PLS_API(require(self->source_font())->GetLocalizeScale());
+                require(cs_receiver)->SetSize(cs_arg0, true);
+            }()));
             if ((anchor & 0x60) == 0) {
-                y += pls::cs::Single((height - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return require(self->source_font())->GetHeight();
-                                      }))) /
-                     2.0f;
+                y += pls::cs::Single((height - PLS_API(require(self->source_font())->GetHeight()))) / 2.0f;
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Font::LockLocalizeSetting(); });
+            PLS_API(pls::kairo::Font::LockLocalizeSetting());
         }
         if ((num & 0x20) != 0) {
-            y -= pls::cs::Single((pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return require(self->source_font())->GetHeight();
-                                  })) /
-                                  2));
+            y -= pls::cs::Single((pls::cs::Int32(PLS_API(require(self->source_font())->GetHeight())) / 2));
         } else if ((num & 0x40) != 0) {
-            y -= pls::cs::Single(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->GetHeight(); }));
+            y -= pls::cs::Single(PLS_API(require(self->source_font())->GetHeight()));
         }
         {
             pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = self;
@@ -161,20 +133,16 @@ void DrawText(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextFormat> 
             pls::cs::Single cs_arg2 = x;
             pls::cs::Single cs_arg3 = y;
             pls::cs::Single cs_arg4 = width;
-            pls::cs::Single cs_arg5 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->GetHeight(); });
-            pls::cs::Int32 cs_arg6 =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return self->GetColor(); });
+            pls::cs::Single cs_arg5 = PLS_API(require(self->source_font())->GetHeight());
+            pls::cs::Int32 cs_arg6 = PLS_API(self->GetColor());
             pls::cs::Int32 cs_arg7 = pls::kairo::Graphics::lineSpacing_;
             TextLayout::Draw(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6, cs_arg7, anchor);
         }
         if (num3) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Font::UnlockLocalizeSetting(); });
+            PLS_API(pls::kairo::Font::UnlockLocalizeSetting());
         }
         if (num2 != -1) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->SetSize(num2, true); });
+            PLS_API(require(self->source_font())->SetSize(num2, true));
         }
     }
 }
@@ -213,9 +181,7 @@ void DrawString2(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextForma
         "M:kairo.unity.ui.Graphics.DrawString2(kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Int32)",
         kairo);
     {
-        TextLayout::Draw(lf, self, str, x, y,
-                         pls::diagnostic::api_call([&]() -> decltype(auto) { return self->GetColor(); }),
-                         anchor);
+        TextLayout::Draw(lf, self, str, x, y, PLS_API(self->GetColor()), anchor);
     }
 }
 
@@ -243,93 +209,64 @@ void DrawStringBold(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextFo
     {
         pls::cs::Int32 color2 = self->source_color();
         pls::cs::Int32 num = -1;
-        str = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::Language::TranslateText(str, true); });
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::PeekAutoTextLayout(); }) &&
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return index_char1(str, u'<'); }) != -1) {
+        str = PLS_API(kl_util::Language::TranslateText(str, true));
+        if (PLS_API(pls::kairo::Graphics::PeekAutoTextLayout()) && PLS_API(index_char1(str, u'<')) != -1) {
             Graphics::DrawStringBold2(self, lf, str, x, y, color, anchor);
             return;
         }
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Language::Japanese(); }) &&
-            !is_null(lf)) {
+        if (!PLS_API(kl_util::Language::Japanese()) && !is_null(lf)) {
             if (require(lf)->GetFont() != -1 && ([&]() -> bool {
                     auto cs_left = require(lf)->GetFont();
-                    auto cs_right = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(self->source_font())->GetSize(); });
+                    auto cs_right = PLS_API(require(self->source_font())->GetSize());
                     return cs_left != cs_right;
                 }())) {
-                num = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(self->source_font())->GetSize(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = self->source_font();
-                        pls::cs::Int32 cs_arg0 = require(lf)->GetFont();
-                        require(cs_receiver)->SetSize(cs_arg0, true);
-                    }());
-                });
+                num = PLS_API(require(self->source_font())->GetSize());
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = self->source_font();
+                    pls::cs::Int32 cs_arg0 = require(lf)->GetFont();
+                    require(cs_receiver)->SetSize(cs_arg0, true);
+                }()));
             }
             x = require(lf)->GetX(x);
             y = require(lf)->GetY(y);
             anchor = require(lf)->GetAnchor(anchor);
         }
         bool flag = (is_null(lf) || require(lf)->GetFont() == -1) &&
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(self->source_font())->IsNeedLocalizeScale();
-                    });
+                    PLS_API(require(self->source_font())->IsNeedLocalizeScale());
         if (flag) {
-            num = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->GetSize(); });
-            pls::cs::Int32 height = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->GetHeight(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = self->source_font();
-                    pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(self->source_font())->GetLocalizeScale(); });
-                    require(cs_receiver)->SetSize(cs_arg0, true);
-                }());
-            });
+            num = PLS_API(require(self->source_font())->GetSize());
+            pls::cs::Int32 height = PLS_API(require(self->source_font())->GetHeight());
+            PLS_API(([&]() -> void {
+                auto cs_receiver = self->source_font();
+                pls::cs::Int32 cs_arg0 = PLS_API(require(self->source_font())->GetLocalizeScale());
+                require(cs_receiver)->SetSize(cs_arg0, true);
+            }()));
             if ((anchor & 0x60) == 0) {
-                y += pls::cs::Single((height - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return require(self->source_font())->GetHeight();
-                                      }))) /
-                     2.0f;
+                y += pls::cs::Single((height - PLS_API(require(self->source_font())->GetHeight()))) / 2.0f;
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Font::LockLocalizeSetting(); });
+            PLS_API(pls::kairo::Font::LockLocalizeSetting());
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->SetColor(color); });
+        PLS_API(self->SetColor(color));
         for (pls::cs::Int32 i = 0; i < pls::cs::Int32(pls::kairo::Graphics::outlineQuality_) + 1; ++i) {
             auto cs_left_246 = pls::kairo::Graphics::outlineWidth_ * pls::cs::Single((i + 1));
             auto cs_right_246 = pls::cs::Single((pls::cs::Int32(pls::kairo::Graphics::outlineQuality_) + 1));
             pls::cs::Single num2 = cs_left_246 / cs_right_246;
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return self->DrawString(str, x - num2, y - num2, anchor); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return self->DrawString(str, x + 0.0f, y - num2, anchor); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return self->DrawString(str, x + num2, y - num2, anchor); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return self->DrawString(str, x - num2, y + 0.0f, anchor); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return self->DrawString(str, x + num2, y + 0.0f, anchor); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return self->DrawString(str, x - num2, y + num2, anchor); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return self->DrawString(str, x + 0.0f, y + num2, anchor); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return self->DrawString(str, x + num2, y + num2, anchor); });
+            PLS_API(self->DrawString(str, x - num2, y - num2, anchor));
+            PLS_API(self->DrawString(str, x + 0.0f, y - num2, anchor));
+            PLS_API(self->DrawString(str, x + num2, y - num2, anchor));
+            PLS_API(self->DrawString(str, x - num2, y + 0.0f, anchor));
+            PLS_API(self->DrawString(str, x + num2, y + 0.0f, anchor));
+            PLS_API(self->DrawString(str, x - num2, y + num2, anchor));
+            PLS_API(self->DrawString(str, x + 0.0f, y + num2, anchor));
+            PLS_API(self->DrawString(str, x + num2, y + num2, anchor));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->SetColor(color2); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->DrawString(str, x, y, anchor); });
+        PLS_API(self->SetColor(color2));
+        PLS_API(self->DrawString(str, x, y, anchor));
         if (flag) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Font::UnlockLocalizeSetting(); });
+            PLS_API(pls::kairo::Font::UnlockLocalizeSetting());
         }
         if (num != -1) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->SetSize(num, true); });
+            PLS_API(require(self->source_font())->SetSize(num, true));
         }
     }
 }
@@ -346,55 +283,39 @@ void DrawStringBold2(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextF
     {
         pls::cs::Int32 color2 = self->source_color();
         pls::cs::Int32 num = -1;
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Language::Japanese(); }) &&
-            !is_null(lf)) {
+        if (!PLS_API(kl_util::Language::Japanese()) && !is_null(lf)) {
             if (require(lf)->GetFont() != -1 && ([&]() -> bool {
                     auto cs_left = require(lf)->GetFont();
-                    auto cs_right = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(self->source_font())->GetSize(); });
+                    auto cs_right = PLS_API(require(self->source_font())->GetSize());
                     return cs_left != cs_right;
                 }())) {
-                num = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(self->source_font())->GetSize(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = self->source_font();
-                        pls::cs::Int32 cs_arg0 = require(lf)->GetFont();
-                        require(cs_receiver)->SetSize(cs_arg0, true);
-                    }());
-                });
+                num = PLS_API(require(self->source_font())->GetSize());
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = self->source_font();
+                    pls::cs::Int32 cs_arg0 = require(lf)->GetFont();
+                    require(cs_receiver)->SetSize(cs_arg0, true);
+                }()));
             }
             x = require(lf)->GetX(x);
             y = require(lf)->GetY(y);
             anchor = require(lf)->GetAnchor(anchor);
         }
         bool flag = (is_null(lf) || require(lf)->GetFont() == -1) &&
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(self->source_font())->IsNeedLocalizeScale();
-                    });
+                    PLS_API(require(self->source_font())->IsNeedLocalizeScale());
         if (flag) {
-            num = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->GetSize(); });
-            pls::cs::Int32 height = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->GetHeight(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = self->source_font();
-                    pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(self->source_font())->GetLocalizeScale(); });
-                    require(cs_receiver)->SetSize(cs_arg0, true);
-                }());
-            });
+            num = PLS_API(require(self->source_font())->GetSize());
+            pls::cs::Int32 height = PLS_API(require(self->source_font())->GetHeight());
+            PLS_API(([&]() -> void {
+                auto cs_receiver = self->source_font();
+                pls::cs::Int32 cs_arg0 = PLS_API(require(self->source_font())->GetLocalizeScale());
+                require(cs_receiver)->SetSize(cs_arg0, true);
+            }()));
             if ((anchor & 0x60) == 0) {
-                y += pls::cs::Single((height - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return require(self->source_font())->GetHeight();
-                                      }))) /
-                     2.0f;
+                y += pls::cs::Single((height - PLS_API(require(self->source_font())->GetHeight()))) / 2.0f;
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Font::LockLocalizeSetting(); });
+            PLS_API(pls::kairo::Font::LockLocalizeSetting());
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->SetColor(color); });
+        PLS_API(self->SetColor(color));
         for (pls::cs::Int32 i = 0; i < pls::cs::Int32(pls::kairo::Graphics::outlineQuality_) + 1; ++i) {
             auto cs_left_247 = pls::kairo::Graphics::outlineWidth_ * pls::cs::Single((i + 1));
             auto cs_right_247 = pls::cs::Single((pls::cs::Int32(pls::kairo::Graphics::outlineQuality_) + 1));
@@ -409,15 +330,13 @@ void DrawStringBold2(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextF
             Graphics::DrawString2(self, str2, x + 0.0f, y + num2, anchor);
             Graphics::DrawString2(self, str2, x + num2, y + num2, anchor);
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->SetColor(color2); });
+        PLS_API(self->SetColor(color2));
         Graphics::DrawString2(self, str, x, y, anchor);
         if (flag) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Font::UnlockLocalizeSetting(); });
+            PLS_API(pls::kairo::Font::UnlockLocalizeSetting());
         }
         if (num != -1) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->source_font())->SetSize(num, true); });
+            PLS_API(require(self->source_font())->SetSize(num, true));
         }
     }
 }

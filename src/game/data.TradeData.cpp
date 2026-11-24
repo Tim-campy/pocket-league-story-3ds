@@ -118,26 +118,17 @@ void TradeData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TradeData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         pls::cs::String text = array[num++];
-        difficult_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        feelPtInt_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        getNameValue_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        playerDataId_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        difficult_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        feelPtInt_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        getNameValue_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        playerDataId_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         execsScript_ = EventData::ReadScript(array[num++]);
-        cost_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        tradeGroup_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        cost_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        tradeGroup_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        flag_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         feelPt_ = feelPtInt_;
     }
 }
@@ -150,8 +141,7 @@ void TradeData::NewGame() {
 
         } else {
             state_ = 0;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 1); })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 1))) {
                 state_ = 1;
             }
         }
@@ -162,14 +152,9 @@ void TradeData::NewGame() {
 void TradeData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TradeData.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(feelPt_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteBoolean(os, new_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(feelPt_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteBoolean(os, new_));
     }
 }
 
@@ -177,12 +162,11 @@ void TradeData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void TradeData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TradeData.Deserialize(java.io.InputStream)", game);
     {
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        feelPt_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        new_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBoolean(stream); });
+        state_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        feelPt_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        new_ = PLS_API(kl_unity_util::StreamUtil::ReadBoolean(stream));
     }
 }
 
@@ -284,10 +268,8 @@ bool TradeData::IsPlayerInMember() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TradeData.IsPlayerInMember", game);
     {
         pls::cs::Ref<PlayerData> elem = require(TradeData::apdat_())->pData_.get_Item(playerDataId_);
-        pls::cs::Int32 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_IndexOf(
-                require(require(game::UserData::GetInstance())->memberPDataist_), pls::cs::box(elem));
-        });
+        pls::cs::Int32 num = PLS_API(kl_java_util::Vector_2_IndexOf(
+            require(require(game::UserData::GetInstance())->memberPDataist_), pls::cs::box(elem)));
         if (num != -1) {
             return true;
         }

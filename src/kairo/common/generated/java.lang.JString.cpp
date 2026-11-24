@@ -8158,9 +8158,7 @@ pls::cs::String New(ByteArray bytes) {
     JString::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JString.New(System.Byte[])", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(pls::cs::RuntimeEncoding::get_UTF8())->GetString(bytes);
-        });
+        return PLS_API(require(pls::cs::RuntimeEncoding::get_UTF8())->GetString(bytes));
     }
 }
 
@@ -8169,22 +8167,15 @@ pls::cs::String New(ByteArray bytes, pls::cs::String enc) {
     JString::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JString.New(System.Byte[],System.String)", kairo);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_receiver = enc;
-                    auto cs_argument = literal(u"Shift_JIS");
-                    cs_receiver.length();
-                    return pls::cs::culture_equals_ignore_case(cs_receiver, cs_argument);
-                }());
-            })) {
+        if (PLS_API(([&]() {
+                auto cs_receiver = enc;
+                auto cs_argument = literal(u"Shift_JIS");
+                cs_receiver.length();
+                return pls::cs::culture_equals_ignore_case(cs_receiver, cs_argument);
+            }()))) {
             return JString::GetSJIS(bytes, 0, bytes.length());
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return pls::cs::RuntimeEncoding::GetEncoding(enc);
-                   }))
-                ->GetString(bytes);
-        });
+        return PLS_API(require(PLS_API(pls::cs::RuntimeEncoding::GetEncoding(enc)))->GetString(bytes));
     }
 }
 
@@ -8193,8 +8184,7 @@ pls::cs::String NewString(pls::cs::String value) {
     JString::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JString.New(System.String)", kairo);
     {
-        return string_from_chars(
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return to_chars(value); }));
+        return string_from_chars(PLS_API(to_chars(value)));
     }
 }
 
@@ -8203,7 +8193,7 @@ pls::cs::String ValueOf(char16_t c) {
     JString::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JString.ValueOf(System.Char)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return char_string(c); });
+        return PLS_API(char_string(c));
     }
 }
 
@@ -8212,7 +8202,7 @@ pls::cs::String ValueOfInt(pls::cs::Int32 i) {
     JString::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JString.ValueOf(System.Int32)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return integer_string(i); });
+        return PLS_API(integer_string(i));
     }
 }
 
@@ -8221,7 +8211,7 @@ pls::cs::String ValueOfLong(pls::cs::Int64 l) {
     JString::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JString.ValueOf(System.Int64)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return integer_string(l); });
+        return PLS_API(integer_string(l));
     }
 }
 
@@ -8233,12 +8223,10 @@ pls::cs::String ValueOfObject(pls::cs::Ref<pls::cs::Object> obj) {
         if (is_null(obj)) {
             return literal(u"null");
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = obj;
-                return require(cs_receiver)->ToString();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = obj;
+            return require(cs_receiver)->ToString();
+        }()));
     }
 }
 
@@ -8263,16 +8251,14 @@ pls::cs::String GetSJIS(ByteArray sjis_bytes, pls::cs::Int32 offset, pls::cs::In
             std::uint16_t unicode = JString::GetUnicode(num);
             std::uint8_t item = pls::cs::cast_integral<std::uint8_t>((pls::cs::Int32(unicode) >> 8));
             std::uint8_t item2 = pls::cs::cast_integral<std::uint8_t>((unicode & 0xFF));
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(item2); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(item); });
+            PLS_API(list.Add(item2));
+            PLS_API(list.Add(item));
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::String {
-                auto cs_receiver = pls::cs::RuntimeEncoding::get_Unicode();
-                auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) { return list.ToArray(); });
-                return require(cs_receiver)->GetString(cs_arg0);
-            }());
-        });
+        return PLS_API(([&]() -> pls::cs::String {
+            auto cs_receiver = pls::cs::RuntimeEncoding::get_Unicode();
+            auto cs_arg0 = PLS_API(list.ToArray());
+            return require(cs_receiver)->GetString(cs_arg0);
+        }()));
     }
 }
 

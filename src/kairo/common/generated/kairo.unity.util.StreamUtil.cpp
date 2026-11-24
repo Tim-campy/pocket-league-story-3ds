@@ -341,14 +341,11 @@ void WriteString(pls::cs::Ref<java::io::OutputStream> os, pls::cs::Ref<SecureStr
         "M:kairo.unity.util.StreamUtil.WriteString(java.io.OutputStream,kairo.unity.util.SecureString)",
         kairo);
     {
-        StreamUtil::Write(os,
-                          (is_null(data)) ? ByteArray{} : pls::diagnostic::api_call([&]() -> decltype(auto) {
-                              return ([&]() -> ByteArray {
-                                  auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8();
-                                  auto cs_arg0 = require(data)->Get();
-                                  return require(cs_receiver)->GetBytes(cs_arg0);
-                              }());
-                          }),
+        StreamUtil::Write(os, (is_null(data)) ? ByteArray{} : PLS_API(([&]() -> ByteArray {
+                              auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8();
+                              auto cs_arg0 = require(data)->Get();
+                              return require(cs_receiver)->GetBytes(cs_arg0);
+                          }())),
                           true);
     }
 }
@@ -360,9 +357,9 @@ void WriteStringString(pls::cs::Ref<java::io::OutputStream> os, pls::cs::String 
                      "M:kairo.unity.util.StreamUtil.WriteString(java.io.OutputStream,System.String)", kairo);
     {
         StreamUtil::Write(os,
-                          (is_null(data)) ? ByteArray{} : pls::diagnostic::api_call([&]() -> decltype(auto) {
-                              return require(pls::cs::RuntimeEncoding::get_UTF8())->GetBytes(data);
-                          }),
+                          (is_null(data))
+                              ? ByteArray{}
+                              : PLS_API(require(pls::cs::RuntimeEncoding::get_UTF8())->GetBytes(data)),
                           true);
     }
 }

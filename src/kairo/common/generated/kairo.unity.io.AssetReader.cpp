@@ -143,21 +143,17 @@ StringArray GetAccessFilesList(pls::cs::String file) {
                 for (std::int32_t cs_i7 = 0; cs_i7 < cs_each7.length(); ++cs_i7) {
                     pls::cs::String text2 = cs_each7.get_Item(cs_i7);
                     {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return list2.Add(pls::cs::String::concat(text2, literal(u"/")));
-                        });
+                        PLS_API(list2.Add(pls::cs::String::concat(text2, literal(u"/"))));
                     }
                 }
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = list2;
-                auto cs_arg0 = pls::cs::String::concat(util::Language::GetFolder(), literal(u"/"));
-                cs_receiver.Add(cs_arg0);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return list2.Add(literal(u"")); });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = list2;
+            auto cs_arg0 = pls::cs::String::concat(util::Language::GetFolder(), literal(u"/"));
+            cs_receiver.Add(cs_arg0);
+        }()));
+        PLS_API(list2.Add(literal(u"")));
         for (pls::cs::Int32 k = AssetReader::dpi_(); k < AssetReader::DPI_FOLDERS().length(); ++k) {
             {
                 auto cs_list_enum8 = list2.GetEnumerator();
@@ -171,19 +167,17 @@ StringArray GetAccessFilesList(pls::cs::String file) {
                 while (cs_list_enum8.MoveNext()) {
                     pls::cs::String item = cs_list_enum8.get_Current();
                     {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = list;
-                                auto cs_arg0 = pls::cs::String::concat(
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = list;
+                            auto cs_arg0 = pls::cs::String::concat(
+                                pls::cs::String::concat(
                                     pls::cs::String::concat(
-                                        pls::cs::String::concat(
-                                            pls::cs::String::concat(text, AssetReader::DPI_FOLDERS()[k]),
-                                            literal(u"/")),
-                                        item),
-                                    file);
-                                cs_receiver.Add(cs_arg0);
-                            }());
-                        });
+                                        pls::cs::String::concat(text, AssetReader::DPI_FOLDERS()[k]),
+                                        literal(u"/")),
+                                    item),
+                                file);
+                            cs_receiver.Add(cs_arg0);
+                        }()));
                     }
                 }
             }
@@ -201,19 +195,17 @@ StringArray GetAccessFilesList(pls::cs::String file) {
                 while (cs_list_enum9.MoveNext()) {
                     pls::cs::String item2 = cs_list_enum9.get_Current();
                     {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = list;
-                                auto cs_arg0 = pls::cs::String::concat(
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = list;
+                            auto cs_arg0 = pls::cs::String::concat(
+                                pls::cs::String::concat(
                                     pls::cs::String::concat(
-                                        pls::cs::String::concat(
-                                            pls::cs::String::concat(text, AssetReader::DPI_FOLDERS()[num]),
-                                            literal(u"/")),
-                                        item2),
-                                    file);
-                                cs_receiver.Add(cs_arg0);
-                            }());
-                        });
+                                        pls::cs::String::concat(text, AssetReader::DPI_FOLDERS()[num]),
+                                        literal(u"/")),
+                                    item2),
+                                file);
+                            cs_receiver.Add(cs_arg0);
+                        }()));
                     }
                 }
             }
@@ -230,13 +222,11 @@ StringArray GetAccessFilesList(pls::cs::String file) {
             while (cs_list_enum10.MoveNext()) {
                 pls::cs::String item3 = cs_list_enum10.get_Current();
                 {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return list.Add(pls::cs::String::concat(pls::cs::String::concat(text, item3), file));
-                    });
+                    PLS_API(list.Add(pls::cs::String::concat(pls::cs::String::concat(text, item3), file)));
                 }
             }
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return list.ToArray(); });
+        return PLS_API(list.ToArray());
     }
 }
 
@@ -248,43 +238,36 @@ ByteArray _getData(pls::cs::String file) {
         pls::cs::Ref<pls::cs::Cell<pls::cs::String>> file_cell =
             pls::cs::make_ref<pls::cs::Cell<pls::cs::String>>(file);
         {
-            return pls::cs::unbox<ByteArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                    auto cs_receiver = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                    pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
-                        pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
-                            pls::cs::raw(file_cell),
-                            std::string("M:kairo.unity.io.AssetReader._getData(System.String):3368"),
-                            [file_cell]() -> pls::cs::Ref<pls::cs::Object> {
-                                {
-                                    pls::cs::Ref<pls::kairo::NativeTextAsset> textAsset =
-                                        AssetReader::_getTextAsset(file_cell->value);
-                                    if (is_null(textAsset)) {
-                                        return pls::cs::Ref<pls::cs::Object>{};
-                                    }
-                                    {
-                                        auto cs_flow_16 = pls::cs::run_finally(
-                                            [&]() -> pls::cs::Flow<pls::cs::Ref<pls::cs::Object>> {
-                                                {
-                                                    return pls::cs::flow_return(
-                                                        pls::cs::box(require(textAsset)->get_bytes()));
-                                                }
-                                                return {};
-                                            },
-                                            [&]() {
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::kairo::unload_text_asset(textAsset);
-                                                });
-                                            });
-                                        return cs_flow_16.value();
-                                    }
+            return pls::cs::unbox<ByteArray>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
+                    pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
+                        pls::cs::raw(file_cell),
+                        std::string("M:kairo.unity.io.AssetReader._getData(System.String):3368"),
+                        [file_cell]() -> pls::cs::Ref<pls::cs::Object> {
+                            {
+                                pls::cs::Ref<pls::kairo::NativeTextAsset> textAsset =
+                                    AssetReader::_getTextAsset(file_cell->value);
+                                if (is_null(textAsset)) {
+                                    return pls::cs::Ref<pls::cs::Object>{};
                                 }
-                            },
-                            file_cell);
-                    return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-                }());
-            }));
+                                {
+                                    auto cs_flow_16 = pls::cs::run_finally(
+                                        [&]() -> pls::cs::Flow<pls::cs::Ref<pls::cs::Object>> {
+                                            {
+                                                return pls::cs::flow_return(
+                                                    pls::cs::box(require(textAsset)->get_bytes()));
+                                            }
+                                            return {};
+                                        },
+                                        [&]() { PLS_API(pls::kairo::unload_text_asset(textAsset)); });
+                                    return cs_flow_16.value();
+                                }
+                            }
+                        },
+                        file_cell);
+                return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+            }())));
         }
     }
 }
@@ -298,74 +281,55 @@ pls::cs::Ref<pls::kairo::NativeTextAsset> _getTextAsset(pls::cs::String file) {
             pls::cs::make_ref<pls::cs::Cell<pls::cs::String>>(file);
         {
             return pls::cs::unbox<pls::cs::Ref<pls::kairo::NativeTextAsset>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                        auto cs_receiver = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                        pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
-                            pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
-                                pls::cs::raw(file_cell),
-                                std::string("M:kairo.unity.io.AssetReader._getTextAsset(System.String):3746"),
-                                [file_cell]() -> pls::cs::Ref<pls::cs::Object> {
-                                    {
-                                        pls::cs::String text = literal(u"Data/");
-                                        file_cell->value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return pls::cs::string_trim(
-                                                common::cfg::Config::ConvertExtension(file_cell->value));
-                                        });
-                                        pls::cs::Ref<pls::kairo::NativeTextAsset> textAsset =
-                                            pls::cs::Ref<pls::kairo::NativeTextAsset>{};
-                                        try {
-                                            textAsset =
-                                                pls::cs::dynamic_pointer_cast<pls::kairo::NativeTextAsset>(
-                                                    pls::cs::box(
-                                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return pls::kairo::load_text_asset(
-                                                                pls::cs::String::concat(text,
-                                                                                        file_cell->value));
-                                                        })));
-                                            if (!is_null(textAsset)) {
-                                                return pls::cs::box(textAsset);
-                                            }
-                                        } catch (const pls::cs::Exception& cs_caught_19) {
-                                            pls::cs::capture_exception(cs_caught_19);
-                                            {
-                                            }
+                PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                    auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                    pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
+                        pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
+                            pls::cs::raw(file_cell),
+                            std::string("M:kairo.unity.io.AssetReader._getTextAsset(System.String):3746"),
+                            [file_cell]() -> pls::cs::Ref<pls::cs::Object> {
+                                {
+                                    pls::cs::String text = literal(u"Data/");
+                                    file_cell->value = PLS_API(pls::cs::string_trim(
+                                        common::cfg::Config::ConvertExtension(file_cell->value)));
+                                    pls::cs::Ref<pls::kairo::NativeTextAsset> textAsset =
+                                        pls::cs::Ref<pls::kairo::NativeTextAsset>{};
+                                    try {
+                                        textAsset =
+                                            pls::cs::dynamic_pointer_cast<pls::kairo::NativeTextAsset>(
+                                                pls::cs::box(PLS_API(pls::kairo::load_text_asset(
+                                                    pls::cs::String::concat(text, file_cell->value)))));
+                                        if (!is_null(textAsset)) {
+                                            return pls::cs::box(textAsset);
                                         }
-                                        pls::cs::Int32 num =
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return last_index_char1(file_cell->value, u'.');
-                                            });
-                                        if (num != -1) {
-                                            file_cell->value =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return substring2(file_cell->value, 0, num);
-                                                });
+                                    } catch (const pls::cs::Exception& cs_caught_19) {
+                                        pls::cs::capture_exception(cs_caught_19);
+                                        {
                                         }
-                                        try {
-                                            textAsset =
-                                                pls::cs::dynamic_pointer_cast<pls::kairo::NativeTextAsset>(
-                                                    pls::cs::box(
-                                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return pls::kairo::load_text_asset(
-                                                                pls::cs::String::concat(text,
-                                                                                        file_cell->value));
-                                                        })));
-                                            if (!is_null(textAsset)) {
-                                                return pls::cs::box(textAsset);
-                                            }
-                                        } catch (const pls::cs::Exception& cs_caught_20) {
-                                            pls::cs::capture_exception(cs_caught_20);
-                                            {
-                                            }
-                                        }
-                                        return pls::cs::Ref<pls::cs::Object>{};
                                     }
-                                },
-                                file_cell);
-                        return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-                    }());
-                }));
+                                    pls::cs::Int32 num = PLS_API(last_index_char1(file_cell->value, u'.'));
+                                    if (num != -1) {
+                                        file_cell->value = PLS_API(substring2(file_cell->value, 0, num));
+                                    }
+                                    try {
+                                        textAsset =
+                                            pls::cs::dynamic_pointer_cast<pls::kairo::NativeTextAsset>(
+                                                pls::cs::box(PLS_API(pls::kairo::load_text_asset(
+                                                    pls::cs::String::concat(text, file_cell->value)))));
+                                        if (!is_null(textAsset)) {
+                                            return pls::cs::box(textAsset);
+                                        }
+                                    } catch (const pls::cs::Exception& cs_caught_20) {
+                                        pls::cs::capture_exception(cs_caught_20);
+                                        {
+                                        }
+                                    }
+                                    return pls::cs::Ref<pls::cs::Object>{};
+                                }
+                            },
+                            file_cell);
+                    return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+                }())));
         }
     }
 }
@@ -389,22 +353,16 @@ ByteArray GetData(pls::cs::String file) {
             }()) {
             return ByteArray{};
         }
-        if (common::cfg::Config::DEBUG() && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return string_equals(file, literal(u"save.bytes"));
-            })) {
+        if (common::cfg::Config::DEBUG() && PLS_API(string_equals(file, literal(u"save.bytes")))) {
             return array;
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_text = file;
-                    auto cs_char = u'/';
-                    return index_char1(cs_text, cs_char) != -1;
-                }());
-            }) ||
-            (!pls::diagnostic::api_call(
-                 [&]() -> decltype(auto) { return pls::cs::culture_ends_with(file, literal(u".dat")); }) &&
-             !pls::diagnostic::api_call(
-                 [&]() -> decltype(auto) { return pls::cs::culture_ends_with(file, literal(u".bytes")); }))) {
+        if (PLS_API(([&]() {
+                auto cs_text = file;
+                auto cs_char = u'/';
+                return index_char1(cs_text, cs_char) != -1;
+            }())) ||
+            (!PLS_API(pls::cs::culture_ends_with(file, literal(u".dat"))) &&
+             !PLS_API(pls::cs::culture_ends_with(file, literal(u".bytes"))))) {
             return array;
         }
         if (AssetReader::encrypt_()) {
@@ -422,63 +380,46 @@ bool Exist(pls::cs::String file) {
         if (is_null(AssetReader::filelist_())) {
             AssetReader::filelist_() = pls::cs::Dictionary<pls::cs::String, bool>::make();
             try {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                        pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
-                            nullptr, std::string("M:kairo.unity.io.AssetReader.Exist(System.String):5021"),
-                            []() -> void {
-                                {
-                                    pls::cs::Ref<pls::kairo::NativeTextAsset> textAsset =
-                                        pls::cs::dynamic_pointer_cast<pls::kairo::NativeTextAsset>(
-                                            pls::cs::box(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::kairo::load_text_asset(literal(u"Data/filelist"));
-                                            })));
-                                    if (!is_null(textAsset)) {
-                                        StringArray array = util::StringUtil::Split(
-                                            require(textAsset)->get_text(), literal(u"\n"));
-                                        for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
-                                            pls::cs::String text =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::cs::string_trim(array[i]);
-                                                });
-                                            if (text.length() > 0) {
-                                                pls::cs::Int32 num2 =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return last_index_char1(text, u'.');
-                                                    });
-                                                if (num2 != -1) {
-                                                    text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return substring2(text, 0, num2);
-                                                    });
-                                                }
-                                                {
-                                                    auto cs_target = AssetReader::filelist_();
-                                                    auto cs_index = text;
-                                                    auto cs_value = true;
-                                                    cs_target.set_Item(cs_index, cs_value);
-                                                }
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                    pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
+                        nullptr, std::string("M:kairo.unity.io.AssetReader.Exist(System.String):5021"),
+                        []() -> void {
+                            {
+                                pls::cs::Ref<pls::kairo::NativeTextAsset> textAsset =
+                                    pls::cs::dynamic_pointer_cast<pls::kairo::NativeTextAsset>(pls::cs::box(
+                                        PLS_API(pls::kairo::load_text_asset(literal(u"Data/filelist")))));
+                                if (!is_null(textAsset)) {
+                                    StringArray array = util::StringUtil::Split(
+                                        require(textAsset)->get_text(), literal(u"\n"));
+                                    for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
+                                        pls::cs::String text = PLS_API(pls::cs::string_trim(array[i]));
+                                        if (text.length() > 0) {
+                                            pls::cs::Int32 num2 = PLS_API(last_index_char1(text, u'.'));
+                                            if (num2 != -1) {
+                                                text = PLS_API(substring2(text, 0, num2));
+                                            }
+                                            {
+                                                auto cs_target = AssetReader::filelist_();
+                                                auto cs_index = text;
+                                                auto cs_value = true;
+                                                cs_target.set_Item(cs_index, cs_value);
                                             }
                                         }
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return pls::kairo::unload_text_asset(textAsset);
-                                        });
                                     }
+                                    PLS_API(pls::kairo::unload_text_asset(textAsset));
                                 }
-                            });
-                        require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-                    }());
-                });
+                            }
+                        });
+                    require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+                }()));
             } catch (const pls::cs::Exception& cs_caught_14) {
                 pls::cs::capture_exception(cs_caught_14);
                 {
                 }
             }
         }
-        file = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::string_trim(common::cfg::Config::ConvertExtension(file));
-        });
+        file = PLS_API(pls::cs::string_trim(common::cfg::Config::ConvertExtension(file)));
         if (is_null(AssetReader::country_())) {
             AssetReader::_init();
         }
@@ -489,16 +430,13 @@ bool Exist(pls::cs::String file) {
                 return cs_left_12 != cs_right_12;
             }
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return AssetReader::filelist_().ContainsKey(file); })) {
+        if (PLS_API(AssetReader::filelist_().ContainsKey(file))) {
             return true;
         }
-        pls::cs::Int32 num =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return last_index_char1(file, u'.'); });
+        pls::cs::Int32 num = PLS_API(last_index_char1(file, u'.'));
         if (num != -1) {
-            file = pls::diagnostic::api_call([&]() -> decltype(auto) { return substring2(file, 0, num); });
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return AssetReader::filelist_().ContainsKey(file); })) {
+            file = PLS_API(substring2(file, 0, num));
+            if (PLS_API(AssetReader::filelist_().ContainsKey(file))) {
                 return true;
             }
         }

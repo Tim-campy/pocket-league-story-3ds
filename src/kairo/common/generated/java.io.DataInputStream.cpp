@@ -59,10 +59,7 @@ pls::cs::Ref<DataInputStream> DataInputStream::create(pls::cs::Ref<InputStream> 
 pls::cs::Int32 DataInputStream::ReadInt() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.io.DataInputStream.ReadInt", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return network_to_host<pls::cs::Int32>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(br_)->ReadInt32(); }));
-        });
+        return PLS_API(network_to_host<pls::cs::Int32>(PLS_API(require(br_)->ReadInt32())));
     }
 }
 
@@ -71,7 +68,7 @@ void DataInputStream::Close() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.io.DataInputStream.Close", kairo);
     {
         if (!is_null(br_)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(br_)->Close(); });
+            PLS_API(require(br_)->Close());
         }
         br_ = pls::cs::Ref<pls::cs::BinaryReader>{};
         InputStream::Close();

@@ -84,25 +84,18 @@ void SurfaceBase_MotionEventRecord::Copy(pls::cs::Ref<SurfaceBase> surface,
         "M:kairo.unity.surface.SurfaceBase.MotionEventRecord.Copy(kairo.unity.surface.SurfaceBase,kairo.unity.surface.MotionEvent)",
         kairo);
     {
-        action = pls::diagnostic::api_call([&]() -> decltype(auto) { return require(evt)->GetAction(); });
-        x = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::Single(require(evt)->GetX()); });
+        action = PLS_API(require(evt)->GetAction());
+        x = PLS_API(pls::cs::Single(require(evt)->GetX()));
         y = ([&]() -> pls::cs::FloatEval {
-            auto cs_left = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::Single(require(evt)->GetY()); });
-            auto cs_right = pls::cs::Single(((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(evt)->IsMousePointer();
-            }))
+            auto cs_left = PLS_API(pls::cs::Single(require(evt)->GetY()));
+            auto cs_right = pls::cs::Single(((PLS_API(require(evt)->IsMousePointer()))
                                                  ? pls::cs::Int32(0)
                                                  : (require(surface)->GetTouchOffset())));
             return cs_left + cs_right;
         }());
-        deltaX = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::Single(require(evt)->GetDeltaX()); });
-        deltaY = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::Single(require(evt)->GetDeltaY()); });
-        deltaTime = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::Single(require(evt)->GetDeltaTime()); });
+        deltaX = PLS_API(pls::cs::Single(require(evt)->GetDeltaX()));
+        deltaY = PLS_API(pls::cs::Single(require(evt)->GetDeltaY()));
+        deltaTime = PLS_API(pls::cs::Single(require(evt)->GetDeltaTime()));
         if (is_null(SurfaceBase_MotionEventRecord::multiTouch_())) {
             SurfaceBase_MotionEventRecord::multiTouch_() = SurfaceBase_MotionEventRecord_MultiTouch::create();
         }
@@ -156,8 +149,7 @@ void SurfaceBase_MotionEventRecord::Copy(pls::cs::Ref<SurfaceBase> surface,
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        isMousePointer =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(evt)->IsMousePointer(); });
+        isMousePointer = PLS_API(require(evt)->IsMousePointer());
     }
 }
 
@@ -190,10 +182,8 @@ void SurfaceBase_MotionEventRecord::CopyMotionEventRecord(pls::cs::Ref<SurfaceBa
                 (pointerIds.length() != require(evt)->pointerIds.length())) {
                 pointerIds = IntArray::make(require(evt)->pointerIds.length());
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JSystem::Arraycopy(pls::cs::box(require(evt)->pointerIds), 0,
-                                                   pls::cs::box(pointerIds), 0, pointerIds.length());
-            });
+            PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(require(evt)->pointerIds), 0,
+                                                pls::cs::box(pointerIds), 0, pointerIds.length()));
         }
         if ([&]() {
                 auto cs_left = pls::cs::box(require(evt)->pointerPos);
@@ -208,10 +198,8 @@ void SurfaceBase_MotionEventRecord::CopyMotionEventRecord(pls::cs::Ref<SurfaceBa
                 (pointerPos.length() != require(evt)->pointerPos.length())) {
                 pointerPos = FloatArray::make(require(evt)->pointerPos.length());
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JSystem::Arraycopy(pls::cs::box(require(evt)->pointerPos), 0,
-                                                   pls::cs::box(pointerPos), 0, pointerPos.length());
-            });
+            PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(require(evt)->pointerPos), 0,
+                                                pls::cs::box(pointerPos), 0, pointerPos.length()));
         }
         if ([&]() {
                 auto cs_left = pls::cs::box(require(evt)->pointerDelta);
@@ -226,10 +214,8 @@ void SurfaceBase_MotionEventRecord::CopyMotionEventRecord(pls::cs::Ref<SurfaceBa
                 (pointerDelta.length() != require(evt)->pointerDelta.length())) {
                 pointerDelta = FloatArray::make(require(evt)->pointerDelta.length());
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JSystem::Arraycopy(pls::cs::box(require(evt)->pointerDelta), 0,
-                                                   pls::cs::box(pointerDelta), 0, pointerDelta.length());
-            });
+            PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(require(evt)->pointerDelta), 0,
+                                                pls::cs::box(pointerDelta), 0, pointerDelta.length()));
         }
     }
 }

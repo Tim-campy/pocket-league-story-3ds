@@ -108,21 +108,13 @@ void PaymentDataRecord::Serialize(pls::cs::Ref<kl_io::OutputStream> stream) {
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.system.payment.PaymentDataRecord.Serialize(java.io.OutputStream)", kairo);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteStringString(stream, productId_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteStringString(stream, orderId_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteStringString(stream, purchaseToken_);
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteLong(stream, timestamp_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteBoolean(stream, send_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(stream, amount_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(stream, actCode_); });
+        PLS_API(kl_util::StreamUtil::WriteStringString(stream, productId_));
+        PLS_API(kl_util::StreamUtil::WriteStringString(stream, orderId_));
+        PLS_API(kl_util::StreamUtil::WriteStringString(stream, purchaseToken_));
+        PLS_API(kl_util::StreamUtil::WriteLong(stream, timestamp_));
+        PLS_API(kl_util::StreamUtil::WriteBoolean(stream, send_));
+        PLS_API(kl_util::StreamUtil::WriteInt(stream, amount_));
+        PLS_API(kl_util::StreamUtil::WriteInt(stream, actCode_));
     }
 }
 
@@ -132,20 +124,13 @@ void PaymentDataRecord::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
                      "M:kairo.unity.system.payment.PaymentDataRecord.Deserialize(java.io.InputStream)",
                      kairo);
     {
-        productId_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadString(stream); });
-        orderId_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadString(stream); });
-        purchaseToken_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadString(stream); });
-        timestamp_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadLong(stream); });
-        send_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadBoolean(stream); });
-        amount_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
-        actCode_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
+        productId_ = PLS_API(kl_util::StreamUtil::ReadString(stream));
+        orderId_ = PLS_API(kl_util::StreamUtil::ReadString(stream));
+        purchaseToken_ = PLS_API(kl_util::StreamUtil::ReadString(stream));
+        timestamp_ = PLS_API(kl_util::StreamUtil::ReadLong(stream));
+        send_ = PLS_API(kl_util::StreamUtil::ReadBoolean(stream));
+        amount_ = PLS_API(kl_util::StreamUtil::ReadInt(stream));
+        actCode_ = PLS_API(kl_util::StreamUtil::ReadInt(stream));
     }
 }
 } // namespace kairo::unity::system::payment

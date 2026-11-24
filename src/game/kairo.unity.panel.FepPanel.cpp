@@ -132,18 +132,14 @@ void FepPanel::Show() {
         kl_cfg::Config::ensure_initialized();
 
         if (kl_cfg::Config::PRINT()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_util::Log::Info(
-                    literal(
-                        u"入力パネルはiPhone対応に向けて処理をブロックさせず、kfw.paenl.MainPanel.Show() の第二引数にイベントハンドラを指定する方式に書き換えてください。"),
-                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-            });
+            PLS_API(kl_util::Log::Info(
+                literal(
+                    u"入力パネルはiPhone対応に向けて処理をブロックさせず、kfw.paenl.MainPanel.Show() の第二引数にイベントハンドラを指定する方式に書き換えてください。"),
+                pls::cs::Ref<pls::cs::ExceptionObject>{}));
         }
-        StringArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::kairo::show_text_panel(require(label_)->text_, require(text_)->text_,
-                                               require(text_)->mode_, require(btn1_)->label_,
-                                               require(btn2_)->label_, require(text_)->maxLength_);
-        });
+        StringArray array = PLS_API(pls::kairo::show_text_panel(
+            require(label_)->text_, require(text_)->text_, require(text_)->mode_, require(btn1_)->label_,
+            require(btn2_)->label_, require(text_)->maxLength_));
         {
             auto cs_target = text_;
             auto cs_value = array[1];
@@ -163,11 +159,9 @@ void FepPanel::Start() {
     {
         FepPanel::current_() = this;
         delay_ = 2;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::kairo::start_text_panel(require(label_)->text_, require(text_)->text_,
-                                                require(text_)->mode_, require(btn1_)->label_,
-                                                require(btn2_)->label_, require(text_)->maxLength_);
-        });
+        PLS_API(pls::kairo::start_text_panel(require(label_)->text_, require(text_)->text_,
+                                             require(text_)->mode_, require(btn1_)->label_,
+                                             require(btn2_)->label_, require(text_)->maxLength_));
     }
 }
 
@@ -180,13 +174,11 @@ bool FepPanel::Update() {
         if (kl_cfg::Config::UNITY_EDITOR() && (--delay_ > 0)) {
             return false;
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::text_panel_finished(); })) {
+        if (!PLS_API(pls::kairo::text_panel_finished())) {
             return false;
         }
         FepPanel::current_() = pls::cs::Ref<FepPanel>{};
-        StringArray fepPanelResult =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::text_panel_result(); });
+        StringArray fepPanelResult = PLS_API(pls::kairo::text_panel_result());
         {
             auto cs_target = text_;
             auto cs_value = fepPanelResult[1];

@@ -26,10 +26,7 @@ pls::cs::Single Cos(pls::cs::Single a) {
     FastMath::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.m3d4.util3d.FastMath.Cos(System.Single)", kairo);
     {
-        return pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return std::cos(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_lang::JMath::ToRadians(a); }));
-        }));
+        return pls::cs::Single(PLS_API(std::cos(PLS_API(kl_lang::JMath::ToRadians(a)))));
     }
 }
 
@@ -38,10 +35,7 @@ pls::cs::Single Sin(pls::cs::Single a) {
     FastMath::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.m3d4.util3d.FastMath.Sin(System.Single)", kairo);
     {
-        return pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return std::sin(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_lang::JMath::ToRadians(a); }));
-        }));
+        return pls::cs::Single(PLS_API(std::sin(PLS_API(kl_lang::JMath::ToRadians(a)))));
     }
 }
 } // namespace kairo::unity::m3d4::util3d::FastMath

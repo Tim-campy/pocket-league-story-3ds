@@ -69,10 +69,8 @@ void DelayEvent::create_init(pls::cs::Ref<DelayEvent> self, pls::cs::Int32 delay
                 return cs_left != cs_right;
             }()) {
             self->argi_ = IntArray::make(argi.length());
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JSystem::Arraycopy(pls::cs::box(argi), 0, pls::cs::box(self->argi_), 0,
-                                                   self->argi_.length());
-            });
+            PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(argi), 0, pls::cs::box(self->argi_), 0,
+                                                self->argi_.length()));
         }
     }
 }
@@ -99,33 +97,23 @@ pls::cs::Ref<DelayEvent> DelayEvent::create(pls::cs::Int32 delayId, pls::cs::Int
 void DelayEvent::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.DelayEvent.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(os, delayId_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(os, line_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(os, wait_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(os, hour_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(os, rideChara_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteStringString(os, (is_null(args_)) ? (pls::cs::String(u""))
-                                                                               : (args_));
-        });
+        PLS_API(kl_util::StreamUtil::WriteInt(os, delayId_));
+        PLS_API(kl_util::StreamUtil::WriteInt(os, line_));
+        PLS_API(kl_util::StreamUtil::WriteInt(os, wait_));
+        PLS_API(kl_util::StreamUtil::WriteInt(os, hour_));
+        PLS_API(kl_util::StreamUtil::WriteInt(os, rideChara_));
+        PLS_API(
+            kl_util::StreamUtil::WriteStringString(os, (is_null(args_)) ? (pls::cs::String(u"")) : (args_)));
         if ([&]() {
                 auto cs_left = pls::cs::box(argi_);
                 auto cs_right = pls::cs::box(IntArray{});
                 return cs_left == cs_right;
             }()) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(os, 0); });
+            PLS_API(kl_util::StreamUtil::WriteInt(os, 0));
         } else {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(os, argi_.length()); });
+            PLS_API(kl_util::StreamUtil::WriteInt(os, argi_.length()));
             for (pls::cs::Int32 i = 0; i < argi_.length(); ++i) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(os, argi_[i]); });
+                PLS_API(kl_util::StreamUtil::WriteInt(os, argi_[i]));
             }
         }
     }
@@ -135,26 +123,18 @@ void DelayEvent::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void DelayEvent::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.DelayEvent.Deserialize(java.io.InputStream)", game);
     {
-        delayId_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
-        line_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
-        wait_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
-        hour_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
-        rideChara_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
-        args_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadString(stream); });
-        argi_ = IntArray::make(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); }));
+        delayId_ = PLS_API(kl_util::StreamUtil::ReadInt(stream));
+        line_ = PLS_API(kl_util::StreamUtil::ReadInt(stream));
+        wait_ = PLS_API(kl_util::StreamUtil::ReadInt(stream));
+        hour_ = PLS_API(kl_util::StreamUtil::ReadInt(stream));
+        rideChara_ = PLS_API(kl_util::StreamUtil::ReadInt(stream));
+        args_ = PLS_API(kl_util::StreamUtil::ReadString(stream));
+        argi_ = IntArray::make(PLS_API(kl_util::StreamUtil::ReadInt(stream)));
         for (pls::cs::Int32 i = 0; i < argi_.length(); ++i) {
             {
                 auto cs_target = argi_;
                 auto cs_index = i;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
+                auto cs_value = PLS_API(kl_util::StreamUtil::ReadInt(stream));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }

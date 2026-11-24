@@ -286,24 +286,18 @@ void GamePad::create_init(pls::cs::Ref<GamePad> self) {
     SurfaceBase::create_init(pls::cs::static_pointer_cast<SurfaceBase>(self));
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.GamePad.#ctor", game);
     {
-        self->app_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-        self->canvas_ =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        self->app_ = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+        self->canvas_ = PLS_API(pls::kairo::Canvas::GetInstance());
         self->effMan_ = TouchEffectManager::GetInstance();
-        pls::cs::Single scaleRatio = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::Single(require(self->app_)->GetScaleRatio(true)); });
+        pls::cs::Single scaleRatio = PLS_API(pls::cs::Single(require(self->app_)->GetScaleRatio(true)));
         pls::cs::Single num = 240.0f * scaleRatio / 100.0f;
         pls::cs::Single num2 = 320.0f;
         self->SetScaleRatio(num * 100.0f / num2);
         self->font_ = pls::cs::make_ref<pls::kairo::Font>();
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(self->font_)->SetSize(14, true); });
+        PLS_API(require(self->font_)->SetSize(14, true));
         self->mode_ = 1;
-        pls::cs::Int32 num3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JInteger::ParseInt(
-                kl_lang::StringEx::SubstringJ(kairo::unity::native::KairoPlugin::GetReleaseNumber(), 0, 1));
-        });
+        pls::cs::Int32 num3 = PLS_API(kl_lang::JInteger::ParseInt(
+            kl_lang::StringEx::SubstringJ(kairo::unity::native::KairoPlugin::GetReleaseNumber(), 0, 1)));
         if (num3 == 3) {
             GamePad::COMPONENTS()[8][0] = 0;
             GamePad::COMPONENTS()[9][1] = 0;
@@ -328,32 +322,26 @@ void GamePad::Load(pls::cs::Ref<kl_unity_util::JarInflater> jar) {
             GamePad::images_() =
                 pls::cs::Array<pls::cs::Ref<pls::kairo::Image>>::make(GamePad::FILENAMES().length());
             for (pls::cs::Int32 i = 0; i < GamePad::images_().length(); ++i) {
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Int64 {
-                            pls::cs::String cs_arg0 = GamePad::FILENAMES()[i];
-                            return require(jar)->GetSize(cs_arg0);
-                        }());
-                    }) != pls::cs::cast_integral<pls::cs::Int64>(-1)) {
+                if (PLS_API(([&]() -> pls::cs::Int64 {
+                        pls::cs::String cs_arg0 = GamePad::FILENAMES()[i];
+                        return require(jar)->GetSize(cs_arg0);
+                    }())) != pls::cs::cast_integral<pls::cs::Int64>(-1)) {
                     {
                         auto cs_target = GamePad::images_();
                         auto cs_index = i;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Image::Load(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                               return ([&]() -> ByteArray {
-                                                                   pls::cs::String cs_arg0 =
-                                                                       GamePad::FILENAMES()[i];
-                                                                   return require(jar)->GetData(cs_arg0);
-                                                               }());
-                                                           }),
-                                                           static_cast<pls::kairo::Image::Format>(-1),
-                                                           static_cast<pls::kairo::Image::Filter>(-1));
-                        });
+                        auto cs_value =
+                            PLS_API(pls::kairo::Image::Load(PLS_API(([&]() -> ByteArray {
+                                                                pls::cs::String cs_arg0 =
+                                                                    GamePad::FILENAMES()[i];
+                                                                return require(jar)->GetData(cs_arg0);
+                                                            }())),
+                                                            static_cast<pls::kairo::Image::Format>(-1),
+                                                            static_cast<pls::kairo::Image::Filter>(-1)));
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
             }
-            pls::cs::Int32 width = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(GamePad::images_().get_Item(0))->GetWidth(); });
+            pls::cs::Int32 width = PLS_API(require(GamePad::images_().get_Item(0))->GetWidth());
             if (width != 384 && width != 512 && width != 576 && width != 768) {
                 GamePad::IMAGE_WIDTH()[0] = 484;
                 GamePad::IMAGE_WIDTH()[1] = 405;
@@ -441,11 +429,11 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
         pls::cs::Int32 num = 0;
         pls::cs::Int32 num2 = 0;
         if (!is_null(g)) {
-            num = pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-            num2 = pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); });
+            num = PLS_API(require(g)->GetOriginX());
+            num2 = PLS_API(require(g)->GetOriginY());
             x += pls::cs::Single(num);
             y += pls::cs::Single(num2);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
+            PLS_API(require(g)->SetOrigin(0, 0));
         }
         {
             auto cs_flow_191 = pls::cs::run_finally(
@@ -474,21 +462,13 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                                     }
                                     pls::cs::String text = pls::cs::String{};
                                     if (id == 0 || id == 5) {
-                                        text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(canvas_)->GetSoftLabelL();
-                                        });
+                                        text = PLS_API(require(canvas_)->GetSoftLabelL());
                                     } else if (id == 1) {
-                                        text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(canvas_)->GetSoftLabelR();
-                                        });
+                                        text = PLS_API(require(canvas_)->GetSoftLabelR());
                                     } else if (id == 2) {
-                                        text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(canvas_)->GetSoftLabel(2);
-                                        });
+                                        text = PLS_API(require(canvas_)->GetSoftLabel(2));
                                     } else if (id == 3) {
-                                        text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(canvas_)->GetSoftLabel(3);
-                                        });
+                                        text = PLS_API(require(canvas_)->GetSoftLabel(3));
                                     } else if (id == 11) {
                                         text = literal(u"debug");
                                     } else if (id == 12) {
@@ -507,23 +487,18 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                                     } else if (id == 17) {
                                         text = literal(u"layout");
                                     } else if (id == 18) {
-                                        text = ((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(form::FormManager::GetInstance())->IsPause();
-                                        }))
-                                                    ? literal(u"play")
-                                                    : literal(u"pause"));
+                                        text =
+                                            ((PLS_API(require(form::FormManager::GetInstance())->IsPause()))
+                                                 ? literal(u"play")
+                                                 : literal(u"pause"));
                                     } else if (id == 19) {
                                         text = literal(u"captcha");
                                     } else if (id == 20) {
                                         text = literal(u"hide");
                                     } else if (id == 4) {
-                                        text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(canvas_)->GetSoftLabel(2);
-                                        });
+                                        text = PLS_API(require(canvas_)->GetSoftLabel(2));
                                         if (is_null(text)) {
-                                            text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(canvas_)->GetSoftLabel(3);
-                                            });
+                                            text = PLS_API(require(canvas_)->GetSoftLabel(3));
                                         }
                                     }
                                     if (id == 21) {
@@ -543,9 +518,8 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                                             kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_),
                                                                                             true);
                                             DrawImage(g, num3 - 27.0f, num4 - 10.0f,
-                                                      ((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return kl_lang::JSystem::CurrentTimeMillis();
-                                                        }) % pls::cs::Int64(800) <
+                                                      ((PLS_API(kl_lang::JSystem::CurrentTimeMillis()) %
+                                                            pls::cs::Int64(800) <
                                                         pls::cs::cast_integral<pls::cs::Int64>(400)))
                                                           ? 15
                                                           : 16);
@@ -554,32 +528,20 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                                             num3 += 12.0f;
                                         }
                                         if (array[4] == 7) {
-                                            pls::cs::Ref<pls::kairo::Font> font =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(g)->GetFont(
-                                                        pls::cs::Ref<pls::kairo::Font>{});
-                                                });
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(font)->SetSize(8, true);
-                                            });
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(g)->PushFont(font);
-                                            });
+                                            pls::cs::Ref<pls::kairo::Font> font = PLS_API(
+                                                require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
+                                            PLS_API(require(font)->SetSize(8, true));
+                                            PLS_API(require(g)->PushFont(font));
                                         }
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(g)->SetColor(0, 0, 0);
-                                        });
+                                        PLS_API(require(g)->SetColor(0, 0, 0));
                                         {
                                             pls::cs::String cs_arg0 =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return kl_unity_util::Language::TranslateSoftLabel(text);
-                                                });
+                                                PLS_API(kl_unity_util::Language::TranslateSoftLabel(text));
                                             kairo::unity::ui::Graphics::DrawText(
                                                 require(g), cs_arg0, num3 - 30.0f, num4, 60.0f, 34);
                                         }
                                         if (array[4] == 7) {
-                                            pls::diagnostic::api_call(
-                                                [&]() -> decltype(auto) { return require(g)->PopFont(); });
+                                            PLS_API(require(g)->PopFont());
                                         }
                                     }
                                 } else {
@@ -590,23 +552,12 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                                     bool flag = array[6] != -1;
                                     if (flag) {
                                         if (id == 2) {
-                                            flag =
-                                                !is_null(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(canvas_)->GetSoftLabel(2);
-                                                }));
+                                            flag = !is_null(PLS_API(require(canvas_)->GetSoftLabel(2)));
                                         } else if (id == 3) {
-                                            flag =
-                                                !is_null(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(canvas_)->GetSoftLabel(3);
-                                                }));
+                                            flag = !is_null(PLS_API(require(canvas_)->GetSoftLabel(3)));
                                         } else if (id == 4) {
-                                            flag =
-                                                (!is_null(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(canvas_)->GetSoftLabel(2);
-                                                })) ||
-                                                 !is_null(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                     return require(canvas_)->GetSoftLabel(3);
-                                                 })));
+                                            flag = (!is_null(PLS_API(require(canvas_)->GetSoftLabel(2))) ||
+                                                    !is_null(PLS_API(require(canvas_)->GetSoftLabel(3))));
                                         }
                                     }
                                     if (flag) {
@@ -661,29 +612,21 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                             if (mode_ != 2) {
                                 require(touchOption)->Flag(require(touchOption)->flag | 2);
                             }
-                            pls::cs::String softLabelR = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(canvas_)->GetSoftLabelR(); });
+                            pls::cs::String softLabelR = PLS_API(require(canvas_)->GetSoftLabelR());
                             pls::cs::Ref<pls::kairo::FormBase> topForm =
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(form::FormManager::GetInstance())->GetTopForm();
-                                });
-                            if (mode_ == 2 && id == 1 && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return string_equals(softLabelR, main::AppData::softLabels_()[2]);
-                                }) &&
-                                (pls::diagnostic::api_call(
-                                     [&]() -> decltype(auto) { return require(topForm)->GetId(); }) == 4 ||
-                                 pls::diagnostic::api_call(
-                                     [&]() -> decltype(auto) { return require(topForm)->GetId(); }) == 3)) {
+                                PLS_API(require(form::FormManager::GetInstance())->GetTopForm());
+                            if (mode_ == 2 && id == 1 &&
+                                PLS_API(string_equals(softLabelR, main::AppData::softLabels_()[2])) &&
+                                (PLS_API(require(topForm)->GetId()) == 4 ||
+                                 PLS_API(require(topForm)->GetId()) == 3)) {
                                 num7 -= 10.0f;
                                 num5 += 10.0f;
                                 num8 -= 30.0f;
                                 num6 += 30.0f;
                             }
-                            if (id == 1 && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return string_equals(softLabelR, main::AppData::softLabels_()[2]);
-                                }) &&
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(topForm)->GetId(); }) == 5) {
+                            if (id == 1 &&
+                                PLS_API(string_equals(softLabelR, main::AppData::softLabels_()[2])) &&
+                                PLS_API(require(topForm)->GetId()) == 5) {
                                 num7 += 30.0f;
                                 num5 -= 30.0f;
                             }
@@ -700,8 +643,7 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                 },
                 [&]() {
                     if (!is_null(g)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(g)->SetOrigin(num, num2); });
+                        PLS_API(require(g)->SetOrigin(num, num2));
                     }
                 });
             if (cs_flow_191.returned())
@@ -727,43 +669,32 @@ void GamePad::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> evt) 
         case 8:
         case 9: {
             if (type == 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(canvas_)->KeyDown(require(component)->value, true);
-                });
+                PLS_API(require(canvas_)->KeyDown(require(component)->value, true));
             }
             if (type == 6 || type == 10) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->KeyUp(require(component)->value); });
+                PLS_API(require(canvas_)->KeyUp(require(component)->value));
             }
             break;
         }
         case 12: {
-            if (type == 0 || (type == 13 && !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                  return require(canvas_)->CheckKeyState(require(component)->value);
-                              }) &&
-                              CheckFirstTouch(id))) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(canvas_)->KeyDown(require(component)->value, true);
-                });
+            if (type == 0 ||
+                (type == 13 && !PLS_API(require(canvas_)->CheckKeyState(require(component)->value)) &&
+                 CheckFirstTouch(id))) {
+                PLS_API(require(canvas_)->KeyDown(require(component)->value, true));
             }
             if (type == 6 || type == 10) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->KeyUp(require(component)->value); });
+                PLS_API(require(canvas_)->KeyUp(require(component)->value));
             }
             break;
         }
         case 13: {
-            if (type == 0 || (type == 13 && !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                  return require(canvas_)->CheckKeyState(require(component)->value);
-                              }) &&
-                              CheckFirstTouch(id))) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(canvas_)->KeyDown(require(component)->value, true);
-                });
+            if (type == 0 ||
+                (type == 13 && !PLS_API(require(canvas_)->CheckKeyState(require(component)->value)) &&
+                 CheckFirstTouch(id))) {
+                PLS_API(require(canvas_)->KeyDown(require(component)->value, true));
             }
             if (type == 6 || type == 10) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->KeyUp(require(component)->value); });
+                PLS_API(require(canvas_)->KeyUp(require(component)->value));
             }
             break;
         }
@@ -774,17 +705,13 @@ void GamePad::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> evt) 
             break;
         }
         case 15: {
-            if (type == 0 || (type == 13 && !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                  return require(canvas_)->CheckKeyState(require(component)->value);
-                              }) &&
-                              CheckFirstTouch(id))) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(canvas_)->KeyDown(require(component)->value, true);
-                });
+            if (type == 0 ||
+                (type == 13 && !PLS_API(require(canvas_)->CheckKeyState(require(component)->value)) &&
+                 CheckFirstTouch(id))) {
+                PLS_API(require(canvas_)->KeyDown(require(component)->value, true));
             }
             if (type == 6 || type == 10) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->KeyUp(require(component)->value); });
+                PLS_API(require(canvas_)->KeyUp(require(component)->value));
             }
             break;
         }
@@ -792,15 +719,11 @@ void GamePad::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> evt) 
         case 22: {
             if (kl_cfg::Config::DEBUG() && !kl_cfg::Config::PTW()) {
                 if (type == 0) {
-                    padTouchBegin_ = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+                    padTouchBegin_ = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                 }
                 if (type == 13 && (padTouchBegin_ > pls::cs::cast_integral<pls::cs::Int64>(0)) &&
                     CheckFirstTouch(id) && (([&]() -> pls::cs::Int64 {
-                                                auto cs_left =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_lang::JSystem::CurrentTimeMillis();
-                                                    });
+                                                auto cs_left = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                                                 auto cs_right = padTouchBegin_;
                                                 return cs_left - cs_right;
                                             }()) > pls::cs::cast_integral<pls::cs::Int64>(1000))) {
@@ -831,33 +754,24 @@ void GamePad::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> evt) 
         case 5: {
             {
                 if (type == 5) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(canvas_)->KeyClick(require(component)->value);
-                    });
+                    PLS_API(require(canvas_)->KeyClick(require(component)->value));
                 }
-                pls::cs::Ref<pls::kairo::FormBase> topForm = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(instance)->GetTopForm(); });
+                pls::cs::Ref<pls::kairo::FormBase> topForm = PLS_API(require(instance)->GetTopForm());
                 if (type == 0) {
-                    webTouchBegin_ = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+                    webTouchBegin_ = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                 }
                 if (type == 13 && (webTouchBegin_ > pls::cs::cast_integral<pls::cs::Int64>(0)) &&
-                    CheckFirstTouch(id) && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return require(topForm)->GetId();
-                                           }) == 1 &&
+                    CheckFirstTouch(id) && PLS_API(require(topForm)->GetId()) == 1 &&
                     (([&]() -> pls::cs::Int64 {
-                         auto cs_left = pls::diagnostic::api_call(
-                             [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+                         auto cs_left = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                          auto cs_right = webTouchBegin_;
                          return cs_left - cs_right;
                      }()) > pls::cs::cast_integral<pls::cs::Int64>(5000))) {
                     webTouchBegin_ = 0ll;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> bool {
-                            pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::SpForm::create();
-                            return require(instance)->Push(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> bool {
+                        pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::SpForm::create();
+                        return require(instance)->Push(cs_arg0);
+                    }()));
                 }
                 if (type == 10 || type == 6) {
                     webTouchBegin_ = 0ll;
@@ -880,27 +794,21 @@ void GamePad::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> evt) 
         }
         case 18: {
             if (type == 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        bool cs_arg0 = !pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(instance)->IsPause(); });
-                        require(instance)->SetPause(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    bool cs_arg0 = !PLS_API(require(instance)->IsPause());
+                    require(instance)->SetPause(cs_arg0);
+                }()));
                 require(TouchEffectManager::GetInstance())->Clear();
             }
             break;
         }
         case 19: {
             if (type == 5) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<SurfaceBase> cs_arg0 = GameView::GetInstance();
-                        PlsPortGeneratedBootstrap::Source::Capture(require(instance), cs_arg0, StringArray{},
-                                                                   pls::cs::Delegate<void(StringArray)>{},
-                                                                   false);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<SurfaceBase> cs_arg0 = GameView::GetInstance();
+                    PlsPortGeneratedBootstrap::Source::Capture(require(instance), cs_arg0, StringArray{},
+                                                               pls::cs::Delegate<void(StringArray)>{}, false);
+                }()));
             }
             break;
         }
@@ -912,9 +820,7 @@ void GamePad::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> evt) 
         }
         default: {
             if (type == 5) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(canvas_)->KeyClick(require(component)->value);
-                });
+                PLS_API(require(canvas_)->KeyClick(require(component)->value));
             }
             break;
         }
@@ -923,8 +829,7 @@ void GamePad::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> evt) 
             GamePad::COMPONENTS()[id][5] != -1 && id != 21 && id != 22) {
             IntArray array = GamePad::TEXTURES()[GamePad::COMPONENTS()[id][5]];
             pls::cs::Ref<pls::kairo::Image> image = GamePad::images_().get_Item(array[0]);
-            auto cs_left_284 = pls::cs::Single(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(image)->GetWidth(); }));
+            auto cs_left_284 = pls::cs::Single(PLS_API(require(image)->GetWidth()));
             auto cs_right_284 = pls::cs::Single(GamePad::IMAGE_WIDTH()[array[0]]);
             pls::cs::Single num2 = cs_left_284 / cs_right_284;
             pls::cs::Array<pls::cs::Ref<pls::cs::Object>> arg =
@@ -956,37 +861,31 @@ void GamePad::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
 
         pls::cs::Ref<SurfaceBase> view_ = SurfaceManager::view_();
         pls::cs::Ref<form::FormManager> instance = form::FormManager::GetInstance();
-        pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
+        pls::cs::Ref<pls::kairo::Font> font = PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
         pls::cs::run_finally(
             [&]() {
                 try {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Font::PushLocalizeSetting(false); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Int32 cs_arg0 = GetX();
-                            pls::cs::Int32 cs_arg1 = GetY();
-                            pls::cs::Int32 cs_arg2 = GetWidth();
-                            pls::cs::Int32 cs_arg3 = GetHeight();
-                            require(g)->SetRenderRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->Scale(100.0f); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(font_); });
+                    PLS_API(pls::kairo::Font::PushLocalizeSetting(false));
+                    PLS_API(([&]() -> void {
+                        pls::cs::Int32 cs_arg0 = GetX();
+                        pls::cs::Int32 cs_arg1 = GetY();
+                        pls::cs::Int32 cs_arg2 = GetWidth();
+                        pls::cs::Int32 cs_arg3 = GetHeight();
+                        require(g)->SetRenderRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                    }()));
+                    PLS_API(require(g)->Scale(100.0f));
+                    PLS_API(require(g)->SetFont(font_));
                     bool flag = true;
                     if (kl_cfg::Config::ADMOB_ENABLE()) {
-                        pls::cs::Ref<pls::kairo::Canvas> instance2 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
-                        pls::cs::Ref<pls::kairo::IApplication> currentApp = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                        auto cs_left_279 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(instance2)->GetHeight(); });
+                        pls::cs::Ref<pls::kairo::Canvas> instance2 =
+                            PLS_API(pls::kairo::Canvas::GetInstance());
+                        pls::cs::Ref<pls::kairo::IApplication> currentApp =
+                            PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                        auto cs_left_279 = PLS_API(require(instance2)->GetHeight());
                         auto cs_right_279 = kairo::unity::ad::AdMobView::GetAdHeight();
                         pls::cs::Int32 num = cs_left_279 - cs_right_279;
-                        pls::cs::Single scaleRatio = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::cs::Single(require(currentApp)->GetScaleRatio(false));
-                        });
+                        pls::cs::Single scaleRatio =
+                            PLS_API(pls::cs::Single(require(currentApp)->GetScaleRatio(false)));
                         pls::cs::Int32 num2 = pls::cs::to_int32((240.0f * scaleRatio / 100.0f));
                         flag = pls::cs::Single((num - num2)) >= ([&]() -> pls::cs::FloatEval {
                                                                     auto cs_left =
@@ -997,8 +896,7 @@ void GamePad::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                                                     100.0f;
                     }
                     bool flag2 = false;
-                    pls::cs::String softLabelL = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->GetSoftLabelL(); });
+                    pls::cs::String softLabelL = PLS_API(require(canvas_)->GetSoftLabelL());
                     for (pls::cs::Int32 i = 0; i < GamePad::WEB_NAMES().length(); ++i) {
                         if (kl_lang::StringEx::EqualsIgnoreCase(GamePad::WEB_NAMES()[i], softLabelL)) {
                             flag2 = true;
@@ -1053,28 +951,21 @@ void GamePad::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             DrawScaledImage(g, 0.0f, num9 - 1, GetWidth(), num8 + 1, 3);
                         }
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Single cs_arg0 = GetScaleRatio();
-                            require(g)->Scale(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::Single cs_arg0 = GetScaleRatio();
+                        require(g)->Scale(cs_arg0);
+                    }()));
                     num5 = pls::cs::to_int32((pls::cs::Single((num5 * 100)) / GetScaleRatio()));
                     num6 = pls::cs::to_int32((pls::cs::Single((num6 * 100)) / GetScaleRatio()));
                     if (mode_ == 0) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(g)->SetOrigin(0, num4 - num6); });
+                        PLS_API(require(g)->SetOrigin(0, num4 - num6));
                         AddTouch(g, 104.0f, 0.0f, 6, 131072);
                         AddTouch(g, 106.0f, 107.0f, 7, 524288);
                         AddTouch(g, 79.0f, 27.0f, 8, 65536);
                         AddTouch(g, 186.0f, 25.0f, 9, 262144);
                         AddTouch(g, 121.0f, 41.0f, 10, 1048576);
-                        if (kl_cfg::Config::DEBUG() && !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(instance)->IsPause();
-                            }) &&
-                            !hideDebugButton_ && !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(instance)->IsCapturing();
-                            })) {
+                        if (kl_cfg::Config::DEBUG() && !PLS_API(require(instance)->IsPause()) &&
+                            !hideDebugButton_ && !PLS_API(require(instance)->IsCapturing())) {
                             if (kl_cfg::Config::DEBUG()) {
                                 AddTouch(g, 5.0f, 64.0f, 11, 1);
                             }
@@ -1093,84 +984,58 @@ void GamePad::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         }
                         if (flag2) {
                             AddTouch(g, 5.0f, 7.0f, 5, 2097152);
-                            AddTouch(
-                                g, 243.0f, 7.0f, 1, 4194304,
-                                kl_lang::StringEx::Length(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(canvas_)->GetSoftLabelR();
-                                })) > 0);
-                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::Language::Japanese();
-                                })) {
+                            AddTouch(g, 243.0f, 7.0f, 1, 4194304,
+                                     kl_lang::StringEx::Length(PLS_API(require(canvas_)->GetSoftLabelR())) >
+                                         0);
+                            if (PLS_API(kl_unity_util::Language::Japanese())) {
                                 DrawImage(g, 15.0f, 48.0f, 17);
                             } else {
                                 DrawImage(g, 15.0f, 48.0f, 18);
                             }
                         } else {
-                            AddTouch(
-                                g, 5.0f, 7.0f, 0, 2097152,
-                                kl_lang::StringEx::Length(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(canvas_)->GetSoftLabelL();
-                                })) > 0);
-                            AddTouch(
-                                g, 243.0f, 7.0f, 1, 4194304,
-                                kl_lang::StringEx::Length(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(canvas_)->GetSoftLabelR();
-                                })) > 0);
+                            AddTouch(g, 5.0f, 7.0f, 0, 2097152,
+                                     kl_lang::StringEx::Length(PLS_API(require(canvas_)->GetSoftLabelL())) >
+                                         0);
+                            AddTouch(g, 243.0f, 7.0f, 1, 4194304,
+                                     kl_lang::StringEx::Length(PLS_API(require(canvas_)->GetSoftLabelR())) >
+                                         0);
                         }
                         DrawWatch(g, 320.0f, 143.0f);
                         DrawBattery(g, 292.0f, 142.0f);
                         AddTouch(g, 5.0f, num6 - 28, 22);
                         DrawVersion(g);
                     } else if (mode_ == 1) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(g)->SetOrigin(0, num4 - num6); });
+                        PLS_API(require(g)->SetOrigin(0, num4 - num6));
                         pls::cs::Int32 num10 = 7;
                         if (kl_cfg::Config::DEBUG()) {
                             num10 = 4;
                         }
                         if (flag2) {
                             AddTouch(g, 5.0f, 7.0f, 5, 2097152);
-                            AddTouch(
-                                g, 243.0f, 7.0f, 1, 4194304,
-                                kl_lang::StringEx::Length(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(canvas_)->GetSoftLabelR();
-                                })) > 0);
-                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::Language::Japanese();
-                                })) {
+                            AddTouch(g, 243.0f, 7.0f, 1, 4194304,
+                                     kl_lang::StringEx::Length(PLS_API(require(canvas_)->GetSoftLabelR())) >
+                                         0);
+                            if (PLS_API(kl_unity_util::Language::Japanese())) {
                                 DrawImage(g, 15.0f, 48.0f, 17);
                             } else {
                                 DrawImage(g, 15.0f, 48.0f, 18);
                             }
                         } else {
-                            AddTouch(
-                                g, 5.0f, 7.0f, 0, 2097152,
-                                kl_lang::StringEx::Length(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(canvas_)->GetSoftLabelL();
-                                })) > 0);
-                            AddTouch(
-                                g, 243.0f, 7.0f, 1, 4194304,
-                                kl_lang::StringEx::Length(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(canvas_)->GetSoftLabelR();
-                                })) > 0);
+                            AddTouch(g, 5.0f, 7.0f, 0, 2097152,
+                                     kl_lang::StringEx::Length(PLS_API(require(canvas_)->GetSoftLabelL())) >
+                                         0);
+                            AddTouch(g, 243.0f, 7.0f, 1, 4194304,
+                                     kl_lang::StringEx::Length(PLS_API(require(canvas_)->GetSoftLabelR())) >
+                                         0);
                         }
-                        if (kl_cfg::Config::DEBUG() && !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(instance)->IsPause();
-                            }) &&
-                            !hideDebugButton_ && !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(instance)->IsCapturing();
-                            })) {
+                        if (kl_cfg::Config::DEBUG() && !PLS_API(require(instance)->IsPause()) &&
+                            !hideDebugButton_ && !PLS_API(require(instance)->IsCapturing())) {
                             AddTouch(g, 4.0f, num6 - 21, 19);
                             AddTouch(g, 242.0f, num6 - 21, 12, 16);
                         }
                         auto cs_left_282 = ([&]() -> pls::cs::FloatEval {
-                            auto cs_left_282 =
-                                pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return pls::kairo::Canvas::GetInstance();
-                                           }))
-                                        ->GetHeight();
-                                }));
+                            auto cs_left_282 = pls::cs::Single(
+                                PLS_API(require(PLS_API(pls::kairo::Canvas::GetInstance()))->GetHeight()));
                             auto cs_right_282 = 240.0f * require(view_)->GetScaleRatio() / 100.0f;
                             return cs_left_282 - cs_right_282;
                         }());
@@ -1205,18 +1070,14 @@ void GamePad::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 AddTouch(g, num12, num14, 5, 2097152);
                                 AddTouch(g, num13, num14, 1, 4194304,
                                          kl_lang::StringEx::Length(
-                                             pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return require(canvas_)->GetSoftLabelR();
-                                             })) > 0);
+                                             PLS_API(require(canvas_)->GetSoftLabelR())) > 0);
                                 pls::cs::Int32 num15 = 10;
                                 pls::cs::Int32 num16 = -20;
                                 if (IsSmallSideView()) {
                                     num15 = -2;
                                     num16 = -6;
                                 }
-                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::Language::Japanese();
-                                    })) {
+                                if (PLS_API(kl_unity_util::Language::Japanese())) {
                                     DrawImage(g, num12 + num15, num14 + num16, 17);
                                 } else {
                                     DrawImage(g, num12 + num15, num14 + num16, 18);
@@ -1224,27 +1085,19 @@ void GamePad::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             } else {
                                 AddTouch(g, num12, num14, 0, 2097152,
                                          kl_lang::StringEx::Length(
-                                             pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return require(canvas_)->GetSoftLabelL();
-                                             })) > 0);
+                                             PLS_API(require(canvas_)->GetSoftLabelL())) > 0);
                                 AddTouch(g, num13, num14, 1, 4194304,
                                          kl_lang::StringEx::Length(
-                                             pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return require(canvas_)->GetSoftLabelR();
-                                             })) > 0);
+                                             PLS_API(require(canvas_)->GetSoftLabelR())) > 0);
                             }
-                            if (kl_cfg::Config::DEBUG() &&
-                                !pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(instance)->IsPause(); }) &&
-                                !pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(instance)->IsCapturing(); })) {
+                            if (kl_cfg::Config::DEBUG() && !PLS_API(require(instance)->IsPause()) &&
+                                !PLS_API(require(instance)->IsCapturing())) {
                                 AddTouch(g, num13, num14 - 30, 12, 16);
                                 AddTouch(g, num12, num14 - 30, 19);
                             }
-                            pls::cs::Ref<pls::kairo::FormBase> topForm = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(instance)->GetTopForm(); });
-                            if (pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(topForm)->GetId(); }) == 4 &&
+                            pls::cs::Ref<pls::kairo::FormBase> topForm =
+                                PLS_API(require(instance)->GetTopForm());
+                            if (PLS_API(require(topForm)->GetId()) == 4 &&
                                 require((pls::cs::unbox<pls::cs::Ref<form::SubForm>>(pls::cs::box(topForm))))
                                     ->IsMenu()) {
                                 pls::cs::Int32 num17 = 2;
@@ -1265,11 +1118,10 @@ void GamePad::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
             },
             [&]() {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->Scale(100.0f); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->ClearRenderRect(); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Font::PopLocalizeSetting(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(font); });
+                PLS_API(require(g)->Scale(100.0f));
+                PLS_API(require(g)->ClearRenderRect());
+                PLS_API(pls::kairo::Font::PopLocalizeSetting());
+                PLS_API(require(g)->SetFont(font));
             });
     }
 }
@@ -1328,17 +1180,13 @@ bool GamePad::DrawSoftLabel(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Singl
         pls::cs::Int32 imgId = array[4];
         pls::cs::String text = pls::cs::String{};
         if ((id == 0) || (id == 5)) {
-            text = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->GetSoftLabelL(); });
+            text = PLS_API(require(canvas_)->GetSoftLabelL());
         } else if ((id == 1)) {
-            text = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->GetSoftLabelR(); });
+            text = PLS_API(require(canvas_)->GetSoftLabelR());
         } else if ((id == 2)) {
-            text = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->GetSoftLabel(2); });
+            text = PLS_API(require(canvas_)->GetSoftLabel(2));
         } else if ((id == 3)) {
-            text = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->GetSoftLabel(3); });
+            text = PLS_API(require(canvas_)->GetSoftLabel(3));
         }
         if (is_null(text)) {
             return false;
@@ -1384,37 +1232,26 @@ bool GamePad::DrawSoftLabel(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Singl
             bool linearFilterEnable = kairo::unity::ui::Canvas::IsLinearFilterEnable(require(canvas_));
             kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), true);
             DrawSoftLabelImage(g, num7 - 27.0f * sideViewRatio, num8 - 10.0f * sideViewRatio,
-                               ((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return kl_lang::JSystem::CurrentTimeMillis();
-                                 }) % pls::cs::Int64(800) <
+                               ((PLS_API(kl_lang::JSystem::CurrentTimeMillis()) % pls::cs::Int64(800) <
                                  pls::cs::cast_integral<pls::cs::Int64>(400)))
                                    ? 15
                                    : 16);
             kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), linearFilterEnable);
             num7 += 12.0f * sideViewRatio;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg0 = pls::cs::to_int32(
-                    (pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{});
-                                }))
-                             ->GetSize();
-                     })) *
-                     sideViewRatio));
-                require(g)->PushFont(cs_arg0);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(0, 0, 0); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::Language::TranslateSoftLabel(text); });
-                require(g)->DrawString(cs_arg0, num7, num8, 34);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopFont(); });
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg0 = pls::cs::to_int32(
+                (pls::cs::Single(PLS_API(
+                     require(PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{})))->GetSize())) *
+                 sideViewRatio));
+            require(g)->PushFont(cs_arg0);
+        }()));
+        PLS_API(require(g)->SetColor(0, 0, 0));
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = PLS_API(kl_unity_util::Language::TranslateSoftLabel(text));
+            require(g)->DrawString(cs_arg0, num7, num8, 34);
+        }()));
+        PLS_API(require(g)->PopFont());
         if (enable && array[5] != -1) {
             array2 = GamePad::TEXTURES()[array[5]];
             auto cs_left_273 = ([&]() -> pls::cs::Int32 {
@@ -1473,22 +1310,19 @@ void GamePad::DrawSoftLabelImage(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::
         pls::cs::Single sideViewRatio = GetSideViewRatio();
         pls::cs::Int32 num = pls::cs::to_int32((pls::cs::Single(array[5]) * sideViewRatio));
         pls::cs::Int32 num2 = pls::cs::to_int32((pls::cs::Single(array[6]) * sideViewRatio));
-        auto cs_left_277 = pls::cs::Single(
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(image)->GetWidth(); }));
+        auto cs_left_277 = pls::cs::Single(PLS_API(require(image)->GetWidth()));
         auto cs_right_277 = pls::cs::Single(GamePad::IMAGE_WIDTH()[array[0]]);
         pls::cs::Single num3 = cs_left_277 / cs_right_277;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Single cs_arg1 = x + pls::cs::Single(array[1]);
-                pls::cs::Single cs_arg2 = y + pls::cs::Single(array[2]);
-                pls::cs::Int32 cs_arg5 = pls::cs::to_int32((pls::cs::Single(array[3]) * num3 + 0.5f));
-                pls::cs::Int32 cs_arg6 = pls::cs::to_int32((pls::cs::Single(array[4]) * num3 + 0.5f));
-                pls::cs::Int32 cs_arg7 = pls::cs::to_int32((pls::cs::Single(array[5]) * num3 + 0.5f));
-                pls::cs::Int32 cs_arg8 = pls::cs::to_int32((pls::cs::Single(array[6]) * num3 + 0.5f));
-                require(g)->DrawScaledImage(image, cs_arg1, cs_arg2, num, num2, cs_arg5, cs_arg6, cs_arg7,
-                                            cs_arg8);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Single cs_arg1 = x + pls::cs::Single(array[1]);
+            pls::cs::Single cs_arg2 = y + pls::cs::Single(array[2]);
+            pls::cs::Int32 cs_arg5 = pls::cs::to_int32((pls::cs::Single(array[3]) * num3 + 0.5f));
+            pls::cs::Int32 cs_arg6 = pls::cs::to_int32((pls::cs::Single(array[4]) * num3 + 0.5f));
+            pls::cs::Int32 cs_arg7 = pls::cs::to_int32((pls::cs::Single(array[5]) * num3 + 0.5f));
+            pls::cs::Int32 cs_arg8 = pls::cs::to_int32((pls::cs::Single(array[6]) * num3 + 0.5f));
+            require(g)->DrawScaledImage(image, cs_arg1, cs_arg2, num, num2, cs_arg5, cs_arg6, cs_arg7,
+                                        cs_arg8);
+        }()));
     }
 }
 
@@ -1509,9 +1343,8 @@ void GamePad::DrawVersion(pls::cs::Ref<pls::kairo::Graphics> g) {
     {
         kl_cfg::Config::ensure_initialized();
 
-        if ((kl_cfg::Config::DEBUG()) && (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(form::FormManager::GetInstance())->IsCapturing();
-            }))) {
+        if ((kl_cfg::Config::DEBUG()) &&
+            (PLS_API(require(form::FormManager::GetInstance())->IsCapturing()))) {
             return;
         }
         if (!(GamePad::versionVisible_())) {
@@ -1519,29 +1352,22 @@ void GamePad::DrawVersion(pls::cs::Ref<pls::kairo::Graphics> g) {
         }
         {
             pls::cs::Int32 num = 7;
-            pls::cs::Int32 originX =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-            pls::cs::Int32 originY =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); });
+            pls::cs::Int32 originX = PLS_API(require(g)->GetOriginX());
+            pls::cs::Int32 originY = PLS_API(require(g)->GetOriginY());
             pls::cs::String value = pls::cs::String::concat(integer_string(202), pls::cs::String(u""));
             auto cs_arg0_283 = value;
             pls::cs::Ref<pls::cs::StringBuilder> stringBuilder =
                 pls::cs::make_ref<pls::cs::StringBuilder>(cs_arg0_283);
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(stringBuilder)->Insert(1, literal(u".")); });
+            PLS_API(require(stringBuilder)->Insert(1, literal(u".")));
             pls::cs::String str =
-                pls::cs::String::concat(literal(u"ver "), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(stringBuilder)->ToString();
-                                        }));
-            pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(font); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 255); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawString(str, 277.0f, num + 38, 2); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(font)->SetSize(0, true); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(font); });
+                pls::cs::String::concat(literal(u"ver "), PLS_API(require(stringBuilder)->ToString()));
+            pls::cs::Ref<pls::kairo::Font> font =
+                PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
+            PLS_API(require(g)->SetFont(font));
+            PLS_API(require(g)->SetColor(255, 255, 255));
+            PLS_API(require(g)->DrawString(str, 277.0f, num + 38, 2));
+            PLS_API(require(font)->SetSize(0, true));
+            PLS_API(require(g)->SetFont(font));
         }
     }
 }
@@ -1553,40 +1379,26 @@ void GamePad::DrawWatch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x,
                      game);
     {
         if (is_null(GamePad::drawWatch_calendar())) {
-            GamePad::drawWatch_calendar() = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::JCalendar::GetInstance(); });
+            GamePad::drawWatch_calendar() = PLS_API(kl_java_util::JCalendar::GetInstance());
         }
         pls::cs::Ref<kl_java_util::JCalendar> jCalendar = GamePad::drawWatch_calendar();
-        pls::cs::Int64 num = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        pls::cs::Int64 num = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         if (num < GamePad::drawWatch_rangeMin() || GamePad::drawWatch_rangeMax() <= num) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(jCalendar)->SetTimeInMillis(num); });
-            pls::cs::Int32 num2 =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(jCalendar)->Get(13); });
-            pls::cs::Int32 num3 =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(jCalendar)->Get(14); });
+            PLS_API(require(jCalendar)->SetTimeInMillis(num));
+            pls::cs::Int32 num2 = PLS_API(require(jCalendar)->Get(13));
+            pls::cs::Int32 num3 = PLS_API(require(jCalendar)->Get(14));
             GamePad::drawWatch_rangeMin() = num - pls::cs::Int64(num2 * 1000) - pls::cs::Int64(num3);
             GamePad::drawWatch_rangeMax() = GamePad::drawWatch_rangeMin() + pls::cs::Int64(60000);
         }
-        pls::cs::Int32 num4 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(jCalendar)->Get(11); });
-        pls::cs::Int32 num5 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(jCalendar)->Get(12); });
-        pls::cs::Ref<kl_java_util::JCalendar> instance = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::JCalendar::GetInstance(); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<kl_java_util::JDate> cs_arg0 = kl_java_util::JDate::create();
-                require(instance)->SetTime(cs_arg0);
-            }());
-        });
-        pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return integer_string(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(11); }));
-        });
-        if (is_null(text) || pls::diagnostic::api_call(
-                                 [&]() -> decltype(auto) { return string_equals(text, literal(u"12")); })) {
+        pls::cs::Int32 num4 = PLS_API(require(jCalendar)->Get(11));
+        pls::cs::Int32 num5 = PLS_API(require(jCalendar)->Get(12));
+        pls::cs::Ref<kl_java_util::JCalendar> instance = PLS_API(kl_java_util::JCalendar::GetInstance());
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<kl_java_util::JDate> cs_arg0 = kl_java_util::JDate::create();
+            require(instance)->SetTime(cs_arg0);
+        }()));
+        pls::cs::String text = PLS_API(integer_string(PLS_API(require(instance)->Get(11))));
+        if (is_null(text) || PLS_API(string_equals(text, literal(u"12")))) {
             if (num4 < 12) {
                 DrawImage(g, x - 81.0f, y, 23);
             } else {
@@ -1650,22 +1462,18 @@ void GamePad::DrawScaledImage(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Sin
     {
         IntArray array = GamePad::TEXTURES()[imgId];
         pls::cs::Ref<pls::kairo::Image> image = GamePad::images_().get_Item(array[0]);
-        auto cs_left_278 = pls::cs::Single(
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(image)->GetWidth(); }));
+        auto cs_left_278 = pls::cs::Single(PLS_API(require(image)->GetWidth()));
         auto cs_right_278 = pls::cs::Single(GamePad::IMAGE_WIDTH()[array[0]]);
         pls::cs::Single num = cs_left_278 / cs_right_278;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Single cs_arg1 = x + pls::cs::Single(array[1]);
-                pls::cs::Single cs_arg2 = y + pls::cs::Single(array[2]);
-                pls::cs::Int32 cs_arg5 = pls::cs::to_int32((pls::cs::Single(array[3]) * num + 0.5f));
-                pls::cs::Int32 cs_arg6 = pls::cs::to_int32((pls::cs::Single(array[4]) * num + 0.5f));
-                pls::cs::Int32 cs_arg7 = pls::cs::to_int32((pls::cs::Single(array[5]) * num + 0.5f));
-                pls::cs::Int32 cs_arg8 = pls::cs::to_int32((pls::cs::Single(array[6]) * num + 0.5f));
-                require(g)->DrawScaledImage(image, cs_arg1, cs_arg2, w, h, cs_arg5, cs_arg6, cs_arg7,
-                                            cs_arg8);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Single cs_arg1 = x + pls::cs::Single(array[1]);
+            pls::cs::Single cs_arg2 = y + pls::cs::Single(array[2]);
+            pls::cs::Int32 cs_arg5 = pls::cs::to_int32((pls::cs::Single(array[3]) * num + 0.5f));
+            pls::cs::Int32 cs_arg6 = pls::cs::to_int32((pls::cs::Single(array[4]) * num + 0.5f));
+            pls::cs::Int32 cs_arg7 = pls::cs::to_int32((pls::cs::Single(array[5]) * num + 0.5f));
+            pls::cs::Int32 cs_arg8 = pls::cs::to_int32((pls::cs::Single(array[6]) * num + 0.5f));
+            require(g)->DrawScaledImage(image, cs_arg1, cs_arg2, w, h, cs_arg5, cs_arg6, cs_arg7, cs_arg8);
+        }()));
     }
 }
 
@@ -1709,20 +1517,14 @@ void GamePad::SetLayoutMode(pls::cs::Int32 mode) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.GamePad.SetLayoutMode(System.Int32)", game);
     {
         pls::cs::Ref<SurfaceManager> surfaceManager = pls::cs::unbox<pls::cs::Ref<SurfaceManager>>(
-            pls::cs::box(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase> {
-                    auto cs_canvas = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
-                    return pls::cs::unbox<pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase>>(
-                        require(cs_canvas)->GetSourceSurfaceManager());
-                }());
-            })));
+            pls::cs::box(PLS_API(([&]() -> pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase> {
+                auto cs_canvas = PLS_API(pls::kairo::Canvas::GetInstance());
+                return pls::cs::unbox<pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase>>(
+                    require(cs_canvas)->GetSourceSurfaceManager());
+            }()))));
         if ((mode == 0)) {
             require(surfaceManager)->SetLayoutMode(false);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(app_)->SetScaleRatio(
-                    -std::numeric_limits<float>::quiet_NaN() /* Single.NaN */);
-            });
+            PLS_API(require(app_)->SetScaleRatio(-std::numeric_limits<float>::quiet_NaN() /* Single.NaN */));
         } else if ((mode == 1)) {
             require(surfaceManager)->SetLayoutMode(true);
         }

@@ -33,23 +33,17 @@ pls::cs::String Decode(pls::cs::String s, pls::cs::String enc) {
     URLDecoder::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.net.URLDecoder.Decode(System.String,System.String)", kairo);
     {
-        pls::cs::Ref<pls::cs::RuntimeEncoding> encoding = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::RuntimeEncoding::GetEncoding(enc); });
+        pls::cs::Ref<pls::cs::RuntimeEncoding> encoding = PLS_API(pls::cs::RuntimeEncoding::GetEncoding(enc));
         pls::cs::String text = literal(u"");
-        ByteArray bytes = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(encoding)->GetBytes(literal(u" ")); });
+        ByteArray bytes = PLS_API(require(encoding)->GetBytes(literal(u" ")));
         for (pls::cs::Int32 i = 0; i < bytes.length(); ++i) {
-            text = pls::cs::String::concat(pls::cs::String::concat(text, literal(u"%")),
-                                           pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return ([&]() {
-                                                   auto cs_value = bytes[i];
-                                                   return pls::cs::format_i32_hex(
-                                                       static_cast<std::int32_t>(cs_value), 2, true);
-                                               }());
-                                           }));
+            text = pls::cs::String::concat(pls::cs::String::concat(text, literal(u"%")), PLS_API(([&]() {
+                                               auto cs_value = bytes[i];
+                                               return pls::cs::format_i32_hex(
+                                                   static_cast<std::int32_t>(cs_value), 2, true);
+                                           }())));
         }
-        s = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::string_replace(s, literal(u"+"), text); });
+        s = PLS_API(pls::cs::string_replace(s, literal(u"+"), text));
         {
             pls::cs::Ref<pls::cs::MemoryStream> memoryStream = ([&]() {
                 return pls::cs::make_ref<pls::cs::MemoryStream>();
@@ -61,45 +55,30 @@ pls::cs::String Decode(pls::cs::String s, pls::cs::String enc) {
                         while (num < s.length()) {
                             if (pls::cs::cast_integral<pls::cs::Int32>(s.at(num)) ==
                                 pls::cs::cast_integral<pls::cs::Int32>(u'%')) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        auto cs_receiver = memoryStream;
-                                        auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return ([&]() {
-                                                auto cs_value =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return substring2(s, num + 1, 2);
-                                                    });
-                                                return pls::cs::byte_parse_hex_number(cs_value, true);
-                                            }());
-                                        });
-                                        require(cs_receiver)->WriteByte(cs_arg0);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    auto cs_receiver = memoryStream;
+                                    auto cs_arg0 = PLS_API(([&]() {
+                                        auto cs_value = PLS_API(substring2(s, num + 1, 2));
+                                        return pls::cs::byte_parse_hex_number(cs_value, true);
+                                    }()));
+                                    require(cs_receiver)->WriteByte(cs_arg0);
+                                }()));
                                 num += 3;
                             } else {
-                                bytes = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> ByteArray {
-                                        auto cs_receiver = encoding;
-                                        auto cs_arg0 = pls::diagnostic::api_call(
-                                            [&]() -> decltype(auto) { return char_string(s.at(num)); });
-                                        return require(cs_receiver)->GetBytes(cs_arg0);
-                                    }());
-                                });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(memoryStream)->Write(bytes, 0, bytes.length());
-                                });
+                                bytes = PLS_API(([&]() -> ByteArray {
+                                    auto cs_receiver = encoding;
+                                    auto cs_arg0 = PLS_API(char_string(s.at(num)));
+                                    return require(cs_receiver)->GetBytes(cs_arg0);
+                                }()));
+                                PLS_API(require(memoryStream)->Write(bytes, 0, bytes.length()));
                                 ++num;
                             }
                         }
-                        return pls::cs::flow_return(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> pls::cs::String {
-                                auto cs_receiver = encoding;
-                                auto cs_arg0 = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(memoryStream)->ToArray(); });
-                                return require(cs_receiver)->GetString(cs_arg0);
-                            }());
-                        }));
+                        return pls::cs::flow_return(PLS_API(([&]() -> pls::cs::String {
+                            auto cs_receiver = encoding;
+                            auto cs_arg0 = PLS_API(require(memoryStream)->ToArray());
+                            return require(cs_receiver)->GetString(cs_arg0);
+                        }())));
                     }
                     return {};
                 },

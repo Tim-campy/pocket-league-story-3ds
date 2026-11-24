@@ -64,32 +64,21 @@ void LineupData::Load(pls::cs::Int32 gameId, pls::cs::String src) {
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.system.lineup.ui.LineupData.Load(System.Int32,System.String)", kairo);
     {
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(src, literal(u"@")); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(src, literal(u"@")));
         gameId_ = gameId;
         explain_ = array[0];
         url_ = array[1];
         file_ = array[2];
-        priority_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[3]); });
-        StringArray array2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(array[4], literal(u"&")); });
-        ratio_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({array2.length(), 2}));
-        });
+        priority_ = PLS_API(kl_lang::JInteger::ParseInt(array[3]));
+        StringArray array2 = PLS_API(kl_unity_util::StringUtil::Split(array[4], literal(u"&")));
+        ratio_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({array2.length(), 2})));
         for (pls::cs::Int32 i = 0; i < array2.length(); ++i) {
-            StringArray array3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StringUtil::Split(array2[i], literal(u","));
-            });
+            StringArray array3 = PLS_API(kl_unity_util::StringUtil::Split(array2[i], literal(u",")));
             {
                 auto cs_target = ratio_;
                 auto cs_index = i;
-                auto cs_value = IntArray::from({pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return kl_lang::JInteger::ParseInt(array3[0]);
-                                                }),
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return kl_lang::JInteger::ParseInt(array3[1]);
-                                                })});
+                auto cs_value = IntArray::from({PLS_API(kl_lang::JInteger::ParseInt(array3[0])),
+                                                PLS_API(kl_lang::JInteger::ParseInt(array3[1]))});
                 cs_target.set_Item(cs_index, cs_value);
             }
         }

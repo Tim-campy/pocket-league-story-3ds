@@ -102,13 +102,12 @@ pls::cs::Ref<SecureString> SecureString::op_Addition(pls::cs::Ref<SecureString> 
         "KairoLibrary",
         "M:kairo.unity.util.SecureString.op_Addition(kairo.unity.util.SecureString,System.String)", kairo);
     {
-        return SecureString::create(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::String::concat(([&]() {
-                                               auto cs_value = z;
-                                               return SecureString::op_Implicit(cs_value);
-                                           }()),
-                                           w);
-        }));
+        return SecureString::create(PLS_API(pls::cs::String::concat(([&]() {
+                                                                        auto cs_value = z;
+                                                                        return SecureString::op_Implicit(
+                                                                            cs_value);
+                                                                    }()),
+                                                                    w)));
     }
 }
 
@@ -139,8 +138,7 @@ pls::cs::Ref<SecureString> SecureString::Set(pls::cs::String value) {
         }
         bitmask_ = pls::cs::cast_integral<pls::cs::Int64>(0x22 | require(SecureNumber::random_())->NextInt());
         original__SecureString = value;
-        value__SecureString =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return to_chars(original__SecureString); });
+        value__SecureString = PLS_API(to_chars(original__SecureString));
         Generate(value__SecureString, value__SecureString);
         hashCode_ = 0;
         for (pls::cs::Int32 i = 0; i < value__SecureString.length(); ++i) {
@@ -166,8 +164,7 @@ pls::cs::String SecureString::Get() {
         }
         Generate(value__SecureString, buffer_);
         pls::cs::String text = string_from_chars(buffer_);
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return string_equals(text, original__SecureString); })) {
+        if (!PLS_API(string_equals(text, original__SecureString))) {
             ++SecureNumber::hacking_();
             original__SecureString = text;
         }
@@ -243,7 +240,7 @@ ByteArray SecureString::GetBytes() {
 bool SecureString::Equals_2(pls::cs::String anObject) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.SecureString.Equals(System.String)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return string_equals(Get(), anObject); });
+        return PLS_API(string_equals(Get(), anObject));
     }
 }
 
@@ -252,13 +249,11 @@ bool SecureString::EqualsSecureString(pls::cs::Ref<SecureString> anObject) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.SecureString.Equals(kairo.unity.util.SecureString)",
                      kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> bool {
-                auto cs_arg0 = Get();
-                auto cs_arg1 = require(anObject)->Get();
-                return string_equals(cs_arg0, cs_arg1);
-            }());
-        });
+        return PLS_API(([&]() -> bool {
+            auto cs_arg0 = Get();
+            auto cs_arg1 = require(anObject)->Get();
+            return string_equals(cs_arg0, cs_arg1);
+        }()));
     }
 }
 
@@ -266,8 +261,7 @@ bool SecureString::EqualsSecureString(pls::cs::Ref<SecureString> anObject) {
 bool SecureString::StartsWith(pls::cs::String prefix) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.SecureString.StartsWith(System.String)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::culture_starts_with(Get(), prefix); });
+        return PLS_API(pls::cs::culture_starts_with(Get(), prefix));
     }
 }
 
@@ -275,8 +269,7 @@ bool SecureString::StartsWith(pls::cs::String prefix) {
 bool SecureString::EndsWith(pls::cs::String suffix) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.SecureString.EndsWith(System.String)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::culture_ends_with(Get(), suffix); });
+        return PLS_API(pls::cs::culture_ends_with(Get(), suffix));
     }
 }
 
@@ -326,13 +319,11 @@ bool SecureString::Equals(pls::cs::Ref<SecureString> self, pls::cs::Ref<pls::cs:
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.SecureString.Equals(System.Object)", kairo);
     {
         if (!is_null(obj) && is_instance<pls::cs::Ref<SecureString>>(pls::cs::box(obj))) {
-            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> bool {
-                    auto cs_arg0 = self->Get();
-                    auto cs_arg1 = require((pls::cs::unbox<pls::cs::Ref<SecureString>>(obj)))->Get();
-                    return string_equals(cs_arg0, cs_arg1);
-                }());
-            });
+            return PLS_API(([&]() -> bool {
+                auto cs_arg0 = self->Get();
+                auto cs_arg1 = require((pls::cs::unbox<pls::cs::Ref<SecureString>>(obj)))->Get();
+                return string_equals(cs_arg0, cs_arg1);
+            }()));
         }
         return pls::cs::box(self) == pls::cs::box(obj);
     }

@@ -59,7 +59,7 @@ pls::cs::Double Cos(pls::cs::Double a) {
     JMath::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JMath.Cos(System.Double)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return std::cos(a); });
+        return PLS_API(std::cos(a));
     }
 }
 
@@ -68,7 +68,7 @@ pls::cs::Double Sin(pls::cs::Double a) {
     JMath::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JMath.Sin(System.Double)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return std::sin(a); });
+        return PLS_API(std::sin(a));
     }
 }
 
@@ -77,7 +77,7 @@ pls::cs::Double Sqrt(pls::cs::Double a) {
     JMath::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JMath.Sqrt(System.Double)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return std::sqrt(a); });
+        return PLS_API(std::sqrt(a));
     }
 }
 

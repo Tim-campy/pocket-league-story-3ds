@@ -310,8 +310,7 @@ void Seb::_loadInputStream(pls::cs::Ref<kl_io::InputStream> stream) {
                                     java::io::DataInputStream::ReadShort(require(dataInputStream)));
                                 array3[7] = pls::cs::cast_integral<pls::cs::Int32>(
                                     java::io::DataInputStream::ReadShort(require(dataInputStream)));
-                                array3[10] = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(dataInputStream)->Read(); });
+                                array3[10] = PLS_API(require(dataInputStream)->Read());
                                 array3[8] = 0;
                                 array3[9] = 0;
                                 if ((array3[1] >= 0 && array3[10] != 0) || array3[1] == -2 ||
@@ -321,27 +320,15 @@ void Seb::_loadInputStream(pls::cs::Ref<kl_io::InputStream> stream) {
                                         auto cs_left = ([&]() -> pls::cs::Int32 {
                                             auto cs_left = ([&]() -> pls::cs::Int32 {
                                                 auto cs_left =
-                                                    (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                         return require(dataInputStream)->Read();
-                                                     })
-                                                     << 24);
+                                                    (PLS_API(require(dataInputStream)->Read()) << 24);
                                                 auto cs_right =
-                                                    (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                         return require(dataInputStream)->Read();
-                                                     })
-                                                     << 16);
+                                                    (PLS_API(require(dataInputStream)->Read()) << 16);
                                                 return cs_left | cs_right;
                                             }());
-                                            auto cs_right =
-                                                (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                     return require(dataInputStream)->Read();
-                                                 })
-                                                 << 8);
+                                            auto cs_right = (PLS_API(require(dataInputStream)->Read()) << 8);
                                             return cs_left | cs_right;
                                         }());
-                                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(dataInputStream)->Read();
-                                        });
+                                        auto cs_right = PLS_API(require(dataInputStream)->Read());
                                         return cs_left | cs_right;
                                     }());
                                 }
@@ -439,9 +426,7 @@ void Seb::_loadInputStream(pls::cs::Ref<kl_io::InputStream> stream) {
                                 }
                                 array4[num14 + 0] = std::int8_t(-128) /* SByte.MinValue */;
                                 array4[num14 + 1] = pls::cs::cast_integral<std::int8_t>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_util::Vector_2_Size(require(vector));
-                                    }));
+                                    PLS_API(kl_util::Vector_2_Size(require(vector))));
                                 array4[num14 + 2] =
                                     pls::cs::cast_integral<std::int8_t>(((array3[11] >> 24) & 0xFF));
                                 array4[num14 + 3] =
@@ -457,10 +442,8 @@ void Seb::_loadInputStream(pls::cs::Ref<kl_io::InputStream> stream) {
                                 recoveredSpriteRecord[4] = pls::cs::cast_integral<std::int16_t>(array3[3]);
                                 recoveredSpriteRecord[5] = pls::cs::cast_integral<std::int16_t>(array3[4]);
                                 recoveredSpriteRecord[6] = pls::cs::cast_integral<std::int16_t>(array3[5]);
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_util::Vector_2_AddElement(require(vector),
-                                                                        pls::cs::box(recoveredSpriteRecord));
-                                });
+                                PLS_API(kl_util::Vector_2_AddElement(require(vector),
+                                                                     pls::cs::box(recoveredSpriteRecord)));
                             }
                         }
                     }
@@ -477,22 +460,18 @@ void Seb::_loadInputStream(pls::cs::Ref<kl_io::InputStream> stream) {
                         pls::cs::Int32 num16 = 0;
                         for (; l < layerHeads_.length(); ++l) {
                             layerHeads_[l] = num16;
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(array2[l]);
-                                    pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(spriteBuffer_);
-                                    pls::cs::Int32 cs_arg4 = array2[l].length();
-                                    kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, num16 * 8, cs_arg4);
-                                }());
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(array[l]);
-                                    pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(spriteFrames_);
-                                    pls::cs::Int32 cs_arg4 = array[l].length();
-                                    kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, num16, cs_arg4);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(array2[l]);
+                                pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(spriteBuffer_);
+                                pls::cs::Int32 cs_arg4 = array2[l].length();
+                                kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, num16 * 8, cs_arg4);
+                            }()));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(array[l]);
+                                pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(spriteFrames_);
+                                pls::cs::Int32 cs_arg4 = array[l].length();
+                                kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, num16, cs_arg4);
+                            }()));
                             num16 += array[l].length();
                         }
                         if ([&]() {
@@ -502,30 +481,18 @@ void Seb::_loadInputStream(pls::cs::Ref<kl_io::InputStream> stream) {
                                 return kl_util::Vector_2_op_Inequality(cs_left, cs_right);
                             }()) {
                             spritesBufferEx_ =
-                                ShortArray::make(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                     return kl_util::Vector_2_Size(require(vector));
-                                                 }) *
-                                                 7);
-                            for (pls::cs::Int32 m = 0; m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                           return kl_util::Vector_2_Size(require(vector));
-                                                       });
+                                ShortArray::make(PLS_API(kl_util::Vector_2_Size(require(vector))) * 7);
+                            for (pls::cs::Int32 m = 0; m < PLS_API(kl_util::Vector_2_Size(require(vector)));
                                  ++m) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                            pls::cs::box(pls::cs::unbox<ShortArray>(
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return kl_util::Vector_2_ElementAt(require(vector), m);
-                                                })));
-                                        pls::cs::Ref<pls::cs::Object> cs_arg2 =
-                                            pls::cs::box(spritesBufferEx_);
-                                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, m * 7, 7);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                                        pls::cs::box(pls::cs::unbox<ShortArray>(
+                                            PLS_API(kl_util::Vector_2_ElementAt(require(vector), m))));
+                                    pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(spritesBufferEx_);
+                                    kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, m * 7, 7);
+                                }()));
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_util::Vector_2_RemoveAllElements(require(vector));
-                            });
+                            PLS_API(kl_util::Vector_2_RemoveAllElements(require(vector)));
                         }
                         vector = pls::cs::Ref<kl_util::Vector>{};
                         boundingRects_ = pls::cs::Array<std::int8_t>::make(maxFrame_ * 4);
@@ -633,44 +600,33 @@ void Seb::_loadInputStream(pls::cs::Ref<kl_io::InputStream> stream) {
                                     auto cs_target = boundingRects_;
                                     auto cs_index = num26 + 1;
                                     auto cs_value = pls::cs::cast_integral<std::int8_t>(
-                                        (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return kl_util::Vector_2_Size(require(vector));
-                                         }) /
-                                         4));
+                                        (PLS_API(kl_util::Vector_2_Size(require(vector))) / 4));
                                     cs_target.set_Item(cs_index, cs_value);
                                 }
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                            pls::cs::box(java::lang::JShort::create(
-                                                pls::cs::cast_integral<std::int16_t>(num17)));
-                                        kl_util::Vector_2_AddElement(require(vector), cs_arg0);
-                                    }());
-                                });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                            pls::cs::box(java::lang::JShort::create(
-                                                pls::cs::cast_integral<std::int16_t>(num18)));
-                                        kl_util::Vector_2_AddElement(require(vector), cs_arg0);
-                                    }());
-                                });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                            pls::cs::box(java::lang::JShort::create(
-                                                pls::cs::cast_integral<std::int16_t>(num24)));
-                                        kl_util::Vector_2_AddElement(require(vector), cs_arg0);
-                                    }());
-                                });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                            pls::cs::box(java::lang::JShort::create(
-                                                pls::cs::cast_integral<std::int16_t>(num25)));
-                                        kl_util::Vector_2_AddElement(require(vector), cs_arg0);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                                        pls::cs::box(java::lang::JShort::create(
+                                            pls::cs::cast_integral<std::int16_t>(num17)));
+                                    kl_util::Vector_2_AddElement(require(vector), cs_arg0);
+                                }()));
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                                        pls::cs::box(java::lang::JShort::create(
+                                            pls::cs::cast_integral<std::int16_t>(num18)));
+                                    kl_util::Vector_2_AddElement(require(vector), cs_arg0);
+                                }()));
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                                        pls::cs::box(java::lang::JShort::create(
+                                            pls::cs::cast_integral<std::int16_t>(num24)));
+                                    kl_util::Vector_2_AddElement(require(vector), cs_arg0);
+                                }()));
+                                PLS_API(([&]() -> void {
+                                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                                        pls::cs::box(java::lang::JShort::create(
+                                            pls::cs::cast_integral<std::int16_t>(num25)));
+                                    kl_util::Vector_2_AddElement(require(vector), cs_arg0);
+                                }()));
                             }
                             if (n == 0) {
                                 array5[0] = num17;
@@ -727,18 +683,15 @@ void Seb::_loadInputStream(pls::cs::Ref<kl_io::InputStream> stream) {
                                 pls::cs::Ref<kl_util::Vector> cs_right = pls::cs::Ref<kl_util::Vector>{};
                                 return kl_util::Vector_2_op_Inequality(cs_left, cs_right);
                             }()) {
-                            boundingRectsEx_ = ShortArray::make(pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return kl_util::Vector_2_Size(require(vector)); }));
+                            boundingRectsEx_ =
+                                ShortArray::make(PLS_API(kl_util::Vector_2_Size(require(vector))));
                             for (pls::cs::Int32 num27 = 0; num27 < boundingRectsEx_.length(); ++num27) {
                                 {
                                     auto cs_target = boundingRectsEx_;
                                     auto cs_index = num27;
                                     auto cs_value =
-                                        require((pls::cs::unbox<pls::cs::Ref<java::lang::JShort>>(
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_util::Vector_2_ElementAt(require(vector),
-                                                                                           num27);
-                                                    }))))
+                                        require((pls::cs::unbox<pls::cs::Ref<java::lang::JShort>>(PLS_API(
+                                                    kl_util::Vector_2_ElementAt(require(vector), num27)))))
                                             ->ShortValue();
                                     cs_target.set_Item(cs_index, cs_value);
                                 }
@@ -880,9 +833,8 @@ IntArray2 Seb::GetSprites(pls::cs::Int32 frameNo) {
             }()) {
             {
                 auto cs_target = workValue;
-                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_util::JTool::MakeArray<IntArray2>(IntArray::from({layersNum, 12}));
-                });
+                auto cs_value =
+                    PLS_API(kl_util::JTool::MakeArray<IntArray2>(IntArray::from({layersNum, 12})));
                 require(cs_target)->works_ = cs_value;
             }
         }
@@ -955,9 +907,8 @@ IntArray Seb::GetSprite(pls::cs::Int32 frameNo, pls::cs::Int32 lineNo) {
             }()) {
             {
                 auto cs_target = workValue;
-                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_util::JTool::MakeArray<IntArray2>(IntArray::from({GetLayersNum(), 12}));
-                });
+                auto cs_value =
+                    PLS_API(kl_util::JTool::MakeArray<IntArray2>(IntArray::from({GetLayersNum(), 12})));
                 require(cs_target)->works_ = cs_value;
             }
         }
@@ -1138,9 +1089,7 @@ IntArray Seb::GetSpriteLocal(pls::cs::Int32 frameNo, pls::cs::Int32 lineNo) {
                 {
                     auto cs_target = require(workStaticValue)->works_;
                     auto cs_index = i;
-                    auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_util::JTool::MakeArray<IntArray2>(IntArray::from({i, 12}));
-                    });
+                    auto cs_value = PLS_API(kl_util::JTool::MakeArray<IntArray2>(IntArray::from({i, 12})));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
@@ -1504,13 +1453,11 @@ void Seb::DrawIntArray(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
         auto cs_left_29 = pls::cs::Single(sp[7]);
         auto cs_right_29 = offset_[1];
         pls::cs::Single num2 = cs_left_29 + cs_right_29;
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->CheckLocalMatrix(); })) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<Matrix> cs_arg0 = Matrix::TranslateTemporary(num, num2);
-                    PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
-                }());
-            });
+        if (PLS_API(require(g)->CheckLocalMatrix())) {
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<Matrix> cs_arg0 = Matrix::TranslateTemporary(num, num2);
+                PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
+            }()));
         } else {
             x += num;
             y += num2;
@@ -1522,27 +1469,19 @@ void Seb::DrawIntArray(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
         if (flag) {
             pls::cs::Int32 num3 = pls::cs::to_int32(
                 (((pls::cs::Int64(sp[11]) & pls::cs::Int64(0xFF000000u)) >> 24) & pls::cs::Int64(0xFF)));
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->GetRenderModeOperator(); }) == 0 &&
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->GetRenderModeSrcRatio(); }) != 255) {
-                num3 = num3 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return require(g)->GetRenderModeSrcRatio();
-                       }) /
-                       255;
+            if (PLS_API(require(g)->GetRenderModeOperator()) == 0 &&
+                PLS_API(require(g)->GetRenderModeSrcRatio()) != 255) {
+                num3 = num3 * PLS_API(require(g)->GetRenderModeSrcRatio()) / 255;
                 if (num3 > 255) {
                     num3 = 255;
                 }
             }
             if (sp[10] == 1) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->PushRenderMode(1, num3, 255 - num3); });
+                PLS_API(require(g)->PushRenderMode(1, num3, 255 - num3));
             } else if (sp[10] == 2) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->PushRenderMode(1, num3, 255); });
+                PLS_API(require(g)->PushRenderMode(1, num3, 255));
             } else if (sp[10] == 3) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->PushRenderMode(2, num3, 255); });
+                PLS_API(require(g)->PushRenderMode(2, num3, 255));
             }
         }
         if (sp[1] > -1) {
@@ -1554,88 +1493,67 @@ void Seb::DrawIntArray(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
             if (recoveredDrawRegion) {
                 pls::cs::Int32 num4 = sp[8] * 1 + sp[9] * 2;
                 if (num4 != 0) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetFlipMode(num4); });
+                    PLS_API(require(g)->SetFlipMode(num4));
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::kairo::Image> cs_arg0 = img.get_Item(sp[1]);
-                        require(g)->DrawImage(cs_arg0, x, y, sx, sy, width, height);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::kairo::Image> cs_arg0 = img.get_Item(sp[1]);
+                    require(g)->DrawImage(cs_arg0, x, y, sx, sy, width, height);
+                }()));
                 if (num4 != 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFlipMode(0); });
+                    PLS_API(require(g)->SetFlipMode(0));
                 }
             }
         } else if (sp[1] == -2) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Int32 {
-                            pls::cs::Int32 cs_arg0 = (((sp[11] & 0xFF0000) >> 16) & 0xFF);
-                            pls::cs::Int32 cs_arg1 = (((sp[11] & 0xFF00) >> 8) & 0xFF);
-                            pls::cs::Int32 cs_arg2 = (sp[11] & 0xFF & 0xFF);
-                            return pls::kairo::Graphics::GetColorOfRGB(cs_arg0, cs_arg1, cs_arg2);
-                        }());
-                    });
-                    require(g)->SetColor(cs_arg0);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg2 = sp[4];
-                    pls::cs::Single cs_arg3 = sp[5];
-                    require(g)->FillRect(x, y, cs_arg2, cs_arg3);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Int32 cs_arg0 = PLS_API(([&]() -> pls::cs::Int32 {
+                    pls::cs::Int32 cs_arg0 = (((sp[11] & 0xFF0000) >> 16) & 0xFF);
+                    pls::cs::Int32 cs_arg1 = (((sp[11] & 0xFF00) >> 8) & 0xFF);
+                    pls::cs::Int32 cs_arg2 = (sp[11] & 0xFF & 0xFF);
+                    return pls::kairo::Graphics::GetColorOfRGB(cs_arg0, cs_arg1, cs_arg2);
+                }()));
+                require(g)->SetColor(cs_arg0);
+            }()));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg2 = sp[4];
+                pls::cs::Single cs_arg3 = sp[5];
+                require(g)->FillRect(x, y, cs_arg2, cs_arg3);
+            }()));
         } else if (sp[1] == -3) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Int32 {
-                            pls::cs::Int32 cs_arg0 = (((sp[11] & 0xFF0000) >> 16) & 0xFF);
-                            pls::cs::Int32 cs_arg1 = (((sp[11] & 0xFF00) >> 8) & 0xFF);
-                            pls::cs::Int32 cs_arg2 = (sp[11] & 0xFF & 0xFF);
-                            return pls::kairo::Graphics::GetColorOfRGB(cs_arg0, cs_arg1, cs_arg2);
-                        }());
-                    });
-                    require(g)->SetColor(cs_arg0);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg2 = sp[4];
-                    pls::cs::Single cs_arg3 = sp[5];
-                    require(g)->DrawRect(x, y, cs_arg2, cs_arg3);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Int32 cs_arg0 = PLS_API(([&]() -> pls::cs::Int32 {
+                    pls::cs::Int32 cs_arg0 = (((sp[11] & 0xFF0000) >> 16) & 0xFF);
+                    pls::cs::Int32 cs_arg1 = (((sp[11] & 0xFF00) >> 8) & 0xFF);
+                    pls::cs::Int32 cs_arg2 = (sp[11] & 0xFF & 0xFF);
+                    return pls::kairo::Graphics::GetColorOfRGB(cs_arg0, cs_arg1, cs_arg2);
+                }()));
+                require(g)->SetColor(cs_arg0);
+            }()));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg2 = sp[4];
+                pls::cs::Single cs_arg3 = sp[5];
+                require(g)->DrawRect(x, y, cs_arg2, cs_arg3);
+            }()));
         } else if (sp[1] == -4) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Int32 {
-                            pls::cs::Int32 cs_arg0 = (((sp[11] & 0xFF0000) >> 16) & 0xFF);
-                            pls::cs::Int32 cs_arg1 = (((sp[11] & 0xFF00) >> 8) & 0xFF);
-                            pls::cs::Int32 cs_arg2 = (sp[11] & 0xFF & 0xFF);
-                            return pls::kairo::Graphics::GetColorOfRGB(cs_arg0, cs_arg1, cs_arg2);
-                        }());
-                    });
-                    require(g)->SetColor(cs_arg0);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg2 = x + pls::cs::Single(sp[4]);
-                    pls::cs::Single cs_arg3 = y + pls::cs::Single(sp[5]);
-                    require(g)->DrawLine(x, y, cs_arg2, cs_arg3, 1.0f);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Int32 cs_arg0 = PLS_API(([&]() -> pls::cs::Int32 {
+                    pls::cs::Int32 cs_arg0 = (((sp[11] & 0xFF0000) >> 16) & 0xFF);
+                    pls::cs::Int32 cs_arg1 = (((sp[11] & 0xFF00) >> 8) & 0xFF);
+                    pls::cs::Int32 cs_arg2 = (sp[11] & 0xFF & 0xFF);
+                    return pls::kairo::Graphics::GetColorOfRGB(cs_arg0, cs_arg1, cs_arg2);
+                }()));
+                require(g)->SetColor(cs_arg0);
+            }()));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg2 = x + pls::cs::Single(sp[4]);
+                pls::cs::Single cs_arg3 = y + pls::cs::Single(sp[5]);
+                require(g)->DrawLine(x, y, cs_arg2, cs_arg3, 1.0f);
+            }()));
         }
         if (flag) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopRenderMode(); });
+            PLS_API(require(g)->PopRenderMode());
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->CheckLocalMatrix(); })) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopMatrix(); });
+        if (PLS_API(require(g)->CheckLocalMatrix())) {
+            PLS_API(require(g)->PopMatrix());
         }
     }
 }
@@ -1663,12 +1581,10 @@ pls::cs::String Seb::ToString() {
         {
             auto cs_left_315 =
                 pls::cs::String::concat(pls::cs::String::concat(literal(u"["), name_), literal(u"] "));
-            auto cs_right_315 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_receiver_315 = pls::cs::static_pointer_cast<pls::cs::Object>(this);
-                    return require(cs_receiver_315)->pls::cs::Object::ToString();
-                }());
-            });
+            auto cs_right_315 = PLS_API(([&]() {
+                auto cs_receiver_315 = pls::cs::static_pointer_cast<pls::cs::Object>(this);
+                return require(cs_receiver_315)->pls::cs::Object::ToString();
+            }()));
             return pls::cs::String::concat(cs_left_315, cs_right_315);
         }
     }
@@ -1708,9 +1624,8 @@ void Seb::SetCacheSize(pls::cs::Int32 size) {
             {
                 auto cs_target = cache_;
                 auto cs_index = i;
-                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_util::JTool::MakeArray<IntArray2>(IntArray::from({layerHeads_.length(), 12}));
-                });
+                auto cs_value =
+                    PLS_API(kl_util::JTool::MakeArray<IntArray2>(IntArray::from({layerHeads_.length(), 12})));
                 cs_target.set_Item(cs_index, cs_value);
             }
             for (pls::cs::Int32 j = 0; j < cache_[i].length(); ++j) {
@@ -1724,12 +1639,10 @@ void Seb::SetCacheSize(pls::cs::Int32 size) {
 std::int32_t Seb::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.Seb.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace kairo::unity::ui

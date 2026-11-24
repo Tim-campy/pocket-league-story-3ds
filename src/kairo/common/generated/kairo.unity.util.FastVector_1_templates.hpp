@@ -56,14 +56,11 @@ template<typename T_T> bool FastVector_2_Contains(pls::cs::Ref<FastVector_2<T_T>
         for (pls::cs::Int32 i = 0; i < self->elementCount; ++i) {
             if (pls::cs::box(pls::cs::box(self->elementData.get_Item(i))) ==
                     pls::cs::box(pls::cs::box(elem)) ||
-                ((pls::cs::box(elem) != pls::cs::Ref<pls::cs::Object>{}) &&
-                 pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return ([&]() {
-                         auto cs_receiver = pls::cs::box(elem);
-                         auto cs_argument = pls::cs::box(self->elementData.get_Item(i));
-                         return require(cs_receiver)->Equals(cs_argument);
-                     }());
-                 }))) {
+                ((pls::cs::box(elem) != pls::cs::Ref<pls::cs::Object>{}) && PLS_API(([&]() {
+                     auto cs_receiver = pls::cs::box(elem);
+                     auto cs_argument = pls::cs::box(self->elementData.get_Item(i));
+                     return require(cs_receiver)->Equals(cs_argument);
+                 }())))) {
                 return true;
             }
         }
@@ -95,12 +92,10 @@ template<typename T_T> pls::cs::Int32 FastVector_2_GetHashCode(pls::cs::Ref<Fast
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.FastVector\u00601.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(self));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(self));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 
@@ -112,14 +107,11 @@ template<typename T_T> pls::cs::Int32 FastVector_2_IndexOf(pls::cs::Ref<FastVect
         for (pls::cs::Int32 i = 0; i < self->elementCount; ++i) {
             if (pls::cs::box(pls::cs::box(self->elementData.get_Item(i))) ==
                     pls::cs::box(pls::cs::box(elem)) ||
-                ((pls::cs::box(elem) != pls::cs::Ref<pls::cs::Object>{}) &&
-                 pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return ([&]() {
-                         auto cs_receiver = pls::cs::box(elem);
-                         auto cs_argument = pls::cs::box(self->elementData.get_Item(i));
-                         return require(cs_receiver)->Equals(cs_argument);
-                     }());
-                 }))) {
+                ((pls::cs::box(elem) != pls::cs::Ref<pls::cs::Object>{}) && PLS_API(([&]() {
+                     auto cs_receiver = pls::cs::box(elem);
+                     auto cs_argument = pls::cs::box(self->elementData.get_Item(i));
+                     return require(cs_receiver)->Equals(cs_argument);
+                 }())))) {
                 return i;
             }
         }
@@ -234,13 +226,11 @@ template<typename T_T> pls::cs::String FastVector_2_ToString(pls::cs::Ref<FastVe
     {
         {
             auto cs_left_9 =
-                pls::cs::String::concat(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return ([&]() {
-                                                auto cs_receiver_9 =
-                                                    pls::cs::static_pointer_cast<pls::cs::Object>(self);
-                                                return require(cs_receiver_9)->pls::cs::Object::ToString();
-                                            }());
-                                        }),
+                pls::cs::String::concat(PLS_API(([&]() {
+                                            auto cs_receiver_9 =
+                                                pls::cs::static_pointer_cast<pls::cs::Object>(self);
+                                            return require(cs_receiver_9)->pls::cs::Object::ToString();
+                                        }())),
                                         literal(u":size="));
             auto cs_right_9 = integer_string(self->bufSize_);
             return pls::cs::String::concat(cs_left_9, cs_right_9);

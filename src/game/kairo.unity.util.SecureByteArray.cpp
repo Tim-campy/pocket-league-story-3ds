@@ -63,9 +63,7 @@ pls::cs::Ref<SecureByteArray> SecureByteArray::Set(ByteArray ary) {
             }
         }
         bitmask_ = pls::cs::cast_integral<pls::cs::Int64>(
-            pls::cs::Int32(0x22) | pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(kl_unity_util::SecureNumber::random_())->NextInt();
-            }));
+            pls::cs::Int32(0x22) | PLS_API(require(kl_unity_util::SecureNumber::random_())->NextInt()));
         original_ = ary;
         value_ = ByteArray::make(ary.length());
         Generate(original_, value_);
@@ -96,10 +94,8 @@ ByteArray SecureByteArray::Get() {
                     return cs_left != cs_right;
                 }()) {
                 kl_unity_util::SecureNumber::hacking_()++;
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JSystem::Arraycopy(pls::cs::box(buffer_), 0, pls::cs::box(original_), 0,
-                                                       buffer_.length());
-                });
+                PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(buffer_), 0, pls::cs::box(original_), 0,
+                                                    buffer_.length()));
                 break;
             }
         }

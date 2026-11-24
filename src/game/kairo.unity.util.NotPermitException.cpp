@@ -28,15 +28,11 @@ pls::cs::String NotPermitException::ToString() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.NotPermitException.ToString", kairo);
     {
         if (!is_null(require(pls::cs::static_pointer_cast<KairoException>(this))->get_InnerException())) {
-            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(
-                           require(pls::cs::static_pointer_cast<KairoException>(this))->get_InnerException())
-                    ->ToString();
-            });
+            return PLS_API(
+                require(require(pls::cs::static_pointer_cast<KairoException>(this))->get_InnerException())
+                    ->ToString());
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(pls::cs::static_pointer_cast<KairoException>(this))->ToString();
-        });
+        return PLS_API(require(pls::cs::static_pointer_cast<KairoException>(this))->ToString());
     }
 }
 } // namespace kairo::unity::util

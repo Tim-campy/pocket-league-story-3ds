@@ -48,13 +48,11 @@ HttpForm_ResultData::System_Collections_IEnumerable_GetEnumerator(pls::cs::Ref<H
     PLS_METHOD_SCOPE("Assembly-CSharp",
                      "M:system.form.HttpForm.ResultData.System#Collections#IEnumerable#GetEnumerator", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_dictionary = self->data_;
-                return pls::cs::box_enumerator<pls::cs::String, pls::cs::Ref<pls::cs::Object>>(
-                    cs_dictionary.GetEnumerator());
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_dictionary = self->data_;
+            return pls::cs::box_enumerator<pls::cs::String, pls::cs::Ref<pls::cs::Object>>(
+                cs_dictionary.GetEnumerator());
+        }()));
     }
 }
 
@@ -135,13 +133,11 @@ pls::cs::Ref<pls::cs::Object> HttpForm_ResultData::Get(pls::cs::String key) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.HttpForm.ResultData.Get(System.String)", game);
     {
         pls::cs::Ref<pls::cs::Object> value = pls::cs::Ref<pls::cs::Object>{};
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_dictionary = data_;
-                    auto cs_key = key;
-                    return cs_dictionary.TryGetValue(cs_key, value);
-                }());
-            })) {
+        if (PLS_API(([&]() {
+                auto cs_dictionary = data_;
+                auto cs_key = key;
+                return cs_dictionary.TryGetValue(cs_key, value);
+            }()))) {
             return value;
         }
         return pls::cs::Ref<pls::cs::Object>{};
@@ -152,7 +148,7 @@ pls::cs::Ref<pls::cs::Object> HttpForm_ResultData::Get(pls::cs::String key) {
 bool HttpForm_ResultData::HasKey(pls::cs::String key) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.HttpForm.ResultData.HasKey(System.String)", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return data_.ContainsKey(key); });
+        return PLS_API(data_.ContainsKey(key));
     }
 }
 } // namespace system::form

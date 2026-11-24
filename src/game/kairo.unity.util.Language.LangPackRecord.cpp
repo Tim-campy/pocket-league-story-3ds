@@ -35,7 +35,7 @@ void create_init(pls::cs::Ref<kl_util::Language_LangPackRecord> self, pls::cs::I
     {
         self->Id = id;
         self->File = file;
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->From.Add(text); });
+        PLS_API(self->From.Add(text));
     }
 }
 
@@ -56,13 +56,11 @@ void AddPosition(pls::cs::Ref<kl_util::Language_LangPackRecord> self, pls::cs::I
                      "M:kairo.unity.util.Language.LangPackRecord.AddPosition(System.Int32,System.Int32)",
                      kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = self->Positions;
-                auto cs_arg0 = Language_Position::create(line, segment);
-                cs_receiver.Add(cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = self->Positions;
+            auto cs_arg0 = Language_Position::create(line, segment);
+            cs_receiver.Add(cs_arg0);
+        }()));
     }
 }
 } // namespace kairo::unity::util::Language_LangPackRecord

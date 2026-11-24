@@ -93,9 +93,8 @@ static PLS_NOINLINE void cs_init_2d2e25a6914f7709_slow(pls::cs::TypeInitFlag& fl
             });
         FriendData_defFriSaveB__storage =
             pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveB_", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<pls::cs::Array<ByteArray>>(IntArray::from({2, 0}));
-                });
+                return PLS_API(
+                    kl_java_util::JTool::MakeArray<pls::cs::Array<ByteArray>>(IntArray::from({2, 0})));
             });
     });
 }
@@ -196,7 +195,7 @@ void FriendData::Load(ByteArray data) {
         friSave_ = kl_unity_util::SecureProperty::create(
             FriendData::defFriSaveP_(), FriendData::defFriSaveI_(), FriendData::defFriSaveL_(),
             FriendData::defFriSaveS_(), FriendData::defFriSaveB_());
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(friSave_)->Load(data); });
+        PLS_API(require(friSave_)->Load(data));
         UnpackFriendBinalyData();
         {
             auto cs_target = require(friSave_)->ints;
@@ -212,8 +211,7 @@ ByteArray FriendData::Write() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.FriendData.Write", game);
     {
         PackFriendBinalyData();
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(friSave_)->ToByteArray(); });
+        return PLS_API(require(friSave_)->ToByteArray());
     }
 }
 
@@ -244,16 +242,13 @@ ByteArray FriendData::WriteGame() {
                 [&]() -> pls::cs::Flow<ByteArray> {
                     {
                         byteArrayOutputStream = kl_io::ByteArrayOutputStream::create();
-                        return pls::cs::flow_return(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream)->ToByteArray();
-                        }));
+                        return pls::cs::flow_return(PLS_API(require(byteArrayOutputStream)->ToByteArray()));
                     }
                     return {};
                 },
                 [&]() {
                     if (!is_null(byteArrayOutputStream)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayOutputStream)->Close(); });
+                        PLS_API(require(byteArrayOutputStream)->Close());
                     }
                     byteArrayOutputStream = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
                 });
@@ -272,70 +267,45 @@ void FriendData::PackFriendBinalyData() {
             [&]() {
                 {
                     byteArrayOutputStream = kl_io::ByteArrayOutputStream::create();
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StreamUtil::WriteInt(
-                            static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(friendHistory_));
-                            }));
-                    });
+                    PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                        static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
+                        PLS_API(kl_java_util::Vector_2_Size(require(friendHistory_)))));
                     for (pls::cs::Int32 i = 0;
-                         i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(friendHistory_));
-                         });
-                         ++i) {
+                         i < PLS_API(kl_java_util::Vector_2_Size(require(friendHistory_))); ++i) {
                         pls::cs::Ref<FriendPlayTimeData> friendPlayTimeData =
                             pls::cs::unbox<pls::cs::Ref<FriendPlayTimeData>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(require(friendHistory_), i);
-                                }));
+                                PLS_API(kl_java_util::Vector_2_ElementAt(require(friendHistory_), i)));
                         require(friendPlayTimeData)->Serialize(byteArrayOutputStream);
                     }
                     {
                         auto cs_target = require(friSave_)->bins;
                         auto cs_index = 0;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream)->ToByteArray();
-                        });
+                        auto cs_value = PLS_API(require(byteArrayOutputStream)->ToByteArray());
                         cs_target.set_Item(cs_index, cs_value);
                     }
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream)->Close(); });
+                    PLS_API(require(byteArrayOutputStream)->Close());
                     byteArrayOutputStream = kl_io::ByteArrayOutputStream::create();
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StreamUtil::WriteInt(
-                            static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(newFriendList_));
-                            }));
-                    });
+                    PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                        static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
+                        PLS_API(kl_java_util::Vector_2_Size(require(newFriendList_)))));
                     for (pls::cs::Int32 j = 0;
-                         j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(newFriendList_));
-                         });
-                         ++j) {
+                         j < PLS_API(kl_java_util::Vector_2_Size(require(newFriendList_))); ++j) {
                         pls::cs::Ref<Friend> friend_ = pls::cs::unbox<pls::cs::Ref<Friend>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(newFriendList_), j);
-                            }));
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(newFriendList_), j)));
                         require(friend_)->Serialize(byteArrayOutputStream);
                     }
                     {
                         auto cs_target = require(friSave_)->bins;
                         auto cs_index = 1;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream)->ToByteArray();
-                        });
+                        auto cs_value = PLS_API(require(byteArrayOutputStream)->ToByteArray());
                         cs_target.set_Item(cs_index, cs_value);
                     }
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream)->Close(); });
+                    PLS_API(require(byteArrayOutputStream)->Close());
                 }
             },
             [&]() {
                 if (!is_null(byteArrayOutputStream)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream)->Close(); });
+                    PLS_API(require(byteArrayOutputStream)->Close());
                 }
                 byteArrayOutputStream = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
             });
@@ -359,49 +329,33 @@ void FriendData::UnpackFriendBinalyData() {
         pls::cs::run_finally(
             [&]() {
                 {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Clear(require(friendHistory_));
-                    });
+                    PLS_API(kl_java_util::Vector_2_Clear(require(friendHistory_)));
                     byteArrayInputStream = kl_io::ByteArrayInputStream::create(require(friSave_)->bins[0]);
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayInputStream)->Available();
-                        }) > 0) {
-                        pls::cs::Int32 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                        });
+                    if (PLS_API(require(byteArrayInputStream)->Available()) > 0) {
+                        pls::cs::Int32 num =
+                            PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                         for (pls::cs::Int32 i = 0; i < num; ++i) {
                             pls::cs::Ref<FriendPlayTimeData> friendPlayTimeData =
                                 FriendPlayTimeData::create();
                             require(friendPlayTimeData)->Deserialize(byteArrayInputStream);
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_AddElement(require(friendHistory_),
-                                                                         pls::cs::box(friendPlayTimeData));
-                            });
+                            PLS_API(kl_java_util::Vector_2_AddElement(require(friendHistory_),
+                                                                      pls::cs::box(friendPlayTimeData)));
                         }
                     }
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Clear(require(newFriendList_));
-                    });
+                    PLS_API(require(byteArrayInputStream)->Close());
+                    PLS_API(kl_java_util::Vector_2_Clear(require(newFriendList_)));
                     byteArrayInputStream = kl_io::ByteArrayInputStream::create(require(friSave_)->bins[1]);
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayInputStream)->Available();
-                        }) > 0) {
-                        pls::cs::Int32 num2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                        });
+                    if (PLS_API(require(byteArrayInputStream)->Available()) > 0) {
+                        pls::cs::Int32 num2 =
+                            PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                         for (pls::cs::Int32 j = 0; j < num2; ++j) {
                             pls::cs::Ref<Friend> friend_ = Friend::create();
                             require(friend_)->Deserialize(byteArrayInputStream);
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_AddElement(require(newFriendList_),
-                                                                         pls::cs::box(friend_));
-                            });
+                            PLS_API(kl_java_util::Vector_2_AddElement(require(newFriendList_),
+                                                                      pls::cs::box(friend_)));
                         }
                     }
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
+                    PLS_API(require(byteArrayInputStream)->Close());
                 }
             },
             [&]() {
@@ -419,9 +373,7 @@ void FriendData::CgiRegistFriend(pls::cs::String name, pls::cs::Int64 minute) {
         pls::cs::String text2 = kairo::unity::system::KairoBase::MakeQueryString(
             literal(u"m"), ((minute == pls::cs::cast_integral<pls::cs::Int64>(-1)))
                                ? (pls::cs::String(u""))
-                               : (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return kl_lang::JString::ValueOfLong(minute);
-                                 })));
+                               : (PLS_API(kl_lang::JString::ValueOfLong(minute))));
         kairo::unity::system::KairoBase::Connect(pls::cs::String::concat(
             pls::cs::String::concat(literal(u"friend/regist_friend.php"), text), text2));
     }
@@ -431,48 +383,29 @@ void FriendData::CgiRegistFriend(pls::cs::String name, pls::cs::Int64 minute) {
 pls::cs::Ref<kl_java_util::Vector> FriendData::CgiGetFriendList() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.FriendData.CgiGetFriendList", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_RemoveAllElements(require(friendList_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_RemoveAllElements(require(applyList_));
-        });
+        PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(friendList_)));
+        PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(applyList_)));
         try {
             ByteArray array = kairo::unity::system::KairoBase::Connect(literal(u"friend/friend_get.php"));
             if (array.length() == 0) {
                 return friendList_;
             }
-            StringArray array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StringUtil::Split(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return kl_lang::JString::New(array);
-                                                        }),
-                                                        literal(u","));
-            });
+            StringArray array2 = PLS_API(
+                kl_unity_util::StringUtil::Split(PLS_API(kl_lang::JString::New(array)), literal(u",")));
             for (pls::cs::Int32 i = 0; i < array2.length(); ++i) {
                 pls::cs::Ref<Friend> friend_ = Friend::create_2(array2[i]);
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(require(friend_)->state_)->Get(); }) == 1) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_AddElement(require(applyList_), pls::cs::box(friend_));
-                    });
-                } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return require(require(friend_)->state_)->Get();
-                           }) == 3) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_AddElement(require(friendList_), pls::cs::box(friend_));
-                    });
+                if (PLS_API(require(require(friend_)->state_)->Get()) == 1) {
+                    PLS_API(kl_java_util::Vector_2_AddElement(require(applyList_), pls::cs::box(friend_)));
+                } else if (PLS_API(require(require(friend_)->state_)->Get()) == 3) {
+                    PLS_API(kl_java_util::Vector_2_AddElement(require(friendList_), pls::cs::box(friend_)));
                 }
             }
             return friendList_;
         } catch (const pls::cs::Exception& cs_caught_259) {
             auto ex = pls::cs::capture_exception(cs_caught_259);
             {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_RemoveAllElements(require(friendList_));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_RemoveAllElements(require(applyList_));
-                });
+                PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(friendList_)));
+                PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(applyList_)));
                 pls::cs::throw_exception(ex);
             }
         }
@@ -487,8 +420,7 @@ pls::cs::Ref<Friend> FriendData::CgiSearchFriend(pls::cs::String friendId) {
             throw pls::cs::Exception();
         }
         pls::cs::String text = kairo::unity::system::KairoBase::MakeQueryString(
-            literal(u"friendid"),
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::string_trim(friendId); }));
+            literal(u"friendid"), PLS_API(pls::cs::string_trim(friendId)));
         ByteArray array = kairo::unity::system::KairoBase::Connect(
             pls::cs::String::concat(literal(u"friend/friend_search.php"), text));
         if (array.length() == 0) {
@@ -508,9 +440,7 @@ void FriendData::CgiApplyFriend(pls::cs::String friendId) {
         pls::cs::String text =
             kairo::unity::system::KairoBase::MakeQueryString(literal(u"friendid"), friendId);
         pls::cs::String text2 = kairo::unity::system::KairoBase::MakeQueryString(
-            literal(u"max"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JString::ValueOfInt(FRIEND_MAX);
-            }));
+            literal(u"max"), PLS_API(kl_lang::JString::ValueOfInt(FRIEND_MAX)));
         kairo::unity::system::KairoBase::Connect(pls::cs::String::concat(
             pls::cs::String::concat(literal(u"friend/friend_apply.php"), text), text2));
     }
@@ -527,9 +457,7 @@ void FriendData::CgiApproveFriend(pls::cs::String friendId) {
         pls::cs::String text =
             kairo::unity::system::KairoBase::MakeQueryString(literal(u"friendid="), friendId);
         pls::cs::String text2 = kairo::unity::system::KairoBase::MakeQueryString(
-            literal(u"max"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JString::ValueOfInt(FRIEND_MAX);
-            }));
+            literal(u"max"), PLS_API(kl_lang::JString::ValueOfInt(FRIEND_MAX)));
         kairo::unity::system::KairoBase::Connect(pls::cs::String::concat(
             pls::cs::String::concat(literal(u"friend/friend_approve.php"), text), text2));
     }
@@ -568,10 +496,8 @@ pls::cs::Ref<Friend> FriendData::CgiRandomFriend() {
 pls::cs::String FriendData::GetFriendName() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.FriendData.GetFriendName", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                require(friSave_)->strs.get_Item(0));
-        });
+        return PLS_API(
+            kl_unity_util::SecureString::ToStringSecureStringStatic(require(friSave_)->strs.get_Item(0)));
     }
 }
 
@@ -595,8 +521,7 @@ void FriendData::SetFriendName(pls::cs::String name) {
         {
             auto cs_target = require(friSave_)->strs;
             auto cs_index = 0;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::SecureString::ValueOf(name); });
+            auto cs_value = PLS_API(kl_unity_util::SecureString::ValueOf(name));
             cs_target.set_Item(cs_index, cs_value);
         }
     }
@@ -607,9 +532,7 @@ bool FriendData::CheckRegistFriend() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.FriendData.CheckRegistFriend", game);
     {
         return (!is_null(require(friSave_)->strs.get_Item(0)) &&
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(require(friSave_)->strs.get_Item(0))->Length();
-                }) > 0);
+                PLS_API(require(require(friSave_)->strs.get_Item(0))->Length()) > 0);
     }
 }
 
@@ -620,8 +543,7 @@ pls::cs::Int32 FriendData::GetPlayBonus() {
         if (PLAY_BONUS_MAX == 0 || PLAY_BONUS_INTERVAL_MINUTE == 0) {
             return 0;
         }
-        auto cs_left_299 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(require(friSave_)->ints.get_Item(3))->Get(); });
+        auto cs_left_299 = PLS_API(require(require(friSave_)->ints.get_Item(3))->Get());
         auto cs_right_299 = PLAY_BONUS_INTERVAL_MINUTE;
         pls::cs::Int32 num = cs_left_299 / cs_right_299;
         if (num > PLAY_BONUS_MAX) {
@@ -645,67 +567,36 @@ void FriendData::RefreshFriendList() {
             this->CgiGetFriendList();
             pls::cs::Int32 num = 0;
             pls::cs::Ref<kl_java_util::Vector> vector = kl_java_util::Vector::create();
-            for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(friendList_));
-                                       });
-                 ++i) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(friendList_), i);
-                            });
-                        kl_java_util::Vector_2_AddElement(require(vector), cs_arg0);
-                    }());
-                });
+            for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(friendList_))); ++i) {
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(friendList_), i));
+                    kl_java_util::Vector_2_AddElement(require(vector), cs_arg0);
+                }()));
             }
-            for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(applyList_));
-                                       });
-                 ++j) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(applyList_), j);
-                            });
-                        kl_java_util::Vector_2_AddElement(require(vector), cs_arg0);
-                    }());
-                });
+            for (pls::cs::Int32 j = 0; j < PLS_API(kl_java_util::Vector_2_Size(require(applyList_))); ++j) {
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(applyList_), j));
+                    kl_java_util::Vector_2_AddElement(require(vector), cs_arg0);
+                }()));
             }
-            for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(vector));
-                                       });
-                 ++k) {
-                pls::cs::Ref<Friend> friend_ =
-                    pls::cs::unbox<pls::cs::Ref<Friend>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(require(vector), k);
-                    }));
+            for (pls::cs::Int32 k = 0; k < PLS_API(kl_java_util::Vector_2_Size(require(vector))); ++k) {
+                pls::cs::Ref<Friend> friend_ = pls::cs::unbox<pls::cs::Ref<Friend>>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), k)));
                 bool flag = false;
-                for (pls::cs::Int32 l = 0; l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(require(friendHistory_));
-                                           });
+                for (pls::cs::Int32 l = 0; l < PLS_API(kl_java_util::Vector_2_Size(require(friendHistory_)));
                      ++l) {
                     pls::cs::Ref<FriendPlayTimeData> friendPlayTimeData =
                         pls::cs::unbox<pls::cs::Ref<FriendPlayTimeData>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(friendHistory_), l);
-                            }));
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(require(friend_)->friendId_)
-                                ->EqualsSecureString(require(friendPlayTimeData)->friendId_);
-                        })) {
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(friendHistory_), l)));
+                    if (PLS_API(require(require(friend_)->friendId_)
+                                    ->EqualsSecureString(require(friendPlayTimeData)->friendId_))) {
                         flag = true;
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(require(friend_)->state_)->Get();
-                            }) == 3) {
+                        if (PLS_API(require(require(friend_)->state_)->Get()) == 3) {
                             auto cs_left_301 =
-                                pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(require(friend_)->minute_)->Get();
-                                }));
-                            auto cs_right_301 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(require(friendPlayTimeData)->minute_)->Get();
-                            });
+                                pls::cs::Int32(PLS_API(require(require(friend_)->minute_)->Get()));
+                            auto cs_right_301 = PLS_API(require(require(friendPlayTimeData)->minute_)->Get());
                             pls::cs::Int32 num2 = cs_left_301 - cs_right_301;
                             if (num2 > 0) {
                                 num += num2;
@@ -725,29 +616,19 @@ void FriendData::RefreshFriendList() {
                     }
                 }
                 if (!flag) {
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(require(friend_)->state_)->Get();
-                        }) == 3) {
-                        pls::cs::String cs_arg0_302 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                                require(friend_)->friendId_);
-                        });
-                        pls::cs::Int32 cs_arg1_302 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(require(friend_)->minute_)->Get(); });
-                        pls::cs::Int32 cs_arg2_302 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(require(friend_)->state_)->Get(); });
+                    if (PLS_API(require(require(friend_)->state_)->Get()) == 3) {
+                        pls::cs::String cs_arg0_302 =
+                            PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                require(friend_)->friendId_));
+                        pls::cs::Int32 cs_arg1_302 = PLS_API(require(require(friend_)->minute_)->Get());
+                        pls::cs::Int32 cs_arg2_302 = PLS_API(require(require(friend_)->state_)->Get());
                         pls::cs::Ref<FriendPlayTimeData> obj =
                             FriendPlayTimeData::create(cs_arg0_302, cs_arg1_302, cs_arg2_302);
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_AddElement(require(friendHistory_),
-                                                                     pls::cs::box(obj));
-                        });
-                        num += pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(require(friend_)->minute_)->Get(); });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_AddElement(require(newFriendList_),
-                                                                     pls::cs::box(friend_));
-                        });
+                        PLS_API(
+                            kl_java_util::Vector_2_AddElement(require(friendHistory_), pls::cs::box(obj)));
+                        num += PLS_API(require(require(friend_)->minute_)->Get());
+                        PLS_API(kl_java_util::Vector_2_AddElement(require(newFriendList_),
+                                                                  pls::cs::box(friend_)));
                     }
                     friendDataUpdated_ = true;
                 }
@@ -756,49 +637,31 @@ void FriendData::RefreshFriendList() {
                 auto cs_target = require(friSave_)->ints;
                 auto cs_index = 3;
                 auto cs_value = kl_unity_util::SecureInt::create(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(require(friSave_)->ints.get_Item(3))->Get();
-                    }) +
-                    num);
+                    PLS_API(require(require(friSave_)->ints.get_Item(3))->Get()) + num);
                 cs_target.set_Item(cs_index, cs_value);
             }
             {
                 auto cs_target = require(friSave_)->ints;
                 auto cs_index = 4;
                 auto cs_value = kl_unity_util::SecureInt::create(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(require(friSave_)->ints.get_Item(4))->Get();
-                    }) +
-                    num);
+                    PLS_API(require(require(friSave_)->ints.get_Item(4))->Get()) + num);
                 cs_target.set_Item(cs_index, cs_value);
             }
-            for (pls::cs::Int32 m = 0; m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(friendHistory_));
-                                       });
+            for (pls::cs::Int32 m = 0; m < PLS_API(kl_java_util::Vector_2_Size(require(friendHistory_)));
                  ++m) {
                 pls::cs::Ref<FriendPlayTimeData> friendPlayTimeData2 =
                     pls::cs::unbox<pls::cs::Ref<FriendPlayTimeData>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(friendHistory_), m);
-                        }));
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(require(friendPlayTimeData2)->state_)->Get();
-                    }) != 3) {
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(friendHistory_), m)));
+                if (PLS_API(require(require(friendPlayTimeData2)->state_)->Get()) != 3) {
                     continue;
                 }
                 bool flag2 = false;
-                for (pls::cs::Int32 n = 0; n < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(require(friendList_));
-                                           });
+                for (pls::cs::Int32 n = 0; n < PLS_API(kl_java_util::Vector_2_Size(require(friendList_)));
                      ++n) {
                     pls::cs::Ref<Friend> friend2 = pls::cs::unbox<pls::cs::Ref<Friend>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(friendList_), n);
-                        }));
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(require(friendPlayTimeData2)->friendId_)
-                                ->EqualsSecureString(require(friend2)->friendId_);
-                        })) {
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(friendList_), n)));
+                    if (PLS_API(require(require(friendPlayTimeData2)->friendId_)
+                                    ->EqualsSecureString(require(friend2)->friendId_))) {
                         flag2 = true;
                         break;
                     }
@@ -818,8 +681,7 @@ void FriendData::RefreshFriendList() {
             auto ex = pls::cs::capture_exception(cs_caught_258);
             {
                 if (kl_cfg::Config::PRINT()) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::Log::Info(ex); });
+                    PLS_API(kl_unity_util::Log::Info(ex));
                 }
                 friendDataUpdated_ = false;
                 pls::cs::throw_exception(ex);
@@ -841,8 +703,7 @@ bool FriendData::UpdateRandomFriend() {
             auto t = pls::cs::capture_exception(cs_caught_279);
             {
                 if (kl_cfg::Config::PRINT()) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                    PLS_API(kl_unity_util::Log::Info(t));
                 }
             }
         }
@@ -898,12 +759,8 @@ void FriendData::DrawGradation(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::In
             num8 = (((num8 < 0.0)) ? pls::cs::Double(0.0) : (num8));
             num9 = (((num9 > 255.0)) ? pls::cs::Double(255.0) : (num9));
             num9 = (((num9 < 0.0)) ? pls::cs::Double(0.0) : (num9));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::Graphics::GetColorOfRGB(
-                        pls::cs::to_int32(num7), pls::cs::to_int32(num8), pls::cs::to_int32(num9));
-                }));
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(
+                pls::cs::to_int32(num7), pls::cs::to_int32(num8), pls::cs::to_int32(num9)))));
             pls::cs::Int32 num10 = 0;
             if ((num == dy && sy % 4 != 0)) {
                 num10 = (sy % 4);
@@ -914,8 +771,7 @@ void FriendData::DrawGradation(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::In
                     num10 = 4;
                 }
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->FillRect(dxAlias, num, w, num10); });
+            PLS_API(require(g)->FillRect(dxAlias, num, w, num10));
             num += num10;
             num7 = num7 + num4;
             num8 = num8 + num5;
@@ -973,8 +829,7 @@ bool FriendData::IsEffectiveRegistName(pls::cs::String name, pls::cs::Int32 max_
         if (kl_lang::StringEx::Length(name) == 0) {
             return false;
         }
-        if (kl_lang::StringEx::Length(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::string_trim(name); })) == 0) {
+        if (kl_lang::StringEx::Length(PLS_API(pls::cs::string_trim(name))) == 0) {
             return false;
         }
         if (max_ != -1 && kl_lang::StringEx::Length(name) > max_) {
@@ -988,8 +843,7 @@ bool FriendData::IsEffectiveRegistName(pls::cs::String name, pls::cs::Int32 max_
             if (kl_lang::StringEx::Length(text) == 0) {
                 return false;
             }
-            if (kl_lang::StringEx::Length(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::string_trim(text); })) == 0) {
+            if (kl_lang::StringEx::Length(PLS_API(pls::cs::string_trim(text))) == 0) {
                 return false;
             }
         } catch (const pls::cs::Exception& cs_caught_256) {
@@ -1033,8 +887,7 @@ pls::cs::Ref<form::FriendForm> FriendData::GetCurrentForm(pls::cs::Ref<Friend> f
 void FriendData::UpdatePlayTime() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.FriendData.UpdatePlayTime", game);
     {
-        pls::cs::Int64 num = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        pls::cs::Int64 num = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         if (playTimeBegin_ == pls::cs::cast_integral<pls::cs::Int64>(-1)) {
             playTimeSec_ = 0ll;
             playTimeBegin_ = num;
@@ -1049,39 +902,28 @@ void FriendData::UpdatePlayTime() {
                 auto cs_target = require(friSave_)->ints;
                 auto cs_index = 1;
                 auto cs_value = kl_unity_util::SecureInt::create(
-                    pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(require(friSave_)->ints.get_Item(1))->Get();
-                    })) +
-                    1);
+                    pls::cs::Int32(PLS_API(require(require(friSave_)->ints.get_Item(1))->Get())) + 1);
                 cs_target.set_Item(cs_index, cs_value);
             }
             playTimeSec_ = 0ll;
         }
         pls::cs::Ref<pls::game::form::FormManager> instance = pls::game::form::FormManager::GetInstance();
-        if (!alreadyCheckNewFriendBonus_ && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_java_util::Vector_2_Size(require(newFriendList_));
-                                            }) > 0 &&
-            PLAY_NEW_FRIEND_BONUS > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> bool {
-                    pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::FriendForm::create(14);
-                    return require(instance)->Push(cs_arg0);
-                }());
-            });
+        if (!alreadyCheckNewFriendBonus_ &&
+            PLS_API(kl_java_util::Vector_2_Size(require(newFriendList_))) > 0 && PLAY_NEW_FRIEND_BONUS > 0) {
+            PLS_API(([&]() -> bool {
+                pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::FriendForm::create(14);
+                return require(instance)->Push(cs_arg0);
+            }()));
         } else if (!alreadyCheckPlayTimeBonus_ && ([&]() -> bool {
-                       auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return require(require(friSave_)->ints.get_Item(3))->Get();
-                       });
+                       auto cs_left = PLS_API(require(require(friSave_)->ints.get_Item(3))->Get());
                        auto cs_right = PLAY_BONUS_INTERVAL_MINUTE;
                        return cs_left >= cs_right;
                    }()) &&
                    PLAY_BONUS_INTERVAL_MINUTE > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> bool {
-                    pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::FriendForm::create(12);
-                    return require(instance)->Push(cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> bool {
+                pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::FriendForm::create(12);
+                return require(instance)->Push(cs_arg0);
+            }()));
         }
     }
 }

@@ -32,10 +32,8 @@ void Button::create_init(pls::cs::Ref<Button> self, pls::cs::String text) {
     Component::create_init(pls::cs::static_pointer_cast<Component>(self));
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.panel.Button.#ctor(System.String)", kairo);
     {
-        self->label_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::Language::TranslateSoftLabel(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::Language::TranslateText(text, true); }));
-        });
+        self->label_ = PLS_API(
+            kl_util::Language::TranslateSoftLabel(PLS_API(kl_util::Language::TranslateText(text, true))));
     }
 }
 

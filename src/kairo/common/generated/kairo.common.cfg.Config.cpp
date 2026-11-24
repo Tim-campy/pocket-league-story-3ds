@@ -618,16 +618,13 @@ void Config::Init(pls::cs::String sourceUrl) {
             sourceUrl = literal(u"");
         }
         pls::cs::String text = Config::APPLI_NAME();
-        pls::cs::Int32 num = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return index_char1(Config::APPLI_NAME(), u'_'); });
+        pls::cs::Int32 num = PLS_API(index_char1(Config::APPLI_NAME(), u'_'));
         if (num != -1) {
             text = java::lang::StringEx::SubstringJ(text, 0, num);
         }
         pls::cs::Int32 num2 = -1;
         if (Config::APPLI_TYPE() == 1) {
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::cs::culture_starts_with(sourceUrl, literal(u"http://macslab"));
-                })) {
+            if (PLS_API(pls::cs::culture_starts_with(sourceUrl, literal(u"http://macslab")))) {
                 num2 = 0;
                 Config::URL_PACKAGE() = pls::cs::String::concat(
                     pls::cs::String::concat(
@@ -637,9 +634,7 @@ void Config::Init(pls::cs::String sourceUrl) {
                             literal(u"/bin/")),
                         Config::APPLI_NAME()),
                     literal(u".jar"));
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return pls::cs::culture_starts_with(sourceUrl, literal(u"http://macs"));
-                       })) {
+            } else if (PLS_API(pls::cs::culture_starts_with(sourceUrl, literal(u"http://macs")))) {
                 num2 = 1;
                 Config::URL_PACKAGE() = pls::cs::String::concat(
                     pls::cs::String::concat(
@@ -673,14 +668,10 @@ void Config::Init(pls::cs::String sourceUrl) {
             sourceUrl = Config::URL_PACKAGE();
         }
         pls::cs::String text2 = java::lang::StringEx::SubstringJ(
-            sourceUrl, 0,
-            pls::cs::Int32(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return last_index_char1(sourceUrl, u'/'); })) +
-                1);
+            sourceUrl, 0, pls::cs::Int32(PLS_API(last_index_char1(sourceUrl, u'/'))) + 1);
         pls::cs::String text3 = pls::cs::String::concat(
-            java::lang::StringEx::SubstringJ(text2, 0, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return pls::cs::culture_index_of(text2, literal(u"/"), 7);
-                                             })),
+            java::lang::StringEx::SubstringJ(text2, 0,
+                                             PLS_API(pls::cs::culture_index_of(text2, literal(u"/"), 7))),
             literal(u"/"));
         pls::cs::String text4 = pls::cs::String::concat(
             text2, ((Config::APPLI_TYPE() == 2) ? literal(u"") : literal(u"../../cgi/")));

@@ -49,8 +49,7 @@ void FormManager::create_init(pls::cs::Ref<FormManager> self) {
     pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(self)->source_construct();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.FormManager.#ctor", game);
     {
-        self->oldTime_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        self->oldTime_ = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         self->SetTargetFps(20);
         self->fps_ = 1;
         self->lastTopFormId_ = -1;
@@ -82,11 +81,9 @@ pls::cs::Ref<FormManager> FormManager::GetInstance() {
 void FormManager::Resume() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.FormManager.Resume", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
-                       pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
-                ->source_Resume();
-        });
+        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
+                    pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
+                    ->source_Resume());
     }
 }
 
@@ -94,18 +91,14 @@ void FormManager::Resume() {
 void FormManager::PreUpdate() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.FormManager.PreUpdate", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
-                       pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
-                ->source_PreUpdate();
-        });
-        pls::cs::Ref<pls::kairo::FormBase> topForm =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return this->GetTopForm(); });
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(topForm)->GetId(); }) == 4) {
+        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
+                    pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
+                    ->source_PreUpdate());
+        pls::cs::Ref<pls::kairo::FormBase> topForm = PLS_API(this->GetTopForm());
+        if (PLS_API(require(topForm)->GetId()) == 4) {
             pls::cs::Ref<SubForm> subForm = pls::cs::unbox<pls::cs::Ref<SubForm>>(pls::cs::box(topForm));
             if (([&]() -> bool {
-                    auto cs_left = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(topForm)->GetId(); });
+                    auto cs_left = PLS_API(require(topForm)->GetId());
                     auto cs_right = lastTopFormId_;
                     return cs_left == cs_right;
                 }()) &&
@@ -116,8 +109,7 @@ void FormManager::PreUpdate() {
             lastTopFormType_ = require(subForm)->type_;
             lastTopFormChara_ = require(subForm)->humanCharaIndex_;
         }
-        lastTopFormId_ =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(topForm)->GetId(); });
+        lastTopFormId_ = PLS_API(require(topForm)->GetId());
     }
 }
 
@@ -129,35 +121,27 @@ void FormManager::Updated() {
 
         pls::cs::Ref<main::AppData> instance = main::AppData::GetInstance();
         pls::cs::Int32 num = tagFps_;
-        if (kl_cfg::Config::DEBUG_SLOW() && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::diagnostic::api_call(
-                                   [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); }))
-                    ->CheckKeyState(1024);
-            })) {
+        if (kl_cfg::Config::DEBUG_SLOW() &&
+            PLS_API(require(PLS_API(pls::kairo::Canvas::GetInstance()))->CheckKeyState(1024))) {
             num = 1;
         }
         pls::cs::Int32 num2 = 1000 / num;
         if (!fpsUnlimited_) {
             try {
-                pls::cs::Ref<pls::kairo::Canvas> instance2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+                pls::cs::Ref<pls::kairo::Canvas> instance2 = PLS_API(pls::kairo::Canvas::GetInstance());
                 pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase> surfaceManager =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase> {
-                            auto cs_canvas = instance2;
-                            return pls::cs::unbox<pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase>>(
-                                require(cs_canvas)->GetSourceSurfaceManager());
-                        }());
-                    });
+                    PLS_API(([&]() -> pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase> {
+                        auto cs_canvas = instance2;
+                        return pls::cs::unbox<pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase>>(
+                            require(cs_canvas)->GetSourceSurfaceManager());
+                    }()));
                 while ((pls::cs::cast_integral<pls::cs::Int64>(0) <= ([&]() -> pls::cs::Int64 {
-                            auto cs_left = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+                            auto cs_left = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                             auto cs_right = oldTime_;
                             return cs_left - cs_right;
                         }())) &&
                        (([&]() -> pls::cs::Int64 {
-                            auto cs_left = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+                            auto cs_left = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                             auto cs_right = oldTime_;
                             return cs_left - cs_right;
                         }()) < pls::cs::cast_integral<pls::cs::Int64>(num2))) {
@@ -170,18 +154,15 @@ void FormManager::Updated() {
                 }
             }
         }
-        oldTime_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
-        auto cs_left_76 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        oldTime_ = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
+        auto cs_left_76 = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         auto cs_right_76 = oldTime_;
         pls::cs::Int64 num3 = cs_left_76 - cs_right_76;
         if (num3 < pls::cs::cast_integral<pls::cs::Int64>(0)) {
             num3 = pls::cs::cast_integral<pls::cs::Int64>(num2);
         }
         if (([&]() -> pls::cs::Int64 {
-                auto cs_left = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+                auto cs_left = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                 auto cs_right = fpsTime_;
                 return cs_left - cs_right;
             }()) >= pls::cs::cast_integral<pls::cs::Int64>(1000)) {
@@ -190,17 +171,14 @@ void FormManager::Updated() {
                 fps_ = 1;
             }
             frameCount_ = 0;
-            fpsTime_ = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+            fpsTime_ = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         } else {
             ++frameCount_;
         }
         loopCounter_ = ((loopCounter_ + 1) % 2147483647 /* Int32.MaxValue */);
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
-                       pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
-                ->source_Updated();
-        });
+        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
+                    pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
+                    ->source_Updated());
     }
 }
 
@@ -208,11 +186,9 @@ void FormManager::Updated() {
 void FormManager::PreDraw() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.FormManager.PreDraw", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
-                       pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
-                ->source_PreDraw();
-        });
+        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
+                    pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
+                    ->source_PreDraw());
     }
 }
 
@@ -220,11 +196,9 @@ void FormManager::PreDraw() {
 void FormManager::Drawn() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.FormManager.Drawn", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
-                       pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
-                ->source_Drawn();
-        });
+        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(
+                    pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(this))
+                    ->source_Drawn());
     }
 }
 

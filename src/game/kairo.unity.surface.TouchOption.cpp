@@ -74,14 +74,12 @@ void TouchOption::create_init(pls::cs::Ref<TouchOption> self, pls::cs::Ref<Touch
                 return cs_left != cs_right;
             }()) {
             self->dragCell = IntArray::make(require(copy)->dragCell.length());
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_source = require(copy)->dragCell;
-                    auto cs_dest = self->dragCell;
-                    auto cs_count = self->dragCell.length();
-                    IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
-                }());
-            });
+            PLS_API(([&]() {
+                auto cs_source = require(copy)->dragCell;
+                auto cs_dest = self->dragCell;
+                auto cs_count = self->dragCell.length();
+                IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
+            }()));
         }
         if ([&]() {
                 auto cs_left = pls::cs::box(require(copy)->args);
@@ -89,14 +87,12 @@ void TouchOption::create_init(pls::cs::Ref<TouchOption> self, pls::cs::Ref<Touch
                 return cs_left != cs_right;
             }()) {
             self->args = IntArray::make(require(copy)->args.length());
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_source = require(copy)->args;
-                    auto cs_dest = self->args;
-                    auto cs_count = self->args.length();
-                    IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
-                }());
-            });
+            PLS_API(([&]() {
+                auto cs_source = require(copy)->args;
+                auto cs_dest = self->args;
+                auto cs_count = self->args.length();
+                IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
+            }()));
         }
         if ([&]() {
                 auto cs_left = pls::cs::box(require(copy)->margin);
@@ -104,14 +100,12 @@ void TouchOption::create_init(pls::cs::Ref<TouchOption> self, pls::cs::Ref<Touch
                 return cs_left != cs_right;
             }()) {
             self->margin = IntArray::make(require(copy)->margin.length());
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_source = require(copy)->margin;
-                    auto cs_dest = self->margin;
-                    auto cs_count = self->margin.length();
-                    IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
-                }());
-            });
+            PLS_API(([&]() {
+                auto cs_source = require(copy)->margin;
+                auto cs_dest = self->margin;
+                auto cs_count = self->margin.length();
+                IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
+            }()));
         }
         if ([&]() {
                 auto cs_left = pls::cs::box(require(copy)->extendValues);
@@ -119,14 +113,12 @@ void TouchOption::create_init(pls::cs::Ref<TouchOption> self, pls::cs::Ref<Touch
                 return cs_left != cs_right;
             }()) {
             self->extendValues = IntArray::make(require(copy)->extendValues.length());
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_source = require(copy)->extendValues;
-                    auto cs_dest = self->extendValues;
-                    auto cs_count = self->extendValues.length();
-                    IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
-                }());
-            });
+            PLS_API(([&]() {
+                auto cs_source = require(copy)->extendValues;
+                auto cs_dest = self->extendValues;
+                auto cs_count = self->extendValues.length();
+                IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
+            }()));
         }
         if ([&]() {
                 auto cs_left = pls::cs::box(require(copy)->keys);
@@ -134,14 +126,12 @@ void TouchOption::create_init(pls::cs::Ref<TouchOption> self, pls::cs::Ref<Touch
                 return cs_left != cs_right;
             }()) {
             self->keys = IntArray::make(require(copy)->keys.length());
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_source = require(copy)->keys;
-                    auto cs_dest = self->keys;
-                    auto cs_count = self->keys.length();
-                    IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
-                }());
-            });
+            PLS_API(([&]() {
+                auto cs_source = require(copy)->keys;
+                auto cs_dest = self->keys;
+                auto cs_count = self->keys.length();
+                IntArray::copy(cs_source, 0, cs_dest, 0, cs_count);
+            }()));
         }
     }
 }
@@ -186,31 +176,23 @@ pls::cs::Ref<TouchOption> TouchOption::Create() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.TouchOption.Create", kairo);
     {
         pls::cs::Ref<TouchOption> touchOption = pls::cs::Ref<TouchOption>{};
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(TouchOption::buffer())->Size();
-                                   });
-             ++i) {
-            if (!require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return require(TouchOption::buffer())->ElementAt(i);
-                 }))->Lock) {
-                touchOption = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(TouchOption::buffer())->ElementAt(i); });
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(TouchOption::buffer())->Size()); ++i) {
+            if (!require(PLS_API(require(TouchOption::buffer())->ElementAt(i)))->Lock) {
+                touchOption = PLS_API(require(TouchOption::buffer())->ElementAt(i));
                 require(touchOption)->Init();
                 break;
             }
         }
         if (is_null(touchOption)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = TouchOption::buffer();
-                    pls::cs::Ref<TouchOption> cs_arg0 = ([&]() {
-                        auto cs_value = TouchOption::create();
-                        touchOption = cs_value;
-                        return cs_value;
-                    }());
-                    require(cs_receiver)->Add(cs_arg0);
+            PLS_API(([&]() -> void {
+                auto cs_receiver = TouchOption::buffer();
+                pls::cs::Ref<TouchOption> cs_arg0 = ([&]() {
+                    auto cs_value = TouchOption::create();
+                    touchOption = cs_value;
+                    return cs_value;
                 }());
-            });
+                require(cs_receiver)->Add(cs_arg0);
+            }()));
         }
         require(touchOption)->Lock = true;
         return touchOption;

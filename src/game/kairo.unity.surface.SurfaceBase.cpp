@@ -116,8 +116,7 @@ bool SurfaceBase::get_registTouch(pls::cs::Ref<SurfaceBase> self) {
             return true;
         }
         if (!is_null(pls::kairo::Graphics::GetCurrent()) &&
-            !pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(pls::kairo::Graphics::GetCurrent())->IsGUI(); })) {
+            !PLS_API(require(pls::kairo::Graphics::GetCurrent())->IsGUI())) {
             return true;
         }
         return false;
@@ -145,8 +144,7 @@ void SurfaceBase::create_init(pls::cs::Ref<SurfaceBase> self) {
         self->touchEvents_ = kl_util::Vector_2_create<pls::cs::Ref<TouchEvent>>();
         self->multiTouchEnable_ = pls::kairo::DebugInput::get_multiTouchEnabled();
         self->pinchPointer_ = IntArray2::from({IntArray::from({0, 0, -1}), IntArray::from({0, 0, -1})});
-        self->pinchStartPoint_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2})); });
+        self->pinchStartPoint_ = PLS_API(kl_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2})));
         self->pinchStart_ = false;
         self->scaleRatio_ = 100.0f;
         self->delay_ = pls::cs::Array<pls::cs::Ref<SurfaceBase_MotionEventRecord>>::make(0);
@@ -172,36 +170,28 @@ pls::cs::Ref<TouchComponent> SurfaceBase::AddTouchComponent(pls::cs::Int32 id, p
         "M:kairo.unity.surface.SurfaceBase.AddTouchComponent(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,kairo.unity.surface.TouchOption)",
         kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Graphics::GetCurrent(); });
+        PLS_API(pls::kairo::Graphics::GetCurrent());
         if (!SurfaceBase::get_registTouch(this)) {
             return pls::cs::Ref<TouchComponent>{};
         }
         pls::cs::Ref<TouchComponent> touchComponent = pls::cs::Ref<TouchComponent>{};
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(componentBuffer_)->Size();
-                                   });
-             ++i) {
-            if (!require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return require(componentBuffer_)->ElementAt(i);
-                 }))->isLock) {
-                touchComponent = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(componentBuffer_)->ElementAt(i); });
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(componentBuffer_)->Size()); ++i) {
+            if (!require(PLS_API(require(componentBuffer_)->ElementAt(i)))->isLock) {
+                touchComponent = PLS_API(require(componentBuffer_)->ElementAt(i));
                 require(touchComponent)->Init();
                 break;
             }
         }
         if (is_null(touchComponent)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = componentBuffer_;
-                    pls::cs::Ref<TouchComponent> cs_arg0 = ([&]() {
-                        auto cs_value = TouchComponent::create();
-                        touchComponent = cs_value;
-                        return cs_value;
-                    }());
-                    require(cs_receiver)->Add_1(cs_arg0);
+            PLS_API(([&]() -> void {
+                auto cs_receiver = componentBuffer_;
+                pls::cs::Ref<TouchComponent> cs_arg0 = ([&]() {
+                    auto cs_value = TouchComponent::create();
+                    touchComponent = cs_value;
+                    return cs_value;
                 }());
-            });
+                require(cs_receiver)->Add_1(cs_arg0);
+            }()));
         }
         require(touchComponent)->surface_ = this;
         require(touchComponent)->id = id;
@@ -227,8 +217,7 @@ pls::cs::Ref<TouchComponent> SurfaceBase::AddTouchComponent(pls::cs::Ref<TouchCo
             return pls::cs::Ref<TouchComponent>{};
         }
         if (this->CanRegistComponent()) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(components_)->Add_1(component); });
+            PLS_API(require(components_)->Add_1(component));
         }
         return component;
     }
@@ -271,8 +260,7 @@ bool SurfaceBase::ExistTouchComponent(pls::cs::Ref<TouchComponent> component) {
 void SurfaceBase::ClearTouchComponent() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.SurfaceBase.ClearTouchComponent", kairo);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(components_)->RemoveAllElements(); });
+        PLS_API(require(components_)->RemoveAllElements());
     }
 }
 
@@ -286,12 +274,9 @@ pls::cs::Ref<SurfaceBase_TouchPoint> SurfaceBase::CreateTouchPoint(pls::cs::Int6
         kairo);
     {
         pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint = pls::cs::Ref<SurfaceBase_TouchPoint>{};
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(touchListBuffer_)->Size();
-                                   });
-             ++i) {
-            pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(touchListBuffer_)->ElementAt(i); });
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(touchListBuffer_)->Size()); ++i) {
+            pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint2 =
+                PLS_API(require(touchListBuffer_)->ElementAt(i));
             if (!java::util::Vector::Contains(require(startTouchList_), touchPoint2) &&
                 !java::util::Vector::Contains(require(lastTouchList_), touchPoint2)) {
                 touchPoint = touchPoint2;
@@ -299,17 +284,15 @@ pls::cs::Ref<SurfaceBase_TouchPoint> SurfaceBase::CreateTouchPoint(pls::cs::Int6
             }
         }
         if (is_null(touchPoint)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = touchListBuffer_;
-                    pls::cs::Ref<SurfaceBase_TouchPoint> cs_arg0 = ([&]() {
-                        auto cs_value = SurfaceBase_TouchPoint::create();
-                        touchPoint = cs_value;
-                        return cs_value;
-                    }());
-                    require(cs_receiver)->Add_1(cs_arg0);
+            PLS_API(([&]() -> void {
+                auto cs_receiver = touchListBuffer_;
+                pls::cs::Ref<SurfaceBase_TouchPoint> cs_arg0 = ([&]() {
+                    auto cs_value = SurfaceBase_TouchPoint::create();
+                    touchPoint = cs_value;
+                    return cs_value;
                 }());
-            });
+                require(cs_receiver)->Add_1(cs_arg0);
+            }()));
         }
         require(touchPoint)->Init(key, x, y, component);
         return touchPoint;
@@ -322,69 +305,45 @@ void SurfaceBase::DoBegin() {
     {
         lock_ = true;
         pls::cs::Double num = scaleRatio_ / 100.0f;
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(touchEvents_)->RemoveAllElements(); });
+        PLS_API(require(touchEvents_)->RemoveAllElements());
         for (pls::cs::Int32 i = 0; i < touchEventBufferNum_.length(); ++i) {
             touchEventBufferNum_[i] = 0;
         }
         for (pls::cs::Int32 j = 0; j < 2; ++j) {
             pls::cs::Ref<kl_util::Vector_2<pls::cs::Ref<SurfaceBase_TouchPoint>>> vector =
                 ((j == 0) ? startTouchList_ : lastTouchList_);
-            for (pls::cs::Int32 num2 =
-                     pls::diagnostic::api_call([&]() -> decltype(auto) { return require(vector)->Size(); }) -
-                     1;
-                 num2 >= 0; --num2) {
+            for (pls::cs::Int32 num2 = PLS_API(require(vector)->Size()) - 1; num2 >= 0; --num2) {
                 bool flag = true;
-                for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return require(components_)->Size();
-                                           });
-                     ++k) {
-                    if (CheckTouchKey(vector, require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return require(components_)->ElementAt(k);
-                                              }))->GetKey())) {
+                for (pls::cs::Int32 k = 0; k < PLS_API(require(components_)->Size()); ++k) {
+                    if (CheckTouchKey(vector,
+                                      require(PLS_API(require(components_)->ElementAt(k)))->GetKey())) {
                         flag = false;
                         break;
                     }
                 }
                 if (flag) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = touchEvents_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(
-                                10, require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return require(vector)->ElementAt(num2);
-                                    }))->component);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(vector)->RemoveElementAt(num2); });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = touchEvents_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(
+                            10, require(PLS_API(require(vector)->ElementAt(num2)))->component);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
+                    PLS_API(require(vector)->RemoveElementAt(num2));
                 }
             }
         }
-        for (pls::cs::Int32 l = 0; l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(components_)->Size();
-                                       }) - 1;
-             ++l) {
-            for (pls::cs::Int32 num3 = pls::diagnostic::api_call(
-                                           [&]() -> decltype(auto) { return require(components_)->Size(); }) -
-                                       1;
-                 num3 > l; --num3) {
-                pls::cs::Ref<TouchComponent> touchComponent = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(components_)->ElementAt(num3 - 1); });
-                pls::cs::Ref<TouchComponent> touchComponent2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(components_)->ElementAt(num3); });
+        for (pls::cs::Int32 l = 0; l < PLS_API(require(components_)->Size()) - 1; ++l) {
+            for (pls::cs::Int32 num3 = PLS_API(require(components_)->Size()) - 1; num3 > l; --num3) {
+                pls::cs::Ref<TouchComponent> touchComponent =
+                    PLS_API(require(components_)->ElementAt(num3 - 1));
+                pls::cs::Ref<TouchComponent> touchComponent2 = PLS_API(require(components_)->ElementAt(num3));
                 if ([&]() -> bool {
                         auto cs_left = require(touchComponent)->GetPriority();
                         auto cs_right = require(touchComponent2)->GetPriority();
                         return cs_left > cs_right;
                     }()) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(components_)->SetElementAt(touchComponent, num3);
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(components_)->SetElementAt(touchComponent2, num3 - 1);
-                    });
+                    PLS_API(require(components_)->SetElementAt(touchComponent, num3));
+                    PLS_API(require(components_)->SetElementAt(touchComponent2, num3 - 1));
                 }
             }
         }
@@ -401,8 +360,7 @@ void SurfaceBase::DoBegin() {
             }()) {
             taskBuffer_ = kl_util::Vector_2_create<pls::cs::Ref<TouchEvent>>();
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(taskBuffer_)->RemoveAllElements(); });
+        PLS_API(require(taskBuffer_)->RemoveAllElements());
     }
 }
 
@@ -411,28 +369,18 @@ void SurfaceBase::DoEnd() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.SurfaceBase.DoEnd", kairo);
     {
         pls::cs::Double num = scaleRatio_ / 100.0f;
-        pls::cs::Int32 num2 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(touchEvents_)->Size(); });
+        pls::cs::Int32 num2 = PLS_API(require(touchEvents_)->Size());
         if (!require(last_)->IsEmpty()) {
             pls::cs::Int32 num3 =
                 pls::cs::to_int32((pls::cs::Double((require(last_)->x - pls::cs::Single(x_))) / num));
             pls::cs::Int32 num4 =
                 pls::cs::to_int32((pls::cs::Double((require(last_)->y - pls::cs::Single(y_))) / num));
-            for (pls::cs::Int32 num5 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(lastTouchList_)->Size();
-                                       }) -
-                                       1;
-                 num5 >= 0; --num5) {
-                pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(lastTouchList_)->ElementAt(num5); });
-                pls::cs::Int32 num6 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(taskBuffer_)->Size(); });
-                for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return require(taskBuffer_)->Size();
-                                           });
-                     ++i) {
-                    pls::cs::Ref<TouchEvent> touchEvent = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(taskBuffer_)->ElementAt(i); });
+            for (pls::cs::Int32 num5 = PLS_API(require(lastTouchList_)->Size()) - 1; num5 >= 0; --num5) {
+                pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint =
+                    PLS_API(require(lastTouchList_)->ElementAt(num5));
+                pls::cs::Int32 num6 = PLS_API(require(taskBuffer_)->Size());
+                for (pls::cs::Int32 i = 0; i < PLS_API(require(taskBuffer_)->Size()); ++i) {
+                    pls::cs::Ref<TouchEvent> touchEvent = PLS_API(require(taskBuffer_)->ElementAt(i));
                     if ([&]() -> bool {
                             auto cs_left = require(require(touchEvent)->component)->GetKey();
                             auto cs_right = require(touchPoint)->key;
@@ -449,46 +397,32 @@ void SurfaceBase::DoEnd() {
                     pls::cs::Ref<TouchComponent> component =
                         GetComponent(require(touchPoint)->id, require(touchPoint)->value);
                     if (!is_null(component)) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = taskBuffer_;
-                                pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(3, component);
-                                require(cs_receiver)->InsertElementAt(cs_arg0, num6);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = taskBuffer_;
+                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(3, component);
+                            require(cs_receiver)->InsertElementAt(cs_arg0, num6);
+                        }()));
                         if ([&]() -> bool {
                                 pls::cs::Ref<kl_util::Vector_2<pls::cs::Ref<SurfaceBase_TouchPoint>>>
                                     cs_arg0 = startTouchList_;
                                 pls::cs::Int64 cs_arg1 = require(component)->GetKey();
                                 return CheckTouchKey(cs_arg0, cs_arg1);
                             }()) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    auto cs_receiver = taskBuffer_;
-                                    pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(6, component);
-                                    require(cs_receiver)->InsertElementAt(cs_arg0, num6 + 1);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                auto cs_receiver = taskBuffer_;
+                                pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(6, component);
+                                require(cs_receiver)->InsertElementAt(cs_arg0, num6 + 1);
+                            }()));
                         }
                     }
                 }
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(lastTouchList_)->RemoveAllElements(); });
-            for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(components_)->Size();
-                                       });
-                 ++j) {
-                pls::cs::Ref<TouchComponent> touchComponent = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(components_)->ElementAt(j); });
+            PLS_API(require(lastTouchList_)->RemoveAllElements());
+            for (pls::cs::Int32 j = 0; j < PLS_API(require(components_)->Size()); ++j) {
+                pls::cs::Ref<TouchComponent> touchComponent = PLS_API(require(components_)->ElementAt(j));
                 bool flag = false;
-                for (pls::cs::Int32 num7 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return require(taskBuffer_)->Size();
-                                           }) -
-                                           1;
-                     num7 >= 0; --num7) {
-                    pls::cs::Ref<TouchEvent> touchEvent2 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(taskBuffer_)->ElementAt(num7); });
+                for (pls::cs::Int32 num7 = PLS_API(require(taskBuffer_)->Size()) - 1; num7 >= 0; --num7) {
+                    pls::cs::Ref<TouchEvent> touchEvent2 = PLS_API(require(taskBuffer_)->ElementAt(num7));
                     if (pls::cs::box(require(touchEvent2)->component) == pls::cs::box(touchComponent) &&
                         require(touchEvent2)->IsPositive()) {
                         flag = true;
@@ -496,91 +430,61 @@ void SurfaceBase::DoEnd() {
                     }
                 }
                 if (flag) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = lastTouchList_;
-                            pls::cs::Ref<SurfaceBase_TouchPoint> cs_arg0 = CreateTouchPoint(
-                                require(touchComponent)->GetKey(), num3, num4, touchComponent);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = lastTouchList_;
+                        pls::cs::Ref<SurfaceBase_TouchPoint> cs_arg0 =
+                            CreateTouchPoint(require(touchComponent)->GetKey(), num3, num4, touchComponent);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
                 }
             }
-            for (pls::cs::Int32 num8 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(startTouchList_)->Size();
-                                       }) -
-                                       1;
-                 num8 >= 0; --num8) {
-                pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(startTouchList_)->ElementAt(num8); });
+            for (pls::cs::Int32 num8 = PLS_API(require(startTouchList_)->Size()) - 1; num8 >= 0; --num8) {
+                pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint2 =
+                    PLS_API(require(startTouchList_)->ElementAt(num8));
                 bool flag2 = true;
-                for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return require(lastTouchList_)->Size();
-                                           });
-                     ++k) {
-                    pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint3 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(lastTouchList_)->ElementAt(k); });
+                for (pls::cs::Int32 k = 0; k < PLS_API(require(lastTouchList_)->Size()); ++k) {
+                    pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint3 =
+                        PLS_API(require(lastTouchList_)->ElementAt(k));
                     if (require(touchPoint2)->key == require(touchPoint3)->key) {
                         flag2 = false;
                         break;
                     }
                 }
                 if (flag2) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(startTouchList_)->RemoveElementAt(num8); });
+                    PLS_API(require(startTouchList_)->RemoveElementAt(num8));
                 }
             }
             pinchStart_ = false;
-            for (pls::cs::Int32 l = 0; l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(taskBuffer_)->Size();
-                                       });
-                 ++l) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = touchEvents_;
-                        pls::cs::Ref<TouchEvent> cs_arg0 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(taskBuffer_)->ElementAt(l); });
-                        require(cs_receiver)->Add_1(cs_arg0);
-                    }());
-                });
+            for (pls::cs::Int32 l = 0; l < PLS_API(require(taskBuffer_)->Size()); ++l) {
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = touchEvents_;
+                    pls::cs::Ref<TouchEvent> cs_arg0 = PLS_API(require(taskBuffer_)->ElementAt(l));
+                    require(cs_receiver)->Add_1(cs_arg0);
+                }()));
             }
             touch_ = require(last_)->action == 0 || require(last_)->action == 2;
             if (!touch_) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(lastTouchList_)->RemoveAllElements(); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(startTouchList_)->RemoveAllElements(); });
+                PLS_API(require(lastTouchList_)->RemoveAllElements());
+                PLS_API(require(startTouchList_)->RemoveAllElements());
             }
         }
-        for (pls::cs::Int32 m = 0; m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(lastTouchList_)->Size();
-                                   });
-             ++m) {
-            pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint4 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(lastTouchList_)->ElementAt(m); });
+        for (pls::cs::Int32 m = 0; m < PLS_API(require(lastTouchList_)->Size()); ++m) {
+            pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint4 = PLS_API(require(lastTouchList_)->ElementAt(m));
             pls::cs::Int32 num9 = -1;
-            for (pls::cs::Int32 n = num2; n < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return require(touchEvents_)->Size();
-                                          });
-                 ++n) {
-                if (require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(touchEvents_)->ElementAt(n);
-                    }))->IsPositive()) {
+            for (pls::cs::Int32 n = num2; n < PLS_API(require(touchEvents_)->Size()); ++n) {
+                if (require(PLS_API(require(touchEvents_)->ElementAt(n)))->IsPositive()) {
                     num9 = n + 1;
                     break;
                 }
             }
             if (num9 == -1) {
-                num9 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(touchEvents_)->Size(); });
+                num9 = PLS_API(require(touchEvents_)->Size());
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = touchEvents_;
-                    pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(13, require(touchPoint4)->component);
-                    require(cs_receiver)->InsertElementAt(cs_arg0, num9);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = touchEvents_;
+                pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(13, require(touchPoint4)->component);
+                require(cs_receiver)->InsertElementAt(cs_arg0, num9);
+            }()));
         }
         pls::cs::Ref<SurfaceBase_MotionEventRecord> motionEventRecord =
             ((!require(last_)->IsEmpty()) ? last_ : last2_);
@@ -595,12 +499,8 @@ void SurfaceBase::DoEnd() {
                 speedX = require(motionEventRecord)->deltaX / require(motionEventRecord)->deltaTime;
                 speedY = require(motionEventRecord)->deltaY / require(motionEventRecord)->deltaTime;
             }
-            for (pls::cs::Int32 num10 = 0; num10 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return require(touchEvents_)->Size();
-                                           });
-                 ++num10) {
-                pls::cs::Ref<TouchEvent> touchEvent3 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(touchEvents_)->ElementAt(num10); });
+            for (pls::cs::Int32 num10 = 0; num10 < PLS_API(require(touchEvents_)->Size()); ++num10) {
+                pls::cs::Ref<TouchEvent> touchEvent3 = PLS_API(require(touchEvents_)->ElementAt(num10));
                 if (require(touchEvent3)->type != 10) {
                     require(touchEvent3)->x = x;
                     require(touchEvent3)->y = y;
@@ -609,12 +509,9 @@ void SurfaceBase::DoEnd() {
                 }
             }
         }
-        while (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(touchEvents_)->Size(); }) >
-               0) {
-            pls::cs::Ref<TouchEvent> evt = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(touchEvents_)->FirstElement(); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(touchEvents_)->RemoveElementAt(0); });
+        while (PLS_API(require(touchEvents_)->Size()) > 0) {
+            pls::cs::Ref<TouchEvent> evt = PLS_API(require(touchEvents_)->FirstElement());
+            PLS_API(require(touchEvents_)->RemoveElementAt(0));
             this->OnTouchEvent(evt);
         }
         if (!require(last_)->IsEmpty()) {
@@ -632,8 +529,7 @@ void SurfaceBase::DoEnd() {
             delayEraseTouchDownComponentId_ = false;
         }
         if (touchDownComponentId_ != -1 && pls::kairo::DebugInput::get_touchCount() == 0 &&
-            !pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::DebugInput::GetMouseButton(0); })) {
+            !PLS_API(pls::kairo::DebugInput::GetMouseButton(0))) {
             delayEraseTouchDownComponentId_ = true;
         }
     }
@@ -675,8 +571,7 @@ bool SurfaceBase::DoEvent(pls::cs::Ref<TouchComponent> c) {
             pls::cs::Int64 cs_arg1 = require(c)->GetKey();
             SearchTouchKey(cs_arg0, cs_arg1);
         }
-        pls::cs::Int32 num7 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(taskBuffer_)->Size(); });
+        pls::cs::Int32 num7 = PLS_API(require(taskBuffer_)->Size());
         pls::cs::Ref<TouchEvent> touchEvent = pls::cs::Ref<TouchEvent>{};
         if (require(c)->Check(1024) && action != 0 && touchDownComponentId_ != -1 &&
             touchDownComponentId_ != require(c)->id) {
@@ -687,33 +582,25 @@ bool SurfaceBase::DoEvent(pls::cs::Ref<TouchComponent> c) {
         cs_switch_17534_section_0:;
             {
                 if (!flag2) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(2, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(2, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
                     if (num6 == -1) {
                         touchDownComponentId_ = require(c)->id;
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = taskBuffer_;
-                                pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(0, c);
-                                require(cs_receiver)->Add_1(cs_arg0);
-                            }());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = startTouchList_;
-                                pls::cs::Ref<SurfaceBase_TouchPoint> cs_arg0 =
-                                    CreateTouchPoint(require(c)->GetKey(), num2, num3, c);
-                                require(cs_receiver)->Add_1(cs_arg0);
-                            }());
-                        });
-                        num6 = pls::diagnostic::api_call(
-                                   [&]() -> decltype(auto) { return require(startTouchList_)->Size(); }) -
-                               1;
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = taskBuffer_;
+                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(0, c);
+                            require(cs_receiver)->Add_1(cs_arg0);
+                        }()));
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = startTouchList_;
+                            pls::cs::Ref<SurfaceBase_TouchPoint> cs_arg0 =
+                                CreateTouchPoint(require(c)->GetKey(), num2, num3, c);
+                            require(cs_receiver)->Add_1(cs_arg0);
+                        }()));
+                        num6 = PLS_API(require(startTouchList_)->Size()) - 1;
                     }
                 }
                 break;
@@ -723,89 +610,69 @@ bool SurfaceBase::DoEvent(pls::cs::Ref<TouchComponent> c) {
             {
                 if (flag2) {
                     if (num6 != -1) {
-                        pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(startTouchList_)->ElementAt(num6); });
+                        pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint =
+                            PLS_API(require(startTouchList_)->ElementAt(num6));
                         pls::cs::Single num8 = require(touchPoint)->x - pls::cs::Single(num2);
                         pls::cs::Single num9 = require(touchPoint)->y - pls::cs::Single(num3);
                         if (num8 * num8 + num9 * num9 < 225.0f) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    auto cs_receiver = taskBuffer_;
-                                    pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(5, c);
-                                    require(cs_receiver)->Add_1(cs_arg0);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                auto cs_receiver = taskBuffer_;
+                                pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(5, c);
+                                require(cs_receiver)->Add_1(cs_arg0);
+                            }()));
                         } else {
                             touchEvent = CreateTouchEvent(1, c);
                             goto cs_switch_17534_section_2;
                         }
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(1, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(1, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
                 } else if (flag && require(start_)->action == 0) {
                     touchDownComponentId_ = require(c)->id;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(0, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(5, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(1, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(3, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(6, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(0, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(5, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(1, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(3, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(6, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(2, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(1, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(3, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(2, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(1, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(3, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
                 }
                 break;
             }
@@ -814,8 +681,8 @@ bool SurfaceBase::DoEvent(pls::cs::Ref<TouchComponent> c) {
             {
                 if (flag2) {
                     if (num6 != -1) {
-                        pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint2 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(startTouchList_)->ElementAt(num6); });
+                        pls::cs::Ref<SurfaceBase_TouchPoint> touchPoint2 =
+                            PLS_API(require(startTouchList_)->ElementAt(num6));
                         pls::cs::Int32 num10 = 0;
                         pls::cs::Int32 num11 = 0;
                         if (!is_null(option) &&
@@ -833,8 +700,7 @@ bool SurfaceBase::DoEvent(pls::cs::Ref<TouchComponent> c) {
                             pls::cs::Ref<TouchEvent> touchEvent2 = CreateTouchEvent(8, c);
                             require(touchEvent2)->dx = num10;
                             require(touchEvent2)->dy = num11;
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(taskBuffer_)->Add_1(touchEvent2); });
+                            PLS_API(require(taskBuffer_)->Add_1(touchEvent2));
                             require(touchPoint2)->dragBaseX =
                                 require(touchPoint2)->dragBaseX +
                                 pls::cs::Single(num10) * require(option)->dragGridW;
@@ -925,65 +791,50 @@ bool SurfaceBase::DoEvent(pls::cs::Ref<TouchComponent> c) {
                             if (require(touchEvent3)->dy < 0) {
                                 require(touchEvent3)->dy = 0;
                             }
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(taskBuffer_)->Add_1(touchEvent3); });
+                            PLS_API(require(taskBuffer_)->Add_1(touchEvent3));
                         } else {
                             pls::cs::Ref<TouchEvent> touchEvent4 = CreateTouchEvent(7, c);
                             require(touchEvent4)->dx =
                                 pls::cs::to_int32((pls::cs::Single(num2) - require(touchPoint2)->x));
                             require(touchEvent4)->dy =
                                 pls::cs::to_int32((pls::cs::Single(num3) - require(touchPoint2)->y));
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(taskBuffer_)->Add_1(touchEvent4); });
+                            PLS_API(require(taskBuffer_)->Add_1(touchEvent4));
                         }
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = taskBuffer_;
-                                pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(4, c);
-                                require(cs_receiver)->Add_1(cs_arg0);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = taskBuffer_;
+                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(4, c);
+                            require(cs_receiver)->Add_1(cs_arg0);
+                        }()));
                     }
                     break;
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = taskBuffer_;
-                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(2, c);
-                        require(cs_receiver)->Add_1(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = taskBuffer_;
+                    pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(2, c);
+                    require(cs_receiver)->Add_1(cs_arg0);
+                }()));
                 if (flag && require(start_)->action == 0) {
                     touchDownComponentId_ = require(c)->id;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(0, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = CreateTouchEvent(0, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
                     pls::cs::Ref<TouchEvent> touchEvent5 = CreateTouchEvent(7, c);
                     require(touchEvent5)->dx = num2 - num4;
                     require(touchEvent5)->dy = num3 - num5;
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(taskBuffer_)->Add_1(touchEvent5); });
+                    PLS_API(require(taskBuffer_)->Add_1(touchEvent5));
                     if (num6 != -1) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(startTouchList_)->RemoveElementAt(num6);
-                        });
+                        PLS_API(require(startTouchList_)->RemoveElementAt(num6));
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = startTouchList_;
-                            pls::cs::Ref<SurfaceBase_TouchPoint> cs_arg0 =
-                                CreateTouchPoint(require(c)->GetKey(), num2, num3, c);
-                            require(cs_receiver)->Add_1(cs_arg0);
-                        }());
-                    });
-                    num6 = pls::diagnostic::api_call(
-                               [&]() -> decltype(auto) { return require(startTouchList_)->Size(); }) -
-                           1;
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = startTouchList_;
+                        pls::cs::Ref<SurfaceBase_TouchPoint> cs_arg0 =
+                            CreateTouchPoint(require(c)->GetKey(), num2, num3, c);
+                        require(cs_receiver)->Add_1(cs_arg0);
+                    }()));
+                    num6 = PLS_API(require(startTouchList_)->Size()) - 1;
                 }
                 break;
             }
@@ -994,8 +845,7 @@ bool SurfaceBase::DoEvent(pls::cs::Ref<TouchComponent> c) {
             }
         }
         if (!is_null(touchEvent)) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(taskBuffer_)->Add_1(touchEvent); });
+            PLS_API(require(taskBuffer_)->Add_1(touchEvent));
         }
         if (multiTouchEnable_ && pls::cs::Double(pinchDistance_) / num != 0.0) {
             IntArray2 array = pinchStartPoint_;
@@ -1043,100 +893,76 @@ bool SurfaceBase::DoEvent(pls::cs::Ref<TouchComponent> c) {
                          i = cs_value;
                          return cs_value;
                      }());
-                     i < pls::diagnostic::api_call(
-                             [&]() -> decltype(auto) { return require(taskBuffer_)->Size(); });
-                     ++i) {
-                    if (!require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return require(taskBuffer_)->ElementAt(i);
-                         }))->IsPositive())
+                     i < PLS_API(require(taskBuffer_)->Size()); ++i) {
+                    if (!require(PLS_API(require(taskBuffer_)->ElementAt(i)))->IsPositive())
                         break;
                 }
                 if (pinchStart_) {
                     pls::cs::Ref<TouchEvent> touchEvent6 = CreateTouchEvent(11, c);
                     require(touchEvent6)->pinch = 0;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchStartPoint_[0]);
-                            pls::cs::Ref<pls::cs::Object> cs_arg2 =
-                                pls::cs::box(require(touchEvent6)->pinchPointBegin_[0]);
-                            kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchStartPoint_[1]);
-                            pls::cs::Ref<pls::cs::Object> cs_arg2 =
-                                pls::cs::box(require(touchEvent6)->pinchPointBegin_[1]);
-                            kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchPointer_[0]);
-                            pls::cs::Ref<pls::cs::Object> cs_arg2 =
-                                pls::cs::box(require(touchEvent6)->pinchPointBegin_[0]);
-                            kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchPointer_[1]);
-                            pls::cs::Ref<pls::cs::Object> cs_arg2 =
-                                pls::cs::box(require(touchEvent6)->pinchPointBegin_[1]);
-                            kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = taskBuffer_;
-                            pls::cs::Ref<TouchEvent> cs_arg0 = touchEvent6;
-                            pls::cs::Int32 cs_arg1 = i++;
-                            require(cs_receiver)->InsertElementAt(cs_arg0, cs_arg1);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchStartPoint_[0]);
+                        pls::cs::Ref<pls::cs::Object> cs_arg2 =
+                            pls::cs::box(require(touchEvent6)->pinchPointBegin_[0]);
+                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchStartPoint_[1]);
+                        pls::cs::Ref<pls::cs::Object> cs_arg2 =
+                            pls::cs::box(require(touchEvent6)->pinchPointBegin_[1]);
+                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchPointer_[0]);
+                        pls::cs::Ref<pls::cs::Object> cs_arg2 =
+                            pls::cs::box(require(touchEvent6)->pinchPointBegin_[0]);
+                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchPointer_[1]);
+                        pls::cs::Ref<pls::cs::Object> cs_arg2 =
+                            pls::cs::box(require(touchEvent6)->pinchPointBegin_[1]);
+                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = taskBuffer_;
+                        pls::cs::Ref<TouchEvent> cs_arg0 = touchEvent6;
+                        pls::cs::Int32 cs_arg1 = i++;
+                        require(cs_receiver)->InsertElementAt(cs_arg0, cs_arg1);
+                    }()));
                 }
                 pls::cs::Ref<TouchEvent> touchEvent7 = CreateTouchEvent(12, c);
                 require(touchEvent7)->pinch = pls::cs::to_int32((pls::cs::Double(pinchDistance_) / num));
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchStartPoint_[0]);
-                        pls::cs::Ref<pls::cs::Object> cs_arg2 =
-                            pls::cs::box(require(touchEvent7)->pinchPointBegin_[0]);
-                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchStartPoint_[1]);
-                        pls::cs::Ref<pls::cs::Object> cs_arg2 =
-                            pls::cs::box(require(touchEvent7)->pinchPointBegin_[1]);
-                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchPointer_[0]);
-                        pls::cs::Ref<pls::cs::Object> cs_arg2 =
-                            pls::cs::box(require(touchEvent7)->pinchPointNow_[0]);
-                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchPointer_[1]);
-                        pls::cs::Ref<pls::cs::Object> cs_arg2 =
-                            pls::cs::box(require(touchEvent7)->pinchPointNow_[1]);
-                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = taskBuffer_;
-                        pls::cs::Ref<TouchEvent> cs_arg0 = touchEvent7;
-                        pls::cs::Int32 cs_arg1 = i++;
-                        require(cs_receiver)->InsertElementAt(cs_arg0, cs_arg1);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchStartPoint_[0]);
+                    pls::cs::Ref<pls::cs::Object> cs_arg2 =
+                        pls::cs::box(require(touchEvent7)->pinchPointBegin_[0]);
+                    kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
+                }()));
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchStartPoint_[1]);
+                    pls::cs::Ref<pls::cs::Object> cs_arg2 =
+                        pls::cs::box(require(touchEvent7)->pinchPointBegin_[1]);
+                    kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
+                }()));
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchPointer_[0]);
+                    pls::cs::Ref<pls::cs::Object> cs_arg2 =
+                        pls::cs::box(require(touchEvent7)->pinchPointNow_[0]);
+                    kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
+                }()));
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pinchPointer_[1]);
+                    pls::cs::Ref<pls::cs::Object> cs_arg2 =
+                        pls::cs::box(require(touchEvent7)->pinchPointNow_[1]);
+                    kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, 0, 2);
+                }()));
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = taskBuffer_;
+                    pls::cs::Ref<TouchEvent> cs_arg0 = touchEvent7;
+                    pls::cs::Int32 cs_arg1 = i++;
+                    require(cs_receiver)->InsertElementAt(cs_arg0, cs_arg1);
+                }()));
                 pinchDistance_ = 0;
             }
         }
@@ -1152,34 +978,22 @@ void SurfaceBase::BeginTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.surface.SurfaceBase.BeginTouchRegist(kairo.unity.ui.Graphics)", kairo);
     {
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(componentBuffer_)->Size();
-                                   });
-             ++i) {
-            pls::cs::Ref<TouchComponent> touchComponent = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(componentBuffer_)->ElementAt(i); });
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(componentBuffer_)->Size()); ++i) {
+            pls::cs::Ref<TouchComponent> touchComponent = PLS_API(require(componentBuffer_)->ElementAt(i));
             if (require(touchComponent)->hasCount <= 0) {
                 require(touchComponent)->isLock = false;
             }
         }
-        for (pls::cs::Int32 j = 0;
-             j < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(components_)->Size(); });
-             ++j) {
-            pls::cs::Ref<TouchComponent> touchComponent2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(components_)->ElementAt(j); });
+        for (pls::cs::Int32 j = 0; j < PLS_API(require(components_)->Size()); ++j) {
+            pls::cs::Ref<TouchComponent> touchComponent2 = PLS_API(require(components_)->ElementAt(j));
             require(touchComponent2)->isLock = true;
             if (!is_null(require(touchComponent2)->option)) {
                 require(require(touchComponent2)->option)->Lock = true;
             }
         }
-        for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(startTouchList_)->Size();
-                                   });
-             ++k) {
+        for (pls::cs::Int32 k = 0; k < PLS_API(require(startTouchList_)->Size()); ++k) {
             pls::cs::Ref<TouchComponent> component =
-                require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(startTouchList_)->ElementAt(k);
-                }))->component;
+                require(PLS_API(require(startTouchList_)->ElementAt(k)))->component;
             if (!is_null(component)) {
                 require(component)->isLock = true;
                 if (!is_null(require(component)->option)) {
@@ -1187,14 +1001,9 @@ void SurfaceBase::BeginTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
             }
         }
-        for (pls::cs::Int32 l = 0; l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(lastTouchList_)->Size();
-                                   });
-             ++l) {
+        for (pls::cs::Int32 l = 0; l < PLS_API(require(lastTouchList_)->Size()); ++l) {
             pls::cs::Ref<TouchComponent> component2 =
-                require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(lastTouchList_)->ElementAt(l);
-                }))->component;
+                require(PLS_API(require(lastTouchList_)->ElementAt(l)))->component;
             if (!is_null(component2)) {
                 require(component2)->isLock = true;
                 if (!is_null(require(component2)->option)) {
@@ -1230,8 +1039,8 @@ void SurfaceBase::OnDraw(pls::cs::Ref<pls::kairo::Graphics> g) {
                      kairo);
     {
         graphics_ = g;
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return windowsScaleBackup_.Clear(); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return windowsScaleGraphics_.Clear(); });
+        PLS_API(windowsScaleBackup_.Clear());
+        PLS_API(windowsScaleGraphics_.Clear());
         pls::cs::run_finally(
             [&]() {
                 {
@@ -1240,8 +1049,8 @@ void SurfaceBase::OnDraw(pls::cs::Ref<pls::kairo::Graphics> g) {
             },
             [&]() {
                 graphics_ = pls::cs::Ref<pls::kairo::Graphics>{};
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return windowsScaleBackup_.Clear(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return windowsScaleGraphics_.Clear(); });
+                PLS_API(windowsScaleBackup_.Clear());
+                PLS_API(windowsScaleGraphics_.Clear());
             });
     }
 }
@@ -1258,8 +1067,8 @@ bool SurfaceBase::IsTouch() {
 pls::cs::Int32 SurfaceBase::GetComponentLength() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.SurfaceBase.GetComponentLength", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Graphics::GetCurrent(); });
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return require(components_)->Size(); });
+        PLS_API(pls::kairo::Graphics::GetCurrent());
+        return PLS_API(require(components_)->Size());
     }
 }
 
@@ -1267,9 +1076,8 @@ pls::cs::Int32 SurfaceBase::GetComponentLength() {
 pls::cs::Ref<TouchComponent> SurfaceBase::GetComponent(pls::cs::Int32 index) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.SurfaceBase.GetComponent(System.Int32)", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Graphics::GetCurrent(); });
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(components_)->ElementAt(index); });
+        PLS_API(pls::kairo::Graphics::GetCurrent());
+        return PLS_API(require(components_)->ElementAt(index));
     }
 }
 
@@ -1349,11 +1157,8 @@ SurfaceBase::SearchTouchKey(pls::cs::Ref<kl_util::Vector_2<pls::cs::Ref<SurfaceB
         "M:kairo.unity.surface.SurfaceBase.SearchTouchKey(java.util.Vector{kairo.unity.surface.SurfaceBase.TouchPoint},System.Int64)",
         kairo);
     {
-        for (pls::cs::Int32 i = 0;
-             i < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(list)->Size(); }); ++i) {
-            if (require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(list)->ElementAt(i);
-                }))->key == key) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(list)->Size()); ++i) {
+            if (require(PLS_API(require(list)->ElementAt(i)))->key == key) {
                 return i;
             }
         }
@@ -1370,11 +1175,8 @@ SurfaceBase::SearchTouchId(pls::cs::Ref<kl_util::Vector_2<pls::cs::Ref<SurfaceBa
         "M:kairo.unity.surface.SurfaceBase.SearchTouchId(java.util.Vector{kairo.unity.surface.SurfaceBase.TouchPoint},System.Int32)",
         kairo);
     {
-        for (pls::cs::Int32 i = 0;
-             i < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(list)->Size(); }); ++i) {
-            if (require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(list)->ElementAt(i);
-                }))->id == id) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(list)->Size()); ++i) {
+            if (require(PLS_API(require(list)->ElementAt(i)))->id == id) {
                 return i;
             }
         }
@@ -1411,11 +1213,8 @@ pls::cs::Ref<TouchEvent> SurfaceBase::GetTouchEventId(pls::cs::Int32 id, pls::cs
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.surface.SurfaceBase.GetTouchEventId(System.Int32,System.Int32)", kairo);
     {
-        for (pls::cs::Int32 i = 0;
-             i < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(touchEvents_)->Size(); });
-             ++i) {
-            pls::cs::Ref<TouchEvent> touchEvent = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(touchEvents_)->ElementAt(i); });
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(touchEvents_)->Size()); ++i) {
+            pls::cs::Ref<TouchEvent> touchEvent = PLS_API(require(touchEvents_)->ElementAt(i));
             if (require(require(touchEvent)->component)->id == id &&
                 (type == -1 || require(touchEvent)->type == type)) {
                 return touchEvent;
@@ -1430,11 +1229,8 @@ pls::cs::Ref<TouchEvent> SurfaceBase::GetTouchEventKey(pls::cs::Int64 key, pls::
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.surface.SurfaceBase.GetTouchEventKey(System.Int64,System.Int32)", kairo);
     {
-        for (pls::cs::Int32 i = 0;
-             i < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(touchEvents_)->Size(); });
-             ++i) {
-            pls::cs::Ref<TouchEvent> touchEvent = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(touchEvents_)->ElementAt(i); });
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(touchEvents_)->Size()); ++i) {
+            pls::cs::Ref<TouchEvent> touchEvent = PLS_API(require(touchEvents_)->ElementAt(i));
             if (require(require(touchEvent)->component)->GetKey() == key &&
                 (type == -1 || require(touchEvent)->type == type)) {
                 return touchEvent;
@@ -1458,25 +1254,20 @@ pls::cs::Ref<TouchEvent> SurfaceBase::CreateTouchEvent(pls::cs::Int32 type,
         }
         if ([&]() -> bool {
                 auto cs_left = touchEventBufferNum_[num];
-                auto cs_right = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(touchEventBuffer_.get_Item(num))->Size(); });
+                auto cs_right = PLS_API(require(touchEventBuffer_.get_Item(num))->Size());
                 return cs_left >= cs_right;
             }()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = touchEventBuffer_.get_Item(num);
-                    pls::cs::Ref<TouchEvent> cs_arg0 = TouchEvent::create();
-                    require(cs_receiver)->Add_1(cs_arg0);
-                }());
-            });
-        }
-        pls::cs::Ref<TouchEvent> touchEvent = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::Ref<TouchEvent> {
+            PLS_API(([&]() -> void {
                 auto cs_receiver = touchEventBuffer_.get_Item(num);
-                pls::cs::Int32 cs_arg0 = touchEventBufferNum_[num];
-                return require(cs_receiver)->ElementAt(cs_arg0);
-            }());
-        });
+                pls::cs::Ref<TouchEvent> cs_arg0 = TouchEvent::create();
+                require(cs_receiver)->Add_1(cs_arg0);
+            }()));
+        }
+        pls::cs::Ref<TouchEvent> touchEvent = PLS_API(([&]() -> pls::cs::Ref<TouchEvent> {
+            auto cs_receiver = touchEventBuffer_.get_Item(num);
+            pls::cs::Int32 cs_arg0 = touchEventBufferNum_[num];
+            return require(cs_receiver)->ElementAt(cs_arg0);
+        }()));
         touchEventBufferNum_[num]++;
         if (num == 1 && ([&]() {
                 auto cs_left = pls::cs::box(require(touchEvent)->pinchPointBegin_);
@@ -1485,16 +1276,12 @@ pls::cs::Ref<TouchEvent> SurfaceBase::CreateTouchEvent(pls::cs::Int32 type,
             }())) {
             {
                 auto cs_target = touchEvent;
-                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2}));
-                });
+                auto cs_value = PLS_API(kl_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2})));
                 require(cs_target)->pinchPointBegin_ = cs_value;
             }
             {
                 auto cs_target = touchEvent;
-                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2}));
-                });
+                auto cs_value = PLS_API(kl_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2})));
                 require(cs_target)->pinchPointNow_ = cs_value;
             }
         }
@@ -1592,20 +1379,17 @@ pls::cs::Int32 SurfaceBase::GetGameWidth() {
                                                 }()) +
                                                 0.01f));
         if (!is_null(graphics_) && ([&]() -> bool {
-                auto cs_left = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::Single(require(graphics_)->GetScale()); });
+                auto cs_left = PLS_API(pls::cs::Single(require(graphics_)->GetScale()));
                 auto cs_right = GetScaleRatio();
                 return cs_left != cs_right;
             }())) {
-            num = pls::cs::to_int32((pls::cs::Single((num * 100)) / (([&]() -> pls::cs::FloatEval {
-                                         auto cs_left =
-                                             pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return pls::cs::Single(require(graphics_)->GetScale());
-                                             }) *
-                                             100.0f;
-                                         auto cs_right = GetScaleRatio();
-                                         return cs_left / cs_right;
-                                     }()))));
+            num =
+                pls::cs::to_int32((pls::cs::Single((num * 100)) / (([&]() -> pls::cs::FloatEval {
+                                       auto cs_left =
+                                           PLS_API(pls::cs::Single(require(graphics_)->GetScale())) * 100.0f;
+                                       auto cs_right = GetScaleRatio();
+                                       return cs_left / cs_right;
+                                   }()))));
         }
         return num;
     }
@@ -1622,20 +1406,17 @@ pls::cs::Int32 SurfaceBase::GetGameHeight() {
                                                 }()) +
                                                 0.01f));
         if (!is_null(graphics_) && ([&]() -> bool {
-                auto cs_left = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::Single(require(graphics_)->GetScale()); });
+                auto cs_left = PLS_API(pls::cs::Single(require(graphics_)->GetScale()));
                 auto cs_right = GetScaleRatio();
                 return cs_left != cs_right;
             }())) {
-            num = pls::cs::to_int32((pls::cs::Single((num * 100)) / (([&]() -> pls::cs::FloatEval {
-                                         auto cs_left =
-                                             pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return pls::cs::Single(require(graphics_)->GetScale());
-                                             }) *
-                                             100.0f;
-                                         auto cs_right = GetScaleRatio();
-                                         return cs_left / cs_right;
-                                     }()))));
+            num =
+                pls::cs::to_int32((pls::cs::Single((num * 100)) / (([&]() -> pls::cs::FloatEval {
+                                       auto cs_left =
+                                           PLS_API(pls::cs::Single(require(graphics_)->GetScale())) * 100.0f;
+                                       auto cs_right = GetScaleRatio();
+                                       return cs_left / cs_right;
+                                   }()))));
         }
         return num;
     }
@@ -1687,10 +1468,8 @@ void SurfaceBase::OnReceiveTouchEvent_2(pls::cs::Ref<SurfaceBase_MotionEventReco
                         pls::cs::Array<pls::cs::Ref<SurfaceBase_MotionEventRecord>> array =
                             pls::cs::Array<pls::cs::Ref<SurfaceBase_MotionEventRecord>>::make(
                                 pls::cs::Int32(delay_.length()) + 1);
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_lang::JSystem::Arraycopy(pls::cs::box(delay_), 0, pls::cs::box(array),
-                                                               0, delay_.length());
-                        });
+                        PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(delay_), 0, pls::cs::box(array), 0,
+                                                            delay_.length()));
                         {
                             auto cs_target = array;
                             auto cs_index = pls::cs::Int32(array.length()) - 1;
@@ -1735,9 +1514,8 @@ void SurfaceBase::OnReceiveTouchEvent_2(pls::cs::Ref<SurfaceBase_MotionEventReco
                                 auto cs_left_7 = pinchPointer_[1][1];
                                 auto cs_right_7 = pinchPointer_[0][1];
                                 pls::cs::Int32 num3 = cs_left_7 - cs_right_7;
-                                num = pls::cs::to_int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JMath::Sqrt(num2 * num2 + num3 * num3);
-                                }));
+                                num = pls::cs::to_int32(
+                                    PLS_API(kl_lang::JMath::Sqrt(num2 * num2 + num3 * num3)));
                             }
                             {
                                 auto cs_target = pinchPointer_[0];
@@ -1785,9 +1563,8 @@ void SurfaceBase::OnReceiveTouchEvent_2(pls::cs::Ref<SurfaceBase_MotionEventReco
                                 auto cs_left_9 = pinchPointer_[1][1];
                                 auto cs_right_9 = pinchPointer_[0][1];
                                 pls::cs::Int32 num6 = cs_left_9 - cs_right_9;
-                                num4 = pls::cs::to_int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JMath::Sqrt(num5 * num5 + num6 * num6);
-                                }));
+                                num4 = pls::cs::to_int32(
+                                    PLS_API(kl_lang::JMath::Sqrt(num5 * num5 + num6 * num6)));
                             }
                             if (num == -1 && num4 != -1) {
                                 pinchStartPoint_[0][0] = pinchPointer_[0][0];
@@ -1845,8 +1622,7 @@ void SurfaceBase::OnKeyUp(pls::cs::Int32 keyCode, pls::cs::Ref<pls::kairo::KeyEv
 pls::cs::Int32 SurfaceBase::GetTouchOffset() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.SurfaceBase.GetTouchOffset", kairo);
     {
-        pls::cs::Ref<pls::kairo::Canvas> instance =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        pls::cs::Ref<pls::kairo::Canvas> instance = PLS_API(pls::kairo::Canvas::GetInstance());
         pls::cs::Int32 num = pls::cs::to_int32(
             (([&]() -> pls::cs::FloatEval {
                  auto cs_left = ([&]() -> pls::cs::FloatEval {
@@ -1855,20 +1631,14 @@ pls::cs::Int32 SurfaceBase::GetTouchOffset() {
                                     return cs_left * cs_right;
                                 }()) /
                                 320.0f;
-                 auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return pls::cs::Single(require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::kairo::IApplication::GetCurrentApp();
-                                            }))->GetResolutionScaleRatio());
-                 });
+                 auto cs_right = PLS_API(pls::cs::Single(
+                     require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetResolutionScaleRatio()));
                  return cs_left * cs_right;
              }()) /
              100.0f));
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(instance)->IsFullscreen(); }) &&
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(instance)->GetStatusBarPosition(); }) == 0) {
-            num -= pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(instance)->GetStatusBarHeight(); });
+        if (!PLS_API(require(instance)->IsFullscreen()) &&
+            PLS_API(require(instance)->GetStatusBarPosition()) == 0) {
+            num -= PLS_API(require(instance)->GetStatusBarHeight());
         }
         return num;
     }

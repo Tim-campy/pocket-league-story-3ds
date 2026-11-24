@@ -42,23 +42,20 @@ void NotifyManager::create_init(pls::cs::Ref<NotifyManager> self) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.notification.ui.NotifyManager.#ctor", kairo);
     {
         self->values_ = pls::cs::List<pls::cs::String>::make();
-        StringArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::PlayerPrefs::GetString(literal(u"_notification_data"), literal(u""));
-                });
-                auto cs_separators = pls::cs::Array<char16_t>::from({char16_t(10)});
-                if (cs_text.is_null())
-                    throw pls::cs::NullReferenceException();
-                return pls::cs::string_split(cs_text, cs_separators, true);
-            }());
-        });
+        StringArray array = PLS_API(([&]() {
+            auto cs_text =
+                PLS_API(pls::kairo::PlayerPrefs::GetString(literal(u"_notification_data"), literal(u"")));
+            auto cs_separators = pls::cs::Array<char16_t>::from({char16_t(10)});
+            if (cs_text.is_null())
+                throw pls::cs::NullReferenceException();
+            return pls::cs::string_split(cs_text, cs_separators, true);
+        }()));
         {
             auto cs_each300 = array;
             for (std::int32_t cs_i300 = 0; cs_i300 < cs_each300.length(); ++cs_i300) {
                 pls::cs::String item = cs_each300.get_Item(cs_i300);
                 {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return self->values_.Add(item); });
+                    PLS_API(self->values_.Add(item));
                 }
             }
         }

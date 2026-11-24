@@ -284,27 +284,19 @@ static PLS_NOINLINE void cs_init_83b311c3bf434048_slow(pls::cs::TypeInitFlag& fl
             });
         Map_COAT_GOAL1_ADDRESS_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Map.COAT_GOAL1_ADDRESS", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2})));
             });
         Map_COAT_GOAL2_ADDRESS_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Map.COAT_GOAL2_ADDRESS", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2})));
             });
         Map_COAT_GOAL1_IN_ADDRESS_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Map.COAT_GOAL1_IN_ADDRESS", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2})));
             });
         Map_COAT_GOAL2_IN_ADDRESS_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Map.COAT_GOAL2_IN_ADDRESS", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({2, 2})));
             });
         Map_GOAL1_GLOBAL_POS_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Map.GOAL1_GLOBAL_POS", [&]() {
@@ -556,22 +548,12 @@ void Map::create_init(pls::cs::Ref<Map> self) {
     Map::ensure_initialized();
     self->screen_pos = IntArray::make(2);
     self->camera_pos = IntArray::make(2);
-    self->c_poss = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-    });
-    self->GOAL1_CAMERA_POS = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-    });
-    self->GOAL2_CAMERA_POS = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-    });
+    self->c_poss = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
+    self->GOAL1_CAMERA_POS = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
+    self->GOAL2_CAMERA_POS = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
     self->cameraRect_gpos = pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>>::make(4);
-    self->cameraRect_spos = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-    });
-    self->cameraRectAddress = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-    });
+    self->cameraRect_spos = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
+    self->cameraRectAddress = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
     self->center_spos = IntArray::make(2);
     self->mapchip_off = IntArray::make(2);
     self->hit_rect = IntArray::make(4);
@@ -595,33 +577,15 @@ pls::cs::Ref<Map> Map::create() {
 void Map::Init() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Map.Init", game);
     {
-        Map::COAT_CONNER() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-        });
-        Map::COAT_CENTER() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 2}));
-        });
-        Map::COAT_GOAL1() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-        });
-        Map::COAT_GOAL2() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-        });
-        Map::COAT_GOAL1_IN() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-        });
-        Map::COAT_GOAL2_IN() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-        });
-        Map::GOAL1() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({1, 2}));
-        });
-        Map::GOAL2() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({1, 2}));
-        });
-        Map::MAP_CONNER() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-        });
+        Map::COAT_CONNER() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
+        Map::COAT_CENTER() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 2})));
+        Map::COAT_GOAL1() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
+        Map::COAT_GOAL2() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
+        Map::COAT_GOAL1_IN() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
+        Map::COAT_GOAL2_IN() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
+        Map::GOAL1() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({1, 2})));
+        Map::GOAL2() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({1, 2})));
+        Map::MAP_CONNER() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
         pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>> array =
             pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>>::from(
                 {kl_util3d::Vector3D::create(-450.0f, 0.0f, -900.0f),
@@ -684,13 +648,11 @@ void Map::Load2() {
         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
             for (pls::cs::Int32 j = 0; j < require(instance)->mapchipMatch_.length(); ++j) {
                 pls::cs::Ref<data::MapchipMatch> mapchipMatch = require(instance)->mapchipMatch_.get_Item(j);
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> bool {
-                            pls::cs::Int32 cs_arg0 = require(mapchipMatch)->flag_;
-                            pls::cs::Int32 cs_arg1 = array[i];
-                            return kl_unity_util::BitUtil::Check(cs_arg0, cs_arg1);
-                        }());
-                    })) {
+                if (PLS_API(([&]() -> bool {
+                        pls::cs::Int32 cs_arg0 = require(mapchipMatch)->flag_;
+                        pls::cs::Int32 cs_arg1 = array[i];
+                        return kl_unity_util::BitUtil::Check(cs_arg0, cs_arg1);
+                    }()))) {
                     Map::mapchipGrounds().set_Item(i, mapchipMatch);
                     break;
                 }
@@ -753,10 +715,8 @@ void Map::SetCoatLine() {
         IntArray array2 = IntArray::make(2);
         array2[0] = pls::cs::to_int32((num2 * 60.0f / 2.0f + num * 60.0f / 2.0f));
         array2[1] = pls::cs::to_int32((num2 * 30.0f / 2.0f - num * 30.0f / 2.0f));
-        Map::MAPCHIP_SPOS() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray3>(
-                IntArray::from({Map::MAPCHIP_FIELD_HNUM(), Map::MAPCHIP_FIELD_WNUM(), 2}));
-        });
+        Map::MAPCHIP_SPOS() = PLS_API(kl_java_util::JTool::MakeArray<IntArray3>(
+            IntArray::from({Map::MAPCHIP_FIELD_HNUM(), Map::MAPCHIP_FIELD_WNUM(), 2})));
         for (pls::cs::Int32 num3 = pls::cs::Int32(Map::MAPCHIP_SPOS().length()) - 1; num3 >= 0; --num3) {
             for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_SPOS()[num3].length(); ++i) {
                 Map::MAPCHIP_SPOS()[num3][i][0] = ([&]() -> pls::cs::Int32 {
@@ -975,14 +935,10 @@ void Map::SetDefaultCoatEva() {
     {
         Team::ensure_initialized();
 
-        Team::DEAFULT_FORMATION_EVA() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(
-                IntArray::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-        });
-        Team::DEAFULT_FORMATION_EVA_PENALTYAREA() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(
-                IntArray::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-        });
+        Team::DEAFULT_FORMATION_EVA() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(
+            IntArray::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()})));
+        Team::DEAFULT_FORMATION_EVA_PENALTYAREA() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(
+            IntArray::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()})));
         pls::cs::Single num = 100.0f;
         pls::cs::Single recoveredUnusedSingleSlot1;
         pls::cs::Single num2 = 1000.0f;
@@ -1084,10 +1040,9 @@ void Map::CreateMap(pls::cs::Int32 stadiumId, pls::cs::String fileName) {
         pls::cs::run_finally(
             [&]() {
                 try {
-                    recordStore = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::RecordStore::OpenRecordStore(1); });
-                    jarInflater = kl_unity_util::JarInflater::create(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->ReadRecord(2); }));
+                    recordStore = PLS_API(pls::kairo::RecordStore::OpenRecordStore(1));
+                    jarInflater =
+                        kl_unity_util::JarInflater::create(PLS_API(require(recordStore)->ReadRecord(2)));
                     {
                         auto cs_target = instance;
                         auto cs_value = Map::create();
@@ -1097,10 +1052,9 @@ void Map::CreateMap(pls::cs::Int32 stadiumId, pls::cs::String fileName) {
                     {
                         auto cs_receiver = require(instance)->map_;
                         pls::cs::Int32 cs_arg0 = stadiumId;
-                        ByteArray cs_arg1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(jarInflater)
-                                ->GetData(pls::cs::String::concat(fileName, literal(u".gmap")));
-                        });
+                        ByteArray cs_arg1 =
+                            PLS_API(require(jarInflater)
+                                        ->GetData(pls::cs::String::concat(fileName, literal(u".gmap"))));
                         require(cs_receiver)->LoadMap(cs_arg0, cs_arg1);
                     }
                     require(require(instance)->map_)->SetCoatLine();
@@ -1115,13 +1069,11 @@ void Map::CreateMap(pls::cs::Int32 stadiumId, pls::cs::String fileName) {
             },
             [&]() {
                 if (!is_null(jarInflater)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(jarInflater)->Close(); });
+                    PLS_API(require(jarInflater)->Close());
                 }
                 jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
                 if (!is_null(recordStore)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->CloseRecordStore(); });
+                    PLS_API(require(recordStore)->CloseRecordStore());
                 }
                 recordStore = pls::cs::Ref<pls::kairo::RecordStore>{};
             });
@@ -1139,26 +1091,18 @@ void Map::LoadMap(pls::cs::Int32 stadiumId, ByteArray source) {
                 try {
                     byteArrayInputStream = kl_io::ByteArrayInputStream::create(source);
                     Map::MAPCHIP_FIELD_WNUM() = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
+                        PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                     Map::MAPCHIP_FIELD_HNUM() = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
-                    Map::MAPCHIP_IMG() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::JTool::MakeArray<IntArray2>(
-                            IntArray::from({Map::MAPCHIP_FIELD_HNUM(), Map::MAPCHIP_FIELD_WNUM()}));
-                    });
+                        PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
+                    Map::MAPCHIP_IMG() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(
+                        IntArray::from({Map::MAPCHIP_FIELD_HNUM(), Map::MAPCHIP_FIELD_WNUM()})));
                     for (pls::cs::Int32 num = Map::MAPCHIP_FIELD_HNUM() - 1; num >= 0; --num) {
                         for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_FIELD_WNUM(); ++i) {
                             {
                                 auto cs_target = Map::MAPCHIP_IMG()[num];
                                 auto cs_index = i;
                                 auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                    }));
+                                    PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                                 cs_target.set_Item(cs_index, cs_value);
                             }
                         }
@@ -1168,18 +1112,14 @@ void Map::LoadMap(pls::cs::Int32 stadiumId, ByteArray source) {
                         auto cs_target = Map::COAT_BASEPOINT();
                         auto cs_index = 0;
                         auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                            }));
+                            PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                         cs_target.set_Item(cs_index, cs_value);
                     }
                     {
                         auto cs_target = Map::COAT_BASEPOINT();
                         auto cs_index = 1;
                         auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                            }));
+                            PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                         cs_target.set_Item(cs_index, cs_value);
                     }
                     pls::cs::Ref<data::StadiumData> stadiumData =
@@ -1193,9 +1133,7 @@ void Map::LoadMap(pls::cs::Int32 stadiumId, ByteArray source) {
                         cs_target.at(cs_index) = cs_value;
                     }
                     pls::cs::Int32 num2 = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
+                        PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                     mapObjects_ = pls::cs::Array<pls::cs::Ref<MapObject>>::make(num2);
                     for (pls::cs::Int32 j = 0; j < mapObjects_.length(); ++j) {
                         {
@@ -1207,52 +1145,42 @@ void Map::LoadMap(pls::cs::Int32 stadiumId, ByteArray source) {
                         {
                             auto cs_target = mapObjects_.get_Item(j);
                             pls::cs::Int32 cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             require(cs_target)->img_ = cs_value;
                         }
                         {
                             auto cs_target = require(mapObjects_.get_Item(j))->spos_;
                             auto cs_index = 0;
                             auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                         {
                             auto cs_target = require(mapObjects_.get_Item(j))->spos_;
                             auto cs_index = 1;
-                            auto cs_value =
-                                -pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                            auto cs_value = -pls::cs::Int32(
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                     }
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
+                    PLS_API(require(byteArrayInputStream)->Close());
                 } catch (const pls::cs::Exception& cs_caught_99) {
                     auto t = pls::cs::capture_exception(cs_caught_99);
                     {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                        PLS_API(kl_unity_util::Log::Info(t));
                     }
                 }
             },
             [&]() {
                 try {
                     if (!is_null(byteArrayInputStream)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
+                        PLS_API(require(byteArrayInputStream)->Close());
                     }
                     byteArrayInputStream = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 } catch (const pls::cs::Exception& cs_caught_98) {
                     auto t2 = pls::cs::capture_exception(cs_caught_98);
                     {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t2); });
+                        PLS_API(kl_unity_util::Log::Info(t2));
                     }
                 }
             });
@@ -1362,12 +1290,10 @@ void Map::Draw_coat(pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen) {
                             pls::cs::Int32 cs_arg0 = camera_pos[0];
                             pls::cs::Int32 cs_arg1 = ([&]() -> pls::cs::Int32 {
                                 auto cs_left = camera_pos[1] + 29;
-                                auto cs_right = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                                auto cs_right = PLS_API(require(image)->GetHeight());
                                 return cs_left - cs_right;
                             }());
-                            pls::cs::Int32 cs_arg3 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                            pls::cs::Int32 cs_arg3 = PLS_API(require(image)->GetHeight());
                             return GameUtil::ChRectHitRect(
                                 cs_arg0, cs_arg1, 60, cs_arg3, form::SoccerForm::VIEW_X(),
                                 form::SoccerForm::VIEW_Y(), form::SoccerForm::VIEW_W(),
@@ -1403,9 +1329,7 @@ void Map::Draw_coat(pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen) {
                         Camera::ConvertScreenToCameraIntArray(cs_arg0, cs_arg1);
                     }
                     mapchipMatch2 = require(apdat_)->mapchipMatch_.get_Item(Map::MAPCHIP_IMG()[num9][j]);
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::BitUtil::Check(require(mapchipMatch2)->flag_, 1);
-                        }) &&
+                    if (PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMatch2)->flag_, 1)) &&
                         !offscreen) {
                         if (!(GameUtil::ChRectHitRect(camera_pos[0], camera_pos[1], 60, 29,
                                                       form::SoccerForm::VIEW_X(), form::SoccerForm::VIEW_Y(),
@@ -1418,9 +1342,7 @@ void Map::Draw_coat(pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen) {
                         }
                         continue;
                     }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::BitUtil::Check(require(mapchipMatch2)->flag_, 2);
-                        })) {
+                    if (PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMatch2)->flag_, 2))) {
                         mapchipMatch2 = mapchipMatch;
                     }
                 }
@@ -1430,12 +1352,10 @@ void Map::Draw_coat(pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen) {
                         pls::cs::Int32 cs_arg0 = camera_pos[0];
                         pls::cs::Int32 cs_arg1 = ([&]() -> pls::cs::Int32 {
                             auto cs_left = camera_pos[1] + 29;
-                            auto cs_right = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(image2)->GetHeight(); });
+                            auto cs_right = PLS_API(require(image2)->GetHeight());
                             return cs_left - cs_right;
                         }());
-                        pls::cs::Int32 cs_arg3 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(image2)->GetHeight(); });
+                        pls::cs::Int32 cs_arg3 = PLS_API(require(image2)->GetHeight());
                         return GameUtil::ChRectHitRect(cs_arg0, cs_arg1, 60, cs_arg3,
                                                        form::SoccerForm::VIEW_X(), form::SoccerForm::VIEW_Y(),
                                                        form::SoccerForm::VIEW_W(), form::SoccerForm::VIEW_H(),
@@ -1501,20 +1421,16 @@ void Map::Draw_copyArea(pls::cs::Ref<pls::kairo::Graphics> g, IntArray draw_rect
                 }
                 pls::cs::Ref<data::MapchipMatch> mapchipMatch2 =
                     require(apdat_)->mapchipMatch_.get_Item(Map::MAPCHIP_IMG()[num4][i]);
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::BitUtil::Check(require(mapchipMatch2)->flag_, 2);
-                    })) {
+                if (PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMatch2)->flag_, 2))) {
                     mapchipMatch2 = mapchipMatch;
                 }
                 pls::cs::Ref<pls::kairo::Image> image =
                     require(require(apdat_)->resMapChip_)->img.get_Item(require(mapchipMatch2)->img_);
-                height = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                height = PLS_API(require(image)->GetHeight());
                 if (height >= 30) {
                     continue;
                 }
-                width =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(image)->GetWidth(); });
+                width = PLS_API(require(image)->GetWidth());
                 {
                     IntArray cs_arg0 = Map::MAPCHIP_SPOS()[num4][i];
                     IntArray cs_arg1 = camera_pos;
@@ -1933,13 +1849,10 @@ void Map::Draw_miniMap(pls::cs::Ref<pls::kairo::Graphics> g) {
         num3 = form::SoccerForm::VIEW_X() + form::SoccerForm::VIEW_W() - 6 - num - sideSoftWidth;
         num4 = form::SoccerForm::VIEW_Y() + form::SoccerForm::VIEW_H() - 6 - num2;
         num5 = 4;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                    require(require(apdat_)->resCom2_)->img.get_Item(92);
-                require(g)->DrawImage(cs_arg0, num3, num4);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(require(apdat_)->resCom2_)->img.get_Item(92);
+            require(g)->DrawImage(cs_arg0, num3, num4);
+        }()));
         for (pls::cs::Int32 num6 = pls::cs::Int32(require(udat_)->teams_.length()) - 1; num6 >= 0; --num6) {
             for (pls::cs::Int32 i = 0; i < require(require(udat_)->teams_.get_Item(num6))->players_.length();
                  ++i) {
@@ -1949,29 +1862,19 @@ void Map::Draw_miniMap(pls::cs::Ref<pls::kairo::Graphics> g) {
                     require(require(player)->pos_)->z_, 900.0f, -900.0f, num3 + num, num3, false));
                 num8 = pls::cs::to_int32(GameUtil::RateConvertFloat(
                     require(require(player)->pos_)->x_, -450.0f, 450.0f, num4, num4 + num2, false));
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                            require(require(apdat_)->resCom2_)->img.get_Item(93);
-                        require(g)->DrawImage(cs_arg0, num7 - 2, num8 - 2, 0 + num6 * 5, 0, 4, 4);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                        require(require(apdat_)->resCom2_)->img.get_Item(93);
+                    require(g)->DrawImage(cs_arg0, num7 - 2, num8 - 2, 0 + num6 * 5, 0, 4, 4);
+                }()));
             }
         }
         if (form::SoccerForm::SHOW_DEBUGDRAW2() == 1) {
             for (pls::cs::Int32 j = 0; j < require(udat_)->teams_.length(); ++j) {
                 if (j == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(255, 255, 0);
-                        }));
-                    });
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 0))));
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(255, 0, 0);
-                        }));
-                    });
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 0, 0))));
                 }
                 num7 = pls::cs::to_int32(
                     GameUtil::RateConvertFloat(require(require(udat_)->teams_.get_Item(j))->fPos_[1], 900.0f,
@@ -1983,9 +1886,7 @@ void Map::Draw_miniMap(pls::cs::Ref<pls::kairo::Graphics> g) {
                     require(require(udat_)->teams_.get_Item(j))->fPos_[2], 0.0f, 900.0f, 0.0f, num2, false));
                 num10 = pls::cs::to_int32(GameUtil::RateConvertFloat(
                     require(require(udat_)->teams_.get_Item(j))->fPos_[3], 0.0f, 1800.0f, 0.0f, num, false));
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->DrawRect(num7 - num10 / 2, num8 - num9 / 2, num10, num9);
-                });
+                PLS_API(require(g)->DrawRect(num7 - num10 / 2, num8 - num9 / 2, num10, num9));
             }
         }
         pls::cs::Ref<Ball> ball_ = require(udat_)->ball_;
@@ -1993,13 +1894,10 @@ void Map::Draw_miniMap(pls::cs::Ref<pls::kairo::Graphics> g) {
                                                             -900.0f, num3 + num, num3, false));
         num8 = pls::cs::to_int32(GameUtil::RateConvertFloat(require(require(ball_)->pos_)->x_, -450.0f,
                                                             450.0f, num4, num4 + num2, false));
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                    require(require(apdat_)->resCom2_)->img.get_Item(93);
-                require(g)->DrawImage(cs_arg0, num7 - 2, num8 - 2, 10, 0, 4, 4);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(require(apdat_)->resCom2_)->img.get_Item(93);
+            require(g)->DrawImage(cs_arg0, num7 - 2, num8 - 2, 10, 0, 4, 4);
+        }()));
     }
 }
 
@@ -2104,25 +2002,18 @@ void Map::Draw_goalPoint(pls::cs::Ref<pls::kairo::Graphics> g) {
             }
         }
         pls::cs::Int32 num = 4;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 0, 0); }));
-        });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 0, 0))));
         for (pls::cs::Int32 j = 0; j < GOAL1_CAMERA_POS.length(); ++j) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg0 = GOAL1_CAMERA_POS[j][0] - num / 2;
-                    pls::cs::Single cs_arg1 = GOAL1_CAMERA_POS[j][1] - num / 2;
-                    require(g)->FillRect(cs_arg0, cs_arg1, num, num);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg0 = GOAL2_CAMERA_POS[j][0] - num / 2;
-                    pls::cs::Single cs_arg1 = GOAL2_CAMERA_POS[j][1] - num / 2;
-                    require(g)->FillRect(cs_arg0, cs_arg1, num, num);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg0 = GOAL1_CAMERA_POS[j][0] - num / 2;
+                pls::cs::Single cs_arg1 = GOAL1_CAMERA_POS[j][1] - num / 2;
+                require(g)->FillRect(cs_arg0, cs_arg1, num, num);
+            }()));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg0 = GOAL2_CAMERA_POS[j][0] - num / 2;
+                pls::cs::Single cs_arg1 = GOAL2_CAMERA_POS[j][1] - num / 2;
+                require(g)->FillRect(cs_arg0, cs_arg1, num, num);
+            }()));
         }
     }
 }
@@ -2144,10 +2035,8 @@ void Map::Draw_mapobject(pls::cs::Ref<pls::kairo::Graphics> g) {
             if (!(([&]() -> bool {
                     pls::cs::Int32 cs_arg0 = camera_pos[0];
                     pls::cs::Int32 cs_arg1 = camera_pos[1];
-                    pls::cs::Int32 cs_arg2 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(image)->GetWidth(); });
-                    pls::cs::Int32 cs_arg3 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                    pls::cs::Int32 cs_arg2 = PLS_API(require(image)->GetWidth());
+                    pls::cs::Int32 cs_arg3 = PLS_API(require(image)->GetHeight());
                     return GameUtil::ChRectHitRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
                                                    form::SoccerForm::VIEW_X(), form::SoccerForm::VIEW_Y(),
                                                    form::SoccerForm::VIEW_W(), form::SoccerForm::VIEW_H(),
@@ -2158,8 +2047,7 @@ void Map::Draw_mapobject(pls::cs::Ref<pls::kairo::Graphics> g) {
             {
                 auto cs_receiver = apdat_;
                 auto cs_left_186 = camera_pos[1];
-                auto cs_right_186 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                auto cs_right_186 = PLS_API(require(image)->GetHeight());
                 pls::cs::Int32 cs_arg2 = cs_left_186 + cs_right_186;
                 pls::cs::Int32 cs_arg3 = require(mapObjects_.get_Item(i))->img_;
                 pls::cs::Int32 cs_arg6 = camera_pos[0];

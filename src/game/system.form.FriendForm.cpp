@@ -108,33 +108,27 @@ static PLS_NOINLINE void cs_init_7eeafe36a056776c_slow(pls::cs::TypeInitFlag& fl
             });
         FriendForm_COLOR_WHITE_storage =
             pls::cs::evaluate_type_initializer_field("F:system.form.FriendForm.COLOR_WHITE", [&]() {
-                return pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255); });
+                return PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255));
             });
         FriendForm_COLOR_BLACK_storage =
             pls::cs::evaluate_type_initializer_field("F:system.form.FriendForm.COLOR_BLACK", [&]() {
-                return pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0); });
+                return PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0));
             });
         FriendForm_COLOR_RED_storage =
             pls::cs::evaluate_type_initializer_field("F:system.form.FriendForm.COLOR_RED", [&]() {
-                return pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 0, 0); });
+                return PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 0, 0));
             });
         FriendForm_COLOR_GREEN_storage =
             pls::cs::evaluate_type_initializer_field("F:system.form.FriendForm.COLOR_GREEN", [&]() {
-                return pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 255, 0); });
+                return PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 255, 0));
             });
         FriendForm_COLOR_BLUE_storage =
             pls::cs::evaluate_type_initializer_field("F:system.form.FriendForm.COLOR_BLUE", [&]() {
-                return pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 255); });
+                return PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 255));
             });
         FriendForm_COLOR_AQUA_storage =
             pls::cs::evaluate_type_initializer_field("F:system.form.FriendForm.COLOR_AQUA", [&]() {
-                return pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 128, 255); });
+                return PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 128, 255));
             });
         FriendForm_drawRandomFriend_result_storage = pls::cs::evaluate_type_initializer_field(
             "F:system.form.FriendForm.drawRandomFriend_result", [&]() { return IntArray::make(4); });
@@ -275,9 +269,7 @@ void FriendForm::LoadResource() {
                     ->SetRecordNameBits(0);
             {
                 auto cs_receiver = FriendForm::resFriend_();
-                ByteArray cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::Storage::Read(3, false, literal(u"friend.dat"));
-                });
+                ByteArray cs_arg0 = PLS_API(pls::kairo::Storage::Read(3, false, literal(u"friend.dat")));
                 require(cs_receiver)->Load(cs_arg0, 3);
             }
         } catch (const pls::cs::Exception& cs_caught_261) {
@@ -297,24 +289,20 @@ bool FriendForm::Init() {
 
         MyFormBase::Init();
         friendData_ = friend_::ui::FriendData::GetInstance();
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
-                pls::cs::String cs_arg1 = main::AppData::softLabels_()[0];
-                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                    cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
+            pls::cs::String cs_arg1 = main::AppData::softLabels_()[0];
+            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
         FriendForm::LoadResource();
         pls::cs::Int32 num = FriendForm::softLabels_()[type_][0];
         pls::cs::Int32 num2 = FriendForm::softLabels_()[type_][1];
         if (type_ == 0) {
             text_ = pls::cs::String(u"");
         } else if (type_ == 1) {
-            text_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                    require(require(friend_::MyFriend::GetInstance())->friSave_)->strs.get_Item(0));
-            });
+            text_ = PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                require(require(friend_::MyFriend::GetInstance())->friSave_)->strs.get_Item(0)));
         } else if (type_ == 2) {
             th_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                 pls::cs::raw(this), std::string("M:system.form.FriendForm.Init:5002"),
@@ -329,29 +317,21 @@ bool FriendForm::Init() {
                                         kairo::unity::system::KairoBase::GetInstance();
                                     require(instance)->Save();
                                     if ([&]() -> bool {
-                                            auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(
-                                                           require(self->friendData_)->previousUpdateMinute_)
-                                                    ->Get();
-                                            });
+                                            auto cs_left = PLS_API(
+                                                require(require(self->friendData_)->previousUpdateMinute_)
+                                                    ->Get());
                                             auto cs_right =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(
-                                                               require(require(self->friendData_)->friSave_)
-                                                                   ->ints.get_Item(1))
-                                                        ->Get();
-                                                });
+                                                PLS_API(require(require(require(self->friendData_)->friSave_)
+                                                                    ->ints.get_Item(1))
+                                                            ->Get());
                                             return cs_left != cs_right;
                                         }()) {
                                         {
                                             auto cs_receiver = self->friendData_;
                                             pls::cs::Int64 cs_arg1 = pls::cs::cast_integral<pls::cs::Int64>(
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(
-                                                               require(require(self->friendData_)->friSave_)
-                                                                   ->ints.get_Item(1))
-                                                        ->Get();
-                                                }));
+                                                PLS_API(require(require(require(self->friendData_)->friSave_)
+                                                                    ->ints.get_Item(1))
+                                                            ->Get()));
                                             require(cs_receiver)->CgiRegistFriend(pls::cs::String{}, cs_arg1);
                                         }
                                         {
@@ -367,18 +347,11 @@ bool FriendForm::Init() {
                                     auto t = pls::cs::capture_exception(cs_caught_262);
                                     {
                                         if (kl_cfg::Config::PRINT()) {
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_unity_util::Log::Info(t);
-                                            });
+                                            PLS_API(kl_unity_util::Log::Info(t));
                                         }
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
-                                                ->Push(self->MakeErrorDialog());
-                                        });
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
-                                                ->Pop();
-                                        });
+                                        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)->Push(
+                                            self->MakeErrorDialog()));
+                                        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)->Pop());
                                     }
                                 }
                             },
@@ -387,31 +360,17 @@ bool FriendForm::Init() {
                 },
                 this));
             require(th_)->Start();
-            if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(require(require(friendData_)->friSave_)->ints.get_Item(0))->Get();
-                        }),
-                        1);
-                })) {
+            if (!PLS_API(kl_unity_util::BitUtil::Check(
+                    PLS_API(require(require(require(friendData_)->friSave_)->ints.get_Item(0))->Get()), 1))) {
                 {
                     auto cs_target = require(require(friendData_)->friSave_)->ints;
                     auto cs_index = 0;
-                    auto cs_value =
-                        kl_unity_util::SecureInt::create(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::BitUtil::On(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(require(require(friendData_)->friSave_)->ints.get_Item(0))
-                                        ->Get();
-                                }),
-                                1);
-                        }));
+                    auto cs_value = kl_unity_util::SecureInt::create(PLS_API(kl_unity_util::BitUtil::On(
+                        PLS_API(require(require(require(friendData_)->friSave_)->ints.get_Item(0))->Get()),
+                        1)));
                     cs_target.set_Item(cs_index, cs_value);
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                        FriendForm::create(11));
-                });
+                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(FriendForm::create(11)));
             }
         } else if (type_ == 3) {
             text_ = pls::cs::String(u"");
@@ -440,12 +399,8 @@ bool FriendForm::Init() {
                 require(textLay_)->SetLineSpace(4);
                 {
                     auto cs_receiver = textLay_;
-                    pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::Replace(
-                            value, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_lang::JString::ValueOfInt(require(friendData_)->FRIEND_MAX);
-                            }));
-                    });
+                    pls::cs::String cs_arg0 = PLS_API(kl_unity_util::StringUtil::Replace(
+                        value, PLS_API(kl_lang::JString::ValueOfInt(require(friendData_)->FRIEND_MAX))));
                     require(cs_receiver)->SetText(cs_arg0);
                 }
                 require(textLay_)->Flush();
@@ -461,23 +416,19 @@ bool FriendForm::Init() {
                 pls::cs::Ref<java::lang::JThread> cs_right = pls::cs::Ref<java::lang::JThread>{};
                 return java::lang::JThread::op_Inequality(cs_left, cs_right);
             }()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
-                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[0];
-                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                        cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
+                pls::cs::String cs_arg1 = main::AppData::softLabels_()[0];
+                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                    cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+            }()));
         } else {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
-                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
-                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                        cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
+                pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
+                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                    cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+            }()));
         }
         return true;
     }
@@ -503,25 +454,21 @@ bool FriendForm::Update() {
                             pls::cs::Ref<java::lang::JThread> cs_right = pls::cs::Ref<java::lang::JThread>{};
                             return java::lang::JThread::op_Inequality(cs_left, cs_right);
                         }()) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
-                                pls::cs::String cs_arg1 = main::AppData::softLabels_()[0];
-                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                                    cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::String cs_arg0 = main::AppData::softLabels_()[0];
+                            pls::cs::String cs_arg1 = main::AppData::softLabels_()[0];
+                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                                cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                        }()));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::String cs_arg0 =
-                                    main::AppData::softLabels_()[FriendForm::softLabels_()[type_][0]];
-                                pls::cs::String cs_arg1 =
-                                    main::AppData::softLabels_()[FriendForm::softLabels_()[type_][1]];
-                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                                    cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::String cs_arg0 =
+                                main::AppData::softLabels_()[FriendForm::softLabels_()[type_][0]];
+                            pls::cs::String cs_arg1 =
+                                main::AppData::softLabels_()[FriendForm::softLabels_()[type_][1]];
+                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                                cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                        }()));
                     }
                 });
             return cs_flow_263.value();
@@ -536,13 +483,11 @@ void FriendForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         kl_cfg::Config::ensure_initialized();
 
         MyFormBase::Draw(g);
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg0 = (require(view_)->GetGameWidth() - 240) / 2;
-                pls::cs::Int32 cs_arg1 = (require(view_)->GetGameHeight() - 240) / 2;
-                require(g)->SetOrigin(cs_arg0, cs_arg1);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg0 = (require(view_)->GetGameWidth() - 240) / 2;
+            pls::cs::Int32 cs_arg1 = (require(view_)->GetGameHeight() - 240) / 2;
+            require(g)->SetOrigin(cs_arg0, cs_arg1);
+        }()));
         pls::cs::run_finally(
             [&]() {
                 try {
@@ -551,22 +496,17 @@ void FriendForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     auto t = pls::cs::capture_exception(cs_caught_260);
                     {
                         if (kl_cfg::Config::PRINT()) {
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                            PLS_API(kl_unity_util::Log::Info(t));
                         }
                         if (kl_cfg::Config::PRINT()) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::Log::Info(
-                                    pls::cs::String::concat(literal(u"type_"), integer_string(type_)),
-                                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-                            });
+                            PLS_API(kl_unity_util::Log::Info(
+                                pls::cs::String::concat(literal(u"type_"), integer_string(type_)),
+                                pls::cs::Ref<pls::cs::ExceptionObject>{}));
                         }
                     }
                 }
             },
-            [&]() {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-            });
+            [&]() { PLS_API(require(g)->SetOrigin(0, 0)); });
     }
 }
 
@@ -596,66 +536,38 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             pls::cs::Int32 num3 = 216;
             pls::cs::Int32 num4 = 128;
             FriendForm::FillRect2(g, num, num2, num3, num4,
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(149, 149, 171);
-                                  }),
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(204, 206, 241);
-                                  }));
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(149, 149, 171)),
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(204, 206, 241)));
             FriendForm::DrawGradation(g, num + 2, num2 + 2, 0, 0, num3 - 4, num4 - 4, 1, 125, 255, 107, 220,
                                       255);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(164, 168, 178); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = KairoText::LT(literal(u"ゲームの前に"));
-                    require(g)->DrawString(cs_arg0, 120.0f, num2 + 10, 2);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(207, 245, 255); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = KairoText::LT(literal(u"あなたのﾆｯｸﾈｰﾑを入力してね"));
-                    require(g)->DrawString(cs_arg0, 120.0f, num2 + 28, 2);
-                }());
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(164, 168, 178))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = KairoText::LT(literal(u"ゲームの前に"));
+                require(g)->DrawString(cs_arg0, 120.0f, num2 + 10, 2);
+            }()));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(207, 245, 255))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = KairoText::LT(literal(u"あなたのﾆｯｸﾈｰﾑを入力してね"));
+                require(g)->DrawString(cs_arg0, 120.0f, num2 + 28, 2);
+            }()));
             FriendForm::FillRect2(g, num + 24, num2 + 47, 171, 24,
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(184, 184, 184);
-                                  }),
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                                  }));
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(166, 167, 179); });
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(184, 184, 184)),
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255)));
+            PLS_API(require(g)->SetColor(166, 167, 179));
             pls::cs::String str = KairoText::LT(literal(u"ここをタッチ"));
             if (!is_null(text_) && kl_lang::StringEx::Length(text_) > 0) {
                 str = text_;
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawString(str, 120.0f, num2 + 53, 2); });
+            PLS_API(require(g)->DrawString(str, 120.0f, num2 + 53, 2));
             pls::game::surface::GameView::AddTouch(
                 g, 3, num + 24, num2 + 47, 171, 24, 131072,
                 require(kairo::unity::surface::TouchOption::Create())->Margin(5, 5, 10, 10));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(207, 245, 255); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = KairoText::LT(literal(u"※あとで変更できます※"));
-                    require(g)->DrawString(cs_arg0, 120.0f, num2 + 77, 2);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(70, 70, 70); }));
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(207, 245, 255))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = KairoText::LT(literal(u"※あとで変更できます※"));
+                require(g)->DrawString(cs_arg0, 120.0f, num2 + 77, 2);
+            }()));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(70, 70, 70))));
             pls::cs::Ref<pls::kairo::Graphics> cs_arg0_293 = g;
             pls::cs::String cs_arg1_293 = KairoText::LT(literal(u"OK"));
             bool cs_arg7_293 = select_ == 1;
@@ -684,56 +596,33 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             pls::cs::Int32 num7 = 216;
             pls::cs::Int32 num8 = 128;
             FriendForm::FillRect2(g, num5, num6, num7, num8,
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(149, 149, 171);
-                                  }),
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(204, 206, 241);
-                                  }));
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(149, 149, 171)),
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(204, 206, 241)));
             FriendForm::DrawGradation(g, num5 + 2, num6 + 2, 0, 0, num7 - 4, num8 - 4, 1, 125, 255, 107, 220,
                                       255);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(207, 245, 255); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = KairoText::LT(literal(u"新しいﾆｯｸﾈｰﾑを入力してね"));
-                    require(g)->DrawString(cs_arg0, 120.0f, num6 + 28, 2);
-                }());
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(207, 245, 255))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = KairoText::LT(literal(u"新しいﾆｯｸﾈｰﾑを入力してね"));
+                require(g)->DrawString(cs_arg0, 120.0f, num6 + 28, 2);
+            }()));
             FriendForm::FillRect2(g, num5 + 24, num6 + 47, 171, 24,
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(184, 184, 184);
-                                  }),
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                                  }));
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(166, 167, 179); });
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(184, 184, 184)),
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255)));
+            PLS_API(require(g)->SetColor(166, 167, 179));
             pls::cs::String str2 = KairoText::LT(literal(u"ここをタッチ"));
             if (!is_null(text_) && kl_lang::StringEx::Length(text_) > 0) {
                 str2 = text_;
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawString(str2, 120.0f, num6 + 53, 2); });
+            PLS_API(require(g)->DrawString(str2, 120.0f, num6 + 53, 2));
             pls::game::surface::GameView::AddTouch(
                 g, 3, num5 + 24, num6 + 47, 171, 24, 131072,
                 require(kairo::unity::surface::TouchOption::Create())->Margin(5, 5, 10, 10));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(207, 245, 255); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = KairoText::LT(literal(u"※あとで変更できます※"));
-                    require(g)->DrawString(cs_arg0, 120.0f, num6 + 77, 2);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(70, 70, 70); }));
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(207, 245, 255))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = KairoText::LT(literal(u"※あとで変更できます※"));
+                require(g)->DrawString(cs_arg0, 120.0f, num6 + 77, 2);
+            }()));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(70, 70, 70))));
             pls::cs::Ref<pls::kairo::Graphics> cs_arg0_294 = g;
             pls::cs::String cs_arg1_294 = KairoText::LT(literal(u"OK"));
             bool cs_arg7_294 = select_ == 1;
@@ -774,34 +663,30 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 return kl_unity_util::SecureString::op_Implicit(cs_value);
                             }());
                             auto cs_right = integer_string(
-                                pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(require(require(friendData_)->friSave_)->ints.get_Item(1))
-                                        ->Get();
-                                })) /
+                                pls::cs::Int32(
+                                    PLS_API(require(require(require(friendData_)->friSave_)->ints.get_Item(1))
+                                                ->Get())) /
                                 60);
                             return pls::cs::String::concat(cs_left, cs_right);
                         }()),
                         literal(u"\t"));
                     auto cs_right = integer_string(
-                        pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(require(require(friendData_)->friSave_)->ints.get_Item(1))->Get();
-                        })) %
+                        pls::cs::Int32(PLS_API(
+                            require(require(require(friendData_)->friSave_)->ints.get_Item(1))->Get())) %
                         60);
                     return pls::cs::String::concat(cs_left, cs_right);
                 }()));
             IntArray array3 = IntArray{};
             pls::cs::Int32 num12 = array3[MyFormBase::WNDRET_BOX_TOP()] + 5;
             pls::cs::Int32 num13 = array3[MyFormBase::WNDRET_BOX_LEFT()] + 6;
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_BLACK()); });
+            PLS_API(require(g)->SetColor(FriendForm::COLOR_BLACK()));
             {
                 pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
                 pls::cs::String cs_arg1 = KairoText::LT(literal(u"前回起動時"));
                 kairo::unity::ui::Graphics::DrawStringTextFormatStringFloat(require(g), cs_arg0, cs_arg1,
                                                                             num13, num12);
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_BLUE()); });
+            PLS_API(require(g)->SetColor(FriendForm::COLOR_BLUE()));
             {
                 pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
                 pls::cs::String cs_arg1 = KairoText::LT(literal(u"累計"));
@@ -809,22 +694,19 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 kairo::unity::ui::Graphics::DrawStringTextFormatStringFloat(require(g), cs_arg0, cs_arg1,
                                                                             cs_arg2, num12);
             }
-            pls::cs::Int32 num14 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(require(require(friendData_)->friSave_)->ints.get_Item(2))->Get();
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
-                    pls::cs::String cs_arg1 =
-                        KairoText::LT(literal(u"<0>時間<1>分"),
-                                      pls::cs::String::concat(
-                                          pls::cs::String::concat(integer_string(num14 / 60), literal(u"\t")),
-                                          integer_string(num14 % 60)));
-                    pls::cs::Single cs_arg2 = array3[MyFormBase::WNDRET_BOX_RIGHT()] - 5;
-                    PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0, cs_arg1, cs_arg2,
-                                                                        num12, 4);
-                }());
-            });
+            pls::cs::Int32 num14 =
+                PLS_API(require(require(require(friendData_)->friSave_)->ints.get_Item(2))->Get());
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                pls::cs::String cs_arg1 =
+                    KairoText::LT(literal(u"<0>時間<1>分"),
+                                  pls::cs::String::concat(
+                                      pls::cs::String::concat(integer_string(num14 / 60), literal(u"\t")),
+                                      integer_string(num14 % 60)));
+                pls::cs::Single cs_arg2 = array3[MyFormBase::WNDRET_BOX_RIGHT()] - 5;
+                PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0, cs_arg1, cs_arg2,
+                                                                    num12, 4);
+            }()));
             pls::cs::Int32 num15 = array3[MyFormBase::WNDRET_BOX_LEFT()] + 10;
             pls::cs::Int32 num16 = 120;
             pls::cs::Int32 num17 = array3[MyFormBase::WNDRET_BOX_RIGHT()] - 10;
@@ -834,203 +716,134 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 if (num18 < require(friendData_)->FRIEND_MAX) {
                     pls::cs::Ref<friend_::ui::Friend> friend_ = pls::cs::Ref<friend_::ui::Friend>{};
                     bool flag2 = false;
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_));
-                        }) > 0 &&
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_))) > 0 &&
                         ([&]() -> bool {
-                            auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(
-                                    require(require(friendData_)->friendList_));
-                            });
+                            auto cs_left = PLS_API(
+                                kl_java_util::Vector_2_Size(require(require(friendData_)->friendList_)));
                             auto cs_right = require(friendData_)->FRIEND_MAX;
                             return cs_left < cs_right;
                         }())) {
                         if (require(friendData_)->FRIEND_MAX <= 5) {
                             if (num18 == require(friendData_)->FRIEND_MAX - 1) {
                                 flag2 = true;
-                            } else if (num18 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(
-                                               require(require(friendData_)->friendList_));
-                                       })) {
+                            } else if (num18 < PLS_API(kl_java_util::Vector_2_Size(
+                                                   require(require(friendData_)->friendList_)))) {
                                 friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_ElementAt(
-                                            require(require(friendData_)->friendList_), num18);
-                                    }));
+                                    PLS_API(kl_java_util::Vector_2_ElementAt(
+                                        require(require(friendData_)->friendList_), num18)));
                             }
                         } else if (num18 == 0) {
                             flag2 = true;
-                        } else if (num18 - 1 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(
-                                           require(require(friendData_)->friendList_));
-                                   })) {
+                        } else if (num18 - 1 < PLS_API(kl_java_util::Vector_2_Size(
+                                                   require(require(friendData_)->friendList_)))) {
                             friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(
-                                        require(require(friendData_)->friendList_), num18 - 1);
-                                }));
+                                PLS_API(kl_java_util::Vector_2_ElementAt(
+                                    require(require(friendData_)->friendList_), num18 - 1)));
                         }
-                    } else if (num18 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                   return kl_java_util::Vector_2_Size(
-                                       require(require(friendData_)->friendList_));
-                               })) {
+                    } else if (num18 < PLS_API(kl_java_util::Vector_2_Size(
+                                           require(require(friendData_)->friendList_)))) {
                         friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(
-                                    require(require(friendData_)->friendList_), num18);
-                            }));
+                            PLS_API(kl_java_util::Vector_2_ElementAt(
+                                require(require(friendData_)->friendList_), num18)));
                     }
                     pls::cs::Int32 num19 = num12 + 2;
                     pls::cs::Int32 num20 = num12 + 18;
                     pls::cs::Int32 num21 = num12 + 10;
                     if (!is_null(friend_)) {
                         FriendForm::FillRect2(g, array3[MyFormBase::WNDRET_BOX_LEFT()] + 3, num12, 196, 32,
-                                              pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return pls::kairo::Graphics::GetColorOfRGB(31, 80, 75);
-                                              }),
-                                              pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                                              }));
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(FriendForm::COLOR_BLACK());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
-                                pls::cs::String cs_arg1 = KairoText::LT(
-                                    literal(u"<0>さん"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                                            require(friend_)->name_);
-                                    }));
-                                PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0,
-                                                                                    cs_arg1, num15, num21, 1);
-                            }());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(FriendForm::COLOR_RED());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
-                                pls::cs::String cs_arg1 = KairoText::LT(
-                                    literal(u"<0>時間<1>分"), ([&]() {
-                                        auto cs_left = pls::cs::String::concat(
-                                            integer_string(
-                                                pls::cs::Int32(
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(require(friend_)->minute_)->Get();
-                                                    })) /
-                                                60),
-                                            literal(u"\t"));
-                                        auto cs_right = integer_string(
-                                            pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(require(friend_)->minute_)->Get();
-                                            })) %
-                                            60);
-                                        return pls::cs::String::concat(cs_left, cs_right);
-                                    }()));
-                                PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0,
-                                                                                    cs_arg1, num17, num21, 4);
-                            }());
-                        });
+                                              PLS_API(pls::kairo::Graphics::GetColorOfRGB(31, 80, 75)),
+                                              PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255)));
+                        PLS_API(require(g)->SetColor(FriendForm::COLOR_BLACK()));
+                        PLS_API(([&]() -> void {
+                            pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                            pls::cs::String cs_arg1 =
+                                KairoText::LT(literal(u"<0>さん"),
+                                              PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                  require(friend_)->name_)));
+                            PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0, cs_arg1,
+                                                                                num15, num21, 1);
+                        }()));
+                        PLS_API(require(g)->SetColor(FriendForm::COLOR_RED()));
+                        PLS_API(([&]() -> void {
+                            pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                            pls::cs::String cs_arg1 = KairoText::LT(
+                                literal(u"<0>時間<1>分"), ([&]() {
+                                    auto cs_left = pls::cs::String::concat(
+                                        integer_string(pls::cs::Int32(PLS_API(
+                                                           require(require(friend_)->minute_)->Get())) /
+                                                       60),
+                                        literal(u"\t"));
+                                    auto cs_right = integer_string(
+                                        pls::cs::Int32(PLS_API(require(require(friend_)->minute_)->Get())) %
+                                        60);
+                                    return pls::cs::String::concat(cs_left, cs_right);
+                                }()));
+                            PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0, cs_arg1,
+                                                                                num17, num21, 4);
+                        }()));
                     } else if (flag2) {
                         FriendForm::FillRect2(g, array3[MyFormBase::WNDRET_BOX_LEFT()] + 3, num12, 196, 32,
-                                              pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return pls::kairo::Graphics::GetColorOfRGB(31, 80, 75);
-                                              }),
-                                              pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                                              }));
-                        friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_FirstElement(
-                                    require(require(friendData_)->applyList_));
-                            }));
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(FriendForm::COLOR_BLACK());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
-                                pls::cs::String cs_arg1 = KairoText::LT(
-                                    literal(u"<0>さん"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                                            require(friend_)->name_);
-                                    }));
-                                PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0,
-                                                                                    cs_arg1, num15, num19, 1);
-                            }());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
-                                pls::cs::String cs_arg1 = KairoText::LT(
-                                    literal(u"<0>時間<1>分"), ([&]() {
-                                        auto cs_left = pls::cs::String::concat(
-                                            integer_string(
-                                                pls::cs::Int32(
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(require(friend_)->minute_)->Get();
-                                                    })) /
-                                                60),
-                                            literal(u"\t"));
-                                        auto cs_right = integer_string(
-                                            pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(require(friend_)->minute_)->Get();
-                                            })) %
-                                            60);
-                                        return pls::cs::String::concat(cs_left, cs_right);
-                                    }()));
-                                PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0,
-                                                                                    cs_arg1, num17, num19, 4);
-                            }());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
-                                pls::cs::String cs_arg1 = KairoText::LT(literal(u"から申請があります。"));
-                                PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0,
-                                                                                    cs_arg1, num15, num20, 1);
-                            }());
-                        });
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_));
-                            }) - 1 >
+                                              PLS_API(pls::kairo::Graphics::GetColorOfRGB(31, 80, 75)),
+                                              PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255)));
+                        friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(PLS_API(
+                            kl_java_util::Vector_2_FirstElement(require(require(friendData_)->applyList_))));
+                        PLS_API(require(g)->SetColor(FriendForm::COLOR_BLACK()));
+                        PLS_API(([&]() -> void {
+                            pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                            pls::cs::String cs_arg1 =
+                                KairoText::LT(literal(u"<0>さん"),
+                                              PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                  require(friend_)->name_)));
+                            PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0, cs_arg1,
+                                                                                num15, num19, 1);
+                        }()));
+                        PLS_API(([&]() -> void {
+                            pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                            pls::cs::String cs_arg1 = KairoText::LT(
+                                literal(u"<0>時間<1>分"), ([&]() {
+                                    auto cs_left = pls::cs::String::concat(
+                                        integer_string(pls::cs::Int32(PLS_API(
+                                                           require(require(friend_)->minute_)->Get())) /
+                                                       60),
+                                        literal(u"\t"));
+                                    auto cs_right = integer_string(
+                                        pls::cs::Int32(PLS_API(require(require(friend_)->minute_)->Get())) %
+                                        60);
+                                    return pls::cs::String::concat(cs_left, cs_right);
+                                }()));
+                            PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0, cs_arg1,
+                                                                                num17, num19, 4);
+                        }()));
+                        PLS_API(([&]() -> void {
+                            pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                            pls::cs::String cs_arg1 = KairoText::LT(literal(u"から申請があります。"));
+                            PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0, cs_arg1,
+                                                                                num15, num20, 1);
+                        }()));
+                        if (PLS_API(kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_))) -
+                                1 >
                             0) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 =
-                                        LF(literal(u"10,,+1"));
-                                    pls::cs::String cs_arg1 =
-                                        KairoText::LTInt(literal(u"他<0>件"),
-                                                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                             return kl_java_util::Vector_2_Size(
-                                                                 require(require(friendData_)->applyList_));
-                                                         }) - 1);
-                                    PlsPortGeneratedBootstrap::Source::DrawGraphicsText(
-                                        require(g), cs_arg0, cs_arg1, num17, num20, 4);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                                pls::cs::String cs_arg1 = KairoText::LTInt(
+                                    literal(u"他<0>件"), PLS_API(kl_java_util::Vector_2_Size(
+                                                             require(require(friendData_)->applyList_))) -
+                                                             1);
+                                PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0,
+                                                                                    cs_arg1, num17, num20, 4);
+                            }()));
                         }
                     } else {
                         FriendForm::FillRect2(g, array3[MyFormBase::WNDRET_BOX_LEFT()] + 3, num12, 196, 32,
-                                              pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return pls::kairo::Graphics::GetColorOfRGB(31, 80, 75);
-                                              }),
-                                              pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return pls::kairo::Graphics::GetColorOfRGB(89, 167, 153);
-                                              }));
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->SetColor(FriendForm::COLOR_WHITE());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
-                                pls::cs::String cs_arg1 = KairoText::LT(literal(u"フレンドを探す"));
-                                PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0,
-                                                                                    cs_arg1, num16, num21, 2);
-                            }());
-                        });
+                                              PLS_API(pls::kairo::Graphics::GetColorOfRGB(31, 80, 75)),
+                                              PLS_API(pls::kairo::Graphics::GetColorOfRGB(89, 167, 153)));
+                        PLS_API(require(g)->SetColor(FriendForm::COLOR_WHITE()));
+                        PLS_API(([&]() -> void {
+                            pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                            pls::cs::String cs_arg1 = KairoText::LT(literal(u"フレンドを探す"));
+                            PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0, cs_arg1,
+                                                                                num16, num21, 2);
+                        }()));
                     }
                     {
                         pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = g;
@@ -1051,33 +864,19 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             pls::cs::Int32 num24 = 216;
             pls::cs::Int32 num25 = 128;
             FriendForm::FillRect2(g, num22, num23, num24, num25,
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(149, 149, 171);
-                                  }),
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(204, 206, 241);
-                                  }));
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(149, 149, 171)),
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(204, 206, 241)));
             FriendForm::DrawGradation(g, num22 + 2, num23 + 2, 0, 0, num24 - 4, num25 - 4, 1, 125, 255, 107,
                                       220, 255);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(207, 245, 255); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = KairoText::LT(literal(u"あなたのIDはこちら(ﾀｯﾁしてね)"));
-                    require(g)->DrawString(cs_arg0, 120.0f, num23 + 10, 2);
-                }());
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(207, 245, 255))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = KairoText::LT(literal(u"あなたのIDはこちら(ﾀｯﾁしてね)"));
+                require(g)->DrawString(cs_arg0, 120.0f, num23 + 10, 2);
+            }()));
             FriendForm::FillRect2(g, num22 + 24, num23 + 25, 171, 24,
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(106, 106, 106);
-                                  }),
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(152, 152, 152);
-                                  }));
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_WHITE()); });
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(106, 106, 106)),
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(152, 152, 152)));
+            PLS_API(require(g)->SetColor(FriendForm::COLOR_WHITE()));
             pls::cs::String friendID = require(friendData_)->GetFriendID();
             pls::cs::String text2 = pls::cs::String(u"");
             try {
@@ -1095,43 +894,28 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     text2 = pls::cs::String(u"");
                 }
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawString(text2, 120.0f, num23 + 32, 2); });
+            PLS_API(require(g)->DrawString(text2, 120.0f, num23 + 32, 2));
             pls::game::surface::GameView::AddTouch(
                 g, 3, num22 + 24, num23 + 25, 171, 24, 65536001,
                 require(kairo::unity::surface::TouchOption::Create())->Margin(40, 40, 10, 10));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(207, 245, 255); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = KairoText::LT(literal(u"検索はこちら"));
-                    require(g)->DrawString(cs_arg0, 120.0f, num23 + 56, 2);
-                }());
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(207, 245, 255))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = KairoText::LT(literal(u"検索はこちら"));
+                require(g)->DrawString(cs_arg0, 120.0f, num23 + 56, 2);
+            }()));
             FriendForm::FillRect2(g, num22 + 24, num23 + 71, 171, 24,
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(184, 184, 184);
-                                  }),
-                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                                  }));
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(166, 167, 179); });
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(184, 184, 184)),
+                                  PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255)));
+            PLS_API(require(g)->SetColor(166, 167, 179));
             pls::cs::String str3 = KairoText::LT(literal(u"ここに入力"));
             if (!is_null(text_) && kl_lang::StringEx::Length(text_) > 0) {
                 str3 = text_;
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawString(str3, 120.0f, num23 + 77, 2); });
+            PLS_API(require(g)->DrawString(str3, 120.0f, num23 + 77, 2));
             pls::game::surface::GameView::AddTouch(
                 g, 3, num22 + 24, num23 + 71, 171, 24, 131072,
                 require(kairo::unity::surface::TouchOption::Create())->Margin(5, 5, 20, 5));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(70, 70, 70); }));
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(70, 70, 70))));
             pls::cs::Ref<pls::kairo::Graphics> cs_arg0_295 = g;
             pls::cs::String cs_arg1_295 = KairoText::LT(literal(u"検索"));
             bool cs_arg7_295 = select_ == 1;
@@ -1167,41 +951,22 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
 
             } else if (type_ == 12) {
                 if (flag) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 48, 207); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0);
-                        }));
-                    });
-                    pls::cs::Int32 originX = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-                    pls::cs::Int32 originY = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->GetOriginY(); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(
-                            pls::game::form::GameForm::VIEW_X(), pls::game::form::GameForm::VIEW_Y(),
-                            pls::game::form::GameForm::VIEW_W(), pls::game::form::GameForm::VIEW_H());
-                    });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetOrigin(originX, originY); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
+                    PLS_API(require(g)->SetRenderMode(1, 48, 207));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0))));
+                    pls::cs::Int32 originX = PLS_API(require(g)->GetOriginX());
+                    pls::cs::Int32 originY = PLS_API(require(g)->GetOriginY());
+                    PLS_API(require(g)->SetOrigin(0, 0));
+                    PLS_API(require(g)->FillRect(
+                        pls::game::form::GameForm::VIEW_X(), pls::game::form::GameForm::VIEW_Y(),
+                        pls::game::form::GameForm::VIEW_W(), pls::game::form::GameForm::VIEW_H()));
+                    PLS_API(require(g)->SetOrigin(originX, originY));
+                    PLS_API(require(g)->SetRenderMode(0, 255, 0));
                 }
-                pls::cs::Int32 originX2 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-                pls::cs::Int32 originY2 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetOrigin(0, originY2); });
+                pls::cs::Int32 originX2 = PLS_API(require(g)->GetOriginX());
+                pls::cs::Int32 originY2 = PLS_API(require(g)->GetOriginY());
+                PLS_API(require(g)->SetOrigin(0, originY2));
                 pls::cs::Int32 num28 = pls::game::form::GameForm::VIEW_W() / 2;
-                pls::cs::Int32 num29 =
-                    (pls::cs::Int32(240) - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return require(g)->GetOriginY();
-                     })) /
-                    2;
+                pls::cs::Int32 num29 = (pls::cs::Int32(240) - PLS_API(require(g)->GetOriginY())) / 2;
                 pls::cs::Int32 num30 = 4;
                 pls::cs::Int32 num31 = 8;
                 pls::cs::Int32 length = 8;
@@ -1231,20 +996,12 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
                 num35 = 0;
                 num36 = num29 - num38 / 2;
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 192, 63); });
+                PLS_API(require(g)->SetRenderMode(1, 192, 63));
                 FriendForm::DrawBonusObi(g, num35, num36, num37, num38,
-                                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return pls::kairo::Graphics::GetColorOfRGB(241, 178, 50);
-                                         }),
-                                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return pls::kairo::Graphics::GetColorOfRGB(234, 215, 12);
-                                         }),
-                                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return pls::kairo::Graphics::GetColorOfRGB(246, 222, 12);
-                                         }));
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
+                                         PLS_API(pls::kairo::Graphics::GetColorOfRGB(241, 178, 50)),
+                                         PLS_API(pls::kairo::Graphics::GetColorOfRGB(234, 215, 12)),
+                                         PLS_API(pls::kairo::Graphics::GetColorOfRGB(246, 222, 12)));
+                PLS_API(require(g)->SetRenderMode(0, 255, 0));
                 if (frame_ >= num31) {
                     num37 = 153;
                     num38 = 19;
@@ -1253,29 +1010,19 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         80);
                     num36 = num29 - 39;
                     FriendForm::FillRect3(g, num35, num36, num37, num38,
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(255, 210, 25);
-                                          }),
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(255, 224, 72);
-                                          }),
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(255, 250, 226);
-                                          }));
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_BLACK()); });
-                    pls::cs::String str4 = KairoText::LT(
-                        literal(u"ﾌﾚﾝﾄﾞﾎﾞｰﾅｽ(<0>分毎)"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_lang::JString::ValueOfInt(
-                                require(friendData_)->PLAY_BONUS_INTERVAL_MINUTE);
-                        }));
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
-                            PlsPortGeneratedBootstrap::Source::DrawGraphicsText(
-                                require(g), cs_arg0, str4, num35 + num37 / 2, num36 + 3, 2);
-                        }());
-                    });
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 210, 25)),
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 224, 72)),
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 250, 226)));
+                    PLS_API(require(g)->SetColor(FriendForm::COLOR_BLACK()));
+                    pls::cs::String str4 =
+                        KairoText::LT(literal(u"ﾌﾚﾝﾄﾞﾎﾞｰﾅｽ(<0>分毎)"),
+                                      PLS_API(kl_lang::JString::ValueOfInt(
+                                          require(friendData_)->PLAY_BONUS_INTERVAL_MINUTE)));
+                    PLS_API(([&]() -> void {
+                        pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                        PlsPortGeneratedBootstrap::Source::DrawGraphicsText(require(g), cs_arg0, str4,
+                                                                            num35 + num37 / 2, num36 + 3, 2);
+                    }()));
                 }
                 if (frame_ >= num32) {
                     num37 = 204;
@@ -1284,18 +1031,12 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         -num37, (pls::game::form::GameForm::VIEW_W() - num37) / 2, num33, frame_ - num32, 80);
                     num36 = num29 - 16;
                     FriendForm::FillRect2(g, num35, num36, num37, num38,
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(7, 56, 158);
-                                          }),
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(206, 217, 152);
-                                          }));
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(7, 56, 158)),
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(206, 217, 152)));
                     FriendForm::DrawGradation(g, num35 + 2, num36 + 2, 0, 0, num37 - 4, num38 - 4, 114, 142,
                                               176, 80, 86, 155);
                     pls::cs::Int32 num39 = num32 + num33;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetClip(num35 + 2, num36 + 2, num37 - 4, num38 - 4);
-                    });
+                    PLS_API(require(g)->SetClip(num35 + 2, num36 + 2, num37 - 4, num38 - 4));
                     if (frame_ < num39) {
                         pls::cs::Int32 maxFrame =
                             require(require(resourceManager)->seb.get_Item(9))->GetMaxFrame();
@@ -1331,26 +1072,22 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             require(cs_receiver)->DrawFrame(g, num35 + 190, num36 + 57, cs_arg3, cs_arg4, -1);
                         }
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->ClearClip(); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_WHITE()); });
+                    PLS_API(require(g)->ClearClip());
+                    PLS_API(require(g)->SetColor(FriendForm::COLOR_WHITE()));
                     pls::cs::String text3 = KairoText::LT(
                         literal(u"ﾌﾚﾝﾄﾞから <co=254,233,1><0></co>時間<co=254,233,1><1></co>分 取得"),
                         ([&]() {
                             auto cs_left = pls::cs::String::concat(
                                 integer_string(
-                                    pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return require(
-                                                   require(require(friendData_)->friSave_)->ints.get_Item(3))
-                                            ->Get();
-                                    })) /
+                                    pls::cs::Int32(PLS_API(
+                                        require(require(require(friendData_)->friSave_)->ints.get_Item(3))
+                                            ->Get())) /
                                     60),
                                 literal(u"\t"));
                             auto cs_right = integer_string(
-                                pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(require(require(friendData_)->friSave_)->ints.get_Item(3))
-                                        ->Get();
-                                })) %
+                                pls::cs::Int32(
+                                    PLS_API(require(require(require(friendData_)->friSave_)->ints.get_Item(3))
+                                                ->Get())) %
                                 60);
                             return pls::cs::String::concat(cs_left, cs_right);
                         }()));
@@ -1377,26 +1114,22 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             require(resourceManager)->img;
                         require(cs_receiver)->DrawFrame(g, num35 + 98, num36 + 11 + 9, cs_arg3, 0, -1);
                     }
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_WHITE()); });
+                    PLS_API(require(g)->SetColor(FriendForm::COLOR_WHITE()));
                     if ([&]() -> bool {
                             auto cs_left = require(friendData_)->GetPlayBonus();
                             auto cs_right = require(friendData_)->PLAY_BONUS_MAX;
                             return cs_left >= cs_right;
                         }()) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
-                                pls::cs::String cs_arg1 = KairoText::LT(literal(u"(最大)"));
-                                PlsPortGeneratedBootstrap::Source::DrawGraphicsText(
-                                    require(g), cs_arg0, cs_arg1, num35 + 133, num36 + 12 + 9, 1);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+1"));
+                            pls::cs::String cs_arg1 = KairoText::LT(literal(u"(最大)"));
+                            PlsPortGeneratedBootstrap::Source::DrawGraphicsText(
+                                require(g), cs_arg0, cs_arg1, num35 + 133, num36 + 12 + 9, 1);
+                        }()));
                     }
                 }
                 if (frame_ >= 24) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_WHITE()); });
+                    PLS_API(require(g)->SetColor(FriendForm::COLOR_WHITE()));
                     pls::cs::Ref<pls::kairo::Graphics> cs_arg0_296 = g;
                     pls::cs::String cs_arg1_296 = KairoText::LT(literal(u"受け取る"));
                     bool cs_arg5_296 = select_ == 0;
@@ -1436,66 +1169,35 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
             } else if (type_ == 13) {
                 if (flag) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 48, 207); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0);
-                        }));
-                    });
-                    pls::cs::Int32 originX3 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-                    pls::cs::Int32 originY3 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->GetOriginY(); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(
-                            pls::game::form::GameForm::VIEW_X(), pls::game::form::GameForm::VIEW_Y(),
-                            pls::game::form::GameForm::VIEW_W(), pls::game::form::GameForm::VIEW_H());
-                    });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetOrigin(originX3, originY3); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
+                    PLS_API(require(g)->SetRenderMode(1, 48, 207));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0))));
+                    pls::cs::Int32 originX3 = PLS_API(require(g)->GetOriginX());
+                    pls::cs::Int32 originY3 = PLS_API(require(g)->GetOriginY());
+                    PLS_API(require(g)->SetOrigin(0, 0));
+                    PLS_API(require(g)->FillRect(
+                        pls::game::form::GameForm::VIEW_X(), pls::game::form::GameForm::VIEW_Y(),
+                        pls::game::form::GameForm::VIEW_W(), pls::game::form::GameForm::VIEW_H()));
+                    PLS_API(require(g)->SetOrigin(originX3, originY3));
+                    PLS_API(require(g)->SetRenderMode(0, 255, 0));
                 }
             } else if (type_ == 14) {
                 if (flag) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 48, 207); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0);
-                        }));
-                    });
-                    pls::cs::Int32 originX4 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-                    pls::cs::Int32 originY4 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->GetOriginY(); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(
-                            pls::game::form::GameForm::VIEW_X(), pls::game::form::GameForm::VIEW_Y(),
-                            pls::game::form::GameForm::VIEW_W(), pls::game::form::GameForm::VIEW_H());
-                    });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetOrigin(originX4, originY4); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
+                    PLS_API(require(g)->SetRenderMode(1, 48, 207));
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0))));
+                    pls::cs::Int32 originX4 = PLS_API(require(g)->GetOriginX());
+                    pls::cs::Int32 originY4 = PLS_API(require(g)->GetOriginY());
+                    PLS_API(require(g)->SetOrigin(0, 0));
+                    PLS_API(require(g)->FillRect(
+                        pls::game::form::GameForm::VIEW_X(), pls::game::form::GameForm::VIEW_Y(),
+                        pls::game::form::GameForm::VIEW_W(), pls::game::form::GameForm::VIEW_H()));
+                    PLS_API(require(g)->SetOrigin(originX4, originY4));
+                    PLS_API(require(g)->SetRenderMode(0, 255, 0));
                 }
-                pls::cs::Int32 originX5 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-                pls::cs::Int32 originY5 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetOrigin(0, originY5); });
+                pls::cs::Int32 originX5 = PLS_API(require(g)->GetOriginX());
+                pls::cs::Int32 originY5 = PLS_API(require(g)->GetOriginY());
+                PLS_API(require(g)->SetOrigin(0, originY5));
                 pls::cs::Int32 num40 = pls::game::form::GameForm::VIEW_W() / 2;
-                pls::cs::Int32 num41 =
-                    (pls::cs::Int32(240) - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return require(g)->GetOriginY();
-                     })) /
-                    2;
+                pls::cs::Int32 num41 = (pls::cs::Int32(240) - PLS_API(require(g)->GetOriginY())) / 2;
                 pls::cs::Int32 num42 = 4;
                 pls::cs::Int32 num43 = 8;
                 pls::cs::Int32 length2 = 8;
@@ -1525,20 +1227,12 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
                 num47 = 0;
                 num48 = num41 - num50 / 2;
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 192, 63); });
+                PLS_API(require(g)->SetRenderMode(1, 192, 63));
                 FriendForm::DrawBonusObi(g, num47, num48, num49, num50,
-                                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return pls::kairo::Graphics::GetColorOfRGB(241, 178, 50);
-                                         }),
-                                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return pls::kairo::Graphics::GetColorOfRGB(234, 215, 12);
-                                         }),
-                                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return pls::kairo::Graphics::GetColorOfRGB(246, 222, 12);
-                                         }));
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
+                                         PLS_API(pls::kairo::Graphics::GetColorOfRGB(241, 178, 50)),
+                                         PLS_API(pls::kairo::Graphics::GetColorOfRGB(234, 215, 12)),
+                                         PLS_API(pls::kairo::Graphics::GetColorOfRGB(246, 222, 12)));
+                PLS_API(require(g)->SetRenderMode(0, 255, 0));
                 if (frame_ >= num43) {
                     num49 = 153;
                     num50 = 19;
@@ -1547,23 +1241,14 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         80);
                     num48 = num41 - 39;
                     FriendForm::FillRect3(g, num47, num48, num49, num50,
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(255, 210, 25);
-                                          }),
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(255, 224, 72);
-                                          }),
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(255, 250, 226);
-                                          }));
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_BLACK()); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = KairoText::LT(literal(u"ﾌﾚﾝﾄﾞﾎﾞｰﾅｽ"));
-                            require(g)->DrawString(cs_arg0, num47 + num49 / 2, num48 + 3, 2);
-                        }());
-                    });
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 210, 25)),
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 224, 72)),
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 250, 226)));
+                    PLS_API(require(g)->SetColor(FriendForm::COLOR_BLACK()));
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = KairoText::LT(literal(u"ﾌﾚﾝﾄﾞﾎﾞｰﾅｽ"));
+                        require(g)->DrawString(cs_arg0, num47 + num49 / 2, num48 + 3, 2);
+                    }()));
                 }
                 if (frame_ >= num44) {
                     num49 = 204;
@@ -1572,18 +1257,12 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         -num49, (pls::game::form::GameForm::VIEW_W() - num49) / 2, num45, frame_ - num44, 80);
                     num48 = num41 - 16;
                     FriendForm::FillRect2(g, num47, num48, num49, num50,
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(7, 56, 158);
-                                          }),
-                                          pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::kairo::Graphics::GetColorOfRGB(206, 217, 152);
-                                          }));
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(7, 56, 158)),
+                                          PLS_API(pls::kairo::Graphics::GetColorOfRGB(206, 217, 152)));
                     FriendForm::DrawGradation(g, num47 + 2, num48 + 2, 0, 0, num49 - 4, num50 - 4, 114, 142,
                                               176, 80, 86, 155);
                     pls::cs::Int32 num51 = num44 + num45;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetClip(num47 + 2, num48 + 2, num49 - 4, num50 - 4);
-                    });
+                    PLS_API(require(g)->SetClip(num47 + 2, num48 + 2, num49 - 4, num50 - 4));
                     if (frame_ < num51) {
                         pls::cs::Int32 maxFrame3 =
                             require(require(resourceManager)->seb.get_Item(9))->GetMaxFrame();
@@ -1619,25 +1298,18 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             require(cs_receiver)->DrawFrame(g, num47 + 190, num48 + 57, cs_arg3, cs_arg4, -1);
                         }
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->ClearClip(); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_WHITE()); });
-                    pls::cs::String text4 =
-                        KairoText::LT(literal(u"フレンドが<co=254,233,1><0>人</co>増えました!"),
-                                      pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return kl_lang::JString::ValueOfInt(
-                                              pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return kl_java_util::Vector_2_Size(
-                                                      require(require(friendData_)->newFriendList_));
-                                              }));
-                                      }));
+                    PLS_API(require(g)->ClearClip());
+                    PLS_API(require(g)->SetColor(FriendForm::COLOR_WHITE()));
+                    pls::cs::String text4 = KairoText::LT(
+                        literal(u"フレンドが<co=254,233,1><0>人</co>増えました!"),
+                        PLS_API(kl_lang::JString::ValueOfInt(PLS_API(
+                            kl_java_util::Vector_2_Size(require(require(friendData_)->newFriendList_))))));
                     kairo::unity::ui::TextLayout::Draw(g, text4, num47 + num49 / 2, num48 + 5,
                                                        FriendForm::COLOR_WHITE(), 2);
                     require(resourceManager)->DrawSeb(g, num47 + 59, num48 + 9 + 9, 16);
                     auto cs_left_297 = require(friendData_)->PLAY_NEW_FRIEND_BONUS;
-                    auto cs_right_297 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(require(friendData_)->newFriendList_));
-                    });
+                    auto cs_right_297 =
+                        PLS_API(kl_java_util::Vector_2_Size(require(require(friendData_)->newFriendList_)));
                     pls::cs::Int32 num52 = cs_left_297 * cs_right_297;
                     DrawNumImage(g, 17, pls::cs::cast_integral<pls::cs::Int64>(num52), num47 + 80 + 7,
                                  num48 + 12 + 9, 0, 2);
@@ -1649,8 +1321,7 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     }
                 }
                 if (frame_ >= 24) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(FriendForm::COLOR_WHITE()); });
+                    PLS_API(require(g)->SetColor(FriendForm::COLOR_WHITE()));
                     pls::cs::Ref<pls::kairo::Graphics> cs_arg0_298 = g;
                     pls::cs::String cs_arg1_298 = KairoText::LT(literal(u"受け取る"));
                     bool cs_arg5_298 = select_ == 0;
@@ -1689,26 +1360,16 @@ void FriendForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     }
                 }
             } else if (type_ == 15 && flag) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 48, 207); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0); }));
-                });
-                pls::cs::Int32 originX6 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-                pls::cs::Int32 originY6 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->FillRect(
-                        pls::game::form::GameForm::VIEW_X(), pls::game::form::GameForm::VIEW_Y(),
-                        pls::game::form::GameForm::VIEW_W(), pls::game::form::GameForm::VIEW_H());
-                });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetOrigin(originX6, originY6); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
+                PLS_API(require(g)->SetRenderMode(1, 48, 207));
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0))));
+                pls::cs::Int32 originX6 = PLS_API(require(g)->GetOriginX());
+                pls::cs::Int32 originY6 = PLS_API(require(g)->GetOriginY());
+                PLS_API(require(g)->SetOrigin(0, 0));
+                PLS_API(require(g)->FillRect(
+                    pls::game::form::GameForm::VIEW_X(), pls::game::form::GameForm::VIEW_Y(),
+                    pls::game::form::GameForm::VIEW_W(), pls::game::form::GameForm::VIEW_H()));
+                PLS_API(require(g)->SetOrigin(originX6, originY6));
+                PLS_API(require(g)->SetRenderMode(0, 255, 0));
             }
         }
     }
@@ -1852,14 +1513,12 @@ void FriendForm::SetSoftLabel(pls::cs::Int32 left, pls::cs::Int32 right) {
     {
         main::AppData::ensure_initialized();
 
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = main::AppData::softLabels_()[left];
-                pls::cs::String cs_arg1 = main::AppData::softLabels_()[right];
-                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                    cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = main::AppData::softLabels_()[left];
+            pls::cs::String cs_arg1 = main::AppData::softLabels_()[right];
+            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
     }
 }
 
@@ -1872,9 +1531,8 @@ void FriendForm::DrawLine(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 x
         "M:system.form.FriendForm.DrawLine(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawLine(x1, y1, x2, y2, 1.0f); });
+        PLS_API(require(g)->SetColor(color));
+        PLS_API(require(g)->DrawLine(x1, y1, x2, y2, 1.0f));
     }
 }
 
@@ -1887,10 +1545,9 @@ void FriendForm::DrawDotLine(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int3
         "M:system.form.FriendForm.DrawDotLine(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color); });
+        PLS_API(require(g)->SetColor(color));
         for (pls::cs::Int32 i = x1; i < x2; i += 3) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawLine(i, y1, i + 1, y2, 1.0f); });
+            PLS_API(require(g)->DrawLine(i, y1, i + 1, y2, 1.0f));
         }
     }
 }
@@ -1904,9 +1561,8 @@ void FriendForm::DrawRect(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 x
         "M:system.form.FriendForm.DrawRect(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x, y, width, height); });
+        PLS_API(require(g)->SetColor(color));
+        PLS_API(require(g)->DrawRect(x, y, width, height));
     }
 }
 
@@ -1920,12 +1576,10 @@ void FriendForm::DrawRect2(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 
         "M:system.form.FriendForm.DrawRect2(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color1); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x, y, width, height); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color2); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x + 1, y + 1, width - 2, height - 2); });
+        PLS_API(require(g)->SetColor(color1));
+        PLS_API(require(g)->DrawRect(x, y, width, height));
+        PLS_API(require(g)->SetColor(color2));
+        PLS_API(require(g)->DrawRect(x + 1, y + 1, width - 2, height - 2));
     }
 }
 
@@ -1939,15 +1593,12 @@ void FriendForm::DrawRect3(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 
         "M:system.form.FriendForm.DrawRect3(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color1); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x, y, width, height); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color2); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x + 1, y + 1, width - 2, height - 2); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color3); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x + 2, y + 2, width - 4, height - 4); });
+        PLS_API(require(g)->SetColor(color1));
+        PLS_API(require(g)->DrawRect(x, y, width, height));
+        PLS_API(require(g)->SetColor(color2));
+        PLS_API(require(g)->DrawRect(x + 1, y + 1, width - 2, height - 2));
+        PLS_API(require(g)->SetColor(color3));
+        PLS_API(require(g)->DrawRect(x + 2, y + 2, width - 4, height - 4));
     }
 }
 
@@ -1960,9 +1611,8 @@ void FriendForm::FillRect(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 x
         "M:system.form.FriendForm.FillRect(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->FillRect(x, y, width, height); });
+        PLS_API(require(g)->SetColor(color));
+        PLS_API(require(g)->FillRect(x, y, width, height));
     }
 }
 
@@ -2078,12 +1728,8 @@ void FriendForm::DrawGradation(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::In
             num8 = (((num8 < 0.0)) ? pls::cs::Double(0.0) : (num8));
             num9 = (((num9 > 255.0)) ? pls::cs::Double(255.0) : (num9));
             num9 = (((num9 < 0.0)) ? pls::cs::Double(0.0) : (num9));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::Graphics::GetColorOfRGB(
-                        pls::cs::to_int32(num7), pls::cs::to_int32(num8), pls::cs::to_int32(num9));
-                }));
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(
+                pls::cs::to_int32(num7), pls::cs::to_int32(num8), pls::cs::to_int32(num9)))));
             pls::cs::Int32 num10 = 0;
             if ((num == dy && sy % 4 != 0)) {
                 num10 = (sy % 4);
@@ -2094,8 +1740,7 @@ void FriendForm::DrawGradation(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::In
                     num10 = 4;
                 }
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->FillRect(dxAlias, num, w, num10); });
+            PLS_API(require(g)->FillRect(dxAlias, num, w, num10));
             num += num10;
             num7 = num7 + num4;
             num8 = num8 + num5;
@@ -2204,19 +1849,10 @@ void FriendForm::DrawNumImage(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int
                     require(cs_receiver)->DrawFrame(g, x, y, cs_arg3, 45, -1);
                 }
             } else {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
-                    }));
-                });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->DrawString(literal(u"-"), x + 1, y + 1); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0); }));
-                });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->DrawString(literal(u"-"), x, y); });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
+                PLS_API(require(g)->DrawString(literal(u"-"), x + 1, y + 1));
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0))));
+                PLS_API(require(g)->DrawString(literal(u"-"), x, y));
             }
             x += num + padding;
         }
@@ -2252,21 +1888,14 @@ pls::cs::Ref<pls::kairo::FormBase> FriendForm::MakeErrorDialog(pls::cs::String m
             msg = KairoText::LT(literal(
                 u"通信できませんでした。|設定を確認し時間を|おいて挑戦して下さい。&ﾌﾚﾝﾄﾞは<friend_max>人まで登録できます"));
         }
-        msg = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::Replace(
-                msg, literal(u"<friend_max>"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JString::ValueOfInt(require(friendData_)->FRIEND_MAX);
-                }));
-        });
+        msg = PLS_API(kl_unity_util::StringUtil::Replace(
+            msg, literal(u"<friend_max>"),
+            PLS_API(kl_lang::JString::ValueOfInt(require(friendData_)->FRIEND_MAX))));
         if (!is_null(args)) {
-            msg = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Replace(msg, args); });
+            msg = PLS_API(kl_unity_util::StringUtil::Replace(msg, args));
         }
-        msg = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::Replace(msg, literal(u"|"), pls::cs::String(u""));
-        });
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(msg, literal(u"&")); });
+        msg = PLS_API(kl_unity_util::StringUtil::Replace(msg, literal(u"|"), pls::cs::String(u"")));
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(msg, literal(u"&")));
         if (array.length() == 1) {
             return pls::game::form::SubForm::MakeDialog(array[0]);
         }
@@ -2292,51 +1921,34 @@ IntArray FriendForm::DrawRandomFriend(pls::cs::Ref<pls::kairo::Graphics> g, pls:
         pls::cs::Int32 num2 = 53;
         pls::cs::Int32 num3 = center - num / 2;
         pls::cs::Int32 topAlias = top;
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 200, 55); });
+        PLS_API(require(g)->SetRenderMode(1, 200, 55));
         FriendForm::DrawGradation(g, num3 + 1, topAlias + 1, 0, 0, num - 2, num2 - 2, 99, 84, 149, 159, 128,
                                   186);
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(92, 50, 104); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(num3, topAlias, num - 2, num2 - 2); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 255, 255); }));
-        });
+        PLS_API(require(g)->SetRenderMode(0, 255, 0));
+        PLS_API(require(g)->SetColor(92, 50, 104));
+        PLS_API(require(g)->DrawRect(num3, topAlias, num - 2, num2 - 2));
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 255))));
         pls::cs::String str = KairoText::LT(
-            literal(u"<0>さん"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::SecureString::ToStringSecureStringStatic(require(randomFriend)->name_);
-            }));
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawString(str, center, topAlias + 4, 2); });
+            literal(u"<0>さん"),
+            PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(require(randomFriend)->name_)));
+        PLS_API(require(g)->DrawString(str, center, topAlias + 4, 2));
         pls::cs::String str2 = KairoText::LT(
             literal(u"ﾌﾟﾚｲ <0>時間<1>分"), ([&]() {
                 auto cs_left = pls::cs::String::concat(
-                    integer_string(pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(require(randomFriend)->minute_)->Get();
-                                   })) /
+                    integer_string(pls::cs::Int32(PLS_API(require(require(randomFriend)->minute_)->Get())) /
                                    60),
                     literal(u"\t"));
-                auto cs_right =
-                    integer_string(pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(require(randomFriend)->minute_)->Get();
-                                   })) %
-                                   60);
+                auto cs_right = integer_string(
+                    pls::cs::Int32(PLS_API(require(require(randomFriend)->minute_)->Get())) % 60);
                 return pls::cs::String::concat(cs_left, cs_right);
             }()));
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawString(str2, center, topAlias + 20, 2); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(85, 50, 16); }));
-        });
+        PLS_API(require(g)->DrawString(str2, center, topAlias + 20, 2));
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(85, 50, 16))));
         {
             pls::cs::String cs_arg0 = KairoText::LT(literal(u"申請してみる"));
             kairo::unity::ui::Graphics::DrawStringBold(
                 require(g), cs_arg0, center, topAlias + 37,
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 246, 222); }),
-                2);
+                PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 246, 222)), 2);
         }
         {
             auto cs_receiver = require(FriendForm::resFriend_())->seb.get_Item(1);
@@ -2365,12 +1977,10 @@ IntArray FriendForm::DrawRandomFriend(pls::cs::Ref<pls::kairo::Graphics> g, pls:
 std::int32_t FriendForm::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.FriendForm.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace system::form

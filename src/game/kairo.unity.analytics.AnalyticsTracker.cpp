@@ -100,18 +100,14 @@ void TrackPageView(bool packageName, pls::cs::String id, StringArray p) {
             }
             text = pls::cs::String::concat(text, p[i]);
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_starts_with(text, literal(u"/")); })) {
+        if (!PLS_API(pls::cs::culture_starts_with(text, literal(u"/")))) {
             text = pls::cs::String::concat(literal(u"/"), text);
         }
         if (packageName) {
             text = pls::cs::String::concat(
-                pls::cs::String::concat(literal(u"/"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                       return pls::kairo::IApplication::GetCurrentApp();
-                                                   }))
-                                                ->GetPackageName();
-                                        })),
+                pls::cs::String::concat(
+                    literal(u"/"),
+                    PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetPackageName())),
                 text);
         }
         auto cs_left_1 = pls::cs::String::concat(
@@ -150,24 +146,20 @@ void TrackPageView(bool packageName, pls::cs::String id, StringArray p) {
         pls::cs::String text2 = pls::cs::String::concat(cs_left_1, cs_right_1);
         text2 = pls::cs::String::concat(
             pls::cs::String::concat(text2, literal(u"&z=")),
-            integer_string(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(([&]() {
-                           auto cs_arg0 = pls::cs::to_int32(pls::diagnostic::api_call(
-                               [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); }));
-                           return pls::cs::make_ref<pls::cs::Random>(cs_arg0);
-                       }()))
-                    ->Next();
-            })));
+            integer_string(PLS_API(require(([&]() {
+                                       auto cs_arg0 =
+                                           pls::cs::to_int32(PLS_API(kl_lang::JSystem::CurrentTimeMillis()));
+                                       return pls::cs::make_ref<pls::cs::Random>(cs_arg0);
+                                   }()))
+                                       ->Next())));
         {
             pls::cs::MonitorScope cs_monitor_0(AnalyticsTracker::lock_());
             {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = AnalyticsTracker::analyticsBuffer_();
-                        auto cs_arg0 = AnalyticsTracker_AnalyticsData::create(text2);
-                        cs_receiver.Add(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = AnalyticsTracker::analyticsBuffer_();
+                    auto cs_arg0 = AnalyticsTracker_AnalyticsData::create(text2);
+                    cs_receiver.Add(cs_arg0);
+                }()));
             }
         }
         AnalyticsTracker::Save();
@@ -229,9 +221,7 @@ void Run() {
                                     throw;
                                 }
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return AnalyticsTracker::analyticsBuffer_().Remove(analyticsData);
-                            });
+                            PLS_API(AnalyticsTracker::analyticsBuffer_().Remove(analyticsData));
                             AnalyticsTracker::Save();
                             continue;
                         }
@@ -240,7 +230,7 @@ void Run() {
                 } catch (const pls::cs::Exception& cs_caught_171) {
                     auto t = pls::cs::capture_exception(cs_caught_171);
                     {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Log::Info(t); });
+                        PLS_API(kl_util::Log::Info(t));
                     }
                 }
             },
@@ -253,8 +243,7 @@ pls::cs::String Encode(pls::cs::String url) {
     AnalyticsTracker::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.analytics.AnalyticsTracker.Encode(System.String)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::uri_escape_data_string(url); });
+        return PLS_API(pls::cs::uri_escape_data_string(url));
     }
 }
 
@@ -263,13 +252,10 @@ pls::cs::String MakeClientId() {
     AnalyticsTracker::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.analytics.AnalyticsTracker.MakeClientId", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::String {
-                auto cs_receiver =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::Guid::NewGuid(); });
-                return cs_receiver.ToString();
-            }());
-        });
+        return PLS_API(([&]() -> pls::cs::String {
+            auto cs_receiver = PLS_API(pls::cs::Guid::NewGuid());
+            return cs_receiver.ToString();
+        }()));
     }
 }
 
@@ -278,18 +264,11 @@ pls::cs::String GetApplicationName() {
     AnalyticsTracker::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.analytics.AnalyticsTracker.GetApplicationName", kairo);
     {
-        pls::cs::String packageName = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(pls::diagnostic::api_call(
-                               [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); }))
-                ->GetPackageName();
-        });
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return substring1(packageName, pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return pls::cs::culture_last_index_of(packageName,
-                                                                                     literal(u"."));
-                                           })) +
-                                               1);
-        });
+        pls::cs::String packageName =
+            PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetPackageName());
+        return PLS_API(substring1(
+            packageName,
+            pls::cs::Int32(PLS_API(pls::cs::culture_last_index_of(packageName, literal(u".")))) + 1));
     }
 }
 
@@ -301,35 +280,28 @@ void Save() {
         if (!AnalyticsTracker::isSetup_()) {
             return;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
-                    nullptr, std::string("M:kairo.unity.analytics.AnalyticsTracker.Save:3526"), []() -> void {
-                        {
-                            try {
-                                pls::cs::Ref<pls::cs::StringBuilder> stringBuilder = ([&]() {
-                                    return pls::cs::make_ref<pls::cs::StringBuilder>();
-                                }());
+        PLS_API(([&]() -> void {
+            auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+            pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
+                nullptr, std::string("M:kairo.unity.analytics.AnalyticsTracker.Save:3526"), []() -> void {
+                    {
+                        try {
+                            pls::cs::Ref<pls::cs::StringBuilder> stringBuilder = ([&]() {
+                                return pls::cs::make_ref<pls::cs::StringBuilder>();
+                            }());
+                            {
+                                pls::cs::MonitorScope cs_monitor_1(AnalyticsTracker::lock_());
                                 {
-                                    pls::cs::MonitorScope cs_monitor_1(AnalyticsTracker::lock_());
-                                    {
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(stringBuilder)->Append(u'1');
-                                        });
-                                        for (pls::cs::Int32 i = 0;
-                                             i < AnalyticsTracker::analyticsBuffer_().get_Count(); ++i) {
-                                            pls::cs::Ref<AnalyticsTracker_AnalyticsData> analyticsData =
-                                                AnalyticsTracker::analyticsBuffer_().get_Item(i);
-                                            if (!is_null(analyticsData)) {
-                                                if (i != 0) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(stringBuilder)->Append(char16_t(10));
-                                                    });
-                                                }
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(stringBuilder)
+                                    PLS_API(require(stringBuilder)->Append(u'1'));
+                                    for (pls::cs::Int32 i = 0;
+                                         i < AnalyticsTracker::analyticsBuffer_().get_Count(); ++i) {
+                                        pls::cs::Ref<AnalyticsTracker_AnalyticsData> analyticsData =
+                                            AnalyticsTracker::analyticsBuffer_().get_Item(i);
+                                        if (!is_null(analyticsData)) {
+                                            if (i != 0) {
+                                                PLS_API(require(stringBuilder)->Append(char16_t(10)));
+                                            }
+                                            PLS_API(require(stringBuilder)
                                                         ->Append(pls::cs::String::concat(
                                                             pls::cs::String::concat(
                                                                 pls::cs::String::concat(
@@ -339,31 +311,23 @@ void Save() {
                                                                     integer_string(
                                                                         require(analyticsData)->Retry)),
                                                                 literal(u"\t")),
-                                                            integer_string(require(analyticsData)->Date)));
-                                                });
-                                            }
+                                                            integer_string(require(analyticsData)->Date))));
                                         }
                                     }
                                 }
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::PlayerPrefs::SetString(
-                                        literal(u"_AnalyticsTracker"),
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(stringBuilder)->ToString();
-                                        }));
-                                });
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return pls::kairo::PlayerPrefs::Save(); });
-                            } catch (const pls::cs::Exception& cs_caught_2) {
-                                pls::cs::capture_exception(cs_caught_2);
-                                {
-                                }
+                            }
+                            PLS_API(pls::kairo::PlayerPrefs::SetString(
+                                literal(u"_AnalyticsTracker"), PLS_API(require(stringBuilder)->ToString())));
+                            PLS_API(pls::kairo::PlayerPrefs::Save());
+                        } catch (const pls::cs::Exception& cs_caught_2) {
+                            pls::cs::capture_exception(cs_caught_2);
+                            {
                             }
                         }
-                    });
-                require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-            }());
-        });
+                    }
+                });
+            require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+        }()));
     }
 }
 
@@ -377,35 +341,29 @@ void Setup() {
         }
         AnalyticsTracker::isSetup_() = true;
         try {
-            pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::kairo::PlayerPrefs::GetString(literal(u"_AnalyticsTracker"), pls::cs::String{});
-            });
+            pls::cs::String text =
+                PLS_API(pls::kairo::PlayerPrefs::GetString(literal(u"_AnalyticsTracker"), pls::cs::String{}));
             if (!is_null(text) && (text.length() > 0)) {
                 {
                     pls::cs::MonitorScope cs_monitor_184(AnalyticsTracker::lock_());
                     {
                         AnalyticsTracker::analyticsBuffer_() =
                             pls::cs::List<pls::cs::Ref<AnalyticsTracker_AnalyticsData>>::make();
-                        text = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return substring1(text, 1); });
+                        text = PLS_API(substring1(text, 1));
                         if (text.length() > 0) {
-                            StringArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() {
-                                    auto cs_text = text;
-                                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                                    cs_separators.at(0) = char16_t(10);
-                                    return pls::cs::string_split(cs_text, cs_separators);
-                                }());
-                            });
+                            StringArray array = PLS_API(([&]() {
+                                auto cs_text = text;
+                                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                                cs_separators.at(0) = char16_t(10);
+                                return pls::cs::string_split(cs_text, cs_separators);
+                            }()));
                             for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
-                                StringArray array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() {
-                                        auto cs_text = array[i];
-                                        auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                                        cs_separators.at(0) = char16_t(9);
-                                        return pls::cs::string_split(cs_text, cs_separators);
-                                    }());
-                                });
+                                StringArray array2 = PLS_API(([&]() {
+                                    auto cs_text = array[i];
+                                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                                    cs_separators.at(0) = char16_t(9);
+                                    return pls::cs::string_split(cs_text, cs_separators);
+                                }()));
                                 pls::cs::Ref<AnalyticsTracker_AnalyticsData> analyticsData =
                                     AnalyticsTracker_AnalyticsData::create();
                                 {
@@ -415,27 +373,22 @@ void Setup() {
                                 }
                                 {
                                     auto cs_target = analyticsData;
-                                    pls::cs::Int32 cs_value = pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return pls::cs::int32_parse(array2[1]); });
+                                    pls::cs::Int32 cs_value = PLS_API(pls::cs::int32_parse(array2[1]));
                                     require(cs_target)->Retry = cs_value;
                                 }
                                 {
                                     auto cs_target = analyticsData;
-                                    pls::cs::Int64 cs_value = pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return pls::cs::int64_parse(array2[2]); });
+                                    pls::cs::Int64 cs_value = PLS_API(pls::cs::int64_parse(array2[2]));
                                     require(cs_target)->Date = cs_value;
                                 }
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return AnalyticsTracker::analyticsBuffer_().Add(analyticsData);
-                                });
+                                PLS_API(AnalyticsTracker::analyticsBuffer_().Add(analyticsData));
                             }
                         }
                     }
                 }
             } else {
-                pls::cs::String installReferrer = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::native_install_referrer(pls::cs::String{});
-                });
+                pls::cs::String installReferrer =
+                    PLS_API(pls::kairo::native_install_referrer(pls::cs::String{}));
                 {
                     pls::cs::MonitorScope cs_monitor_185(AnalyticsTracker::lock_());
                     {

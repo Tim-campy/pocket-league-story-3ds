@@ -58,12 +58,10 @@ void GameDataRecord::create_init(pls::cs::Ref<GameDataRecord> self) {
 
 void GameDataRecord::create_init(pls::cs::Ref<GameDataRecord> self, pls::cs::Int32 number, bool insert) {
     GameDataRecord::ensure_initialized();
-    GameDataRecord::create_init(pls::cs::static_pointer_cast<GameDataRecord>(self),
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JInteger::ParseInt(
-                                        require(KairoBase::GetInstance())->GetFriendId());
-                                }),
-                                number, insert);
+    GameDataRecord::create_init(
+        pls::cs::static_pointer_cast<GameDataRecord>(self),
+        PLS_API(kl_lang::JInteger::ParseInt(require(KairoBase::GetInstance())->GetFriendId())), number,
+        insert);
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.#ctor(System.Int32,System.Boolean)",
                      kairo);
     {
@@ -118,31 +116,21 @@ pls::cs::Ref<GameDataRecord> GameDataRecord::create(pls::cs::Int32 friendId, pls
 void GameDataRecord::Add(pls::cs::String name) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.Add(System.String)", kairo);
     {
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(dataSet_));
-                                   });
-             ++i) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(dataSet_))); ++i) {
             pls::cs::Ref<GameDataRecord_Data> data = pls::cs::unbox<pls::cs::Ref<GameDataRecord_Data>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(dataSet_), i);
-                }));
-            if (!require(data)->toset_ && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return string_equals(name, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                                                 require(data)->name_);
-                                         }));
-                })) {
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(dataSet_), i)));
+            if (!require(data)->toset_ &&
+                PLS_API(string_equals(name, PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                require(data)->name_))))) {
                 return;
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = dataSet_;
-                pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                    pls::cs::box(GameDataRecord_Data::create(name, ByteArray{}, false));
-                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = dataSet_;
+            pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                pls::cs::box(GameDataRecord_Data::create(name, ByteArray{}, false));
+            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+        }()));
     }
 }
 
@@ -160,8 +148,7 @@ void GameDataRecord::AddLong(pls::cs::String name, pls::cs::Int64 value) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.Add(System.String,System.Int64)",
                      kairo);
     {
-        AddByteArray(name, kl_lang::StringEx::GetBytes(pls::diagnostic::api_call(
-                               [&]() -> decltype(auto) { return kl_lang::JString::ValueOfLong(value); })));
+        AddByteArray(name, kl_lang::StringEx::GetBytes(PLS_API(kl_lang::JString::ValueOfLong(value))));
     }
 }
 
@@ -170,20 +157,12 @@ void GameDataRecord::AddByteArray(pls::cs::String name, ByteArray data) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.Add(System.String,System.Byte[])",
                      kairo);
     {
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(dataSet_));
-                                   });
-             ++i) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(dataSet_))); ++i) {
             pls::cs::Ref<GameDataRecord_Data> data2 = pls::cs::unbox<pls::cs::Ref<GameDataRecord_Data>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(dataSet_), i);
-                }));
-            if (require(data2)->toset_ && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return string_equals(name, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                                                 require(data2)->name_);
-                                         }));
-                })) {
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(dataSet_), i)));
+            if (require(data2)->toset_ &&
+                PLS_API(string_equals(name, PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                require(data2)->name_))))) {
                 {
                     auto cs_target = data2;
                     auto cs_value = util::SecureByteArray::ValueOf(data);
@@ -192,14 +171,12 @@ void GameDataRecord::AddByteArray(pls::cs::String name, ByteArray data) {
                 return;
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = dataSet_;
-                pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                    pls::cs::box(GameDataRecord_Data::create(name, data, true));
-                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = dataSet_;
+            pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                pls::cs::box(GameDataRecord_Data::create(name, data, true));
+            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+        }()));
     }
 }
 
@@ -208,20 +185,12 @@ void GameDataRecord::Acquire(pls::cs::String name, ByteArray data) {
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.system.GameDataRecord.Acquire(System.String,System.Byte[])", kairo);
     {
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(dataSet_));
-                                   });
-             ++i) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(dataSet_))); ++i) {
             pls::cs::Ref<GameDataRecord_Data> data2 = pls::cs::unbox<pls::cs::Ref<GameDataRecord_Data>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(dataSet_), i);
-                }));
-            if (!require(data2)->toset_ && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return string_equals(name, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                                                 require(data2)->name_);
-                                         }));
-                })) {
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(dataSet_), i)));
+            if (!require(data2)->toset_ &&
+                PLS_API(string_equals(name, PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                require(data2)->name_))))) {
                 {
                     auto cs_target = data2;
                     auto cs_value = util::SecureByteArray::ValueOf(data);
@@ -246,11 +215,8 @@ pls::cs::Int64 GameDataRecord::GetValue(pls::cs::String name) {
             }()) {
             return (-9223372036854775807ll - 1) /* Int64.MinValue */;
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JLong::ParseLong(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::cs::RuntimeEncoding::get_UTF8())->GetString(data);
-            }));
-        });
+        return PLS_API(kl_lang::JLong::ParseLong(
+            PLS_API(require(pls::cs::RuntimeEncoding::get_UTF8())->GetString(data))));
     }
 }
 
@@ -266,9 +232,7 @@ pls::cs::String GameDataRecord::GetString(pls::cs::String name) {
             }()) {
             return pls::cs::String{};
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(pls::cs::RuntimeEncoding::get_UTF8())->GetString(data);
-        });
+        return PLS_API(require(pls::cs::RuntimeEncoding::get_UTF8())->GetString(data));
     }
 }
 
@@ -276,38 +240,22 @@ pls::cs::String GameDataRecord::GetString(pls::cs::String name) {
 ByteArray GameDataRecord::GetData(pls::cs::String name) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.GetData(System.String)", kairo);
     {
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(dataSet_));
-                                   });
-             ++i) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(dataSet_))); ++i) {
             pls::cs::Ref<GameDataRecord_Data> data = pls::cs::unbox<pls::cs::Ref<GameDataRecord_Data>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(dataSet_), i);
-                }));
-            if (!require(data)->toset_ && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return string_equals(name, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                                                 require(data)->name_);
-                                         }));
-                }) &&
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(dataSet_), i)));
+            if (!require(data)->toset_ &&
+                PLS_API(string_equals(name, PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                require(data)->name_)))) &&
                 require(data)->acquired_) {
                 return util::SecureByteArray::ToArray(require(data)->value_);
             }
         }
-        for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(dataSet_));
-                                   });
-             ++j) {
+        for (pls::cs::Int32 j = 0; j < PLS_API(kl_java_util::Vector_2_Size(require(dataSet_))); ++j) {
             pls::cs::Ref<GameDataRecord_Data> data2 = pls::cs::unbox<pls::cs::Ref<GameDataRecord_Data>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(dataSet_), j);
-                }));
-            if (require(data2)->toset_ && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return string_equals(name, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                                                 require(data2)->name_);
-                                         }));
-                })) {
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(dataSet_), j)));
+            if (require(data2)->toset_ &&
+                PLS_API(string_equals(name, PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                require(data2)->name_))))) {
                 return util::SecureByteArray::ToArray(require(data2)->value_);
             }
         }
@@ -320,55 +268,33 @@ void GameDataRecord::Pack(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.Pack(java.io.OutputStream)", kairo);
     {
         pls::cs::Ref<KairoBase> instance = KairoBase::GetInstance();
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(
-                os, pls::diagnostic::api_call([&]() -> decltype(auto) { return require(userId_)->Get(); }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(
-                os, pls::diagnostic::api_call([&]() -> decltype(auto) { return require(friendId_)->Get(); }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(
-                os, pls::diagnostic::api_call([&]() -> decltype(auto) { return require(number_)->Get(); }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(
-                os, pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(dataSet_)); }));
-        });
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(dataSet_));
-                                   });
-             ++i) {
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, PLS_API(require(userId_)->Get())));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, PLS_API(require(friendId_)->Get())));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, PLS_API(require(number_)->Get())));
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteInt(os, PLS_API(kl_java_util::Vector_2_Size(require(dataSet_)))));
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(dataSet_))); ++i) {
             pls::cs::Ref<GameDataRecord_Data> data = pls::cs::unbox<pls::cs::Ref<GameDataRecord_Data>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(dataSet_), i);
-                }));
-            pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::SecureString::ToStringSecureStringStatic(require(data)->name_);
-            });
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(dataSet_), i)));
+            pls::cs::String text =
+                PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(require(data)->name_));
             pls::cs::String cs_arg1_313 = text;
             ByteArray cs_arg2_313 = util::SecureByteArray::ToArray(require(data)->value_);
             ByteArray array = require(instance)->ToDBValue(literal(u"t_gamedata"), cs_arg1_313, cs_arg2_313);
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteStringString(os, text); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteInt(os, (([&]() {
-                                                               auto cs_left = pls::cs::box(array);
-                                                               auto cs_right = pls::cs::box(ByteArray{});
-                                                               return cs_left == cs_right;
-                                                           }()))
-                                                                   ? -1
-                                                                   : array.length());
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteStringString(os, text));
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, (([&]() {
+                                                            auto cs_left = pls::cs::box(array);
+                                                            auto cs_right = pls::cs::box(ByteArray{});
+                                                            return cs_left == cs_right;
+                                                        }()))
+                                                                ? -1
+                                                                : array.length()));
             if ([&]() {
                     auto cs_left = pls::cs::box(array);
                     auto cs_right = pls::cs::box(ByteArray{});
                     return cs_left != cs_right;
                 }()) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::Write(os, array); });
+                PLS_API(kl_unity_util::StreamUtil::Write(os, array));
             }
         }
     }
@@ -378,10 +304,8 @@ void GameDataRecord::Pack(pls::cs::Ref<kl_io::OutputStream> os) {
 pls::cs::Ref<GameDataRecord> GameDataRecord::Copy(bool to_set) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.Copy(System.Boolean)", kairo);
     {
-        pls::cs::Int32 cs_arg0_311 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(friendId_)->Get(); });
-        pls::cs::Int32 cs_arg1_311 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(number_)->Get(); });
+        pls::cs::Int32 cs_arg0_311 = PLS_API(require(friendId_)->Get());
+        pls::cs::Int32 cs_arg1_311 = PLS_API(require(number_)->Get());
         bool cs_arg2_311 = isInsert_;
         pls::cs::Ref<GameDataRecord> gameDataRecord =
             GameDataRecord::create(cs_arg0_311, cs_arg1_311, cs_arg2_311);
@@ -390,25 +314,16 @@ pls::cs::Ref<GameDataRecord> GameDataRecord::Copy(bool to_set) {
             auto cs_value = kl_unity_util::SecureInt::create_2(friendId_);
             require(cs_target)->friendId_ = cs_value;
         }
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(dataSet_));
-                                   });
-             ++i) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(dataSet_))); ++i) {
             pls::cs::Ref<GameDataRecord_Data> data = pls::cs::unbox<pls::cs::Ref<GameDataRecord_Data>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(dataSet_), i);
-                }));
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(dataSet_), i)));
             if (require(data)->toset_ == to_set &&
-                (!to_set || pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(require(data)->name_)->IndexOf(46);
-                            }) == -1)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = require(gameDataRecord)->dataSet_;
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(require(data)->Clone());
-                        kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                    }());
-                });
+                (!to_set || PLS_API(require(require(data)->name_)->IndexOf(46)) == -1)) {
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = require(gameDataRecord)->dataSet_;
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(require(data)->Clone());
+                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+                }()));
             }
         }
         return gameDataRecord;
@@ -424,18 +339,14 @@ pls::cs::String GameDataRecord::ToString() {
                 auto cs_left = pls::cs::String::concat(
                     ([&]() {
                         auto cs_left = pls::cs::String::concat(
-                            pls::cs::String::concat(
-                                literal(u"userId ["),
-                                integer_string(pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(userId_)->Get(); }))),
+                            pls::cs::String::concat(literal(u"userId ["),
+                                                    integer_string(PLS_API(require(userId_)->Get()))),
                             literal(u"] friendId ["));
-                        auto cs_right = integer_string(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(friendId_)->Get(); }));
+                        auto cs_right = integer_string(PLS_API(require(friendId_)->Get()));
                         return pls::cs::String::concat(cs_left, cs_right);
                     }()),
                     literal(u"] number ["));
-                auto cs_right = integer_string(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(number_)->Get(); }));
+                auto cs_right = integer_string(PLS_API(require(number_)->Get()));
                 return pls::cs::String::concat(cs_left, cs_right);
             }()),
             literal(u"]"));
@@ -445,15 +356,10 @@ pls::cs::String GameDataRecord::ToString() {
                     pls::cs::Ref<kl_java_util::Vector> cs_right = pls::cs::Ref<kl_java_util::Vector>{};
                     return kl_java_util::Vector_2_op_Inequality(cs_left, cs_right);
                 }()) {
-                for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(require(dataSet_));
-                                           });
-                     ++i) {
+                for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(dataSet_))); ++i) {
                     pls::cs::Ref<GameDataRecord_Data> data =
                         pls::cs::unbox<pls::cs::Ref<GameDataRecord_Data>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(dataSet_), i);
-                            }));
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(dataSet_), i)));
                     text = concat_objects2(
                         pls::cs::box(text), pls::cs::box(([&]() {
                             pls::cs::Ref<kl_unity_util::SecureString> cs_left = ([&]() {
@@ -471,14 +377,13 @@ pls::cs::String GameDataRecord::ToString() {
                     if (is_null(require(data)->value_)) {
                         text = (pls::cs::String::concat(text, literal(u"null")));
                     } else {
-                        text = (pls::cs::String::concat(
-                            text, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::String {
-                                    auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8();
-                                    auto cs_arg0 = require(require(data)->value_)->ToArray();
-                                    return require(cs_receiver)->GetString(cs_arg0);
-                                }());
-                            })));
+                        text = (pls::cs::String::concat(text, PLS_API(([&]() -> pls::cs::String {
+                                                            auto cs_receiver =
+                                                                pls::cs::RuntimeEncoding::get_UTF8();
+                                                            auto cs_arg0 =
+                                                                require(require(data)->value_)->ToArray();
+                                                            return require(cs_receiver)->GetString(cs_arg0);
+                                                        }()))));
                     }
                 }
             }
@@ -495,10 +400,8 @@ pls::cs::String GameDataRecord::ToString() {
 pls::cs::Ref<GameDataRecord> GameDataRecord::Clone() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.Clone", kairo);
     {
-        pls::cs::Int32 cs_arg0_314 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(friendId_)->Get(); });
-        pls::cs::Int32 cs_arg1_314 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(number_)->Get(); });
+        pls::cs::Int32 cs_arg0_314 = PLS_API(require(friendId_)->Get());
+        pls::cs::Int32 cs_arg1_314 = PLS_API(require(number_)->Get());
         bool cs_arg2_314 = isInsert_;
         pls::cs::Ref<GameDataRecord> gameDataRecord =
             GameDataRecord::create(cs_arg0_314, cs_arg1_314, cs_arg2_314);
@@ -512,21 +415,14 @@ pls::cs::Ref<GameDataRecord> GameDataRecord::Clone() {
             auto cs_value = kl_java_util::Vector::create();
             require(cs_target)->dataSet_ = cs_value;
         }
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(dataSet_));
-                                   });
-             ++i) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(dataSet_))); ++i) {
             pls::cs::Ref<GameDataRecord_Data> data = pls::cs::unbox<pls::cs::Ref<GameDataRecord_Data>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(dataSet_), i);
-                }));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = require(gameDataRecord)->dataSet_;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(require(data)->Clone());
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(dataSet_), i)));
+            PLS_API(([&]() -> void {
+                auto cs_receiver = require(gameDataRecord)->dataSet_;
+                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(require(data)->Clone());
+                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+            }()));
         }
         return gameDataRecord;
     }
@@ -536,7 +432,7 @@ pls::cs::Ref<GameDataRecord> GameDataRecord::Clone() {
 pls::cs::Int32 GameDataRecord::GetFriendId() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.GetFriendId", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return require(friendId_)->Get(); });
+        return PLS_API(require(friendId_)->Get());
     }
 }
 
@@ -544,7 +440,7 @@ pls::cs::Int32 GameDataRecord::GetFriendId() {
 pls::cs::Int32 GameDataRecord::GetNumber() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.GetNumber", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return require(number_)->Get(); });
+        return PLS_API(require(number_)->Get());
     }
 }
 
@@ -552,12 +448,10 @@ pls::cs::Int32 GameDataRecord::GetNumber() {
 std::int32_t GameDataRecord::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.GameDataRecord.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace kairo::unity::system

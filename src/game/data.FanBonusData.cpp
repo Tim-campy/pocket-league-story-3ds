@@ -218,31 +218,23 @@ void FanBonusData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FanBonusData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         message_ = array[num++];
         info_name_ = array[num++];
-        termMode_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        termModeIndex_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        termModeValue_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        dispCharaType_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        termMode_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        termModeIndex_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        termModeValue_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        dispCharaType_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         for (pls::cs::Int32 i = 0; i < param.length(); ++i) {
             {
                 auto cs_target = param;
                 auto cs_index = i;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        flag_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
     }
 }
 
@@ -256,39 +248,25 @@ void FanBonusData::Load2() {
         pls::cs::Ref<main::AppData> instance = main::AppData::GetInstance();
         for (pls::cs::Int32 i = 0; i < require(instance)->fanBonus_.length(); ++i) {
             pls::cs::Ref<FanBonusData> fanBonusData = require(instance)->fanBonus_.get_Item(i);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 8);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 8))) {
                 FanBonusData::FB_LEAGUE_AMA() = i;
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 16);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 16))) {
                 FanBonusData::FB_LEAGUE_REGI() = i;
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 32);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 32))) {
                 FanBonusData::FB_LEAGUE_ALL() = i;
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 64);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 64))) {
                 FanBonusData::FB_LEAGUE_WORLD() = i;
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 128);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 128))) {
                 FanBonusData::FB_LEAGUE_KAIRO() = i;
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 256);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 256))) {
                 FanBonusData::FB_GOAL_50() = i;
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 512);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(fanBonusData)->flag_, 512))) {
                 FanBonusData::FB_GOAL_100() = i;
             }
         }
         if (kl_cfg::Config::DEBUG_CMD()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::Log::Info(
+            PLS_API(kl_unity_util::Log::Info(
+                pls::cs::String::concat(
                     pls::cs::String::concat(
                         pls::cs::String::concat(
                             pls::cs::String::concat(
@@ -297,19 +275,17 @@ void FanBonusData::Load2() {
                                         pls::cs::String::concat(
                                             pls::cs::String::concat(
                                                 pls::cs::String::concat(
-                                                    pls::cs::String::concat(
-                                                        literal(u"■FanBonusData.java ch "),
-                                                        integer_string(FanBonusData::FB_LEAGUE_AMA())),
-                                                    literal(u", ")),
-                                                integer_string(FanBonusData::FB_LEAGUE_REGI())),
-                                            literal(u", ")),
-                                        integer_string(FanBonusData::FB_LEAGUE_ALL())),
-                                    literal(u", ")),
-                                integer_string(FanBonusData::FB_LEAGUE_WORLD())),
-                            literal(u", ")),
-                        integer_string(FanBonusData::FB_LEAGUE_KAIRO())),
-                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-            });
+                                                    literal(u"■FanBonusData.java ch "),
+                                                    integer_string(FanBonusData::FB_LEAGUE_AMA())),
+                                                literal(u", ")),
+                                            integer_string(FanBonusData::FB_LEAGUE_REGI())),
+                                        literal(u", ")),
+                                    integer_string(FanBonusData::FB_LEAGUE_ALL())),
+                                literal(u", ")),
+                            integer_string(FanBonusData::FB_LEAGUE_WORLD())),
+                        literal(u", ")),
+                    integer_string(FanBonusData::FB_LEAGUE_KAIRO())),
+                pls::cs::Ref<pls::cs::ExceptionObject>{}));
         }
         FanBonusData::FB_GOAL_50() = 41;
         FanBonusData::FB_GOAL_100() = 42;
@@ -328,14 +304,10 @@ void FanBonusData::NewGame() {
 void FanBonusData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FanBonusData.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
         for (pls::cs::Int32 i = 0; i < achiveDay_.length(); ++i) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(
-                    os, pls::cs::cast_integral<std::int16_t>(achiveDay_[i]));
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                os, pls::cs::cast_integral<std::int16_t>(achiveDay_[i])));
         }
     }
 }
@@ -344,14 +316,14 @@ void FanBonusData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void FanBonusData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FanBonusData.Deserialize(java.io.InputStream)", game);
     {
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+        state_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
         for (pls::cs::Int32 i = 0; i < achiveDay_.length(); ++i) {
             {
                 auto cs_target = achiveDay_;
                 auto cs_index = i;
-                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
+                    PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -389,11 +361,9 @@ void FanBonusData::SetBPFData(pls::cs::Ref<FanBonusData> fb_data, pls::cs::Strin
         if (require(fb_data)->dispCharaType_ == 0) {
             array = IntArray::make(require(fb_data)->param[3]);
             for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
-                pls::cs::Ref<PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<PlayerData>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(
-                            require(require(FanBonusData::udat_())->memberPDataist_), i);
-                    }));
+                pls::cs::Ref<PlayerData> playerData =
+                    pls::cs::unbox<pls::cs::Ref<PlayerData>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                        require(require(FanBonusData::udat_())->memberPDataist_), i)));
                 array[i] = require(playerData)->id_;
             }
         } else if (require(fb_data)->dispCharaType_ == 1) {
@@ -420,29 +390,22 @@ void FanBonusData::SetBPFData(pls::cs::Ref<FanBonusData> fb_data, pls::cs::Strin
             }
         }
         pls::cs::Int32 value = 0;
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::Check(require(fb_data)->flag_, 2);
-            })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(require(fb_data)->flag_, 2))) {
             value = 1;
         }
         pls::cs::Ref<pls::kairo::Font> font = pls::cs::make_ref<pls::kairo::Font>();
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = FanBonusData::bonus_f_data1();
-                pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                    pls::cs::box(pls::cs::Array<pls::cs::Ref<pls::cs::Object>>::from(
-                        {pls::cs::box(topMessage),
-                         pls::cs::box(kl_lang::JInteger::create(
-                             pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                 return require(font)->StringWidth(topMessage);
-                             })) +
-                             20)),
-                         pls::cs::box(array2),
-                         pls::cs::box(kl_lang::JInteger::create(require(fb_data)->dispCharaType_)),
-                         pls::cs::box(array), pls::cs::box(kl_lang::JInteger::create(value))}));
-                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = FanBonusData::bonus_f_data1();
+            pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                pls::cs::box(pls::cs::Array<pls::cs::Ref<pls::cs::Object>>::from(
+                    {pls::cs::box(topMessage),
+                     pls::cs::box(kl_lang::JInteger::create(
+                         pls::cs::Int32(PLS_API(require(font)->StringWidth(topMessage))) + 20)),
+                     pls::cs::box(array2),
+                     pls::cs::box(kl_lang::JInteger::create(require(fb_data)->dispCharaType_)),
+                     pls::cs::box(array), pls::cs::box(kl_lang::JInteger::create(value))}));
+            kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+        }()));
         if (require(fb_data)->state_ == 0) {
             require(fb_data)->ChangeState(1);
             require(fb_data)->achiveDay_[0] = require(require(FanBonusData::apdat_())->save_)->ints[1];
@@ -475,22 +438,16 @@ pls::cs::Ref<kl_java_util::Vector> FanBonusData::GetFanBonusDataList(pls::cs::In
     FanBonusData::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FanBonusData.GetFanBonusDataList(System.Int32)", game);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(FanBonusData::fb_list()));
-            }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(FanBonusData::fb_list()));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(FanBonusData::fb_list()))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(FanBonusData::fb_list())));
         }
         for (pls::cs::Int32 i = 0; i < require(FanBonusData::apdat_())->fanBonus_.length(); ++i) {
             pls::cs::Ref<FanBonusData> fanBonusData = require(FanBonusData::apdat_())->fanBonus_.get_Item(i);
             if (require(fanBonusData)->termMode_ != term_mode) {
                 continue;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_AddElement(require(FanBonusData::fb_list()),
-                                                         pls::cs::box(fanBonusData));
-            });
+            PLS_API(kl_java_util::Vector_2_AddElement(require(FanBonusData::fb_list()),
+                                                      pls::cs::box(fanBonusData)));
         }
         return FanBonusData::fb_list();
     }
@@ -587,16 +544,10 @@ void FanBonusData::ChBonusEvent() {
                         pls::cs::Ref<kl_java_util::Vector> fanBonusDataList4 =
                             FanBonusData::GetFanBonusDataList(num);
                         for (pls::cs::Int32 n = 0;
-                             n < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                 return kl_java_util::Vector_2_Size(require(fanBonusDataList4));
-                             });
-                             ++n) {
+                             n < PLS_API(kl_java_util::Vector_2_Size(require(fanBonusDataList4))); ++n) {
                             pls::cs::Ref<FanBonusData> fanBonusData7 =
                                 pls::cs::unbox<pls::cs::Ref<FanBonusData>>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_ElementAt(require(fanBonusDataList4),
-                                                                                n);
-                                    }));
+                                    PLS_API(kl_java_util::Vector_2_ElementAt(require(fanBonusDataList4), n)));
                             if (require(instance2)->game_winConsecutive_ ==
                                 require(fanBonusData7)->termModeValue_) {
                                 FanBonusData::SetBPFData(fanBonusData7, require(fanBonusData7)->message_,
@@ -647,24 +598,17 @@ void FanBonusData::ChBonusEvent() {
                         pls::cs::Ref<kl_java_util::Vector> out_ary = kl_java_util::Vector::create();
                         pls::cs::Ref<kl_java_util::Vector> vector = kl_java_util::Vector::create();
                         TeamData::SetScoreRanking(league_data, out_ary, vector);
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(vector));
-                            }) > 0) {
-                            IntArray array =
-                                pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(require(vector), 0);
-                                }));
+                        if (PLS_API(kl_java_util::Vector_2_Size(require(vector))) > 0) {
+                            IntArray array = pls::cs::unbox<IntArray>(
+                                PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), 0)));
                             if (array[1] == 0) {
                                 pls::cs::Ref<PlayerData> playerData3 =
                                     require(instance)->pData_.get_Item(array[2]);
                                 fanBonusData = FanBonusData::GetFanBonusData(num, 0);
                                 {
                                     pls::cs::Ref<FanBonusData> cs_arg0 = fanBonusData;
-                                    pls::cs::String cs_arg1 =
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_unity_util::StringUtil::Replace(
-                                                require(fanBonusData)->message_, require(playerData3)->name_);
-                                        });
+                                    pls::cs::String cs_arg1 = PLS_API(kl_unity_util::StringUtil::Replace(
+                                        require(fanBonusData)->message_, require(playerData3)->name_));
                                     IntArray cs_arg2 = require(fanBonusData)->param;
                                     pls::cs::Int32 cs_arg3 = require(playerData3)->id_;
                                     FanBonusData::SetBPFData(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
@@ -685,32 +629,20 @@ void FanBonusData::ChBonusEvent() {
                     pls::cs::Ref<kl_java_util::Vector> vector2 = kl_java_util::Vector::create();
                     bool flag = false;
                     for (pls::cs::Int32 num7 = 0;
-                         num7 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(
-                                 require(require(require(instance2)->gm_)->scorerListUserTeam));
-                         });
+                         num7 < PLS_API(kl_java_util::Vector_2_Size(
+                                    require(require(require(instance2)->gm_)->scorerListUserTeam)));
                          ++num7) {
-                        pls::cs::Int32 num8 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(
-                                       (pls::cs::unbox<pls::cs::Ref<kl_lang::JInteger>>(
-                                           pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_ElementAt(
-                                                   require(
-                                                       require(require(instance2)->gm_)->scorerListUserTeam),
-                                                   num7);
-                                           }))))
-                                ->IntValue();
-                        });
+                        pls::cs::Int32 num8 = PLS_API(
+                            require((pls::cs::unbox<pls::cs::Ref<kl_lang::JInteger>>(
+                                        PLS_API(kl_java_util::Vector_2_ElementAt(
+                                            require(require(require(instance2)->gm_)->scorerListUserTeam),
+                                            num7)))))
+                                ->IntValue());
                         flag = false;
                         for (pls::cs::Int32 num9 = 0;
-                             num9 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                 return kl_java_util::Vector_2_Size(require(vector2));
-                             });
-                             ++num9) {
-                            IntArray array2 =
-                                pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(require(vector2), num9);
-                                }));
+                             num9 < PLS_API(kl_java_util::Vector_2_Size(require(vector2))); ++num9) {
+                            IntArray array2 = pls::cs::unbox<IntArray>(
+                                PLS_API(kl_java_util::Vector_2_ElementAt(require(vector2), num9)));
                             if (array2[0] == num8) {
                                 flag = true;
                                 array2[1]++;
@@ -720,32 +652,23 @@ void FanBonusData::ChBonusEvent() {
                         if (flag) {
                             continue;
                         }
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                    pls::cs::box(IntArray::from({num8, 1}));
-                                kl_java_util::Vector_2_AddElement(require(vector2), cs_arg0);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(IntArray::from({num8, 1}));
+                            kl_java_util::Vector_2_AddElement(require(vector2), cs_arg0);
+                        }()));
                     }
-                    for (pls::cs::Int32 num10 = 0; num10 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                       return kl_java_util::Vector_2_Size(require(vector2));
-                                                   });
-                         ++num10) {
-                        IntArray array3 =
-                            pls::cs::unbox<IntArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(vector2), num10);
-                            }));
+                    for (pls::cs::Int32 num10 = 0;
+                         num10 < PLS_API(kl_java_util::Vector_2_Size(require(vector2))); ++num10) {
+                        IntArray array3 = pls::cs::unbox<IntArray>(
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(vector2), num10)));
                         if (array3[1] >= 3) {
                             pls::cs::Ref<PlayerData> playerData5 =
                                 require(instance)->pData_.get_Item(array3[0]);
                             fanBonusData = FanBonusData::GetFanBonusData(num, 0);
                             {
                                 pls::cs::Ref<FanBonusData> cs_arg0 = fanBonusData;
-                                pls::cs::String cs_arg1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StringUtil::Replace(require(fanBonusData)->message_,
-                                                                              require(playerData5)->name_);
-                                });
+                                pls::cs::String cs_arg1 = PLS_API(kl_unity_util::StringUtil::Replace(
+                                    require(fanBonusData)->message_, require(playerData5)->name_));
                                 IntArray cs_arg2 = require(fanBonusData)->param;
                                 pls::cs::Int32 cs_arg3 = require(playerData5)->id_;
                                 FanBonusData::SetBPFData(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
@@ -758,30 +681,19 @@ void FanBonusData::ChBonusEvent() {
                     pls::cs::Ref<kl_java_util::Vector> fanBonusDataList6 =
                         FanBonusData::GetFanBonusDataList(num);
                     for (pls::cs::Int32 num5 = 0;
-                         num5 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(fanBonusDataList6));
-                         });
-                         ++num5) {
+                         num5 < PLS_API(kl_java_util::Vector_2_Size(require(fanBonusDataList6))); ++num5) {
                         pls::cs::Ref<FanBonusData> fanBonusData9 = pls::cs::unbox<pls::cs::Ref<FanBonusData>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(fanBonusDataList6), num5);
-                            }));
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(fanBonusDataList6), num5)));
                         for (pls::cs::Int32 num6 = 0; num6 < 11; ++num6) {
                             pls::cs::Ref<PlayerData> playerData4 = pls::cs::unbox<pls::cs::Ref<PlayerData>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(
-                                        require(require(instance2)->memberPDataist_), num6);
-                                }));
+                                PLS_API(kl_java_util::Vector_2_ElementAt(
+                                    require(require(instance2)->memberPDataist_), num6)));
                             if (require(playerData4)->matchNum_ == require(fanBonusData9)->termModeValue_) {
-                                pls::cs::String topMessage4 =
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StringUtil::Replace(
-                                            require(fanBonusData9)->message_,
-                                            pls::cs::String::concat(
-                                                pls::cs::String::concat(require(playerData4)->name_,
-                                                                        literal(u"\t")),
-                                                integer_string(require(playerData4)->matchNum_)));
-                                    });
+                                pls::cs::String topMessage4 = PLS_API(kl_unity_util::StringUtil::Replace(
+                                    require(fanBonusData9)->message_,
+                                    pls::cs::String::concat(
+                                        pls::cs::String::concat(require(playerData4)->name_, literal(u"\t")),
+                                        integer_string(require(playerData4)->matchNum_))));
                                 FanBonusData::SetBPFData(fanBonusData9, topMessage4,
                                                          require(fanBonusData9)->param,
                                                          require(playerData4)->id_);
@@ -794,31 +706,20 @@ void FanBonusData::ChBonusEvent() {
                     pls::cs::Ref<kl_java_util::Vector> fanBonusDataList5 =
                         FanBonusData::GetFanBonusDataList(num);
                     for (pls::cs::Int32 num3 = 0;
-                         num3 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(fanBonusDataList5));
-                         });
-                         ++num3) {
+                         num3 < PLS_API(kl_java_util::Vector_2_Size(require(fanBonusDataList5))); ++num3) {
                         pls::cs::Ref<FanBonusData> fanBonusData8 = pls::cs::unbox<pls::cs::Ref<FanBonusData>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(fanBonusDataList5), num3);
-                            }));
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(fanBonusDataList5), num3)));
                         for (pls::cs::Int32 num4 = 0; num4 < 11; ++num4) {
                             pls::cs::Ref<PlayerData> playerData2 = pls::cs::unbox<pls::cs::Ref<PlayerData>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(
-                                        require(require(instance2)->memberPDataist_), num4);
-                                }));
+                                PLS_API(kl_java_util::Vector_2_ElementAt(
+                                    require(require(instance2)->memberPDataist_), num4)));
                             if (require(playerData2)->game_goalConsecutive_ ==
                                 require(fanBonusData8)->termModeValue_) {
-                                pls::cs::String topMessage3 =
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StringUtil::Replace(
-                                            require(fanBonusData8)->message_,
-                                            pls::cs::String::concat(
-                                                pls::cs::String::concat(require(playerData2)->name_,
-                                                                        literal(u"\t")),
-                                                integer_string(require(playerData2)->game_goalConsecutive_)));
-                                    });
+                                pls::cs::String topMessage3 = PLS_API(kl_unity_util::StringUtil::Replace(
+                                    require(fanBonusData8)->message_,
+                                    pls::cs::String::concat(
+                                        pls::cs::String::concat(require(playerData2)->name_, literal(u"\t")),
+                                        integer_string(require(playerData2)->game_goalConsecutive_))));
                                 FanBonusData::SetBPFData(fanBonusData8, topMessage3,
                                                          require(fanBonusData8)->param,
                                                          require(playerData2)->id_);
@@ -831,37 +732,24 @@ void FanBonusData::ChBonusEvent() {
                     pls::cs::Ref<kl_java_util::Vector> fanBonusDataList3 =
                         FanBonusData::GetFanBonusDataList(num);
                     for (pls::cs::Int32 l = 0;
-                         l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(fanBonusDataList3));
-                         });
-                         ++l) {
+                         l < PLS_API(kl_java_util::Vector_2_Size(require(fanBonusDataList3))); ++l) {
                         pls::cs::Ref<FanBonusData> fanBonusData6 = pls::cs::unbox<pls::cs::Ref<FanBonusData>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(fanBonusDataList3), l);
-                            }));
-                        for (pls::cs::Int32 m = 0; m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                       return kl_java_util::Vector_2_Size(
-                                                           require(require(instance2)->memberPDataist_));
-                                                   });
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(fanBonusDataList3), l)));
+                        for (pls::cs::Int32 m = 0; m < PLS_API(kl_java_util::Vector_2_Size(
+                                                           require(require(instance2)->memberPDataist_)));
                              ++m) {
                             pls::cs::Ref<PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<PlayerData>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(
-                                        require(require(instance2)->memberPDataist_), m);
-                                }));
+                                PLS_API(kl_java_util::Vector_2_ElementAt(
+                                    require(require(instance2)->memberPDataist_), m)));
                             if (require(playerData)->game_goalTotal_ >=
                                     require(fanBonusData6)->termModeValue_ &&
                                 require(playerData)->pri_game_goalTotal_ <
                                     require(fanBonusData6)->termModeValue_) {
-                                pls::cs::String topMessage2 =
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StringUtil::Replace(
-                                            require(fanBonusData6)->message_,
-                                            pls::cs::String::concat(
-                                                pls::cs::String::concat(require(playerData)->name_,
-                                                                        literal(u"\t")),
-                                                integer_string(require(playerData)->game_goalTotal_)));
-                                    });
+                                pls::cs::String topMessage2 = PLS_API(kl_unity_util::StringUtil::Replace(
+                                    require(fanBonusData6)->message_,
+                                    pls::cs::String::concat(
+                                        pls::cs::String::concat(require(playerData)->name_, literal(u"\t")),
+                                        integer_string(require(playerData)->game_goalTotal_))));
                                 FanBonusData::SetBPFData(fanBonusData6, topMessage2,
                                                          require(fanBonusData6)->param,
                                                          require(playerData)->id_);
@@ -883,27 +771,18 @@ void FanBonusData::ChBonusEvent() {
                         pls::cs::Ref<kl_java_util::Vector> fanBonusDataList2 =
                             FanBonusData::GetFanBonusDataList(num);
                         for (pls::cs::Int32 k = 0;
-                             k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                 return kl_java_util::Vector_2_Size(require(fanBonusDataList2));
-                             });
-                             ++k) {
+                             k < PLS_API(kl_java_util::Vector_2_Size(require(fanBonusDataList2))); ++k) {
                             pls::cs::Ref<FanBonusData> fanBonusData5 =
                                 pls::cs::unbox<pls::cs::Ref<FanBonusData>>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_ElementAt(require(fanBonusDataList2),
-                                                                                k);
-                                    }));
+                                    PLS_API(kl_java_util::Vector_2_ElementAt(require(fanBonusDataList2), k)));
                             if (require(supervisorData)->winTotal_ ==
                                 require(fanBonusData5)->termModeValue_) {
-                                pls::cs::String topMessage =
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StringUtil::Replace(
-                                            require(fanBonusData5)->message_,
-                                            pls::cs::String::concat(
-                                                pls::cs::String::concat(require(supervisorData)->name_,
-                                                                        literal(u"\t")),
-                                                integer_string(require(supervisorData)->winTotal_)));
-                                    });
+                                pls::cs::String topMessage = PLS_API(kl_unity_util::StringUtil::Replace(
+                                    require(fanBonusData5)->message_,
+                                    pls::cs::String::concat(
+                                        pls::cs::String::concat(require(supervisorData)->name_,
+                                                                literal(u"\t")),
+                                        integer_string(require(supervisorData)->winTotal_))));
                                 FanBonusData::SetBPFData(fanBonusData5, topMessage,
                                                          require(fanBonusData5)->param,
                                                          require(supervisorData)->id_);
@@ -917,14 +796,9 @@ void FanBonusData::ChBonusEvent() {
                     pls::cs::Ref<kl_java_util::Vector> fanBonusDataList =
                         FanBonusData::GetFanBonusDataList(num);
                     for (pls::cs::Int32 j = 0;
-                         j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_java_util::Vector_2_Size(require(fanBonusDataList));
-                         });
-                         ++j) {
+                         j < PLS_API(kl_java_util::Vector_2_Size(require(fanBonusDataList))); ++j) {
                         pls::cs::Ref<FanBonusData> fanBonusData4 = pls::cs::unbox<pls::cs::Ref<FanBonusData>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(fanBonusDataList), j);
-                            }));
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(fanBonusDataList), j)));
                         if (require(fanBonusData4)->state_ == 1) {
                             continue;
                         }

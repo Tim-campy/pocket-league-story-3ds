@@ -14,12 +14,11 @@ pls::cs::Ref<kl_util::SecureString> op_Addition(pls::cs::String z, pls::cs::Ref<
         "KairoLibrary",
         "M:kairo.unity.util.SecureString.op_Addition(System.String,kairo.unity.util.SecureString)", kairo);
     {
-        return kl_util::SecureString::create(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::String::concat(z, ([&]() {
-                                               auto cs_value = w;
-                                               return kl_util::SecureString::op_Implicit(cs_value);
-                                           }()));
-        }));
+        return kl_util::SecureString::create(
+            PLS_API(pls::cs::String::concat(z, ([&]() {
+                                                auto cs_value = w;
+                                                return kl_util::SecureString::op_Implicit(cs_value);
+                                            }()))));
     }
 }
 } // namespace kairo::unity::util::SecureString

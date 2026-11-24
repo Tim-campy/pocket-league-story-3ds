@@ -130,12 +130,10 @@ bool Receipt::Equals(pls::cs::Ref<Receipt> self, pls::cs::Ref<pls::cs::Object> o
 std::int32_t Receipt::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.Receipt.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 
@@ -144,18 +142,15 @@ void Receipt::Copy(pls::cs::Ref<Receipt> r) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.Receipt.Copy(system.billing.ui.Receipt)", game);
     {
         productID_ = ([&]() {
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(require(r)->productID_)->Get(); });
+            auto cs_value = PLS_API(require(require(r)->productID_)->Get());
             return kl_util::SecureString::op_ImplicitString(cs_value);
         }());
         receipt_ = ([&]() {
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(require(r)->receipt_)->Get(); });
+            auto cs_value = PLS_API(require(require(r)->receipt_)->Get());
             return kl_util::SecureString::op_ImplicitString(cs_value);
         }());
         state_ = ([&]() {
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(require(r)->state_)->Get(); });
+            auto cs_value = PLS_API(require(require(r)->state_)->Get());
             return kl_util::SecureInt::op_ImplicitInt(cs_value);
         }());
         productType_ = require(r)->productType_;
@@ -277,13 +272,11 @@ bool Receipt::IsTicketProduct() {
 
         if (IsTicketProductTmp_ == -1) {
             IsTicketProductTmp_ = 0;
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> bool {
-                        auto cs_arg0 = GetProductID();
-                        auto cs_arg1 = StoreBase::PAYMENT_PRODUCT();
-                        return contains_string(cs_arg0, cs_arg1);
-                    }());
-                })) {
+            if (PLS_API(([&]() -> bool {
+                    auto cs_arg0 = GetProductID();
+                    auto cs_arg1 = StoreBase::PAYMENT_PRODUCT();
+                    return contains_string(cs_arg0, cs_arg1);
+                }()))) {
                 IsTicketProductTmp_ = 1;
             }
         }
@@ -317,28 +310,18 @@ void Receipt::DebugVerificationReceipt(pls::cs::String token) {
 void Receipt::Save(pls::cs::Ref<kl_io::OutputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.Receipt.Save(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteString(stream, productID_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteString(stream, receipt_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteInt(stream, ([&]() {
-                                                     auto cs_value = state_;
-                                                     return kl_util::SecureInt::op_Implicit(cs_value);
-                                                 }()));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteInt(stream,
-                                                 pls::cs::cast_integral<pls::cs::Int32>(productType_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteBoolean(stream, paymentComplete_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteLong(stream, ([&]() {
-                                                      auto cs_value = purchaseTime_;
-                                                      return kl_util::SecureLong::op_Implicit(cs_value);
-                                                  }()));
-        });
+        PLS_API(kl_util::StreamUtil::WriteString(stream, productID_));
+        PLS_API(kl_util::StreamUtil::WriteString(stream, receipt_));
+        PLS_API(kl_util::StreamUtil::WriteInt(stream, ([&]() {
+                                                  auto cs_value = state_;
+                                                  return kl_util::SecureInt::op_Implicit(cs_value);
+                                              }())));
+        PLS_API(kl_util::StreamUtil::WriteInt(stream, pls::cs::cast_integral<pls::cs::Int32>(productType_)));
+        PLS_API(kl_util::StreamUtil::WriteBoolean(stream, paymentComplete_));
+        PLS_API(kl_util::StreamUtil::WriteLong(stream, ([&]() {
+                                                   auto cs_value = purchaseTime_;
+                                                   return kl_util::SecureLong::op_Implicit(cs_value);
+                                               }())));
     }
 }
 
@@ -351,8 +334,7 @@ pls::cs::Ref<Receipt> Receipt::Load(pls::cs::Ref<kl_io::InputStream> stream) {
         {
             auto cs_target = receipt;
             auto cs_value = ([&]() {
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadString(stream); });
+                auto cs_value = PLS_API(kl_util::StreamUtil::ReadString(stream));
                 return kl_util::SecureString::op_ImplicitString(cs_value);
             }());
             require(cs_target)->productID_ = cs_value;
@@ -360,8 +342,7 @@ pls::cs::Ref<Receipt> Receipt::Load(pls::cs::Ref<kl_io::InputStream> stream) {
         {
             auto cs_target = receipt;
             auto cs_value = ([&]() {
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadString(stream); });
+                auto cs_value = PLS_API(kl_util::StreamUtil::ReadString(stream));
                 return kl_util::SecureString::op_ImplicitString(cs_value);
             }());
             require(cs_target)->receipt_ = cs_value;
@@ -369,29 +350,26 @@ pls::cs::Ref<Receipt> Receipt::Load(pls::cs::Ref<kl_io::InputStream> stream) {
         {
             auto cs_target = receipt;
             auto cs_value = ([&]() {
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
+                auto cs_value = PLS_API(kl_util::StreamUtil::ReadInt(stream));
                 return kl_util::SecureInt::op_ImplicitInt(cs_value);
             }());
             require(cs_target)->state_ = cs_value;
         }
         {
             auto cs_target = receipt;
-            auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); }));
+            auto cs_value =
+                pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_util::StreamUtil::ReadInt(stream)));
             require(cs_target)->productType_ = cs_value;
         }
         {
             auto cs_target = receipt;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadBoolean(stream); });
+            auto cs_value = PLS_API(kl_util::StreamUtil::ReadBoolean(stream));
             require(cs_target)->paymentComplete_ = cs_value;
         }
         {
             auto cs_target = receipt;
             auto cs_value = ([&]() {
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadLong(stream); });
+                auto cs_value = PLS_API(kl_util::StreamUtil::ReadLong(stream));
                 return kl_util::SecureLong::op_ImplicitLong(cs_value);
             }());
             require(cs_target)->purchaseTime_ = cs_value;
@@ -437,29 +415,16 @@ pls::cs::String Receipt::PasswordEncode(ByteArray src) {
                             auto cs_value = false;
                             kl_cfg::Config::PRINT() = cs_value;
                         }
-                        ByteArray array = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_util::Compressor::Compress(src); });
+                        ByteArray array = PLS_API(kl_util::Compressor::Compress(src));
                         src = ByteArray::make(pls::cs::Int32(array.length()) + 8);
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_lang::JSystem::Arraycopy(
-                                pls::cs::box(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_util::EncodeUtil::LongToByteAry(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_util::CRC64::GetValue(array);
-                                        }),
-                                        false);
-                                })),
-                                0, pls::cs::box(src), 0, 8);
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_lang::JSystem::Arraycopy(pls::cs::box(array), 0, pls::cs::box(src), 8,
-                                                               array.length());
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_util::Encrypter::Encode(src, Receipt::PASSKEY());
-                        });
-                        return pls::cs::flow_return(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_util::Base64::Encode(src); }));
+                        PLS_API(kl_lang::JSystem::Arraycopy(
+                            pls::cs::box(PLS_API(kl_util::EncodeUtil::LongToByteAry(
+                                PLS_API(kl_util::CRC64::GetValue(array)), false))),
+                            0, pls::cs::box(src), 0, 8));
+                        PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(array), 0, pls::cs::box(src), 8,
+                                                            array.length()));
+                        PLS_API(kl_util::Encrypter::Encode(src, Receipt::PASSKEY()));
+                        return pls::cs::flow_return(PLS_API(kl_util::Base64::Encode(src)));
                     }
                     return {};
                 },
@@ -500,26 +465,16 @@ ByteArray Receipt::PasswordDecodeToBytes(pls::cs::String src) {
                             auto cs_value = false;
                             kl_cfg::Config::PRINT() = cs_value;
                         }
-                        ByteArray array = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_util::Base64::Decode(src); });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_util::Encrypter::Decode(array, Receipt::PASSKEY());
-                        });
-                        pls::cs::Int64 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_util::EncodeUtil::ByteAryToLong(array, false);
-                        });
+                        ByteArray array = PLS_API(kl_util::Base64::Decode(src));
+                        PLS_API(kl_util::Encrypter::Decode(array, Receipt::PASSKEY()));
+                        pls::cs::Int64 num = PLS_API(kl_util::EncodeUtil::ByteAryToLong(array, false));
                         ByteArray array2 = ByteArray::make(pls::cs::Int32(array.length()) - 8);
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_lang::JSystem::Arraycopy(pls::cs::box(array), 8, pls::cs::box(array2),
-                                                               0, array2.length());
-                        });
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_util::CRC64::GetValue(array2);
-                            }) != num) {
+                        PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(array), 8, pls::cs::box(array2), 0,
+                                                            array2.length()));
+                        if (PLS_API(kl_util::CRC64::GetValue(array2)) != num) {
                             return pls::cs::flow_return(ByteArray{});
                         }
-                        return pls::cs::flow_return(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_util::Compressor::Expand(array2); }));
+                        return pls::cs::flow_return(PLS_API(kl_util::Compressor::Expand(array2)));
                     }
                     return {};
                 },
@@ -540,13 +495,11 @@ pls::cs::String Receipt::PasswordDecodeToString(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.Receipt.PasswordDecodeToString(System.String)",
                      game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::String {
-                auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8();
-                auto cs_arg0 = Receipt::PasswordDecodeToBytes(src);
-                return require(cs_receiver)->GetString(cs_arg0);
-            }());
-        });
+        return PLS_API(([&]() -> pls::cs::String {
+            auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8();
+            auto cs_arg0 = Receipt::PasswordDecodeToBytes(src);
+            return require(cs_receiver)->GetString(cs_arg0);
+        }()));
     }
 }
 } // namespace system::billing::ui

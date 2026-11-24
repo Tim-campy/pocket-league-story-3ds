@@ -78,7 +78,7 @@ pls::cs::Ref<TouchEffectManager> TouchEffectManager::GetInstance() {
 void TouchEffectManager::Add(pls::cs::Ref<TouchEffect> effect) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.TouchEffectManager.Add(surface.TouchEffect)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(effects)->Add(effect); });
+        PLS_API(require(effects)->Add(effect));
     }
 }
 
@@ -86,16 +86,11 @@ void TouchEffectManager::Add(pls::cs::Ref<TouchEffect> effect) {
 void TouchEffectManager::Frame() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.TouchEffectManager.Frame", game);
     {
-        for (pls::cs::Int32 num =
-                 pls::diagnostic::api_call([&]() -> decltype(auto) { return require(effects)->Size(); }) - 1;
-             num >= 0; --num) {
+        for (pls::cs::Int32 num = PLS_API(require(effects)->Size()) - 1; num >= 0; --num) {
             {
-                bool recoveredCondition_793 = require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return require(effects)->ElementAt(num);
-                                              }))->Frame();
+                bool recoveredCondition_793 = require(PLS_API(require(effects)->ElementAt(num)))->Frame();
                 if (recoveredCondition_793) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(effects)->RemoveElementAt(num); });
+                    PLS_API(require(effects)->RemoveElementAt(num));
                 }
             }
         }
@@ -108,18 +103,14 @@ void TouchEffectManager::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     {
         kl_cfg::Config::ensure_initialized();
 
-        for (pls::cs::Int32 i = 0;
-             i < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(effects)->Size(); });
-             ++i) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(effects)->Size()); ++i) {
             try {
-                require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(effects)->ElementAt(i);
-                }))->Draw(g);
+                require(PLS_API(require(effects)->ElementAt(i)))->Draw(g);
             } catch (const pls::cs::Exception& cs_caught_195) {
                 auto t = pls::cs::capture_exception(cs_caught_195);
                 {
                     if (kl_cfg::Config::PRINT()) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Log::Info(t); });
+                        PLS_API(kl_util::Log::Info(t));
                     }
                 }
             }
@@ -131,13 +122,10 @@ void TouchEffectManager::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
 void TouchEffectManager::Clear() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.TouchEffectManager.Clear", game);
     {
-        for (pls::cs::Int32 num =
-                 pls::diagnostic::api_call([&]() -> decltype(auto) { return require(effects)->Size(); }) - 1;
-             num >= 0; --num) {
+        for (pls::cs::Int32 num = PLS_API(require(effects)->Size()) - 1; num >= 0; --num) {
             RemoveEffectInt(num);
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(effects)->RemoveAllElementsKeep(); });
+        PLS_API(require(effects)->RemoveAllElementsKeep());
     }
 }
 
@@ -146,8 +134,7 @@ void TouchEffectManager::RemoveEffect(pls::cs::Ref<TouchEffect> effect) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.TouchEffectManager.RemoveEffect(surface.TouchEffect)",
                      game);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(effects)->RemoveElement(effect); });
+        PLS_API(require(effects)->RemoveElement(effect));
     }
 }
 
@@ -155,8 +142,7 @@ void TouchEffectManager::RemoveEffect(pls::cs::Ref<TouchEffect> effect) {
 void TouchEffectManager::RemoveEffectInt(pls::cs::Int32 index) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.TouchEffectManager.RemoveEffect(System.Int32)", game);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(effects)->RemoveElementAt(index); });
+        PLS_API(require(effects)->RemoveElementAt(index));
     }
 }
 
@@ -165,12 +151,9 @@ void TouchEffectManager::RemoveSurface(pls::cs::Ref<kairo::unity::surface::Surfa
     PLS_METHOD_SCOPE("Assembly-CSharp",
                      "M:surface.TouchEffectManager.RemoveSurface(kairo.unity.surface.SurfaceBase)", game);
     {
-        for (pls::cs::Int32 num =
-                 pls::diagnostic::api_call([&]() -> decltype(auto) { return require(effects)->Size(); }) - 1;
-             num >= 0; --num) {
-            if (pls::cs::box(require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                 return require(effects)->ElementAt(num);
-                             }))->surface_) == pls::cs::box(surface)) {
+        for (pls::cs::Int32 num = PLS_API(require(effects)->Size()) - 1; num >= 0; --num) {
+            if (pls::cs::box(require(PLS_API(require(effects)->ElementAt(num)))->surface_) ==
+                pls::cs::box(surface)) {
                 RemoveEffectInt(num);
             }
         }
@@ -181,12 +164,8 @@ void TouchEffectManager::RemoveSurface(pls::cs::Ref<kairo::unity::surface::Surfa
 void TouchEffectManager::RemoveId(pls::cs::Int32 id) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.TouchEffectManager.RemoveId(System.Int32)", game);
     {
-        for (pls::cs::Int32 num =
-                 pls::diagnostic::api_call([&]() -> decltype(auto) { return require(effects)->Size(); }) - 1;
-             num >= 0; --num) {
-            if (require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(effects)->ElementAt(num);
-                }))->id_ == id) {
+        for (pls::cs::Int32 num = PLS_API(require(effects)->Size()) - 1; num >= 0; --num) {
+            if (require(PLS_API(require(effects)->ElementAt(num)))->id_ == id) {
                 RemoveEffectInt(num);
             }
         }
@@ -200,11 +179,8 @@ void TouchEffectManager::RemoveComponentId(pls::cs::Ref<kairo::unity::surface::S
         "Assembly-CSharp",
         "M:surface.TouchEffectManager.RemoveComponentId(kairo.unity.surface.SurfaceBase,System.Int32)", game);
     {
-        for (pls::cs::Int32 num =
-                 pls::diagnostic::api_call([&]() -> decltype(auto) { return require(effects)->Size(); }) - 1;
-             num >= 0; --num) {
-            pls::cs::Ref<TouchEffect> touchEffect = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(effects)->ElementAt(num); });
+        for (pls::cs::Int32 num = PLS_API(require(effects)->Size()) - 1; num >= 0; --num) {
+            pls::cs::Ref<TouchEffect> touchEffect = PLS_API(require(effects)->ElementAt(num));
             if (pls::cs::box(require(touchEffect)->surface_) == pls::cs::box(surface) &&
                 kairo::unity::surface::TouchComponent::GetId(require(touchEffect)->key_) == componentId) {
                 RemoveEffectInt(num);
@@ -221,11 +197,8 @@ void TouchEffectManager::RemoveComponentKey(pls::cs::Ref<kairo::unity::surface::
         "M:surface.TouchEffectManager.RemoveComponentKey(kairo.unity.surface.SurfaceBase,System.Int64)",
         game);
     {
-        for (pls::cs::Int32 num =
-                 pls::diagnostic::api_call([&]() -> decltype(auto) { return require(effects)->Size(); }) - 1;
-             num >= 0; --num) {
-            pls::cs::Ref<TouchEffect> touchEffect = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(effects)->ElementAt(num); });
+        for (pls::cs::Int32 num = PLS_API(require(effects)->Size()) - 1; num >= 0; --num) {
+            pls::cs::Ref<TouchEffect> touchEffect = PLS_API(require(effects)->ElementAt(num));
             if (pls::cs::box(require(touchEffect)->surface_) == pls::cs::box(surface) &&
                 require(touchEffect)->key_ == componentKey) {
                 RemoveEffectInt(num);
@@ -260,31 +233,24 @@ TouchEffectManager::AddEffect(pls::cs::Ref<kairo::unity::surface::SurfaceBase> s
         game);
     {
         pls::cs::Ref<TouchEffect> touchEffect = pls::cs::Ref<TouchEffect>{};
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(effectsBuffer_)->Size();
-                                   });
-             ++i) {
-            pls::cs::Ref<TouchEffect> touchEffect2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(effectsBuffer_)->ElementAt(i); });
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(effects)->Contains(touchEffect2); })) {
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(effectsBuffer_)->Size()); ++i) {
+            pls::cs::Ref<TouchEffect> touchEffect2 = PLS_API(require(effectsBuffer_)->ElementAt(i));
+            if (PLS_API(require(effects)->Contains(touchEffect2))) {
                 continue;
             }
             touchEffect = touchEffect2;
             break;
         }
         if (is_null(touchEffect)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = effectsBuffer_;
-                    pls::cs::Ref<TouchEffect> cs_arg0 = ([&]() {
-                        auto cs_value = TouchEffect::create();
-                        touchEffect = cs_value;
-                        return cs_value;
-                    }());
-                    require(cs_receiver)->Add(cs_arg0);
+            PLS_API(([&]() -> void {
+                auto cs_receiver = effectsBuffer_;
+                pls::cs::Ref<TouchEffect> cs_arg0 = ([&]() {
+                    auto cs_value = TouchEffect::create();
+                    touchEffect = cs_value;
+                    return cs_value;
                 }());
-            });
+                require(cs_receiver)->Add(cs_arg0);
+            }()));
         }
         require(touchEffect)->Init(surface, id, x, y, component, arg);
         Add(touchEffect);

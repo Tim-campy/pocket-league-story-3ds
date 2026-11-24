@@ -82,13 +82,11 @@ pls::cs::Int32 TextLayout_TextBlock::Draw(pls::cs::Ref<pls::kairo::Graphics> g, 
     {
         pls::cs::Single num = x_;
         pls::cs::Single num2 = y_;
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->CheckLocalMatrix(); })) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<Matrix> cs_arg0 = Matrix::TranslateTemporary(num, num2);
-                    PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
-                }());
-            });
+        if (PLS_API(require(g)->CheckLocalMatrix())) {
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<Matrix> cs_arg0 = Matrix::TranslateTemporary(num, num2);
+                PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
+            }()));
             num2 = 0.0f;
             num = num2;
         }
@@ -114,25 +112,17 @@ pls::cs::Int32 TextLayout_TextBlock::Draw(pls::cs::Ref<pls::kairo::Graphics> g, 
                                 if (pictographParam_[1] == literal(u"∞")) {
                                     num3 = -1;
                                 } else {
-                                    num3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::int32_parse(pictographParam_[1]);
-                                    });
+                                    num3 = PLS_API(pls::cs::int32_parse(pictographParam_[1]));
                                 }
                             }
                             if (2 < pictographParam_.length() && (pictographParam_[2].length() > 0)) {
-                                num4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::cs::int32_parse(pictographParam_[2]);
-                                });
+                                num4 = PLS_API(pls::cs::int32_parse(pictographParam_[2]));
                             }
                             if (3 < pictographParam_.length() && (pictographParam_[3].length() > 0)) {
-                                num5 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::cs::int32_parse(pictographParam_[3]);
-                                });
+                                num5 = PLS_API(pls::cs::int32_parse(pictographParam_[3]));
                             }
                             if (4 < pictographParam_.length() && (pictographParam_[4].length() > 0)) {
-                                num6 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::cs::int32_parse(pictographParam_[4]);
-                                });
+                                num6 = PLS_API(pls::cs::int32_parse(pictographParam_[4]));
                             }
                             x += pls::cs::Single(num5);
                             y += pls::cs::Single(num6);
@@ -147,9 +137,7 @@ pls::cs::Int32 TextLayout_TextBlock::Draw(pls::cs::Ref<pls::kairo::Graphics> g, 
                                 }());
                             }
                             pls::cs::Single num7 =
-                                pls::cs::Single(pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(font_)->GetHeight(); })) /
-                                12.0f;
+                                pls::cs::Single(PLS_API(require(font_)->GetHeight())) / 12.0f;
                             ShortArray boundingRect =
                                 require(Pictograph::get_Seb(pictograph))->GetBoundingRect(num3);
                             if (boxH != -1.0f &&
@@ -187,34 +175,20 @@ pls::cs::Int32 TextLayout_TextBlock::Draw(pls::cs::Ref<pls::kairo::Graphics> g, 
                                                                          pls::cs::Int64(0xFF000000u)) >>
                                                                         24) &
                                                                        pls::cs::Int64(0xFF)));
-                                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(g)->GetRenderModeOperator();
-                                                    }) == 0 &&
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(g)->GetRenderModeSrcRatio();
-                                                    }) != 255) {
+                                                if (PLS_API(require(g)->GetRenderModeOperator()) == 0 &&
+                                                    PLS_API(require(g)->GetRenderModeSrcRatio()) != 255) {
                                                     num8 = num8 *
-                                                           pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                               return require(g)->GetRenderModeSrcRatio();
-                                                           }) /
-                                                           255;
+                                                           PLS_API(require(g)->GetRenderModeSrcRatio()) / 255;
                                                     if (num8 > 255) {
                                                         num8 = 255;
                                                     }
                                                 }
                                                 if (array[10] == 1) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(g)->PushRenderMode(1, num8,
-                                                                                          255 - num8);
-                                                    });
+                                                    PLS_API(require(g)->PushRenderMode(1, num8, 255 - num8));
                                                 } else if (array[10] == 2) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(g)->PushRenderMode(1, num8, 255);
-                                                    });
+                                                    PLS_API(require(g)->PushRenderMode(1, num8, 255));
                                                 } else if (array[10] == 3) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(g)->PushRenderMode(2, num8, 255);
-                                                    });
+                                                    PLS_API(require(g)->PushRenderMode(2, num8, 255));
                                                 }
                                             }
                                             pls::cs::Single dx = x + num + pls::cs::Single(array[6]) * num7;
@@ -225,40 +199,32 @@ pls::cs::Int32 TextLayout_TextBlock::Draw(pls::cs::Ref<pls::kairo::Graphics> g, 
                                                 pls::cs::to_int32((pls::cs::Single(array[5]) * num7 + 0.01f));
                                             if (!require(Pictograph::get_Transform(pictograph))
                                                      ->IsIdentity()) {
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return ([&]() -> void {
-                                                        pls::cs::Ref<Matrix> cs_arg0 =
-                                                            Pictograph::get_Transform(pictograph);
-                                                        PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(
-                                                            require(g), cs_arg0);
-                                                    }());
-                                                });
+                                                PLS_API(([&]() -> void {
+                                                    pls::cs::Ref<Matrix> cs_arg0 =
+                                                        Pictograph::get_Transform(pictograph);
+                                                    PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(
+                                                        require(g), cs_arg0);
+                                                }()));
                                             }
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return ([&]() -> void {
-                                                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                                                        require(require(Pictograph::get_Seb(pictograph))
-                                                                    ->manager_)
-                                                            ->img.get_Item(array[1]);
-                                                    pls::cs::Int32 cs_arg5 = array[2];
-                                                    pls::cs::Int32 cs_arg6 = array[3];
-                                                    pls::cs::Int32 cs_arg7 = array[4];
-                                                    pls::cs::Int32 cs_arg8 = array[5];
-                                                    require(g)->DrawScaledImage(cs_arg0, dx, dy, num9, num10,
-                                                                                cs_arg5, cs_arg6, cs_arg7,
-                                                                                cs_arg8);
-                                                }());
-                                            });
+                                            PLS_API(([&]() -> void {
+                                                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                                                    require(
+                                                        require(Pictograph::get_Seb(pictograph))->manager_)
+                                                        ->img.get_Item(array[1]);
+                                                pls::cs::Int32 cs_arg5 = array[2];
+                                                pls::cs::Int32 cs_arg6 = array[3];
+                                                pls::cs::Int32 cs_arg7 = array[4];
+                                                pls::cs::Int32 cs_arg8 = array[5];
+                                                require(g)->DrawScaledImage(cs_arg0, dx, dy, num9, num10,
+                                                                            cs_arg5, cs_arg6, cs_arg7,
+                                                                            cs_arg8);
+                                            }()));
                                             if (!require(Pictograph::get_Transform(pictograph))
                                                      ->IsIdentity()) {
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(g)->PopMatrix();
-                                                });
+                                                PLS_API(require(g)->PopMatrix());
                                             }
                                             if (flag) {
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(g)->PopRenderMode();
-                                                });
+                                                PLS_API(require(g)->PopRenderMode());
                                             }
                                         }
                                     }
@@ -277,23 +243,20 @@ pls::cs::Int32 TextLayout_TextBlock::Draw(pls::cs::Ref<pls::kairo::Graphics> g, 
                             if (boxH != -1.0f &&
                                 (([&]() -> pls::cs::FloatEval {
                                      auto cs_left = y + y_;
-                                     auto cs_right = pls::cs::Single(pls::diagnostic::api_call(
-                                         [&]() -> decltype(auto) { return require(font_)->GetHeight(); }));
+                                     auto cs_right = pls::cs::Single(PLS_API(require(font_)->GetHeight()));
                                      return cs_left + cs_right;
                                  }()) < boxY ||
                                  boxY + boxH < y + y_)) {
                                 return pls::cs::flow_return(num11);
                             }
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->SetColor(color_); });
+                            PLS_API(require(g)->SetColor(color_));
                             if (len >= kl_lang::StringEx::Length(text_)) {
                                 Font::Draw(require(font_), g, text_, x + num, y + num2);
                             } else {
                                 {
                                     auto cs_receiver = font_;
                                     pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = g;
-                                    pls::cs::String cs_arg1 = pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return substring2(text_, 0, len); });
+                                    pls::cs::String cs_arg1 = PLS_API(substring2(text_, 0, len));
                                     Font::Draw(require(cs_receiver), cs_arg0, cs_arg1, x + num, y + num2);
                                 }
                             }
@@ -303,10 +266,8 @@ pls::cs::Int32 TextLayout_TextBlock::Draw(pls::cs::Ref<pls::kairo::Graphics> g, 
                     return {};
                 },
                 [&]() {
-                    if (pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(g)->CheckLocalMatrix(); })) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(g)->PopMatrix(); });
+                    if (PLS_API(require(g)->CheckLocalMatrix())) {
+                        PLS_API(require(g)->PopMatrix());
                     }
                 });
             return cs_flow_94.value();
@@ -318,7 +279,7 @@ pls::cs::Int32 TextLayout_TextBlock::Draw(pls::cs::Ref<pls::kairo::Graphics> g, 
 void TextLayout_TextBlock::Dispose() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.TextLayout.TextBlock.Dispose", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(font_)->Dispose(); });
+        PLS_API(require(font_)->Dispose());
         font_ = pls::cs::Ref<pls::kairo::Font>{};
         text_ = pls::cs::String{};
     }

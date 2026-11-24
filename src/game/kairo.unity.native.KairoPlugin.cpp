@@ -109,8 +109,7 @@ pls::cs::String GetReleaseNumber() {
     KairoPlugin::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.native.KairoPlugin.GetReleaseNumber", kairo);
     {
-        pls::cs::String text =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::native_release(); });
+        pls::cs::String text = PLS_API(pls::kairo::native_release());
         for (pls::cs::Int32 num = pls::cs::Int32(text.length()) - 1; num >= 0; --num) {
             if (((pls::cs::cast_integral<pls::cs::Int32>(u'0') >
                   pls::cs::cast_integral<pls::cs::Int32>(text.at(num))) ||
@@ -118,8 +117,7 @@ pls::cs::String GetReleaseNumber() {
                   pls::cs::cast_integral<pls::cs::Int32>(u'9'))) &&
                 (pls::cs::cast_integral<pls::cs::Int32>(text.at(num)) !=
                  pls::cs::cast_integral<pls::cs::Int32>(u'.'))) {
-                text = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::string_remove(text, num); });
+                text = PLS_API(pls::cs::string_remove(text, num));
             }
         }
         if (text.length() == 0) {

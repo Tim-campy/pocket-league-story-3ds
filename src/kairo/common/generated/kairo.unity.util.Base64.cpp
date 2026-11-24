@@ -25,8 +25,7 @@ ByteArray Decode(pls::cs::String str) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.Base64.Decode(System.String)", kairo);
     {
         try {
-            return pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::convert_from_base64_string(str); });
+            return PLS_API(pls::cs::convert_from_base64_string(str));
         } catch (const pls::cs::Exception& cs_caught_0) {
             pls::cs::capture_exception(cs_caught_0);
             {
@@ -41,8 +40,7 @@ pls::cs::String Encode(ByteArray bytes) {
     Base64::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.Base64.Encode(System.Byte[])", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::convert_to_base64_string(bytes); });
+        return PLS_API(pls::cs::convert_to_base64_string(bytes));
     }
 }
 } // namespace kairo::unity::util::Base64

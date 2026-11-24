@@ -87,9 +87,8 @@ pls::cs::String TouchEvent::ToString() {
     {
         if (is_null(component)) {
             return ([&]() -> pls::cs::String {
-                auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return concat_objects2(pls::cs::box(this), pls::cs::box(literal(u":component=")));
-                });
+                auto cs_left =
+                    PLS_API(concat_objects2(pls::cs::box(this), pls::cs::box(literal(u":component="))));
                 if (!cs_left.is_null())
                     return cs_left;
                 return literal(u"");
@@ -170,12 +169,10 @@ bool TouchEvent::IsPositive() {
 std::int32_t TouchEvent::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.TouchEvent.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace kairo::unity::surface

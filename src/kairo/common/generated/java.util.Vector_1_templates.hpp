@@ -35,7 +35,7 @@ template<typename T_T> void Vector_2_AddElement(pls::cs::Ref<Vector_2<T_T>> self
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.Vector\u00601.AddElement(\u00600)", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->list_.Add(pls::cs::box(obj)); });
+        PLS_API(self->list_.Add(pls::cs::box(obj)));
     }
 }
 
@@ -71,13 +71,11 @@ bool Vector_2_Equals(pls::cs::Ref<Vector_2<T_T>> self, pls::cs::Ref<pls::cs::Obj
                 return cs_left_6 == cs_right_6;
             }
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(self));
-                auto cs_argument = obj;
-                return require(cs_receiver)->pls::cs::Object::Equals(cs_argument);
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(self));
+            auto cs_argument = obj;
+            return require(cs_receiver)->pls::cs::Object::Equals(cs_argument);
+        }()));
     }
 }
 
@@ -105,8 +103,7 @@ template<typename T_T> pls::cs::Int32 Vector_2_IndexOf(pls::cs::Ref<Vector_2<T_T
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.Vector\u00601.IndexOf(\u00600)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return self->list_.IndexOf(pls::cs::box(elem)); });
+        return PLS_API(self->list_.IndexOf(pls::cs::box(elem)));
     }
 }
 
@@ -117,8 +114,7 @@ void Vector_2_InsertElementAt(pls::cs::Ref<Vector_2<T_T>> self, T_T obj, pls::cs
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.Vector\u00601.InsertElementAt(\u00600,System.Int32)",
                      kairo);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return self->list_.Insert(index, pls::cs::box(obj)); });
+        PLS_API(self->list_.Insert(index, pls::cs::box(obj)));
     }
 }
 
@@ -154,7 +150,7 @@ template<typename T_T> void Vector_2_RemoveAllElements(pls::cs::Ref<Vector_2<T_T
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.Vector\u00601.RemoveAllElements", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->list_.Clear(); });
+        PLS_API(self->list_.Clear());
     }
 }
 
@@ -163,12 +159,11 @@ template<typename T_T> bool Vector_2_RemoveElement(pls::cs::Ref<Vector_2<T_T>> s
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.Vector\u00601.RemoveElement(\u00600)", kairo);
     {
-        pls::cs::Int32 num = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return self->list_.IndexOf(pls::cs::box(obj)); });
+        pls::cs::Int32 num = PLS_API(self->list_.IndexOf(pls::cs::box(obj)));
         if (num == -1) {
             return false;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->list_.RemoveAt(num); });
+        PLS_API(self->list_.RemoveAt(num));
         return true;
     }
 }
@@ -178,7 +173,7 @@ template<typename T_T> void Vector_2_RemoveElementAt(pls::cs::Ref<Vector_2<T_T>>
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.Vector\u00601.RemoveElementAt(System.Int32)", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return self->list_.RemoveAt(index); });
+        PLS_API(self->list_.RemoveAt(index));
     }
 }
 
@@ -211,12 +206,10 @@ template<typename T_T> pls::cs::String Vector_2_ToString(pls::cs::Ref<Vector_2<T
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.Vector\u00601.ToString", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_value = pls::cs::box(self->list_);
-                return require(cs_value)->ToString();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_value = pls::cs::box(self->list_);
+            return require(cs_value)->ToString();
+        }()));
     }
 }
 

@@ -69,21 +69,15 @@ static PLS_NOINLINE void cs_init_4489b86073532f79_slow(pls::cs::TypeInitFlag& fl
             "F:data.TrainingData.TRA_SELECT_TRA", [&]() { return 0; });
         TrainingData_TRA_UPPARAM_storage =
             pls::cs::evaluate_type_initializer_field("F:data.TrainingData.TRA_UPPARAM", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 6}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 6})));
             });
         TrainingData_TRA_ADD_storage =
             pls::cs::evaluate_type_initializer_field("F:data.TrainingData.TRA_ADD", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 6}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 6})));
             });
         TrainingData_TRA_UPPARAM_DISP_storage =
             pls::cs::evaluate_type_initializer_field("F:data.TrainingData.TRA_UPPARAM_DISP", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 6}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({3, 6})));
             });
         TrainingData_FARESULT_RATE_storage = pls::cs::evaluate_type_initializer_field(
             "F:data.TrainingData.FARESULT_RATE", [&]() { return IntArray::from({8, 92, 100}); });
@@ -146,9 +140,7 @@ pls::cs::Ref<game::UserData>& TrainingData::udat_() {
 
 void TrainingData::create_init(pls::cs::Ref<TrainingData> self) {
     TrainingData::ensure_initialized();
-    self->eff_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({6, 2}));
-    });
+    self->eff_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({6, 2})));
     BaseData::create_init(pls::cs::static_pointer_cast<BaseData>(self));
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TrainingData.#ctor", game);
     {
@@ -159,9 +151,7 @@ void TrainingData::create_init(pls::cs::Ref<TrainingData> self) {
 
 void TrainingData::create_init(pls::cs::Ref<TrainingData> self, pls::cs::String src) {
     TrainingData::ensure_initialized();
-    self->eff_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({6, 2}));
-    });
+    self->eff_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({6, 2})));
     BaseData::create_init(pls::cs::static_pointer_cast<BaseData>(self));
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TrainingData.#ctor(System.String)", game);
     {
@@ -202,38 +192,29 @@ void TrainingData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TrainingData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         name_ = array[num++];
-        icon_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        tMode_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        icon_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        tMode_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         for (pls::cs::Int32 i = 0; i < eff_.length(); ++i) {
             {
                 auto cs_target = eff_[i];
                 auto cs_index = 0;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
             {
                 auto cs_target = eff_[i];
                 auto cs_index = 1;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        costType_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        cost_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        costType_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        cost_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         explain_ = array[num++];
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        flag_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
     }
 }
 
@@ -253,8 +234,7 @@ void TrainingData::NewGame() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TrainingData.NewGame", game);
     {
         state_ = 0;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 1); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 1))) {
             ChangeState(1);
             new_ = false;
         }
@@ -265,11 +245,8 @@ void TrainingData::NewGame() {
 void TrainingData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TrainingData.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteBoolean(os, new_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteBoolean(os, new_));
     }
 }
 
@@ -277,10 +254,9 @@ void TrainingData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void TrainingData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TrainingData.Deserialize(java.io.InputStream)", game);
     {
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        new_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBoolean(stream); });
+        state_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        new_ = PLS_API(kl_unity_util::StreamUtil::ReadBoolean(stream));
     }
 }
 

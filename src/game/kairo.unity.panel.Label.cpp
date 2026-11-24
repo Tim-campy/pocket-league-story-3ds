@@ -32,8 +32,7 @@ void Label::create_init(pls::cs::Ref<Label> self, pls::cs::String text) {
     Component::create_init(pls::cs::static_pointer_cast<Component>(self));
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.panel.Label.#ctor(System.String)", kairo);
     {
-        self->text_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::Language::TranslateText(text, true); });
+        self->text_ = PLS_API(kl_util::Language::TranslateText(text, true));
     }
 }
 

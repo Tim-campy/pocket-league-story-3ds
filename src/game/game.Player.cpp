@@ -426,21 +426,15 @@ static PLS_NOINLINE void cs_init_2ef6641b828546ac_slow(pls::cs::TypeInitFlag& fl
         Player_eva_dribble_storage = pls::cs::evaluate_type_initializer_field(
             "F:game.Player.eva_dribble", [&]() { return FloatArray::make(9); });
         Player_eva_pass_storage = pls::cs::evaluate_type_initializer_field("F:game.Player.eva_pass", [&]() {
-            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::JTool::MakeArray<FloatArray2>(IntArray::from({11, 2}));
-            });
+            return PLS_API(kl_java_util::JTool::MakeArray<FloatArray2>(IntArray::from({11, 2})));
         });
         Player_eva_pass_info_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Player.eva_pass_info", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 2}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 2})));
             });
         Player_eva_pass_info_onEnemy_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Player.eva_pass_info_onEnemy", [&]() {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 2}));
-                });
+                return PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 2})));
             });
         Player_chColPos_storage = pls::cs::evaluate_type_initializer_field(
             "F:game.Player.chColPos", [&]() { return kl_util3d::Vector3D::create(); });
@@ -772,8 +766,7 @@ void Player::create_init(pls::cs::Ref<Player> self, pls::cs::Int32 obj_type) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.#ctor(System.Int32)", game);
     {
         Player::apdat_() = main::AppData::GetInstance();
-        Player::canvas_() =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        Player::canvas_() = PLS_API(pls::kairo::Canvas::GetInstance());
         self->obj_type_ = obj_type;
         self->pData_id_ = 1;
         self->bodyImg_ = 100;
@@ -795,8 +788,7 @@ void Player::Init(pls::cs::Int32 pData_id, pls::cs::Int32 formation_index, pls::
                      "M:game.Player.Init(System.Int32,System.Int32,System.Int32,System.Int32)", game);
     {
         Player::apdat_() = main::AppData::GetInstance();
-        Player::canvas_() =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        Player::canvas_() = PLS_API(pls::kairo::Canvas::GetInstance());
         Player::udat_() = UserData::GetInstance();
         pData_id_ = pData_id;
         p_id_ = formation_index;
@@ -815,12 +807,8 @@ void Player::Init(pls::cs::Int32 pData_id, pls::cs::Int32 formation_index, pls::
         formationGo_ = kl_util3d::Vector3D::create();
         v_ = kl_util3d::Vector3D::create();
         formation_ = IntArray::make(2);
-        formation_param_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({5, 2}));
-        });
-        formation_address_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({5, 2}));
-        });
+        formation_param_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({5, 2})));
+        formation_address_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({5, 2})));
         address_ = IntArray::make(2);
         mostEvaAddres_ = IntArray::make(2);
         screen_pos_ = IntArray::make(2);
@@ -831,8 +819,7 @@ void Player::Init(pls::cs::Int32 pData_id, pls::cs::Int32 formation_index, pls::
         actId_ = 0;
         coliState_ = 0;
         coliBallState_ = 0;
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 2); });
+        flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 2));
         physical_hp_ = data::PlayerData::GetPhysicalHpMax(this);
         directBox_ = IntArray::make(4);
         role_ = require(require(Player::apdat_())->pData_.get_Item(pData_id))->role_;
@@ -843,20 +830,16 @@ void Player::Init(pls::cs::Int32 pData_id, pls::cs::Int32 formation_index, pls::
 void Player::Clear() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.Clear", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(pos_)->Set(0.0f, 0.0f, 0.0f); });
+        PLS_API(require(pos_)->Set(0.0f, 0.0f, 0.0f));
         frame_ = 0;
         seb_ = 0;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(script_)); }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(script_));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(script_))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(script_)));
         }
         flag_ = 0;
         state_ = 0;
         stateCnt_ = 0;
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 2); });
+        flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 2));
     }
 }
 
@@ -878,8 +861,7 @@ bool Player::Update() {
                              1);
         }
         Update_moveArea();
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(script_)); }) > 0) {
+        if (PLS_API(kl_java_util::Vector_2_Size(require(script_))) > 0) {
             this->Script();
         } else {
             actId_ = DecideAction();
@@ -957,30 +939,25 @@ pls::cs::Int32 Player::DecideAction() {
 
         pls::cs::Int32 result = 0;
         pls::cs::Ref<Team> team = require(Player::udat_())->teams_.get_Item(team_id_);
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 2048); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 2048))) {
             return 11;
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 4096); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 4096))) {
             return 12;
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 8192); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 8192))) {
             return 13;
         }
         if (require(require(Player::udat_())->gm_)->state_ == 2 ||
             require(require(Player::udat_())->gm_)->state_ == 1) {
             if (require(require(Player::udat_())->gm_)->stateCnt_ >= 50 &&
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 4); })) {
+                PLS_API(kl_unity_util::BitUtil::Check(flag_, 4))) {
                 return 7;
             }
             return 5;
         }
         if (require(require(Player::udat_())->gm_)->state_ == 3 &&
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 4); })) {
+            PLS_API(kl_unity_util::BitUtil::Check(flag_, 4))) {
             if ([&]() -> bool {
                     auto cs_left = require(require(Player::udat_())->gm_)->stateCnt_;
                     auto cs_right = GameManager::WAIT_THROWIN()[1];
@@ -991,8 +968,7 @@ pls::cs::Int32 Player::DecideAction() {
             return 5;
         }
         if (require(require(Player::udat_())->gm_)->state_ == 4 &&
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 512); })) {
+            PLS_API(kl_unity_util::BitUtil::Check(flag_, 512))) {
             if ([&]() -> bool {
                     auto cs_left = require(require(Player::udat_())->gm_)->stateCnt_;
                     auto cs_right = GameManager::WAIT_GK()[1];
@@ -1003,8 +979,7 @@ pls::cs::Int32 Player::DecideAction() {
             return 5;
         }
         if (require(require(Player::udat_())->gm_)->state_ == 5 &&
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 1024); })) {
+            PLS_API(kl_unity_util::BitUtil::Check(flag_, 1024))) {
             if ([&]() -> bool {
                     auto cs_left = require(require(Player::udat_())->gm_)->stateCnt_;
                     auto cs_right = GameManager::WAIT_CK()[1];
@@ -1016,48 +991,38 @@ pls::cs::Int32 Player::DecideAction() {
         }
         if (role_ == 0) {
             result = 4;
-        } else if (pls::diagnostic::api_call(
-                       [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 4); })) {
+        } else if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 4))) {
             result = 3;
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_java_util::Vector_2_IndexOf(require(require(team)->players_receive_),
-                                                             pls::cs::box(this));
-                   }) != -1) {
+        } else if (PLS_API(kl_java_util::Vector_2_IndexOf(require(require(team)->players_receive_),
+                                                          pls::cs::box(this))) != -1) {
             result = 1;
         } else if (require(require(Player::udat_())->gm_)->gameState_ == 1 - team_id_ &&
                    require(require(Player::udat_())->gm_)->state_ == 0) {
             pls::cs::Ref<Player> passer =
                 require(require(Player::udat_())->teams_.get_Item(1 - team_id_))->GetPasser();
             if ((!is_null(passer) && require(passer)->role_ != 0) &&
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::AbsInt(([&]() -> pls::cs::Int32 {
-                        auto cs_left = require(passer)->address_[0];
-                        auto cs_right = address_[0];
-                        return cs_left - cs_right;
-                    }()));
-                }) <= 2 &&
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::AbsInt(([&]() -> pls::cs::Int32 {
-                        auto cs_left = require(passer)->address_[1];
-                        auto cs_right = address_[1];
-                        return cs_left - cs_right;
-                    }()));
-                }) <= 2) {
+                PLS_API(kl_lang::JMath::AbsInt(([&]() -> pls::cs::Int32 {
+                    auto cs_left = require(passer)->address_[0];
+                    auto cs_right = address_[0];
+                    return cs_left - cs_right;
+                }()))) <= 2 &&
+                PLS_API(kl_lang::JMath::AbsInt(([&]() -> pls::cs::Int32 {
+                    auto cs_left = require(passer)->address_[1];
+                    auto cs_right = address_[1];
+                    return cs_left - cs_right;
+                }()))) <= 2) {
                 pls::cs::Single num = (-900.0f + 1800.0f * pls::cs::Single(team_id_));
-                pls::cs::Single x = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::Sqrt(require(require(passer)->pos_)->x_ *
-                                                    require(require(passer)->pos_)->x_ +
-                                                (require(require(passer)->pos_)->z_ - num) *
-                                                    (require(require(passer)->pos_)->z_ - num));
-                }));
+                pls::cs::Single x = pls::cs::Single(PLS_API(kl_lang::JMath::Sqrt(
+                    require(require(passer)->pos_)->x_ * require(require(passer)->pos_)->x_ +
+                    (require(require(passer)->pos_)->z_ - num) *
+                        (require(require(passer)->pos_)->z_ - num))));
                 pls::cs::Single num2 = GameUtil::RateConvertFloat(x, 200.0f, 600.0f, 240.0f, 128.0f, true);
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_lang::JMath::Sqrt(
-                            (require(require(passer)->pos_)->x_ - require(pos_)->x_) *
-                                (require(require(passer)->pos_)->x_ - require(pos_)->x_) +
-                            (require(require(passer)->pos_)->z_ - require(pos_)->z_) *
-                                (require(require(passer)->pos_)->z_ - require(pos_)->z_));
-                    }) < pls::cs::Double(num2)) {
+                if (PLS_API(
+                        kl_lang::JMath::Sqrt((require(require(passer)->pos_)->x_ - require(pos_)->x_) *
+                                                 (require(require(passer)->pos_)->x_ - require(pos_)->x_) +
+                                             (require(require(passer)->pos_)->z_ - require(pos_)->z_) *
+                                                 (require(require(passer)->pos_)->z_ - require(pos_)->z_))) <
+                    pls::cs::Double(num2)) {
                     result = 2;
                 }
             }
@@ -1122,10 +1087,7 @@ bool Player::ChMoveDirect(pls::cs::Int32 ch_direct, pls::cs::Int32 act_id) {
         pls::cs::Int32 num2;
         pls::cs::Int32 num3;
         IntArray array = IntArray{};
-        if ((((pls::diagnostic::api_call(
-                  [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 4); })) ||
-              (role_ == 0)) ||
-             (act_id == 1)) ||
+        if ((((PLS_API(kl_unity_util::BitUtil::Check(flag_, 4))) || (role_ == 0)) || (act_id == 1)) ||
             (act_id == 2)) {
             array = direct_dis_passer;
         } else {
@@ -1138,19 +1100,11 @@ bool Player::ChMoveDirect(pls::cs::Int32 ch_direct, pls::cs::Int32 act_id) {
             }
             if (ch_direct != moveDirectBox[i]) {
                 if (ch_direct > moveDirectBox[i]) {
-                    num2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_lang::JMath::AbsInt(ch_direct - moveDirectBox[i]);
-                    });
-                    num3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_lang::JMath::AbsInt(ch_direct - (moveDirectBox[i] + 8));
-                    });
+                    num2 = PLS_API(kl_lang::JMath::AbsInt(ch_direct - moveDirectBox[i]));
+                    num3 = PLS_API(kl_lang::JMath::AbsInt(ch_direct - (moveDirectBox[i] + 8)));
                 } else {
-                    num2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_lang::JMath::AbsInt(moveDirectBox[i] - ch_direct);
-                    });
-                    num3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_lang::JMath::AbsInt(moveDirectBox[i] - (ch_direct + 8));
-                    });
+                    num2 = PLS_API(kl_lang::JMath::AbsInt(moveDirectBox[i] - ch_direct));
+                    num3 = PLS_API(kl_lang::JMath::AbsInt(moveDirectBox[i] - (ch_direct + 8)));
                 }
                 if (num2 > num3) {
                     num2 = num3;
@@ -1184,23 +1138,17 @@ void Player::Move(pls::cs::Ref<kl_util3d::Vector3D> go_pos, pls::cs::Int32 act_i
     {
         Camera::ensure_initialized();
 
-        pls::cs::Single num = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt(
-                (require(go_pos)->x_ - require(pos_)->x_) * (require(go_pos)->x_ - require(pos_)->x_) +
-                (require(go_pos)->z_ - require(pos_)->z_) * (require(go_pos)->z_ - require(pos_)->z_));
-        }));
+        pls::cs::Single num = pls::cs::Single(PLS_API(kl_lang::JMath::Sqrt(
+            (require(go_pos)->x_ - require(pos_)->x_) * (require(go_pos)->x_ - require(pos_)->x_) +
+            (require(go_pos)->z_ - require(pos_)->z_) * (require(go_pos)->z_ - require(pos_)->z_))));
         if (num == 0.0f) {
             return;
         }
-        pls::cs::Single num2 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt((require(go_pos)->x_ - require(pos_)->x_) *
-                                        (require(go_pos)->x_ - require(pos_)->x_));
-        }));
-        pls::cs::Single num3 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt(
-                (require(go_pos)->x_ - require(pos_)->x_) * (require(go_pos)->x_ - require(pos_)->x_) +
-                (require(go_pos)->z_ - require(pos_)->z_) * (require(go_pos)->z_ - require(pos_)->z_));
-        }));
+        pls::cs::Single num2 = pls::cs::Single(PLS_API(kl_lang::JMath::Sqrt(
+            (require(go_pos)->x_ - require(pos_)->x_) * (require(go_pos)->x_ - require(pos_)->x_))));
+        pls::cs::Single num3 = pls::cs::Single(PLS_API(kl_lang::JMath::Sqrt(
+            (require(go_pos)->x_ - require(pos_)->x_) * (require(go_pos)->x_ - require(pos_)->x_) +
+            (require(go_pos)->z_ - require(pos_)->z_) * (require(go_pos)->z_ - require(pos_)->z_))));
         pls::cs::Single num4 =
             (require(go_pos)->x_ - require(pos_)->x_) * (require(go_pos)->x_ - require(pos_)->x_);
         pls::cs::Single num5 = num4 / (num2 * num3);
@@ -1244,7 +1192,7 @@ void Player::Move(pls::cs::Ref<kl_util3d::Vector3D> go_pos, pls::cs::Int32 act_i
         if (act_id == -1 && speed_eva == 50) {
             value *= 0.5f;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(old_pos)->Set(pos_); });
+        PLS_API(require(old_pos)->Set(pos_));
         require(v_)->x_ = (require(go_pos)->x_ - require(pos_)->x_) * value / num;
         require(v_)->z_ = (require(go_pos)->z_ - require(pos_)->z_) * value / num;
         require(pos_)->x_ = require(pos_)->x_ + require(v_)->x_;
@@ -1306,12 +1254,11 @@ void Player::Act_freeRun() {
             require(require(Player::udat_())->teams_.get_Item(team_id_))->GetPasser();
         if (require(require(Player::udat_())->teams_.get_Item(team_id_))->ChWhichChargeTern() &&
             !is_null(passer)) {
-            pls::cs::Single x = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JMath::Sqrt((require(pos_)->x_ - require(require(passer)->pos_)->x_) *
-                                                (require(pos_)->x_ - require(require(passer)->pos_)->x_) +
-                                            (require(pos_)->z_ - require(require(passer)->pos_)->z_) *
-                                                (require(pos_)->z_ - require(require(passer)->pos_)->z_));
-            }));
+            pls::cs::Single x = pls::cs::Single(
+                PLS_API(kl_lang::JMath::Sqrt((require(pos_)->x_ - require(require(passer)->pos_)->x_) *
+                                                 (require(pos_)->x_ - require(require(passer)->pos_)->x_) +
+                                             (require(pos_)->z_ - require(require(passer)->pos_)->z_) *
+                                                 (require(pos_)->z_ - require(require(passer)->pos_)->z_))));
             Player::w_freeRun_afrMostEvaPos() =
                 GameUtil::RateConvertFloat(x, 160.0f, 80.0f, 0.6f, 0.9f, true);
             Player::w_freeRun_formation() = 1.0f - Player::w_freeRun_afrMostEvaPos();
@@ -1389,10 +1336,8 @@ void Player::Act_freeRun() {
                  }())) /
                  (Player::w_freeRun_formation() + Player::w_freeRun_afrMostEvaPos())));
         } else if (kl_cfg::Config::DEBUG_CMD()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::Log::Info(literal(u"■Player.java act_freeRun() エラー"),
-                                                pls::cs::Ref<pls::cs::ExceptionObject>{});
-            });
+            PLS_API(kl_unity_util::Log::Info(literal(u"■Player.java act_freeRun() エラー"),
+                                             pls::cs::Ref<pls::cs::ExceptionObject>{}));
         }
         Move(goalPos_, 0, speed_eva, false);
     }
@@ -1405,7 +1350,7 @@ void Player::Act_receive() {
         if (ChHeading()) {
             Proc_head();
             pls::cs::Single headJampDis = data::PlayerData::GetHeadJampDis(this);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(seb_startPos)->Set(pos_); });
+            PLS_API(require(seb_startPos)->Set(pos_));
             {
                 auto cs_target = seb_v;
                 pls::cs::Single cs_value = GameUtil::SetVStop(headJampDis, Player::SEB_H_HEAD_JAMPTIME() / 2);
@@ -1414,27 +1359,15 @@ void Player::Act_receive() {
             seb_ay = GameUtil::SetAStop(headJampDis, Player::SEB_H_HEAD_JAMPTIME() / 2);
             return;
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::Check(require(require(Player::udat_())->ball_)->flag_, 16);
-            })) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(goalPos_)->Set(require(require(Player::udat_())->ball_)->fallPos_);
-            });
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(require(Player::udat_())->ball_)->flag_, 16);
-                }) &&
+        if (PLS_API(kl_unity_util::BitUtil::Check(require(require(Player::udat_())->ball_)->flag_, 16))) {
+            PLS_API(require(goalPos_)->Set(require(require(Player::udat_())->ball_)->fallPos_));
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(require(Player::udat_())->ball_)->flag_, 16)) &&
                 require(require(Player::udat_())->ball_)->boundNum_ == 0) {
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::BitUtil::Check(require(require(Player::udat_())->ball_)->flag_,
-                                                             64);
-                    })) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(goalPos_)->Set(require(require(Player::udat_())->ball_)->receiverPos_);
-                    });
+                if (PLS_API(
+                        kl_unity_util::BitUtil::Check(require(require(Player::udat_())->ball_)->flag_, 64))) {
+                    PLS_API(require(goalPos_)->Set(require(require(Player::udat_())->ball_)->receiverPos_));
                 } else if (require(require(Player::udat_())->ball_)->boundNum_ > 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(goalPos_)->Set(require(require(Player::udat_())->ball_)->pos_);
-                    });
+                    PLS_API(require(goalPos_)->Set(require(require(Player::udat_())->ball_)->pos_));
                 } else if (require(require(require(Player::udat_())->ball_)->a_)->y_ == -0.25f) {
                     if ([&]() -> bool {
                             auto cs_left = require(require(Player::udat_())->ball_)->fallTime_ -
@@ -1442,19 +1375,13 @@ void Player::Act_receive() {
                             auto cs_right = Player::SEB_H_HEAD_ANIME()[1] / 2;
                             return cs_left < cs_right;
                         }()) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(goalPos_)->Set(require(require(Player::udat_())->ball_)->pos_);
-                        });
+                        PLS_API(require(goalPos_)->Set(require(require(Player::udat_())->ball_)->pos_));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(goalPos_)->Set(
-                                require(require(Player::udat_())->ball_)->receiverPos_);
-                        });
+                        PLS_API(
+                            require(goalPos_)->Set(require(require(Player::udat_())->ball_)->receiverPos_));
                     }
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(goalPos_)->Set(require(require(Player::udat_())->ball_)->fallPos_);
-                    });
+                    PLS_API(require(goalPos_)->Set(require(require(Player::udat_())->ball_)->fallPos_));
                 }
             }
             if (require(goalPos_)->x_ < -450.0f) {
@@ -1509,12 +1436,8 @@ void Player::Act_receive() {
         }
         {
             pls::cs::Ref<Ball> ball_ = require(Player::udat_())->ball_;
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::cs::Single(kl_lang::JMath::Abs(require(require(ball_)->v_)->x_));
-                }) < 0.01f ||
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::cs::Single(kl_lang::JMath::Abs(require(require(ball_)->v_)->z_));
-                }) < 0.01f) {
+            if (PLS_API(pls::cs::Single(kl_lang::JMath::Abs(require(require(ball_)->v_)->x_))) < 0.01f ||
+                PLS_API(pls::cs::Single(kl_lang::JMath::Abs(require(require(ball_)->v_)->z_))) < 0.01f) {
                 Move(require(ball_)->pos_, 1);
             } else {
                 pls::cs::Single num = require(require(ball_)->v_)->z_ * require(require(ball_)->pos_)->x_ /
@@ -1557,20 +1480,19 @@ void Player::Act_charge() {
 
         pls::cs::Ref<Player> passer =
             require(require(Player::udat_())->teams_.get_Item(1 - team_id_))->GetPasser();
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(old_pos)->Set(pos_); });
+        PLS_API(require(old_pos)->Set(pos_));
         if (is_null(passer)) {
             return;
         }
         if (ChSlidingTackleEva(passer)) {
             GameUtil::Sub(require(passer)->pos_, pos_, temp_vec);
-            pls::cs::Single num = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JMath::Sqrt(require(temp_vec)->x_ * require(temp_vec)->x_ +
-                                            require(temp_vec)->z_ * require(temp_vec)->z_);
-            }));
+            pls::cs::Single num =
+                pls::cs::Single(PLS_API(kl_lang::JMath::Sqrt(require(temp_vec)->x_ * require(temp_vec)->x_ +
+                                                             require(temp_vec)->z_ * require(temp_vec)->z_)));
             if (num < 0.1f) {
                 return;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(seb_startPos)->Set(pos_); });
+            PLS_API(require(seb_startPos)->Set(pos_));
             require(seb_v)->x_ = data::PlayerData::SLIDING_SPEED() * require(temp_vec)->x_ / num;
             require(seb_v)->z_ = data::PlayerData::SLIDING_SPEED() * require(temp_vec)->z_ / num;
             Proc_sliding(passer);
@@ -1612,12 +1534,11 @@ pls::cs::Int32 Player::GetToThrowInPID() {
                 require(require(Player::udat_())->teams_.get_Item(team_id_))->players_.get_Item(i);
             pls::cs::Int32 num2 = require(player)->eva_receivePos_;
             pls::cs::Int32 num3 = num2;
-            pls::cs::Single num4 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JMath::Sqrt((require(require(player)->pos_)->x_ - require(pos_)->x_) *
-                                                (require(require(player)->pos_)->x_ - require(pos_)->x_) +
-                                            (require(require(player)->pos_)->z_ - require(pos_)->z_) *
-                                                (require(require(player)->pos_)->z_ - require(pos_)->z_));
-            }));
+            pls::cs::Single num4 = pls::cs::Single(
+                PLS_API(kl_lang::JMath::Sqrt((require(require(player)->pos_)->x_ - require(pos_)->x_) *
+                                                 (require(require(player)->pos_)->x_ - require(pos_)->x_) +
+                                             (require(require(player)->pos_)->z_ - require(pos_)->z_) *
+                                                 (require(require(player)->pos_)->z_ - require(pos_)->z_))));
             if (num4 > 500.0f) {
                 Player::eva_pass()[i][0] = 0.0f;
                 continue;
@@ -1673,13 +1594,11 @@ pls::cs::Int32 Player::GetToThrowInPID() {
                 }
                 pls::cs::Ref<Player> player3 =
                     require(require(Player::udat_())->teams_.get_Item(team_id_))->players_.get_Item(l);
-                pls::cs::Single num7 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::Sqrt(
-                        (require(require(player3)->pos_)->x_ - require(pos_)->x_) *
-                            (require(require(player3)->pos_)->x_ - require(pos_)->x_) +
-                        (require(require(player3)->pos_)->z_ - require(pos_)->z_) *
-                            (require(require(player3)->pos_)->z_ - require(pos_)->z_));
-                }));
+                pls::cs::Single num7 = pls::cs::Single(PLS_API(
+                    kl_lang::JMath::Sqrt((require(require(player3)->pos_)->x_ - require(pos_)->x_) *
+                                             (require(require(player3)->pos_)->x_ - require(pos_)->x_) +
+                                         (require(require(player3)->pos_)->z_ - require(pos_)->z_) *
+                                             (require(require(player3)->pos_)->z_ - require(pos_)->z_))));
                 if (num5 < num7) {
                     num5 = num7;
                     num6 = l;
@@ -1712,8 +1631,7 @@ bool Player::ChBodyHitBody(pls::cs::Ref<Player> charge_p, pls::cs::Ref<Player> r
     {
         data::PlayerData::ensure_initialized();
 
-        bool flag = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(require(charge_p)->flag_, 16); });
+        bool flag = PLS_API(kl_unity_util::BitUtil::Check(require(charge_p)->flag_, 16));
         pls::cs::Single value = data::PlayerData::CHARGE_RATE_BODY();
         value = data::PlayerData::AuraUpdate(charge_p, value, 4);
         value = data::PlayerData::AuraUpdate(receive_p, value, 6);
@@ -1730,9 +1648,8 @@ bool Player::ChBodyHitBody(pls::cs::Ref<Player> charge_p, pls::cs::Ref<Player> r
             if (flag) {
                 {
                     auto cs_target = charge_p;
-                    pls::cs::Int32 cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::BitUtil::Off(require(charge_p)->flag_, 32);
-                    });
+                    pls::cs::Int32 cs_value =
+                        PLS_API(kl_unity_util::BitUtil::Off(require(charge_p)->flag_, 32));
                     require(cs_target)->flag_ = cs_value;
                 }
             }
@@ -1746,10 +1663,8 @@ bool Player::ChBodyHitBody(pls::cs::Ref<Player> charge_p, pls::cs::Ref<Player> r
 bool Player::ChTrapOrHeading() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.ChTrapOrHeading", game);
     {
-        bool flag = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 64); });
-        if (flag && !pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 128); })) {
+        bool flag = PLS_API(kl_unity_util::BitUtil::Check(flag_, 64));
+        if (flag && !PLS_API(kl_unity_util::BitUtil::Check(flag_, 128))) {
             return false;
         }
         pls::cs::Single num = 20.0f;
@@ -1872,8 +1787,7 @@ void Player::Update_moveArea() {
 bool Player::Script() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.Script", game);
     {
-        while (pls::diagnostic::api_call(
-                   [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(script_)); }) > 0) {
+        while (PLS_API(kl_java_util::Vector_2_Size(require(script_))) > 0) {
             insertScriptIndex_ = 1;
             {
                 auto cs_flow_103 = pls::cs::run_finally(
@@ -1883,68 +1797,47 @@ bool Player::Script() {
                             pls::cs::Int32 recoveredScriptCommand = firstScript[0];
                             if ((recoveredScriptCommand == 1)) {
                                 if (firstScript[2] == 1) {
-                                    flag_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::BitUtil::On(flag_, 1);
-                                    });
+                                    flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 1));
                                 }
                                 firstScript[1]--;
                                 if (firstScript[1] <= 0) {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                    });
+                                    PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                     return pls::cs::flow_continue(62394);
                                 }
                             } else if ((recoveredScriptCommand == 2)) {
                                 ChangeState(firstScript[1]);
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                });
+                                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                 return pls::cs::flow_continue(62394);
                             } else if ((recoveredScriptCommand == 3)) {
                                 seb_ = firstScript[1];
                                 sebCnt_ = 0;
                                 frame_ = 0;
-                                flag_ = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 2); });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                });
+                                flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 2));
+                                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                 return pls::cs::flow_continue(62394);
                             } else if ((recoveredScriptCommand == 4)) {
                                 direct_ = firstScript[1];
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                });
+                                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                 return pls::cs::flow_continue(62394);
                             } else if ((recoveredScriptCommand == 5)) {
                                 flag_ = firstScript[1];
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                });
+                                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                 return pls::cs::flow_continue(62394);
                             } else if ((recoveredScriptCommand == 6)) {
-                                flag_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> pls::cs::Int32 {
-                                        pls::cs::Int32 cs_arg0 = flag_;
-                                        pls::cs::Int32 cs_arg1 = firstScript[1];
-                                        return kl_unity_util::BitUtil::On(cs_arg0, cs_arg1);
-                                    }());
-                                });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                });
+                                flag_ = PLS_API(([&]() -> pls::cs::Int32 {
+                                    pls::cs::Int32 cs_arg0 = flag_;
+                                    pls::cs::Int32 cs_arg1 = firstScript[1];
+                                    return kl_unity_util::BitUtil::On(cs_arg0, cs_arg1);
+                                }()));
+                                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                 return pls::cs::flow_continue(62394);
                             } else if ((recoveredScriptCommand == 7)) {
-                                flag_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> pls::cs::Int32 {
-                                        pls::cs::Int32 cs_arg0 = flag_;
-                                        pls::cs::Int32 cs_arg1 = firstScript[1];
-                                        return kl_unity_util::BitUtil::Off(cs_arg0, cs_arg1);
-                                    }());
-                                });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                });
+                                flag_ = PLS_API(([&]() -> pls::cs::Int32 {
+                                    pls::cs::Int32 cs_arg0 = flag_;
+                                    pls::cs::Int32 cs_arg1 = firstScript[1];
+                                    return kl_unity_util::BitUtil::Off(cs_arg0, cs_arg1);
+                                }()));
+                                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                 return pls::cs::flow_continue(62394);
                             } else if ((recoveredScriptCommand == 9)) {
                                 if ([&]() -> bool {
@@ -2023,12 +1916,8 @@ bool Player::Script() {
                                             [pls::cs::Int32(Player::SEB_H_SAVING_ANIME().length()) - 1];
                                         return cs_left >= cs_right;
                                     }()) {
-                                    flag_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::BitUtil::Off(flag_, 8);
-                                    });
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                    });
+                                    flag_ = PLS_API(kl_unity_util::BitUtil::Off(flag_, 8));
+                                    PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                     return pls::cs::flow_continue(62394);
                                 }
                             } else if ((recoveredScriptCommand == 10)) {
@@ -2046,12 +1935,8 @@ bool Player::Script() {
                                             [pls::cs::Int32(Player::SEB_H_SLIDING_ANIME().length()) - 1];
                                         return cs_left >= cs_right;
                                     }()) {
-                                    flag_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::BitUtil::Off(flag_, 48);
-                                    });
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                    });
+                                    flag_ = PLS_API(kl_unity_util::BitUtil::Off(flag_, 48));
+                                    PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                     return pls::cs::flow_continue(62394);
                                 }
                             } else if ((recoveredScriptCommand == 11)) {
@@ -2064,26 +1949,18 @@ bool Player::Script() {
                                             [pls::cs::Int32(Player::SEB_H_HEAD_ANIME().length()) - 1];
                                         return cs_left >= cs_right;
                                     }()) {
-                                    flag_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::BitUtil::Off(flag_, 64);
-                                    });
+                                    flag_ = PLS_API(kl_unity_util::BitUtil::Off(flag_, 64));
                                     if (require(pos_)->y_ < 0.0f) {
                                         require(pos_)->y_ = 0.0f;
                                     }
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                    });
+                                    PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                     return pls::cs::flow_continue(62394);
                                 }
                             } else if ((recoveredScriptCommand == 12)) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                });
+                                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                 return pls::cs::flow_continue(62394);
                             } else if ((recoveredScriptCommand == 13)) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                });
+                                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                 return pls::cs::flow_continue(62394);
                             } else if ((recoveredScriptCommand == 14)) {
                                 {
@@ -2102,9 +1979,7 @@ bool Player::Script() {
                                     }
                                 }
                             } else if ((recoveredScriptCommand == 15)) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_RemoveElementAt(require(script_), 0);
-                                });
+                                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(script_), 0));
                                 return pls::cs::flow_continue(62394);
                             }
                             return pls::cs::flow_break(62394);
@@ -2126,12 +2001,10 @@ bool Player::Script() {
 IntArray Player::GetFirstScript() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.GetFirstScript", game);
     {
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(script_)); }) == 0) {
+        if (PLS_API(kl_java_util::Vector_2_Size(require(script_))) == 0) {
             return IntArray{};
         }
-        return pls::cs::unbox<IntArray>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::Vector_2_FirstElement(require(script_)); }));
+        return pls::cs::unbox<IntArray>(PLS_API(kl_java_util::Vector_2_FirstElement(require(script_))));
     }
 }
 
@@ -2139,8 +2012,7 @@ IntArray Player::GetFirstScript() {
 void Player::ClearScript() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.ClearScript", game);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::Vector_2_RemoveAllElements(require(script_)); });
+        PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(script_)));
         if (insertScriptIndex_ != -1) {
             insertScriptIndex_ = 0;
         }
@@ -2289,9 +2161,7 @@ void Player::AddCommandGoalSad() {
 void Player::AddCommand(IntArray script) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.AddCommand(System.Int32[])", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_AddElement(require(script_), pls::cs::box(script));
-        });
+        PLS_API(kl_java_util::Vector_2_AddElement(require(script_), pls::cs::box(script)));
     }
 }
 
@@ -2358,8 +2228,7 @@ pls::cs::Int32 Player::SetDrawParam(pls::cs::Int32 head_id, pls::cs::Int32 body_
         pls::cs::Int32 num9 = head_id;
         pls::cs::Int32 num10 = 0;
         pls::cs::Int32 num11 = sebCnt_;
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 2); })) {
+        if (!PLS_API(kl_unity_util::BitUtil::Check(flag_, 2))) {
             num11 = 0;
         }
         bool flag2 = true;
@@ -2379,8 +2248,7 @@ pls::cs::Int32 Player::SetDrawParam(pls::cs::Int32 head_id, pls::cs::Int32 body_
             num10 = direct_;
             num6 = num + Player::head_off()[seb][direct_][num5][0];
             num7 = num2 + Player::head_off()[seb][direct_][num5][1];
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 256); })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 256))) {
                 num3 = 36 + direct_;
                 num5 = 0;
                 num = Player::body_off()[4][0];
@@ -2855,27 +2723,22 @@ void Player::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 x, pls::c
               pData_id_ == require(require(require(Player::apdat_())->camera)->subPlayer_)->pData_id_) &&
              obj_type_ == 1) ||
             ((!is_null(require(require(Player::apdat_())->camera)->subSvisor_) && obj_type_ == 2))) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                        require(require(Player::apdat_())->resCom2_)->img.get_Item(139);
-                    pls::cs::Single cs_arg1 = x + draw_param[5] - 5;
-                    pls::cs::Single cs_arg2 = y + draw_param[6] - 28;
-                    require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                        require(require(Player::apdat_())->resCom2_)->img.get_Item(138);
-                    pls::cs::Single cs_arg1 = x + draw_param[5] - 8;
-                    pls::cs::Single cs_arg2 = y + draw_param[6] - 4;
-                    require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                    require(require(Player::apdat_())->resCom2_)->img.get_Item(139);
+                pls::cs::Single cs_arg1 = x + draw_param[5] - 5;
+                pls::cs::Single cs_arg2 = y + draw_param[6] - 28;
+                require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2);
+            }()));
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                    require(require(Player::apdat_())->resCom2_)->img.get_Item(138);
+                pls::cs::Single cs_arg1 = x + draw_param[5] - 8;
+                pls::cs::Single cs_arg2 = y + draw_param[6] - 4;
+                require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2);
+            }()));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 262144); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 262144))) {
             pls::cs::Int32 frame = frame_ % 12 / 3;
             {
                 auto cs_receiver = Player::apdat_();
@@ -2935,10 +2798,7 @@ void Player::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 x, pls::c
                 require(cs_receiver)->DrawSeb(g, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
             }
         }
-        if (isSoccerForm &&
-            (pls::diagnostic::api_call(
-                 [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 4); }) ||
-             actId_ == 1) &&
+        if (isSoccerForm && (PLS_API(kl_unity_util::BitUtil::Check(flag_, 4)) || actId_ == 1) &&
             require(require(Player::udat_())->gm_)->state_ == 0) {
             pls::cs::Int32 physicalHpMax = data::PlayerData::GetPhysicalHpMax(this);
             if (physical_hp_ < physicalHpMax) {
@@ -2946,73 +2806,48 @@ void Player::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 x, pls::c
                 pls::cs::Int32 num2 = GameUtil::RateConvert(physicalHpMax, data::PlayerData::PHYSICALHP_MIN(),
                                                             data::PlayerData::PHYSICALHP_MAX(), 8, 26, true);
                 pls::cs::Int32 num3 = 4;
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(41, 14, 0); }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = x + draw_param[5] - num2 / 2;
-                        pls::cs::Single cs_arg1 = y + draw_param[6] + num;
-                        require(g)->DrawRect(cs_arg0, cs_arg1, num2 - 1, num3 - 1);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(117, 21, 0); }));
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = x + draw_param[5] - num2 / 2 + 1;
-                        pls::cs::Single cs_arg1 = y + draw_param[6] + num + 1;
-                        require(g)->FillRect(cs_arg0, cs_arg1, num2 - 2, num3 - 2);
-                    }());
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(41, 14, 0))));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = x + draw_param[5] - num2 / 2;
+                    pls::cs::Single cs_arg1 = y + draw_param[6] + num;
+                    require(g)->DrawRect(cs_arg0, cs_arg1, num2 - 1, num3 - 1);
+                }()));
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(117, 21, 0))));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = x + draw_param[5] - num2 / 2 + 1;
+                    pls::cs::Single cs_arg1 = y + draw_param[6] + num + 1;
+                    require(g)->FillRect(cs_arg0, cs_arg1, num2 - 2, num3 - 2);
+                }()));
                 pls::cs::Int32 num4 =
                     GameUtil::RateConvert(physical_hp_, physicalHpMax, 0, num2 - 2, 0, true);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(
-                                255, GameUtil::RateConvert(physical_hp_, physicalHpMax, 0, 255, 0, true), 0);
-                        });
-                        require(g)->SetColor(cs_arg0);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = x + draw_param[5] - num2 / 2 + 1;
-                        pls::cs::Single cs_arg1 = y + draw_param[6] + num + 1;
-                        require(g)->FillRect(cs_arg0, cs_arg1, num4, num3 - 2);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Int32 cs_arg0 = PLS_API(pls::kairo::Graphics::GetColorOfRGB(
+                        255, GameUtil::RateConvert(physical_hp_, physicalHpMax, 0, 255, 0, true), 0));
+                    require(g)->SetColor(cs_arg0);
+                }()));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = x + draw_param[5] - num2 / 2 + 1;
+                    pls::cs::Single cs_arg1 = y + draw_param[6] + num + 1;
+                    require(g)->FillRect(cs_arg0, cs_arg1, num4, num3 - 2);
+                }()));
             }
         }
         if (isSoccerForm && form::SoccerForm::SHOW_DEBUGDRAW2() == 1) {
             if (team_id_ == 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Graphics::GetColorOfRGB(255, 255, 0);
-                    }));
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 0))));
             } else {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->SetColor(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 255); }));
-                });
+                PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 255))));
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = ([&]() {
-                        auto cs_left = pls::cs::String(u"");
-                        auto cs_right = integer_string(coliState_);
-                        return pls::cs::String::concat(cs_left, cs_right);
-                    }());
-                    pls::cs::Single cs_arg1 = x + draw_param[5];
-                    pls::cs::Single cs_arg2 = y + draw_param[6] - 40;
-                    require(g)->DrawString(cs_arg0, cs_arg1, cs_arg2);
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = ([&]() {
+                    auto cs_left = pls::cs::String(u"");
+                    auto cs_right = integer_string(coliState_);
+                    return pls::cs::String::concat(cs_left, cs_right);
                 }());
-            });
+                pls::cs::Single cs_arg1 = x + draw_param[5];
+                pls::cs::Single cs_arg2 = y + draw_param[6] - 40;
+                require(g)->DrawString(cs_arg0, cs_arg1, cs_arg2);
+            }()));
         }
     }
 }
@@ -3023,8 +2858,7 @@ void Player::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 index) {
     {
         form::SoccerForm::ensure_initialized();
 
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 1); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 1))) {
             return;
         }
         Camera::ConvertGlobalToCamera(pos_, camera_pos);
@@ -3077,8 +2911,7 @@ void Player::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 index) {
 void Player::Proc_saving() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.Proc_saving", game);
     {
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 8); });
+        flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 8));
         AddCommandChangeSeb(14);
         AddCommandSaving();
         AddCommandChangeSeb(0);
@@ -3089,8 +2922,7 @@ void Player::Proc_saving() {
 void Player::Proc_sliding(pls::cs::Ref<Player> enemy_passerPlayer) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.Proc_sliding(game.Player)", game);
     {
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 48); });
+        flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 48));
         AddCommandChangeSeb(5);
         AddCommandSliding();
         AddCommandFlagOff(48);
@@ -3103,8 +2935,7 @@ void Player::Proc_sliding(pls::cs::Ref<Player> enemy_passerPlayer) {
 void Player::Proc_head() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.Proc_head", game);
     {
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 192); });
+        flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 192));
         AddCommandChangeSeb(2);
         AddCommandHead();
         AddCommandChangeSeb(0);
@@ -3116,8 +2947,7 @@ void Player::Proc_head() {
 void Player::Proc_down() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.Proc_down", game);
     {
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 16384); });
+        flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 16384));
         AddCommandChangeSeb(12);
         pls::cs::Int32 num = Player::SEB_H_DOWN_ANIME() + 1;
         num = pls::cs::to_int32(data::PlayerData::AuraUpdate(this, num, 9));
@@ -3172,17 +3002,14 @@ pls::cs::Int32 Player::GetShootEva() {
         pls::cs::Single num = 0.0f;
         if (team_id_ == 0) {
             array = Map::GOAL2_GLOBAL_POS();
-            num = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JMath::Sqrt((0.0f - require(pos_)->x_) * (0.0f - require(pos_)->x_) +
-                                            (900.0f - require(pos_)->z_) * (900.0f - require(pos_)->z_));
-            }));
+            num = pls::cs::Single(
+                PLS_API(kl_lang::JMath::Sqrt((0.0f - require(pos_)->x_) * (0.0f - require(pos_)->x_) +
+                                             (900.0f - require(pos_)->z_) * (900.0f - require(pos_)->z_))));
         } else {
             array = Map::GOAL1_GLOBAL_POS();
-            num = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JMath::Sqrt((0.0f - require(pos_)->x_) * (0.0f - require(pos_)->x_) +
-                                            ((-900.0f - require(pos_)->z_)) *
-                                                ((-900.0f - require(pos_)->z_)));
-            }));
+            num = pls::cs::Single(PLS_API(
+                kl_lang::JMath::Sqrt((0.0f - require(pos_)->x_) * (0.0f - require(pos_)->x_) +
+                                     ((-900.0f - require(pos_)->z_)) * ((-900.0f - require(pos_)->z_)))));
         }
         if (num > 600.0f) {
             return 0;
@@ -3199,14 +3026,12 @@ pls::cs::Int32 Player::GetShootEva() {
             pls::cs::Ref<kl_util3d::Vector3D> cs_arg1 = pos_;
             GameUtil::Sub(cs_arg0, cs_arg1, Player::vec2());
         }
-        pls::cs::Single num3 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt(require(Player::vec1())->x_ * require(Player::vec1())->x_ +
-                                        require(Player::vec1())->z_ * require(Player::vec1())->z_);
-        }));
-        pls::cs::Single num4 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt(require(Player::vec2())->x_ * require(Player::vec2())->x_ +
-                                        require(Player::vec2())->z_ * require(Player::vec2())->z_);
-        }));
+        pls::cs::Single num3 = pls::cs::Single(
+            PLS_API(kl_lang::JMath::Sqrt(require(Player::vec1())->x_ * require(Player::vec1())->x_ +
+                                         require(Player::vec1())->z_ * require(Player::vec1())->z_)));
+        pls::cs::Single num4 = pls::cs::Single(
+            PLS_API(kl_lang::JMath::Sqrt(require(Player::vec2())->x_ * require(Player::vec2())->x_ +
+                                         require(Player::vec2())->z_ * require(Player::vec2())->z_)));
         pls::cs::Single num5 = 0.0f;
         if (num3 * num4 == 0.0f) {
             num5 = 0.0f;
@@ -3240,12 +3065,11 @@ bool Player::ChSlidingTackleEva(pls::cs::Ref<Player> target_player) {
         if (GameUtil::Random(1000) < slidingRate) {
             return false;
         }
-        pls::cs::Single num = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt((require(require(target_player)->pos_)->x_ - require(pos_)->x_) *
-                                            (require(require(target_player)->pos_)->x_ - require(pos_)->x_) +
-                                        (require(require(target_player)->pos_)->z_ - require(pos_)->z_) *
-                                            (require(require(target_player)->pos_)->z_ - require(pos_)->z_));
-        }));
+        pls::cs::Single num = pls::cs::Single(PLS_API(
+            kl_lang::JMath::Sqrt((require(require(target_player)->pos_)->x_ - require(pos_)->x_) *
+                                     (require(require(target_player)->pos_)->x_ - require(pos_)->x_) +
+                                 (require(require(target_player)->pos_)->z_ - require(pos_)->z_) *
+                                     (require(require(target_player)->pos_)->z_ - require(pos_)->z_))));
         pls::cs::Int32 num4;
         pls::cs::Int32 num5;
         pls::cs::Int32 num8;
@@ -3257,14 +3081,12 @@ bool Player::ChSlidingTackleEva(pls::cs::Ref<Player> target_player) {
         Player::st_a_vec() = Map::DIRECT_VEC().get_Item(require(target_player)->direct_);
         require(Player::st_b_vec())->x_ = require(require(target_player)->pos_)->x_ - require(pos_)->x_;
         require(Player::st_b_vec())->z_ = require(require(target_player)->pos_)->z_ - require(pos_)->z_;
-        pls::cs::Single num2 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt(require(Player::st_a_vec())->x_ * require(Player::st_a_vec())->x_ +
-                                        require(Player::st_a_vec())->z_ * require(Player::st_a_vec())->z_);
-        }));
-        pls::cs::Single num3 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt(require(Player::st_b_vec())->x_ * require(Player::st_b_vec())->x_ +
-                                        require(Player::st_b_vec())->z_ * require(Player::st_b_vec())->z_);
-        }));
+        pls::cs::Single num2 = pls::cs::Single(
+            PLS_API(kl_lang::JMath::Sqrt(require(Player::st_a_vec())->x_ * require(Player::st_a_vec())->x_ +
+                                         require(Player::st_a_vec())->z_ * require(Player::st_a_vec())->z_)));
+        pls::cs::Single num3 = pls::cs::Single(
+            PLS_API(kl_lang::JMath::Sqrt(require(Player::st_b_vec())->x_ * require(Player::st_b_vec())->x_ +
+                                         require(Player::st_b_vec())->z_ * require(Player::st_b_vec())->z_)));
         if (num2 * num3 == 0.0f) {
             return false;
         }
@@ -3295,9 +3117,7 @@ bool Player::ChHeading() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Player.ChHeading", game);
     {
         pls::cs::Ref<Ball> ball_ = require(Player::udat_())->ball_;
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::Check(require(ball_)->flag_, 16);
-            }) &&
+        if (PLS_API(kl_unity_util::BitUtil::Check(require(ball_)->flag_, 16)) &&
             require(require(Player::udat_())->gm_)->gameState_ != 2) {
             return false;
         }
@@ -3305,20 +3125,16 @@ bool Player::ChHeading() {
             return false;
         }
         if (([&]() -> pls::cs::Int32 {
-                auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::AbsInt(([&]() -> pls::cs::Int32 {
-                        auto cs_left = require(ball_)->address_[0];
-                        auto cs_right = address_[0];
-                        return cs_left - cs_right;
-                    }()));
-                });
-                auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::AbsInt(([&]() -> pls::cs::Int32 {
-                        auto cs_left = require(ball_)->address_[1];
-                        auto cs_right = address_[1];
-                        return cs_left - cs_right;
-                    }()));
-                });
+                auto cs_left = PLS_API(kl_lang::JMath::AbsInt(([&]() -> pls::cs::Int32 {
+                    auto cs_left = require(ball_)->address_[0];
+                    auto cs_right = address_[0];
+                    return cs_left - cs_right;
+                }())));
+                auto cs_right = PLS_API(kl_lang::JMath::AbsInt(([&]() -> pls::cs::Int32 {
+                    auto cs_left = require(ball_)->address_[1];
+                    auto cs_right = address_[1];
+                    return cs_left - cs_right;
+                }())));
                 return cs_left + cs_right;
             }()) > 6) {
             return false;

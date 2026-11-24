@@ -107,64 +107,34 @@ void TBall::Init_training(pls::cs::Ref<TGroupArea> tGroupArea) {
 void TBall::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.TBall.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(tId_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, frame_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(direct_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteVector3D(os, pos_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteVector3D(os, shadowPos_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteVector3D(os, v_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteVector3D(os, a_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, screen_pos_[0]); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, screen_pos_[1]); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(os, screen_shadowPos_[0]);
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(os, screen_shadowPos_[1]);
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, camera_pos_[0]); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, camera_pos_[1]); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteFloat(os, v_len_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, flag_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, stateCnt_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(tId_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, frame_));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(direct_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, pos_));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, shadowPos_));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, v_));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, a_));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, screen_pos_[0]));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, screen_pos_[1]));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, screen_shadowPos_[0]));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, screen_shadowPos_[1]));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, camera_pos_[0]));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, camera_pos_[1]));
+        PLS_API(kl_unity_util::StreamUtil::WriteFloat(os, v_len_));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, flag_));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, stateCnt_));
         if (is_null(t_owner_)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(-1));
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(-1)));
         } else {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(
-                    os, pls::cs::cast_integral<std::int16_t>(require(t_owner_)->trainingId_[0]));
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                os, pls::cs::cast_integral<std::int16_t>(require(t_owner_)->trainingId_[0])));
         }
         if (is_null(t_lastOwner_)) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(-1));
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(-1)));
         } else {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(
-                    os, pls::cs::cast_integral<std::int16_t>(require(t_lastOwner_)->trainingId_[0]));
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                os, pls::cs::cast_integral<std::int16_t>(require(t_lastOwner_)->trainingId_[0])));
         }
     }
 }
@@ -173,75 +143,59 @@ void TBall::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void TBall::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.TBall.Deserialize(java.io.InputStream)", game);
     {
-        tId_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        frame_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        direct_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        pos_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-        shadowPos_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-        v_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-        a_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
+        tId_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        frame_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        direct_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        pos_ = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        shadowPos_ = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        v_ = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        a_ = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
         {
             auto cs_target = screen_pos_;
             auto cs_index = 0;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = screen_pos_;
             auto cs_index = 1;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = screen_shadowPos_;
             auto cs_index = 0;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = screen_shadowPos_;
             auto cs_index = 1;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = camera_pos_;
             auto cs_index = 0;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = camera_pos_;
             auto cs_index = 1;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+            auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
             cs_target.set_Item(cs_index, cs_value);
         }
-        v_len_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::Single(kl_unity_util::StreamUtil::ReadFloat(stream));
-        });
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        stateCnt_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        ownerId_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        lastOwnerId_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+        v_len_ = PLS_API(pls::cs::Single(kl_unity_util::StreamUtil::ReadFloat(stream)));
+        flag_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        state_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        stateCnt_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        ownerId_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        lastOwnerId_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
         t_owner_ = pls::cs::Ref<TPlayer>{};
         t_lastOwner_ = pls::cs::Ref<TPlayer>{};
     }
@@ -266,18 +220,14 @@ void TBall::Update_training() {
     {
         frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
         savePosFrame_ = ((savePosFrame_ + 1) % 2147483647 /* Int32.MaxValue */);
-        bool flag = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 64); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(old_pos)->Set(pos_); });
+        bool flag = PLS_API(kl_unity_util::BitUtil::Check(flag_, 64));
+        PLS_API(require(old_pos)->Set(pos_));
         if (!is_null(t_owner_)) {
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(t_owner_)->flag_, 131072);
-                })) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(v_)->Add(a_); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(pos_)->Add(v_); });
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(t_owner_)->flag_, 131072))) {
+                PLS_API(require(v_)->Add(a_));
+                PLS_API(require(pos_)->Add(v_));
             } else {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(pos_)->Set(require(t_owner_)->pos_); });
+                PLS_API(require(pos_)->Set(require(t_owner_)->pos_));
             }
         } else {
             pls::cs::Single num;
@@ -303,12 +253,10 @@ void TBall::Update_training() {
                 require(v_)->y_ = require(v_)->y_ * 0.995f;
                 require(v_)->z_ = require(v_)->z_ * num2;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(v_)->Add(a_); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(pos_)->Add(v_); });
-            v_len_ = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JMath::Sqrt(require(v_)->x_ * require(v_)->x_ +
-                                            require(v_)->z_ * require(v_)->z_);
-            }));
+            PLS_API(require(v_)->Add(a_));
+            PLS_API(require(pos_)->Add(v_));
+            v_len_ = pls::cs::Single(PLS_API(
+                kl_lang::JMath::Sqrt(require(v_)->x_ * require(v_)->x_ + require(v_)->z_ * require(v_)->z_)));
             if (require(require(tGroupArea_)->tArea_)->tMode_ == 3) {
                 bool flag2 = false;
                 pls::cs::Single recoveredUnusedSingle;
@@ -441,8 +389,7 @@ void TBall::Update_training() {
         if (receive_wait >= 0) {
             --receive_wait;
             if (receive_wait <= 0) {
-                flag_ = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 8); });
+                flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 8));
             }
         }
         if (require(pos_)->y_ < 0.0f) {
@@ -473,8 +420,7 @@ void TBall::Draw_training(pls::cs::Ref<pls::kairo::Graphics> g) {
         form::GameForm::ensure_initialized();
         Ball::ensure_initialized();
 
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 1); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 1))) {
             return;
         }
         Camera::ConvertGlobalToCamera(pos_, camera_pos_);
@@ -492,25 +438,19 @@ void TBall::Draw_training(pls::cs::Ref<pls::kairo::Graphics> g) {
         bool dark = false;
         pls::cs::Int32 frame = frame_ % 12 / 6;
         if (!is_null(t_owner_)) {
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(t_owner_)->flag_, 131072);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(t_owner_)->flag_, 131072))) {
                 num += 3;
             } else if (require(t_owner_)->seb_ == 14) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(pos_)->Set(require(t_owner_)->pos_); });
+                PLS_API(require(pos_)->Set(require(t_owner_)->pos_));
                 direct_ = require(t_owner_)->direct_;
                 num += 3;
             } else {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(pos_)->Set(require(t_owner_)->pos_); });
+                PLS_API(require(pos_)->Set(require(t_owner_)->pos_));
                 direct_ = require(t_owner_)->direct_;
                 pls::cs::Single num2 = 50.0f;
-                pls::cs::Single x = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::Sqrt(
-                        require(require(t_owner_)->v_)->x_ * require(require(t_owner_)->v_)->x_ +
-                        require(require(t_owner_)->v_)->z_ * require(require(t_owner_)->v_)->z_);
-                }));
+                pls::cs::Single x = pls::cs::Single(PLS_API(kl_lang::JMath::Sqrt(
+                    require(require(t_owner_)->v_)->x_ * require(require(t_owner_)->v_)->x_ +
+                    require(require(t_owner_)->v_)->z_ * require(require(t_owner_)->v_)->z_)));
                 num2 = GameUtil::RateConvertFloat(x, 0.0f, 10.0f, 0.0f, 100.0f, true);
                 pls::cs::Int32 c2min = pls::cs::to_int32(([&]() -> pls::cs::Single {
                     pls::cs::Single cs_arg3 = Ball::DRIBBLE_DIRECT_DIS()[direct_][0][0];
@@ -533,31 +473,23 @@ void TBall::Draw_training(pls::cs::Ref<pls::kairo::Graphics> g) {
                     return GameUtil::RateConvertFloat(num2, 0.0f, 100.0f, cs_arg3, cs_arg4, true);
                 }()));
                 pls::cs::Int32 num3 = frame_ % 16;
-                pls::cs::Int32 num4 =
-                    GameUtil::RateConvert(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return kl_lang::JMath::AbsInt(num3 - 8);
-                                          }),
-                                          8, 0, c2min, c2max, true);
-                pls::cs::Int32 num5 =
-                    GameUtil::RateConvert(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return kl_lang::JMath::AbsInt(num3 - 8);
-                                          }),
-                                          8, 0, c2min2, c2max2, true);
-                pls::cs::Single num6 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::Sqrt(([&]() -> pls::cs::Int32 {
-                        auto cs_left = ([&]() -> pls::cs::Int32 {
-                            auto cs_left = (TBall::camera_pos_dribble_2()[0] - num4);
-                            auto cs_right = (TBall::camera_pos_dribble_2()[0] - num4);
-                            return cs_left * cs_right;
-                        }());
-                        auto cs_right = ([&]() -> pls::cs::Int32 {
-                            auto cs_left = (TBall::camera_pos_dribble_2()[1] - num5);
-                            auto cs_right = (TBall::camera_pos_dribble_2()[1] - num5);
-                            return cs_left * cs_right;
-                        }());
-                        return cs_left + cs_right;
-                    }()));
-                }));
+                pls::cs::Int32 num4 = GameUtil::RateConvert(PLS_API(kl_lang::JMath::AbsInt(num3 - 8)), 8, 0,
+                                                            c2min, c2max, true);
+                pls::cs::Int32 num5 = GameUtil::RateConvert(PLS_API(kl_lang::JMath::AbsInt(num3 - 8)), 8, 0,
+                                                            c2min2, c2max2, true);
+                pls::cs::Single num6 = pls::cs::Single(PLS_API(kl_lang::JMath::Sqrt(([&]() -> pls::cs::Int32 {
+                    auto cs_left = ([&]() -> pls::cs::Int32 {
+                        auto cs_left = (TBall::camera_pos_dribble_2()[0] - num4);
+                        auto cs_right = (TBall::camera_pos_dribble_2()[0] - num4);
+                        return cs_left * cs_right;
+                    }());
+                    auto cs_right = ([&]() -> pls::cs::Int32 {
+                        auto cs_left = (TBall::camera_pos_dribble_2()[1] - num5);
+                        auto cs_right = (TBall::camera_pos_dribble_2()[1] - num5);
+                        return cs_left * cs_right;
+                    }());
+                    return cs_left + cs_right;
+                }()))));
                 pls::cs::Int32 num7 = num4 * 3 / 4;
                 pls::cs::Int32 num8 = num5 * 3 / 4;
                 TBall::camera_pos_dribble_2()[0] = num7;
@@ -665,23 +597,18 @@ void TBall::ReceiveBall(pls::cs::Ref<TPlayer> player) {
         require(a_)->z_ = 0.0f;
         {
             auto cs_target = player;
-            pls::cs::Int32 cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(require(player)->flag_, 4); });
+            pls::cs::Int32 cs_value = PLS_API(kl_unity_util::BitUtil::On(require(player)->flag_, 4));
             require(cs_target)->flag_ = cs_value;
         }
         require(player)->ballHaveTime_ = 0;
         require(player)->ballDribbleTime_ = 0;
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 4); });
+        flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 4));
         t_owner_ = player;
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(pos_)->Set(require(t_owner_)->pos_); });
+        PLS_API(require(pos_)->Set(require(t_owner_)->pos_));
         receive_wait = 0;
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 8); });
+        flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 8));
         boundNum_ = 0;
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Off(flag_, 112); });
+        flag_ = PLS_API(kl_unity_util::BitUtil::Off(flag_, 112));
         targetPId = -1;
     }
 }
@@ -692,26 +619,21 @@ void TBall::ReleaseBall(pls::cs::Ref<TPlayer> player) {
     {
         Ball::ensure_initialized();
 
-        if (!(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 4); }))) {
+        if (!(PLS_API(kl_unity_util::BitUtil::Check(flag_, 4)))) {
             return;
         }
         {
             {
                 auto cs_target = player;
-                pls::cs::Int32 cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Off(require(player)->flag_, 4);
-                });
+                pls::cs::Int32 cs_value = PLS_API(kl_unity_util::BitUtil::Off(require(player)->flag_, 4));
                 require(cs_target)->flag_ = cs_value;
             }
             require(player)->ballHaveTime_ = 0;
-            flag_ = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Off(flag_, 4); });
+            flag_ = PLS_API(kl_unity_util::BitUtil::Off(flag_, 4));
             t_lastOwner_ = t_owner_;
             t_owner_ = pls::cs::Ref<TPlayer>{};
             receive_wait = Ball::RECEIVE_WAIT_MIN();
-            flag_ = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Off(flag_, 8); });
+            flag_ = PLS_API(kl_unity_util::BitUtil::Off(flag_, 8));
             boundNum_ = 0;
         }
     }
@@ -724,23 +646,19 @@ void TBall::SetPassDataTraining(pls::cs::Ref<TPlayer> player, pls::cs::Int32 pas
     {
         Ball::ensure_initialized();
 
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(v_)->Set(0.0f, 0.0f, 0.0f); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(a_)->Set(0.0f, 0.0f, 0.0f); });
+        PLS_API(require(v_)->Set(0.0f, 0.0f, 0.0f));
+        PLS_API(require(a_)->Set(0.0f, 0.0f, 0.0f));
         pls::cs::Ref<TPlayer> tPlayer =
-            pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                    auto cs_receiver = require(require(player)->tGroupArea_)->tPlayerList_;
-                    pls::cs::Int32 cs_arg0 = 1 - require(player)->trainingId_[4];
-                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                }());
-            }));
+            pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                auto cs_receiver = require(require(player)->tGroupArea_)->tPlayerList_;
+                pls::cs::Int32 cs_arg0 = 1 - require(player)->trainingId_[4];
+                return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+            }())));
         require(temp_pos)->x_ = require(require(tPlayer)->pos_)->x_;
         require(temp_pos)->z_ = require(require(tPlayer)->pos_)->z_;
-        pls::cs::Single num = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt(
-                (require(temp_pos)->x_ - require(pos_)->x_) * (require(temp_pos)->x_ - require(pos_)->x_) +
-                (require(temp_pos)->z_ - require(pos_)->z_) * (require(temp_pos)->z_ - require(pos_)->z_));
-        }));
+        pls::cs::Single num = pls::cs::Single(PLS_API(kl_lang::JMath::Sqrt(
+            (require(temp_pos)->x_ - require(pos_)->x_) * (require(temp_pos)->x_ - require(pos_)->x_) +
+            (require(temp_pos)->z_ - require(pos_)->z_) * (require(temp_pos)->z_ - require(pos_)->z_))));
         pls::cs::Single passSpeed = data::PlayerData::GetPassSpeed(player);
         require(v_)->x_ = passSpeed * (require(temp_pos)->x_ - require(pos_)->x_) / num;
         require(v_)->y_ = 0.0f;
@@ -755,8 +673,8 @@ void TBall::SetShoot(pls::cs::Ref<Player> player, pls::cs::Ref<kl_util3d::Vector
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.TBall.SetShoot(game.Player,kairo.unity.m3d4.util3d.Vector3D)",
                      game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(v_)->Set(0.0f, 0.0f, 0.0f); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(a_)->Set(0.0f, 0.0f, 0.0f); });
+        PLS_API(require(v_)->Set(0.0f, 0.0f, 0.0f));
+        PLS_API(require(a_)->Set(0.0f, 0.0f, 0.0f));
         pls::cs::Int32 num = GameUtil::Random(100);
         {
             auto cs_target = g1_TBall;
@@ -767,21 +685,17 @@ void TBall::SetShoot(pls::cs::Ref<Player> player, pls::cs::Ref<kl_util3d::Vector
         require(g1_TBall)->z_ = require(goal_center)->z_;
         pls::cs::Int32 playerBodyPoseEva = data::PlayerData::GetPlayerBodyPoseEva(player, 10);
         pls::cs::Single shootSpeed = data::PlayerData::GetShootSpeed(player, playerBodyPoseEva);
-        pls::cs::Single num2 = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::Sqrt(
-                (require(g1_TBall)->x_ - require(pos_)->x_) * (require(g1_TBall)->x_ - require(pos_)->x_) +
-                (require(g1_TBall)->z_ - require(pos_)->z_) * (require(g1_TBall)->z_ - require(pos_)->z_));
-        }));
+        pls::cs::Single num2 = pls::cs::Single(PLS_API(kl_lang::JMath::Sqrt(
+            (require(g1_TBall)->x_ - require(pos_)->x_) * (require(g1_TBall)->x_ - require(pos_)->x_) +
+            (require(g1_TBall)->z_ - require(pos_)->z_) * (require(g1_TBall)->z_ - require(pos_)->z_))));
         require(v_)->x_ = shootSpeed * (require(g1_TBall)->x_ - require(pos_)->x_) / num2;
         require(v_)->z_ = shootSpeed * (require(g1_TBall)->z_ - require(pos_)->z_) / num2;
         pls::cs::Int32 eva = playerBodyPoseEva;
         pls::cs::Single shootV0y = data::PlayerData::GetShootV0y(player, eva);
         require(v_)->y_ = shootV0y;
         require(a_)->y_ = -0.1f;
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(shoot_goalPos_TBall)->Set(g1_TBall); });
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::BitUtil::On(flag_, 48); });
+        PLS_API(require(shoot_goalPos_TBall)->Set(g1_TBall));
+        flag_ = PLS_API(kl_unity_util::BitUtil::On(flag_, 48));
         SetSavePos(pos_, v_, a_);
     }
 }
@@ -790,8 +704,7 @@ void TBall::SetShoot(pls::cs::Ref<Player> player, pls::cs::Ref<kl_util3d::Vector
 bool TBall::ChBallDirectHere(pls::cs::Ref<TPlayer> tPlayer) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.TBall.ChBallDirectHere(game.TPlayer)", game);
     {
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 32); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 32))) {
             if (require(require(require(tPlayer)->tGroupArea_)->tArea_)->pId_ == 2) {
                 if (require(pos_)->z_ < require(require(tPlayer)->pos_)->z_ && require(v_)->z_ > 0.0f) {
                     return true;

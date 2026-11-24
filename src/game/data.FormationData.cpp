@@ -119,25 +119,18 @@ void FormationData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FormationData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         name_ = array[num++];
         pls::cs::String src2 = array[num++];
-        IntArray array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::SplitIntegers(src2, literal(u","));
-        });
-        formation_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 2}));
-        });
+        IntArray array2 = PLS_API(kl_unity_util::StringUtil::SplitIntegers(src2, literal(u",")));
+        formation_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({11, 2})));
         for (pls::cs::Int32 i = 0; i < formation_.length(); ++i) {
             formation_[i][0] = array2[i * 2];
             formation_[i][1] = array2[i * 2 + 1];
         }
         explain_ = array[num++];
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        flag_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
     }
 }
 
@@ -146,8 +139,7 @@ void FormationData::NewGame() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FormationData.NewGame", game);
     {
         state_ = 0;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 1); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 1))) {
             state_ = 1;
         }
     }
@@ -157,17 +149,12 @@ void FormationData::NewGame() {
 void FormationData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FormationData.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteBoolean(os, new_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteBoolean(os, new_));
         for (pls::cs::Int32 i = 0; i < formation_.length(); ++i) {
             for (pls::cs::Int32 j = 0; j < formation_[i].length(); ++j) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StreamUtil::WriteShort(
-                        os, pls::cs::cast_integral<std::int16_t>(formation_[i][j]));
-                });
+                PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                    os, pls::cs::cast_integral<std::int16_t>(formation_[i][j])));
             }
         }
     }
@@ -177,17 +164,16 @@ void FormationData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void FormationData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FormationData.Deserialize(java.io.InputStream)", game);
     {
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        new_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBoolean(stream); });
+        state_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        new_ = PLS_API(kl_unity_util::StreamUtil::ReadBoolean(stream));
         for (pls::cs::Int32 i = 0; i < formation_.length(); ++i) {
             for (pls::cs::Int32 j = 0; j < formation_[i].length(); ++j) {
                 {
                     auto cs_target = formation_[i];
                     auto cs_index = j;
-                    auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+                    auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
+                        PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
@@ -216,10 +202,8 @@ void FormationData::UpdateStamemRole() {
             require(main::AppData::GetInstance())
                 ->formationData_.get_Item(require(instance)->selectFormationId_);
         for (pls::cs::Int32 i = 0; i < 11; ++i) {
-            pls::cs::Ref<PlayerData> playerData =
-                pls::cs::unbox<pls::cs::Ref<PlayerData>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(require(instance)->memberPDataist_), i);
-                }));
+            pls::cs::Ref<PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<PlayerData>>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(require(instance)->memberPDataist_), i)));
             if (i == 0) {
                 require(playerData)->role_ = 0;
             } else if (require(formationData)->formation_[i][1] <= 2) {

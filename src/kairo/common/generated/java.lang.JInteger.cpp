@@ -81,7 +81,7 @@ pls::cs::Ref<JInteger> JInteger::ValueOf(pls::cs::String s) {
 pls::cs::String JInteger::ToString() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JInteger.ToString", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return integer_string(value_); });
+        return PLS_API(integer_string(value_));
     }
 }
 
@@ -90,7 +90,7 @@ pls::cs::Int32 JInteger::ParseInt(pls::cs::String s) {
     JInteger::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JInteger.ParseInt(System.String)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::int32_parse(s); });
+        return PLS_API(pls::cs::int32_parse(s));
     }
 }
 
@@ -114,7 +114,7 @@ bool JInteger::Equals(pls::cs::Ref<JInteger> self, pls::cs::Ref<pls::cs::Object>
 std::int32_t JInteger::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JInteger.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return value_hash(value_); });
+        return PLS_API(value_hash(value_));
     }
 }
 } // namespace java::lang

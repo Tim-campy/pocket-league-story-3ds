@@ -324,8 +324,7 @@ pls::cs::Ref<JLocale> JLocale::GetDefault() {
                 pls::cs::Ref<JLocale> cs_right = pls::cs::Ref<JLocale>{};
                 return JLocale::op_Equality(cs_left, cs_right);
             }()) {
-            StringArray array =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::native_locale(); });
+            StringArray array = PLS_API(pls::kairo::native_locale());
             JLocale::defaultLocale() = JLocale::create(array[0], array[1]);
         }
         return JLocale::defaultLocale();
@@ -375,12 +374,10 @@ bool JLocale::Equals(pls::cs::Ref<JLocale> self, pls::cs::Ref<pls::cs::Object> o
 std::int32_t JLocale::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.JLocale.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace java::util

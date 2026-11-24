@@ -702,50 +702,39 @@ void PlayerData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.PlayerData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         ++num;
         name_ = array[num++];
         name2_ = array[num++];
-        category_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        faceImg_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        initLv_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        category_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        faceImg_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        initLv_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         pls::cs::String value = array[num++];
-        StringArray array2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(value, literal(u"&")); });
+        StringArray array2 = PLS_API(kl_unity_util::StringUtil::Split(value, literal(u"&")));
         paramPhysicalMax_ = IntArray::make(array2.length());
         for (pls::cs::Int32 i = 0; i < array2.length(); ++i) {
             {
                 auto cs_target = paramPhysicalMax_;
                 auto cs_index = i;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array2[i]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array2[i]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
         {
             auto cs_target = salary_;
             auto cs_index = 0;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+            auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = salary_;
             auto cs_index = 1;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+            auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
             cs_target.set_Item(cs_index, cs_value);
         }
-        popularP_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        popularP_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        flag_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         SetLv(initLv_);
         exp_ = 0;
         auraPoint_ = 5000;
@@ -765,48 +754,25 @@ void PlayerData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.PlayerData.Serialize(java.io.OutputStream)", game);
     {
         for (pls::cs::Int32 i = 0; i < paramPhysical_.length(); ++i) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(
-                    os, pls::cs::cast_integral<std::int16_t>(paramPhysical_[i]));
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                os, pls::cs::cast_integral<std::int16_t>(paramPhysical_[i])));
         }
         for (pls::cs::Int32 j = 0; j < trainingPoint_.length(); ++j) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteInt(os, trainingPoint_[j]);
-            });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, trainingPoint_[j]));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(role_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(auraPoint_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, matchNum_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(os, game_goalConsecutive_);
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, game_goalTotal_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(game_goalInLeague_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, exp_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, expStock_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, lv_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteBoolean(os, new_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(onceMember_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, popularP_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(role_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(auraPoint_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, matchNum_));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, game_goalConsecutive_));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, game_goalTotal_));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(game_goalInLeague_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, exp_));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, expStock_));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, lv_));
+        PLS_API(kl_unity_util::StreamUtil::WriteBoolean(os, new_));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(onceMember_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, popularP_));
     }
 }
 
@@ -818,8 +784,8 @@ void PlayerData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
             {
                 auto cs_target = paramPhysical_;
                 auto cs_index = i;
-                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
+                    PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -827,35 +793,25 @@ void PlayerData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
             {
                 auto cs_target = trainingPoint_;
                 auto cs_index = j;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        role_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        auraPoint_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        matchNum_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        game_goalConsecutive_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        game_goalTotal_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        game_goalInLeague_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        exp_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        expStock_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        lv_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        new_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBoolean(stream); });
-        onceMember_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        popularP_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        role_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        auraPoint_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        matchNum_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        game_goalConsecutive_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        game_goalTotal_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        game_goalInLeague_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        exp_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        expStock_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        lv_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        new_ = PLS_API(kl_unity_util::StreamUtil::ReadBoolean(stream));
+        onceMember_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        popularP_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
     }
 }
 
@@ -1327,9 +1283,7 @@ pls::cs::Single PlayerData::AuraUpdate(pls::cs::Ref<game::Player> player, pls::c
     PLS_METHOD_SCOPE("Assembly-CSharp",
                      "M:data.PlayerData.AuraUpdate(game.Player,System.Single,System.Int32)", game);
     {
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::Check(require(player)->flag_, 262144);
-            })) {
+        if (!PLS_API(kl_unity_util::BitUtil::Check(require(player)->flag_, 262144))) {
             return value;
         }
         return value * PlayerData::AURA_RATE()[auraActId];
@@ -1695,8 +1649,7 @@ void PlayerData::Update_aura(pls::cs::Ref<game::Player> player) {
         if (auraCnt_ > 0) {
             --auraCnt_;
             if (auraCnt_ == 0) {
-                flag_ = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Off(flag_, 262144); });
+                flag_ = PLS_API(kl_unity_util::BitUtil::Off(flag_, 262144));
             }
         }
     }
@@ -1708,9 +1661,7 @@ void PlayerData::Start_aura(pls::cs::Ref<game::Player> player) {
     {
         {
             auto cs_target = player;
-            pls::cs::Int32 cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::On(require(player)->flag_, 262144);
-            });
+            pls::cs::Int32 cs_value = PLS_API(kl_unity_util::BitUtil::On(require(player)->flag_, 262144));
             require(cs_target)->flag_ = cs_value;
         }
         auraPoint_ = 0;
@@ -1733,14 +1684,10 @@ void PlayerData::Employ(pls::cs::Int32 pDataId) {
     {
         pls::cs::Ref<game::UserData> instance = game::UserData::GetInstance();
         pls::cs::Ref<PlayerData> playerData = require(main::AppData::GetInstance())->pData_.get_Item(pDataId);
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_IndexOf(require(require(instance)->memberPDataist_),
-                                                      pls::cs::box(playerData));
-            }) == -1) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_AddElement(require(require(instance)->memberPDataist_),
-                                                         pls::cs::box(playerData));
-            });
+        if (PLS_API(kl_java_util::Vector_2_IndexOf(require(require(instance)->memberPDataist_),
+                                                   pls::cs::box(playerData))) == -1) {
+            PLS_API(kl_java_util::Vector_2_AddElement(require(require(instance)->memberPDataist_),
+                                                      pls::cs::box(playerData)));
             require(playerData)->new_ = true;
             require(playerData)->onceMember_ = 1;
         }
@@ -1761,16 +1708,12 @@ void PlayerData::Dismissal(pls::cs::Int32 pDataId) {
     {
         pls::cs::Ref<game::UserData> instance = game::UserData::GetInstance();
         pls::cs::Ref<PlayerData> playerData = require(main::AppData::GetInstance())->pData_.get_Item(pDataId);
-        pls::cs::Int32 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_IndexOf(require(require(instance)->memberPDataist_),
-                                                  pls::cs::box(playerData));
-        });
+        pls::cs::Int32 num = PLS_API(kl_java_util::Vector_2_IndexOf(
+            require(require(instance)->memberPDataist_), pls::cs::box(playerData)));
         if (num == -1) {
             return;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_RemoveElementAt(require(require(instance)->memberPDataist_), num);
-        });
+        PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(require(instance)->memberPDataist_), num));
         pls::cs::Int32 num2 = require(playerData)->id_ - 22;
         if ((num2 < 0) || (num2 >= require(PlayerData::apdat_())->tradeData_.length())) {
             return;

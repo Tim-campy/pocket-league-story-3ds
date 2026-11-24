@@ -40,8 +40,7 @@ void Dialog::create_init(pls::cs::Ref<Dialog> self, pls::cs::Int32 type, pls::cs
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.Dialog.#ctor(System.Int32,System.String)", kairo);
     {
         self->type_ = type;
-        self->title_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::Language::TranslateText(title, true); });
+        self->title_ = PLS_API(kl_util::Language::TranslateText(title, true));
         self->font_ = pls::cs::make_ref<pls::kairo::Font>();
         self->msg_ = literal(u"");
         self->background_ = Graphics::GetColorOfName(-16777216);
@@ -60,13 +59,9 @@ pls::cs::Ref<Dialog> Dialog::create(pls::cs::Int32 type, pls::cs::String title) 
 void Dialog::SetText(pls::cs::String msg) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.Dialog.SetText(System.String)", kairo);
     {
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StringUtil::Split(msg, literal(u"\t")); });
-        msg_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::Language::TranslateText(array[0], true); });
-        msg_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StringUtil::Replace(msg_, literal(u"<br>"), literal(u"\n"));
-        });
+        StringArray array = PLS_API(kl_util::StringUtil::Split(msg, literal(u"\t")));
+        msg_ = PLS_API(kl_util::Language::TranslateText(array[0], true));
+        msg_ = PLS_API(kl_util::StringUtil::Replace(msg_, literal(u"<br>"), literal(u"\n")));
         url_ = pls::cs::String{};
         if (1 < array.length()) {
             url_ = array[1];
@@ -100,8 +95,7 @@ pls::cs::Int32 Dialog::Show() {
                 text = pls::cs::String::concat(text, cmds_[i]);
             }
         }
-        pls::cs::Int32 num = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::show_dialog(type_, title_, msg_, text); });
+        pls::cs::Int32 num = PLS_API(pls::kairo::show_dialog(type_, title_, msg_, text));
         if (!is_null(url_) && (num == 1 || num == 4)) {
             Canvas::OpenBrowser(url_);
         }

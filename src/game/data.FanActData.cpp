@@ -240,9 +240,7 @@ pls::cs::Ref<game::UserData>& FanActData::udat_() {
 void FanActData::create_init(pls::cs::Ref<FanActData> self) {
     FanActData::ensure_initialized();
     self->effLimit_ = IntArray::make(2);
-    self->eff_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-    });
+    self->eff_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
     self->cost_ = IntArray::make(2);
     self->benefit_ = IntArray::make(2);
     self->execsScript_ = IntArray3::make(6);
@@ -257,9 +255,7 @@ void FanActData::create_init(pls::cs::Ref<FanActData> self) {
 void FanActData::create_init(pls::cs::Ref<FanActData> self, pls::cs::String src) {
     FanActData::ensure_initialized();
     self->effLimit_ = IntArray::make(2);
-    self->eff_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-    });
+    self->eff_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
     self->cost_ = IntArray::make(2);
     self->benefit_ = IntArray::make(2);
     self->execsScript_ = IntArray3::make(6);
@@ -306,21 +302,16 @@ void FanActData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FanActData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         name_ = array[num++];
-        type_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        icon_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        type_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        icon_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         for (pls::cs::Int32 i = 0; i < effLimit_.length(); ++i) {
             {
                 auto cs_target = effLimit_;
                 auto cs_index = i;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -329,20 +320,17 @@ void FanActData::Load(pls::cs::String src) {
                 {
                     auto cs_target = eff_[j];
                     auto cs_index = k;
-                    auto cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                    auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
         }
-        costType_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        costType_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         for (pls::cs::Int32 l = 0; l < cost_.length(); ++l) {
             {
                 auto cs_target = cost_;
                 auto cs_index = l;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -350,13 +338,11 @@ void FanActData::Load(pls::cs::String src) {
             {
                 auto cs_target = benefit_;
                 auto cs_index = m;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        difficult_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        difficult_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         for (pls::cs::Int32 n = 0; n < execsScript_.length(); ++n) {
             {
                 auto cs_target = execsScript_;
@@ -366,8 +352,7 @@ void FanActData::Load(pls::cs::String src) {
             }
         }
         explain_ = array[num++];
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        flag_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
     }
 }
 
@@ -376,8 +361,7 @@ void FanActData::NewGame() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FanActData.NewGame", game);
     {
         state_ = 0;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 1); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 1))) {
             ChangeState(1);
             new_ = false;
         }
@@ -388,18 +372,11 @@ void FanActData::NewGame() {
 void FanActData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FanActData.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(rank_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, rankPoint_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, stateCnt_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteBoolean(os, new_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(rank_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, rankPoint_));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, stateCnt_));
+        PLS_API(kl_unity_util::StreamUtil::WriteBoolean(os, new_));
     }
 }
 
@@ -407,16 +384,12 @@ void FanActData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void FanActData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.FanActData.Deserialize(java.io.InputStream)", game);
     {
-        rank_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        rankPoint_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        stateCnt_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        new_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBoolean(stream); });
+        rank_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        rankPoint_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        state_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        stateCnt_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        new_ = PLS_API(kl_unity_util::StreamUtil::ReadBoolean(stream));
     }
 }
 

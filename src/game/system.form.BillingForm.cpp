@@ -223,9 +223,7 @@ void BillingForm::LoadResource() {
                     ->SetRecordNameBits(0);
             {
                 auto cs_receiver = BillingForm::resBilling_();
-                ByteArray cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::Storage::Read(3, false, literal(u"billing.dat"));
-                });
+                ByteArray cs_arg0 = PLS_API(pls::kairo::Storage::Read(3, false, literal(u"billing.dat")));
                 require(cs_receiver)->Load(cs_arg0, 3);
             }
         } catch (const pls::cs::Exception& cs_caught_240) {
@@ -251,18 +249,15 @@ bool BillingForm::Init() {
         pls::cs::Ref<kl_java_util::Vector> vector = kl_java_util::Vector::create();
         pls::cs::Int32 num = BillingForm::configData_()[type_][0];
         pls::cs::Int32 num2 = BillingForm::configData_()[type_][1];
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
-                pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
-                this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
+            pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
+            this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
         if (type_ == 0) {
             if (kl_cfg::Config::APPLI_TYPE() == 2) {
                 pls::cs::String url;
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::Language::Japanese(); })) {
+                if (PLS_API(kl_unity_util::Language::Japanese())) {
                     url = (pls::cs::String::concat(
                         pls::cs::String::concat(literal(u"http://kairopark.jp/android/policy/app_gm"),
                                                 integer_string(kl_cfg::Config::PID())),
@@ -274,21 +269,15 @@ bool BillingForm::Init() {
                         literal(u"_kiyaku.html")));
                 }
                 if (!kairo::unity::ui::Canvas::OpenBrowser(url)) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            pls::game::form::SubForm::MakeDialog(
-                                KairoText::LT(literal(u"通信に失敗しました"))));
-                    });
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        pls::game::form::SubForm::MakeDialog(KairoText::LT(literal(u"通信に失敗しました")))));
                 }
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
             textLay_ = kairo::unity::ui::TextLayout::create();
             require(textLay_)->SetSize(146.0f, 124.0f);
             require(textLay_)->SetLineSpace(6);
-            require(textLay_)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(30, 30, 30); }));
+            require(textLay_)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(30, 30, 30)));
             {
                 pls::cs::String cs_arg0 = marketNotes_[page_];
                 require(textLay_)->SetText(cs_arg0);
@@ -306,8 +295,7 @@ bool BillingForm::Init() {
             textLay_ = kairo::unity::ui::TextLayout::create();
             require(textLay_)->SetSize(166.0f, 124.0f);
             require(textLay_)->SetLineSpace(6);
-            require(textLay_)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(30, 30, 30); }));
+            require(textLay_)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(30, 30, 30)));
             require(textLay_)->SetText(text);
             require(textLay_)->Flush();
         } else if (type_ == 2) {
@@ -349,8 +337,7 @@ void BillingForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         pls::cs::Int32 num = x_;
         pls::cs::Int32 num2 = y_;
         if ([&]() {
-                auto cs_left = pls::cs::box(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetForm(0); }));
+                auto cs_left = pls::cs::box(PLS_API(require(formMan_)->GetForm(0)));
                 auto cs_right = pls::cs::box(require(apdat_)->frmGame_);
                 return cs_left == cs_right;
             }()) {
@@ -360,7 +347,7 @@ void BillingForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             num += (require(view_)->GetGameWidth() - 240) / 2;
             num2 += (require(view_)->GetGameHeight() - 240) / 2;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(num, num2); });
+        PLS_API(require(g)->SetOrigin(num, num2));
         pls::cs::run_finally(
             [&]() {
                 try {
@@ -371,9 +358,7 @@ void BillingForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     }
                 }
             },
-            [&]() {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-            });
+            [&]() { PLS_API(require(g)->SetOrigin(0, 0)); });
     }
 }
 
@@ -387,10 +372,8 @@ void BillingForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             return;
         }
         if (!require(apdat_)->IsTopForm(this)) {
-            pls::cs::Ref<pls::kairo::FormBase> topForm = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(topForm)->GetId(); }) !=
-                4) {
+            pls::cs::Ref<pls::kairo::FormBase> topForm = PLS_API(require(formMan_)->GetTopForm());
+            if (PLS_API(require(topForm)->GetId()) != 4) {
                 return;
             }
             pls::cs::Ref<pls::game::form::SubForm> subForm =
@@ -398,18 +381,13 @@ void BillingForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             if (!require(subForm)->IsMenu() && require(subForm)->type_ != type_) {
                 return;
             }
-            for (pls::cs::Int32 num = pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return require(formMan_)->GetFormsNum();
-                                      })) -
-                                      2;
-                 num >= 0; --num) {
-                topForm = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetForm(num); });
+            for (pls::cs::Int32 num = pls::cs::Int32(PLS_API(require(formMan_)->GetFormsNum())) - 2; num >= 0;
+                 --num) {
+                topForm = PLS_API(require(formMan_)->GetForm(num));
                 if (pls::cs::box(topForm) == pls::cs::box(this)) {
                     break;
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(topForm)->GetId(); }) != 4 ||
+                if (PLS_API(require(topForm)->GetId()) != 4 ||
                     !require((pls::cs::unbox<pls::cs::Ref<pls::game::form::SubForm>>(pls::cs::box(topForm))))
                          ->IsMenu()) {
                     return;
@@ -423,8 +401,7 @@ void BillingForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             if (threadFrame_ == 1) {
                 pls::cs::Ref<pls::game::form::FormManager> instance =
                     pls::game::form::FormManager::GetInstance();
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(instance)->DrawAllForms(); });
+                PLS_API(require(instance)->DrawAllForms());
             } else if (threadFrame_ > 1) {
                 ConnectForm::DrawConnect(g);
             }
@@ -474,30 +451,20 @@ void BillingForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 pls::cs::Int32 num7 = num5 + num3;
                 pls::cs::Int32 num8 = num6 + num4;
                 BillingForm::FillRect3(g, num5, num6, num3, num4,
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::Graphics::GetColorOfRGB(150, 153, 225);
-                                       }),
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::Graphics::GetColorOfRGB(85, 87, 171);
-                                       }),
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::Graphics::GetColorOfRGB(253, 253, 253);
-                                       }));
+                                       PLS_API(pls::kairo::Graphics::GetColorOfRGB(150, 153, 225)),
+                                       PLS_API(pls::kairo::Graphics::GetColorOfRGB(85, 87, 171)),
+                                       PLS_API(pls::kairo::Graphics::GetColorOfRGB(253, 253, 253)));
                 require(apdat_)->DrawBox(g, num5 + 9, num6 + 24, num7 - 9, num8 - 6);
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetColor(55, 55, 55); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::String cs_arg0 = KairoText::LT(literal(u"どちらに入店しますか"));
-                        require(g)->DrawString(cs_arg0, 120.0f, num6 + 8, 2);
-                    }());
-                });
+                PLS_API(require(g)->SetColor(55, 55, 55));
+                PLS_API(([&]() -> void {
+                    pls::cs::String cs_arg0 = KairoText::LT(literal(u"どちらに入店しますか"));
+                    require(g)->DrawString(cs_arg0, 120.0f, num6 + 8, 2);
+                }()));
                 StringArray array = StringArray::from(
                     {KairoText::LT(literal(u"パンプキン商会")), KairoText::LT(literal(u"チケットショップ"))});
                 pls::cs::Int32 num9 = num6 + 30 + 5;
                 for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(55, 55, 55); });
+                    PLS_API(require(g)->SetColor(55, 55, 55));
                     pls::cs::String cs_arg1_292 = array[i];
                     bool cs_arg5_292 = select_ == i;
                     bool cs_arg7_292 = select_ == i;
@@ -505,18 +472,16 @@ void BillingForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         DrawCommand(g, cs_arg1_292, 125, num9 + 2, 2, cs_arg5_292, 1, cs_arg7_292);
                     pls::game::surface::GameView::AddTouch(g, 3, array2[0], array2[1], array2[2], array2[3],
                                                            0x20000 | i);
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Single cs_arg2 = require(view_)->GetGameWidth();
-                            require(g)->SetClip(0.0f, 0.0f, cs_arg2, num9 + 16);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::Single cs_arg2 = require(view_)->GetGameWidth();
+                        require(g)->SetClip(0.0f, 0.0f, cs_arg2, num9 + 16);
+                    }()));
                     if (i == 0) {
                         require(BillingForm::resBilling_())->DrawSeb(g, num5 + 22, num9 + 24, 1, 0);
                     } else {
                         require(BillingForm::resBilling_())->DrawSeb(g, num5 + 22, num9 + 23, 1, 1);
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->ClearClip(); });
+                    PLS_API(require(g)->ClearClip());
                     num9 += 37;
                 }
             }
@@ -567,9 +532,7 @@ bool BillingForm::_update() {
         if (threadState_ != 0) {
             if (threadState_ != 1 && threadType_ == 0) {
                 pls::cs::Int64 num = pls::cs::Int64(350) - (([&]() -> pls::cs::Int64 {
-                                         auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return kl_lang::JSystem::CurrentTimeMillis();
-                                         });
+                                         auto cs_left = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                                          auto cs_right = threadBeginTime_;
                                          return cs_left - cs_right;
                                      }()));
@@ -589,9 +552,7 @@ bool BillingForm::_update() {
                     }
                 } else {
                     if (threadType_ == 1) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                     }
                     if (threadType_ == 2) {
                         pls::cs::Ref<billing::ui::BillingManager> instance2 =
@@ -611,106 +572,79 @@ bool BillingForm::_update() {
             } else if (threadState_ == 3) {
                 threadState_ = 0;
                 if (kl_cfg::Config::PRINT()) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::Log::Info(error_, pls::cs::Ref<pls::cs::ExceptionObject>{});
-                    });
+                    PLS_API(kl_unity_util::Log::Info(error_, pls::cs::Ref<pls::cs::ExceptionObject>{}));
                 }
                 if (threadType_ == 0 && type_ == 2 && !require(instance)->Check(65536)) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                pls::cs::String cs_arg1 = KairoText::LT(literal(
-                                    u"おっと…<br>本部との<co=60,100,200>通信に失敗</co>してしまいました。"));
-                                pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                            }()));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                pls::cs::String cs_arg1 = KairoText::LT(
-                                    literal(u"電波や通信の状態を確認して<br>もう一回お店に来ると…"));
-                                pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                            }()));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                pls::cs::String cs_arg1 =
-                                    KairoText::LT(literal(u"本来のステキな商品が陳列されますよ。"));
-                                pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                            }()));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                pls::cs::String cs_arg1 =
-                                    KairoText::LT(literal(u"というわけで…<br>またお待ちしています。"));
-                                pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                            }()));
-                    });
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                            pls::cs::String cs_arg1 = KairoText::LT(literal(
+                                u"おっと…<br>本部との<co=60,100,200>通信に失敗</co>してしまいました。"));
+                            pls::cs::String cs_arg2 = pls::cs::String(u"");
+                            return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                        }())));
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                            pls::cs::String cs_arg1 = KairoText::LT(
+                                literal(u"電波や通信の状態を確認して<br>もう一回お店に来ると…"));
+                            pls::cs::String cs_arg2 = pls::cs::String(u"");
+                            return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                        }())));
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                            pls::cs::String cs_arg1 =
+                                KairoText::LT(literal(u"本来のステキな商品が陳列されますよ。"));
+                            pls::cs::String cs_arg2 = pls::cs::String(u"");
+                            return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                        }())));
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                            pls::cs::String cs_arg1 =
+                                KairoText::LT(literal(u"というわけで…<br>またお待ちしています。"));
+                            pls::cs::String cs_arg2 = pls::cs::String(u"");
+                            return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                        }())));
                     require(instance)->On(65536);
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
                 if (threadType_ == 2 && kairo::unity::io::Http::PopErrorCode() == 210) {
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            pls::game::form::SubForm::MakeDialog(kairo::unity::io::Http::PopErrorText()));
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        pls::game::form::SubForm::MakeDialog(kairo::unity::io::Http::PopErrorText())));
                 }
                 if (threadType_ == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
                 if (threadType_ == 1) {
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                        BillingForm::create(1));
-                });
+                return PLS_API(
+                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(BillingForm::create(1)));
             }
         }
         pls::cs::Int32 num3 = 0;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(131072); })) {
+        if (PLS_API(require(canvas_)->CheckKeyState(131072))) {
             ++num3;
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(524288); })) {
+        if (PLS_API(require(canvas_)->CheckKeyState(524288))) {
             ++num3;
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(65536); })) {
+        if (PLS_API(require(canvas_)->CheckKeyState(65536))) {
             ++num3;
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(262144); })) {
+        if (PLS_API(require(canvas_)->CheckKeyState(262144))) {
             ++num3;
         }
         if (num3 > 1) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(canvas_)->ClearKeyBuffer(); });
+            PLS_API(require(canvas_)->ClearKeyBuffer());
         }
         loopCounter_ = ((loopCounter_ + 1) % 2147483647 /* Int32.MaxValue */);
         if (type_ == 0) {
             frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
             pls::cs::Int32 num4 = page_;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); }) ||
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576)) ||
+                PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                 page_ = (page_ + 1) % marketNotes_.length();
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(65536))) {
                 page_ = (page_ - 1 + marketNotes_.length()) % marketNotes_.length();
             }
             if (num4 != page_) {
@@ -721,17 +655,11 @@ bool BillingForm::_update() {
                 require(textLay_)->Flush();
             }
             if (require(apdat_)->IsPushSoftLabel(2, 1048576)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 1) {
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); }) ||
-                require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576)) || require(apdat_)->IsPushSoftLabel(2)) {
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 2) {
             if (!is_null(bform_)) {
@@ -741,32 +669,26 @@ bool BillingForm::_update() {
             if (mode_ == 0) {
                 ++mode_;
                 if (!require(instance)->Check(131072)) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                pls::cs::String cs_arg1 = KairoText::LT(
-                                    literal(u"ここは、世界的に見て超レアな<br>｢チケット｣を売るお店ですよ。"));
-                                pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                            }()));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                pls::cs::String cs_arg1 = KairoText::LT(
-                                    literal(u"なかなかの金額だからよく考えて買っていってくださいね。"));
-                                pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                            }()));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                pls::cs::String cs_arg1 = KairoText::LT(literal(u"フフフ。"));
-                                pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                            }()));
-                    });
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                            pls::cs::String cs_arg1 = KairoText::LT(
+                                literal(u"ここは、世界的に見て超レアな<br>｢チケット｣を売るお店ですよ。"));
+                            pls::cs::String cs_arg2 = pls::cs::String(u"");
+                            return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                        }())));
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                            pls::cs::String cs_arg1 = KairoText::LT(
+                                literal(u"なかなかの金額だからよく考えて買っていってくださいね。"));
+                            pls::cs::String cs_arg2 = pls::cs::String(u"");
+                            return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                        }())));
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                            pls::cs::String cs_arg1 = KairoText::LT(literal(u"フフフ。"));
+                            pls::cs::String cs_arg2 = pls::cs::String(u"");
+                            return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                        }())));
                     require(instance)->On(131072);
                     try {
                         require(instance)->Save();
@@ -776,14 +698,12 @@ bool BillingForm::_update() {
                         }
                     }
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                pls::cs::String cs_arg1 = KairoText::LT(literal(u"フフフ<br>いらっしゃい。"));
-                                pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                            }()));
-                    });
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                            pls::cs::String cs_arg1 = KairoText::LT(literal(u"フフフ<br>いらっしゃい。"));
+                            pls::cs::String cs_arg2 = pls::cs::String(u"");
+                            return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                        }())));
                 }
                 return true;
             }
@@ -800,52 +720,40 @@ bool BillingForm::_update() {
                     return cs_left != cs_right;
                 }()) {
                 ScrollControl(sales_.length(), 6);
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                     if (select_ < sales_.length()) {
                         pls::cs::Ref<billing::ui::BillingItem> billingItem = sales_.get_Item(select_);
                         if (require(billingItem)->GetState() == 1) {
-                            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                    ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                        pls::cs::String cs_arg1 = KairoText::LT(literal(
-                                            u"あー、残念ながら<br>そちらは<co=60,100,200>売り切れ</co>です。<br>他の商品もご覧下さいませ。"));
-                                        pls::cs::String cs_arg2 =
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_lang::JString::ValueOfInt(999);
-                                            });
-                                        return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                                    }()));
-                            });
+                            return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                                ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                                    pls::cs::String cs_arg1 = KairoText::LT(literal(
+                                        u"あー、残念ながら<br>そちらは<co=60,100,200>売り切れ</co>です。<br>他の商品もご覧下さいませ。"));
+                                    pls::cs::String cs_arg2 = PLS_API(kl_lang::JString::ValueOfInt(999));
+                                    return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                                }())));
                         }
                         if (!require(instance)->Check(524288)) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                    ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                        pls::cs::String cs_arg1 =
-                                            KairoText::LT(literal(u"おや、お目が高いですね。"));
-                                        pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                        return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                                    }()));
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                    ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                        pls::cs::String cs_arg1 = KairoText::LT(literal(
-                                            u"こちらは<co=60,100,200>現実のお金で購入する</co>ステキな商品です。"));
-                                        pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                        return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                                    }()));
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                    ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                        pls::cs::String cs_arg1 = KairoText::LT(literal(
-                                            u"ちびっこは、<co=60,100,200>保護者の方</co>に確認してから購入するようにして下さいね。フフフ。"));
-                                        pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                        return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                                    }()));
-                            });
+                            PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                                ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                                    pls::cs::String cs_arg1 =
+                                        KairoText::LT(literal(u"おや、お目が高いですね。"));
+                                    pls::cs::String cs_arg2 = pls::cs::String(u"");
+                                    return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                                }())));
+                            PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                                ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                                    pls::cs::String cs_arg1 = KairoText::LT(literal(
+                                        u"こちらは<co=60,100,200>現実のお金で購入する</co>ステキな商品です。"));
+                                    pls::cs::String cs_arg2 = pls::cs::String(u"");
+                                    return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                                }())));
+                            PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                                ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                                    pls::cs::String cs_arg1 = KairoText::LT(literal(
+                                        u"ちびっこは、<co=60,100,200>保護者の方</co>に確認してから購入するようにして下さいね。フフフ。"));
+                                    pls::cs::String cs_arg2 = pls::cs::String(u"");
+                                    return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                                }())));
                             require(instance)->On(524288);
                             try {
                                 require(instance)->Save();
@@ -858,21 +766,17 @@ bool BillingForm::_update() {
                         bform_ = BillingForm::create(3);
                         require(bform_)->item_ = billingItem;
                         require(bform_)->skipUpdateSales_ = true;
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(bform_);
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(bform_));
                     }
                 } else if (require(apdat_)->IsPushSoftLabel(2)) {
                     if (!require(instance)->Check(262144)) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                    pls::cs::String cs_arg1 = KairoText::LT(
-                                        literal(u"これからいつでもお店はありますからいつでも来て下さいね。"));
-                                    pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                    return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                                }()));
-                        });
+                        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                                pls::cs::String cs_arg1 = KairoText::LT(
+                                    literal(u"これからいつでもお店はありますからいつでも来て下さいね。"));
+                                pls::cs::String cs_arg2 = pls::cs::String(u"");
+                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                            }())));
                         require(instance)->On(262144);
                         try {
                             require(instance)->Save();
@@ -882,37 +786,27 @@ bool BillingForm::_update() {
                             }
                         }
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                    pls::cs::String cs_arg1 =
-                                        KairoText::LT(literal(u"フフフ<br>また来てくださいね。"));
-                                    pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                    return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
-                                }()));
-                        });
+                        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                                pls::cs::String cs_arg1 =
+                                    KairoText::LT(literal(u"フフフ<br>また来てくださいね。"));
+                                pls::cs::String cs_arg2 = pls::cs::String(u"");
+                                return pls::game::form::SubForm::MakeTalkForm(4, cs_arg1, cs_arg2);
+                            }())));
                     }
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
             }
-            if (kl_cfg::Config::DEBUG() && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(canvas_)->CheckKeyPulse(2048);
-                })) {
+            if (kl_cfg::Config::DEBUG() && PLS_API(require(canvas_)->CheckKeyPulse(2048))) {
                 pls::cs::Ref<billing::MyBilling> instance3 = billing::MyBilling::GetInstance();
                 if (select2_ == 0) {
                     pls::cs::Ref<kl_java_util::Vector> purchaseLog = require(instance3)->GetPurchaseLog();
                     pls::cs::String text = pls::cs::String(u"");
-                    for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                   return kl_java_util::Vector_2_Size(require(purchaseLog));
-                                               });
+                    for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(purchaseLog)));
                          ++i) {
                         pls::cs::Ref<billing::ui::PurchaseRecord> purchaseRecord =
                             pls::cs::unbox<pls::cs::Ref<billing::ui::PurchaseRecord>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(require(purchaseLog), i);
-                                }));
+                                PLS_API(kl_java_util::Vector_2_ElementAt(require(purchaseLog), i)));
                         if (kl_lang::StringEx::Length(text) > 0) {
                             text = pls::cs::String::concat(text, literal(u"\n\n"));
                         }
@@ -921,9 +815,7 @@ bool BillingForm::_update() {
                     pls::cs::Ref<billing::ui::PurchaseLogView> purchaseLogView =
                         billing::ui::PurchaseLogView::create(literal(u"過去の購入履歴"));
                     {
-                        pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(purchaseLog));
-                        });
+                        pls::cs::Int32 cs_arg0 = PLS_API(kl_java_util::Vector_2_Size(require(purchaseLog)));
                         require(purchaseLogView)->SetLog(cs_arg0, text, true);
                     }
                     require(purchaseLogView)->Show();
@@ -960,51 +852,37 @@ bool BillingForm::_update() {
                 }
             }
         } else if (type_ == 3) {
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 select_ = (select_ - 1 + 2) % 2;
-            } else if (pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            } else if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 select_ = (select_ + 1 + 2) % 2;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ == 0) {
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            BillingForm::create(0));
-                    });
+                    return PLS_API(
+                        static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(BillingForm::create(0)));
                 }
                 if (select_ == 1) {
                     ThreadStart(1);
                     return true;
                 }
             } else if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 4) {
 
         } else if (type_ == 5) {
             pls::cs::Int32 num6 = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 select_ = (select_ - 1 + num6) % num6;
-            } else if (pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            } else if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 select_ = (select_ + 1 + num6) % num6;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         }
         return true;
@@ -1020,11 +898,9 @@ void BillingForm::ScrollControl(pls::cs::Int32 num, pls::cs::Int32 showMax) {
             return;
         }
         {
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 select_ = (select_ - 1 + num) % num;
-            } else if (pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            } else if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 select_ = (select_ + 1) % num;
             }
             ScrollUpdate(num, showMax);
@@ -1166,8 +1042,7 @@ bool BillingForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e
                     {
                         select2_ = require(component)->value;
                         if (require(e)->type == 1) {
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(canvas_)->KeyClick(2048); });
+                            PLS_API(require(canvas_)->KeyClick(2048));
                         }
                         break;
                     }
@@ -1199,13 +1074,11 @@ void BillingForm::SetSoftlabel() {
             num2 = 0;
             num = num2;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
-                pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
-                this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
+            pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
+            this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
     }
 }
 
@@ -1227,14 +1100,11 @@ void BillingForm::UpdateSaleList() {
             pls::cs::Ref<billing::ui::BillingItem> billingItem = sales.get_Item(j);
             if (require(billingItem)->GetSeriesNumber() != -1) {
                 for (pls::cs::Int32 k = j + 1; k < sales.length(); ++k) {
-                    if (require(sales.get_Item(k))->GetSeriesNumber() != -1 &&
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> bool {
-                                auto cs_arg0 = require(sales.get_Item(j))->GetSeriesName();
-                                auto cs_arg1 = require(sales.get_Item(k))->GetSeriesName();
-                                return string_equals(cs_arg0, cs_arg1);
-                            }());
-                        })) {
+                    if (require(sales.get_Item(k))->GetSeriesNumber() != -1 && PLS_API(([&]() -> bool {
+                            auto cs_arg0 = require(sales.get_Item(j))->GetSeriesName();
+                            auto cs_arg1 = require(sales.get_Item(k))->GetSeriesName();
+                            return string_equals(cs_arg0, cs_arg1);
+                        }()))) {
                         array[k] = num;
                     }
                 }
@@ -1265,25 +1135,19 @@ void BillingForm::UpdateSaleList() {
                 }
             }
             if (!is_null(billingItem2)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(billingItem2));
-                });
+                PLS_API(kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(billingItem2)));
             } else if (!is_null(billingItem3)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(billingItem3));
-                });
+                PLS_API(kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(billingItem3)));
             }
         }
-        sales_ = pls::cs::Array<pls::cs::Ref<billing::ui::BillingItem>>::make(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(vector)); }));
+        sales_ = pls::cs::Array<pls::cs::Ref<billing::ui::BillingItem>>::make(
+            PLS_API(kl_java_util::Vector_2_Size(require(vector))));
         for (pls::cs::Int32 n = 0; n < sales_.length(); ++n) {
             {
                 auto cs_target = sales_;
                 auto cs_index = n;
                 auto cs_value = pls::cs::unbox<pls::cs::Ref<billing::ui::BillingItem>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(require(vector), n);
-                    }));
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), n)));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -1314,8 +1178,7 @@ void BillingForm::ThreadStart(pls::cs::Int32 type) {
 void BillingForm::Run() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.BillingForm.Run", game);
     {
-        threadBeginTime_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        threadBeginTime_ = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         pls::cs::run_finally(
             [&]() {
                 try {
@@ -1341,8 +1204,7 @@ void BillingForm::Run() {
                 } catch (const pls::cs::Exception& cs_caught_242) {
                     auto ex2 = pls::cs::capture_exception(cs_caught_242);
                     {
-                        error_ = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(ex2)->ToString(); });
+                        error_ = PLS_API(require(ex2)->ToString());
                         threadState_ = 3;
                         th_ = pls::cs::Ref<java::lang::JThread>{};
                     }
@@ -1361,9 +1223,8 @@ void BillingForm::DrawLine(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 
         "M:system.form.BillingForm.DrawLine(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawLine(x1, y1, x2, y2, 1.0f); });
+        PLS_API(require(g)->SetColor(color));
+        PLS_API(require(g)->DrawLine(x1, y1, x2, y2, 1.0f));
     }
 }
 
@@ -1376,10 +1237,9 @@ void BillingForm::DrawDotLine(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int
         "M:system.form.BillingForm.DrawDotLine(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color); });
+        PLS_API(require(g)->SetColor(color));
         for (pls::cs::Int32 i = x1; i < x2; i += 3) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawLine(i, y1, i + 1, y2, 1.0f); });
+            PLS_API(require(g)->DrawLine(i, y1, i + 1, y2, 1.0f));
         }
     }
 }
@@ -1393,9 +1253,8 @@ void BillingForm::DrawRect(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 
         "M:system.form.BillingForm.DrawRect(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x, y, width, height); });
+        PLS_API(require(g)->SetColor(color));
+        PLS_API(require(g)->DrawRect(x, y, width, height));
     }
 }
 
@@ -1409,12 +1268,10 @@ void BillingForm::DrawRect2(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32
         "M:system.form.BillingForm.DrawRect2(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color1); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x, y, width, height); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color2); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x + 1, y + 1, width - 2, height - 2); });
+        PLS_API(require(g)->SetColor(color1));
+        PLS_API(require(g)->DrawRect(x, y, width, height));
+        PLS_API(require(g)->SetColor(color2));
+        PLS_API(require(g)->DrawRect(x + 1, y + 1, width - 2, height - 2));
     }
 }
 
@@ -1428,15 +1285,12 @@ void BillingForm::DrawRect3(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32
         "M:system.form.BillingForm.DrawRect3(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color1); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x, y, width, height); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color2); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x + 1, y + 1, width - 2, height - 2); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color3); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawRect(x + 2, y + 2, width - 4, height - 4); });
+        PLS_API(require(g)->SetColor(color1));
+        PLS_API(require(g)->DrawRect(x, y, width, height));
+        PLS_API(require(g)->SetColor(color2));
+        PLS_API(require(g)->DrawRect(x + 1, y + 1, width - 2, height - 2));
+        PLS_API(require(g)->SetColor(color3));
+        PLS_API(require(g)->DrawRect(x + 2, y + 2, width - 4, height - 4));
     }
 }
 
@@ -1449,9 +1303,8 @@ void BillingForm::FillRect(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 
         "M:system.form.BillingForm.FillRect(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->FillRect(x, y, width, height); });
+        PLS_API(require(g)->SetColor(color));
+        PLS_API(require(g)->FillRect(x, y, width, height));
     }
 }
 
@@ -1567,12 +1420,8 @@ void BillingForm::DrawGradation(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::I
             num8 = (((num8 < 0.0)) ? pls::cs::Double(0.0) : (num8));
             num9 = (((num9 > 255.0)) ? pls::cs::Double(255.0) : (num9));
             num9 = (((num9 < 0.0)) ? pls::cs::Double(0.0) : (num9));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::Graphics::GetColorOfRGB(
-                        pls::cs::to_int32(num7), pls::cs::to_int32(num8), pls::cs::to_int32(num9));
-                }));
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(
+                pls::cs::to_int32(num7), pls::cs::to_int32(num8), pls::cs::to_int32(num9)))));
             pls::cs::Int32 num10 = 0;
             if ((num == dy && sy % 4 != 0)) {
                 num10 = (sy % 4);
@@ -1583,8 +1432,7 @@ void BillingForm::DrawGradation(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::I
                     num10 = 4;
                 }
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->FillRect(dxAlias, num, w, num10); });
+            PLS_API(require(g)->FillRect(dxAlias, num, w, num10));
             num += num10;
             num7 = num7 + num4;
             num8 = num8 + num5;
@@ -1635,17 +1483,15 @@ IntArray BillingForm::DrawAdOffButtoan(pls::cs::Ref<pls::kairo::Graphics> g, pls
             BillingForm::LoadResource();
             IntArray sprite =
                 require(require(BillingForm::resBilling_())->seb.get_Item(10))->GetSprite(frame, 0);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                        require(BillingForm::resBilling_())->img.get_Item(sprite[1]);
-                    pls::cs::Int32 cs_arg5 = sprite[2];
-                    pls::cs::Int32 cs_arg6 = sprite[3];
-                    pls::cs::Int32 cs_arg7 = sprite[4];
-                    pls::cs::Int32 cs_arg8 = sprite[5];
-                    require(g)->DrawScaledImage(cs_arg0, dx, dy, dw, dh, cs_arg5, cs_arg6, cs_arg7, cs_arg8);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                    require(BillingForm::resBilling_())->img.get_Item(sprite[1]);
+                pls::cs::Int32 cs_arg5 = sprite[2];
+                pls::cs::Int32 cs_arg6 = sprite[3];
+                pls::cs::Int32 cs_arg7 = sprite[4];
+                pls::cs::Int32 cs_arg8 = sprite[5];
+                require(g)->DrawScaledImage(cs_arg0, dx, dy, dw, dh, cs_arg5, cs_arg6, cs_arg7, cs_arg8);
+            }()));
             IntArray array = BillingForm::drawAdOffButtoan_result();
             array[0] = dx;
             array[1] = dy;
@@ -1665,12 +1511,10 @@ IntArray BillingForm::DrawAdOffButtoan(pls::cs::Ref<pls::kairo::Graphics> g, pls
 std::int32_t BillingForm::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.BillingForm.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace system::form

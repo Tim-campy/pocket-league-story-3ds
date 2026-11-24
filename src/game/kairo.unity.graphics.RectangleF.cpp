@@ -105,12 +105,10 @@ bool RectangleF::Equals(pls::cs::Ref<RectangleF> self, pls::cs::Ref<pls::cs::Obj
 std::int32_t RectangleF::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.graphics.RectangleF.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace kairo::unity::graphics

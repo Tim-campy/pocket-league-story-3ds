@@ -118,33 +118,21 @@ void QuestMatchData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.QuestMatchData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         name_ = array[num++];
-        matchForm_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        matchEnemy_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StringUtil::SplitIntegers(array[num++], literal(u","));
-        });
-        matchLeague_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        matchForm_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        matchEnemy_ = PLS_API(kl_util::StringUtil::SplitIntegers(array[num++], literal(u",")));
+        matchLeague_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         execsScript_ = EventData::ReadScript(array[num++]);
         execsScript2_ = EventData::ReadScript(array[num++]);
-        victoryPrize_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        matchPrize_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        joinCost_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        schedule_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        rank_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        victoryPrize_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        matchPrize_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        joinCost_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        schedule_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        rank_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         explain_ = array[num++];
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        flag_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
     }
 }
 
@@ -154,8 +142,7 @@ void QuestMatchData::NewGame() {
     {
         state_ = 0;
         trophy_ = 0;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::BitUtil::Check(flag_, 1); })) {
+        if (PLS_API(kl_util::BitUtil::Check(flag_, 1))) {
             ChangeState(1);
         }
     }
@@ -165,23 +152,14 @@ void QuestMatchData::NewGame() {
 void QuestMatchData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.QuestMatchData.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(trophy_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteBoolean(os, new_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(matchEnemy_.length()));
-        });
+        PLS_API(kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(trophy_)));
+        PLS_API(kl_util::StreamUtil::WriteBoolean(os, new_));
+        PLS_API(
+            kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(matchEnemy_.length())));
         for (pls::cs::Int32 i = 0; i < matchEnemy_.length(); ++i) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_util::StreamUtil::WriteShort(os,
-                                                       pls::cs::cast_integral<std::int16_t>(matchEnemy_[i]));
-            });
+            PLS_API(
+                kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(matchEnemy_[i])));
         }
     }
 }
@@ -190,21 +168,18 @@ void QuestMatchData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void QuestMatchData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.QuestMatchData.Deserialize(java.io.InputStream)", game);
     {
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadShort(stream); }));
-        trophy_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadShort(stream); }));
-        new_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadBoolean(stream); });
-        pls::cs::Int32 num = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadShort(stream); }));
+        state_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_util::StreamUtil::ReadShort(stream)));
+        trophy_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_util::StreamUtil::ReadShort(stream)));
+        new_ = PLS_API(kl_util::StreamUtil::ReadBoolean(stream));
+        pls::cs::Int32 num =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_util::StreamUtil::ReadShort(stream)));
         matchEnemy_ = IntArray::make(num);
         for (pls::cs::Int32 i = 0; i < matchEnemy_.length(); ++i) {
             {
                 auto cs_target = matchEnemy_;
                 auto cs_index = i;
-                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadShort(stream); }));
+                auto cs_value =
+                    pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_util::StreamUtil::ReadShort(stream)));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }

@@ -73,8 +73,7 @@ void TouchEffect::Init(pls::cs::Ref<kairo::unity::surface::SurfaceBase> surface,
         id_ = id;
         x_ = x;
         y_ = y;
-        lastFrameTime_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        lastFrameTime_ = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         time_ = lastFrameTime_;
         arg_ = arg;
         key_ = 0ll;
@@ -94,9 +93,7 @@ bool TouchEffect::Frame() {
     {
         pls::cs::Int32 num = 8;
         pls::cs::Int32 num2 = pls::cs::to_int32((([&]() -> pls::cs::Int64 {
-                                  auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return kl_lang::JSystem::CurrentTimeMillis();
-                                  });
+                                  auto cs_left = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                                   auto cs_right = time_;
                                   return cs_left - cs_right;
                               }()))) /
@@ -107,9 +104,7 @@ bool TouchEffect::Frame() {
         pls::cs::Double num3 = vx_;
         pls::cs::Double num4 = vy_;
         pls::cs::Double num5 = pls::cs::Double((([&]() -> pls::cs::Int64 {
-                                   auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_lang::JSystem::CurrentTimeMillis();
-                                   });
+                                   auto cs_left = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                                    auto cs_right = lastFrameTime_;
                                    return cs_left - cs_right;
                                }()))) /
@@ -124,8 +119,7 @@ bool TouchEffect::Frame() {
         if ((num4 >= 0.0 && vy_ < 0.0f) || (vy_ >= 0.0f && num4 < 0.0)) {
             vx_ = 0.0f;
         }
-        lastFrameTime_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        lastFrameTime_ = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         return false;
     }
 }
@@ -136,9 +130,7 @@ void TouchEffect::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     {
         pls::cs::Single num = require(surface_)->GetScaleRatio() / 100.0f;
         pls::cs::Int32 num2 = pls::cs::to_int32((([&]() -> pls::cs::Int64 {
-                                  auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                      return kl_lang::JSystem::CurrentTimeMillis();
-                                  });
+                                  auto cs_left = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                                   auto cs_right = time_;
                                   return cs_left - cs_right;
                               }()))) /
@@ -169,20 +161,16 @@ void TouchEffect::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                  num5 / 2.0f;
             pls::cs::Single num6 = array2[0] * num;
             pls::cs::Single num7 = array2[1] * num;
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, num3, 255 - num3); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Int32 cs_arg5 = pls::cs::to_int32((array2[2] + 0.5f));
-                    pls::cs::Int32 cs_arg6 = pls::cs::to_int32((array2[3] + 0.5f));
-                    pls::cs::Int32 cs_arg7 = pls::cs::to_int32((array2[4] + 0.5f));
-                    pls::cs::Int32 cs_arg8 = pls::cs::to_int32((array2[5] + 0.5f));
-                    require(g)->DrawScaledImage(image, dx, dy, num6 + num4, num7 + num5, cs_arg5, cs_arg6,
-                                                cs_arg7, cs_arg8);
-                }());
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
+            PLS_API(require(g)->SetRenderMode(1, num3, 255 - num3));
+            PLS_API(([&]() -> void {
+                pls::cs::Int32 cs_arg5 = pls::cs::to_int32((array2[2] + 0.5f));
+                pls::cs::Int32 cs_arg6 = pls::cs::to_int32((array2[3] + 0.5f));
+                pls::cs::Int32 cs_arg7 = pls::cs::to_int32((array2[4] + 0.5f));
+                pls::cs::Int32 cs_arg8 = pls::cs::to_int32((array2[5] + 0.5f));
+                require(g)->DrawScaledImage(image, dx, dy, num6 + num4, num7 + num5, cs_arg5, cs_arg6,
+                                            cs_arg7, cs_arg8);
+            }()));
+            PLS_API(require(g)->SetRenderMode(0, 255, 0));
         } else if (id_ == 1) {
 
         } else if (id_ == 2) {

@@ -124,39 +124,24 @@ void ApplyTask::Init(pls::cs::Ref<BillingItem> item, pls::cs::String gift, pls::
             provisionValueS_ = kl_util::SecureString::create(require(item_)->GetProvisionValueText());
             provisionValueI_ = kl_util::SecureInt::create(require(item_)->GetProvisionValue());
         } else {
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(gift_)->Length(); }) > 0) {
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(gift_)->IndexOf(9); }) != -1) {
-                    StringArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_util::StringUtil::Split(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                              return require(gift_)->ToString();
-                                                          }),
-                                                          literal(u"\t"));
-                    });
-                    talkCharaId_ = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[0]); });
+            if (PLS_API(require(gift_)->Length()) > 0) {
+                if (PLS_API(require(gift_)->IndexOf(9)) != -1) {
+                    StringArray array = PLS_API(
+                        kl_util::StringUtil::Split(PLS_API(require(gift_)->ToString()), literal(u"\t")));
+                    talkCharaId_ = PLS_API(kl_lang::JInteger::ParseInt(array[0]));
                     talkText_ = kl_util::SecureString::create(array[1]);
                 } else {
-                    if (pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(gift_)->StartsWith(literal(u"@")); })) {
+                    if (PLS_API(require(gift_)->StartsWith(literal(u"@")))) {
 
                     } else {
-                        StringArray array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_util::StringUtil::Split(
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(gift_)->ToString(); }),
-                                literal(u","));
-                        });
+                        StringArray array2 = PLS_API(
+                            kl_util::StringUtil::Split(PLS_API(require(gift_)->ToString()), literal(u",")));
                         productId_ = kl_util::SecureString::create(array2[0]);
                         if (1 < array2.length()) {
                             name_ = kl_util::SecureString::create(array2[1]);
                         }
-                        array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_util::StringUtil::Split(
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(productId_)->Get(); }),
-                                literal(u"_"));
-                        });
+                        array2 = PLS_API(
+                            kl_util::StringUtil::Split(PLS_API(require(productId_)->Get()), literal(u"_")));
                         if (0 < array2.length()) {
                             provisionType_ = kl_util::SecureString::create(array2[0]);
                         }
@@ -164,30 +149,20 @@ void ApplyTask::Init(pls::cs::Ref<BillingItem> item, pls::cs::String gift, pls::
                             provisionValueS_ = kl_util::SecureString::create(array2[1]);
                         }
                         try {
-                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(provisionValueS_)->Equals_2(literal(u"on"));
-                                })) {
+                            if (PLS_API(require(provisionValueS_)->Equals_2(literal(u"on")))) {
                                 provisionValueI_ = kl_util::SecureInt::create(1);
-                            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(provisionValueS_)->Equals_2(literal(u"off"));
-                                       })) {
+                            } else if (PLS_API(require(provisionValueS_)->Equals_2(literal(u"off")))) {
                                 provisionValueI_ = kl_util::SecureInt::create(0);
                             } else {
-                                provisionValueI_ = kl_util::SecureInt::create(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_lang::JInteger::ParseInt(
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(provisionValueS_)->Get();
-                                            }));
-                                    }));
+                                provisionValueI_ = kl_util::SecureInt::create(PLS_API(
+                                    kl_lang::JInteger::ParseInt(PLS_API(require(provisionValueS_)->Get()))));
                             }
                         } catch (const pls::cs::Exception& cs_caught_197) {
                             pls::cs::capture_exception(cs_caught_197);
                             {
                             }
                         }
-                        if (pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(name_)->Length(); }) == 0) {
+                        if (PLS_API(require(name_)->Length()) == 0) {
                             pls::cs::Ref<BillingManager> instance = BillingManager::GetInstance();
                             pls::cs::Array<pls::cs::Ref<BillingItem>> items = require(instance)->GetItems();
                             pls::cs::Ref<BillingItem> billingItem = pls::cs::Ref<BillingItem>{};
@@ -197,34 +172,25 @@ void ApplyTask::Init(pls::cs::Ref<BillingItem> item, pls::cs::String gift, pls::
                                 if (is_null(items.get_Item(i))) {
                                     continue;
                                 }
-                                if (!(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> bool {
-                                            auto cs_arg0 = require(items.get_Item(i))->GetProvisionType();
-                                            auto cs_arg1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_util::SecureString::ToStringSecureStringStatic(
-                                                    provisionType_);
-                                            });
-                                            return string_equals(cs_arg0, cs_arg1);
-                                        }());
-                                    }))) {
+                                if (!(PLS_API(([&]() -> bool {
+                                        auto cs_arg0 = require(items.get_Item(i))->GetProvisionType();
+                                        auto cs_arg1 =
+                                            PLS_API(kl_util::SecureString::ToStringSecureStringStatic(
+                                                provisionType_));
+                                        return string_equals(cs_arg0, cs_arg1);
+                                    }())))) {
                                     continue;
                                 }
-                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> bool {
-                                            auto cs_arg0 =
-                                                require(items.get_Item(i))->GetProvisionValueText();
-                                            auto cs_arg1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_util::SecureString::ToStringSecureStringStatic(
-                                                    provisionValueS_);
-                                            });
-                                            return string_equals(cs_arg0, cs_arg1);
-                                        }());
-                                    })) {
+                                if (PLS_API(([&]() -> bool {
+                                        auto cs_arg0 = require(items.get_Item(i))->GetProvisionValueText();
+                                        auto cs_arg1 =
+                                            PLS_API(kl_util::SecureString::ToStringSecureStringStatic(
+                                                provisionValueS_));
+                                        return string_equals(cs_arg0, cs_arg1);
+                                    }()))) {
                                     billingItem = items.get_Item(i);
                                 } else if (require(items.get_Item(i))->GetProvisionValue() > 1 &&
-                                           pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return require(provisionValueI_)->Get();
-                                           }) > 1) {
+                                           PLS_API(require(provisionValueI_)->Get()) > 1) {
                                     billingItem2 = items.get_Item(i);
                                 } else {
                                     billingItem3 = items.get_Item(i);
@@ -250,22 +216,12 @@ void ApplyTask::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.ApplyTask.Serialize(java.io.OutputStream)",
                      game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteInt(os, (!is_null(item_)) ? (require(item_)->id_)
-                                                                       : pls::cs::Int32(-1));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteStringString(
-                os,
-                (!is_null(gift_))
-                    ? (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(gift_)->Get(); }))
-                    : (pls::cs::String(u"")));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteByteByte(os, pls::cs::cast_integral<std::uint8_t>(type_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteBoolean(os, notice_); });
+        PLS_API(kl_util::StreamUtil::WriteInt(os, (!is_null(item_)) ? (require(item_)->id_)
+                                                                    : pls::cs::Int32(-1)));
+        PLS_API(kl_util::StreamUtil::WriteStringString(
+            os, (!is_null(gift_)) ? (PLS_API(require(gift_)->Get())) : (pls::cs::String(u""))));
+        PLS_API(kl_util::StreamUtil::WriteByteByte(os, pls::cs::cast_integral<std::uint8_t>(type_)));
+        PLS_API(kl_util::StreamUtil::WriteBoolean(os, notice_));
     }
 }
 
@@ -277,21 +233,16 @@ void ApplyTask::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
         pls::cs::Ref<BillingManager> instance = BillingManager::GetInstance();
         pls::cs::Array<pls::cs::Ref<BillingItem>> items = require(instance)->GetItems();
         item_ = pls::cs::Ref<BillingItem>{};
-        pls::cs::Int32 num = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
+        pls::cs::Int32 num = PLS_API(kl_util::StreamUtil::ReadInt(stream));
         if (0 <= num && num < items.length()) {
             item_ = items.get_Item(num);
         }
-        gift_ = kl_util::SecureString::create(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadString(stream); }));
-        type_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadByte(stream); }));
-        notice_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadBoolean(stream); });
+        gift_ = kl_util::SecureString::create(PLS_API(kl_util::StreamUtil::ReadString(stream)));
+        type_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_util::StreamUtil::ReadByte(stream)));
+        notice_ = PLS_API(kl_util::StreamUtil::ReadBoolean(stream));
         {
             pls::cs::Ref<BillingItem> cs_arg0 = item_;
-            pls::cs::String cs_arg1 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::SecureString::ToStringSecureStringStatic(gift_); });
+            pls::cs::String cs_arg1 = PLS_API(kl_util::SecureString::ToStringSecureStringStatic(gift_));
             pls::cs::Int32 cs_arg2 = type_;
             bool cs_arg3 = notice_;
             Init(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
@@ -319,8 +270,7 @@ bool ApplyTask::IsItem() {
 bool ApplyTask::IsGift() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.ApplyTask.IsGift", game);
     {
-        return (!is_null(gift_) &&
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(gift_)->Length(); }) > 0);
+        return (!is_null(gift_) && PLS_API(require(gift_)->Length()) > 0);
     }
 }
 
@@ -328,10 +278,8 @@ bool ApplyTask::IsGift() {
 bool ApplyTask::IsGiftScript() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.ApplyTask.IsGiftScript", game);
     {
-        return (!is_null(gift_) && pls::diagnostic::api_call(
-                                       [&]() -> decltype(auto) { return require(gift_)->Length(); }) > 0) &&
-               pls::diagnostic::api_call(
-                   [&]() -> decltype(auto) { return require(gift_)->StartsWith(literal(u"@")); });
+        return (!is_null(gift_) && PLS_API(require(gift_)->Length()) > 0) &&
+               PLS_API(require(gift_)->StartsWith(literal(u"@")));
     }
 }
 
@@ -352,8 +300,7 @@ bool ApplyTask::Equals(pls::cs::Ref<ApplyTask> obj) {
             return pls::cs::box(item_) == pls::cs::box(require(obj)->item_) && type_ == require(obj)->type_;
         }
         if (IsGift() && require(obj)->IsGift()) {
-            return pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(gift_)->EqualsSecureString(require(obj)->gift_); });
+            return PLS_API(require(gift_)->EqualsSecureString(require(obj)->gift_));
         }
         if (!IsGift() && !IsItem() && !require(obj)->IsGift() && !require(obj)->IsItem()) {
             return true;

@@ -132,28 +132,29 @@ o que o empacotador do tradutor não sabia decidir. Depois do congelamento: incl
 cabeçalho onde falta e trocar as chamadas; o sufixo `_2` some se `Vector<T>` e
 `Vector` forem fundidos (o C# usa `Vector` só como apelido de `Vector<object>`).
 
-### Forma mais curta para `api_call` (proposta de 2026-11-23, não aplicada)
+### Remover o embrulho `PLS_API` (proposta de 2026-11-24, não aplicada)
 
-O jogo tem 10.145 chamadas `pls::diagnostic::api_call([&]() -> decltype(auto) { return EXPR; })`
-em 140 arquivos de `src/game/` (e 252 em `src/kairo/common/generated/`), todas nesta
-forma exata. Proposta: uma macro variádica em `src/kairo/common/diagnostic_profile.hpp`
+`PLS_API(X)` (aplicada em 2026-11-24, `docs/notes/pls-api-2026-11-24.md`) só serve ao
+perfil do build de diagnóstico no PC: separa o tempo das chamadas à plataforma do tempo
+do jogo (`PLS_FRAME_PROFILE`, áreas `translated_game` × `independent_kairo_api`) e o tira
+do tempo exclusivo de cada método (`tools/diagnostic_execution.py`). Não é usado pelo
+benchmark do 3DS (o build ARM não define `PLS_DIAGNOSTIC_BUILD`: lá é a própria
+chamada), nem pela cobertura e pela salvaguarda dos roteiros (`PLS_METHOD_SCOPE`).
+Sem ele, o tempo da plataforma conta como tempo do método do jogo que a chamou.
 
-```cpp
-#define PLS_API(...) ::pls::diagnostic::api_call([&]() -> decltype(auto) { return __VA_ARGS__; })
-```
-
-e a troca mecânica `pls::diagnostic::api_call([&]() -> decltype(auto) { return X; })` →
-`PLS_API(X)`. Antes/depois:
-
-```cpp
-cost_ = pls::diagnostic::api_call(
-    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-cost_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
-```
-
-Prova de equivalência: a macro se expande para os mesmos tokens (mesma lambda, mesma
-captura, mesmo `decltype(auto)`), então (1) a sequência de tokens depois do
-pré-processador é idêntica (`cl /P` antes e depois, comparada com
-`tools/cpp_tokens.py`) e (2) os objetos de cada unidade são idênticos em código e
-dados no PC e no ARM (`tools/compare_objects.py`, como na formatação de 2026-11-23).
-Custo: uma macro no runtime (decisão do usuário) e um commit grande, só de forma.
+Proposta: trocar `PLS_API(X)` por `X` (entre parênteses só onde a precedência exigir).
+Não é mudança só de forma: a lambda some, e com ela um ponto de sequência entre `X` e o
+resto da expressão (o C++17 não intercala a avaliação de uma chamada de função com a de
+outros operandos; sem a lambda, subexpressões de `X` podem se intercalar com operandos
+não sequenciados vizinhos). Prova necessária:
+1. **ARM** (onde `api_call` já é só a chamada e a lambda é expandida em linha com `-O2`):
+   objetos idênticos em código e dados (`tools/compare_objects.py`); qualquer diferença
+   explicada caso a caso.
+2. **PC, build normal** (sem diagnóstico): idem.
+3. **PC diagnóstico**: os objetos mudam por definição (some o `Scope`); comportamento
+   pelos 87 roteiros (mesmos métodos executados, mesmos estados de interface e saves que
+   antes) e pela verificação completa.
+4. Revisão dos pontos onde `X` aparece junto de outro operando com efeito, no mesmo
+   comando, sem bloco de ordem (`cs_arg`, `cs_left`): listar por ferramenta e conferir
+   que a ordem não é observável.
+Custo: perde-se a separação de tempo jogo × plataforma no perfil do PC.

@@ -85,17 +85,14 @@ void TextFormat::Init(pls::cs::String format) {
         if (is_null(format)) {
             return;
         }
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StringUtil::Split(format, literal(u",")); });
+        StringArray array = PLS_API(kl_util::StringUtil::Split(format, literal(u",")));
         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
-            pls::cs::String text =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::string_trim(array[i]); });
+            pls::cs::String text = PLS_API(pls::cs::string_trim(array[i]));
             if (kl_lang::StringEx::Length(text) == 0) {
                 continue;
             }
             if ((i == 0)) {
-                font_ = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(text); });
+                font_ = PLS_API(kl_lang::JInteger::ParseInt(text));
             } else if ((i == 1) || (i == 2)) {
                 {
                     char16_t c = kl_lang::StringEx::CharAt(text, 0);
@@ -107,8 +104,7 @@ void TextFormat::Init(pls::cs::String format) {
                          pls::cs::cast_integral<pls::cs::Int32>(u'*')) ||
                         (pls::cs::cast_integral<pls::cs::Int32>(c) ==
                          pls::cs::cast_integral<pls::cs::Int32>(u'/'))) {
-                        text = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return substring1(text, 1); });
+                        text = PLS_API(substring1(text, 1));
                     }
                     pls::cs::Int32 num = pls::cs::to_int32((java::lang::JFloat::ParseFloat(text) * 10.0f));
                     IntArray array2 = IntArray::make(2);
@@ -133,8 +129,7 @@ void TextFormat::Init(pls::cs::String format) {
                     }
                 }
             } else if ((i == 3)) {
-                anchor_ = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(text); });
+                anchor_ = PLS_API(kl_lang::JInteger::ParseInt(text));
             }
         }
     }
@@ -200,15 +195,11 @@ pls::cs::Int32 TextFormat::GetAnchor(pls::cs::Int32 anchor) {
         if (anchor_ == -1) {
             return anchor;
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::BitUtil::Check(anchor_, 7); })) {
-            anchor = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::BitUtil::Off(anchor, 7); });
+        if (PLS_API(kl_util::BitUtil::Check(anchor_, 7))) {
+            anchor = PLS_API(kl_util::BitUtil::Off(anchor, 7));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::BitUtil::Check(anchor_, 112); })) {
-            anchor = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::BitUtil::Off(anchor, 112); });
+        if (PLS_API(kl_util::BitUtil::Check(anchor_, 112))) {
+            anchor = PLS_API(kl_util::BitUtil::Off(anchor, 112));
         }
         return anchor | anchor_;
     }

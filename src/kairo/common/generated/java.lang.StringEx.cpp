@@ -37,14 +37,12 @@ bool EqualsIgnoreCase(pls::cs::String str, pls::cs::String anotherString) {
         if (str.length() != anotherString.length()) {
             return false;
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = str;
-                auto cs_argument = anotherString;
-                cs_receiver.length();
-                return pls::cs::culture_equals_ignore_case(cs_receiver, cs_argument);
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = str;
+            auto cs_argument = anotherString;
+            cs_receiver.length();
+            return pls::cs::culture_equals_ignore_case(cs_receiver, cs_argument);
+        }()));
     }
 }
 
@@ -53,8 +51,7 @@ ByteArray GetBytes(pls::cs::String str) {
     StringEx::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.StringEx.GetBytes(System.String)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(pls::cs::RuntimeEncoding::get_UTF8())->GetBytes(str); });
+        return PLS_API(require(pls::cs::RuntimeEncoding::get_UTF8())->GetBytes(str));
     }
 }
 
@@ -63,8 +60,7 @@ pls::cs::Int32 IndexOf(pls::cs::String str, pls::cs::Int32 ch) {
     StringEx::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.StringEx.IndexOf(System.String,System.Int32)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return index_char1(str, pls::cs::cast_integral<char16_t>(ch)); });
+        return PLS_API(index_char1(str, pls::cs::cast_integral<char16_t>(ch)));
     }
 }
 
@@ -101,7 +97,7 @@ pls::cs::String ToLowerCase(pls::cs::String str) {
     StringEx::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.StringEx.ToLowerCase(System.String)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::culture_to_lower(str); });
+        return PLS_API(pls::cs::culture_to_lower(str));
     }
 }
 
@@ -111,8 +107,7 @@ pls::cs::String SubstringJ(pls::cs::String str, pls::cs::Int32 beginIndex, pls::
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:java.lang.StringEx.SubstringJ(System.String,System.Int32,System.Int32)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return substring2(str, beginIndex, endIndex - beginIndex); });
+        return PLS_API(substring2(str, beginIndex, endIndex - beginIndex));
     }
 }
 
@@ -121,7 +116,7 @@ pls::cs::String SubstringJ(pls::cs::String str, pls::cs::Int32 beginIndex) {
     StringEx::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.StringEx.SubstringJ(System.String,System.Int32)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return substring1(str, beginIndex); });
+        return PLS_API(substring1(str, beginIndex));
     }
 }
 } // namespace java::lang::StringEx

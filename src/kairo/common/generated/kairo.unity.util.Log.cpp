@@ -42,8 +42,7 @@ pls::cs::String Info(pls::cs::String text, pls::cs::Ref<pls::cs::ExceptionObject
                 Log::DebugLog(text);
             }
             if (!is_null(t)) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::debug_log(pls::cs::box(t)); });
+                PLS_API(pls::kairo::debug_log(pls::cs::box(t)));
             }
         }
         if (is_null(text)) {
@@ -61,8 +60,7 @@ pls::cs::String Info(pls::cs::Ref<pls::cs::ExceptionObject> t) {
         common::cfg::Config::ensure_initialized();
 
         if (common::cfg::Config::PRINT() && !is_null(t)) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::debug_log(pls::cs::box(t)); });
+            PLS_API(pls::kairo::debug_log(pls::cs::box(t)));
         }
         return literal(u"");
     }
@@ -76,8 +74,7 @@ void DebugLog(pls::cs::String text) {
         if (text == Log::lastLog_()) {
             text = pls::cs::String::concat(text, literal(u" "));
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::debug_log(pls::cs::box(text)); });
+        PLS_API(pls::kairo::debug_log(pls::cs::box(text)));
         Log::lastLog_() = text;
     }
 }
@@ -91,41 +88,30 @@ pls::cs::String GetThrowableName(pls::cs::Ref<pls::cs::ExceptionObject> t) {
         if (is_null(t)) {
             return literal(u"");
         }
-        pls::cs::Ref<pls::cs::RuntimeType> type = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(t);
-                return pls::cs::RuntimeType::for_name(require(cs_receiver)->managed_type_name());
-            }());
-        });
+        pls::cs::Ref<pls::cs::RuntimeType> type = PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(t);
+            return pls::cs::RuntimeType::for_name(require(cs_receiver)->managed_type_name());
+        }()));
         pls::cs::String text = require(type)->get_Name();
         try {
-            pls::cs::Int32 num =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return last_index_char1(text, u'.'); });
+            pls::cs::Int32 num = PLS_API(last_index_char1(text, u'.'));
             if (num != -1) {
-                text =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return substring1(text, num + 1); });
+                text = PLS_API(substring1(text, num + 1));
             }
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::cs::culture_ends_with(text, literal(u"Exception"));
-                })) {
-                text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return substring2(text, 0, ([&]() -> pls::cs::Int32 {
-                                          auto cs_left = java::lang::StringEx::Length(text);
-                                          auto cs_right = java::lang::StringEx::Length(literal(u"Exception"));
-                                          return cs_left - cs_right;
-                                      }()));
-                });
+            if (PLS_API(pls::cs::culture_ends_with(text, literal(u"Exception")))) {
+                text = PLS_API(substring2(text, 0, ([&]() -> pls::cs::Int32 {
+                                              auto cs_left = java::lang::StringEx::Length(text);
+                                              auto cs_right =
+                                                  java::lang::StringEx::Length(literal(u"Exception"));
+                                              return cs_left - cs_right;
+                                          }())));
             }
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::cs::culture_ends_with(text, literal(u"Error"));
-                })) {
-                text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return substring2(text, 0, ([&]() -> pls::cs::Int32 {
-                                          auto cs_left = java::lang::StringEx::Length(text);
-                                          auto cs_right = java::lang::StringEx::Length(literal(u"Error"));
-                                          return cs_left - cs_right;
-                                      }()));
-                });
+            if (PLS_API(pls::cs::culture_ends_with(text, literal(u"Error")))) {
+                text = PLS_API(substring2(text, 0, ([&]() -> pls::cs::Int32 {
+                                              auto cs_left = java::lang::StringEx::Length(text);
+                                              auto cs_right = java::lang::StringEx::Length(literal(u"Error"));
+                                              return cs_left - cs_right;
+                                          }())));
             }
             return text;
         } catch (const pls::cs::Exception& cs_caught_1) {

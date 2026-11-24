@@ -69,12 +69,11 @@ pls::cs::String KairoText::LT(pls::cs::String text) {
     KairoText::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.KairoText.LT(System.String)", game);
     {
-        pls::cs::String text2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::Language::TranslateText(text, true); });
+        pls::cs::String text2 = PLS_API(kl_util::Language::TranslateText(text, true));
         if (text2 != text) {
             return text2;
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Language::Japanese(); })) {
+        if (PLS_API(kl_util::Language::Japanese())) {
             return text;
         }
         if (!KairoText::convertTranslateTable_()) {
@@ -83,25 +82,19 @@ pls::cs::String KairoText::LT(pls::cs::String text) {
                     {
                         auto cs_target = KairoText::TRANSLATE_TABLE()[i];
                         auto cs_index = j;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_util::StringUtil::Replace(KairoText::TRANSLATE_TABLE()[i][j],
-                                                                literal(u"\n"), literal(u"<br>"));
-                        });
+                        auto cs_value = PLS_API(kl_util::StringUtil::Replace(
+                            KairoText::TRANSLATE_TABLE()[i][j], literal(u"\n"), literal(u"<br>")));
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
             }
             KairoText::convertTranslateTable_() = true;
         }
-        pls::cs::String value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StringUtil::Replace(text, literal(u"\n"), literal(u"<br>"));
-        });
+        pls::cs::String value = PLS_API(kl_util::StringUtil::Replace(text, literal(u"\n"), literal(u"<br>")));
         pls::cs::Int32 num = 1;
         for (pls::cs::Int32 k = 0; k < KairoText::TRANSLATE_TABLE().length(); ++k) {
             if (num < KairoText::TRANSLATE_TABLE()[k].length() &&
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return string_equals(KairoText::TRANSLATE_TABLE()[k][0], value);
-                })) {
+                PLS_API(string_equals(KairoText::TRANSLATE_TABLE()[k][0], value))) {
                 return KairoText::TRANSLATE_TABLE()[k][num];
             }
         }
@@ -114,8 +107,7 @@ pls::cs::String KairoText::LT(pls::cs::String text, pls::cs::String arg) {
     KairoText::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.KairoText.LT(System.String,System.String)", game);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StringUtil::Replace(KairoText::LT(text), arg); });
+        return PLS_API(kl_util::StringUtil::Replace(KairoText::LT(text), arg));
     }
 }
 
@@ -124,14 +116,11 @@ pls::cs::String KairoText::LTInt(pls::cs::String text, pls::cs::Int32 arg) {
     KairoText::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.KairoText.LT(System.String,System.Int32)", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::String {
-                pls::cs::String cs_arg0 = KairoText::LT(text);
-                pls::cs::String cs_arg1 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JString::ValueOfInt(arg); });
-                return kl_util::StringUtil::Replace(cs_arg0, cs_arg1);
-            }());
-        });
+        return PLS_API(([&]() -> pls::cs::String {
+            pls::cs::String cs_arg0 = KairoText::LT(text);
+            pls::cs::String cs_arg1 = PLS_API(kl_lang::JString::ValueOfInt(arg));
+            return kl_util::StringUtil::Replace(cs_arg0, cs_arg1);
+        }()));
     }
 }
 } // namespace system

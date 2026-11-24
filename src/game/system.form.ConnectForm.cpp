@@ -107,8 +107,7 @@ bool ConnectForm::Init() {
     {
         MyFormBase::Init();
         apdat_ = main::AppData::GetInstance();
-        canvas_ =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        canvas_ = PLS_API(pls::kairo::Canvas::GetInstance());
         formMan_ = pls::game::form::FormManager::GetInstance();
         if (is_null(ConnectForm::resConnect_())) {
             ConnectForm::resConnect_() =
@@ -118,21 +117,17 @@ bool ConnectForm::Init() {
                     ->SetRecordNameBits(0);
             {
                 auto cs_receiver = ConnectForm::resConnect_();
-                ByteArray cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::Storage::Read(3, false, literal(u"connect.dat"));
-                });
+                ByteArray cs_arg0 = PLS_API(pls::kairo::Storage::Read(3, false, literal(u"connect.dat")));
                 require(cs_receiver)->Load(cs_arg0, 3);
             }
         }
         ConnectForm::frame_() = 0;
         ConnectForm::close_() = false;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = pls::cs::String(u"");
-                pls::cs::String cs_arg1 = pls::cs::String(u"");
-                this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = pls::cs::String(u"");
+            pls::cs::String cs_arg1 = pls::cs::String(u"");
+            this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
         return true;
     }
 }
@@ -144,9 +139,7 @@ bool ConnectForm::Update() {
         MyFormBase::Update();
         ConnectForm::frame_() = ((ConnectForm::frame_() + 1) % 2147483647 /* Int32.MaxValue */);
         if (ConnectForm::close_()) {
-            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-            });
+            return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
         }
         try {
             java::lang::JThread::Yield();
@@ -165,22 +158,18 @@ void ConnectForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.ConnectForm.Draw(kairo.unity.ui.Graphics)", game);
     {
         MyFormBase::Draw(g);
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg0 = (require(view_)->GetGameWidth() - 240) / 2;
-                pls::cs::Int32 cs_arg1 = (require(view_)->GetGameHeight() - 240) / 2 + 13;
-                require(g)->SetOrigin(cs_arg0, cs_arg1);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg0 = (require(view_)->GetGameWidth() - 240) / 2;
+            pls::cs::Int32 cs_arg1 = (require(view_)->GetGameHeight() - 240) / 2 + 13;
+            require(g)->SetOrigin(cs_arg0, cs_arg1);
+        }()));
         pls::cs::run_finally(
             [&]() {
                 {
                     _draw(g);
                 }
             },
-            [&]() {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-            });
+            [&]() { PLS_API(require(g)->SetOrigin(0, 0)); });
     }
 }
 
@@ -188,10 +177,8 @@ void ConnectForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
 void ConnectForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.ConnectForm._draw(kairo.unity.ui.Graphics)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::Log::Info(literal(u"ConnectForm._draw()"),
-                                      pls::cs::Ref<pls::cs::ExceptionObject>{});
-        });
+        PLS_API(
+            kl_util::Log::Info(literal(u"ConnectForm._draw()"), pls::cs::Ref<pls::cs::ExceptionObject>{}));
     }
 }
 
@@ -236,12 +223,10 @@ bool ConnectForm::Finish() {
 std::int32_t ConnectForm::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.ConnectForm.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace system::form

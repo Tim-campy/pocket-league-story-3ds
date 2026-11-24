@@ -93,10 +93,9 @@ void MatchForm::create_init(pls::cs::Ref<MatchForm> self) {
     self->userList_ = pls::cs::Array<pls::cs::Ref<MatchForm_UserRecord>>::make(0);
     self->USER_MAX = 3;
     self->TOPRANK_MAX = 7;
-    self->rankList_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<
-            pls::cs::Array<pls::cs::Array<pls::cs::Ref<MatchForm_UserRecord>>>>(IntArray::from({2, 0}));
-    });
+    self->rankList_ = PLS_API(
+        kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<MatchForm_UserRecord>>>>(
+            IntArray::from({2, 0})));
     MyFormBase::create_init(pls::cs::static_pointer_cast<MyFormBase>(self), 904);
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.MatchForm.#ctor", game);
     {
@@ -109,10 +108,9 @@ void MatchForm::create_init(pls::cs::Ref<MatchForm> self, pls::cs::Int32 type) {
     self->userList_ = pls::cs::Array<pls::cs::Ref<MatchForm_UserRecord>>::make(0);
     self->USER_MAX = 3;
     self->TOPRANK_MAX = 7;
-    self->rankList_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<
-            pls::cs::Array<pls::cs::Array<pls::cs::Ref<MatchForm_UserRecord>>>>(IntArray::from({2, 0}));
-    });
+    self->rankList_ = PLS_API(
+        kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<pls::cs::Ref<MatchForm_UserRecord>>>>(
+            IntArray::from({2, 0})));
     MyFormBase::create_init(pls::cs::static_pointer_cast<MyFormBase>(self), 904);
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.MatchForm.#ctor(System.Int32)", game);
     {
@@ -169,8 +167,7 @@ void MatchForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         pls::cs::Int32 num = x_;
         pls::cs::Int32 num2 = y_;
         if ([&]() {
-                auto cs_left = pls::cs::box(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetForm(0); }));
+                auto cs_left = pls::cs::box(PLS_API(require(formMan_)->GetForm(0)));
                 auto cs_right = pls::cs::box(require(apdat_)->frmGame_);
                 return cs_left == cs_right;
             }()) {
@@ -180,7 +177,7 @@ void MatchForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             num += (require(view_)->GetGameWidth() - 240) / 2;
             num2 += (require(view_)->GetGameHeight() - 240) / 2;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(num, num2); });
+        PLS_API(require(g)->SetOrigin(num, num2));
         pls::cs::run_finally(
             [&]() {
                 try {
@@ -191,9 +188,7 @@ void MatchForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     }
                 }
             },
-            [&]() {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-            });
+            [&]() { PLS_API(require(g)->SetOrigin(0, 0)); });
     }
 }
 
@@ -205,10 +200,8 @@ void MatchForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             return;
         }
         if (!require(apdat_)->IsTopForm(this)) {
-            pls::cs::Ref<pls::kairo::FormBase> topForm = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(topForm)->GetId(); }) !=
-                4) {
+            pls::cs::Ref<pls::kairo::FormBase> topForm = PLS_API(require(formMan_)->GetTopForm());
+            if (PLS_API(require(topForm)->GetId()) != 4) {
                 return;
             }
             pls::cs::Ref<pls::game::form::SubForm> subForm =
@@ -216,18 +209,13 @@ void MatchForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             if (!require(subForm)->IsMenu() && require(subForm)->type_ != type_) {
                 return;
             }
-            for (pls::cs::Int32 num = pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return require(formMan_)->GetFormsNum();
-                                      })) -
-                                      2;
-                 num >= 0; --num) {
-                topForm = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetForm(num); });
+            for (pls::cs::Int32 num = pls::cs::Int32(PLS_API(require(formMan_)->GetFormsNum())) - 2; num >= 0;
+                 --num) {
+                topForm = PLS_API(require(formMan_)->GetForm(num));
                 if (pls::cs::box(topForm) == pls::cs::box(this)) {
                     break;
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(topForm)->GetId(); }) != 4 ||
+                if (PLS_API(require(topForm)->GetId()) != 4 ||
                     !require((pls::cs::unbox<pls::cs::Ref<pls::game::form::SubForm>>(pls::cs::box(topForm))))
                          ->IsMenu()) {
                     return;
@@ -293,25 +281,17 @@ bool MatchForm::_update() {
                 threadState_ = 0;
                 if (threadType_ == 2) {
                     require(require(apdat_)->frmGame_)->Init();
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
             } else if (threadState_ == 3) {
                 threadState_ = 0;
                 if (kl_cfg::Config::PRINT()) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::Log::Info(error_, pls::cs::Ref<pls::cs::ExceptionObject>{});
-                    });
+                    PLS_API(kl_unity_util::Log::Info(error_, pls::cs::Ref<pls::cs::ExceptionObject>{}));
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                        pls::game::form::SubForm::MakeDialog(error_));
-                });
+                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                    pls::game::form::SubForm::MakeDialog(error_)));
                 if (type_ == 1) {
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
             }
         }
@@ -320,37 +300,28 @@ bool MatchForm::_update() {
         require(require(require(apdat_)->resCom2_)->seb.get_Item(60))->Frame();
         if (type_ == 0) {
             pls::cs::Int32 num = USER_MAX + 1;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 select_ = (select_ - 1 + num) % num;
-            } else if (pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            } else if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 select_ = (select_ + 1 + num) % num;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ == num - 1) {
                     if (command_ == 0) {
                         ThreadStart(0);
                     } else if (command_ == 1) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                MatchForm::create(1));
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            MatchForm::create(1)));
                     }
                 } else if (select_ < userList_.length()) {
                     dlUser_ = userList_.get_Item(select_);
                     ThreadStart(2);
                 }
             } else if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 1 && require(apdat_)->IsPushSoftLabel(2)) {
-            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-            });
+            return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
         }
         return true;
     }
@@ -436,13 +407,11 @@ void MatchForm::SetSoftlabel() {
             num2 = 0;
             num = num2;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
-                pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
-                this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
+            pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
+            this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
     }
 }
 
@@ -506,10 +475,8 @@ void MatchForm::Run() {
                         }
                         require(gameDataRecord)->AddByteArray(literal(u"d0"), MatchForm::upload_());
                         {
-                            ByteArray cs_arg1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::RecordStore::ReadRecord(
-                                    0, 1 + main::AppData::currentSaveSlot_());
-                            });
+                            ByteArray cs_arg1 = PLS_API(pls::kairo::RecordStore::ReadRecord(
+                                0, 1 + main::AppData::currentSaveSlot_()));
                             require(gameDataRecord)->AddByteArray(literal(u"d1"), cs_arg1);
                         }
                         require(gameDataRecord)->AddLong(literal(u"is_alive"), 1ll);
@@ -533,9 +500,8 @@ void MatchForm::Run() {
                                     get, text2, pls::cs::String{}, literal(u"v0"), cs_arg4, cs_arg5, cs_arg6,
                                     literal(u"50,50"), 2);
                             }());
-                        pls::cs::Int32 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_lang::JInteger::ParseInt(require(instance)->GetFriendId());
-                        });
+                        pls::cs::Int32 num =
+                            PLS_API(kl_lang::JInteger::ParseInt(require(instance)->GetFriendId()));
                         IntArray array2 = IntArray::make(array.length());
                         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
                             pls::cs::Int32 friendId = require(array.get_Item(i))->GetFriendId();
@@ -558,13 +524,11 @@ void MatchForm::Run() {
                             for (pls::cs::Int32 l = 0; l < array2.length(); ++l) {
                                 num2 += array2[l];
                                 if (num3 < num2) {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> void {
-                                            pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                                                pls::cs::box(array.get_Item(l));
-                                            kl_java_util::Vector_2_AddElement(require(vector), cs_arg0);
-                                        }());
-                                    });
+                                    PLS_API(([&]() -> void {
+                                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                                            pls::cs::box(array.get_Item(l));
+                                        kl_java_util::Vector_2_AddElement(require(vector), cs_arg0);
+                                    }()));
                                     array2[l] = 0;
                                     break;
                                 }
@@ -572,18 +536,12 @@ void MatchForm::Run() {
                         }
                         pls::cs::Array<pls::cs::Ref<kairo::unity::system::GameDataRecord>> array3 =
                             pls::cs::Array<pls::cs::Ref<kairo::unity::system::GameDataRecord>>::make(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_Size(require(vector));
-                                }));
-                        for (pls::cs::Int32 m = 0; m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                       return kl_java_util::Vector_2_Size(require(vector));
-                                                   });
+                                PLS_API(kl_java_util::Vector_2_Size(require(vector))));
+                        for (pls::cs::Int32 m = 0; m < PLS_API(kl_java_util::Vector_2_Size(require(vector)));
                              ++m) {
                             pls::cs::Ref<kairo::unity::system::GameDataRecord> gameDataRecord2 =
                                 pls::cs::unbox<pls::cs::Ref<kairo::unity::system::GameDataRecord>>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_ElementAt(require(vector), m);
-                                    }));
+                                    PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), m)));
                             pls::cs::Int32 cs_arg0_308 = require(gameDataRecord2)->GetFriendId();
                             pls::cs::Int32 cs_arg1_308 = require(gameDataRecord2)->GetNumber();
                             pls::cs::Ref<kairo::unity::system::GameDataRecord> gameDataRecord3 =
@@ -636,44 +594,33 @@ void MatchForm::Run() {
                             }
                             {
                                 auto cs_target = userRecord;
-                                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::Image::Load(
-                                        require(gameDataRecord4)->GetData(literal(u"d0")),
-                                        static_cast<pls::kairo::Image::Format>(-1),
-                                        static_cast<pls::kairo::Image::Filter>(-1));
-                                });
+                                auto cs_value = PLS_API(
+                                    pls::kairo::Image::Load(require(gameDataRecord4)->GetData(literal(u"d0")),
+                                                            static_cast<pls::kairo::Image::Format>(-1),
+                                                            static_cast<pls::kairo::Image::Filter>(-1)));
                                 require(cs_target)->image_ = cs_value;
                             }
-                            StringArray array5 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StringUtil::Split(
-                                    require(gameDataRecord4)->GetString(literal(u"s1")), literal(u","));
-                            });
+                            StringArray array5 = PLS_API(kl_unity_util::StringUtil::Split(
+                                require(gameDataRecord4)->GetString(literal(u"s1")), literal(u",")));
                             {
                                 auto cs_target = userRecord;
-                                pls::cs::Int32 cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JInteger::ParseInt(array5[0]);
-                                });
+                                pls::cs::Int32 cs_value = PLS_API(kl_lang::JInteger::ParseInt(array5[0]));
                                 require(cs_target)->year_ = cs_value;
                             }
                             {
                                 auto cs_target = userRecord;
                                 pls::cs::Int64 cs_value = pls::cs::cast_integral<pls::cs::Int64>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_lang::JInteger::ParseInt(array5[1]);
-                                    }));
+                                    PLS_API(kl_lang::JInteger::ParseInt(array5[1])));
                                 require(cs_target)->money_ = cs_value;
                             }
                             {
                                 auto cs_target = userRecord;
-                                pls::cs::Int32 cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JInteger::ParseInt(array5[2]);
-                                });
+                                pls::cs::Int32 cs_value = PLS_API(kl_lang::JInteger::ParseInt(array5[2]));
                                 require(cs_target)->week_ = cs_value;
                             }
                             {
                                 auto cs_target = userRecord;
-                                pls::cs::Int64 cs_value = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return kl_lang::JLong::ParseLong(array5[3]); });
+                                pls::cs::Int64 cs_value = PLS_API(kl_lang::JLong::ParseLong(array5[3]));
                                 require(cs_target)->money_ = cs_value;
                             }
                             array4.set_Item(n, userRecord);
@@ -690,9 +637,7 @@ void MatchForm::Run() {
                                 pls::cs::String cs_arg0 = require(instance)->GetFriendId();
                                 pls::cs::String cs_arg1 = get2;
                                 pls::cs::String cs_arg2 = text3;
-                                pls::cs::String cs_arg4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JString::ValueOfInt(TOPRANK_MAX);
-                                });
+                                pls::cs::String cs_arg4 = PLS_API(kl_lang::JString::ValueOfInt(TOPRANK_MAX));
                                 return require(instance)->ConnectGameDataRanking(cs_arg0, cs_arg1, cs_arg2,
                                                                                  literal(u"v0"), cs_arg4,
                                                                                  true, pls::cs::String{});
@@ -762,10 +707,8 @@ void MatchForm::Run() {
                         require(gameDataRecord6)->Add(literal(u"v1"));
                         gameDataRecord6 = require(instance)->ConnectGameData(gameDataRecord6);
                         ByteArray data = require(gameDataRecord6)->GetData(literal(u"d1"));
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::RecordStore::WriteRecord(
-                                0, 3 + main::AppData::currentSaveSlot_(), data);
-                        });
+                        PLS_API(pls::kairo::RecordStore::WriteRecord(0, 3 + main::AppData::currentSaveSlot_(),
+                                                                     data));
                         require(apdat_)->LoadGame(main::AppData::currentSaveSlot_(), true);
                     }
                     threadState_ = 2;
@@ -786,12 +729,10 @@ void MatchForm::Run() {
 std::int32_t MatchForm::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.MatchForm.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace system::form

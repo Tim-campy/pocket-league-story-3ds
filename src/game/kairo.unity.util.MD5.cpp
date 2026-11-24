@@ -30,12 +30,10 @@ pls::cs::String GetValue(ByteArray buf) {
     MD5::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.MD5.GetValue(System.Byte[])", kairo);
     {
-        ByteArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_buffer = buf;
-                return pls::cs::md5_compute_hash(cs_buffer);
-            }());
-        });
+        ByteArray array = PLS_API(([&]() {
+            auto cs_buffer = buf;
+            return pls::cs::md5_compute_hash(cs_buffer);
+        }()));
         pls::cs::Ref<pls::cs::StringBuilder> stringBuilder = ([&]() {
             return pls::cs::make_ref<pls::cs::StringBuilder>();
         }());
@@ -44,11 +42,9 @@ pls::cs::String GetValue(ByteArray buf) {
             if (kl_lang::StringEx::Length(text) == 1) {
                 text = pls::cs::String::concat(literal(u"0"), text);
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(stringBuilder)->Append(text); });
+            PLS_API(require(stringBuilder)->Append(text));
         }
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(stringBuilder)->ToString(); });
+        return PLS_API(require(stringBuilder)->ToString());
     }
 }
 } // namespace kairo::unity::util::MD5

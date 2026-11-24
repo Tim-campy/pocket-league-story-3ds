@@ -92,15 +92,12 @@ void GameBanner::create_init(pls::cs::Ref<GameBanner> self) {
     SurfaceBase::create_init(pls::cs::static_pointer_cast<SurfaceBase>(self));
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.surface.GameBanner.#ctor", game);
     {
-        self->app_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-        self->canvas_ =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        self->app_ = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+        self->canvas_ = PLS_API(pls::kairo::Canvas::GetInstance());
         self->effMan_ = pls::game::surface::TouchEffectManager::GetInstance();
         self->random_ = kl_util::JRandom::create();
         self->current_ = -1;
-        self->showBeginTime_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        self->showBeginTime_ = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         self->useAdmob_ = true;
     }
 }
@@ -152,8 +149,8 @@ void GameBanner::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> ev
                         return pls::cs::String::concat(cs_left, cs_right);
                     }()),
                     literal(u"&dl=store\n\n"));
-                pls::cs::Ref<pls::kairo::IApplication> currentApp = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
+                pls::cs::Ref<pls::kairo::IApplication> currentApp =
+                    PLS_API(pls::kairo::IApplication::GetCurrentApp());
             } else if (require(component)->value == 1) {
                 pls::cs::Ref<pls::game::form::FormManager> instance =
                     pls::game::form::FormManager::GetInstance();
@@ -164,8 +161,7 @@ void GameBanner::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> ev
                     auto cs_value = require(instance2)->GetItem(0);
                     require(cs_target)->item_ = cs_value;
                 }
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(instance)->Push(billingForm); });
+                PLS_API(require(instance)->Push(billingForm));
             } else {
                 kairo::unity::ui::Canvas::OpenBrowser(kl_cfg::Config::URL_SITE());
             }
@@ -201,8 +197,7 @@ void GameBanner::Unload() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.surface.GameBanner.Unload", game);
     {
         if (!is_null(GameBanner::image_())) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(GameBanner::image_())->Dispose(); });
+            PLS_API(require(GameBanner::image_())->Dispose());
         }
         GameBanner::image_() = pls::cs::Ref<pls::kairo::Image>{};
         current_ = -1;
@@ -214,8 +209,7 @@ bool GameBanner::Visible() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.surface.GameBanner.Visible", game);
     {
         if ([&]() -> bool {
-                auto cs_left =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(app_)->GetHeight(); });
+                auto cs_left = PLS_API(require(app_)->GetHeight());
                 auto cs_right = GetY();
                 return cs_left <= cs_right;
             }()) {

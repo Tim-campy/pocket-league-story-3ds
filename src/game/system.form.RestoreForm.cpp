@@ -61,13 +61,11 @@ bool RestoreForm::Init() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.RestoreForm.Init", game);
     {
         MyFormBase::Init();
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = pls::cs::String(u"");
-                pls::cs::String cs_arg1 = pls::cs::String(u"");
-                this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = pls::cs::String(u"");
+            pls::cs::String cs_arg1 = pls::cs::String(u"");
+            this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
         result_ = -1;
         require(java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                     pls::cs::raw(this), std::string("M:system.form.RestoreForm.Init:545"),
@@ -111,13 +109,9 @@ bool RestoreForm::Update() {
     {
         MyFormBase::Update();
         if (result_ != -1) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-            });
+            PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             if (!is_null(next_)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(next_);
-                });
+                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(next_));
             }
             if (!is_null(message_)) {
                 Push(message_);

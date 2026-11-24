@@ -54,7 +54,7 @@ std::int16_t JShort::ShortValue() {
 pls::cs::String JShort::ToString() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JShort.ToString", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return integer_string(value_); });
+        return PLS_API(integer_string(value_));
     }
 }
 
@@ -79,7 +79,7 @@ bool JShort::Equals(pls::cs::Ref<JShort> self, pls::cs::Ref<pls::cs::Object> obj
 std::int32_t JShort::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JShort.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return value_hash(value_); });
+        return PLS_API(value_hash(value_));
     }
 }
 } // namespace java::lang

@@ -56,8 +56,7 @@ pls::cs::Int32 SurfaceBase_MotionEventRecord_MultiTouch::GetPointerCount() {
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.GetPointerCount", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(event_)->GetPointerCount(); });
+        return PLS_API(require(event_)->GetPointerCount());
     }
 }
 
@@ -67,8 +66,7 @@ pls::cs::Int32 SurfaceBase_MotionEventRecord_MultiTouch::GetPointerId(pls::cs::I
         "KairoLibrary",
         "M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.GetPointerId(System.Int32)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(event_)->GetPointerId(index); });
+        return PLS_API(require(event_)->GetPointerId(index));
     }
 }
 
@@ -79,8 +77,7 @@ pls::cs::Single SurfaceBase_MotionEventRecord_MultiTouch::GetX(pls::cs::Int32 in
                      kairo);
     {
         try {
-            return pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::Single(require(event_)->GetX(index)); });
+            return PLS_API(pls::cs::Single(require(event_)->GetX(index)));
         } catch (const pls::cs::Exception& cs_caught_22) {
             pls::cs::capture_exception(cs_caught_22);
             {
@@ -97,8 +94,7 @@ pls::cs::Single SurfaceBase_MotionEventRecord_MultiTouch::GetY(pls::cs::Int32 in
                      kairo);
     {
         try {
-            return pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::Single(require(event_)->GetY(index)); });
+            return PLS_API(pls::cs::Single(require(event_)->GetY(index)));
         } catch (const pls::cs::Exception& cs_caught_23) {
             pls::cs::capture_exception(cs_caught_23);
             {
@@ -115,8 +111,7 @@ pls::cs::Single SurfaceBase_MotionEventRecord_MultiTouch::GetDeltaX(pls::cs::Int
                      kairo);
     {
         try {
-            return pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::Single(require(event_)->GetDeltaX(index)); });
+            return PLS_API(pls::cs::Single(require(event_)->GetDeltaX(index)));
         } catch (const pls::cs::Exception& cs_caught_24) {
             pls::cs::capture_exception(cs_caught_24);
             {
@@ -133,8 +128,7 @@ pls::cs::Single SurfaceBase_MotionEventRecord_MultiTouch::GetDeltaY(pls::cs::Int
                      kairo);
     {
         try {
-            return pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::Single(require(event_)->GetDeltaY(index)); });
+            return PLS_API(pls::cs::Single(require(event_)->GetDeltaY(index)));
         } catch (const pls::cs::Exception& cs_caught_25) {
             pls::cs::capture_exception(cs_caught_25);
             {
@@ -151,8 +145,7 @@ pls::cs::Single SurfaceBase_MotionEventRecord_MultiTouch::GetDeltaTime(pls::cs::
         "M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.GetDeltaTime(System.Int32)", kairo);
     {
         try {
-            return pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::Single(require(event_)->GetDeltaTime(index)); });
+            return PLS_API(pls::cs::Single(require(event_)->GetDeltaTime(index)));
         } catch (const pls::cs::Exception& cs_caught_26) {
             pls::cs::capture_exception(cs_caught_26);
             {

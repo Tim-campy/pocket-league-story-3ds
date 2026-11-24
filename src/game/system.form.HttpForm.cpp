@@ -183,13 +183,11 @@ bool HttpForm::Init() {
         resultData_ = HttpForm_ResultData::create();
         thread_ = java::lang::JThread::create(this);
         require(thread_)->Start();
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = pls::cs::String(u"");
-                pls::cs::String cs_arg1 = pls::cs::String(u"");
-                this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = pls::cs::String(u"");
+            pls::cs::String cs_arg1 = pls::cs::String(u"");
+            this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
         return true;
     }
 }
@@ -211,55 +209,39 @@ void HttpForm::DrawConnect(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.HttpForm.DrawConnect(kairo.unity.ui.Graphics)", game);
     {
         try {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->PushOrigin(0, 0, false); });
+            PLS_API(require(g)->PushOrigin(0, 0, false));
             pls::cs::Ref<pls::game::surface::GameView> instance = pls::game::surface::GameView::GetInstance();
             pls::cs::Int32 num = require(instance)->GetGameWidth() / 2;
             pls::cs::Int32 num2 = require(instance)->GetGameHeight() / 2;
-            pls::cs::Int32 totalFrames = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return pls::kairo::IApplication::GetCurrentApp();
-                       }))
-                    ->GetTotalFrames();
-            });
+            pls::cs::Int32 totalFrames =
+                PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetTotalFrames());
             pls::cs::Ref<kairo::unity::ui::ResourceManager> resource =
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return PlsPortGeneratedBootstrap::Source::GetApplicationResource(
-                        require(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); })));
-                });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<kairo::unity::ui::Matrix> cs_arg0 =
-                        kairo::unity::ui::Matrix::ScaleTemporary(0.5f, 0.5f, 0.0f, 0.0f);
-                    PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
-                }());
-            });
+                PLS_API(PlsPortGeneratedBootstrap::Source::GetApplicationResource(
+                    require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))));
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<kairo::unity::ui::Matrix> cs_arg0 =
+                    kairo::unity::ui::Matrix::ScaleTemporary(0.5f, 0.5f, 0.0f, 0.0f);
+                PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
+            }()));
             require(resource)->DrawSeb(g, num, num2, 1);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<kairo::unity::ui::Matrix> cs_arg0 =
-                        kairo::unity::ui::Matrix::RotateTemporary(totalFrames / 2 * 30, 0.0f, 0.0f);
-                    PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<kairo::unity::ui::Matrix> cs_arg0 =
+                    kairo::unity::ui::Matrix::RotateTemporary(totalFrames / 2 * 30, 0.0f, 0.0f);
+                PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
+            }()));
             require(resource)->DrawSeb(g, num, num2, 2);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopMatrix(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopMatrix(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PushFont(10); });
+            PLS_API(require(g)->PopMatrix());
+            PLS_API(require(g)->PopMatrix());
+            PLS_API(require(g)->PushFont(10));
             pls::cs::String text = literal(u"Transmission");
-            pls::cs::Int32 num3 =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->StringWidth(text); });
+            pls::cs::Int32 num3 = PLS_API(require(g)->StringWidth(text));
             for (pls::cs::Int32 i = 0; i < totalFrames / 4 % 4; ++i) {
                 text = pls::cs::String::concat(text, literal(u"."));
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 255); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawString(text, num - num3 / 2 - 7, num2 - 42);
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopFont(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopOrigin(); });
+            PLS_API(require(g)->SetColor(255, 255, 255));
+            PLS_API(require(g)->DrawString(text, num - num3 / 2 - 7, num2 - 42));
+            PLS_API(require(g)->PopFont());
+            PLS_API(require(g)->PopOrigin());
         } catch (const pls::cs::Exception& cs_caught_264) {
             pls::cs::capture_exception(cs_caught_264);
             {
@@ -281,9 +263,7 @@ bool HttpForm::Update() {
             }
             if (threadState_ == HttpForm::THSTATE_SUCCESS()) {
                 threadState_ = HttpForm::THSTATE_NONE();
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 if ([&]() {
                         auto cs_left = resultMethod_;
                         auto cs_right = pls::cs::Delegate<void(pls::cs::Ref<HttpForm>,
@@ -302,20 +282,13 @@ bool HttpForm::Update() {
             if (threadState_ == HttpForm::THSTATE_FAILURE()) {
                 threadState_ = HttpForm::THSTATE_NONE();
                 if (kl_cfg::Config::PRINT()) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_util::Log::Info(HttpForm_ResultData::get_Error(resultData_),
-                                                  pls::cs::Ref<pls::cs::ExceptionObject>{});
-                    });
+                    PLS_API(kl_util::Log::Info(HttpForm_ResultData::get_Error(resultData_),
+                                               pls::cs::Ref<pls::cs::ExceptionObject>{}));
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 if (HttpForm::get_ProcessError(this)) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            pls::game::form::SubForm::MakeDialog(
-                                HttpForm_ResultData::get_Error(resultData_)));
-                    });
+                    PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        pls::game::form::SubForm::MakeDialog(HttpForm_ResultData::get_Error(resultData_))));
                 } else if ([&]() {
                                auto cs_left = resultMethod_;
                                auto cs_right = pls::cs::Delegate<void(pls::cs::Ref<HttpForm>,
@@ -378,12 +351,9 @@ void HttpForm::Run() {
                 } catch (const pls::cs::Exception& cs_caught_265) {
                     auto ex = pls::cs::capture_exception(cs_caught_265);
                     {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_util::Log::Info(
-                                pls::cs::String::concat(pls::cs::String(u""),
-                                                        object_string(pls::cs::box(ex))),
-                                pls::cs::Ref<pls::cs::ExceptionObject>{});
-                        });
+                        PLS_API(kl_util::Log::Info(
+                            pls::cs::String::concat(pls::cs::String(u""), object_string(pls::cs::box(ex))),
+                            pls::cs::Ref<pls::cs::ExceptionObject>{}));
                         {
                             auto cs_receiver = resultData_;
                             auto cs_rhs = kairo::unity::io::Http::PopErrorText();

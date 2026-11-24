@@ -105,12 +105,10 @@ bool JDate::Equals(pls::cs::Ref<JDate> self, pls::cs::Ref<pls::cs::Object> obj) 
 std::int32_t JDate::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.JDate.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 
@@ -136,13 +134,11 @@ void JDate::SetTime(pls::cs::Int64 time) {
             auto cs_arg6 = JDate::UNIX_TIME().get_Kind();
             return pls::cs::DateTime(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
         }());
-        date_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::DateTime {
-                auto cs_receiver = date_;
-                auto cs_arg0 = pls::cs::Double(time);
-                return cs_receiver.AddMilliseconds(cs_arg0);
-            }());
-        });
+        date_ = PLS_API(([&]() -> pls::cs::DateTime {
+            auto cs_receiver = date_;
+            auto cs_arg0 = pls::cs::Double(time);
+            return cs_receiver.AddMilliseconds(cs_arg0);
+        }()));
     }
 }
 

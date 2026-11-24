@@ -55,10 +55,8 @@ pls::cs::Ref<ByteArrayOutputStream> ByteArrayOutputStream::create() {
 ByteArray ByteArrayOutputStream::ToByteArray() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.io.ByteArrayOutputStream.ToByteArray", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require((pls::cs::unbox<pls::cs::Ref<pls::cs::MemoryStream>>(pls::cs::box(Wrapped))))
-                ->ToArray();
-        });
+        return PLS_API(
+            require((pls::cs::unbox<pls::cs::Ref<pls::cs::MemoryStream>>(pls::cs::box(Wrapped))))->ToArray());
     }
 }
 
@@ -73,13 +71,11 @@ void ByteArrayOutputStream::Close() {
 pls::cs::String ByteArrayOutputStream::ToString() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.io.ByteArrayOutputStream.ToString", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::String {
-                auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8();
-                auto cs_arg0 = ToByteArray();
-                return require(cs_receiver)->GetString(cs_arg0);
-            }());
-        });
+        return PLS_API(([&]() -> pls::cs::String {
+            auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8();
+            auto cs_arg0 = ToByteArray();
+            return require(cs_receiver)->GetString(cs_arg0);
+        }()));
     }
 }
 } // namespace java::io

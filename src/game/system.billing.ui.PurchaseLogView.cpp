@@ -54,9 +54,7 @@ void PurchaseLogView::SetLog(pls::cs::Int32 num, pls::cs::String text, bool log)
                      game);
     {
         num_ = num;
-        text_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StringUtil::Replace(text, literal(u"<br>"), literal(u"\n"));
-        });
+        text_ = PLS_API(kl_util::StringUtil::Replace(text, literal(u"<br>"), literal(u"\n")));
         log_ = log;
     }
 }
@@ -67,8 +65,8 @@ void PurchaseLogView::Show() {
     {
         pls::cs::Int32 num = native::AppPlugin::ShowPurchaseLog(title_, num_, text_, log_);
         if (num == 1) {
-            pls::cs::Ref<pls::kairo::IApplication> currentApp = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
+            pls::cs::Ref<pls::kairo::IApplication> currentApp =
+                PLS_API(pls::kairo::IApplication::GetCurrentApp());
             pls::cs::Ref<BillingManager> instance = BillingManager::GetInstance();
             require(instance)->ClearPurchaseLog();
             pls::cs::Ref<kairo::unity::system::KairoBase> instance2 =

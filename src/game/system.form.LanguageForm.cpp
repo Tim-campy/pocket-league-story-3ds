@@ -124,7 +124,7 @@ bool LanguageForm::Update() {
                 for (std::int32_t cs_i266 = 0; cs_i266 < cs_each266.length(); ++cs_i266) {
                     StringArray item = cs_each266.get_Item(cs_i266);
                     {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(item); });
+                        PLS_API(list.Add(item));
                     }
                 }
             }
@@ -132,12 +132,9 @@ bool LanguageForm::Update() {
                 kairo::unity::util::Language::GetCustomLanguagePackLocation();
             if (!is_null(customLanguagePackLocation)) {
                 try {
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Storage::Exists(1, literal(u"_custom_lang_pack.csv"));
-                        })) {
-                        ByteArray data = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Storage::Read(1, false, literal(u"_custom_lang_pack.csv"));
-                        });
+                    if (PLS_API(pls::kairo::Storage::Exists(1, literal(u"_custom_lang_pack.csv")))) {
+                        ByteArray data =
+                            PLS_API(pls::kairo::Storage::Read(1, false, literal(u"_custom_lang_pack.csv")));
                         pls::cs::Ref<kairo::unity::util::Language_LanguagePackInfo> languagePackInfo =
                             kairo::unity::util::Language::GetLanguagePackInfo(data);
                         pls::cs::String text = pls::cs::String(u"");
@@ -148,13 +145,11 @@ bool LanguageForm::Update() {
                             text = pls::cs::String::concat(pls::cs::String::concat(text, literal(u"@")),
                                                            require(languagePackInfo)->Author);
                         }
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = list;
-                                auto cs_arg0 = StringArray::from({text, customLanguagePackLocation});
-                                cs_receiver.Add(cs_arg0);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = list;
+                            auto cs_arg0 = StringArray::from({text, customLanguagePackLocation});
+                            cs_receiver.Add(cs_arg0);
+                        }()));
                     }
                 } catch (const pls::cs::Exception& cs_caught_267) {
                     pls::cs::capture_exception(cs_caught_267);
@@ -162,7 +157,7 @@ bool LanguageForm::Update() {
                     }
                 }
             }
-            languages_ = pls::diagnostic::api_call([&]() -> decltype(auto) { return list.ToArray(); });
+            languages_ = PLS_API(list.ToArray());
             pls::cs::Int32 index = 0;
             StringArray array = StringArray::make(languages_.length());
             for (pls::cs::Int32 j = 0; j < languages_.length(); ++j) {
@@ -179,21 +174,15 @@ bool LanguageForm::Update() {
                 LanguageForm::langDownloadUrl_() =
                     kairo::unity::util::Language::GetCustomLanguagePackLocation();
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::kairo::start_language_panel(array, index, LanguageForm::langDownloadUrl_(),
-                                                        mode_);
-            });
+            PLS_API(pls::kairo::start_language_panel(array, index, LanguageForm::langDownloadUrl_(), mode_));
             return true;
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::language_panel_finished(); })) {
+        if (!PLS_API(pls::kairo::language_panel_finished())) {
             return true;
         }
-        StringArray languagePanelResult = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::language_panel_result(); });
+        StringArray languagePanelResult = PLS_API(pls::kairo::language_panel_result());
         if (!is_null(languagePanelResult[0])) {
-            pls::cs::Int32 num = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::int32_parse(languagePanelResult[0]); });
+            pls::cs::Int32 num = PLS_API(pls::cs::int32_parse(languagePanelResult[0]));
             if (num == -3) {
                 kairo::unity::ui::Canvas::OpenBrowser(literal(u"http://kairopark.jp/language_pack_en.html"));
             } else if (num == -2) {
@@ -222,8 +211,7 @@ bool LanguageForm::Update() {
                                             kairo::unity::util::Language::MakeLangPackTemplate(
                                                 cs_arg0_303, cs_arg1_303, cs_arg2_303, cs_arg3_303);
                                         }
-                                        pls::cs::Int32 hashCode = pls::diagnostic::api_call(
-                                            [&]() -> decltype(auto) { return value_hash(data2); });
+                                        pls::cs::Int32 hashCode = PLS_API(value_hash(data2));
                                         {
                                             bool recoveredCondition_3348 =
                                                 require(instance)->ConnectLangPackCheck(
@@ -251,9 +239,7 @@ bool LanguageForm::Update() {
                                 },
                                 this);
                 pls::cs::Ref<HttpForm> languageForm = HttpForm::create(cs_arg0_303, cs_arg1_303);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(languageForm);
-                });
+                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(languageForm));
             } else if (num == -1) {
                 LanguageForm::langDownloadUrl_() = languagePanelResult[1];
                 langDownloadData_ = ByteArray{};
@@ -287,12 +273,10 @@ bool LanguageForm::Update() {
                                                     auto cs_right_304 = pls::cs::Delegate<void()>{};
                                                     return cs_left_304 != cs_right_304;
                                                 }())) {
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return ([&]() {
-                                                        auto cs_delegate_304 = LanguageForm::callback_();
-                                                        cs_delegate_304();
-                                                    }());
-                                                });
+                                                PLS_API(([&]() {
+                                                    auto cs_delegate_304 = LanguageForm::callback_();
+                                                    cs_delegate_304();
+                                                }()));
                                             }
                                         } else {
                                             pls::cs::Ref<pls::game::form::FormManager> instance_3 =
@@ -300,25 +284,19 @@ bool LanguageForm::Update() {
                                             pls::cs::Ref<LanguageForm> nextLanguageForm =
                                                 LanguageForm::create();
                                             require(nextLanguageForm)->mode_ = 1;
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(instance_3)->Push(nextLanguageForm);
-                                            });
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return ([&]() -> bool {
-                                                    pls::cs::Ref<pls::kairo::FormBase> cs_arg0_304 =
-                                                        pls::game::form::SubForm::MakeDialog(
-                                                            HttpForm_ResultData::get_Error(data_5));
-                                                    return require(instance_3)->Push(cs_arg0_304);
-                                                }());
-                                            });
+                                            PLS_API(require(instance_3)->Push(nextLanguageForm));
+                                            PLS_API(([&]() -> bool {
+                                                pls::cs::Ref<pls::kairo::FormBase> cs_arg0_304 =
+                                                    pls::game::form::SubForm::MakeDialog(
+                                                        HttpForm_ResultData::get_Error(data_5));
+                                                return require(instance_3)->Push(cs_arg0_304);
+                                            }()));
                                         }
                                     }
                                 },
                                 this);
                 pls::cs::Ref<HttpForm> httpForm = HttpForm::create(cs_arg0_304, cs_arg1_304);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(httpForm);
-                });
+                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(httpForm));
                 HttpForm::set_ProcessError(httpForm, false);
             } else {
                 pls::cs::String text2 = languagePanelResult[1];
@@ -333,18 +311,15 @@ bool LanguageForm::Update() {
                             auto cs_right = pls::cs::Delegate<void()>{};
                             return cs_left != cs_right;
                         }())) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() {
-                                auto cs_delegate = LanguageForm::callback_();
-                                cs_delegate();
-                            }());
-                        });
+                        PLS_API(([&]() {
+                            auto cs_delegate = LanguageForm::callback_();
+                            cs_delegate();
+                        }()));
                     }
                 }
             }
         }
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop(); });
+        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
     }
 }
 
@@ -375,26 +350,22 @@ void LanguageForm::DrawButton(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Del
         game);
     {
         pls::cs::Ref<pls::game::surface::GameView> instance = pls::game::surface::GameView::GetInstance();
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PushOrigin(0, 0, false); });
+        PLS_API(require(g)->PushOrigin(0, 0, false));
         pls::cs::Int32 originalUnusedSlot1;
         pls::cs::Int32 x = 20;
         pls::cs::Int32 y = 20;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::BitUtil::Check(anchor, 2); })) {
+        if (PLS_API(kl_util::BitUtil::Check(anchor, 2))) {
             x = require(instance)->GetGameWidth() / 2;
-        } else if (pls::diagnostic::api_call(
-                       [&]() -> decltype(auto) { return kl_util::BitUtil::Check(anchor, 4); })) {
+        } else if (PLS_API(kl_util::BitUtil::Check(anchor, 4))) {
             x = require(instance)->GetGameWidth() - 20;
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::BitUtil::Check(anchor, 32); })) {
+        if (PLS_API(kl_util::BitUtil::Check(anchor, 32))) {
             y = require(instance)->GetGameHeight() / 2;
-        } else if (pls::diagnostic::api_call(
-                       [&]() -> decltype(auto) { return kl_util::BitUtil::Check(anchor, 64); })) {
+        } else if (PLS_API(kl_util::BitUtil::Check(anchor, 64))) {
             y = require(instance)->GetGameHeight() - 20;
         }
         LanguageForm::DrawButton(g, x, y, callback);
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopOrigin(); });
+        PLS_API(require(g)->PopOrigin());
     }
 }
 
@@ -411,39 +382,31 @@ void LanguageForm::DrawButton(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int
 
         LanguageForm::callback_() = callback;
         pls::cs::Ref<pls::game::surface::GameView> instance = pls::game::surface::GameView::GetInstance();
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PushOrigin(0, 0, false); });
+        PLS_API(require(g)->PushOrigin(0, 0, false));
         pls::cs::Int32 value = 20160614;
         bool flag = require(instance)->CheckTouch(3, value);
         pls::cs::Ref<kairo::unity::ui::ResourceManager> resource =
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return PlsPortGeneratedBootstrap::Source::GetApplicationResource(
-                    require(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); })));
-            });
+            PLS_API(PlsPortGeneratedBootstrap::Source::GetApplicationResource(
+                require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))));
         IntArray sprite = require(require(resource)->seb.get_Item(0))->GetSprite(0, 0);
         if (flag) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->PushBlendMode(1, 255, 255, 255, 128); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<kairo::unity::ui::Matrix> cs_arg0 =
-                        kairo::unity::ui::Matrix::ScaleTemporary(1.1f, 1.1f, 0.0f, 0.0f);
-                    PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
-                }());
-            });
-        }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
+            PLS_API(require(g)->PushBlendMode(1, 255, 255, 255, 128));
+            PLS_API(([&]() -> void {
                 pls::cs::Ref<kairo::unity::ui::Matrix> cs_arg0 =
-                    kairo::unity::ui::Matrix::ScaleTemporary(0.5f, 0.5f, 0.0f, 0.0f);
+                    kairo::unity::ui::Matrix::ScaleTemporary(1.1f, 1.1f, 0.0f, 0.0f);
                 PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
-            }());
-        });
+            }()));
+        }
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<kairo::unity::ui::Matrix> cs_arg0 =
+                kairo::unity::ui::Matrix::ScaleTemporary(0.5f, 0.5f, 0.0f, 0.0f);
+            PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
+        }()));
         require(resource)->DrawSeb(g, x, y, 0);
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopMatrix(); });
+        PLS_API(require(g)->PopMatrix());
         if (flag) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopMatrix(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopBlendMode(); });
+            PLS_API(require(g)->PopMatrix());
+            PLS_API(require(g)->PopBlendMode());
         }
         {
             pls::cs::Int32 cs_arg2 = x + sprite[6] / 2;
@@ -452,16 +415,13 @@ void LanguageForm::DrawButton(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int
             pls::cs::Int32 cs_arg5 = sprite[5] / 2;
             pls::game::surface::GameView::AddTouch(g, 3, cs_arg2, cs_arg3, cs_arg4, cs_arg5, value);
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopOrigin(); });
+        PLS_API(require(g)->PopOrigin());
         if (kl_cfg::Config::DEBUG() && !LanguageForm::warningTextLayout_()) {
-            if (!pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::IsAutoTextLayout(); })) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return PlsPortGeneratedBootstrap::Source::ShowToast(
-                        literal(
-                            u"自動テキストレイアウトが無効になっています。\nGraphics.SetAutoTextLayout() を使って有効にする事を推奨します。"),
-                        0);
-                });
+            if (!PLS_API(pls::kairo::Graphics::IsAutoTextLayout())) {
+                PLS_API(PlsPortGeneratedBootstrap::Source::ShowToast(
+                    literal(
+                        u"自動テキストレイアウトが無効になっています。\nGraphics.SetAutoTextLayout() を使って有効にする事を推奨します。"),
+                    0));
             }
             LanguageForm::warningTextLayout_() = true;
         }
@@ -480,12 +440,10 @@ bool LanguageForm::OnTouchEventStatic(pls::cs::Ref<kairo::unity::surface::TouchE
             if (require(component)->value == 20160614) {
                 switch (require(e)->type) {
                 case 1: {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> bool {
-                            pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = LanguageForm::create();
-                            return require(instance)->Push(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> bool {
+                        pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = LanguageForm::create();
+                        return require(instance)->Push(cs_arg0);
+                    }()));
                     break;
                 }
                 }

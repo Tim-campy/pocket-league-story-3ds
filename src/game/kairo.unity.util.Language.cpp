@@ -104,63 +104,46 @@ void Init() {
             pls::cs::List<StringArray> list = pls::cs::List<StringArray>::make();
             if (kl_cfg::Config::LANGUAGE() == -1) {
                 if (Language::English()) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = list;
-                            auto cs_arg0 =
-                                StringArray::from({literal(u"English"), literal(u""), literal(u"en-US")});
-                            cs_receiver.Add(cs_arg0);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = list;
-                            auto cs_arg0 =
-                                StringArray::from({literal(u"日本語"),
-                                                   kl_unity_util::Language::KAIRO_JAPANESE(), literal(u"")});
-                            cs_receiver.Add(cs_arg0);
-                        }());
-                    });
-                } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = list;
-                            auto cs_arg0 =
-                                StringArray::from({literal(u"日本語"), literal(u""), literal(u"ja-JP")});
-                            cs_receiver.Add(cs_arg0);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = list;
-                            auto cs_arg0 =
-                                StringArray::from({literal(u"English"),
-                                                   kl_unity_util::Language::KAIRO_ENGLISH(), literal(u"")});
-                            cs_receiver.Add(cs_arg0);
-                        }());
-                    });
-                }
-            } else {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
+                    PLS_API(([&]() -> void {
                         auto cs_receiver = list;
                         auto cs_arg0 =
                             StringArray::from({literal(u"English"), literal(u""), literal(u"en-US")});
                         cs_receiver.Add(cs_arg0);
-                    }());
-                });
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = list;
+                        auto cs_arg0 = StringArray::from(
+                            {literal(u"日本語"), kl_unity_util::Language::KAIRO_JAPANESE(), literal(u"")});
+                        cs_receiver.Add(cs_arg0);
+                    }()));
+                } else {
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = list;
+                        auto cs_arg0 =
+                            StringArray::from({literal(u"日本語"), literal(u""), literal(u"ja-JP")});
+                        cs_receiver.Add(cs_arg0);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = list;
+                        auto cs_arg0 = StringArray::from(
+                            {literal(u"English"), kl_unity_util::Language::KAIRO_ENGLISH(), literal(u"")});
+                        cs_receiver.Add(cs_arg0);
+                    }()));
+                }
+            } else {
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = list;
+                    auto cs_arg0 = StringArray::from({literal(u"English"), literal(u""), literal(u"en-US")});
+                    cs_receiver.Add(cs_arg0);
+                }()));
             }
             pls::cs::Ref<kl_unity_util::JarInflater> jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
             pls::cs::run_finally(
                 [&]() {
                     try {
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Storage::Exists(3, filename);
-                            })) {
+                        if (PLS_API(pls::kairo::Storage::Exists(3, filename))) {
                             jarInflater = kl_unity_util::JarInflater::create(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::Storage::Read(3, false, filename);
-                                }));
+                                PLS_API(pls::kairo::Storage::Read(3, false, filename)));
                             StringArray files = JarInflater::GetFiles(require(jarInflater));
                             {
                                 auto cs_each162 = files;
@@ -170,18 +153,14 @@ void Init() {
                                         try {
                                             pls::cs::Ref<Language_LanguagePackInfo> languagePackInfo =
                                                 Language::GetLanguagePackInfo(
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(jarInflater)->GetData(text);
-                                                    }));
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return ([&]() -> void {
-                                                    auto cs_receiver = list;
-                                                    auto cs_arg0 = StringArray::from(
-                                                        {require(languagePackInfo)->Title, text,
-                                                         require(languagePackInfo)->Code});
-                                                    cs_receiver.Add(cs_arg0);
-                                                }());
-                                            });
+                                                    PLS_API(require(jarInflater)->GetData(text)));
+                                            PLS_API(([&]() -> void {
+                                                auto cs_receiver = list;
+                                                auto cs_arg0 =
+                                                    StringArray::from({require(languagePackInfo)->Title, text,
+                                                                       require(languagePackInfo)->Code});
+                                                cs_receiver.Add(cs_arg0);
+                                            }()));
                                         } catch (const pls::cs::Exception& cs_caught_163) {
                                             pls::cs::capture_exception(cs_caught_163);
                                             {
@@ -199,42 +178,27 @@ void Init() {
                 },
                 [&]() {
                     if ((!is_null(pls::cs::box((jarInflater))))) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require((jarInflater))->Close(); });
+                        PLS_API(require((jarInflater))->Close());
                     }
                     jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
                 });
-            Language::systemLangPackFiles_() =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return list.ToArray(); });
+            Language::systemLangPackFiles_() = PLS_API(list.ToArray());
         }
         if (kl_unity_util::Language::forceResetType_() != 0 &&
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::kairo::PlayerPrefs::HasKey(literal(u"_language_pack"));
-            })) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::kairo::PlayerPrefs::DeleteKey(literal(u"_language_pack"));
-            });
+            PLS_API(pls::kairo::PlayerPrefs::HasKey(literal(u"_language_pack")))) {
+            PLS_API(pls::kairo::PlayerPrefs::DeleteKey(literal(u"_language_pack")));
             if (kl_cfg::Config::PRINT()) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::Log::Info(literal(u"PlayerPrefs.DeleteKey(PREF_LANG_PACK)"),
-                                                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-                });
+                PLS_API(kl_unity_util::Log::Info(literal(u"PlayerPrefs.DeleteKey(PREF_LANG_PACK)"),
+                                                 pls::cs::Ref<pls::cs::ExceptionObject>{}));
             }
         }
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::kairo::PlayerPrefs::HasKey(literal(u"_language_pack"));
-            }) &&
+        if (!PLS_API(pls::kairo::PlayerPrefs::HasKey(literal(u"_language_pack"))) &&
             kl_cfg::Config::LANGUAGE() != 0) {
-            pls::cs::Ref<kl_java_util::JLocale> jLocale = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::JLocale::GetDefault(); });
-            pls::cs::String text2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::culture_to_lower(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(jLocale)->GetLanguage(); }));
-            });
-            pls::cs::String text3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::culture_to_lower(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(jLocale)->GetCountry(); }));
-            });
+            pls::cs::Ref<kl_java_util::JLocale> jLocale = PLS_API(kl_java_util::JLocale::GetDefault());
+            pls::cs::String text2 =
+                PLS_API(pls::cs::culture_to_lower(PLS_API(require(jLocale)->GetLanguage())));
+            pls::cs::String text3 =
+                PLS_API(pls::cs::culture_to_lower(PLS_API(require(jLocale)->GetCountry())));
             if (text2 == literal(u"zh")) {
                 if (text3 == literal(u"sg")) {
                     text3 = literal(u"ch");
@@ -254,20 +218,17 @@ void Init() {
                 for (std::int32_t cs_i165 = 0; cs_i165 < cs_each165.length(); ++cs_i165) {
                     StringArray array4 = cs_each165.get_Item(cs_i165);
                     {
-                        pls::cs::String text4 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::cs::culture_to_lower(array4[2]); });
+                        pls::cs::String text4 = PLS_API(pls::cs::culture_to_lower(array4[2]));
                         if (pls::cs::String::concat(pls::cs::String::concat(text2, literal(u"-")), text3) ==
                             text4) {
                             array = array4;
                         }
-                        if (text2 == pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() {
-                                    auto cs_text = text4;
-                                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                                    cs_separators.at(0) = u'-';
-                                    return pls::cs::string_split(cs_text, cs_separators);
-                                }());
-                            })[0]) {
+                        if (text2 == PLS_API(([&]() {
+                                auto cs_text = text4;
+                                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                                cs_separators.at(0) = u'-';
+                                return pls::cs::string_split(cs_text, cs_separators);
+                            }()))[0]) {
                             array2 = array4;
                         }
                     }
@@ -280,32 +241,24 @@ void Init() {
                             auto cs_right = pls::cs::box(StringArray{});
                             return cs_left == cs_right;
                         }()) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::Log::Info(literal(u"bestLangPack == null"),
-                                                            pls::cs::Ref<pls::cs::ExceptionObject>{});
-                        });
+                        PLS_API(kl_unity_util::Log::Info(literal(u"bestLangPack == null"),
+                                                         pls::cs::Ref<pls::cs::ExceptionObject>{}));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::Log::Info(
-                                pls::cs::String::concat(literal(u"bestLangPack[1]"), array[1]),
-                                pls::cs::Ref<pls::cs::ExceptionObject>{});
-                        });
+                        PLS_API(kl_unity_util::Log::Info(
+                            pls::cs::String::concat(literal(u"bestLangPack[1]"), array[1]),
+                            pls::cs::Ref<pls::cs::ExceptionObject>{}));
                     }
                     if ([&]() {
                             auto cs_left = pls::cs::box(array2);
                             auto cs_right = pls::cs::box(StringArray{});
                             return cs_left == cs_right;
                         }()) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::Log::Info(literal(u"matchLangPack == null"),
-                                                            pls::cs::Ref<pls::cs::ExceptionObject>{});
-                        });
+                        PLS_API(kl_unity_util::Log::Info(literal(u"matchLangPack == null"),
+                                                         pls::cs::Ref<pls::cs::ExceptionObject>{}));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::Log::Info(
-                                pls::cs::String::concat(literal(u"matchLangPack[1]"), array2[1]),
-                                pls::cs::Ref<pls::cs::ExceptionObject>{});
-                        });
+                        PLS_API(kl_unity_util::Log::Info(
+                            pls::cs::String::concat(literal(u"matchLangPack[1]"), array2[1]),
+                            pls::cs::Ref<pls::cs::ExceptionObject>{}));
                     }
                 }
                 if ((([&]() {
@@ -313,15 +266,13 @@ void Init() {
                          auto cs_right = pls::cs::box(StringArray{});
                          return cs_left == cs_right;
                      }()) ||
-                     pls::diagnostic::api_call(
-                         [&]() -> decltype(auto) { return string_equals(array[1], literal(u"")); })) &&
+                     PLS_API(string_equals(array[1], literal(u"")))) &&
                     (([&]() {
                          auto cs_left = pls::cs::box(array2);
                          auto cs_right = pls::cs::box(StringArray{});
                          return cs_left == cs_right;
                      }()) ||
-                     pls::diagnostic::api_call(
-                         [&]() -> decltype(auto) { return string_equals(array2[1], literal(u"")); }))) {
+                     PLS_API(string_equals(array2[1], literal(u""))))) {
                     array = StringArray::from(
                         {literal(u"日本語"), kl_unity_util::Language::KAIRO_JAPANESE(), literal(u"")});
                 }
@@ -331,29 +282,22 @@ void Init() {
                     auto cs_right = pls::cs::box(StringArray{});
                     return cs_left != cs_right;
                 }()) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::PlayerPrefs::SetString(literal(u"_language_pack"), array[1]);
-                });
+                PLS_API(pls::kairo::PlayerPrefs::SetString(literal(u"_language_pack"), array[1]));
             } else if ([&]() {
                            auto cs_left = pls::cs::box(array2);
                            auto cs_right = pls::cs::box(StringArray{});
                            return cs_left != cs_right;
                        }()) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::PlayerPrefs::SetString(literal(u"_language_pack"), array2[1]);
-                });
+                PLS_API(pls::kairo::PlayerPrefs::SetString(literal(u"_language_pack"), array2[1]));
             }
         }
-        ByteArray array5 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::kairo::Storage::Read(3, false, literal(u"language_pack_format.txt"));
-        });
+        ByteArray array5 = PLS_API(pls::kairo::Storage::Read(3, false, literal(u"language_pack_format.txt")));
         if ([&]() {
                 auto cs_left = pls::cs::box(array5);
                 auto cs_right = pls::cs::box(ByteArray{});
                 return cs_left != cs_right;
             }()) {
-            pls::cs::String text5 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StringUtil::GetString(array5); });
+            pls::cs::String text5 = PLS_API(kl_unity_util::StringUtil::GetString(array5));
             {
                 auto cs_value =
                     pls::cs::Dictionary<pls::cs::String,
@@ -361,47 +305,39 @@ void Init() {
                 kl_unity_util::Language::langPackFormats_() = cs_value;
             }
             {
-                auto cs_each166 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() {
-                        auto cs_text = text5;
-                        auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                        cs_separators.at(0) = char16_t(10);
-                        return pls::cs::string_split(cs_text, cs_separators);
-                    }());
-                });
+                auto cs_each166 = PLS_API(([&]() {
+                    auto cs_text = text5;
+                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                    cs_separators.at(0) = char16_t(10);
+                    return pls::cs::string_split(cs_text, cs_separators);
+                }()));
                 for (std::int32_t cs_i166 = 0; cs_i166 < cs_each166.length(); ++cs_i166) {
                     pls::cs::String recoveredLangFormatLine = cs_each166.get_Item(cs_i166);
                     {
-                        StringArray array6 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() {
-                                auto cs_text = recoveredLangFormatLine;
-                                auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                                cs_separators.at(0) = u',';
-                                return pls::cs::string_split(cs_text, cs_separators);
-                            }());
-                        });
+                        StringArray array6 = PLS_API(([&]() {
+                            auto cs_text = recoveredLangFormatLine;
+                            auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                            cs_separators.at(0) = u',';
+                            return pls::cs::string_split(cs_text, cs_separators);
+                        }()));
                         pls::cs::String cs_arg0_266 = array6[0];
-                        char16_t cs_arg1_266 = pls::cs::cast_integral<char16_t>(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::cs::int32_parse(array6[1]); }));
-                        char16_t cs_arg2_266 = pls::cs::cast_integral<char16_t>(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::cs::int32_parse(array6[2]); }));
+                        char16_t cs_arg1_266 =
+                            pls::cs::cast_integral<char16_t>(PLS_API(pls::cs::int32_parse(array6[1])));
+                        char16_t cs_arg2_266 =
+                            pls::cs::cast_integral<char16_t>(PLS_API(pls::cs::int32_parse(array6[2])));
                         pls::cs::Ref<kl_unity_util::Language_LangPackFormat> langPackFormat =
                             Language_LangPackFormat::create(cs_arg0_266, cs_arg1_266, cs_arg2_266);
                         {
                             auto cs_target = kl_unity_util::Language::langPackFormats_();
-                            auto cs_index = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::culture_to_lower(require(langPackFormat)->File);
-                            });
+                            auto cs_index = PLS_API(pls::cs::culture_to_lower(require(langPackFormat)->File));
                             auto cs_value = langPackFormat;
                             cs_target.set_Item(cs_index, cs_value);
                         }
                     }
                 }
             }
-            if (!Language::SetLanguagePack(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return pls::kairo::PlayerPrefs::GetString(
-                                                   literal(u"_language_pack"), pls::cs::String{});
-                                           }),
+            if (!Language::SetLanguagePack(PLS_API(pls::kairo::PlayerPrefs::GetString(
+                                               literal(u"_language_pack"), pls::cs::String{})),
                                            ByteArray{}, false)) {
                 Language::SetLanguagePack(pls::cs::String{}, ByteArray{}, true);
             }
@@ -414,8 +350,7 @@ bool English() {
     kl_unity_util::Language::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.Language.English", kairo);
     {
-        return pls::diagnostic::api_call(
-                   [&]() -> decltype(auto) { return kl_unity_util::Language::Get(); }) == 1;
+        return PLS_API(kl_unity_util::Language::Get()) == 1;
     }
 }
 
@@ -441,19 +376,15 @@ void SetSoftLabelTable(StringArray2 softlabelTable) {
             {
                 auto cs_target = kl_unity_util::Language::softlabelTable_()[i];
                 auto cs_index = 0;
-                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StringUtil::Replace(
-                        kl_unity_util::Language::softlabelTable_()[i][0], literal(u"\\"), literal(u"¥"));
-                });
+                auto cs_value = PLS_API(kl_unity_util::StringUtil::Replace(
+                    kl_unity_util::Language::softlabelTable_()[i][0], literal(u"\\"), literal(u"¥")));
                 cs_target.set_Item(cs_index, cs_value);
             }
             {
                 auto cs_target = kl_unity_util::Language::softlabelTable_()[i];
                 auto cs_index = 1;
-                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StringUtil::Replace(
-                        kl_unity_util::Language::softlabelTable_()[i][1], literal(u"\\"), literal(u"¥"));
-                });
+                auto cs_value = PLS_API(kl_unity_util::StringUtil::Replace(
+                    kl_unity_util::Language::softlabelTable_()[i][1], literal(u"\\"), literal(u"¥")));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -477,8 +408,7 @@ void SetTextTable(StringArray2 textTable) {
             return;
         }
         {
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::Language::MakeTextTable(textTable); });
+            auto cs_value = PLS_API(kl_unity_util::Language::MakeTextTable(textTable));
             kl_unity_util::Language::textTable_() = cs_value;
         }
     }
@@ -513,13 +443,8 @@ pls::cs::String LT(pls::cs::String text, pls::cs::String arg) {
     kl_unity_util::Language::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.Language.LT(System.String,System.String)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::Replace(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                          return kl_unity_util::Language::TranslateText(text,
-                                                                                                        true);
-                                                      }),
-                                                      arg);
-        });
+        return PLS_API(kl_unity_util::StringUtil::Replace(
+            PLS_API(kl_unity_util::Language::TranslateText(text, true)), arg));
     }
 }
 
@@ -534,17 +459,13 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
 
         if (kl_cfg::Config::DEBUG()) {
             if (is_null(file)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::Log::Info(literal(u"SetLanguagePack[(null)]"),
-                                                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-                });
+                PLS_API(kl_unity_util::Log::Info(literal(u"SetLanguagePack[(null)]"),
+                                                 pls::cs::Ref<pls::cs::ExceptionObject>{}));
             } else {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::Log::Info(
-                        pls::cs::String::concat(pls::cs::String::concat(literal(u"SetLanguagePack["), file),
-                                                literal(u"]")),
-                        pls::cs::Ref<pls::cs::ExceptionObject>{});
-                });
+                PLS_API(kl_unity_util::Log::Info(
+                    pls::cs::String::concat(pls::cs::String::concat(literal(u"SetLanguagePack["), file),
+                                            literal(u"]")),
+                    pls::cs::Ref<pls::cs::ExceptionObject>{}));
             }
         }
         if (!is_null(file)) {
@@ -553,9 +474,7 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
                 kl_unity_util::Language::priorityLanguage_() = cs_value;
             }
             if (Language::English()) {
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return string_equals(file, kl_unity_util::Language::KAIRO_JAPANESE());
-                    })) {
+                if (PLS_API(string_equals(file, kl_unity_util::Language::KAIRO_JAPANESE()))) {
                     {
                         pls::cs::Int32 cs_value = 0;
                         kl_unity_util::Language::priorityLanguage_() = cs_value;
@@ -563,13 +482,9 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
                     Language::ClearSoftLabelTable();
                     Language::ClearTextTable();
                 }
-            } else if (pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return kl_unity_util::Language::Japanese(); })) {
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return string_equals(file, literal(u"")); }) ||
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return string_equals(file, kl_unity_util::Language::KAIRO_JAPANESE());
-                    })) {
+            } else if (PLS_API(kl_unity_util::Language::Japanese())) {
+                if (PLS_API(string_equals(file, literal(u""))) ||
+                    PLS_API(string_equals(file, kl_unity_util::Language::KAIRO_JAPANESE()))) {
                     Language::ClearSoftLabelTable();
                     Language::ClearTextTable();
                 } else {
@@ -580,18 +495,11 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
                 }
             }
         }
-        if (!is_null(file) && (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                   return string_equals(file, kl_unity_util::Language::KAIRO_JAPANESE());
-                               }) ||
-                               pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                   return string_equals(file, kl_unity_util::Language::KAIRO_ENGLISH());
-                               }))) {
+        if (!is_null(file) && (PLS_API(string_equals(file, kl_unity_util::Language::KAIRO_JAPANESE())) ||
+                               PLS_API(string_equals(file, kl_unity_util::Language::KAIRO_ENGLISH())))) {
             if (save) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::PlayerPrefs::SetString(literal(u"_language_pack"), file);
-                });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::PlayerPrefs::Save(); });
+                PLS_API(pls::kairo::PlayerPrefs::SetString(literal(u"_language_pack"), file));
+                PLS_API(pls::kairo::PlayerPrefs::Save());
             }
             Language::langPackFile_() = file;
             pls::cs::String id = literal(u"UA-35228877-18");
@@ -604,42 +512,34 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
             }
             if (save) {
                 if (kl_cfg::Config::PRINT()) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::Log::Info(
-                            literal(u"DispatchPageView[SetLanguagePack    MultiType]"),
-                            pls::cs::Ref<pls::cs::ExceptionObject>{});
-                    });
+                    PLS_API(
+                        kl_unity_util::Log::Info(literal(u"DispatchPageView[SetLanguagePack    MultiType]"),
+                                                 pls::cs::Ref<pls::cs::ExceptionObject>{}));
                 }
                 analytics::AnalyticsTracker::DispatchPageView();
             }
             return true;
         }
-        bool flag =
-            (!is_null(file) && (file.length() > 0)) && !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::RuntimeRegex::IsMatch(file, literal(u"^[a-zA-Z0-9_\\-]+\\.csv$"));
-            });
+        bool flag = (!is_null(file) && (file.length() > 0)) &&
+                    !PLS_API(pls::cs::RuntimeRegex::IsMatch(file, literal(u"^[a-zA-Z0-9_\\-]+\\.csv$")));
         if (kl_cfg::Config::PRINT()) {
             if (is_null(file)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::Log::Info(
-                        pls::cs::String::concat(
-                            pls::cs::String::concat(literal(u"SetLanguagePack[(null)]    custom("),
-                                                    pls::cs::String(flag ? u"True" : u"False")),
-                            literal(u")")),
-                        pls::cs::Ref<pls::cs::ExceptionObject>{});
-                });
+                PLS_API(kl_unity_util::Log::Info(
+                    pls::cs::String::concat(
+                        pls::cs::String::concat(literal(u"SetLanguagePack[(null)]    custom("),
+                                                pls::cs::String(flag ? u"True" : u"False")),
+                        literal(u")")),
+                    pls::cs::Ref<pls::cs::ExceptionObject>{}));
             } else {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::Log::Info(
+                PLS_API(kl_unity_util::Log::Info(
+                    pls::cs::String::concat(
                         pls::cs::String::concat(
                             pls::cs::String::concat(
-                                pls::cs::String::concat(
-                                    pls::cs::String::concat(literal(u"SetLanguagePack["), file),
-                                    literal(u"]    custom(")),
-                                pls::cs::String(flag ? u"True" : u"False")),
-                            literal(u")")),
-                        pls::cs::Ref<pls::cs::ExceptionObject>{});
-                });
+                                pls::cs::String::concat(literal(u"SetLanguagePack["), file),
+                                literal(u"]    custom(")),
+                            pls::cs::String(flag ? u"True" : u"False")),
+                        literal(u")")),
+                    pls::cs::Ref<pls::cs::ExceptionObject>{}));
             }
         }
         pls::cs::Ref<kl_unity_util::JarInflater> jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
@@ -654,22 +554,15 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
                             }())) {
                             if (!flag) {
                                 jarInflater = kl_unity_util::JarInflater::create(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::Storage::Read(3, false, literal(u"language.dat"));
-                                    }));
-                                data = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(jarInflater)->GetData(file); });
+                                    PLS_API(pls::kairo::Storage::Read(3, false, literal(u"language.dat"))));
+                                data = PLS_API(require(jarInflater)->GetData(file));
                             } else {
-                                if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::Storage::Exists(1,
-                                                                           literal(u"_custom_lang_pack.csv"));
-                                    })) {
+                                if (!PLS_API(
+                                        pls::kairo::Storage::Exists(1, literal(u"_custom_lang_pack.csv")))) {
                                     return pls::cs::flow_return(false);
                                 }
-                                data = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::Storage::Read(1, false,
-                                                                     literal(u"_custom_lang_pack.csv"));
-                                });
+                                data = PLS_API(
+                                    pls::kairo::Storage::Read(1, false, literal(u"_custom_lang_pack.csv")));
                             }
                         }
                         Language::LoadLanguagePack(data);
@@ -682,39 +575,27 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
                         }
                         if (save) {
                             if (flag) {
-                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::PlayerPrefs::GetString(
-                                            literal(u"_language_pack_location"), literal(u""));
-                                    }) != file) {
+                                if (PLS_API(pls::kairo::PlayerPrefs::GetString(
+                                        literal(u"_language_pack_location"), literal(u""))) != file) {
                                     pls::cs::Ref<ui::Dialog> dialog =
                                         ui::Dialog::create(3, literal(u"Message"));
                                     require(dialog)->SetText(literal(
                                         u"Data downloaded.\nUpload language pack and creator's name to Kairosoft for sharing?\nNo personal data will be sent."));
                                     pls::cs::Int32 num = require(dialog)->Show();
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::PlayerPrefs::SetInt(
-                                            literal(u"_language_pack_send"), (num == 4) ? 1 : 0);
-                                    });
+                                    PLS_API(pls::kairo::PlayerPrefs::SetInt(literal(u"_language_pack_send"),
+                                                                            (num == 4) ? 1 : 0));
                                 }
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::PlayerPrefs::SetString(
-                                        literal(u"_language_pack_location"), file);
-                                });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::Storage::Write(
-                                        1, false, literal(u"_custom_lang_pack.csv"), data);
-                                });
+                                PLS_API(pls::kairo::PlayerPrefs::SetString(
+                                    literal(u"_language_pack_location"), file));
+                                PLS_API(pls::kairo::Storage::Write(1, false,
+                                                                   literal(u"_custom_lang_pack.csv"), data));
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::PlayerPrefs::SetString(literal(u"_language_pack"), file);
-                            });
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return pls::kairo::PlayerPrefs::Save(); });
+                            PLS_API(pls::kairo::PlayerPrefs::SetString(literal(u"_language_pack"), file));
+                            PLS_API(pls::kairo::PlayerPrefs::Save());
                         }
-                        bool num2 = flag && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::kairo::PlayerPrefs::GetInt(
-                                                    literal(u"_language_pack_send"), 0);
-                                            }) == 1;
+                        bool num2 =
+                            flag &&
+                            PLS_API(pls::kairo::PlayerPrefs::GetInt(literal(u"_language_pack_send"), 0)) == 1;
                         pls::cs::String id2 = literal(u"UA-35228877-18");
                         if (num2) {
                             {
@@ -737,11 +618,9 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
                         }
                         if (save) {
                             if (kl_cfg::Config::PRINT()) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::Log::Info(
-                                        literal(u"DispatchPageView[SetLanguagePack]"),
-                                        pls::cs::Ref<pls::cs::ExceptionObject>{});
-                                });
+                                PLS_API(
+                                    kl_unity_util::Log::Info(literal(u"DispatchPageView[SetLanguagePack]"),
+                                                             pls::cs::Ref<pls::cs::ExceptionObject>{}));
                             }
                             analytics::AnalyticsTracker::DispatchPageView();
                         }
@@ -750,13 +629,11 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
                         auto ex = pls::cs::capture_exception(cs_caught_167);
                         {
                             if (kl_cfg::Config::PRINT()) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return kl_unity_util::Log::Info(ex); });
+                                PLS_API(kl_unity_util::Log::Info(ex));
                             }
                             if (flag) {
-                                pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::cs::string_trim(require(ex)->get_Message());
-                                });
+                                pls::cs::String text =
+                                    PLS_API(pls::cs::string_trim(require(ex)->get_Message()));
                                 if (text.length() <= 0) {
                                     text = literal(u"An error has occurred.");
                                 }
@@ -771,8 +648,7 @@ bool SetLanguagePack(pls::cs::String file, ByteArray data, bool save) {
                 },
                 [&]() {
                     if ((!is_null(pls::cs::box((jarInflater))))) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require((jarInflater))->Close(); });
+                        PLS_API(require((jarInflater))->Close());
                     }
                     jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
                 });
@@ -788,9 +664,8 @@ pls::cs::String GetCustomLanguagePackLocation() {
     kl_unity_util::Language::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.Language.GetCustomLanguagePackLocation", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::kairo::PlayerPrefs::GetString(literal(u"_language_pack_location"), pls::cs::String{});
-        });
+        return PLS_API(
+            pls::kairo::PlayerPrefs::GetString(literal(u"_language_pack_location"), pls::cs::String{}));
     }
 }
 
@@ -817,9 +692,7 @@ void LoadLanguagePack(ByteArray data) {
         if (kl_cfg::Config::LANGUAGE() == 0) {
             Language::langPackCode_() = literal(u"ja-JP");
             Language::langPackTitle_() = literal(u"日本語");
-        } else if (kl_cfg::Config::LANGUAGE() == -1 && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_unity_util::Language::Japanese();
-                   })) {
+        } else if (kl_cfg::Config::LANGUAGE() == -1 && PLS_API(kl_unity_util::Language::Japanese())) {
             Language::langPackCode_() = literal(u"ja-JP");
             Language::langPackTitle_() = literal(u"日本語");
         }
@@ -846,10 +719,8 @@ void LoadLanguagePack(ByteArray data) {
                             kl_unity_util::Language::langPackFolders_() = cs_value;
                         }
                     } else {
-                        ByteArray array3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Storage::Read(3, false,
-                                                             literal(u"language_pack_template_en.txt"));
-                        });
+                        ByteArray array3 = PLS_API(
+                            pls::kairo::Storage::Read(3, false, literal(u"language_pack_template_en.txt")));
                         if ([&]() {
                                 auto cs_left = pls::cs::box(array3);
                                 auto cs_right = pls::cs::box(ByteArray{});
@@ -857,8 +728,7 @@ void LoadLanguagePack(ByteArray data) {
                             }()) {
                             throw pls::cs::Exception();
                         }
-                        pls::cs::String text4 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::GetString(array3); });
+                        pls::cs::String text4 = PLS_API(kl_unity_util::StringUtil::GetString(array3));
                         {
                             auto cs_value =
                                 pls::cs::Array<pls::cs::Ref<kl_unity_util::Language_LangPackRecord>>::make(0);
@@ -872,75 +742,44 @@ void LoadLanguagePack(ByteArray data) {
                             pls::cs::Ref<kl_unity_util::Language_LangPackRecord>{};
                         pls::cs::Int32 num2 = 0;
                         while (num2 < text4.length()) {
-                            pls::cs::Int32 num3 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return index_char2(text4, u',', num2); });
-                            pls::cs::Int32 num4 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return index_char2(text4, u',', num3 + 1); });
-                            pls::cs::Int32 num5 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return index_char2(text4, u',', num4 + 1); });
-                            pls::cs::Int32 num6 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return index_char2(text4, char16_t(10), num5 + 1);
-                            });
+                            pls::cs::Int32 num3 = PLS_API(index_char2(text4, u',', num2));
+                            pls::cs::Int32 num4 = PLS_API(index_char2(text4, u',', num3 + 1));
+                            pls::cs::Int32 num5 = PLS_API(index_char2(text4, u',', num4 + 1));
+                            pls::cs::Int32 num6 = PLS_API(index_char2(text4, char16_t(10), num5 + 1));
                             if (num6 == -1) {
                                 num6 = text4.length();
                             }
-                            pls::cs::String text5 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::string_trim(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return substring2(text4, num2, num3 - num2);
-                                    }));
-                            });
-                            pls::cs::String file = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::culture_to_lower(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return substring2(text4, num3 + 1, num4 - (num3 + 1));
-                                    }));
-                            });
-                            pls::cs::String text6 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::string_trim(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return substring2(text4, num4 + 1, num5 - (num4 + 1));
-                                    }));
-                            });
-                            pls::cs::String text7 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return substring2(text4, num5 + 1, num6 - (num5 + 1));
-                            });
+                            pls::cs::String text5 =
+                                PLS_API(pls::cs::string_trim(PLS_API(substring2(text4, num2, num3 - num2))));
+                            pls::cs::String file = PLS_API(pls::cs::culture_to_lower(
+                                PLS_API(substring2(text4, num3 + 1, num4 - (num3 + 1)))));
+                            pls::cs::String text6 = PLS_API(pls::cs::string_trim(
+                                PLS_API(substring2(text4, num4 + 1, num5 - (num4 + 1)))));
+                            pls::cs::String text7 = PLS_API(substring2(text4, num5 + 1, num6 - (num5 + 1)));
                             if (text5.length() > 0) {
                                 langPackRecord = Language_LangPackRecord::create(
-                                    pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return pls::cs::int32_parse(text5); }),
-                                    file, text7);
+                                    PLS_API(pls::cs::int32_parse(text5)), file, text7);
                                 {
-                                    auto cs_each172 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() {
-                                            auto cs_text = text6;
-                                            auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                                            cs_separators.at(0) = u'&';
-                                            return pls::cs::string_split(cs_text, cs_separators);
-                                        }());
-                                    });
+                                    auto cs_each172 = PLS_API(([&]() {
+                                        auto cs_text = text6;
+                                        auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                                        cs_separators.at(0) = u'&';
+                                        return pls::cs::string_split(cs_text, cs_separators);
+                                    }()));
                                     for (std::int32_t cs_i172 = 0; cs_i172 < cs_each172.length(); ++cs_i172) {
                                         pls::cs::String positionText = cs_each172.get_Item(cs_i172);
                                         {
-                                            StringArray array5 =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return ([&]() {
-                                                        auto cs_text = positionText;
-                                                        auto cs_separators =
-                                                            pls::cs::Array<char16_t>::make(1);
-                                                        cs_separators.at(0) = u'-';
-                                                        return pls::cs::string_split(cs_text, cs_separators);
-                                                    }());
-                                                });
+                                            StringArray array5 = PLS_API(([&]() {
+                                                auto cs_text = positionText;
+                                                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                                                cs_separators.at(0) = u'-';
+                                                return pls::cs::string_split(cs_text, cs_separators);
+                                            }()));
                                             {
                                                 pls::cs::Int32 cs_arg0 =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return pls::cs::int32_parse(array5[0]);
-                                                    });
+                                                    PLS_API(pls::cs::int32_parse(array5[0]));
                                                 pls::cs::Int32 cs_arg1 =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return pls::cs::int32_parse(array5[1]);
-                                                    });
+                                                    PLS_API(pls::cs::int32_parse(array5[1]));
                                                 Language_LangPackRecord::AddPosition(require(langPackRecord),
                                                                                      cs_arg0, cs_arg1);
                                             }
@@ -958,19 +797,15 @@ void LoadLanguagePack(ByteArray data) {
                                                 pls::cs::Int32(
                                                     kl_unity_util::Language::langPackRecords_().length()) +
                                                 512);
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> void {
-                                            auto cs_arg0 = pls::cs::array_cast(
-                                                pls::cs::box(kl_unity_util::Language::langPackRecords_()));
-                                            auto cs_arg1 = 0;
-                                            auto cs_arg2 =
-                                                pls::cs::array_cast(pls::cs::box(destinationArray));
-                                            auto cs_arg3 = 0;
-                                            auto cs_arg4 =
-                                                kl_unity_util::Language::langPackRecords_().length();
-                                            pls::cs::array_copy(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4);
-                                        }());
-                                    });
+                                    PLS_API(([&]() -> void {
+                                        auto cs_arg0 = pls::cs::array_cast(
+                                            pls::cs::box(kl_unity_util::Language::langPackRecords_()));
+                                        auto cs_arg1 = 0;
+                                        auto cs_arg2 = pls::cs::array_cast(pls::cs::box(destinationArray));
+                                        auto cs_arg3 = 0;
+                                        auto cs_arg4 = kl_unity_util::Language::langPackRecords_().length();
+                                        pls::cs::array_copy(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4);
+                                    }()));
                                     {
                                         auto cs_value = destinationArray;
                                         kl_unity_util::Language::langPackRecords_() = cs_value;
@@ -980,13 +815,11 @@ void LoadLanguagePack(ByteArray data) {
                                     require(langPackRecord)->Id, langPackRecord);
                                 pls::cs::List<pls::cs::Ref<kl_unity_util::Language_LangPackRecord>> value =
                                     pls::cs::List<pls::cs::Ref<kl_unity_util::Language_LangPackRecord>>{};
-                                if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() {
-                                            auto cs_dictionary = dictionary;
-                                            auto cs_key = require(langPackRecord)->File;
-                                            return cs_dictionary.TryGetValue(cs_key, value);
-                                        }());
-                                    })) {
+                                if (!PLS_API(([&]() {
+                                        auto cs_dictionary = dictionary;
+                                        auto cs_key = require(langPackRecord)->File;
+                                        return cs_dictionary.TryGetValue(cs_key, value);
+                                    }()))) {
                                     {
                                         auto cs_target = dictionary;
                                         auto cs_index = require(langPackRecord)->File;
@@ -999,13 +832,10 @@ void LoadLanguagePack(ByteArray data) {
                                         cs_target.set_Item(cs_index, cs_value);
                                     }
                                 }
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return value.Add(langPackRecord); });
+                                PLS_API(value.Add(langPackRecord));
                             } else {
                                 if (!is_null(langPackRecord)) {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return require(langPackRecord)->From.Add(text7);
-                                    });
+                                    PLS_API(require(langPackRecord)->From.Add(text7));
                                 }
                             }
                             num2 = num6 + 1;
@@ -1032,10 +862,8 @@ void LoadLanguagePack(ByteArray data) {
                                                 pls::cs::run_finally(
                                                     [&]() {
                                                         {
-                                                            text8 = pls::diagnostic::api_call(
-                                                                [&]() -> decltype(auto) {
-                                                                    return require(streamReader)->ReadToEnd();
-                                                                });
+                                                            text8 =
+                                                                PLS_API(require(streamReader)->ReadToEnd());
                                                         }
                                                     },
                                                     [&]() {
@@ -1058,11 +886,8 @@ void LoadLanguagePack(ByteArray data) {
                             pls::cs::String text10 = literal(u"");
                             num2 = 0;
                             while (num2 < text8.length()) {
-                                pls::cs::Int32 num8 = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return index_char2(text8, u',', num2); });
-                                pls::cs::Int32 num9 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return index_char2(text8, char16_t(10), num8 + 1);
-                                });
+                                pls::cs::Int32 num8 = PLS_API(index_char2(text8, u',', num2));
+                                pls::cs::Int32 num9 = PLS_API(index_char2(text8, char16_t(10), num8 + 1));
                                 if (num9 == -1) {
                                     num9 = text8.length();
                                 }
@@ -1071,144 +896,99 @@ void LoadLanguagePack(ByteArray data) {
                                     pls::cs::cast_integral<pls::cs::Int32>(char16_t(13))) {
                                     --num9;
                                 }
-                                pls::cs::String text11 = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return substring2(text8, num2, num8 - num2); });
-                                pls::cs::String text12 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return substring2(text8, num8 + 1, num9 - (num8 + 1));
-                                });
-                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::culture_starts_with(text11, literal(u"\""));
-                                    }) &&
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::culture_ends_with(text11, literal(u"\""));
-                                    })) {
-                                    text11 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return substring2(text11, 1, pls::cs::Int32(text11.length()) - 2);
-                                    });
+                                pls::cs::String text11 = PLS_API(substring2(text8, num2, num8 - num2));
+                                pls::cs::String text12 =
+                                    PLS_API(substring2(text8, num8 + 1, num9 - (num8 + 1)));
+                                if (PLS_API(pls::cs::culture_starts_with(text11, literal(u"\""))) &&
+                                    PLS_API(pls::cs::culture_ends_with(text11, literal(u"\"")))) {
+                                    text11 =
+                                        PLS_API(substring2(text11, 1, pls::cs::Int32(text11.length()) - 2));
                                 }
-                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::culture_starts_with(text12, literal(u"\""));
-                                    }) &&
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::culture_ends_with(text12, literal(u"\""));
-                                    })) {
-                                    text12 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return substring2(text12, 1, pls::cs::Int32(text12.length()) - 2);
-                                    });
+                                if (PLS_API(pls::cs::culture_starts_with(text12, literal(u"\""))) &&
+                                    PLS_API(pls::cs::culture_ends_with(text12, literal(u"\"")))) {
+                                    text12 =
+                                        PLS_API(substring2(text12, 1, pls::cs::Int32(text12.length()) - 2));
                                 }
-                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::culture_starts_with(text11, literal(u"@"));
-                                    })) {
+                                if (PLS_API(pls::cs::culture_starts_with(text11, literal(u"@")))) {
                                     if (text11 == literal(u"@author")) {
                                         Language::langPackAuthor_() = text12;
                                     }
                                     if (text11 == literal(u"@language")) {
-                                        Language::langPackCode_() =
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::RuntimeRegex::Replace(
-                                                    text12, literal(u"[^a-zA-Z\\-]"), literal(u""));
-                                            });
+                                        Language::langPackCode_() = PLS_API(pls::cs::RuntimeRegex::Replace(
+                                            text12, literal(u"[^a-zA-Z\\-]"), literal(u"")));
                                     }
                                     if (text11 == literal(u"@title")) {
                                         Language::langPackTitle_() = text12;
                                     }
                                     if (text11 == literal(u"@scale")) {
                                         Language::langPackScale_() = 100;
-                                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::culture_ends_with(text12, literal(u"%"));
-                                            })) {
-                                            text12 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return substring2(text12, 0,
-                                                                  pls::cs::Int32(text12.length()) - 1);
-                                            });
+                                        if (PLS_API(pls::cs::culture_ends_with(text12, literal(u"%")))) {
+                                            text12 = PLS_API(
+                                                substring2(text12, 0, pls::cs::Int32(text12.length()) - 1));
                                         }
-                                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return ([&]() {
-                                                    auto cs_receiver = text12;
-                                                    auto cs_argument = literal(u"auto");
-                                                    cs_receiver.length();
-                                                    return pls::cs::culture_equals_ignore_case(cs_receiver,
-                                                                                               cs_argument);
-                                                }());
-                                            })) {
+                                        if (PLS_API(([&]() {
+                                                auto cs_receiver = text12;
+                                                auto cs_argument = literal(u"auto");
+                                                cs_receiver.length();
+                                                return pls::cs::culture_equals_ignore_case(cs_receiver,
+                                                                                           cs_argument);
+                                            }()))) {
                                             Language::langPackScale_() = -1;
                                         } else {
                                             pls::cs::Int32 result = 0;
-                                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return ([&]() {
-                                                        auto cs_text = text12;
-                                                        return pls::cs::int32_try_parse(cs_text, result);
-                                                    }());
-                                                })) {
+                                            if (PLS_API(([&]() {
+                                                    auto cs_text = text12;
+                                                    return pls::cs::int32_try_parse(cs_text, result);
+                                                }()))) {
                                                 Language::langPackScale_() = result;
                                             }
                                         }
                                     }
                                     if (text11 == literal(u"@appli")) {
-                                        pls::cs::Ref<pls::cs::RegexMatch> match =
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::RuntimeRegex::Match(text12,
-                                                                                    literal(u"([0-9]+)"));
-                                            });
+                                        pls::cs::Ref<pls::cs::RegexMatch> match = PLS_API(
+                                            pls::cs::RuntimeRegex::Match(text12, literal(u"([0-9]+)")));
                                         if (require(match)->get_Success()) {
-                                            num7 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::int32_parse(
-                                                    require(([&]() {
-                                                        auto cs_receiver = require(match)->get_Groups();
-                                                        auto cs_index = 1;
-                                                        return require(cs_receiver)->get_Item(cs_index);
-                                                    }()))
-                                                        ->get_Value());
-                                            });
+                                            num7 = PLS_API(pls::cs::int32_parse(
+                                                require(([&]() {
+                                                    auto cs_receiver = require(match)->get_Groups();
+                                                    auto cs_index = 1;
+                                                    return require(cs_receiver)->get_Item(cs_index);
+                                                }()))
+                                                    ->get_Value()));
                                         }
                                     }
-                                } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return pls::cs::culture_starts_with(text11, literal(u"#"));
-                                           })) {
+                                } else if (PLS_API(pls::cs::culture_starts_with(text11, literal(u"#")))) {
                                     pls::cs::Int32 result2 = 0;
-                                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return ([&]() {
-                                                auto cs_text =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return substring1(text11, 1);
-                                                    });
-                                                return pls::cs::int32_try_parse(cs_text, result2);
-                                            }());
-                                        })) {
+                                    if (PLS_API(([&]() {
+                                            auto cs_text = PLS_API(substring1(text11, 1));
+                                            return pls::cs::int32_try_parse(cs_text, result2);
+                                        }()))) {
                                         langPackRecord =
                                             kl_unity_util::Language::langPackRecords_().get_Item(result2);
                                         if (!is_null(langPackRecord)) {
                                             pls::cs::Ref<pls::cs::RegexMatch> match2 =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::cs::RuntimeRegex::Match(
-                                                        require(langPackRecord)->From.get_Item(0),
-                                                        literal(u"^<po=[^>]+>"));
-                                                });
+                                                PLS_API(pls::cs::RuntimeRegex::Match(
+                                                    require(langPackRecord)->From.get_Item(0),
+                                                    literal(u"^<po=[^>]+>")));
                                             text9 = ((!require(match2)->get_Success())
                                                          ? literal(u"")
                                                          : require(match2)->get_Value());
-                                            match2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::RuntimeRegex::Match(
-                                                    require(langPackRecord)->From.get_Item(0),
-                                                    literal(u"</po>$"));
-                                            });
+                                            match2 = PLS_API(pls::cs::RuntimeRegex::Match(
+                                                require(langPackRecord)->From.get_Item(0),
+                                                literal(u"</po>$")));
                                             text10 = ((!require(match2)->get_Success())
                                                           ? literal(u"")
                                                           : require(match2)->get_Value());
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(langPackRecord)
-                                                    ->To.Add(pls::cs::String::concat(
-                                                        pls::cs::String::concat(text9, text12), text10));
-                                            });
+                                            PLS_API(require(langPackRecord)
+                                                        ->To.Add(pls::cs::String::concat(
+                                                            pls::cs::String::concat(text9, text12), text10)));
                                         }
                                     }
                                 } else if (text11.length() <= 0) {
                                     if (!is_null(langPackRecord)) {
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(langPackRecord)
-                                                ->To.Add(pls::cs::String::concat(
-                                                    pls::cs::String::concat(text9, text12), text10));
-                                        });
+                                        PLS_API(require(langPackRecord)
+                                                    ->To.Add(pls::cs::String::concat(
+                                                        pls::cs::String::concat(text9, text12), text10)));
                                     }
                                 }
                                 num2 = num10 + 1;
@@ -1219,24 +999,17 @@ void LoadLanguagePack(ByteArray data) {
                                 literal(u"The language packs for different applications.").utf8());
                         }
                         if (!is_null(Language::langPackCode_()) && (Language::langPackCode_().length() > 0)) {
-                            StringArray array6 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() {
-                                    auto cs_text = Language::langPackCode_();
-                                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                                    cs_separators.at(0) = u'-';
-                                    return pls::cs::string_split(cs_text, cs_separators);
-                                }());
-                            });
+                            StringArray array6 = PLS_API(([&]() {
+                                auto cs_text = Language::langPackCode_();
+                                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                                cs_separators.at(0) = u'-';
+                                return pls::cs::string_split(cs_text, cs_separators);
+                            }()));
                             if (array6.length() == 2) {
                                 Language::langPackCode_() = ([&]() {
                                     auto cs_left = pls::cs::String::concat(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return pls::cs::culture_to_lower(array6[0]);
-                                        }),
-                                        literal(u"-"));
-                                    auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::culture_to_upper(array6[1]);
-                                    });
+                                        PLS_API(pls::cs::culture_to_lower(array6[0])), literal(u"-"));
+                                    auto cs_right = PLS_API(pls::cs::culture_to_upper(array6[1]));
                                     return pls::cs::String::concat(cs_left, cs_right);
                                 }());
                             }
@@ -1249,41 +1022,32 @@ void LoadLanguagePack(ByteArray data) {
                             kl_unity_util::Language::langPackFolders_() = cs_value;
                         }
                         if (!is_null(Language::langPackCode_())) {
-                            StringArray array7 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() {
-                                    auto cs_text = Language::langPackCode_();
-                                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                                    cs_separators.at(0) = u'-';
-                                    return pls::cs::string_split(cs_text, cs_separators);
-                                }());
-                            });
+                            StringArray array7 = PLS_API(([&]() {
+                                auto cs_text = Language::langPackCode_();
+                                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                                cs_separators.at(0) = u'-';
+                                return pls::cs::string_split(cs_text, cs_separators);
+                            }()));
                             pls::cs::List<pls::cs::String> list2 = pls::cs::List<pls::cs::String>::make();
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return list2.Add(Language::langPackCode_()); });
+                            PLS_API(list2.Add(Language::langPackCode_()));
                             if (Language::langPackCode_() == literal(u"zh-SG")) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return list2.Add(literal(u"zh-CN")); });
+                                PLS_API(list2.Add(literal(u"zh-CN")));
                             }
                             if (Language::langPackCode_() == literal(u"zh-HK")) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return list2.Add(literal(u"zh-TW")); });
+                                PLS_API(list2.Add(literal(u"zh-TW")));
                             }
                             if (Language::langPackCode_() == literal(u"zh-MO")) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return list2.Add(literal(u"zh-TW")); });
+                                PLS_API(list2.Add(literal(u"zh-TW")));
                             }
                             if (array7.length() >= 2) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> void {
-                                        auto cs_receiver = list2;
-                                        auto cs_arg0 = array7[0];
-                                        cs_receiver.Add(cs_arg0);
-                                    }());
-                                });
+                                PLS_API(([&]() -> void {
+                                    auto cs_receiver = list2;
+                                    auto cs_arg0 = array7[0];
+                                    cs_receiver.Add(cs_arg0);
+                                }()));
                             }
                             {
-                                auto cs_value = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return list2.ToArray(); });
+                                auto cs_value = PLS_API(list2.ToArray());
                                 kl_unity_util::Language::langPackFolders_() = cs_value;
                             }
                         }
@@ -1372,27 +1136,23 @@ void LoadLanguagePack(ByteArray data) {
                                                                     cs_target.set_Item(cs_index, cs_value);
                                                                 }
                                                             }
-                                                            pls::diagnostic::api_call([&]()
-                                                                                          -> decltype(auto) {
-                                                                return ([&]() -> void {
-                                                                    auto cs_receiver =
-                                                                        array8.get_Item(position2.Line);
-                                                                    auto cs_arg0 =
-                                                                        ([&]()
-                                                                             -> kl_unity_util::
-                                                                                 Language_RecordPosition {
-                                                                                     pls::cs::Int32 cs_arg0 =
-                                                                                         position2.Line;
-                                                                                     pls::cs::Int32 cs_arg1 =
-                                                                                         position2.Segment;
-                                                                                     return Language_RecordPosition::
-                                                                                         create(cs_arg0,
-                                                                                                cs_arg1,
-                                                                                                item3);
-                                                                                 }());
-                                                                    cs_receiver.Add(cs_arg0);
-                                                                }());
-                                                            });
+                                                            PLS_API(([&]() -> void {
+                                                                auto cs_receiver =
+                                                                    array8.get_Item(position2.Line);
+                                                                auto cs_arg0 =
+                                                                    ([&]()
+                                                                         -> kl_unity_util::
+                                                                             Language_RecordPosition {
+                                                                                 pls::cs::Int32 cs_arg0 =
+                                                                                     position2.Line;
+                                                                                 pls::cs::Int32 cs_arg1 =
+                                                                                     position2.Segment;
+                                                                                 return Language_RecordPosition::
+                                                                                     create(cs_arg0, cs_arg1,
+                                                                                            item3);
+                                                                             }());
+                                                                cs_receiver.Add(cs_arg0);
+                                                            }()));
                                                         }
                                                     }
                                                 }
@@ -1453,17 +1213,13 @@ void LoadLanguagePack(ByteArray data) {
                         }
                         pls::cs::List<pls::cs::Ref<kl_unity_util::Language_LangPackRecord>> value3 =
                             pls::cs::List<pls::cs::Ref<kl_unity_util::Language_LangPackRecord>>{};
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() {
-                                    auto cs_dictionary = dictionary;
-                                    auto cs_key = literal(u"lib.language");
-                                    return cs_dictionary.TryGetValue(cs_key, value3);
-                                }());
-                            })) {
-                            ByteArray array10 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Storage::Read(3, false,
-                                                                 literal(u"language_pack_template_ja.txt"));
-                            });
+                        if (PLS_API(([&]() {
+                                auto cs_dictionary = dictionary;
+                                auto cs_key = literal(u"lib.language");
+                                return cs_dictionary.TryGetValue(cs_key, value3);
+                            }()))) {
+                            ByteArray array10 = PLS_API(pls::kairo::Storage::Read(
+                                3, false, literal(u"language_pack_template_ja.txt")));
                             if ([&]() {
                                     auto cs_left = pls::cs::box(array10);
                                     auto cs_right = pls::cs::box(ByteArray{});
@@ -1471,55 +1227,33 @@ void LoadLanguagePack(ByteArray data) {
                                 }()) {
                                 throw pls::cs::Exception();
                             }
-                            pls::cs::String text13 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StringUtil::GetString(array10);
-                            });
+                            pls::cs::String text13 = PLS_API(kl_unity_util::StringUtil::GetString(array10));
                             pls::cs::Dictionary<pls::cs::String, pls::cs::List<pls::cs::Int32>> dictionary2 =
                                 pls::cs::Dictionary<pls::cs::String, pls::cs::List<pls::cs::Int32>>::make();
                             num2 = 0;
                             while (num2 < text13.length()) {
-                                pls::cs::Int32 num13 = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return index_char2(text13, u',', num2); });
-                                pls::cs::Int32 num14 = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return index_char2(text13, u',', num13 + 1); });
-                                pls::cs::Int32 num15 = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return index_char2(text13, u',', num14 + 1); });
-                                pls::cs::Int32 num16 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return index_char2(text13, char16_t(10), num15 + 1);
-                                });
+                                pls::cs::Int32 num13 = PLS_API(index_char2(text13, u',', num2));
+                                pls::cs::Int32 num14 = PLS_API(index_char2(text13, u',', num13 + 1));
+                                pls::cs::Int32 num15 = PLS_API(index_char2(text13, u',', num14 + 1));
+                                pls::cs::Int32 num16 = PLS_API(index_char2(text13, char16_t(10), num15 + 1));
                                 if (num16 == -1) {
                                     num16 = text13.length();
                                 }
-                                pls::cs::String text14 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::cs::string_trim(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return substring2(text13, num2, num13 - num2);
-                                        }));
-                                });
-                                pls::cs::String text15 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::cs::culture_to_lower(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return substring2(text13, num13 + 1, num14 - (num13 + 1));
-                                        }));
-                                });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::cs::string_trim(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return substring2(text13, num14 + 1, num15 - (num14 + 1));
-                                        }));
-                                });
-                                pls::cs::String key = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return substring2(text13, num15 + 1, num16 - (num15 + 1));
-                                });
+                                pls::cs::String text14 = PLS_API(
+                                    pls::cs::string_trim(PLS_API(substring2(text13, num2, num13 - num2))));
+                                pls::cs::String text15 = PLS_API(pls::cs::culture_to_lower(
+                                    PLS_API(substring2(text13, num13 + 1, num14 - (num13 + 1)))));
+                                PLS_API(pls::cs::string_trim(
+                                    PLS_API(substring2(text13, num14 + 1, num15 - (num14 + 1)))));
+                                pls::cs::String key =
+                                    PLS_API(substring2(text13, num15 + 1, num16 - (num15 + 1)));
                                 if (text15 == literal(u"lib.language") && (text14.length() > 0)) {
                                     pls::cs::List<pls::cs::Int32> value4 = pls::cs::List<pls::cs::Int32>{};
-                                    if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return ([&]() {
-                                                auto cs_dictionary = dictionary2;
-                                                auto cs_key = key;
-                                                return cs_dictionary.TryGetValue(cs_key, value4);
-                                            }());
-                                        })) {
+                                    if (!PLS_API(([&]() {
+                                            auto cs_dictionary = dictionary2;
+                                            auto cs_key = key;
+                                            return cs_dictionary.TryGetValue(cs_key, value4);
+                                        }()))) {
                                         {
                                             auto cs_target = dictionary2;
                                             auto cs_index = key;
@@ -1531,15 +1265,11 @@ void LoadLanguagePack(ByteArray data) {
                                             cs_target.set_Item(cs_index, cs_value);
                                         }
                                     }
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> void {
-                                            auto cs_receiver = value4;
-                                            auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::int32_parse(text14);
-                                            });
-                                            cs_receiver.Add(cs_arg0);
-                                        }());
-                                    });
+                                    PLS_API(([&]() -> void {
+                                        auto cs_receiver = value4;
+                                        auto cs_arg0 = PLS_API(pls::cs::int32_parse(text14));
+                                        cs_receiver.Add(cs_arg0);
+                                    }()));
                                 }
                                 num2 = num16 + 1;
                             }
@@ -1551,13 +1281,11 @@ void LoadLanguagePack(ByteArray data) {
                                     pls::cs::String text16 = array11[k][l][1];
                                     pls::cs::Int32 num17 = -1;
                                     pls::cs::List<pls::cs::Int32> value5 = pls::cs::List<pls::cs::Int32>{};
-                                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return ([&]() {
-                                                auto cs_dictionary = dictionary2;
-                                                auto cs_key = array11[k][l][0];
-                                                return cs_dictionary.TryGetValue(cs_key, value5);
-                                            }());
-                                        })) {
+                                    if (PLS_API(([&]() {
+                                            auto cs_dictionary = dictionary2;
+                                            auto cs_key = array11[k][l][0];
+                                            return cs_dictionary.TryGetValue(cs_key, value5);
+                                        }()))) {
                                         {
                                             auto cs_list_enum181 = value5.GetEnumerator();
                                             struct cs_list_scope181 {
@@ -1602,11 +1330,9 @@ void LoadLanguagePack(ByteArray data) {
                                             value3.get_Item(num17);
                                         if (array11[k][l].length() <= 2) {
                                             StringArray array12 = StringArray::make(3);
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::array_copy(
-                                                    pls::cs::array_cast(pls::cs::box(array11[k][l])), 0,
-                                                    pls::cs::array_cast(pls::cs::box(array12)), 0, 2);
-                                            });
+                                            PLS_API(pls::cs::array_copy(
+                                                pls::cs::array_cast(pls::cs::box(array11[k][l])), 0,
+                                                pls::cs::array_cast(pls::cs::box(array12)), 0, 2));
                                             array11[k][l] = array12;
                                         }
                                         if (require(langPackRecord3)->To.get_Count() <= 0) {
@@ -1620,37 +1346,28 @@ void LoadLanguagePack(ByteArray data) {
                                             }
                                         }
                                         if (require(langPackRecord3)->Positions.get_Count() > 0) {
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(langPackRecord3)->Positions.RemoveAt(0);
-                                            });
+                                            PLS_API(require(langPackRecord3)->Positions.RemoveAt(0));
                                         }
                                         if (require(langPackRecord3)->Positions.get_Count() <= 0) {
-                                            pls::diagnostic::api_call(
-                                                [&]() -> decltype(auto) { return value3.RemoveAt(num17); });
+                                            PLS_API(value3.RemoveAt(num17));
                                         }
                                     }
                                 }
                             }
                             {
-                                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::Language::MakeTextTable(
-                                        kl_unity_util::Language::BUILTIN_TRANSLATE_TABLE());
-                                });
+                                auto cs_value = PLS_API(kl_unity_util::Language::MakeTextTable(
+                                    kl_unity_util::Language::BUILTIN_TRANSLATE_TABLE()));
                                 kl_unity_util::Language::builtInTextTable_() = cs_value;
                             }
                         }
                     }
                     StringArray array13 = StringArray{};
                     StringArray2 array14 = StringArray2{};
-                    jarInflater =
-                        kl_unity_util::JarInflater::create(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Storage::Read(3, false, literal(u"xls.dat"));
-                        }));
+                    jarInflater = kl_unity_util::JarInflater::create(
+                        PLS_API(pls::kairo::Storage::Read(3, false, literal(u"xls.dat"))));
                     if (JarInflater::Exist(require(jarInflater), literal(u"softkey.txt"))) {
-                        array13 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                              literal(u"softkey.txt"));
-                        });
+                        array13 = PLS_API(
+                            kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"softkey.txt")));
                         if ([&]() {
                                 auto cs_left = pls::cs::box(array13);
                                 auto cs_right = pls::cs::box(StringArray{});
@@ -1658,19 +1375,15 @@ void LoadLanguagePack(ByteArray data) {
                             }()) {
                             array14 = StringArray2::make(array13.length());
                             for (pls::cs::Int32 n = 0; n < array14.length(); ++n) {
-                                array14[n] = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StringUtil::Split(array13[n], literal(u"\t"), false,
-                                                                            false, false);
-                                });
+                                array14[n] = PLS_API(kl_unity_util::StringUtil::Split(
+                                    array13[n], literal(u"\t"), false, false, false));
                             }
                             Language::SetSoftLabelTable(array14);
                         }
                     }
                     if (JarInflater::Exist(require(jarInflater), literal(u"text.txt"))) {
-                        array13 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                              literal(u"text.txt"));
-                        });
+                        array13 = PLS_API(
+                            kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"text.txt")));
                         if ([&]() {
                                 auto cs_left = pls::cs::box(array13);
                                 auto cs_right = pls::cs::box(StringArray{});
@@ -1678,23 +1391,17 @@ void LoadLanguagePack(ByteArray data) {
                             }()) {
                             array14 = StringArray2::make(array13.length());
                             for (pls::cs::Int32 num19 = 0; num19 < array14.length(); ++num19) {
-                                array13[num19] = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StringUtil::Replace(array13[num19], literal(u"\\n"),
-                                                                              literal(u"\n"));
-                                });
-                                array14[num19] = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StringUtil::Split(array13[num19], literal(u"\t"),
-                                                                            false, false, false);
-                                });
+                                array13[num19] = PLS_API(kl_unity_util::StringUtil::Replace(
+                                    array13[num19], literal(u"\\n"), literal(u"\n")));
+                                array14[num19] = PLS_API(kl_unity_util::StringUtil::Split(
+                                    array13[num19], literal(u"\t"), false, false, false));
                             }
                             Language::SetTextTable(array14);
                         }
                     }
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(jarInflater)->Close(); });
+                    PLS_API(require(jarInflater)->Close());
                     jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Font::SetScale(100); });
+                    PLS_API(pls::kairo::Font::SetScale(100));
                     if ([&]() {
                             auto cs_left = pls::cs::box(kl_unity_util::Language::langPackRecords_());
                             auto cs_right = pls::cs::box(
@@ -1702,9 +1409,7 @@ void LoadLanguagePack(ByteArray data) {
                             return cs_left != cs_right;
                         }()) {
                         if (Language::langPackScale_() == -1 &&
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return dictionary.ContainsKey(literal(u"text"));
-                            })) {
+                            PLS_API(dictionary.ContainsKey(literal(u"text")))) {
                             pls::cs::List<pls::cs::Ref<kl_unity_util::Language_LangPackRecord>> list5 =
                                 pls::cs::List<pls::cs::Ref<kl_unity_util::Language_LangPackRecord>>::make();
                             {
@@ -1722,8 +1427,7 @@ void LoadLanguagePack(ByteArray data) {
                                             (require(item5)->To.get_Count() != 0) &&
                                             50 <= require(item5)->From.get_Item(0).length() &&
                                             (require(item5)->From.get_Item(0).length() < 200)) {
-                                            pls::diagnostic::api_call(
-                                                [&]() -> decltype(auto) { return list5.Add(item5); });
+                                            PLS_API(list5.Add(item5));
                                         }
                                     }
                                 }
@@ -1742,22 +1446,17 @@ void LoadLanguagePack(ByteArray data) {
                                 {
                                     auto cs_old = Language::langPackScale_();
                                     auto cs_rhs = ([&]() -> pls::cs::Int32 {
-                                        auto cs_left =
-                                            pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return ([&]() -> pls::cs::Int32 {
-                                                    pls::cs::String cs_arg0 =
-                                                        require(langPackRecord4)->From.get_Item(0);
-                                                    return require(font)->StringWidth(cs_arg0);
-                                                }());
-                                            })) *
-                                            100;
-                                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return ([&]() -> pls::cs::Int32 {
-                                                pls::cs::String cs_arg0 =
-                                                    require(langPackRecord4)->To.get_Item(0);
-                                                return require(font)->StringWidth(cs_arg0);
-                                            }());
-                                        });
+                                        auto cs_left = pls::cs::Int32(PLS_API(([&]() -> pls::cs::Int32 {
+                                                           pls::cs::String cs_arg0 =
+                                                               require(langPackRecord4)->From.get_Item(0);
+                                                           return require(font)->StringWidth(cs_arg0);
+                                                       }()))) *
+                                                       100;
+                                        auto cs_right = PLS_API(([&]() -> pls::cs::Int32 {
+                                            pls::cs::String cs_arg0 =
+                                                require(langPackRecord4)->To.get_Item(0);
+                                            return require(font)->StringWidth(cs_arg0);
+                                        }()));
                                         return cs_left / cs_right;
                                     }());
                                     pls::cs::Int32 cs_value = cs_old + cs_rhs;
@@ -1784,9 +1483,7 @@ void LoadLanguagePack(ByteArray data) {
                             Language::langPackScale_() = 100;
                         }
                         if (Language::langPackScale_() != 100) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Font::SetScale(Language::langPackScale_());
-                            });
+                            PLS_API(pls::kairo::Font::SetScale(Language::langPackScale_()));
                         }
                     }
                 } catch (const pls::cs::Exception& cs_caught_183) {
@@ -1810,8 +1507,7 @@ void LoadLanguagePack(ByteArray data) {
             },
             [&]() {
                 if (!is_null(jarInflater)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(jarInflater)->Close(); });
+                    PLS_API(require(jarInflater)->Close());
                 }
                 jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
             });
@@ -1841,8 +1537,7 @@ pls::cs::String GetLanguageCode() {
     kl_unity_util::Language::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.Language.GetLanguageCode", kairo);
     {
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::Language::Japanese(); })) {
+        if (PLS_API(kl_unity_util::Language::Japanese())) {
             return literal(u"ja-JP");
         }
         return Language::langPackCode_();
@@ -1880,29 +1575,19 @@ pls::cs::Ref<Language_LanguagePackInfo> GetLanguagePackInfo(ByteArray data) {
                                 [&]() {
                                     {
                                         while (true) {
-                                            pls::cs::String text =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return require(streamReader)->ReadLine();
-                                                });
+                                            pls::cs::String text = PLS_API(require(streamReader)->ReadLine());
                                             if (is_null(text)) {
                                                 break;
                                             }
-                                            pls::cs::Int32 num = pls::diagnostic::api_call(
-                                                [&]() -> decltype(auto) { return index_char1(text, u','); });
+                                            pls::cs::Int32 num = PLS_API(index_char1(text, u','));
                                             if (num == -1) {
                                                 break;
                                             }
-                                            pls::cs::String text2 = pls::diagnostic::api_call(
-                                                [&]() -> decltype(auto) { return substring2(text, 0, num); });
-                                            pls::cs::String text3 =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return substring1(text, num + 1);
-                                                });
+                                            pls::cs::String text2 = PLS_API(substring2(text, 0, num));
+                                            pls::cs::String text3 = PLS_API(substring1(text, num + 1));
                                             pls::cs::Ref<pls::cs::RegexMatch> match =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::cs::RuntimeRegex::Match(
-                                                        text2, literal(u"^\\s*\"(.*)\"\\s*$"));
-                                                });
+                                                PLS_API(pls::cs::RuntimeRegex::Match(
+                                                    text2, literal(u"^\\s*\"(.*)\"\\s*$")));
                                             if (require(match)->get_Success()) {
                                                 text2 = require(([&]() {
                                                             auto cs_receiver = require(match)->get_Groups();
@@ -1911,16 +1596,10 @@ pls::cs::Ref<Language_LanguagePackInfo> GetLanguagePackInfo(ByteArray data) {
                                                         }()))
                                                             ->get_Value();
                                             }
-                                            text2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::culture_to_lower(
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return pls::cs::string_trim(text2);
-                                                    }));
-                                            });
-                                            match = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return pls::cs::RuntimeRegex::Match(
-                                                    text3, literal(u"^\\s*\"(.*)\"\\s*$"));
-                                            });
+                                            text2 = PLS_API(pls::cs::culture_to_lower(
+                                                PLS_API(pls::cs::string_trim(text2))));
+                                            match = PLS_API(pls::cs::RuntimeRegex::Match(
+                                                text3, literal(u"^\\s*\"(.*)\"\\s*$")));
                                             if (require(match)->get_Success()) {
                                                 text3 = require(([&]() {
                                                             auto cs_receiver = require(match)->get_Groups();
@@ -1929,9 +1608,8 @@ pls::cs::Ref<Language_LanguagePackInfo> GetLanguagePackInfo(ByteArray data) {
                                                         }()))
                                                             ->get_Value();
                                             }
-                                            if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::cs::culture_starts_with(text2, literal(u"@"));
-                                                })) {
+                                            if (!PLS_API(
+                                                    pls::cs::culture_starts_with(text2, literal(u"@")))) {
                                                 break;
                                             }
                                             {
@@ -1957,12 +1635,10 @@ pls::cs::Ref<Language_LanguagePackInfo> GetLanguagePackInfo(ByteArray data) {
                                                 case 1: {
                                                     {
                                                         auto cs_target = languagePackInfo;
-                                                        auto cs_value = pls::diagnostic::api_call(
-                                                            [&]() -> decltype(auto) {
-                                                                return pls::cs::RuntimeRegex::Replace(
-                                                                    text3, literal(u"[^a-zA-Z\\-]"),
-                                                                    literal(u""));
-                                                            });
+                                                        auto cs_value =
+                                                            PLS_API(pls::cs::RuntimeRegex::Replace(
+                                                                text3, literal(u"[^a-zA-Z\\-]"),
+                                                                literal(u"")));
                                                         require(cs_target)->Code = cs_value;
                                                     }
                                                     break;
@@ -1976,11 +1652,8 @@ pls::cs::Ref<Language_LanguagePackInfo> GetLanguagePackInfo(ByteArray data) {
                                                     break;
                                                 }
                                                 case 4: {
-                                                    match =
-                                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return pls::cs::RuntimeRegex::Match(
-                                                                text3, literal(u"([0-9.]+)"));
-                                                        });
+                                                    match = PLS_API(pls::cs::RuntimeRegex::Match(
+                                                        text3, literal(u"([0-9.]+)")));
                                                     if (require(match)->get_Success()) {
                                                         {
                                                             auto cs_target = languagePackInfo;
@@ -2043,10 +1716,8 @@ void MakeLangPackTemplate(bool japanese, pls::cs::Int32 version, pls::cs::String
 
         pls::cs::String filename = (japanese ? literal(u"language_pack_template_ja.txt")
                                              : literal(u"language_pack_template_en.txt"));
-        pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::GetString(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Storage::Read(3, false, filename); }));
-        });
+        pls::cs::String text = PLS_API(
+            kl_unity_util::StringUtil::GetString(PLS_API(pls::kairo::Storage::Read(3, false, filename))));
         pls::cs::String text2 = (japanese ? literal(u"ja-JP") : literal(u"en-US"));
         pls::cs::String text3 = (japanese ? literal(u"日本語") : literal(u"English"));
         pls::cs::Ref<pls::cs::StringBuilder> stringBuilder = ([&]() {
@@ -2054,13 +1725,8 @@ void MakeLangPackTemplate(bool japanese, pls::cs::Int32 version, pls::cs::String
         }());
         pls::cs::String text4 =
             pls::cs::String::concat(pls::cs::String::concat(integer_string(version / 100), literal(u".")),
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StringUtil::FormatString(
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return object_string(pls::cs::box(version % 100));
-                                            }),
-                                            2, u'0');
-                                    }));
+                                    PLS_API(kl_unity_util::StringUtil::FormatString(
+                                        PLS_API(object_string(pls::cs::box(version % 100))), 2, u'0')));
         StringArray2 array = StringArray2::from(
             {StringArray::from({literal(u"@title"), text3}),
              StringArray::from({literal(u"@language"), text2}),
@@ -2077,55 +1743,40 @@ void MakeLangPackTemplate(bool japanese, pls::cs::Int32 version, pls::cs::String
                 StringArray array2 = cs_each270.get_Item(cs_i270);
                 {
                     if (require(stringBuilder)->get_Length() > 0) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(stringBuilder)->Append(literal(u"\n"));
-                        });
+                        PLS_API(require(stringBuilder)->Append(literal(u"\n")));
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                            auto cs_receiver = stringBuilder;
-                            auto cs_arg0 = pls::cs::String::concat(
-                                ([&]() {
-                                    auto cs_left = pls::cs::String::concat(
-                                        pls::cs::String::concat(literal(u"\""), array2[0]),
-                                        literal(u"\",\""));
-                                    auto cs_right = array2[1];
-                                    return pls::cs::String::concat(cs_left, cs_right);
-                                }()),
-                                literal(u"\""));
-                            return require(cs_receiver)->Append(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                        auto cs_receiver = stringBuilder;
+                        auto cs_arg0 = pls::cs::String::concat(
+                            ([&]() {
+                                auto cs_left = pls::cs::String::concat(
+                                    pls::cs::String::concat(literal(u"\""), array2[0]), literal(u"\",\""));
+                                auto cs_right = array2[1];
+                                return pls::cs::String::concat(cs_left, cs_right);
+                            }()),
+                            literal(u"\""));
+                        return require(cs_receiver)->Append(cs_arg0);
+                    }()));
                 }
             }
         }
         pls::cs::Int32 num = 0;
         while (num < text.length()) {
-            pls::cs::Int32 num2 =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return index_char2(text, u',', num); });
-            pls::cs::Int32 num3 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return index_char2(text, u',', num2 + 1); });
-            pls::cs::Int32 num4 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return index_char2(text, u',', num3 + 1); });
-            pls::cs::Int32 num5 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return index_char2(text, char16_t(10), num4 + 1); });
+            pls::cs::Int32 num2 = PLS_API(index_char2(text, u',', num));
+            pls::cs::Int32 num3 = PLS_API(index_char2(text, u',', num2 + 1));
+            pls::cs::Int32 num4 = PLS_API(index_char2(text, u',', num3 + 1));
+            pls::cs::Int32 num5 = PLS_API(index_char2(text, char16_t(10), num4 + 1));
             if (num5 == -1) {
                 num5 = text.length();
             }
-            pls::cs::String text5 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return substring2(text, num, num2 - num); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return substring2(text, num2 + 1, num3 - (num2 + 1)); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return substring2(text, num3 + 1, num4 - (num3 + 1)); });
-            pls::cs::String text6 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return substring2(text, num4 + 1, num5 - (num4 + 1)); });
+            pls::cs::String text5 = PLS_API(substring2(text, num, num2 - num));
+            PLS_API(substring2(text, num2 + 1, num3 - (num2 + 1)));
+            PLS_API(substring2(text, num3 + 1, num4 - (num3 + 1)));
+            pls::cs::String text6 = PLS_API(substring2(text, num4 + 1, num5 - (num4 + 1)));
             while (true) {
                 pls::cs::Int32 length = text6.length();
-                text6 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::cs::RuntimeRegex::Replace(text6, literal(u"^<po=[^>]+>|</po>$"),
-                                                          literal(u""));
-                });
+                text6 = PLS_API(
+                    pls::cs::RuntimeRegex::Replace(text6, literal(u"^<po=[^>]+>|</po>$"), literal(u"")));
                 if (length == text6.length()) {
                     break;
                 }
@@ -2133,66 +1784,48 @@ void MakeLangPackTemplate(bool japanese, pls::cs::Int32 version, pls::cs::String
             if (text6.length() > 0) {
                 if (text5.length() <= 0) {
                     if (require(stringBuilder)->get_Length() > 0) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(stringBuilder)->Append(literal(u"\n"));
-                        });
+                        PLS_API(require(stringBuilder)->Append(literal(u"\n")));
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                            auto cs_receiver = stringBuilder;
-                            auto cs_arg0 = pls::cs::String::concat(
-                                pls::cs::String::concat(literal(u",\""),
-                                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return pls::cs::string_replace(
-                                                                text6, literal(u"\""), literal(u"\"\""));
-                                                        })),
-                                literal(u"\""));
-                            return require(cs_receiver)->Append(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                        auto cs_receiver = stringBuilder;
+                        auto cs_arg0 = pls::cs::String::concat(
+                            pls::cs::String::concat(
+                                literal(u",\""),
+                                PLS_API(pls::cs::string_replace(text6, literal(u"\""), literal(u"\"\"")))),
+                            literal(u"\""));
+                        return require(cs_receiver)->Append(cs_arg0);
+                    }()));
                 } else {
                     while (text5.length() < 5) {
                         text5 = pls::cs::String::concat(literal(u"0"), text5);
                     }
                     if (require(stringBuilder)->get_Length() > 0) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(stringBuilder)->Append(literal(u"\n"));
-                        });
+                        PLS_API(require(stringBuilder)->Append(literal(u"\n")));
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                            auto cs_receiver = stringBuilder;
-                            auto cs_arg0 = pls::cs::String::concat(
-                                pls::cs::String::concat(
-                                    pls::cs::String::concat(pls::cs::String::concat(literal(u"\"#"), text5),
-                                                            literal(u"\",\"")),
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::string_replace(text6, literal(u"\""),
-                                                                       literal(u"\"\""));
-                                    })),
-                                literal(u"\""));
-                            return require(cs_receiver)->Append(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                        auto cs_receiver = stringBuilder;
+                        auto cs_arg0 = pls::cs::String::concat(
+                            pls::cs::String::concat(
+                                pls::cs::String::concat(pls::cs::String::concat(literal(u"\"#"), text5),
+                                                        literal(u"\",\"")),
+                                PLS_API(pls::cs::string_replace(text6, literal(u"\""), literal(u"\"\"")))),
+                            literal(u"\""));
+                        return require(cs_receiver)->Append(cs_arg0);
+                    }()));
                 }
             }
             num = num5 + 1;
         }
-        data =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(stringBuilder)->ToString(); });
+        data = PLS_API(require(stringBuilder)->ToString());
         file = pls::cs::String::concat(kl_cfg::Config::OUTPUT_CSV_NAME(),
                                        (japanese ? literal(u"_ja") : literal(u"")));
-        file = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::RuntimeRegex::Replace(file, literal(u"[^a-zA-Z_]"), literal(u""));
-        });
+        file = PLS_API(pls::cs::RuntimeRegex::Replace(file, literal(u"[^a-zA-Z_]"), literal(u"")));
         file = pls::cs::String::concat(file, literal(u".csv"));
         if (kl_cfg::Config::PRINT()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::Log::Info(
-                    pls::cs::String::concat(pls::cs::String::concat(literal(u"OUTPUT_NAME    file["), file),
-                                            literal(u"]")),
-                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-            });
+            PLS_API(kl_unity_util::Log::Info(
+                pls::cs::String::concat(pls::cs::String::concat(literal(u"OUTPUT_NAME    file["), file),
+                                        literal(u"]")),
+                pls::cs::Ref<pls::cs::ExceptionObject>{}));
         }
     }
 }
@@ -2204,27 +1837,17 @@ pls::cs::String GetTitle(pls::cs::String code) {
     {
         pls::cs::String result = pls::cs::String{};
         if (!is_null(code)) {
-            code = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_to_lower(code); });
+            code = PLS_API(pls::cs::culture_to_lower(code));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::RuntimeRegex::IsMatch(code, literal(u"^ja")); })) {
+        if (PLS_API(pls::cs::RuntimeRegex::IsMatch(code, literal(u"^ja")))) {
             result = literal(u"日本語");
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return pls::cs::RuntimeRegex::IsMatch(code, literal(u"^en(-us)?$"));
-                   })) {
+        } else if (PLS_API(pls::cs::RuntimeRegex::IsMatch(code, literal(u"^en(-us)?$")))) {
             result = literal(u"English");
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return pls::cs::RuntimeRegex::IsMatch(code, literal(u"^zh(-cn|-sg)"));
-                   })) {
+        } else if (PLS_API(pls::cs::RuntimeRegex::IsMatch(code, literal(u"^zh(-cn|-sg)")))) {
             result = literal(u"中文(简体)");
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return pls::cs::RuntimeRegex::IsMatch(code, literal(u"^zh(-tw|-hk|-mo)?"));
-                   })) {
+        } else if (PLS_API(pls::cs::RuntimeRegex::IsMatch(code, literal(u"^zh(-tw|-hk|-mo)?")))) {
             result = literal(u"中文(繁體)");
-        } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return pls::cs::RuntimeRegex::IsMatch(code, literal(u"^ko"));
-                   })) {
+        } else if (PLS_API(pls::cs::RuntimeRegex::IsMatch(code, literal(u"^ko")))) {
             result = literal(u"한국어");
         }
         return result;

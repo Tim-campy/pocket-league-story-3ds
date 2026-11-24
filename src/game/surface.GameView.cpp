@@ -172,16 +172,13 @@ void GameView::create_init(pls::cs::Ref<GameView> self) {
     SurfaceBase::create_init(pls::cs::static_pointer_cast<SurfaceBase>(self));
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.GameView.#ctor", game);
     {
-        self->app_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-        self->canvas_ =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        self->app_ = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+        self->canvas_ = PLS_API(pls::kairo::Canvas::GetInstance());
         self->effMan_ = TouchEffectManager::GetInstance();
         self->formMan_ = form::FormManager::GetInstance();
-        pls::cs::Ref<pls::kairo::IApplication> currentApp = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-        self->SetScaleRatio(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::Single(require(currentApp)->GetScaleRatio(false)); }));
+        pls::cs::Ref<pls::kairo::IApplication> currentApp =
+            PLS_API(pls::kairo::IApplication::GetCurrentApp());
+        self->SetScaleRatio(PLS_API(pls::cs::Single(require(currentApp)->GetScaleRatio(false))));
         self->font_ = pls::cs::make_ref<pls::kairo::Font>();
         self->markComponentKey_ = -1ll;
         self->markComponentFrame_ = 0;
@@ -205,26 +202,21 @@ void GameView::Load(pls::cs::Ref<kl_unity_util::JarInflater> jar) {
             GameView::images_() =
                 pls::cs::Array<pls::cs::Ref<pls::kairo::Image>>::make(GameView::FILENAMES().length());
             for (pls::cs::Int32 i = 0; i < GameView::images_().length(); ++i) {
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Int64 {
-                            pls::cs::String cs_arg0 = GameView::FILENAMES()[i];
-                            return require(jar)->GetSize(cs_arg0);
-                        }());
-                    }) != pls::cs::cast_integral<pls::cs::Int64>(-1)) {
+                if (PLS_API(([&]() -> pls::cs::Int64 {
+                        pls::cs::String cs_arg0 = GameView::FILENAMES()[i];
+                        return require(jar)->GetSize(cs_arg0);
+                    }())) != pls::cs::cast_integral<pls::cs::Int64>(-1)) {
                     {
                         auto cs_target = GameView::images_();
                         auto cs_index = i;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Image::Load(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                               return ([&]() -> ByteArray {
-                                                                   pls::cs::String cs_arg0 =
-                                                                       GameView::FILENAMES()[i];
-                                                                   return require(jar)->GetData(cs_arg0);
-                                                               }());
-                                                           }),
-                                                           static_cast<pls::kairo::Image::Format>(-1),
-                                                           static_cast<pls::kairo::Image::Filter>(-1));
-                        });
+                        auto cs_value =
+                            PLS_API(pls::kairo::Image::Load(PLS_API(([&]() -> ByteArray {
+                                                                pls::cs::String cs_arg0 =
+                                                                    GameView::FILENAMES()[i];
+                                                                return require(jar)->GetData(cs_arg0);
+                                                            }())),
+                                                            static_cast<pls::kairo::Image::Format>(-1),
+                                                            static_cast<pls::kairo::Image::Filter>(-1)));
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
@@ -302,22 +294,16 @@ void GameView::EndTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) {
             if (require(component)->id == 12 || require(component)->id == 15) {
                 touchComponent3 = component;
             } else if (require(component)->id == 11) {
-                pls::cs::Int32 num =
-                    pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::BitUtil::Split(require(component)->value);
-                    })[1]);
+                pls::cs::Int32 num = pls::cs::cast_integral<pls::cs::Int32>(
+                    PLS_API(kl_unity_util::BitUtil::Split(require(component)->value))[1]);
                 if (is_null(touchComponent) ||
                     (pls::cs::cast_integral<pls::cs::Int32>(
-                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_unity_util::BitUtil::Split(require(touchComponent)->value);
-                         })[1]) > num)) {
+                         PLS_API(kl_unity_util::BitUtil::Split(require(touchComponent)->value))[1]) > num)) {
                     touchComponent = component;
                 }
                 if (is_null(touchComponent2) ||
                     (pls::cs::cast_integral<pls::cs::Int32>(
-                         pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_unity_util::BitUtil::Split(require(touchComponent2)->value);
-                         })[1]) < num)) {
+                         PLS_API(kl_unity_util::BitUtil::Split(require(touchComponent2)->value))[1]) < num)) {
                     touchComponent2 = component;
                 }
             }
@@ -333,12 +319,12 @@ void GameView::EndTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) {
             pls::cs::Ref<kairo::unity::surface::TouchComponent> component2 = GetComponent(j);
             if (require(component2)->id == 11) {
                 if (!is_null(touchComponent) && require(touchComponent)->y == require(component2)->y) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(component2); });
+                    PLS_API(list.Add(component2));
                 }
                 if (!is_null(touchComponent2) &&
                     require(touchComponent2)->y + require(touchComponent2)->height ==
                         require(component2)->y + require(component2)->height) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return list2.Add(component2); });
+                    PLS_API(list2.Add(component2));
                 }
             }
         }
@@ -403,11 +389,8 @@ void GameView::EndTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) {
         }
         if (!is_null(touchComponent) && !is_null(touchComponent3)) {
             IntArray array = IntArray::make(require(require(touchComponent3)->option)->args.length());
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JSystem::Arraycopy(
-                    pls::cs::box(require(require(touchComponent3)->option)->args), 0, pls::cs::box(array), 0,
-                    array.length());
-            });
+            PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(require(require(touchComponent3)->option)->args),
+                                                0, pls::cs::box(array), 0, array.length()));
             bool flag = false;
             bool flag2 = false;
             for (pls::cs::Int32 num4 = 0; num4 < list.get_Count(); ++num4) {
@@ -460,54 +443,39 @@ void GameView::EndTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) {
                 AddTouchComponent(16, 0, 0, cs_arg3, cs_arg4, 0, cs_arg6);
             }
         }
-        pls::cs::Int32 originX =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-        pls::cs::Int32 originY =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); });
-        pls::cs::Single scale = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::Single(require(g)->GetScale()); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg0 =
-                    pls::cs::to_int32((([&]() -> pls::cs::FloatEval {
-                                           auto cs_left = pls::cs::Single((GetX() * 100));
-                                           auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return pls::cs::Single(require(app_)->GetScaleRatio(false));
-                                           });
-                                           return cs_left / cs_right;
-                                       }()) +
-                                       0.01f));
-                pls::cs::Int32 cs_arg1 =
-                    pls::cs::to_int32((([&]() -> pls::cs::FloatEval {
-                                           auto cs_left = pls::cs::Single((GetY() * 100));
-                                           auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return pls::cs::Single(require(app_)->GetScaleRatio(false));
-                                           });
-                                           return cs_left / cs_right;
-                                       }()) +
-                                       0.01f));
-                require(g)->SetOrigin(cs_arg0, cs_arg1);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Single cs_arg0 = GetScaleRatio() + 1.0f;
+        pls::cs::Int32 originX = PLS_API(require(g)->GetOriginX());
+        pls::cs::Int32 originY = PLS_API(require(g)->GetOriginY());
+        pls::cs::Single scale = PLS_API(pls::cs::Single(require(g)->GetScale()));
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg0 =
+                pls::cs::to_int32((([&]() -> pls::cs::FloatEval {
+                                       auto cs_left = pls::cs::Single((GetX() * 100));
+                                       auto cs_right =
+                                           PLS_API(pls::cs::Single(require(app_)->GetScaleRatio(false)));
+                                       return cs_left / cs_right;
+                                   }()) +
+                                   0.01f));
+            pls::cs::Int32 cs_arg1 =
+                pls::cs::to_int32((([&]() -> pls::cs::FloatEval {
+                                       auto cs_left = pls::cs::Single((GetY() * 100));
+                                       auto cs_right =
+                                           PLS_API(pls::cs::Single(require(app_)->GetScaleRatio(false)));
+                                       return cs_left / cs_right;
+                                   }()) +
+                                   0.01f));
+            require(g)->SetOrigin(cs_arg0, cs_arg1);
+        }()));
+        PLS_API(([&]() -> void {
+            pls::cs::Single cs_arg0 = GetScaleRatio() + 1.0f;
+            require(g)->Scale(cs_arg0);
+        }()));
+        for (pls::cs::Int32 num9 = 0; num9 < PLS_API(require(delayPaintBuffer_)->Size()); ++num9) {
+            IntArray array2 = PLS_API(require(delayPaintBuffer_)->ElementAt(num9));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg0 =
+                    pls::cs::Single(array2[pls::cs::Int32(array2.length()) - 1]) / 100.0f;
                 require(g)->Scale(cs_arg0);
-            }());
-        });
-        for (pls::cs::Int32 num9 = 0; num9 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return require(delayPaintBuffer_)->Size();
-                                      });
-             ++num9) {
-            IntArray array2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(delayPaintBuffer_)->ElementAt(num9); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg0 =
-                        pls::cs::Single(array2[pls::cs::Int32(array2.length()) - 1]) / 100.0f;
-                    require(g)->Scale(cs_arg0);
-                }());
-            });
+            }()));
             if (array2[0] == 0) {
                 pls::cs::Int32 num10 = 6;
                 pls::cs::Int32 num11 = 2;
@@ -545,8 +513,7 @@ void GameView::EndTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) {
                 pls::cs::Int32 num21 = num15 - num13;
                 pls::cs::Int32 num22 = num16 - num12 * 2;
                 pls::cs::Int32 num23 = num17 + num13 * 2;
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, num19, 255 - num19); });
+                PLS_API(require(g)->SetRenderMode(1, num19, 255 - num19));
                 DrawScaledImage(g, num20 - 5, num21, 5.0f, num23, 8);
                 DrawScaledImage(g, num20, num21, num22, num23, 9);
                 DrawScaledImage(g, num20 + num22, num21, 5.0f, num23, 10);
@@ -555,17 +522,14 @@ void GameView::EndTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) {
                     DrawScaledImage(g, num20 - num18, num21 - num18, num22 + num18 * 2, num23 + num18 * 2, 9);
                     DrawScaledImage(g, num20 + num22 + num18, num21 - num18, 5.0f, num23 + num18 * 2, 10);
                 }
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(0, 255, 0); });
+                PLS_API(require(g)->SetRenderMode(0, 255, 0));
                 markComponentFrame_ = ((markComponentFrame_ + 1) % 2147483647 /* Int32.MaxValue */);
             }
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(delayPaintBuffer_)->RemoveAllElements(); });
+        PLS_API(require(delayPaintBuffer_)->RemoveAllElements());
         loopFrame_ = ((loopFrame_ + 1) % 2147483647 /* Int32.MaxValue */);
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->Scale(scale); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->SetOrigin(originX, originY); });
+        PLS_API(require(g)->Scale(scale));
+        PLS_API(require(g)->SetOrigin(originX, originY));
         SurfaceBase::EndTouchRegist(g);
     }
 }
@@ -744,8 +708,7 @@ GameView::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id,
         pls::cs::Int32 savedY = y;
         pls::cs::Int32 savedWidth = w;
         pls::cs::Int32 savedHeight = h;
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawImage(img, x, y, u, v, w, h); });
+        PLS_API(require(g)->DrawImage(img, x, y, u, v, w, h));
         pls::cs::Ref<kairo::unity::surface::TouchComponent> touchComponent =
             require(GameView::instance_())
                 ->_addTouch(g, id, savedX, savedY, savedWidth, savedHeight, value, opt);
@@ -756,12 +719,8 @@ GameView::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id,
             require(touchComponent)->SetPaint(x, y);
         } else {
             {
-                pls::cs::Int32 cs_arg0 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); }) +
-                    x;
-                pls::cs::Int32 cs_arg1 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); }) +
-                    y;
+                pls::cs::Int32 cs_arg0 = PLS_API(require(g)->GetOriginX()) + x;
+                pls::cs::Int32 cs_arg1 = PLS_API(require(g)->GetOriginY()) + y;
                 require(touchComponent)->SetPaint(cs_arg0, cs_arg1);
             }
         }
@@ -882,12 +841,8 @@ GameView::AddTouchSeb(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, p
             require(touchComponent)->SetPaint(x, y, frame);
         } else {
             {
-                pls::cs::Int32 cs_arg0 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); }) +
-                    x;
-                pls::cs::Int32 cs_arg1 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); }) +
-                    y;
+                pls::cs::Int32 cs_arg0 = PLS_API(require(g)->GetOriginX()) + x;
+                pls::cs::Int32 cs_arg1 = PLS_API(require(g)->GetOriginY()) + y;
                 require(touchComponent)->SetPaint(cs_arg0, cs_arg1, frame);
             }
         }
@@ -929,12 +884,9 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                     }
                 } else if ((id == 19)) {
                     pls::cs::Int32 num12 = y + (h - 4) / 2;
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(30, 30, 30); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->FillRect(x + 1, num12, w - 2, 4.0f); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->FillRect(x, num12 + 1, w, 2.0f); });
+                    PLS_API(require(g)->SetColor(30, 30, 30));
+                    PLS_API(require(g)->FillRect(x + 1, num12, w - 2, 4.0f));
+                    PLS_API(require(g)->FillRect(x, num12 + 1, w, 2.0f));
                     pls::cs::Int32 num13 = (w - 2) / (require(opt)->dragCell[4] - 1);
                     DrawImage(g, x + Get(value) * num13, num12 + 2, 11);
                     x = x + Get(value) * num13 - 15;
@@ -970,24 +922,18 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                                 pls::cs::Int32 num7 = 0;
                                 pls::cs::Int32 num8 = 0;
                                 if (!is_null(g)) {
-                                    num7 = pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-                                    num8 = pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return require(g)->GetOriginY(); });
+                                    num7 = PLS_API(require(g)->GetOriginX());
+                                    num8 = PLS_API(require(g)->GetOriginY());
                                     num3 += num7;
                                     num4 += num8;
                                 }
                                 if (!is_null(g) && ([&]() -> bool {
-                                        auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return pls::cs::Single(require(g)->GetScale());
-                                        });
+                                        auto cs_left = PLS_API(pls::cs::Single(require(g)->GetScale()));
                                         auto cs_right = GetScaleRatio();
                                         return cs_left != cs_right;
                                     }())) {
                                     auto cs_left_57 =
-                                        pls::cs::Double(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return pls::cs::Single(require(g)->GetScale());
-                                        }));
+                                        pls::cs::Double(PLS_API(pls::cs::Single(require(g)->GetScale())));
                                     auto cs_right_57 = pls::cs::Double(GetScaleRatio());
                                     pls::cs::Double num9 = cs_left_57 / cs_right_57;
                                     num3 = num7 + pls::cs::to_int32((pls::cs::Double((num3 - num7)) * num9));
@@ -997,10 +943,7 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                                     num3 += pls::cs::to_int32(
                                         (([&]() -> pls::cs::FloatEval {
                                              auto cs_left = pls::cs::Single(
-                                                 (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                      return require(g)->GetRenderRect();
-                                                  })[0] *
-                                                  100));
+                                                 (PLS_API(require(g)->GetRenderRect())[0] * 100));
                                              auto cs_right = GetScaleRatio();
                                              return cs_left / cs_right;
                                          }()) +
@@ -1008,10 +951,7 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                                     num4 += pls::cs::to_int32(
                                         (([&]() -> pls::cs::FloatEval {
                                              auto cs_left = pls::cs::Single(
-                                                 (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                      return require(g)->GetRenderRect();
-                                                  })[1] *
-                                                  100));
+                                                 (PLS_API(require(g)->GetRenderRect())[1] * 100));
                                              auto cs_right = GetScaleRatio();
                                              return cs_left / cs_right;
                                          }()) +
@@ -1027,10 +967,8 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                                 pls::cs::Int32 num10 = x;
                                 pls::cs::Int32 num11 = y;
                                 if (!is_null(g)) {
-                                    num10 += pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-                                    num11 += pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return require(g)->GetOriginY(); });
+                                    num10 += PLS_API(require(g)->GetOriginX());
+                                    num11 += PLS_API(require(g)->GetOriginY());
                                 }
                                 if (num2 == 1) {
                                     {
@@ -1066,25 +1004,18 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
             }
         }
         if ([&]() {
-                auto cs_left = pls::cs::box(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetCurrentForm(); }));
-                auto cs_right = pls::cs::box(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); }));
+                auto cs_left = pls::cs::box(PLS_API(require(formMan_)->GetCurrentForm()));
+                auto cs_right = pls::cs::box(PLS_API(require(formMan_)->GetTopForm()));
                 return cs_left != cs_right;
             }()) {
-            pls::cs::Ref<pls::kairo::FormBase> topForm = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-            pls::cs::Ref<pls::kairo::FormBase> currentForm = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->GetCurrentForm(); });
+            pls::cs::Ref<pls::kairo::FormBase> topForm = PLS_API(require(formMan_)->GetTopForm());
+            pls::cs::Ref<pls::kairo::FormBase> currentForm = PLS_API(require(formMan_)->GetCurrentForm());
             if (([&]() -> bool {
-                    auto cs_left = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(topForm)->GetId(); });
-                    auto cs_right = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(currentForm)->GetId(); });
+                    auto cs_left = PLS_API(require(topForm)->GetId());
+                    auto cs_right = PLS_API(require(currentForm)->GetId());
                     return cs_left != cs_right;
                 }()) ||
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(topForm)->GetId(); }) !=
-                    4 ||
+                PLS_API(require(topForm)->GetId()) != 4 ||
                 !require((pls::cs::unbox<pls::cs::Ref<form::SubForm>>(pls::cs::box(topForm))))->IsMenu() ||
                 !require((pls::cs::unbox<pls::cs::Ref<form::SubForm>>(pls::cs::box(currentForm))))
                      ->IsMenu()) {
@@ -1101,17 +1032,17 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                 pls::cs::String::concat(literal(u"valueの値が不正です(value="), integer_string(value)),
                 literal(u")")));
             require(dialog)->Show();
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(app_)->Terminate(); });
+            PLS_API(require(app_)->Terminate());
             return pls::cs::Ref<kairo::unity::surface::TouchComponent>{};
         }
         pls::cs::Int32 num14 = 0;
         pls::cs::Int32 num15 = 0;
         if (!is_null(g)) {
-            num14 = pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-            num15 = pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); });
+            num14 = PLS_API(require(g)->GetOriginX());
+            num15 = PLS_API(require(g)->GetOriginY());
             x += num14;
             y += num15;
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
+            PLS_API(require(g)->SetOrigin(0, 0));
         }
         pls::cs::Int32 x2 = x;
         pls::cs::Int32 y2 = y;
@@ -1123,96 +1054,66 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                             if ((require(opt)->flag & 0x10) != 0 && GameView::CheckMarker(id, value) &&
                                 !IsTouch()) {
                                 AddDelayPaintBuffer(
-                                    g,
-                                    IntArray::from({0, x + pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                           return require(g)->GetOriginX();
-                                                       }),
-                                                    y + pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(g)->GetOriginY();
-                                                    }),
-                                                    w, h}));
+                                    g, IntArray::from({0, x + PLS_API(require(g)->GetOriginX()),
+                                                       y + PLS_API(require(g)->GetOriginY()), w, h}));
                             }
-                            pls::cs::Int32 color = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->GetColor(); });
-                            pls::cs::Int32 colorOfRGB = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::kairo::Graphics::GetColorOfRGB(239, 154, 22);
-                            });
+                            pls::cs::Int32 color = PLS_API(require(g)->GetColor());
+                            pls::cs::Int32 colorOfRGB =
+                                PLS_API(pls::kairo::Graphics::GetColorOfRGB(239, 154, 22));
                             if ((require(opt)->flag & 0x100) != 0 &&
                                 (value == 0 || Get(value) != (value & 0xFFFF))) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(g)->SetColor(colorOfRGB); });
+                                PLS_API(require(g)->SetColor(colorOfRGB));
                                 pls::cs::Int32 num16 = pls::cs::to_int32(
-                                    (96.0 * pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                         return kl_lang::JMath::Sin(
-                                             pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return kl_lang::JMath::ToRadians(loopFrame_ % 45 * 4);
-                                             }));
-                                     })));
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(g)->SetRenderMode(1, num16, 255 - num16);
-                                });
+                                    (96.0 * PLS_API(kl_lang::JMath::Sin(
+                                                PLS_API(kl_lang::JMath::ToRadians(loopFrame_ % 45 * 4))))));
+                                PLS_API(require(g)->SetRenderMode(1, num16, 255 - num16));
                                 if ([&]() {
                                         auto cs_left = pls::cs::box(require(opt)->args);
                                         auto cs_right = pls::cs::box(IntArray{});
                                         return cs_left != cs_right;
                                     }()) {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> void {
-                                            pls::cs::Single cs_arg0 = require(opt)->args[0] + num14;
-                                            pls::cs::Single cs_arg1 = require(opt)->args[1] + num15;
-                                            pls::cs::Single cs_arg2 = require(opt)->args[2];
-                                            pls::cs::Single cs_arg3 = require(opt)->args[3];
-                                            require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
-                                        }());
-                                    });
+                                    PLS_API(([&]() -> void {
+                                        pls::cs::Single cs_arg0 = require(opt)->args[0] + num14;
+                                        pls::cs::Single cs_arg1 = require(opt)->args[1] + num15;
+                                        pls::cs::Single cs_arg2 = require(opt)->args[2];
+                                        pls::cs::Single cs_arg3 = require(opt)->args[3];
+                                        require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                                    }()));
                                 } else {
-                                    pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return require(g)->FillRect(x, y, w, h); });
+                                    PLS_API(require(g)->FillRect(x, y, w, h));
                                 }
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(); });
+                                PLS_API(require(g)->SetRenderMode());
                             }
                             if ((require(opt)->flag & 0x80) != 0) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(g)->SetColor(colorOfRGB); });
+                                PLS_API(require(g)->SetColor(colorOfRGB));
                                 pls::cs::Int32 num17 = loopFrame_ / 12 % 2;
                                 pls::cs::Int32 num18 = x + num17;
                                 pls::cs::Int32 num19 = y + num17;
                                 pls::cs::Int32 num20 = w - num17 * 2;
                                 pls::cs::Int32 num21 = h - num17 * 2;
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(g)->DrawRect(num18, num19, num20, num21);
-                                });
+                                PLS_API(require(g)->DrawRect(num18, num19, num20, num21));
                             }
                             if ((require(opt)->flag & 0x800) != 0 && CheckTouch(id, value)) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 255); });
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(g)->PushRenderMode(1, 64, 255);
-                                });
+                                PLS_API(require(g)->SetColor(255, 255, 255));
+                                PLS_API(require(g)->PushRenderMode(1, 64, 255));
                                 if (!is_null(opt) && ([&]() {
                                         auto cs_left = pls::cs::box(require(opt)->args);
                                         auto cs_right = pls::cs::box(IntArray{});
                                         return cs_left != cs_right;
                                     }())) {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> void {
-                                            pls::cs::Single cs_arg0 = require(opt)->args[0] + num14;
-                                            pls::cs::Single cs_arg1 = require(opt)->args[1] + num15;
-                                            pls::cs::Single cs_arg2 = require(opt)->args[2];
-                                            pls::cs::Single cs_arg3 = require(opt)->args[3];
-                                            require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
-                                        }());
-                                    });
+                                    PLS_API(([&]() -> void {
+                                        pls::cs::Single cs_arg0 = require(opt)->args[0] + num14;
+                                        pls::cs::Single cs_arg1 = require(opt)->args[1] + num15;
+                                        pls::cs::Single cs_arg2 = require(opt)->args[2];
+                                        pls::cs::Single cs_arg3 = require(opt)->args[3];
+                                        require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                                    }()));
                                 } else {
-                                    pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return require(g)->FillRect(x, y, w, h); });
+                                    PLS_API(require(g)->FillRect(x, y, w, h));
                                 }
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(g)->PopRenderMode(); });
+                                PLS_API(require(g)->PopRenderMode());
                             }
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->SetColor(color); });
+                            PLS_API(require(g)->SetColor(color));
                         }
                         if (!SurfaceBase::get_registTouch(pls::cs::static_pointer_cast<SurfaceBase>(this))) {
                             return pls::cs::flow_return(
@@ -1233,12 +1134,8 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                         switch (id) {
                         case 8: {
                             if ([&]() {
-                                    auto cs_left =
-                                        pls::cs::box(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(formMan_)->GetCurrentForm();
-                                        }));
-                                    auto cs_right = pls::cs::box(pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); }));
+                                    auto cs_left = pls::cs::box(PLS_API(require(formMan_)->GetCurrentForm()));
+                                    auto cs_right = pls::cs::box(PLS_API(require(formMan_)->GetTopForm()));
                                     return cs_left != cs_right;
                                 }()) {
                                 num23 = x + w;
@@ -1318,9 +1215,7 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                         if (GameView::TOUCHPARAMS()[id][5] == 1 &&
                             (is_null(opt) || (require(opt)->flag & 0x20) == 0)) {
                             pls::cs::Single num27 =
-                                ((!is_null(g)) ? pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::cs::Single(require(g)->GetScale());
-                                })
+                                ((!is_null(g)) ? PLS_API(pls::cs::Single(require(g)->GetScale()))
                                                : GetScaleRatio());
                             pls::cs::Int32 num28 =
                                 pls::cs::to_int32((pls::cs::Single((GetWidth() * 100)) / num27 + 0.01f));
@@ -1344,14 +1239,12 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                         w = num23 - num22;
                         h = num25 - num24;
                         if (!is_null(g) && ([&]() -> bool {
-                                auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::cs::Single(require(g)->GetScale());
-                                });
+                                auto cs_left = PLS_API(pls::cs::Single(require(g)->GetScale()));
                                 auto cs_right = GetScaleRatio();
                                 return cs_left != cs_right;
                             }())) {
-                            auto cs_left_58 = pls::cs::Double(pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return pls::cs::Single(require(g)->GetScale()); }));
+                            auto cs_left_58 =
+                                pls::cs::Double(PLS_API(pls::cs::Single(require(g)->GetScale())));
                             auto cs_right_58 = pls::cs::Double(GetScaleRatio());
                             pls::cs::Double num30 = cs_left_58 / cs_right_58;
                             x = num14 + pls::cs::to_int32((pls::cs::Double((x - num14)) * num30));
@@ -1448,8 +1341,7 @@ GameView::_addTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 id, pls
                 },
                 [&]() {
                     if (!is_null(g)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(g)->SetOrigin(num14, num15); });
+                        PLS_API(require(g)->SetOrigin(num14, num15));
                     }
                 });
             return cs_flow_95.value();
@@ -1516,8 +1408,8 @@ void GameView::Set(pls::cs::Int32 value, pls::cs::Ref<kairo::unity::surface::Tou
         {
             pls::cs::Ref<pls::kairo::TouchValueAccessor> cs_arg0 = GetTouchValueAccessor();
             pls::cs::Int32 cs_arg1 = pls::cs::to_int32((pls::cs::Int64(value) & pls::cs::Int64(0xFFFF0000u)));
-            pls::cs::Int32 cs_arg2 = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Split(value); })[1]);
+            pls::cs::Int32 cs_arg2 =
+                pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::BitUtil::Split(value))[1]);
             Set(cs_arg0, cs_arg1, cs_arg2, c);
         }
     }
@@ -1532,9 +1424,7 @@ void GameView::Set(pls::cs::Ref<pls::kairo::TouchValueAccessor> va, pls::cs::Int
         game);
     {
         Set(va, pls::cs::to_int32((pls::cs::Int64(value) & pls::cs::Int64(0xFFFF0000u))),
-            pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Split(value); })[1]),
-            c);
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::BitUtil::Split(value))[1]), c);
     }
 }
 
@@ -1559,8 +1449,7 @@ void GameView::Set(pls::cs::Ref<pls::kairo::TouchValueAccessor> va, pls::cs::Int
     {
         type = pls::cs::to_int32((pls::cs::Int64(type) & pls::cs::Int64(0xFFFF0000u)));
         if (type != 0) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(va)->SetTouchValue(type, value); });
+            PLS_API(require(va)->SetTouchValue(type, value));
         }
         if ((!is_null(c) && !is_null(require(c)->option)) && ([&]() {
                 auto cs_left = pls::cs::box(require(require(c)->option)->extendValues);
@@ -1569,17 +1458,13 @@ void GameView::Set(pls::cs::Ref<pls::kairo::TouchValueAccessor> va, pls::cs::Int
             }())) {
             IntArray extendValues = require(require(c)->option)->extendValues;
             for (pls::cs::Int32 i = 0; i < extendValues.length(); ++i) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Int32 cs_arg0 = pls::cs::to_int32(
-                            (pls::cs::Int64(extendValues[i]) & pls::cs::Int64(0xFFFF0000u)));
-                        pls::cs::Int32 cs_arg1 = pls::cs::cast_integral<pls::cs::Int32>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::BitUtil::Split(extendValues[i]);
-                            })[1]);
-                        require(va)->SetTouchValue(cs_arg0, cs_arg1);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Int32 cs_arg0 =
+                        pls::cs::to_int32((pls::cs::Int64(extendValues[i]) & pls::cs::Int64(0xFFFF0000u)));
+                    pls::cs::Int32 cs_arg1 = pls::cs::cast_integral<pls::cs::Int32>(
+                        PLS_API(kl_unity_util::BitUtil::Split(extendValues[i]))[1]);
+                    require(va)->SetTouchValue(cs_arg0, cs_arg1);
+                }()));
             }
         }
     }
@@ -1599,8 +1484,7 @@ pls::cs::Int32 GameView::Get(pls::cs::Ref<pls::kairo::TouchValueAccessor> va, pl
                      "M:surface.GameView.Get(kairo.unity.surface.TouchValueAccessor,System.Int32)", game);
     {
         type = pls::cs::to_int32((pls::cs::Int64(type) & pls::cs::Int64(0xFFFF0000u)));
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(va)->GetTouchValue(type, 0); });
+        return PLS_API(require(va)->GetTouchValue(type, 0));
     }
 }
 
@@ -1624,9 +1508,7 @@ pls::cs::Int32 GameView::Join(pls::cs::Int32 type, pls::cs::Int32 v) {
         if (type < -32768 || 32767 < type) {
             high = pls::cs::cast_integral<std::int16_t>((type >> 16));
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::BitUtil::Join(high, pls::cs::cast_integral<std::int16_t>(v));
-        });
+        return PLS_API(kl_unity_util::BitUtil::Join(high, pls::cs::cast_integral<std::int16_t>(v)));
     }
 }
 
@@ -1634,7 +1516,7 @@ pls::cs::Int32 GameView::Join(pls::cs::Int32 type, pls::cs::Int32 v) {
 pls::cs::Ref<pls::kairo::TouchValueAccessor> GameView::GetTouchValueAccessor() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:surface.GameView.GetTouchValueAccessor", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
+        return PLS_API(require(formMan_)->GetTopForm());
     }
 }
 
@@ -1644,11 +1526,10 @@ void GameView::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) {
                      game);
     {
         pls::cs::Ref<kairo::unity::surface::TouchComponent> component = require(e)->component;
-        if (is_instance<pls::cs::Ref<form::MyFormBase>>(pls::cs::box(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); })))) {
-            pls::cs::Ref<form::MyFormBase> myFormBase =
-                pls::cs::unbox<pls::cs::Ref<form::MyFormBase>>(pls::cs::box(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); })));
+        if (is_instance<pls::cs::Ref<form::MyFormBase>>(
+                pls::cs::box(PLS_API(require(formMan_)->GetTopForm())))) {
+            pls::cs::Ref<form::MyFormBase> myFormBase = pls::cs::unbox<pls::cs::Ref<form::MyFormBase>>(
+                pls::cs::box(PLS_API(require(formMan_)->GetTopForm())));
             if (!require(myFormBase)->OnTouchEvent(e)) {
                 return;
             }
@@ -1766,13 +1647,11 @@ void GameView::OnTouchTitleMenu(pls::cs::Int32 type, pls::cs::Int32 v,
             break;
         }
         case 1: {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = canvas_;
-                    pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
-                    require(cs_receiver)->KeyClick(cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = canvas_;
+                pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
+                require(cs_receiver)->KeyClick(cs_arg0);
+            }()));
             break;
         }
         }
@@ -1790,13 +1669,11 @@ void GameView::OnTouchDlgPage(pls::cs::Int32 type, pls::cs::Int32 v,
         pls::cs::Ref<TouchEffect> touchEffect = pls::cs::Ref<TouchEffect>{};
         switch (type) {
         case 0: {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = canvas_;
-                    pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
-                    require(cs_receiver)->KeyDown(cs_arg0, true);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = canvas_;
+                pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
+                require(cs_receiver)->KeyDown(cs_arg0, true);
+            }()));
             if (v == 16) {
                 touchEffect =
                     AddEffect(0, require(component)->paintX, require(component)->paintY, 2, component);
@@ -1818,13 +1695,11 @@ void GameView::OnTouchDlgPage(pls::cs::Int32 type, pls::cs::Int32 v,
         }
         case 6:
         case 10: {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = canvas_;
-                    pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
-                    require(cs_receiver)->KeyUp(cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = canvas_;
+                pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
+                require(cs_receiver)->KeyUp(cs_arg0);
+            }()));
             break;
         }
         }
@@ -1842,8 +1717,7 @@ void GameView::OnTouchDlgPage2(pls::cs::Int32 type, pls::cs::Int32 v,
         pls::cs::Ref<TouchEffect> touchEffect = pls::cs::Ref<TouchEffect>{};
         switch (type) {
         case 5: {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->KeyClick(pls::cs::Int32(1) << v); });
+            PLS_API(require(canvas_)->KeyClick(pls::cs::Int32(1) << v));
             if (v == 16) {
                 touchEffect =
                     AddEffect(0, require(component)->paintX, require(component)->paintY, 2, component);
@@ -1874,21 +1748,18 @@ void GameView::OnTouchDlgPage2(pls::cs::Int32 type, pls::cs::Int32 v,
                     }())) {
                     markComponentKey_ = require(require(e)->component)->GetKey();
                 } else {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->KeyClick(1048576); });
+                    PLS_API(require(canvas_)->KeyClick(1048576));
                 }
             }
             break;
         }
         case 6:
         case 10: {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = canvas_;
-                    pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
-                    require(cs_receiver)->KeyUp(cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = canvas_;
+                pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
+                require(cs_receiver)->KeyUp(cs_arg0);
+            }()));
             break;
         }
         }
@@ -1908,13 +1779,11 @@ void GameView::OnTouchDlgCmd(pls::cs::Int32 type, pls::cs::Int32 v,
             {
                 Set(v, require(e)->component);
                 if (type == 1) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = canvas_;
-                            pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
-                            require(cs_receiver)->KeyClick(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = canvas_;
+                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
+                        require(cs_receiver)->KeyClick(cs_arg0);
+                    }()));
                 }
                 break;
             }
@@ -1943,13 +1812,11 @@ void GameView::OnTouchDlgSel(pls::cs::Int32 type, pls::cs::Int32 v,
                     }())) {
                     markComponentKey_ = require(require(e)->component)->GetKey();
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = canvas_;
-                            pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
-                            require(cs_receiver)->KeyClick(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = canvas_;
+                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
+                        require(cs_receiver)->KeyClick(cs_arg0);
+                    }()));
                 }
             }
             break;
@@ -1968,18 +1835,16 @@ void GameView::OnTouchKeyClick(pls::cs::Int32 type, pls::cs::Int32 v,
         if (v == 0) {
             v = 20;
         }
-        bool flag = (pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                         [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Split(v); })[0]) == 0);
+        bool flag =
+            (pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::BitUtil::Split(v))[0]) == 0);
         switch (type) {
         case 5: {
             if (flag) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = canvas_;
-                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
-                        require(cs_receiver)->KeyClick(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = canvas_;
+                    pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
+                    require(cs_receiver)->KeyClick(cs_arg0);
+                }()));
             } else {
                 Set(v, require(e)->component);
             }
@@ -1999,18 +1864,16 @@ void GameView::OnTouchKeyPress(pls::cs::Int32 type, pls::cs::Int32 v,
         if (v == 0) {
             v = 20;
         }
-        bool flag = (pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                         [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Split(v); })[0]) == 0);
+        bool flag =
+            (pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::BitUtil::Split(v))[0]) == 0);
         switch (type) {
         case 0: {
             if (flag) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = canvas_;
-                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
-                        require(cs_receiver)->KeyDown(cs_arg0, false);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = canvas_;
+                    pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
+                    require(cs_receiver)->KeyDown(cs_arg0, false);
+                }()));
             } else {
                 Set(v, require(e)->component);
             }
@@ -2019,13 +1882,11 @@ void GameView::OnTouchKeyPress(pls::cs::Int32 type, pls::cs::Int32 v,
         case 6:
         case 10: {
             if (flag) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = canvas_;
-                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
-                        require(cs_receiver)->KeyUp(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = canvas_;
+                    pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
+                    require(cs_receiver)->KeyUp(cs_arg0);
+                }()));
             }
             break;
         }
@@ -2043,18 +1904,16 @@ void GameView::OnTouchKeyDown(pls::cs::Int32 type, pls::cs::Int32 v,
         if (v == 0) {
             v = 20;
         }
-        bool flag = (pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                         [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Split(v); })[0]) == 0);
+        bool flag =
+            (pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::BitUtil::Split(v))[0]) == 0);
         switch (type) {
         case 0: {
             if (flag) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = canvas_;
-                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
-                        require(cs_receiver)->KeyDown(cs_arg0, true);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = canvas_;
+                    pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
+                    require(cs_receiver)->KeyDown(cs_arg0, true);
+                }()));
             } else {
                 Set(v, require(e)->component);
             }
@@ -2074,18 +1933,16 @@ void GameView::OnTouchKeyUp(pls::cs::Int32 type, pls::cs::Int32 v,
         if (v == 0) {
             v = 20;
         }
-        bool flag = (pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                         [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Split(v); })[0]) == 0);
+        bool flag =
+            (pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::BitUtil::Split(v))[0]) == 0);
         switch (type) {
         case 1: {
             if (flag) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = canvas_;
-                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
-                        require(cs_receiver)->KeyDown(cs_arg0, true);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = canvas_;
+                    pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, pls::cs::Int32(1) << v);
+                    require(cs_receiver)->KeyDown(cs_arg0, true);
+                }()));
             } else {
                 Set(v, require(e)->component);
             }
@@ -2103,13 +1960,9 @@ void GameView::OnTouchMainMenu(pls::cs::Int32 type, pls::cs::Int32 v,
         "M:surface.GameView.OnTouchMainMenu(System.Int32,System.Int32,kairo.unity.surface.TouchEvent)", game);
     {
         pls::cs::Ref<pls::kairo::FormBase> va = pls::cs::Ref<pls::kairo::FormBase>{};
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(formMan_)->GetFormsNum();
-                                   });
-             ++i) {
-            pls::cs::Ref<pls::kairo::FormBase> form =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->GetForm(i); });
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(form)->GetId(); }) == 4 &&
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(formMan_)->GetFormsNum()); ++i) {
+            pls::cs::Ref<pls::kairo::FormBase> form = PLS_API(require(formMan_)->GetForm(i));
+            if (PLS_API(require(form)->GetId()) == 4 &&
                 require((pls::cs::unbox<pls::cs::Ref<form::SubForm>>(pls::cs::box(form))))->type_ == 3) {
                 va = form;
                 break;
@@ -2121,18 +1974,14 @@ void GameView::OnTouchMainMenu(pls::cs::Int32 type, pls::cs::Int32 v,
             if (is_null(GetComponentId(9))) {
                 Set(v, require(e)->component);
                 if (type == 1) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->KeyClick(1048576); });
+                    PLS_API(require(canvas_)->KeyClick(1048576));
                 }
             } else if (Get(va, v) != (v & 0xFFFF)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> bool {
-                        auto cs_receiver = formMan_;
-                        pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                        return require(cs_receiver)->Pop(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> bool {
+                    auto cs_receiver = formMan_;
+                    pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = PLS_API(require(formMan_)->GetTopForm());
+                    return require(cs_receiver)->Pop(cs_arg0);
+                }()));
                 Set(va, v, require(e)->component);
             }
             break;
@@ -2154,13 +2003,11 @@ void GameView::OnTouchSubMenu(pls::cs::Int32 type, pls::cs::Int32 v,
             {
                 Set(v, require(e)->component);
                 if (type == 1) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = canvas_;
-                            pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
-                            require(cs_receiver)->KeyClick(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = canvas_;
+                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
+                        require(cs_receiver)->KeyClick(cs_arg0);
+                    }()));
                 }
                 break;
             }
@@ -2189,13 +2036,11 @@ void GameView::OnTouchList(pls::cs::Int32 type, pls::cs::Int32 v,
                     }())) {
                     markComponentKey_ = require(require(e)->component)->GetKey();
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = canvas_;
-                            pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
-                            require(cs_receiver)->KeyClick(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = canvas_;
+                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
+                        require(cs_receiver)->KeyClick(cs_arg0);
+                    }()));
                 }
             }
             break;
@@ -2225,13 +2070,11 @@ void GameView::OnTouchScrollList(pls::cs::Int32 type, pls::cs::Int32 v,
                     }())) {
                     markComponentKey_ = require(require(e)->component)->GetKey();
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = canvas_;
-                            pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
-                            require(cs_receiver)->KeyClick(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = canvas_;
+                        pls::cs::Int32 cs_arg0 = GetKey(require(e)->component, 1048576);
+                        require(cs_receiver)->KeyClick(cs_arg0);
+                    }()));
                 }
             }
             break;
@@ -2479,8 +2322,7 @@ void GameView::OnTouchRect(pls::cs::Int32 type, pls::cs::Int32 v,
             {
                 Set(v, require(e)->component);
                 if (type == 1) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->KeyClick(1048576); });
+                    PLS_API(require(canvas_)->KeyClick(1048576));
                 }
                 break;
             }
@@ -2495,120 +2337,105 @@ void GameView::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     {
         kl_cfg::Config::ensure_initialized();
 
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg0 = GetX();
-                pls::cs::Int32 cs_arg1 = GetY();
-                pls::cs::Int32 cs_arg2 = GetWidth();
-                pls::cs::Int32 cs_arg3 = GetHeight();
-                require(g)->SetRenderRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Single cs_arg0 = GetScaleRatio();
-                require(g)->Scale(cs_arg0);
-            }());
-        });
-        pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg0 = GetX();
+            pls::cs::Int32 cs_arg1 = GetY();
+            pls::cs::Int32 cs_arg2 = GetWidth();
+            pls::cs::Int32 cs_arg3 = GetHeight();
+            require(g)->SetRenderRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+        }()));
+        PLS_API(([&]() -> void {
+            pls::cs::Single cs_arg0 = GetScaleRatio();
+            require(g)->Scale(cs_arg0);
+        }()));
+        pls::cs::Ref<pls::kairo::Font> font = PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
         pls::cs::run_finally(
             [&]() {
                 {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(font_); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->Draw(g); });
+                    PLS_API(require(g)->SetFont(font_));
+                    PLS_API(require(formMan_)->Draw(g));
                 }
             },
             [&]() {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(font); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->Scale(100.0f); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->ClearRenderRect(); });
+                PLS_API(require(g)->SetFont(font));
+                PLS_API(require(g)->Scale(100.0f));
+                PLS_API(require(g)->ClearRenderRect());
             });
         if (notesFrame_ != 0) {
             ++notesFrame_;
         }
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->IsPause(); }) &&
-            !require(GamePad::GetInstance())->hide_) {
+        if (!PLS_API(require(formMan_)->IsPause()) && !require(GamePad::GetInstance())->hide_) {
             if (require(GamePad::GetInstance())->visibleTouchRange_) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetColor(255, 0, 0); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = GetX();
-                        pls::cs::Single cs_arg1 = ([&]() -> pls::cs::FloatEval {
-                            auto cs_left = pls::cs::Single(GetY());
-                            auto cs_right = ([&]() -> pls::cs::FloatEval {
-                                                auto cs_left = pls::cs::Single(lastTouchY);
-                                                auto cs_right = GetScaleRatio();
-                                                return cs_left * cs_right;
-                                            }()) /
-                                            100.0f;
-                            return cs_left + cs_right;
-                        }());
-                        pls::cs::Single cs_arg2 = ([&]() -> pls::cs::Int32 {
-                            auto cs_left = GetX();
-                            auto cs_right = GetWidth();
-                            return cs_left + cs_right;
-                        }());
-                        pls::cs::Single cs_arg3 = ([&]() -> pls::cs::FloatEval {
-                            auto cs_left = pls::cs::Single(GetY());
-                            auto cs_right = ([&]() -> pls::cs::FloatEval {
-                                                auto cs_left = pls::cs::Single(lastTouchY);
-                                                auto cs_right = GetScaleRatio();
-                                                return cs_left * cs_right;
-                                            }()) /
-                                            100.0f;
-                            return cs_left + cs_right;
-                        }());
-                        require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                PLS_API(require(g)->SetColor(255, 0, 0));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = GetX();
+                    pls::cs::Single cs_arg1 = ([&]() -> pls::cs::FloatEval {
+                        auto cs_left = pls::cs::Single(GetY());
+                        auto cs_right = ([&]() -> pls::cs::FloatEval {
+                                            auto cs_left = pls::cs::Single(lastTouchY);
+                                            auto cs_right = GetScaleRatio();
+                                            return cs_left * cs_right;
+                                        }()) /
+                                        100.0f;
+                        return cs_left + cs_right;
                     }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = ([&]() -> pls::cs::FloatEval {
-                            auto cs_left = pls::cs::Single(GetX());
-                            auto cs_right = ([&]() -> pls::cs::FloatEval {
-                                                auto cs_left = pls::cs::Single(lastTouchX);
-                                                auto cs_right = GetScaleRatio();
-                                                return cs_left * cs_right;
-                                            }()) /
-                                            100.0f;
-                            return cs_left + cs_right;
-                        }());
-                        pls::cs::Single cs_arg1 = GetY();
-                        pls::cs::Single cs_arg2 = ([&]() -> pls::cs::FloatEval {
-                            auto cs_left = pls::cs::Single(GetX());
-                            auto cs_right = ([&]() -> pls::cs::FloatEval {
-                                                auto cs_left = pls::cs::Single(lastTouchX);
-                                                auto cs_right = GetScaleRatio();
-                                                return cs_left * cs_right;
-                                            }()) /
-                                            100.0f;
-                            return cs_left + cs_right;
-                        }());
-                        pls::cs::Single cs_arg3 = ([&]() -> pls::cs::Int32 {
-                            auto cs_left = GetY();
-                            auto cs_right = GetHeight();
-                            return cs_left + cs_right;
-                        }());
-                        require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                    pls::cs::Single cs_arg2 = ([&]() -> pls::cs::Int32 {
+                        auto cs_left = GetX();
+                        auto cs_right = GetWidth();
+                        return cs_left + cs_right;
                     }());
-                });
+                    pls::cs::Single cs_arg3 = ([&]() -> pls::cs::FloatEval {
+                        auto cs_left = pls::cs::Single(GetY());
+                        auto cs_right = ([&]() -> pls::cs::FloatEval {
+                                            auto cs_left = pls::cs::Single(lastTouchY);
+                                            auto cs_right = GetScaleRatio();
+                                            return cs_left * cs_right;
+                                        }()) /
+                                        100.0f;
+                        return cs_left + cs_right;
+                    }());
+                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                }()));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = ([&]() -> pls::cs::FloatEval {
+                        auto cs_left = pls::cs::Single(GetX());
+                        auto cs_right = ([&]() -> pls::cs::FloatEval {
+                                            auto cs_left = pls::cs::Single(lastTouchX);
+                                            auto cs_right = GetScaleRatio();
+                                            return cs_left * cs_right;
+                                        }()) /
+                                        100.0f;
+                        return cs_left + cs_right;
+                    }());
+                    pls::cs::Single cs_arg1 = GetY();
+                    pls::cs::Single cs_arg2 = ([&]() -> pls::cs::FloatEval {
+                        auto cs_left = pls::cs::Single(GetX());
+                        auto cs_right = ([&]() -> pls::cs::FloatEval {
+                                            auto cs_left = pls::cs::Single(lastTouchX);
+                                            auto cs_right = GetScaleRatio();
+                                            return cs_left * cs_right;
+                                        }()) /
+                                        100.0f;
+                        return cs_left + cs_right;
+                    }());
+                    pls::cs::Single cs_arg3 = ([&]() -> pls::cs::Int32 {
+                        auto cs_left = GetY();
+                        auto cs_right = GetHeight();
+                        return cs_left + cs_right;
+                    }());
+                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                }()));
             }
             if (kl_cfg::Config::SHOW_FPS()) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(0, 0, 0); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 128, 128); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = GetX();
-                        pls::cs::Single cs_arg1 = GetY();
-                        require(g)->FillRect(cs_arg0, cs_arg1, 14.0f, 14.0f);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetRenderMode(); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 255); });
+                PLS_API(require(g)->SetColor(0, 0, 0));
+                PLS_API(require(g)->SetRenderMode(1, 128, 128));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = GetX();
+                    pls::cs::Single cs_arg1 = GetY();
+                    require(g)->FillRect(cs_arg0, cs_arg1, 14.0f, 14.0f);
+                }()));
+                PLS_API(require(g)->SetRenderMode());
+                PLS_API(require(g)->SetColor(255, 255, 255));
                 {
                     pls::cs::Int64 cs_arg0 =
                         pls::cs::cast_integral<pls::cs::Int64>(require(formMan_)->GetFps());
@@ -2616,37 +2443,26 @@ void GameView::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     pls::cs::Single cs_arg2 = GetY() + 1;
                     kairo::unity::ui::Graphics::DrawString(require(g), cs_arg0, cs_arg1, cs_arg2);
                 }
-                pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return integer_string(java::lang::JRuntime::FreeMemory(require(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_lang::JRuntime::GetRuntime(); }))));
-                });
-                pls::cs::Int32 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{});
-                           }))
-                        ->StringWidth(text);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(0, 0, 0); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 128, 128); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = GetX() + 15;
-                        pls::cs::Single cs_arg1 = GetY();
-                        require(g)->FillRect(cs_arg0, cs_arg1, num + 2, 14.0f);
-                    }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetRenderMode(); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 255); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::String cs_arg0 = text;
-                        pls::cs::Single cs_arg1 = GetX() + 15 + 1;
-                        pls::cs::Single cs_arg2 = GetY() + 1;
-                        require(g)->DrawString(cs_arg0, cs_arg1, cs_arg2);
-                    }());
-                });
+                pls::cs::String text = PLS_API(integer_string(
+                    java::lang::JRuntime::FreeMemory(require(PLS_API(kl_lang::JRuntime::GetRuntime())))));
+                pls::cs::Int32 num =
+                    PLS_API(require(PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{})))
+                                ->StringWidth(text));
+                PLS_API(require(g)->SetColor(0, 0, 0));
+                PLS_API(require(g)->SetRenderMode(1, 128, 128));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = GetX() + 15;
+                    pls::cs::Single cs_arg1 = GetY();
+                    require(g)->FillRect(cs_arg0, cs_arg1, num + 2, 14.0f);
+                }()));
+                PLS_API(require(g)->SetRenderMode());
+                PLS_API(require(g)->SetColor(255, 255, 255));
+                PLS_API(([&]() -> void {
+                    pls::cs::String cs_arg0 = text;
+                    pls::cs::Single cs_arg1 = GetX() + 15 + 1;
+                    pls::cs::Single cs_arg2 = GetY() + 1;
+                    require(g)->DrawString(cs_arg0, cs_arg1, cs_arg2);
+                }()));
             }
         }
     }
@@ -2676,23 +2492,19 @@ void GameView::DrawScaledImage(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Si
     {
         IntArray array = GameView::TEXTURES()[imgId];
         pls::cs::Ref<pls::kairo::Image> image = GameView::images_().get_Item(array[0]);
-        auto cs_left_60 = pls::cs::Single(
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(image)->GetWidth(); }));
+        auto cs_left_60 = pls::cs::Single(PLS_API(require(image)->GetWidth()));
         auto cs_right_60 = pls::cs::Single(GameView::IMAGE_WIDTH()[array[0]]);
         pls::cs::Single num = cs_left_60 / cs_right_60;
         pls::cs::Single num2 = 0.75f;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Single cs_arg1 = x + pls::cs::Single(array[1]) * num2;
-                pls::cs::Single cs_arg2 = y + pls::cs::Single(array[2]) * num2;
-                pls::cs::Int32 cs_arg5 = pls::cs::to_int32((pls::cs::Single(array[3]) * num + 0.5f));
-                pls::cs::Int32 cs_arg6 = pls::cs::to_int32((pls::cs::Single(array[4]) * num + 0.5f));
-                pls::cs::Int32 cs_arg7 = pls::cs::to_int32((pls::cs::Single(array[5]) * num + 0.5f));
-                pls::cs::Int32 cs_arg8 = pls::cs::to_int32((pls::cs::Single(array[6]) * num + 0.5f));
-                require(g)->DrawScaledImage(image, cs_arg1, cs_arg2, w, h, cs_arg5, cs_arg6, cs_arg7,
-                                            cs_arg8);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Single cs_arg1 = x + pls::cs::Single(array[1]) * num2;
+            pls::cs::Single cs_arg2 = y + pls::cs::Single(array[2]) * num2;
+            pls::cs::Int32 cs_arg5 = pls::cs::to_int32((pls::cs::Single(array[3]) * num + 0.5f));
+            pls::cs::Int32 cs_arg6 = pls::cs::to_int32((pls::cs::Single(array[4]) * num + 0.5f));
+            pls::cs::Int32 cs_arg7 = pls::cs::to_int32((pls::cs::Single(array[5]) * num + 0.5f));
+            pls::cs::Int32 cs_arg8 = pls::cs::to_int32((pls::cs::Single(array[6]) * num + 0.5f));
+            require(g)->DrawScaledImage(image, cs_arg1, cs_arg2, w, h, cs_arg5, cs_arg6, cs_arg7, cs_arg8);
+        }()));
     }
 }
 
@@ -2730,36 +2542,17 @@ IntArray GameView::DrawVerticalScroll(pls::cs::Ref<pls::kairo::Graphics> g, pls:
             w += 2;
         }
         if (type == 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(7, 5, 78); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->FillRect(x, y, w, h); });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(7, 5, 78))));
+            PLS_API(require(g)->FillRect(x, y, w, h));
         } else {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(168, 95, 80); }));
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->FillRect(x, y - 1, w + 2, h + 2); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(202, 150, 66); }));
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->FillRect(x + w / 2, y, 1.0f, h - 2); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(202, 150, 66); }));
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->FillRect(x, y, w, 1.0f); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(202, 150, 66); }));
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->FillRect(x, y - 1 + h - 2, w, 1.0f); });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(168, 95, 80))));
+            PLS_API(require(g)->FillRect(x, y - 1, w + 2, h + 2));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(202, 150, 66))));
+            PLS_API(require(g)->FillRect(x + w / 2, y, 1.0f, h - 2));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(202, 150, 66))));
+            PLS_API(require(g)->FillRect(x, y, w, 1.0f));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(202, 150, 66))));
+            PLS_API(require(g)->FillRect(x, y - 1 + h - 2, w, 1.0f));
         }
         if (maximum < 0) {
             maximum = 0;
@@ -2776,40 +2569,28 @@ IntArray GameView::DrawVerticalScroll(pls::cs::Ref<pls::kairo::Graphics> g, pls:
         pls::cs::Int32 color2 = 0;
         if ((type == 0)) {
             if (touch) {
-                color = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(246, 129, 0); });
-                color2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(246, 129, 0); });
+                color = PLS_API(pls::kairo::Graphics::GetColorOfRGB(246, 129, 0));
+                color2 = PLS_API(pls::kairo::Graphics::GetColorOfRGB(246, 129, 0));
             } else {
-                color = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(48, 160, 255); });
-                color2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(48, 160, 255); });
+                color = PLS_API(pls::kairo::Graphics::GetColorOfRGB(48, 160, 255));
+                color2 = PLS_API(pls::kairo::Graphics::GetColorOfRGB(48, 160, 255));
             }
         } else if ((type == 1)) {
             if (touch) {
-                color = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(240, 130, 0); });
-                color2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(240, 130, 0); });
+                color = PLS_API(pls::kairo::Graphics::GetColorOfRGB(240, 130, 0));
+                color2 = PLS_API(pls::kairo::Graphics::GetColorOfRGB(240, 130, 0));
             } else {
-                color = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(243, 210, 114); });
-                color2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(202, 150, 66); });
+                color = PLS_API(pls::kairo::Graphics::GetColorOfRGB(243, 210, 114));
+                color2 = PLS_API(pls::kairo::Graphics::GetColorOfRGB(202, 150, 66));
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->FillRect(x, num, w, num2); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(color2); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->FillRect(x, num, 1.0f, 1.0f); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->FillRect(x + w - 1, num, 1.0f, 1.0f); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->FillRect(x, num + num2 - 1, 1.0f, 1.0f); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->FillRect(x + w - 1, num + num2 - 1, 1.0f, 1.0f); });
+        PLS_API(require(g)->SetColor(color));
+        PLS_API(require(g)->FillRect(x, num, w, num2));
+        PLS_API(require(g)->SetColor(color2));
+        PLS_API(require(g)->FillRect(x, num, 1.0f, 1.0f));
+        PLS_API(require(g)->FillRect(x + w - 1, num, 1.0f, 1.0f));
+        PLS_API(require(g)->FillRect(x, num + num2 - 1, 1.0f, 1.0f));
+        PLS_API(require(g)->FillRect(x + w - 1, num + num2 - 1, 1.0f, 1.0f));
         drawVerticalScroll_tmp[0] = num;
         drawVerticalScroll_tmp[1] = num2;
         return drawVerticalScroll_tmp;
@@ -2834,8 +2615,7 @@ pls::cs::Ref<TouchEffect> GameView::AddEffect(pls::cs::Int32 id, pls::cs::Int32 
         }
         IntArray array = GameView::TEXTURES()[imgId];
         pls::cs::Ref<pls::kairo::Image> image = GameView::images_().get_Item(array[0]);
-        auto cs_left_287 = pls::cs::Single(
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(image)->GetWidth(); }));
+        auto cs_left_287 = pls::cs::Single(PLS_API(require(image)->GetWidth()));
         auto cs_right_287 = pls::cs::Single(GameView::IMAGE_WIDTH()[array[0]]);
         pls::cs::Single num = cs_left_287 / cs_right_287;
         pls::cs::Single num2 = 0.75f;
@@ -2897,21 +2677,15 @@ void GameView::AddDelayPaintBuffer(pls::cs::Ref<pls::kairo::Graphics> g, IntArra
                      "M:surface.GameView.AddDelayPaintBuffer(kairo.unity.ui.Graphics,System.Int32[])", game);
     {
         IntArray array = IntArray::make(pls::cs::Int32(paint.length()) + 1);
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::array_copy(pls::cs::array_cast(pls::cs::box(paint)), 0,
-                                       pls::cs::array_cast(pls::cs::box(array)), 0, paint.length());
-        });
+        PLS_API(pls::cs::array_copy(pls::cs::array_cast(pls::cs::box(paint)), 0,
+                                    pls::cs::array_cast(pls::cs::box(array)), 0, paint.length()));
         {
             auto cs_target = array;
             auto cs_index = pls::cs::Int32(array.length()) - 1;
-            auto cs_value = pls::cs::to_int32((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                   return pls::cs::Single(require(g)->GetScale());
-                                               }) *
-                                               100.0f));
+            auto cs_value = pls::cs::to_int32((PLS_API(pls::cs::Single(require(g)->GetScale())) * 100.0f));
             cs_target.set_Item(cs_index, cs_value);
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(delayPaintBuffer_)->Add_1(array); });
+        PLS_API(require(delayPaintBuffer_)->Add_1(array));
     }
 }
 } // namespace surface

@@ -53,49 +53,37 @@ pls::cs::String Json::ReadJSon(pls::cs::String json, pls::cs::String key) {
         if (is_null(key) || is_null(json)) {
             return pls::cs::String{};
         }
-        pls::cs::Ref<pls::cs::RegexMatch> match = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::RuntimeRegex::Match(json, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::cs::string_replace(
-                                                        literal(u"\"<key>\"\\s*:\\s*(\"[^\"]*\"|[0-9.]*)"),
-                                                        literal(u"<key>"), key);
-                                                }));
-        });
+        pls::cs::Ref<pls::cs::RegexMatch> match = PLS_API(pls::cs::RuntimeRegex::Match(
+            json, PLS_API(pls::cs::string_replace(literal(u"\"<key>\"\\s*:\\s*(\"[^\"]*\"|[0-9.]*)"),
+                                                  literal(u"<key>"), key))));
         if (require(match)->get_Success()) {
-            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_text = require(([&]() {
-                                       auto cs_receiver = require(match)->get_Groups();
-                                       auto cs_index = 1;
-                                       return require(cs_receiver)->get_Item(cs_index);
-                                   }()))
-                                       ->get_Value();
-                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                    cs_separators.at(0) = u'"';
-                    return pls::cs::string_trim(cs_text, cs_separators);
-                }());
-            });
+            return PLS_API(([&]() {
+                auto cs_text = require(([&]() {
+                                   auto cs_receiver = require(match)->get_Groups();
+                                   auto cs_index = 1;
+                                   return require(cs_receiver)->get_Item(cs_index);
+                               }()))
+                                   ->get_Value();
+                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                cs_separators.at(0) = u'"';
+                return pls::cs::string_trim(cs_text, cs_separators);
+            }()));
         }
-        match = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::RuntimeRegex::Match(json, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::cs::string_replace(
-                                                        literal(u"\"<key>\"\\s*=\\s*(\"[^\"]*\"|[0-9.]*)"),
-                                                        literal(u"<key>"), key);
-                                                }));
-        });
+        match = PLS_API(pls::cs::RuntimeRegex::Match(
+            json, PLS_API(pls::cs::string_replace(literal(u"\"<key>\"\\s*=\\s*(\"[^\"]*\"|[0-9.]*)"),
+                                                  literal(u"<key>"), key))));
         if (require(match)->get_Success()) {
-            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_text = require(([&]() {
-                                       auto cs_receiver = require(match)->get_Groups();
-                                       auto cs_index = 1;
-                                       return require(cs_receiver)->get_Item(cs_index);
-                                   }()))
-                                       ->get_Value();
-                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                    cs_separators.at(0) = u'"';
-                    return pls::cs::string_trim(cs_text, cs_separators);
-                }());
-            });
+            return PLS_API(([&]() {
+                auto cs_text = require(([&]() {
+                                   auto cs_receiver = require(match)->get_Groups();
+                                   auto cs_index = 1;
+                                   return require(cs_receiver)->get_Item(cs_index);
+                               }()))
+                                   ->get_Value();
+                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                cs_separators.at(0) = u'"';
+                return pls::cs::string_trim(cs_text, cs_separators);
+            }()));
         }
         return pls::cs::String{};
     }
@@ -120,8 +108,7 @@ pls::cs::String Json::Record(pls::cs::String type, pls::cs::String value) {
         return pls::cs::String::concat(
             pls::cs::String::concat(
                 pls::cs::String::concat(pls::cs::String::concat(literal(u"\""), type), literal(u"\":\"")),
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_util::StringUtil::Escape(value); })),
+                PLS_API(kl_util::StringUtil::Escape(value))),
             literal(u"\""));
     }
 }
@@ -161,9 +148,8 @@ pls::cs::String Json::AdjustJson(pls::cs::String receipt, pls::cs::String produc
                      "M:system.billing.util.Json.AdjustJson(System.String,System.String,System.String)",
                      game);
     {
-        pls::cs::String json = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::string_replace(receipt, literal(u"\\"), pls::cs::String(u""));
-        });
+        pls::cs::String json =
+            PLS_API(pls::cs::string_replace(receipt, literal(u"\\"), pls::cs::String(u"")));
         StringArray2 array =
             StringArray2::from({StringArray::from({literal(u"orderId"), pls::cs::String(u"")}),
                                 StringArray::from({literal(u"packageName"), pls::cs::String(u"")}),
@@ -183,19 +169,17 @@ pls::cs::String Json::AdjustJson(pls::cs::String receipt, pls::cs::String produc
             if ((is_null(array[j][1])) || ((array[j][1].length() <= 0))) {
                 continue;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = list;
-                    auto cs_arg0 = ([&]() -> pls::cs::String {
-                        pls::cs::String cs_arg0 = array[j][0];
-                        pls::cs::String cs_arg1 = array[j][1];
-                        return Json::Record(cs_arg0, cs_arg1);
-                    }());
-                    cs_receiver.Add(cs_arg0);
+            PLS_API(([&]() -> void {
+                auto cs_receiver = list;
+                auto cs_arg0 = ([&]() -> pls::cs::String {
+                    pls::cs::String cs_arg0 = array[j][0];
+                    pls::cs::String cs_arg1 = array[j][1];
+                    return Json::Record(cs_arg0, cs_arg1);
                 }());
-            });
+                cs_receiver.Add(cs_arg0);
+            }()));
         }
-        return Json::MakeJson(pls::diagnostic::api_call([&]() -> decltype(auto) { return list.ToArray(); }));
+        return Json::MakeJson(PLS_API(list.ToArray()));
     }
 }
 } // namespace system::billing::util

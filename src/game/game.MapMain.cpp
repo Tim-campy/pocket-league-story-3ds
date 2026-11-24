@@ -334,12 +334,8 @@ pls::cs::Single& MapMain::TRAIN_COAT_W() {
 void MapMain::create_init(pls::cs::Ref<MapMain> self) {
     MapMain::ensure_initialized();
     self->camera_pos = IntArray::make(2);
-    self->c_poss = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-    });
-    self->TRAIN_COAT_CPOS = pls::diagnostic::api_call([&]() -> decltype(auto) {
-        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-    });
+    self->c_poss = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
+    self->TRAIN_COAT_CPOS = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
     self->hit_rect = IntArray::make(4);
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.MapMain.#ctor", game);
     {
@@ -384,10 +380,9 @@ void MapMain::CreateMap() {
         pls::cs::run_finally(
             [&]() {
                 try {
-                    recordStore = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::RecordStore::OpenRecordStore(1); });
-                    jarInflater = kl_unity_util::JarInflater::create(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->ReadRecord(2); }));
+                    recordStore = PLS_API(pls::kairo::RecordStore::OpenRecordStore(1));
+                    jarInflater =
+                        kl_unity_util::JarInflater::create(PLS_API(require(recordStore)->ReadRecord(2)));
                     {
                         auto cs_target = instance;
                         auto cs_value = MapMain::create();
@@ -397,10 +392,8 @@ void MapMain::CreateMap() {
                     pls::cs::String text = literal(u"test");
                     {
                         auto cs_receiver = require(instance)->mapMain_;
-                        ByteArray cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(jarInflater)
-                                ->GetData(pls::cs::String::concat(text, literal(u".gmap")));
-                        });
+                        ByteArray cs_arg0 = PLS_API(
+                            require(jarInflater)->GetData(pls::cs::String::concat(text, literal(u".gmap"))));
                         require(cs_receiver)->LoadMap(cs_arg0);
                     }
                 } catch (const pls::cs::Exception& cs_caught_69) {
@@ -412,13 +405,11 @@ void MapMain::CreateMap() {
             },
             [&]() {
                 if (!is_null(jarInflater)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(jarInflater)->Close(); });
+                    PLS_API(require(jarInflater)->Close());
                 }
                 jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
                 if (!is_null(recordStore)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->CloseRecordStore(); });
+                    PLS_API(require(recordStore)->CloseRecordStore());
                 }
                 recordStore = pls::cs::Ref<pls::kairo::RecordStore>{};
             });
@@ -436,30 +427,20 @@ void MapMain::LoadMap(ByteArray source) {
                 try {
                     byteArrayInputStream = kl_io::ByteArrayInputStream::create(source);
                     MapMain::MAPCHIP_FIELD_WNUM() = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
+                        PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                     MapMain::MAPCHIP_FIELD_HNUM() = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
-                    MapMain::MAPCHIP_IMG_SAVE() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::JTool::MakeArray<IntArray2>(
-                            IntArray::from({MapMain::MAPCHIP_FIELD_HNUM(), MapMain::MAPCHIP_FIELD_WNUM()}));
-                    });
-                    MapMain::MAPCHIP_IMG() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::JTool::MakeArray<IntArray2>(
-                            IntArray::from({MapMain::MAPCHIP_FIELD_HNUM(), MapMain::MAPCHIP_FIELD_WNUM()}));
-                    });
+                        PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
+                    MapMain::MAPCHIP_IMG_SAVE() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(
+                        IntArray::from({MapMain::MAPCHIP_FIELD_HNUM(), MapMain::MAPCHIP_FIELD_WNUM()})));
+                    MapMain::MAPCHIP_IMG() = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(
+                        IntArray::from({MapMain::MAPCHIP_FIELD_HNUM(), MapMain::MAPCHIP_FIELD_WNUM()})));
                     for (pls::cs::Int32 num = MapMain::MAPCHIP_FIELD_HNUM() - 1; num >= 0; --num) {
                         for (pls::cs::Int32 i = 0; i < MapMain::MAPCHIP_FIELD_WNUM(); ++i) {
                             {
                                 auto cs_target = MapMain::MAPCHIP_IMG_SAVE()[num];
                                 auto cs_index = i;
                                 auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                    }));
+                                    PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                                 cs_target.set_Item(cs_index, cs_value);
                             }
                         }
@@ -469,26 +450,21 @@ void MapMain::LoadMap(ByteArray source) {
                             MapMain::MAPCHIP_IMG()[num2][j] = MapMain::MAPCHIP_IMG_SAVE()[num2][j];
                         }
                     }
-                    MapMain::COAT_BASEPOINT() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({8, 2}));
-                    });
+                    MapMain::COAT_BASEPOINT() =
+                        PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({8, 2})));
                     for (pls::cs::Int32 k = 0; k < MapMain::COAT_BASEPOINT().length(); ++k) {
                         {
                             auto cs_target = MapMain::COAT_BASEPOINT()[k];
                             auto cs_index = 0;
                             auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                         {
                             auto cs_target = MapMain::COAT_BASEPOINT()[k];
                             auto cs_index = 1;
                             auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                         MapMain::COAT_BASEPOINT()[k][1] =
@@ -515,15 +491,13 @@ void MapMain::LoadMap(ByteArray source) {
                         pls::cs::Ref<kl_util3d::Vector3D> cs_arg2 = MapMain::MOVE_POINT().get_Item(1);
                         Camera::ConvertAddressToGlobal(cs_arg0, cs_arg1, cs_arg2);
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::MOVE_POINT().get_Item(3);
-                            pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(1))->x_;
-                            pls::cs::Single cs_arg1 = require(MapMain::MOVE_POINT().get_Item(1))->y_;
-                            pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(1))->z_ + 270.0f;
-                            require(cs_receiver)->Set(cs_arg0, cs_arg1, cs_arg2);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::MOVE_POINT().get_Item(3);
+                        pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(1))->x_;
+                        pls::cs::Single cs_arg1 = require(MapMain::MOVE_POINT().get_Item(1))->y_;
+                        pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(1))->z_ + 270.0f;
+                        require(cs_receiver)->Set(cs_arg0, cs_arg1, cs_arg2);
+                    }()));
                     {
                         auto cs_target = MapMain::MOVE_POINT().get_Item(0);
                         auto cs_old = require(cs_target)->z_;
@@ -545,30 +519,24 @@ void MapMain::LoadMap(ByteArray source) {
                         pls::cs::Single cs_value = cs_old + cs_rhs;
                         require(cs_target)->z_ = cs_value;
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::MOVE_POINT().get_Item(5);
-                            pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(3))->x_ + 200.0f;
-                            pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(3))->z_;
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::MOVE_POINT().get_Item(6);
-                            pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(3))->x_ - 200.0f;
-                            pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(3))->z_;
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::MOVE_POINT().get_Item(7);
-                            pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(3))->x_;
-                            pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(3))->z_ + 200.0f;
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::MOVE_POINT().get_Item(5);
+                        pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(3))->x_ + 200.0f;
+                        pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(3))->z_;
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::MOVE_POINT().get_Item(6);
+                        pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(3))->x_ - 200.0f;
+                        pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(3))->z_;
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::MOVE_POINT().get_Item(7);
+                        pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(3))->x_;
+                        pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(3))->z_ + 200.0f;
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
                     {
                         auto cs_target = MapMain::MOVE_POINT().get_Item(0);
                         auto cs_old = require(cs_target)->z_;
@@ -590,24 +558,20 @@ void MapMain::LoadMap(ByteArray source) {
                         pls::cs::Single cs_value = cs_old + cs_rhs;
                         require(cs_target)->x_ = cs_value;
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::MOVE_POINT().get_Item(2);
-                            pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(1))->x_ + 20.0f;
-                            pls::cs::Single cs_arg1 = require(MapMain::MOVE_POINT().get_Item(1))->y_;
-                            pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(1))->z_;
-                            require(cs_receiver)->Set(cs_arg0, cs_arg1, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::MOVE_POINT().get_Item(4);
-                            pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(3))->x_ + 20.0f;
-                            pls::cs::Single cs_arg1 = require(MapMain::MOVE_POINT().get_Item(3))->y_;
-                            pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(3))->z_;
-                            require(cs_receiver)->Set(cs_arg0, cs_arg1, cs_arg2);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::MOVE_POINT().get_Item(2);
+                        pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(1))->x_ + 20.0f;
+                        pls::cs::Single cs_arg1 = require(MapMain::MOVE_POINT().get_Item(1))->y_;
+                        pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(1))->z_;
+                        require(cs_receiver)->Set(cs_arg0, cs_arg1, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::MOVE_POINT().get_Item(4);
+                        pls::cs::Single cs_arg0 = require(MapMain::MOVE_POINT().get_Item(3))->x_ + 20.0f;
+                        pls::cs::Single cs_arg1 = require(MapMain::MOVE_POINT().get_Item(3))->y_;
+                        pls::cs::Single cs_arg2 = require(MapMain::MOVE_POINT().get_Item(3))->z_;
+                        require(cs_receiver)->Set(cs_arg0, cs_arg1, cs_arg2);
+                    }()));
                     {
                         pls::cs::Int32 cs_arg0 = MapMain::COAT_BASEPOINT()[6][0];
                         pls::cs::Int32 cs_arg1 = MapMain::COAT_BASEPOINT()[6][1];
@@ -657,39 +621,32 @@ void MapMain::LoadMap(ByteArray source) {
                         pls::cs::Single cs_value = cs_old + cs_rhs;
                         require(cs_target)->z_ = cs_value;
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::TRAIN_COAT_GPOS().get_Item(1);
-                            pls::cs::Single cs_arg0 =
-                                require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->x_ + MapMain::TRAIN_COAT_W();
-                            pls::cs::Single cs_arg2 = require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->z_;
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::TRAIN_COAT_GPOS().get_Item(2);
-                            pls::cs::Single cs_arg0 =
-                                require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->x_ + MapMain::TRAIN_COAT_W();
-                            pls::cs::Single cs_arg2 =
-                                require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->z_ - MapMain::TRAIN_COAT_H();
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::TRAIN_COAT_GPOS().get_Item(3);
-                            pls::cs::Single cs_arg0 = require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->x_;
-                            pls::cs::Single cs_arg2 =
-                                require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->z_ - MapMain::TRAIN_COAT_H();
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    MapMain::TRAIN_COAT_BLOCK() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::JTool::MakeArray<
-                            pls::cs::Array<pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>>>>(
-                            IntArray::from({4, 2}));
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::TRAIN_COAT_GPOS().get_Item(1);
+                        pls::cs::Single cs_arg0 =
+                            require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->x_ + MapMain::TRAIN_COAT_W();
+                        pls::cs::Single cs_arg2 = require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->z_;
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::TRAIN_COAT_GPOS().get_Item(2);
+                        pls::cs::Single cs_arg0 =
+                            require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->x_ + MapMain::TRAIN_COAT_W();
+                        pls::cs::Single cs_arg2 =
+                            require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->z_ - MapMain::TRAIN_COAT_H();
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::TRAIN_COAT_GPOS().get_Item(3);
+                        pls::cs::Single cs_arg0 = require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->x_;
+                        pls::cs::Single cs_arg2 =
+                            require(MapMain::TRAIN_COAT_GPOS().get_Item(0))->z_ - MapMain::TRAIN_COAT_H();
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    MapMain::TRAIN_COAT_BLOCK() =
+                        PLS_API(kl_java_util::JTool::MakeArray<
+                                pls::cs::Array<pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>>>>(
+                            IntArray::from({4, 2})));
                     for (pls::cs::Int32 n = 0; n < MapMain::TRAIN_COAT_BLOCK().length(); ++n) {
                         {
                             auto cs_target = MapMain::TRAIN_COAT_BLOCK()[n];
@@ -732,78 +689,54 @@ void MapMain::LoadMap(ByteArray source) {
                         pls::cs::Single cs_value = cs_old + cs_rhs;
                         require(cs_target)->z_ = cs_value;
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[0].get_Item(1);
-                            pls::cs::Single cs_arg0 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->x_ +
-                                MapMain::TRAIN_COAT_W();
-                            pls::cs::Single cs_arg2 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->z_ -
-                                MapMain::TRAIN_COAT_H() / 2.0f;
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[1].get_Item(0);
-                            pls::cs::Single cs_arg0 = require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->x_;
-                            pls::cs::Single cs_arg2 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->z_ -
-                                MapMain::TRAIN_COAT_H() / 2.0f;
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[1].get_Item(1);
-                            pls::cs::Single cs_arg0 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->x_ +
-                                MapMain::TRAIN_COAT_W();
-                            pls::cs::Single cs_arg2 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->z_ -
-                                MapMain::TRAIN_COAT_H();
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[2].get_Item(1);
-                            pls::cs::Single cs_arg0 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->x_ +
-                                MapMain::TRAIN_COAT_W();
-                            pls::cs::Single cs_arg2 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->z_ -
-                                MapMain::TRAIN_COAT_H() / 2.0f;
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[3].get_Item(0);
-                            pls::cs::Single cs_arg0 = require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->x_;
-                            pls::cs::Single cs_arg2 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->z_ -
-                                MapMain::TRAIN_COAT_H() / 2.0f;
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[3].get_Item(1);
-                            pls::cs::Single cs_arg0 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->x_ +
-                                MapMain::TRAIN_COAT_W();
-                            pls::cs::Single cs_arg2 =
-                                require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->z_ -
-                                MapMain::TRAIN_COAT_H();
-                            require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
-                        }());
-                    });
-                    MapMain::MAPCHIP_SPOS() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::JTool::MakeArray<IntArray3>(IntArray::from(
-                            {MapMain::MAPCHIP_FIELD_HNUM(), MapMain::MAPCHIP_FIELD_WNUM(), 2}));
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[0].get_Item(1);
+                        pls::cs::Single cs_arg0 =
+                            require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->x_ + MapMain::TRAIN_COAT_W();
+                        pls::cs::Single cs_arg2 = require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->z_ -
+                                                  MapMain::TRAIN_COAT_H() / 2.0f;
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[1].get_Item(0);
+                        pls::cs::Single cs_arg0 = require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->x_;
+                        pls::cs::Single cs_arg2 = require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->z_ -
+                                                  MapMain::TRAIN_COAT_H() / 2.0f;
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[1].get_Item(1);
+                        pls::cs::Single cs_arg0 =
+                            require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->x_ + MapMain::TRAIN_COAT_W();
+                        pls::cs::Single cs_arg2 =
+                            require(MapMain::TRAIN_COAT_BLOCK()[0].get_Item(0))->z_ - MapMain::TRAIN_COAT_H();
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[2].get_Item(1);
+                        pls::cs::Single cs_arg0 =
+                            require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->x_ + MapMain::TRAIN_COAT_W();
+                        pls::cs::Single cs_arg2 = require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->z_ -
+                                                  MapMain::TRAIN_COAT_H() / 2.0f;
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[3].get_Item(0);
+                        pls::cs::Single cs_arg0 = require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->x_;
+                        pls::cs::Single cs_arg2 = require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->z_ -
+                                                  MapMain::TRAIN_COAT_H() / 2.0f;
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = MapMain::TRAIN_COAT_BLOCK()[3].get_Item(1);
+                        pls::cs::Single cs_arg0 =
+                            require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->x_ + MapMain::TRAIN_COAT_W();
+                        pls::cs::Single cs_arg2 =
+                            require(MapMain::TRAIN_COAT_BLOCK()[2].get_Item(0))->z_ - MapMain::TRAIN_COAT_H();
+                        require(cs_receiver)->Set(cs_arg0, 0.0f, cs_arg2);
+                    }()));
+                    MapMain::MAPCHIP_SPOS() = PLS_API(kl_java_util::JTool::MakeArray<IntArray3>(
+                        IntArray::from({MapMain::MAPCHIP_FIELD_HNUM(), MapMain::MAPCHIP_FIELD_WNUM(), 2})));
                     for (pls::cs::Int32 num3 = pls::cs::Int32(MapMain::MAPCHIP_SPOS().length()) - 1;
                          num3 >= 0; --num3) {
                         for (pls::cs::Int32 num4 = 0; num4 < MapMain::MAPCHIP_SPOS()[num3].length(); ++num4) {
@@ -812,38 +745,29 @@ void MapMain::LoadMap(ByteArray source) {
                         }
                     }
                     pls::cs::Int32 num5 = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
-                    IntArray2 array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({num5, 3}));
-                    });
+                        PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
+                    IntArray2 array =
+                        PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({num5, 3})));
                     for (pls::cs::Int32 num6 = 0; num6 < array.length(); ++num6) {
                         {
                             auto cs_target = array[num6];
                             auto cs_index = 0;
                             auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                         {
                             auto cs_target = array[num6];
                             auto cs_index = 1;
                             auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                         {
                             auto cs_target = array[num6];
                             auto cs_index = 2;
                             auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                         array[num6][1] = MapMain::MAPCHIP_FIELD_HNUM() - 1 - array[num6][1];
@@ -851,9 +775,7 @@ void MapMain::LoadMap(ByteArray source) {
                         require(require(udat_)->tenants_.get_Item(num6))->address_[1] = array[num6][1];
                     }
                     pls::cs::Int32 num7 = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
+                        PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                     mapObjects_ = pls::cs::Array<pls::cs::Ref<MapObject>>::make(num7);
                     for (pls::cs::Int32 num8 = 0; num8 < mapObjects_.length(); ++num8) {
                         {
@@ -865,52 +787,42 @@ void MapMain::LoadMap(ByteArray source) {
                         {
                             auto cs_target = mapObjects_.get_Item(num8);
                             pls::cs::Int32 cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             require(cs_target)->img_ = cs_value;
                         }
                         {
                             auto cs_target = require(mapObjects_.get_Item(num8))->spos_;
                             auto cs_index = 0;
                             auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                         {
                             auto cs_target = require(mapObjects_.get_Item(num8))->spos_;
                             auto cs_index = 1;
-                            auto cs_value =
-                                -pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                                }));
+                            auto cs_value = -pls::cs::Int32(
+                                PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                     }
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
+                    PLS_API(require(byteArrayInputStream)->Close());
                 } catch (const pls::cs::Exception& cs_caught_71) {
                     auto t = pls::cs::capture_exception(cs_caught_71);
                     {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                        PLS_API(kl_unity_util::Log::Info(t));
                     }
                 }
             },
             [&]() {
                 try {
                     if (!is_null(byteArrayInputStream)) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
+                        PLS_API(require(byteArrayInputStream)->Close());
                     }
                     byteArrayInputStream = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
                 } catch (const pls::cs::Exception& cs_caught_70) {
                     auto t2 = pls::cs::capture_exception(cs_caught_70);
                     {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t2); });
+                        PLS_API(kl_unity_util::Log::Info(t2));
                     }
                 }
             });
@@ -929,13 +841,11 @@ void MapMain::Load2() {
         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
             for (pls::cs::Int32 j = 0; j < require(instance)->mapchipMain_.length(); ++j) {
                 pls::cs::Ref<data::MapchipMain> mapchipMain = require(instance)->mapchipMain_.get_Item(j);
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> bool {
-                            pls::cs::Int32 cs_arg0 = require(mapchipMain)->flag_;
-                            pls::cs::Int32 cs_arg1 = array[i];
-                            return kl_unity_util::BitUtil::Check(cs_arg0, cs_arg1);
-                        }());
-                    })) {
+                if (PLS_API(([&]() -> bool {
+                        pls::cs::Int32 cs_arg0 = require(mapchipMain)->flag_;
+                        pls::cs::Int32 cs_arg1 = array[i];
+                        return kl_unity_util::BitUtil::Check(cs_arg0, cs_arg1);
+                    }()))) {
                     MapMain::mapchipGrounds().set_Item(i, mapchipMain);
                     break;
                 }
@@ -944,36 +854,28 @@ void MapMain::Load2() {
         MapMain::mapchip_outMap() = pls::cs::Ref<data::MapchipMain>{};
         for (pls::cs::Int32 k = 0; k < require(instance)->mapchipMain_.length(); ++k) {
             pls::cs::Ref<data::MapchipMain> mapchipMain2 = require(instance)->mapchipMain_.get_Item(k);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(mapchipMain2)->flag_, 2);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMain2)->flag_, 2))) {
                 MapMain::mapchip_outMap() = mapchipMain2;
                 break;
             }
         }
         for (pls::cs::Int32 l = 0; l < require(instance)->mapchipMain_.length(); ++l) {
             pls::cs::Ref<data::MapchipMain> mapchipMain3 = require(instance)->mapchipMain_.get_Item(l);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(mapchipMain3)->flag_, 128);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMain3)->flag_, 128))) {
                 MapMain::mapchip_vacant() = mapchipMain3;
                 break;
             }
         }
         for (pls::cs::Int32 m = 0; m < require(instance)->mapchipMain_.length(); ++m) {
             pls::cs::Ref<data::MapchipMain> mapchipMain4 = require(instance)->mapchipMain_.get_Item(m);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(mapchipMain4)->flag_, 256);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMain4)->flag_, 256))) {
                 MapMain::mapchip_tree() = mapchipMain4;
                 break;
             }
         }
         for (pls::cs::Int32 n = 0; n < require(instance)->mapchipMain_.length(); ++n) {
             pls::cs::Ref<data::MapchipMain> mapchipMain5 = require(instance)->mapchipMain_.get_Item(n);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(mapchipMain5)->flag_, 512);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMain5)->flag_, 512))) {
                 MapMain::mapchip_fenceGrass() = mapchipMain5;
                 break;
             }
@@ -1040,9 +942,7 @@ void MapMain::Draw_coat(pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen) {
                             }
                         }
                     }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::BitUtil::Check(require(mapchipMain2)->flag_, 1);
-                        })) {
+                    if (PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMain2)->flag_, 1))) {
                         if (!offscreen) {
                             continue;
                         }
@@ -1050,9 +950,7 @@ void MapMain::Draw_coat(pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen) {
                         continue;
                     }
                     if (!is_null(mapchipMain) &&
-                        (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_unity_util::BitUtil::Check(require(mapchipMain2)->flag_, 4);
-                         }) ||
+                        (PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMain2)->flag_, 4)) ||
                          num2 >= 5)) {
                         mapchipMain2 = mapchipMain;
                     } else if (num2 == 5) {
@@ -1065,12 +963,10 @@ void MapMain::Draw_coat(pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen) {
                         pls::cs::Int32 cs_arg0 = camera_pos[0];
                         pls::cs::Int32 cs_arg1 = ([&]() -> pls::cs::Int32 {
                             auto cs_left = camera_pos[1] + 29;
-                            auto cs_right = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                            auto cs_right = PLS_API(require(image)->GetHeight());
                             return cs_left - cs_right;
                         }());
-                        pls::cs::Int32 cs_arg3 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                        pls::cs::Int32 cs_arg3 = PLS_API(require(image)->GetHeight());
                         return GameUtil::ChRectHitRect(
                             cs_arg0, cs_arg1, 60, cs_arg3, form::GameForm::VIEW_X(), form::GameForm::VIEW_Y(),
                             form::GameForm::VIEW_W(), form::GameForm::VIEW_H(), false);
@@ -1136,20 +1032,17 @@ void MapMain::Draw_copyArea(pls::cs::Ref<pls::kairo::Graphics> g, IntArray draw_
                 }
                 pls::cs::Ref<data::MapchipMain> mapchipMain2 =
                     require(apdat_)->mapchipMain_.get_Item(MapMain::MAPCHIP_IMG()[num4][i]);
-                if (!is_null(mapchipMain) && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::BitUtil::Check(require(mapchipMain2)->flag_, 4);
-                    })) {
+                if (!is_null(mapchipMain) &&
+                    PLS_API(kl_unity_util::BitUtil::Check(require(mapchipMain2)->flag_, 4))) {
                     mapchipMain2 = mapchipMain;
                 }
                 pls::cs::Ref<pls::kairo::Image> image =
                     require(require(apdat_)->resMapChipMain_)->img.get_Item(require(mapchipMain2)->img_);
-                height = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                height = PLS_API(require(image)->GetHeight());
                 if (height >= 30) {
                     continue;
                 }
-                width =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(image)->GetWidth(); });
+                width = PLS_API(require(image)->GetWidth());
                 {
                     IntArray cs_arg0 = MapMain::MAPCHIP_SPOS()[num4][i];
                     IntArray cs_arg1 = camera_pos;
@@ -1239,33 +1132,23 @@ void MapMain::Draw_trainingCoat(pls::cs::Ref<pls::kairo::Graphics> g) {
                 Camera::ConvertGlobalToCamera(cs_arg0, cs_arg1);
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 255, 0); }));
-        });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 255, 0))));
         for (pls::cs::Int32 j = 0; j < TRAIN_COAT_CPOS.length(); ++j) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg0 = TRAIN_COAT_CPOS[j][0] - 4;
-                    pls::cs::Single cs_arg1 = TRAIN_COAT_CPOS[j][1] - 4;
-                    require(g)->FillRect(cs_arg0, cs_arg1, 8.0f, 8.0f);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg0 = TRAIN_COAT_CPOS[j][0] - 4;
+                pls::cs::Single cs_arg1 = TRAIN_COAT_CPOS[j][1] - 4;
+                require(g)->FillRect(cs_arg0, cs_arg1, 8.0f, 8.0f);
+            }()));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 255); }));
-        });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 255))));
         for (pls::cs::Int32 k = 0; k < TRAIN_COAT_CPOS.length(); ++k) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg0 = TRAIN_COAT_CPOS[k][0];
-                    pls::cs::Single cs_arg1 = TRAIN_COAT_CPOS[k][1];
-                    pls::cs::Single cs_arg2 = TRAIN_COAT_CPOS[(k + 1) % 4][0];
-                    pls::cs::Single cs_arg3 = TRAIN_COAT_CPOS[(k + 1) % 4][1];
-                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg0 = TRAIN_COAT_CPOS[k][0];
+                pls::cs::Single cs_arg1 = TRAIN_COAT_CPOS[k][1];
+                pls::cs::Single cs_arg2 = TRAIN_COAT_CPOS[(k + 1) % 4][0];
+                pls::cs::Single cs_arg3 = TRAIN_COAT_CPOS[(k + 1) % 4][1];
+                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+            }()));
         }
         for (pls::cs::Int32 l = 0; l < require(udat_)->tAreas_.length(); ++l) {
             for (pls::cs::Int32 m = 0; m < require(udat_)->tAreas_[l].length(); ++m) {
@@ -1294,11 +1177,7 @@ void MapMain::Draw_trainingCoat(pls::cs::Ref<pls::kairo::Graphics> g) {
                     pls::cs::Int32 g2 = GameUtil::RateConvert(
                         n, 0, require(require(udat_)->tAreas_[l].get_Item(m))->tGroupAreas_.length(), 0, 255,
                         true);
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(r, g2, 255);
-                        }));
-                    });
+                    PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(r, g2, 255))));
                 }
                 if (require(require(udat_)->tAreas_[l].get_Item(m))->tMode_ == 3) {
                     for (pls::cs::Int32 num3 = 0;
@@ -1315,41 +1194,25 @@ void MapMain::Draw_trainingCoat(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 Camera::ConvertGlobalToCamera(cs_arg0, cs_arg1);
                             }
                             pls::cs::Int32 num5 = 6;
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->SetColor(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::Graphics::GetColorOfRGB(255, 255, 0);
-                                    }));
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 =
-                                        require(tGroupArea2)->goal_cpos[num4][0] - num5 / 2;
-                                    pls::cs::Single cs_arg1 =
-                                        require(tGroupArea2)->goal_cpos[num4][1] - num5 / 2;
-                                    require(g)->FillRect(cs_arg0, cs_arg1, num5, num5);
-                                }());
-                            });
+                            PLS_API(require(g)->SetColor(
+                                PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 0))));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = require(tGroupArea2)->goal_cpos[num4][0] - num5 / 2;
+                                pls::cs::Single cs_arg1 = require(tGroupArea2)->goal_cpos[num4][1] - num5 / 2;
+                                require(g)->FillRect(cs_arg0, cs_arg1, num5, num5);
+                            }()));
                         }
                         for (pls::cs::Int32 num6 = 0;
                              num6 < pls::cs::Int32(require(tGroupArea2)->goal_gpos.length()) - 1; ++num6) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->SetColor(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::Graphics::GetColorOfRGB(255, 0, 0);
-                                    }));
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = require(tGroupArea2)->goal_cpos[num6][0];
-                                    pls::cs::Single cs_arg1 = require(tGroupArea2)->goal_cpos[num6][1];
-                                    pls::cs::Single cs_arg2 =
-                                        require(tGroupArea2)->goal_cpos[(num6 + 1) % 4][0];
-                                    pls::cs::Single cs_arg3 =
-                                        require(tGroupArea2)->goal_cpos[(num6 + 1) % 4][1];
-                                    require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
-                                }());
-                            });
+                            PLS_API(require(g)->SetColor(
+                                PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 0, 0))));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = require(tGroupArea2)->goal_cpos[num6][0];
+                                pls::cs::Single cs_arg1 = require(tGroupArea2)->goal_cpos[num6][1];
+                                pls::cs::Single cs_arg2 = require(tGroupArea2)->goal_cpos[(num6 + 1) % 4][0];
+                                pls::cs::Single cs_arg3 = require(tGroupArea2)->goal_cpos[(num6 + 1) % 4][1];
+                                require(g)->DrawLine(cs_arg0, cs_arg1, cs_arg2, cs_arg3, 1.0f);
+                            }()));
                         }
                     }
                 }

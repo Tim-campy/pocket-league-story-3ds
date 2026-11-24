@@ -51,8 +51,7 @@ void Friend::create_init(pls::cs::Ref<Friend> self) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.Friend.#ctor", game);
     {
         self->friendId_ = pls::cs::Ref<kl_util::SecureString>{};
-        self->name_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::SecureString::ValueOf(pls::cs::String(u"")); });
+        self->name_ = PLS_API(kl_util::SecureString::ValueOf(pls::cs::String(u"")));
         self->state_ = kl_util::SecureInt::create(1);
         self->minute_ = kl_util::SecureInt::create(0);
         self->updated_ = kl_util::SecureInt::create(0);
@@ -61,9 +60,7 @@ void Friend::create_init(pls::cs::Ref<Friend> self) {
 
 void Friend::create_init(pls::cs::Ref<Friend> self, ByteArray src) {
     Friend::ensure_initialized();
-    Friend::create_2_init(
-        pls::cs::static_pointer_cast<Friend>(self),
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_lang::JString::New(src); }));
+    Friend::create_2_init(pls::cs::static_pointer_cast<Friend>(self), PLS_API(kl_lang::JString::New(src)));
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.Friend.#ctor(System.Byte[])", game);
     {
     }
@@ -80,22 +77,14 @@ void Friend::create_init(pls::cs::Ref<Friend> self, pls::cs::String friendId, pl
         "M:system.friend.ui.Friend.#ctor(System.String,System.String,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        self->friendId_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::SecureString::ValueOf(friendId); });
-        self->name_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::SecureString::ValueOf(name); });
+        self->friendId_ = PLS_API(kl_util::SecureString::ValueOf(friendId));
+        self->name_ = PLS_API(kl_util::SecureString::ValueOf(name));
         self->state_ = kl_util::SecureInt::create(state);
         self->minute_ = kl_util::SecureInt::create(minute);
         self->updated_ = kl_util::SecureInt::create(updated);
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->name_)->EndsWith(literal(u"\010")); })) {
-            self->name_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_util::SecureString::ValueOf(
-                    pls::cs::String::concat(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(self->name_)->ToString();
-                                            }),
-                                            literal(u"\010")));
-            });
+        if (!PLS_API(require(self->name_)->EndsWith(literal(u"\010")))) {
+            self->name_ = PLS_API(kl_util::SecureString::ValueOf(
+                pls::cs::String::concat(PLS_API(require(self->name_)->ToString()), literal(u"\010"))));
         }
     }
 }
@@ -105,8 +94,7 @@ void Friend::create_2_init(pls::cs::Ref<Friend> self, pls::cs::String src) {
     Friend::create_init(pls::cs::static_pointer_cast<Friend>(self));
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.Friend.#ctor(System.String)", game);
     {
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StringUtil::Split(src, literal(u"|")); });
+        StringArray array = PLS_API(kl_util::StringUtil::Split(src, literal(u"|")));
         if (0 < array.length()) {
             self->friendId_ = kl_util::SecureString::create(array[0]);
         }
@@ -115,32 +103,25 @@ void Friend::create_2_init(pls::cs::Ref<Friend> self, pls::cs::String src) {
         }
         if (2 < array.length()) {
             self->state_ = kl_util::SecureInt::create(([&]() {
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ValueOf(array[2]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ValueOf(array[2]));
                 return kl_lang::JInteger::op_Implicit(cs_value);
             }()));
         }
         if (3 < array.length()) {
             self->minute_ = kl_util::SecureInt::create(([&]() {
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ValueOf(array[3]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ValueOf(array[3]));
                 return kl_lang::JInteger::op_Implicit(cs_value);
             }()));
         }
         if (4 < array.length()) {
             self->updated_ = kl_util::SecureInt::create(([&]() {
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ValueOf(array[4]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ValueOf(array[4]));
                 return kl_lang::JInteger::op_Implicit(cs_value);
             }()));
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(self->name_)->EndsWith(literal(u"\010")); })) {
+        if (!PLS_API(require(self->name_)->EndsWith(literal(u"\010")))) {
             self->name_ = kl_util::SecureString::create(
-                pls::cs::String::concat(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(self->name_)->ToString();
-                                        }),
-                                        literal(u"\010")));
+                pls::cs::String::concat(PLS_API(require(self->name_)->ToString()), literal(u"\010")));
         }
     }
 }
@@ -182,30 +163,13 @@ pls::cs::Ref<Friend> Friend::create_2(pls::cs::String src) {
 void Friend::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.Friend.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteStringString(
-                os, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_util::SecureString::ToStringSecureStringStatic(friendId_);
-                }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteInt(
-                os, pls::diagnostic::api_call([&]() -> decltype(auto) { return require(state_)->Get(); }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteInt(
-                os, pls::diagnostic::api_call([&]() -> decltype(auto) { return require(minute_)->Get(); }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteInt(
-                os, pls::diagnostic::api_call([&]() -> decltype(auto) { return require(updated_)->Get(); }));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteStringString(
-                os, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_util::SecureString::ToStringSecureStringStatic(name_);
-                }));
-        });
+        PLS_API(kl_util::StreamUtil::WriteStringString(
+            os, PLS_API(kl_util::SecureString::ToStringSecureStringStatic(friendId_))));
+        PLS_API(kl_util::StreamUtil::WriteInt(os, PLS_API(require(state_)->Get())));
+        PLS_API(kl_util::StreamUtil::WriteInt(os, PLS_API(require(minute_)->Get())));
+        PLS_API(kl_util::StreamUtil::WriteInt(os, PLS_API(require(updated_)->Get())));
+        PLS_API(kl_util::StreamUtil::WriteStringString(
+            os, PLS_API(kl_util::SecureString::ToStringSecureStringStatic(name_))));
     }
 }
 
@@ -213,16 +177,11 @@ void Friend::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void Friend::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.ui.Friend.Deserialize(java.io.InputStream)", game);
     {
-        friendId_ = kl_util::SecureString::create(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadString(stream); }));
-        state_ = kl_util::SecureInt::create(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); }));
-        minute_ = kl_util::SecureInt::create(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); }));
-        updated_ = kl_util::SecureInt::create(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); }));
-        name_ = kl_util::SecureString::create(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadString(stream); }));
+        friendId_ = kl_util::SecureString::create(PLS_API(kl_util::StreamUtil::ReadString(stream)));
+        state_ = kl_util::SecureInt::create(PLS_API(kl_util::StreamUtil::ReadInt(stream)));
+        minute_ = kl_util::SecureInt::create(PLS_API(kl_util::StreamUtil::ReadInt(stream)));
+        updated_ = kl_util::SecureInt::create(PLS_API(kl_util::StreamUtil::ReadInt(stream)));
+        name_ = kl_util::SecureString::create(PLS_API(kl_util::StreamUtil::ReadString(stream)));
     }
 }
 } // namespace system::friend_::ui

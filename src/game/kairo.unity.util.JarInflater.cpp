@@ -21,29 +21,23 @@ void create_init(pls::cs::Ref<kl_util::JarInflater> self, pls::cs::String direct
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.JarInflater.#ctor(System.String)", kairo);
     {
         self->directory_ = directory;
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::culture_ends_with(self->directory_, literal(u"/"));
-            })) {
+        if (!PLS_API(pls::cs::culture_ends_with(self->directory_, literal(u"/")))) {
             self->directory_ = pls::cs::String::concat(self->directory_, literal(u"/"));
         }
-        pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::String::concat(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return ([&]() -> pls::cs::String {
-                                                   auto cs_arg0 = self->directory_;
-                                                   auto cs_arg1 = 0;
-                                                   auto cs_arg2 =
-                                                       kl_lang::StringEx::Length(self->directory_) - 1;
-                                                   return substring2(cs_arg0, cs_arg1, cs_arg2);
-                                               }());
-                                           }),
-                                           literal(u".dat"));
-        });
-        StringArray array = StringArray::from({text, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                   return pls::cs::String::concat(self->directory_, text);
-                                               })});
+        pls::cs::String text =
+            PLS_API(pls::cs::String::concat(PLS_API(([&]() -> pls::cs::String {
+                                                auto cs_arg0 = self->directory_;
+                                                auto cs_arg1 = 0;
+                                                auto cs_arg2 =
+                                                    kl_lang::StringEx::Length(self->directory_) - 1;
+                                                return substring2(cs_arg0, cs_arg1, cs_arg2);
+                                            }())),
+                                            literal(u".dat")));
+        StringArray array =
+            StringArray::from({text, PLS_API(pls::cs::String::concat(self->directory_, text))});
         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
-            pls::cs::Ref<kl_java_io::InputStream> resourceAsStream = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return self->GetResourceAsStream(array[i]); });
+            pls::cs::Ref<kl_java_io::InputStream> resourceAsStream =
+                PLS_API(self->GetResourceAsStream(array[i]));
             if (is_null(resourceAsStream)) {
                 continue;
             }
@@ -51,16 +45,14 @@ void create_init(pls::cs::Ref<kl_util::JarInflater> self, pls::cs::String direct
                 auto cs_flow_68 = pls::cs::run_finally(
                     [&]() -> pls::cs::Flow<void> {
                         {
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return self->_load(resourceAsStream); });
+                            PLS_API(self->_load(resourceAsStream));
                             return pls::cs::flow_break(1425);
                         }
                         return {};
                     },
                     [&]() {
                         if (!is_null(resourceAsStream)) {
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(resourceAsStream)->Close(); });
+                            PLS_API(require(resourceAsStream)->Close());
                         }
                         resourceAsStream = pls::cs::Ref<kl_java_io::InputStream>{};
                     });
@@ -84,11 +76,11 @@ bool Exist(pls::cs::Ref<kl_util::JarInflater> self, pls::cs::String name) {
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.JarInflater.Exist(System.String)", kairo);
     {
-        name = pls::diagnostic::api_call([&]() -> decltype(auto) { return self->ConvertExtension(name); });
+        name = PLS_API(self->ConvertExtension(name));
         if (!is_null(self->directory_)) {
             return JarInflater::CheckResourceAsStream(self, pls::cs::String::concat(self->directory_, name));
         }
-        return !is_null(pls::diagnostic::api_call([&]() -> decltype(auto) { return self->_search(name); }));
+        return !is_null(PLS_API(self->_search(name)));
     }
 }
 
@@ -107,14 +99,11 @@ bool CheckResourceAsStream(pls::cs::Ref<kl_util::JarInflater> self, pls::cs::Str
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.JarInflater.CheckResourceAsStream(System.String)",
                      kairo);
     {
-        file = pls::diagnostic::api_call([&]() -> decltype(auto) { return self->ConvertExtension(file); });
+        file = PLS_API(self->ConvertExtension(file));
         try {
-            return pls::diagnostic::api_call(
-                       [&]() -> decltype(auto) { return kl_unity_io::AssetReader::Exist(file); }) ||
-                   pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_unity_io::AssetReader::Exist(
-                           pls::cs::String::concat(file, literal(u".bytes")));
-                   });
+            return PLS_API(kl_unity_io::AssetReader::Exist(file)) ||
+                   PLS_API(
+                       kl_unity_io::AssetReader::Exist(pls::cs::String::concat(file, literal(u".bytes"))));
         } catch (const pls::cs::Exception& cs_caught_65) {
             pls::cs::capture_exception(cs_caught_65);
             {
@@ -132,12 +121,10 @@ StringArray GetFiles(pls::cs::Ref<kl_util::JarInflater> self) {
         if (!is_null(self->directory_)) {
             return StringArray{};
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_dictionary = self->files_;
-                return cs_dictionary.KeysToArray();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_dictionary = self->files_;
+            return cs_dictionary.KeysToArray();
+        }()));
     }
 }
 } // namespace kairo::unity::util::JarInflater

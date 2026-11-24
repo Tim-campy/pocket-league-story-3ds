@@ -48,13 +48,11 @@ pls::cs::Ref<SkuDetails> Inventory::GetSkuDetails(pls::cs::String sku) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.util.Inventory.GetSkuDetails(System.String)", game);
     {
         pls::cs::Ref<SkuDetails> value = pls::cs::Ref<SkuDetails>{};
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_dictionary = mSkuMap;
-                auto cs_key = sku;
-                return cs_dictionary.TryGetValue(cs_key, value);
-            }());
-        });
+        PLS_API(([&]() {
+            auto cs_dictionary = mSkuMap;
+            auto cs_key = sku;
+            return cs_dictionary.TryGetValue(cs_key, value);
+        }()));
         return value;
     }
 }
@@ -64,13 +62,11 @@ pls::cs::Ref<Purchase> Inventory::GetPurchase(pls::cs::String sku) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.util.Inventory.GetPurchase(System.String)", game);
     {
         pls::cs::Ref<Purchase> value = pls::cs::Ref<Purchase>{};
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_dictionary = mPurchaseMap;
-                auto cs_key = sku;
-                return cs_dictionary.TryGetValue(cs_key, value);
-            }());
-        });
+        PLS_API(([&]() {
+            auto cs_dictionary = mPurchaseMap;
+            auto cs_key = sku;
+            return cs_dictionary.TryGetValue(cs_key, value);
+        }()));
         return value;
     }
 }
@@ -79,7 +75,7 @@ pls::cs::Ref<Purchase> Inventory::GetPurchase(pls::cs::String sku) {
 bool Inventory::HasPurchase(pls::cs::String sku) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.util.Inventory.HasPurchase(System.String)", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return mPurchaseMap.ContainsKey(sku); });
+        return PLS_API(mPurchaseMap.ContainsKey(sku));
     }
 }
 
@@ -87,7 +83,7 @@ bool Inventory::HasPurchase(pls::cs::String sku) {
 bool Inventory::HasDetails(pls::cs::String sku) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.util.Inventory.HasDetails(System.String)", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return mSkuMap.ContainsKey(sku); });
+        return PLS_API(mSkuMap.ContainsKey(sku));
     }
 }
 
@@ -95,8 +91,8 @@ bool Inventory::HasDetails(pls::cs::String sku) {
 void Inventory::ErasePurchase(pls::cs::String sku) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.util.Inventory.ErasePurchase(System.String)", game);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return mPurchaseMap.ContainsKey(sku); })) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return mPurchaseMap.Remove(sku); });
+        if (PLS_API(mPurchaseMap.ContainsKey(sku))) {
+            PLS_API(mPurchaseMap.Remove(sku));
         }
     }
 }
@@ -105,16 +101,14 @@ void Inventory::ErasePurchase(pls::cs::String sku) {
 pls::cs::List<pls::cs::String> Inventory::GetAllOwnedSkus() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.util.Inventory.GetAllOwnedSkus", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_dictionary = mPurchaseMap;
-                auto cs_items = cs_dictionary.KeysToArray();
-                auto cs_list = pls::cs::List<pls::cs::String>::make(cs_items.length());
-                for (std::int32_t cs_i = 0; cs_i < cs_items.length(); ++cs_i)
-                    cs_list.Add(cs_items.at(cs_i));
-                return cs_list;
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_dictionary = mPurchaseMap;
+            auto cs_items = cs_dictionary.KeysToArray();
+            auto cs_list = pls::cs::List<pls::cs::String>::make(cs_items.length());
+            for (std::int32_t cs_i = 0; cs_i < cs_items.length(); ++cs_i)
+                cs_list.Add(cs_items.at(cs_i));
+            return cs_list;
+        }()));
     }
 }
 
@@ -136,16 +130,12 @@ pls::cs::List<pls::cs::String> Inventory::GetAllOwnedSkus(pls::cs::String itemTy
             while (cs_view_enum231.MoveNext()) {
                 pls::cs::Ref<Purchase> value = cs_view_enum231.get_Current().get_Value();
                 {
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return string_equals(require(value)->GetItemType(), itemType);
-                        })) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = list;
-                                auto cs_arg0 = require(value)->GetSku();
-                                cs_receiver.Add(cs_arg0);
-                            }());
-                        });
+                    if (PLS_API(string_equals(require(value)->GetItemType(), itemType))) {
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = list;
+                            auto cs_arg0 = require(value)->GetSku();
+                            cs_receiver.Add(cs_arg0);
+                        }()));
                     }
                 }
             }
@@ -158,16 +148,14 @@ pls::cs::List<pls::cs::String> Inventory::GetAllOwnedSkus(pls::cs::String itemTy
 pls::cs::List<pls::cs::Ref<Purchase>> Inventory::GetAllPurchases() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.util.Inventory.GetAllPurchases", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_dictionary = mPurchaseMap;
-                auto cs_items = cs_dictionary.ValuesToArray();
-                auto cs_list = pls::cs::List<pls::cs::Ref<Purchase>>::make(cs_items.length());
-                for (std::int32_t cs_i = 0; cs_i < cs_items.length(); ++cs_i)
-                    cs_list.Add(cs_items.at(cs_i));
-                return cs_list;
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_dictionary = mPurchaseMap;
+            auto cs_items = cs_dictionary.ValuesToArray();
+            auto cs_list = pls::cs::List<pls::cs::Ref<Purchase>>::make(cs_items.length());
+            for (std::int32_t cs_i = 0; cs_i < cs_items.length(); ++cs_i)
+                cs_list.Add(cs_items.at(cs_i));
+            return cs_list;
+        }()));
     }
 }
 

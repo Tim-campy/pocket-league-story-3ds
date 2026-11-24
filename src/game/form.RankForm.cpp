@@ -88,60 +88,38 @@ bool RankForm::Init() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.RankForm.Init", game);
     {
         MyFormBase::Init();
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(charaList_)); }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(charaList_));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(charaList_))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(charaList_)));
         }
         pls::cs::Ref<kl_java_util::Vector> vector = kl_java_util::Vector::create();
         for (pls::cs::Int32 i = 0; i < require(apdat_)->pData_.length(); ++i) {
             pls::cs::Ref<data::PlayerData> playerData = require(apdat_)->pData_.get_Item(i);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(playerData)->flag_, 1);
-                })) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(playerData));
-                });
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(playerData)->flag_, 1))) {
+                PLS_API(kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(playerData)));
             }
         }
-        for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(vector));
-                                   });
-             ++j) {
+        for (pls::cs::Int32 j = 0; j < PLS_API(kl_java_util::Vector_2_Size(require(vector))); ++j) {
             pls::cs::Ref<data::PlayerData> obj = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(vector), j);
-                }));
-            pls::cs::Int32 num = game::GameUtil::Random(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(vector)); }));
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), j)));
+            pls::cs::Int32 num =
+                game::GameUtil::Random(PLS_API(kl_java_util::Vector_2_Size(require(vector))));
             if (num == j) {
                 continue;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(vector), num);
-                        });
-                    kl_java_util::Vector_2_SetElementAt(require(vector), cs_arg0, j);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_SetElementAt(require(vector), pls::cs::box(obj), num);
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), num));
+                kl_java_util::Vector_2_SetElementAt(require(vector), cs_arg0, j);
+            }()));
+            PLS_API(kl_java_util::Vector_2_SetElementAt(require(vector), pls::cs::box(obj), num));
         }
         for (pls::cs::Int32 k = 0; k < 5; ++k) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = charaList_;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(vector), k);
-                        });
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = charaList_;
+                pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), k));
+                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+            }()));
         }
         ChangeState(0);
         return true;
@@ -155,15 +133,12 @@ bool RankForm::Update() {
         pls::cs::Int32 num = 2;
         frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
         if (state_ == 0) {
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(65536))) {
                 page_ = (page_ - 1 + num) % num;
-            } else if (pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(262144); })) {
+            } else if (PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                 page_ = (page_ + 1) % num;
             } else if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->Pop(); });
+                return PLS_API(require(formMan_)->Pop());
             }
         }
         return true;
@@ -178,16 +153,14 @@ void RankForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         pls::cs::Int32 num2 = 13;
         num += (require(view_)->GetGameWidth() - 240) / 2;
         num2 += (require(view_)->GetGameHeight() - 240) / 2;
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(num, num2); });
+        PLS_API(require(g)->SetOrigin(num, num2));
         pls::cs::run_finally(
             [&]() {
                 {
                     _draw(g);
                 }
             },
-            [&]() {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
-            });
+            [&]() { PLS_API(require(g)->SetOrigin(0, 0)); });
     }
 }
 
@@ -196,8 +169,7 @@ void RankForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.RankForm._draw(kairo.unity.ui.Graphics)", game);
     {
         pls::cs::Int32 num = 2;
-        pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
+        pls::cs::Ref<pls::kairo::Font> font = PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
         pls::cs::Int64 netHighScore = require(apdat_)->GetNetHighScore();
         pls::cs::Int64 value = require(apdat_)->GetHighScore();
         if (page_ == 1) {
@@ -248,90 +220,56 @@ void RankForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 text = MyFormBase::LTLong(literal(u"<0>年までの最高資金"), 8ll);
             }
             pls::cs::Int32 num2 = -9;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(60, 100, 200); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = text;
-                    pls::cs::Single cs_arg1 =
-                        120.0f - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return pls::cs::Single(require(font)->StringWidthF(text));
-                                 }) / 2.0f;
-                    require(g)->DrawString(cs_arg0, cs_arg1, 68 + num2);
-                }());
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(60, 100, 200))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = text;
+                pls::cs::Single cs_arg1 =
+                    120.0f - PLS_API(pls::cs::Single(require(font)->StringWidthF(text))) / 2.0f;
+                require(g)->DrawString(cs_arg0, cs_arg1, 68 + num2);
+            }()));
             num2 = 76;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                        require(require(apdat_)->resEvent_)->img.get_Item(11);
-                    require(g)->DrawImage(cs_arg0, 29.0f, num2 + 2);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                    require(require(apdat_)->resEvent_)->img.get_Item(11);
+                require(g)->DrawImage(cs_arg0, 29.0f, num2 + 2);
+            }()));
             pls::cs::String text2 = require(require(apdat_)->sysSave_)->strs[0 + page_];
             pls::cs::Int32 num3 = 0;
             pls::cs::Int32 y = num2 + 51 + 20;
             pls::cs::Int32 num4 = 26;
             pls::cs::Ref<game::UserData> instance = game::UserData::GetInstance();
-            for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(charaList_));
-                                       });
-                 ++i) {
+            for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(charaList_))); ++i) {
                 num3 = 120 - num4 * 2 + num4 * i;
                 pls::cs::Ref<data::PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(require(charaList_), i);
-                    }));
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(charaList_), i)));
                 pls::cs::Int32 frame = frame_ % 20 / 5;
                 require(instance)->SetDispPlayerData(0, require(instance)->selectUniform_,
                                                      require(playerData)->faceImg_, frame, 1);
                 require(instance)->DrawDispPlayer(g, num3, y);
             }
             num2 = 72;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 60); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = text2;
-                    pls::cs::Single cs_arg1 =
-                        120.0f - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return pls::cs::Single(require(font)->StringWidthF(text2));
-                                 }) / 2.0f;
-                    require(g)->DrawString(cs_arg0, cs_arg1, 94 + num2);
-                }());
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 60))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = text2;
+                pls::cs::Single cs_arg1 =
+                    120.0f - PLS_API(pls::cs::Single(require(font)->StringWidthF(text2))) / 2.0f;
+                require(g)->DrawString(cs_arg0, cs_arg1, 94 + num2);
+            }()));
             num2 = 68;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(60, 100, 200); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawString(literal(u"ﾊｲｽｺｱ"), 58.0f, 118 + num2);
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(60, 100, 200))));
+            PLS_API(require(g)->DrawString(literal(u"ﾊｲｽｺｱ"), 58.0f, 118 + num2));
             pls::cs::String text3 = pls::cs::String(u"");
             if (page_ == 0) {
                 text3 = MyFormBase::UNI(literal(u"P"), value);
             } else if (page_ == 1) {
                 text3 = MyFormBase::YEN(literal(u"万円"), value);
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(200, 100, 60); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = text3;
-                    pls::cs::Single cs_arg1 =
-                        pls::cs::Int32(186) - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(font)->StringWidth(text3);
-                        });
-                    require(g)->DrawString(cs_arg0, cs_arg1, 118 + num2);
-                }());
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(200, 100, 60))));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = text3;
+                pls::cs::Single cs_arg1 = pls::cs::Int32(186) - PLS_API(require(font)->StringWidth(text3));
+                require(g)->DrawString(cs_arg0, cs_arg1, 118 + num2);
+            }()));
         }
     }
 }
@@ -382,14 +320,12 @@ void RankForm::SetSoftLabel() {
         {
             pls::cs::Int32 num = array[0];
             pls::cs::Int32 num2 = array[1];
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
-                    pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
-                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                        cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
+                pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
+                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                    cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+            }()));
         }
     }
 }
@@ -417,12 +353,10 @@ void RankForm::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
 std::int32_t RankForm::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.RankForm.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace form

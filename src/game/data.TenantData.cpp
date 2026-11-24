@@ -213,39 +213,30 @@ void TenantData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TenantData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         name_ = array[num++];
-        root_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        icon_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        root_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        icon_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         img_ = IntArray::make(4);
         for (pls::cs::Int32 i = 0; i < img_.length(); ++i) {
             {
                 auto cs_target = img_;
                 auto cs_index = i;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        charm_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        charm_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         usePrice_ = IntArray::make(2);
         keepCost_ = IntArray::make(2);
-        dataResearch_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-        });
+        dataResearch_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
         efToFan_ = IntArray::make(2);
         for (pls::cs::Int32 j = 0; j < usePrice_.length(); ++j) {
             {
                 auto cs_target = usePrice_;
                 auto cs_index = j;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -253,25 +244,20 @@ void TenantData::Load(pls::cs::String src) {
             {
                 auto cs_target = keepCost_;
                 auto cs_index = k;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
         pls::cs::Int32 num2 = 0;
         pls::cs::String value = array[num++];
-        StringArray array2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(value, literal(u"&")); });
-        dataResearch_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-        });
+        StringArray array2 = PLS_API(kl_unity_util::StringUtil::Split(value, literal(u"&")));
+        dataResearch_ = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
         for (pls::cs::Int32 l = 0; l < dataResearch_.length(); ++l) {
             for (pls::cs::Int32 m = 0; m < dataResearch_[l].length(); ++m) {
                 {
                     auto cs_target = dataResearch_[l];
                     auto cs_index = m;
-                    auto cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array2[num2++]); });
+                    auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array2[num2++]));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
@@ -280,27 +266,22 @@ void TenantData::Load(pls::cs::String src) {
             {
                 auto cs_target = efToFan_;
                 auto cs_index = n;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        buildTime_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        buildCost_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        buildTime_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        buildCost_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         for (pls::cs::Int32 num3 = 0; num3 < investCost_.length(); ++num3) {
             {
                 auto cs_target = investCost_;
                 auto cs_index = num3;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
         explain_ = array[num++];
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        flag_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         SetLv(1);
     }
 }
@@ -313,21 +294,13 @@ void TenantData::Load2() {
         pls::cs::Ref<main::AppData> instance = main::AppData::GetInstance();
         for (pls::cs::Int32 i = 0; i < require(instance)->tenantData_.length(); ++i) {
             pls::cs::Ref<TenantData> tenantData = require(instance)->tenantData_.get_Item(i);
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::BitUtil::Check(require(tenantData)->flag_, 4);
-                })) {
+            if (PLS_API(kl_unity_util::BitUtil::Check(require(tenantData)->flag_, 4))) {
                 TenantData::TENANT_ID_GOODS() = i;
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(tenantData)->flag_, 8);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(tenantData)->flag_, 8))) {
                 TenantData::TENANT_ID_TRAININGAREA() = i;
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(tenantData)->flag_, 16);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(tenantData)->flag_, 16))) {
                 TenantData::TENANT_ID_TRAININGAREA_SPRED() = i;
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return kl_unity_util::BitUtil::Check(require(tenantData)->flag_, 32);
-                       })) {
+            } else if (PLS_API(kl_unity_util::BitUtil::Check(require(tenantData)->flag_, 32))) {
                 TenantData::TENANT_ID_STADIUM() = i;
             }
         }
@@ -339,8 +312,7 @@ void TenantData::NewGame() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TenantData.NewGame", game);
     {
         state_ = 0;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::BitUtil::Check(flag_, 1); })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag_, 1))) {
             ChangeState(1);
         }
     }
@@ -350,16 +322,10 @@ void TenantData::NewGame() {
 void TenantData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TenantData.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, stateCnt_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(lv_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteBoolean(os, new_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, stateCnt_));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(lv_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteBoolean(os, new_));
     }
 }
 
@@ -367,14 +333,11 @@ void TenantData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void TenantData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.TenantData.Deserialize(java.io.InputStream)", game);
     {
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        stateCnt_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        lv_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        new_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBoolean(stream); });
+        state_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        stateCnt_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        lv_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        new_ = PLS_API(kl_unity_util::StreamUtil::ReadBoolean(stream));
         SetLv(lv_);
     }
 }

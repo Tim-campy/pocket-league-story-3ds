@@ -106,18 +106,14 @@ void LineupManager::Load(ByteArray data) {
                 {
                     byteArrayInputStream = kl_io::ByteArrayInputStream::create(data);
                     pls::cs::Int32 num = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
+                        PLS_API(kl_unity_util::StreamUtil::ReadShort(byteArrayInputStream)));
                     showCount_ = IntArray::make(num);
                     for (pls::cs::Int32 i = 0; i < showCount_.length(); ++i) {
                         {
                             auto cs_target = showCount_;
                             auto cs_index = i;
                             auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadByte(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadByte(byteArrayInputStream)));
                             cs_target.set_Item(cs_index, cs_value);
                         }
                     }
@@ -151,21 +147,15 @@ ByteArray LineupManager::Write() {
                 [&]() -> pls::cs::Flow<ByteArray> {
                     {
                         byteArrayOutputStream = kl_io::ByteArrayOutputStream::create();
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::WriteShort(
-                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
-                                pls::cs::cast_integral<std::int16_t>(showCount_.length()));
-                        });
+                        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                            static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
+                            pls::cs::cast_integral<std::int16_t>(showCount_.length())));
                         for (pls::cs::Int32 i = 0; i < showCount_.length(); ++i) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteByteByte(
-                                    static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
-                                    pls::cs::cast_integral<std::uint8_t>(showCount_[i]));
-                            });
+                            PLS_API(kl_unity_util::StreamUtil::WriteByteByte(
+                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
+                                pls::cs::cast_integral<std::uint8_t>(showCount_[i])));
                         }
-                        return pls::cs::flow_return(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(byteArrayOutputStream)->ToByteArray();
-                        }));
+                        return pls::cs::flow_return(PLS_API(require(byteArrayOutputStream)->ToByteArray()));
                     }
                     return {};
                 },
@@ -197,24 +187,15 @@ void LineupManager::LoadLineupList(ByteArray data) {
         kl_cfg::Config::ensure_initialized();
 
         try {
-            data = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::Compressor::Expand(data); });
+            data = PLS_API(kl_unity_util::Compressor::Expand(data));
             pls::cs::Ref<kl_java_util::Vector> vector = kl_java_util::Vector::create();
-            StringArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StringUtil::Split(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return kl_lang::JString::New(data,
-                                                                                         literal(u"UTF-8"));
-                                                        }),
-                                                        literal(u"\n"));
-            });
+            StringArray array = PLS_API(kl_unity_util::StringUtil::Split(
+                PLS_API(kl_lang::JString::New(data, literal(u"UTF-8"))), literal(u"\n")));
             pls::cs::Array<pls::cs::Array<pls::cs::Ref<LineupData>>> array2 =
                 pls::cs::Array<pls::cs::Array<pls::cs::Ref<LineupData>>>::make(array.length());
             for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
-                StringArray array3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StringUtil::Split(array[i], literal(u"\t"));
-                });
-                pls::cs::Int32 gameId = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array3[0]); });
+                StringArray array3 = PLS_API(kl_unity_util::StringUtil::Split(array[i], literal(u"\t")));
+                pls::cs::Int32 gameId = PLS_API(kl_lang::JInteger::ParseInt(array3[0]));
                 pls::cs::Array<pls::cs::Ref<LineupData>> array4 =
                     pls::cs::Array<pls::cs::Ref<LineupData>>::make(pls::cs::Int32(array3.length()) - 1);
                 for (pls::cs::Int32 j = 1; j < array3.length(); ++j) {
@@ -223,15 +204,12 @@ void LineupManager::LoadLineupList(ByteArray data) {
                         pls::cs::String cs_arg1 = array3[j];
                         require(lineupData)->Load(gameId, cs_arg1);
                     }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::cs::culture_index_of(require(lineupData)->url_, literal(u"http://"));
-                        }) == -1) {
+                    if (PLS_API(pls::cs::culture_index_of(require(lineupData)->url_, literal(u"http://"))) ==
+                        -1) {
                         {
                             auto cs_target = lineupData;
-                            auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StringUtil::Replace(appliLinkUrl_,
-                                                                          require(lineupData)->url_);
-                            });
+                            auto cs_value = PLS_API(
+                                kl_unity_util::StringUtil::Replace(appliLinkUrl_, require(lineupData)->url_));
                             require(cs_target)->url_ = cs_value;
                         }
                     }
@@ -241,9 +219,7 @@ void LineupManager::LoadLineupList(ByteArray data) {
                 }
                 array2[i] = array4;
             }
-            for (pls::cs::Int32 num = pls::diagnostic::api_call(
-                     [&]() -> decltype(auto) { return kl_unity_util::Language::Get(); });
-                 num >= 0; --num) {
+            for (pls::cs::Int32 num = PLS_API(kl_unity_util::Language::Get()); num >= 0; --num) {
                 for (pls::cs::Int32 k = 0; k < array2.length(); ++k) {
                     if (([&]() {
                             auto cs_left = pls::cs::box(array2[k]);
@@ -251,30 +227,24 @@ void LineupManager::LoadLineupList(ByteArray data) {
                             return cs_left != cs_right;
                         }()) &&
                         num < array2[k].length() && !is_null(array2[k].get_Item(num))) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(array2[k].get_Item(num));
-                                kl_java_util::Vector_2_AddElement(require(vector), cs_arg0);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(array2[k].get_Item(num));
+                            kl_java_util::Vector_2_AddElement(require(vector), cs_arg0);
+                        }()));
                     }
                 }
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(require(vector));
-                    }) > 0) {
+                if (PLS_API(kl_java_util::Vector_2_Size(require(vector))) > 0) {
                     break;
                 }
             }
-            lineupList_ = pls::cs::Array<pls::cs::Ref<LineupData>>::make(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(vector)); }));
+            lineupList_ = pls::cs::Array<pls::cs::Ref<LineupData>>::make(
+                PLS_API(kl_java_util::Vector_2_Size(require(vector))));
             for (pls::cs::Int32 l = 0; l < lineupList_.length(); ++l) {
                 {
                     auto cs_target = lineupList_;
                     auto cs_index = l;
                     auto cs_value = pls::cs::unbox<pls::cs::Ref<LineupData>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(vector), l);
-                        }));
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), l)));
                     cs_target.set_Item(cs_index, cs_value);
                 }
             }
@@ -282,8 +252,7 @@ void LineupManager::LoadLineupList(ByteArray data) {
             auto t = pls::cs::capture_exception(cs_caught_295);
             {
                 if (kl_cfg::Config::PRINT()) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                    PLS_API(kl_unity_util::Log::Info(t));
                 }
             }
         }
@@ -298,13 +267,9 @@ void LineupManager::Start(pls::cs::Int32 num) {
         kl_cfg::Config::ensure_initialized();
 
         pls::cs::Ref<KairoBase> instance = KairoBase::GetInstance();
-        pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(pls::diagnostic::api_call(
-                               [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); }))
-                ->GetPackageName();
-        });
-        pls::cs::Int32 num2 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return last_index_char1(text, u'.'); });
+        pls::cs::String text =
+            PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetPackageName());
+        pls::cs::Int32 num2 = PLS_API(last_index_char1(text, u'.'));
         if (num2 != -1) {
             text = kl_lang::StringEx::SubstringJ(text, num2 + 1);
         }
@@ -321,9 +286,8 @@ void LineupManager::Start(pls::cs::Int32 num) {
             auto cs_flow_294 = pls::cs::run_finally(
                 [&]() -> pls::cs::Flow<void> {
                     try {
-                        ByteArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Storage::Read(3, false, literal(u"lineup.dat"));
-                        });
+                        ByteArray array =
+                            PLS_API(pls::kairo::Storage::Read(3, false, literal(u"lineup.dat")));
                         if (!is_null(pls::cs::box(array))) {
                             jarInflater = kl_unity_util::JarInflater::create(array);
                             pls::cs::String time = literal(u"");
@@ -334,16 +298,13 @@ void LineupManager::Start(pls::cs::Int32 num) {
                                         auto cs_right = pls::cs::box(ByteArray{});
                                         return cs_left != cs_right;
                                     }()) {
-                                    time = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_lang::JString::New(preferences);
-                                    });
+                                    time = PLS_API(kl_lang::JString::New(preferences));
                                 }
                             } catch (const pls::cs::Exception& cs_caught_288) {
                                 auto t = pls::cs::capture_exception(cs_caught_288);
                                 {
                                     if (kl_cfg::Config::PRINT()) {
-                                        pls::diagnostic::api_call(
-                                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                                        PLS_API(kl_unity_util::Log::Info(t));
                                     }
                                 }
                             }
@@ -361,8 +322,7 @@ void LineupManager::Start(pls::cs::Int32 num) {
                                 auto t2 = pls::cs::capture_exception(cs_caught_289);
                                 {
                                     if (kl_cfg::Config::PRINT()) {
-                                        pls::diagnostic::api_call(
-                                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t2); });
+                                        PLS_API(kl_unity_util::Log::Info(t2));
                                     }
                                 }
                             }
@@ -373,8 +333,7 @@ void LineupManager::Start(pls::cs::Int32 num) {
                                 auto t3 = pls::cs::capture_exception(cs_caught_290);
                                 {
                                     if (kl_cfg::Config::PRINT()) {
-                                        pls::diagnostic::api_call(
-                                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t3); });
+                                        PLS_API(kl_unity_util::Log::Info(t3));
                                     }
                                 }
                             }
@@ -384,16 +343,12 @@ void LineupManager::Start(pls::cs::Int32 num) {
                                     return cs_left == cs_right;
                                 }()) {
                                 try {
-                                    array3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return require(jarInflater)->GetData(literal(u"list.bin"));
-                                    });
+                                    array3 = PLS_API(require(jarInflater)->GetData(literal(u"list.bin")));
                                 } catch (const pls::cs::Exception& cs_caught_291) {
                                     auto t4 = pls::cs::capture_exception(cs_caught_291);
                                     {
                                         if (kl_cfg::Config::PRINT()) {
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_unity_util::Log::Info(t4);
-                                            });
+                                            PLS_API(kl_unity_util::Log::Info(t4));
                                         }
                                     }
                                 }
@@ -418,11 +373,8 @@ void LineupManager::Start(pls::cs::Int32 num) {
                             }
                             IntArray dst = IntArray::make(num4);
                             if (showCount_.length() != 0) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JSystem::Arraycopy(pls::cs::box(showCount_), 0,
-                                                                       pls::cs::box(dst), 0,
-                                                                       showCount_.length());
-                                });
+                                PLS_API(kl_lang::JSystem::Arraycopy(
+                                    pls::cs::box(showCount_), 0, pls::cs::box(dst), 0, showCount_.length()));
                             }
                             showCount_ = dst;
                             IntArray array4 = IntArray::make(lineupList_.length());
@@ -451,15 +403,11 @@ void LineupManager::Start(pls::cs::Int32 num) {
                             }
                             pls::cs::Ref<kl_java_util::JRandom> jRandom = kl_java_util::JRandom::create();
                             {
-                                pls::cs::Int64 cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JSystem::CurrentTimeMillis();
-                                });
+                                pls::cs::Int64 cs_arg0 = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
                                 java::util::JRandom::SetSeed(require(jRandom), cs_arg0);
                             }
                             pls::cs::Ref<kl_java_util::Vector> vector = kl_java_util::Vector::create();
-                            while (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(vector));
-                                   }) < num) {
+                            while (PLS_API(kl_java_util::Vector_2_Size(require(vector))) < num) {
                                 pls::cs::Ref<LineupData> lineupData2 = pls::cs::Ref<LineupData>{};
                                 pls::cs::Int32 num5 = 0;
                                 for (pls::cs::Int32 k = 0; k < array4.length(); ++k) {
@@ -487,27 +435,19 @@ void LineupManager::Start(pls::cs::Int32 num) {
                                     if (util::JarInflater::Exist(require(jarInflater), fileName)) {
                                         {
                                             auto cs_target = lineupData2;
-                                            auto cs_value =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::kairo::Image::Load(
-                                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return require(jarInflater)->GetData(fileName);
-                                                        }),
-                                                        static_cast<pls::kairo::Image::Format>(-1),
-                                                        static_cast<pls::kairo::Image::Filter>(-1));
-                                                });
+                                            auto cs_value = PLS_API(pls::kairo::Image::Load(
+                                                PLS_API(require(jarInflater)->GetData(fileName)),
+                                                static_cast<pls::kairo::Image::Format>(-1),
+                                                static_cast<pls::kairo::Image::Filter>(-1)));
                                             require(cs_target)->image_ = cs_value;
                                         }
                                     } else if (LineupManager::ExistPreferences(fileName)) {
                                         {
                                             auto cs_target = lineupData2;
-                                            auto cs_value =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::kairo::Image::Load(
-                                                        LineupManager::GetPreferences(fileName),
-                                                        static_cast<pls::kairo::Image::Format>(-1),
-                                                        static_cast<pls::kairo::Image::Filter>(-1));
-                                                });
+                                            auto cs_value = PLS_API(pls::kairo::Image::Load(
+                                                LineupManager::GetPreferences(fileName),
+                                                static_cast<pls::kairo::Image::Format>(-1),
+                                                static_cast<pls::kairo::Image::Filter>(-1)));
                                             require(cs_target)->image_ = cs_value;
                                         }
                                     } else {
@@ -517,13 +457,9 @@ void LineupManager::Start(pls::cs::Int32 num) {
                                             LineupManager::PutPreferences(fileName, array5[0]);
                                             {
                                                 auto cs_target = lineupData2;
-                                                auto cs_value =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return pls::kairo::Image::Load(
-                                                            array5[0],
-                                                            static_cast<pls::kairo::Image::Format>(-1),
-                                                            static_cast<pls::kairo::Image::Filter>(-1));
-                                                    });
+                                                auto cs_value = PLS_API(pls::kairo::Image::Load(
+                                                    array5[0], static_cast<pls::kairo::Image::Format>(-1),
+                                                    static_cast<pls::kairo::Image::Filter>(-1)));
                                                 require(cs_target)->image_ = cs_value;
                                             }
                                         }
@@ -532,23 +468,17 @@ void LineupManager::Start(pls::cs::Int32 num) {
                                     auto t5 = pls::cs::capture_exception(cs_caught_292);
                                     {
                                         if (kl_cfg::Config::PRINT()) {
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_unity_util::Log::Info(t5);
-                                            });
+                                            PLS_API(kl_unity_util::Log::Info(t5));
                                         }
                                     }
                                 }
                                 if (!is_null(require(lineupData2)->image_)) {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_AddElement(require(vector),
-                                                                                 pls::cs::box(lineupData2));
-                                    });
+                                    PLS_API(kl_java_util::Vector_2_AddElement(require(vector),
+                                                                              pls::cs::box(lineupData2)));
                                 }
                                 array4[num2] = 0;
                             }
-                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_Size(require(vector));
-                                }) < num) {
+                            if (PLS_API(kl_java_util::Vector_2_Size(require(vector))) < num) {
                                 UnloadImage();
                                 return pls::cs::flow_return();
                             }
@@ -558,9 +488,7 @@ void LineupManager::Start(pls::cs::Int32 num) {
                                     auto cs_target = showLineups_;
                                     auto cs_index = m;
                                     auto cs_value = pls::cs::unbox<pls::cs::Ref<LineupData>>(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_java_util::Vector_2_ElementAt(require(vector), m);
-                                        }));
+                                        PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), m)));
                                     cs_target.set_Item(cs_index, cs_value);
                                 }
                                 pls::cs::Int32 gameId_ = require(showLineups_.get_Item(m))->gameId_;
@@ -573,8 +501,7 @@ void LineupManager::Start(pls::cs::Int32 num) {
                         auto t6 = pls::cs::capture_exception(cs_caught_293);
                         {
                             if (kl_cfg::Config::PRINT()) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t6); });
+                                PLS_API(kl_unity_util::Log::Info(t6));
                             }
                         }
                     }
@@ -582,8 +509,7 @@ void LineupManager::Start(pls::cs::Int32 num) {
                 },
                 [&]() {
                     if (!is_null(pls::cs::box(jarInflater))) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(jarInflater)->Close(); });
+                        PLS_API(require(jarInflater)->Close());
                     }
                     jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
                 });
@@ -606,9 +532,7 @@ void LineupManager::UnloadImage() {
         }
         for (pls::cs::Int32 i = 0; i < lineupList_.length(); ++i) {
             if (!is_null(lineupList_.get_Item(i)) && !is_null(require(lineupList_.get_Item(i))->image_)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(require(lineupList_.get_Item(i))->image_)->Dispose();
-                });
+                PLS_API(require(require(lineupList_.get_Item(i))->image_)->Dispose());
                 require(lineupList_.get_Item(i))->image_ = pls::cs::Ref<pls::kairo::Image>{};
             }
         }
@@ -640,8 +564,7 @@ void LineupManager::PutPreferences(pls::cs::String key, ByteArray data) {
         "KairoLibrary",
         "M:kairo.unity.system.lineup.ui.LineupManager.PutPreferences(System.String,System.Byte[])", kairo);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
+        PLS_API(pls::kairo::IApplication::GetCurrentApp());
         key = pls::cs::String::concat(literal(u"lineup/"), key);
         if ([&]() {
                 auto cs_left = pls::cs::box(data);
@@ -650,8 +573,7 @@ void LineupManager::PutPreferences(pls::cs::String key, ByteArray data) {
             }()) {
             data = ByteArray::make(0);
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::Storage::Write(1, true, key, data); });
+        PLS_API(pls::kairo::Storage::Write(1, true, key, data));
     }
 }
 
@@ -661,11 +583,9 @@ ByteArray LineupManager::GetPreferences(pls::cs::String key) {
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.system.lineup.ui.LineupManager.GetPreferences(System.String)", kairo);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
+        PLS_API(pls::kairo::IApplication::GetCurrentApp());
         key = pls::cs::String::concat(literal(u"lineup/"), key);
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::Storage::Read(1, true, key); });
+        return PLS_API(pls::kairo::Storage::Read(1, true, key));
     }
 }
 
@@ -675,23 +595,18 @@ bool LineupManager::ExistPreferences(pls::cs::String key) {
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.system.lineup.ui.LineupManager.ExistPreferences(System.String)", kairo);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
+        PLS_API(pls::kairo::IApplication::GetCurrentApp());
         key = pls::cs::String::concat(literal(u"lineup/"), key);
-        pls::cs::Ref<pls::kairo::Storage> storage =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Storage::Open(1, true); });
+        pls::cs::Ref<pls::kairo::Storage> storage = PLS_API(pls::kairo::Storage::Open(1, true));
         {
             auto cs_flow_296 = pls::cs::run_finally(
                 [&]() -> pls::cs::Flow<bool> {
                     {
-                        return pls::cs::flow_return(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(storage)->Exists(key); }));
+                        return pls::cs::flow_return(PLS_API(require(storage)->Exists(key)));
                     }
                     return {};
                 },
-                [&]() {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(storage)->Close(); });
-                });
+                [&]() { PLS_API(require(storage)->Close()); });
             return cs_flow_296.value();
         }
     }

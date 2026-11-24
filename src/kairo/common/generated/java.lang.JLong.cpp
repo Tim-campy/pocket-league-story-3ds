@@ -23,7 +23,7 @@ pls::cs::Int64 ParseLong(pls::cs::String s) {
     JLong::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JLong.ParseLong(System.String)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::int64_parse(s); });
+        return PLS_API(pls::cs::int64_parse(s));
     }
 }
 } // namespace java::lang::JLong

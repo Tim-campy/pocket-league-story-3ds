@@ -50,8 +50,7 @@ void BillingManager::InitOverload(pls::cs::Ref<BillingManager> self,
         self->itemList_ = generated::java::util::Vector::create();
         for (pls::cs::Int32 spriteIndex = 0; spriteIndex < data.length(); ++spriteIndex) {
             pls::cs::Array<pls::cs::String> array = data[spriteIndex];
-            pls::cs::Int32 id = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return generated::java::lang::JInteger::ParseInt(array[0]); });
+            pls::cs::Int32 id = PLS_API(generated::java::lang::JInteger::ParseInt(array[0]));
             pls::cs::Int32 num = 0;
             for (pls::cs::Int32 j = 0; j < generated::java::lang::StringEx::Length(array[1]); ++j) {
                 char16_t c = generated::java::lang::StringEx::CharAt(array[1], j);
@@ -68,8 +67,7 @@ void BillingManager::InitOverload(pls::cs::Ref<BillingManager> self,
                 pls::cs::String cs_arg2 = array[2];
                 pls::cs::String cs_arg3 = array[3];
                 pls::cs::String cs_arg4 = array[4];
-                pls::cs::Int32 cs_arg5 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return generated::java::lang::JInteger::ParseInt(array[5]); });
+                pls::cs::Int32 cs_arg5 = PLS_API(generated::java::lang::JInteger::ParseInt(array[5]));
                 pls::cs::String cs_arg6 = array[6];
                 require(billingItem)->Init(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
             }
@@ -79,73 +77,47 @@ void BillingManager::InitOverload(pls::cs::Ref<BillingManager> self,
                 auto cs_value = billingItem;
                 cs_target.set_Item(cs_index, cs_value);
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return generated::java::util::Vector_2_AddElement(require(self->itemList_),
-                                                                  pls::cs::box(billingItem));
-            });
+            PLS_API(generated::java::util::Vector_2_AddElement(require(self->itemList_),
+                                                               pls::cs::box(billingItem)));
         }
         pls::cs::Ref<generated::java::util::Vector> vector = generated::java::util::Vector::create();
-        pls::cs::Array<bool> array2 =
-            pls::cs::Array<bool>::make(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return generated::java::util::Vector_2_Size(require(self->itemList_));
-            }));
-        for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return generated::java::util::Vector_2_Size(require(self->itemList_));
-                                   });
-             ++k) {
+        pls::cs::Array<bool> array2 = pls::cs::Array<bool>::make(
+            PLS_API(generated::java::util::Vector_2_Size(require(self->itemList_))));
+        for (pls::cs::Int32 k = 0;
+             k < PLS_API(generated::java::util::Vector_2_Size(require(self->itemList_))); ++k) {
             if (array2[k]) {
                 continue;
             }
             array2[k] = true;
-            pls::cs::Ref<BillingItem> billingItem2 =
-                pls::cs::unbox<pls::cs::Ref<BillingItem>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return generated::java::util::Vector_2_ElementAt(require(self->itemList_), k);
-                }));
+            pls::cs::Ref<BillingItem> billingItem2 = pls::cs::unbox<pls::cs::Ref<BillingItem>>(
+                PLS_API(generated::java::util::Vector_2_ElementAt(require(self->itemList_), k)));
             pls::cs::String seriesName = require(billingItem2)->GetSeriesName();
             if (is_null(seriesName)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                            pls::cs::box(pls::cs::Array<pls::cs::Ref<BillingItem>>::from({billingItem2}));
-                        generated::java::util::Vector_2_AddElement(require(vector), cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                        pls::cs::box(pls::cs::Array<pls::cs::Ref<BillingItem>>::from({billingItem2}));
+                    generated::java::util::Vector_2_AddElement(require(vector), cs_arg0);
+                }()));
                 continue;
             }
             pls::cs::Ref<generated::java::util::Vector> vector2 = generated::java::util::Vector::create();
             for (pls::cs::Int32 l = k;
-                 l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return generated::java::util::Vector_2_Size(require(self->itemList_));
-                 });
-                 ++l) {
+                 l < PLS_API(generated::java::util::Vector_2_Size(require(self->itemList_))); ++l) {
                 pls::cs::Ref<BillingItem> billingItem3 = pls::cs::unbox<pls::cs::Ref<BillingItem>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return generated::java::util::Vector_2_ElementAt(require(self->itemList_), l);
-                    }));
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return string_equals(seriesName, require(billingItem3)->GetSeriesName());
-                    })) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return generated::java::util::Vector_2_AddElement(require(vector2),
-                                                                          pls::cs::box(billingItem3));
-                    });
+                    PLS_API(generated::java::util::Vector_2_ElementAt(require(self->itemList_), l)));
+                if (PLS_API(string_equals(seriesName, require(billingItem3)->GetSeriesName()))) {
+                    PLS_API(generated::java::util::Vector_2_AddElement(require(vector2),
+                                                                       pls::cs::box(billingItem3)));
                     array2[l] = true;
                 }
             }
             pls::cs::Array<pls::cs::Ref<BillingItem>> array3 =
                 pls::cs::Array<pls::cs::Ref<BillingItem>>::make(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return generated::java::util::Vector_2_Size(require(vector2));
-                    }));
-            for (pls::cs::Int32 m = 0; m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return generated::java::util::Vector_2_Size(require(vector2));
-                                       });
+                    PLS_API(generated::java::util::Vector_2_Size(require(vector2))));
+            for (pls::cs::Int32 m = 0; m < PLS_API(generated::java::util::Vector_2_Size(require(vector2)));
                  ++m) {
-                array3.set_Item(m, pls::cs::unbox<pls::cs::Ref<BillingItem>>(
-                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return generated::java::util::Vector_2_ElementAt(require(vector2),
-                                                                                            m);
-                                       })));
+                array3.set_Item(m, pls::cs::unbox<pls::cs::Ref<BillingItem>>(PLS_API(
+                                       generated::java::util::Vector_2_ElementAt(require(vector2), m))));
             }
             for (pls::cs::Int32 n = 0; n < pls::cs::Int32(array3.length()) - 1; ++n) {
                 for (pls::cs::Int32 num2 = pls::cs::Int32(array3.length()) - 1; num2 > n; --num2) {
@@ -160,24 +132,17 @@ void BillingManager::InitOverload(pls::cs::Ref<BillingManager> self,
                     }
                 }
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return generated::java::util::Vector_2_AddElement(require(vector), pls::cs::box(array3));
-            });
+            PLS_API(generated::java::util::Vector_2_AddElement(require(vector), pls::cs::box(array3)));
         }
-        self->itemGroup_ =
-            pls::cs::Array<pls::cs::Array<pls::cs::Ref<BillingItem>>>::make(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return generated::java::util::Vector_2_Size(require(vector)); }));
-        for (pls::cs::Int32 num3 = 0; num3 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return generated::java::util::Vector_2_Size(require(vector));
-                                      });
+        self->itemGroup_ = pls::cs::Array<pls::cs::Array<pls::cs::Ref<BillingItem>>>::make(
+            PLS_API(generated::java::util::Vector_2_Size(require(vector))));
+        for (pls::cs::Int32 num3 = 0; num3 < PLS_API(generated::java::util::Vector_2_Size(require(vector)));
              ++num3) {
             {
                 auto cs_target = self->itemGroup_;
                 auto cs_index = num3;
                 auto cs_value = pls::cs::unbox<pls::cs::Array<pls::cs::Ref<BillingItem>>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return generated::java::util::Vector_2_ElementAt(require(vector), num3);
-                    }));
+                    PLS_API(generated::java::util::Vector_2_ElementAt(require(vector), num3)));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -199,15 +164,10 @@ void BillingManager::LoadOverload(pls::cs::Ref<BillingManager> self, pls::cs::Ar
                 {
                     byteArrayInputStream = generated::java::io::ByteArrayInputStream::create(data);
                     pls::cs::Int32 num = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return generated::kairo::unity::util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
+                        PLS_API(generated::kairo::unity::util::StreamUtil::ReadShort(byteArrayInputStream)));
                     for (pls::cs::Int32 i = 0; i < num; ++i) {
-                        pls::cs::Int32 num2 = pls::cs::cast_integral<pls::cs::Int32>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return generated::kairo::unity::util::StreamUtil::ReadShort(
-                                    byteArrayInputStream);
-                            }));
+                        pls::cs::Int32 num2 = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(
+                            generated::kairo::unity::util::StreamUtil::ReadShort(byteArrayInputStream)));
                         pls::cs::Ref<BillingItem> billingItem = self->items_.get_Item(num2);
                         if (is_null(billingItem)) {
                             billingItem = static_cast<pls::cs::Ref<BillingItem>>(
@@ -226,50 +186,36 @@ void BillingManager::LoadOverload(pls::cs::Ref<BillingManager> self, pls::cs::Ar
                     }
                     self->applyTaskList_ = generated::java::util::Vector::create();
                     num = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return generated::kairo::unity::util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
+                        PLS_API(generated::kairo::unity::util::StreamUtil::ReadShort(byteArrayInputStream)));
                     for (pls::cs::Int32 j = 0; j < num; ++j) {
                         pls::cs::Ref<ApplyTask> applyTask = ApplyTask::create();
                         require(applyTask)->Deserialize(byteArrayInputStream);
                         if (require(applyTask)->Enable()) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return generated::java::util::Vector_2_AddElement(
-                                    require(self->applyTaskList_), pls::cs::box(applyTask));
-                            });
+                            PLS_API(generated::java::util::Vector_2_AddElement(require(self->applyTaskList_),
+                                                                               pls::cs::box(applyTask)));
                         }
                     }
                     self->purchaseLog_ = generated::java::util::Vector::create();
                     num = pls::cs::cast_integral<pls::cs::Int32>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return generated::kairo::unity::util::StreamUtil::ReadShort(byteArrayInputStream);
-                        }));
+                        PLS_API(generated::kairo::unity::util::StreamUtil::ReadShort(byteArrayInputStream)));
                     for (pls::cs::Int32 k = 0; k < num; ++k) {
                         pls::cs::Ref<PurchaseRecord> purchaseRecord = PurchaseRecord::create();
                         require(purchaseRecord)->Deserialize(byteArrayInputStream);
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return generated::java::util::Vector_2_AddElement(require(self->purchaseLog_),
-                                                                              pls::cs::box(purchaseRecord));
-                        });
+                        PLS_API(generated::java::util::Vector_2_AddElement(require(self->purchaseLog_),
+                                                                           pls::cs::box(purchaseRecord)));
                     }
                     self->StoreBase::Load(byteArrayInputStream);
                 }
             },
             [&]() {
                 if (!is_null(byteArrayInputStream)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayInputStream)->Close(); });
+                    PLS_API(require(byteArrayInputStream)->Close());
                 }
                 byteArrayInputStream = pls::cs::Ref<generated::java::io::ByteArrayInputStream>{};
                 for (pls::cs::Int32 l = 0;
-                     l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return generated::java::util::Vector_2_Size(require(self->itemList_));
-                     });
-                     ++l) {
+                     l < PLS_API(generated::java::util::Vector_2_Size(require(self->itemList_))); ++l) {
                     pls::cs::Ref<BillingItem> billingItem2 = pls::cs::unbox<pls::cs::Ref<BillingItem>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return generated::java::util::Vector_2_ElementAt(require(self->itemList_), l);
-                        }));
+                        PLS_API(generated::java::util::Vector_2_ElementAt(require(self->itemList_), l)));
                     if (!array[require(billingItem2)->id_]) {
                         {
                             pls::cs::Int32 cs_arg0 = require(billingItem2)->GetState();

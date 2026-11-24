@@ -58,8 +58,7 @@ pls::cs::String Replace(pls::cs::String value, pls::cs::String oldStr, pls::cs::
                      kairo);
     {
         while (true) {
-            pls::cs::Int32 num = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_index_of(value, oldStr); });
+            pls::cs::Int32 num = PLS_API(pls::cs::culture_index_of(value, oldStr));
             if (num == -1) {
                 break;
             }
@@ -117,12 +116,9 @@ StringArray Split(pls::cs::String text, pls::cs::String sep, bool trim, bool exc
             text2 = literal(u"");
             do {
             cs_label_IL_0020:;
-                num2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::culture_index_of(text, sep, num); });
+                num2 = PLS_API(pls::cs::culture_index_of(text, sep, num));
                 if (num2 == -1) {
-                    text2 = pls::cs::String::concat(text2, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return substring1(text, num);
-                                                    }));
+                    text2 = pls::cs::String::concat(text2, PLS_API(substring1(text, num)));
                 } else {
                     if (escape) {
                         flag = true;
@@ -174,8 +170,7 @@ StringArray Split(pls::cs::String text, pls::cs::String sep, bool trim, bool exc
                     if (num4 - i < 0) {
                         text2 = literal(u"");
                     } else {
-                        text2 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return substring2(text2, i, num4 - i + 1); });
+                        text2 = PLS_API(substring2(text2, i, num4 - i + 1));
                     }
                 }
                 if (!excludeZeroLength || java::lang::StringEx::Length(text2) > 0) {
@@ -203,46 +198,36 @@ pls::cs::String Escape(pls::cs::String text) {
         }());
         pls::cs::Int32 num = 0;
         while (num < java::lang::StringEx::Length(text)) {
-            pls::cs::Int32 num2 =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return index_char2(text, u'\\', num); });
+            pls::cs::Int32 num2 = PLS_API(index_char2(text, u'\\', num));
             if (num2 == -1) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                        auto cs_receiver = stringBuilder;
-                        auto cs_arg0 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return substring1(text, num); });
-                        return require(cs_receiver)->Append(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                    auto cs_receiver = stringBuilder;
+                    auto cs_arg0 = PLS_API(substring1(text, num));
+                    return require(cs_receiver)->Append(cs_arg0);
+                }()));
                 break;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
-                    auto cs_receiver = stringBuilder;
-                    auto cs_arg0 = java::lang::StringEx::SubstringJ(text, num, num2);
-                    return require(cs_receiver)->Append(cs_arg0);
-                }());
-            });
+            PLS_API(([&]() -> pls::cs::Ref<pls::cs::StringBuilder> {
+                auto cs_receiver = stringBuilder;
+                auto cs_arg0 = java::lang::StringEx::SubstringJ(text, num, num2);
+                return require(cs_receiver)->Append(cs_arg0);
+            }()));
             if (num2 + 1 < java::lang::StringEx::Length(text)) {
                 char16_t c = java::lang::StringEx::CharAt(text, num2 + 1);
                 if (pls::cs::cast_integral<pls::cs::Int32>(c) ==
                     pls::cs::cast_integral<pls::cs::Int32>(u'\\')) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(stringBuilder)->Append(u'\\'); });
+                    PLS_API(require(stringBuilder)->Append(u'\\'));
                 } else if (pls::cs::cast_integral<pls::cs::Int32>(c) ==
                            pls::cs::cast_integral<pls::cs::Int32>(u't')) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(stringBuilder)->Append(char16_t(9)); });
+                    PLS_API(require(stringBuilder)->Append(char16_t(9)));
                 } else if (pls::cs::cast_integral<pls::cs::Int32>(c) ==
                            pls::cs::cast_integral<pls::cs::Int32>(u'n')) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(stringBuilder)->Append(char16_t(10)); });
+                    PLS_API(require(stringBuilder)->Append(char16_t(10)));
                 }
             }
             num = num2 + 2;
         }
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(stringBuilder)->ToString(); });
+        return PLS_API(require(stringBuilder)->ToString());
     }
 }
 

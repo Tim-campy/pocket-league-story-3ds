@@ -48,11 +48,9 @@ pls::cs::Int64 GetTime() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.ClockTime.GetTime", kairo);
     {
         if (!ClockTime::isSetTime_()) {
-            return pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+            return PLS_API(kl_lang::JSystem::CurrentTimeMillis());
         }
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        return PLS_API(kl_lang::JSystem::CurrentTimeMillis());
     }
 }
 

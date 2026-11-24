@@ -16,9 +16,7 @@ StringArray Split(pls::cs::String value, pls::cs::String sep, bool zeroSkip) {
                      "M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean)",
                      kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StringUtil::Split(value, sep, true, zeroSkip, false);
-        });
+        return PLS_API(kl_util::StringUtil::Split(value, sep, true, zeroSkip, false));
     }
 }
 } // namespace kairo::unity::util::StringUtil

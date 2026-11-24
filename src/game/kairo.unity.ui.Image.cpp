@@ -39,27 +39,24 @@ void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<kl_io::Inpu
         pls::cs::Int32 num = 0;
         pls::cs::Ref<kl_java_util::Vector> vector = kl_java_util::Vector::create();
         pls::cs::Ref<kl_java_util::Vector> vector2 = kl_java_util::Vector::create();
-        self->optimizeBlockWidth_ = pls::cs::cast_integral<std::int16_t>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadByte(stream); }));
+        self->optimizeBlockWidth_ =
+            pls::cs::cast_integral<std::int16_t>(PLS_API(kl_unity_util::StreamUtil::ReadByte(stream)));
         if (pls::cs::cast_integral<pls::cs::Int32>(self->optimizeBlockWidth_) == -1) {
             self->optimizeBlockHeight_ = pls::cs::cast_integral<std::int16_t>(-1);
             self->optimizePass_ = 1;
-            pls::cs::Int32 num2 = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadByte(stream); }));
+            pls::cs::Int32 num2 =
+                pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadByte(stream)));
             pls::cs::Array<ShortArray> array = pls::cs::Array<ShortArray>::make(num2);
             self->optimizeSeb_ = pls::cs::Array<std::int8_t>::make(num2 * 4);
             pls::cs::Ref<kl_java_util::Vector> vector3 = pls::cs::Ref<kl_java_util::Vector>{};
             for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
-                num2 = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadByte(stream); }));
+                num2 = pls::cs::cast_integral<pls::cs::Int32>(
+                    PLS_API(kl_unity_util::StreamUtil::ReadByte(stream)));
                 bool flag = false;
                 ShortArray array2 = ShortArray::make(4);
                 for (pls::cs::Int32 j = 0; j < array2.length(); ++j) {
                     array2[j] = pls::cs::cast_integral<std::int16_t>(
-                        (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                             return kl_unity_util::StreamUtil::ReadByte(stream);
-                         }) &
-                         0xFF));
+                        (PLS_API(kl_unity_util::StreamUtil::ReadByte(stream)) & 0xFF));
                     if (pls::cs::cast_integral<pls::cs::Int32>(array2[j]) > 255) {
                         flag = true;
                     }
@@ -74,18 +71,13 @@ void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<kl_io::Inpu
                         }()) {
                         vector3 = kl_java_util::Vector::create();
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_AddElement(require(vector3), pls::cs::box(array2));
-                    });
+                    PLS_API(kl_java_util::Vector_2_AddElement(require(vector3), pls::cs::box(array2)));
                     self->optimizeSeb_[i * 4 + 0] = pls::cs::cast_integral<std::int8_t>(-1);
                     {
                         auto cs_target = self->optimizeSeb_;
                         auto cs_index = i * 4 + 1;
                         auto cs_value = pls::cs::cast_integral<std::int8_t>(
-                            (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                 return kl_java_util::Vector_2_Size(require(vector3));
-                             }) -
-                             1));
+                            (PLS_API(kl_java_util::Vector_2_Size(require(vector3))) - 1));
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 } else {
@@ -98,8 +90,7 @@ void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<kl_io::Inpu
                     {
                         auto cs_target = array[i];
                         auto cs_index = l;
-                        auto cs_value = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); });
+                        auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadShort(stream));
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
@@ -113,24 +104,14 @@ void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<kl_io::Inpu
                     return kl_java_util::Vector_2_op_Inequality(cs_left, cs_right);
                 }()) {
                 self->optimizeSebEx_ =
-                    ShortArray::make(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                         return kl_java_util::Vector_2_Size(require(vector3));
-                                     }) *
-                                     4);
-                for (pls::cs::Int32 m = 0; m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(require(vector3));
-                                           });
-                     ++m) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(
-                                pls::cs::unbox<ShortArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(require(vector3), m);
-                                })));
-                            pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(self->optimizeSebEx_);
-                            kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, m * 4, 4);
-                        }());
-                    });
+                    ShortArray::make(PLS_API(kl_java_util::Vector_2_Size(require(vector3))) * 4);
+                for (pls::cs::Int32 m = 0; m < PLS_API(kl_java_util::Vector_2_Size(require(vector3))); ++m) {
+                    PLS_API(([&]() -> void {
+                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pls::cs::unbox<ShortArray>(
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(vector3), m))));
+                        pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(self->optimizeSebEx_);
+                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, m * 4, 4);
+                    }()));
                 }
             }
             self->optimizeAccessL_ = ShortArray::make(pls::cs::Int32(array.length()) * self->optimizePass_);
@@ -189,28 +170,18 @@ void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<kl_io::Inpu
                             auto cs_right = pls::cs::cast_integral<pls::cs::Int32>(array3[num4 + 6]);
                             return cs_left != cs_right;
                         }())) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_AddElement(require(vector2), pls::cs::box(array3));
-                        });
+                        PLS_API(kl_java_util::Vector_2_AddElement(require(vector2), pls::cs::box(array3)));
                         num7 = pls::cs::cast_integral<std::int16_t>(
-                            (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                 return kl_java_util::Vector_2_Size(require(vector2));
-                             }) -
-                             1));
+                            (PLS_API(kl_java_util::Vector_2_Size(require(vector2))) - 1));
                         if (num < pls::cs::cast_integral<pls::cs::Int32>(num7)) {
                             num = pls::cs::cast_integral<pls::cs::Int32>(num7);
                         }
                         std::uint16_t num8 = pls::cs::cast_integral<std::uint16_t>(32768);
                         num7 = (num7 | pls::cs::cast_integral<std::int16_t>(num8));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(array4));
-                        });
+                        PLS_API(kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(array4)));
                         num7 = pls::cs::cast_integral<std::int16_t>(
-                            (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                 return kl_java_util::Vector_2_Size(require(vector));
-                             }) -
-                             1));
+                            (PLS_API(kl_java_util::Vector_2_Size(require(vector))) - 1));
                         if (num < pls::cs::cast_integral<pls::cs::Int32>(num7)) {
                             num = pls::cs::cast_integral<pls::cs::Int32>(num7);
                         }
@@ -222,24 +193,22 @@ void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<kl_io::Inpu
                 array[n] = ShortArray{};
             }
         } else {
-            self->optimizeBlockHeight_ = pls::cs::cast_integral<std::int16_t>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadByte(stream); }));
-            self->optimizeWidthNum_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadByte(stream); }));
-            self->optimizeHeightNum_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadByte(stream); }));
+            self->optimizeBlockHeight_ =
+                pls::cs::cast_integral<std::int16_t>(PLS_API(kl_unity_util::StreamUtil::ReadByte(stream)));
+            self->optimizeWidthNum_ =
+                pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadByte(stream)));
+            self->optimizeHeightNum_ =
+                pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadByte(stream)));
             self->optimizePass_ = 1;
             self->optimizeBlockWidth_ = (self->optimizeBlockWidth_ & 255);
             self->optimizeBlockHeight_ = (self->optimizeBlockHeight_ & 255);
             pls::cs::Array<pls::cs::Array<ShortArray>> array5 =
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<ShortArray>>>(
-                        IntArray::from({self->optimizeHeightNum_, self->optimizeWidthNum_}));
-                });
+                PLS_API(kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<ShortArray>>>(
+                    IntArray::from({self->optimizeHeightNum_, self->optimizeWidthNum_})));
             for (pls::cs::Int32 num9 = 0; num9 < array5.length(); ++num9) {
                 for (pls::cs::Int32 num10 = 0; num10 < array5[num9].length(); ++num10) {
-                    pls::cs::Int32 num11 = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadByte(stream); }));
+                    pls::cs::Int32 num11 = pls::cs::cast_integral<pls::cs::Int32>(
+                        PLS_API(kl_unity_util::StreamUtil::ReadByte(stream)));
                     {
                         auto cs_target = array5[num9];
                         auto cs_index = num10;
@@ -248,8 +217,7 @@ void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<kl_io::Inpu
                     }
                     ShortArray array6 = array5[num9][num10];
                     for (pls::cs::Int32 num12 = 0; num12 < array6.length(); ++num12) {
-                        array6[num12] = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); });
+                        array6[num12] = PLS_API(kl_unity_util::StreamUtil::ReadShort(stream));
                     }
                     if (self->optimizePass_ < num11) {
                         self->optimizePass_ = num11;
@@ -315,30 +283,19 @@ void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<kl_io::Inpu
                                 auto cs_right = pls::cs::cast_integral<pls::cs::Int32>(array7[num16 + 6]);
                                 return cs_left != cs_right;
                             }())) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_AddElement(require(vector2),
-                                                                         pls::cs::box(array7));
-                            });
+                            PLS_API(
+                                kl_java_util::Vector_2_AddElement(require(vector2), pls::cs::box(array7)));
                             num19 = pls::cs::cast_integral<std::int16_t>(
-                                (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return kl_java_util::Vector_2_Size(require(vector2));
-                                 }) -
-                                 1));
+                                (PLS_API(kl_java_util::Vector_2_Size(require(vector2))) - 1));
                             if (num < pls::cs::cast_integral<pls::cs::Int32>(num19)) {
                                 num = pls::cs::cast_integral<pls::cs::Int32>(num19);
                             }
                             std::uint16_t num20 = pls::cs::cast_integral<std::uint16_t>(32768);
                             num19 = (num19 | pls::cs::cast_integral<std::int16_t>(num20));
                         } else {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_AddElement(require(vector),
-                                                                         pls::cs::box(array8));
-                            });
+                            PLS_API(kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(array8)));
                             num19 = pls::cs::cast_integral<std::int16_t>(
-                                (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return kl_java_util::Vector_2_Size(require(vector));
-                                 }) -
-                                 1));
+                                (PLS_API(kl_java_util::Vector_2_Size(require(vector))) - 1));
                             if (num < pls::cs::cast_integral<pls::cs::Int32>(num19)) {
                                 num = pls::cs::cast_integral<pls::cs::Int32>(num19);
                             }
@@ -376,50 +333,30 @@ void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<kl_io::Inpu
             }
             self->optimizeAccessL_ = ShortArray{};
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(vector)); }) > 0) {
+        if (PLS_API(kl_java_util::Vector_2_Size(require(vector))) > 0) {
             self->optimize_ =
-                pls::cs::Array<std::int8_t>::make(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                      return kl_java_util::Vector_2_Size(require(vector));
-                                                  }) *
-                                                  7);
-            for (pls::cs::Int32 num22 = 0; num22 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(require(vector));
-                                           });
+                pls::cs::Array<std::int8_t>::make(PLS_API(kl_java_util::Vector_2_Size(require(vector))) * 7);
+            for (pls::cs::Int32 num22 = 0; num22 < PLS_API(kl_java_util::Vector_2_Size(require(vector)));
                  ++num22) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                            pls::cs::box(pls::cs::unbox<pls::cs::Array<std::int8_t>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(require(vector), num22);
-                                })));
-                        pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(self->optimize_);
-                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, num22 * 7, 7);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                        pls::cs::box(pls::cs::unbox<pls::cs::Array<std::int8_t>>(
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), num22))));
+                    pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(self->optimize_);
+                    kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, num22 * 7, 7);
+                }()));
             }
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(vector2)); }) > 0) {
-            self->optimizeEx_ = ShortArray::make(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                     return kl_java_util::Vector_2_Size(require(vector2));
-                                                 }) *
-                                                 7);
-            for (pls::cs::Int32 num23 = 0; num23 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(require(vector2));
-                                           });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(vector2))) > 0) {
+            self->optimizeEx_ = ShortArray::make(PLS_API(kl_java_util::Vector_2_Size(require(vector2))) * 7);
+            for (pls::cs::Int32 num23 = 0; num23 < PLS_API(kl_java_util::Vector_2_Size(require(vector2)));
                  ++num23) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(
-                            pls::cs::unbox<ShortArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(vector2), num23);
-                            })));
-                        pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(self->optimizeEx_);
-                        kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, num23 * 7, 7);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pls::cs::unbox<ShortArray>(
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(vector2), num23))));
+                    pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(self->optimizeEx_);
+                    kl_lang::JSystem::Arraycopy(cs_arg0, 0, cs_arg2, num23 * 7, 7);
+                }()));
             }
         }
     }
@@ -513,10 +450,8 @@ ByteArray OverwritePaletteData(ByteArray image, ByteArray palette, pls::cs::Int3
         if (paletteOffset + colors > paletteInfo[1]) {
             colors = paletteInfo[1] - paletteOffset;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JSystem::Arraycopy(pls::cs::box(palette), paletteOffset * 3, pls::cs::box(image),
-                                               paletteInfo[0] + imageOffset * 3, colors * 3);
-        });
+        PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(palette), paletteOffset * 3, pls::cs::box(image),
+                                            paletteInfo[0] + imageOffset * 3, colors * 3));
         return image;
     }
 }
@@ -574,10 +509,8 @@ IntArray GetPaletteInfo(ByteArray data) {
             }
         } else if (fileFormat == literal(u"png")) {
             if (kl_cfg::Config::DEBUG()) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::Log::Info(literal(u"getPaletteInfo:PNGは対応していません"),
-                                                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-                });
+                PLS_API(kl_unity_util::Log::Info(literal(u"getPaletteInfo:PNGは対応していません"),
+                                                 pls::cs::Ref<pls::cs::ExceptionObject>{}));
             }
             return IntArray{};
         }

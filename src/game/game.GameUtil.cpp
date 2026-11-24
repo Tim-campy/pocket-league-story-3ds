@@ -217,10 +217,8 @@ void GameUtil::create_init(pls::cs::Ref<GameUtil> self) {
             {
                 auto cs_target = GameUtil::SIN();
                 auto cs_index = i;
-                auto cs_value = pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JMath::Sin(pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_lang::JMath::ToRadians(i); }));
-                }));
+                auto cs_value =
+                    pls::cs::Single(PLS_API(kl_lang::JMath::Sin(PLS_API(kl_lang::JMath::ToRadians(i)))));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -553,12 +551,7 @@ pls::cs::Int32 GameUtil::Random(pls::cs::Int32 n) {
     GameUtil::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.GameUtil.Random(System.Int32)", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JMath::AbsInt(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return require(GameUtil::random())->NextInt();
-                                          }) %
-                                          n);
-        });
+        return PLS_API(kl_lang::JMath::AbsInt(PLS_API(require(GameUtil::random())->NextInt()) % n));
     }
 }
 
@@ -866,10 +859,8 @@ pls::cs::Single GameUtil::GetDistanceFromPos(pls::cs::Ref<kl_util3d::Vector3D> a
         GameUtil::Sub(b, a, GameUtil::temp1());
         GameUtil::Sub(c, a, GameUtil::temp2());
         {
-            auto cs_left_256 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::Single(
-                    kl_lang::JMath::Abs(GameUtil::Cross(GameUtil::temp1(), GameUtil::temp2())));
-            });
+            auto cs_left_256 = PLS_API(
+                pls::cs::Single(kl_lang::JMath::Abs(GameUtil::Cross(GameUtil::temp1(), GameUtil::temp2()))));
             auto cs_right_256 = GameUtil::Abs(b, a);
             return cs_left_256 / cs_right_256;
         }
@@ -883,11 +874,9 @@ pls::cs::Single GameUtil::Abs(pls::cs::Ref<kl_util3d::Vector3D> a, pls::cs::Ref<
                      "M:game.GameUtil.Abs(kairo.unity.m3d4.util3d.Vector3D,kairo.unity.m3d4.util3d.Vector3D)",
                      game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::Single(
-                kl_lang::JMath::Abs((require(a)->x_ - require(b)->x_) * (require(a)->x_ - require(b)->x_) +
-                                    (require(a)->z_ - require(b)->z_) * (require(a)->z_ - require(b)->z_)));
-        });
+        return PLS_API(pls::cs::Single(
+            kl_lang::JMath::Abs((require(a)->x_ - require(b)->x_) * (require(a)->x_ - require(b)->x_) +
+                                (require(a)->z_ - require(b)->z_) * (require(a)->z_ - require(b)->z_))));
     }
 }
 
@@ -952,21 +941,15 @@ pls::cs::Ref<kl_util3d::Vector3D> GameUtil::GetCrossPoint(pls::cs::Ref<kl_util3d
         GameUtil::Sub(a1, b1, GameUtil::temp1());
         GameUtil::Sub(a2, b1, GameUtil::temp2());
         GameUtil::Sub(b2, b1, GameUtil::temp3());
-        pls::cs::Single num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::Single(
-                kl_lang::JMath::Abs(GameUtil::Cross(GameUtil::temp3(), GameUtil::temp1())));
-        });
-        pls::cs::Single num2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::Single(
-                kl_lang::JMath::Abs(GameUtil::Cross(GameUtil::temp3(), GameUtil::temp2())));
-        });
+        pls::cs::Single num = PLS_API(
+            pls::cs::Single(kl_lang::JMath::Abs(GameUtil::Cross(GameUtil::temp3(), GameUtil::temp1()))));
+        pls::cs::Single num2 = PLS_API(
+            pls::cs::Single(kl_lang::JMath::Abs(GameUtil::Cross(GameUtil::temp3(), GameUtil::temp2()))));
         pls::cs::Single num3 = num / (num + num2);
         GameUtil::Sub(a2, a1, GameUtil::temp1());
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(GameUtil::temp3())
-                ->Set(require(a1)->x_ + require(GameUtil::temp1())->x_ * num3, 0.0f,
-                      require(a1)->z_ + require(GameUtil::temp1())->z_ * num3);
-        });
+        PLS_API(require(GameUtil::temp3())
+                    ->Set(require(a1)->x_ + require(GameUtil::temp1())->x_ * num3, 0.0f,
+                          require(a1)->z_ + require(GameUtil::temp1())->z_ * num3));
         return GameUtil::temp3();
     }
 }
@@ -1151,21 +1134,19 @@ bool GameUtil::ChOnLineIntArrayIntArrayIntIntArray(IntArray p1, IntArray p2, pls
                 }());
                 return cs_left - cs_right;
             }())));
-            auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JMath::Sqrt(([&]() -> pls::cs::Int32 {
-                    auto cs_left = ([&]() -> pls::cs::Int32 {
-                        auto cs_left = GameUtil::vec2()[0];
-                        auto cs_right = GameUtil::vec2()[0];
-                        return cs_left * cs_right;
-                    }());
-                    auto cs_right = ([&]() -> pls::cs::Int32 {
-                        auto cs_left = GameUtil::vec2()[1];
-                        auto cs_right = GameUtil::vec2()[1];
-                        return cs_left * cs_right;
-                    }());
-                    return cs_left + cs_right;
-                }()));
-            });
+            auto cs_right = PLS_API(kl_lang::JMath::Sqrt(([&]() -> pls::cs::Int32 {
+                auto cs_left = ([&]() -> pls::cs::Int32 {
+                    auto cs_left = GameUtil::vec2()[0];
+                    auto cs_right = GameUtil::vec2()[0];
+                    return cs_left * cs_right;
+                }());
+                auto cs_right = ([&]() -> pls::cs::Int32 {
+                    auto cs_left = GameUtil::vec2()[1];
+                    auto cs_right = GameUtil::vec2()[1];
+                    return cs_left * cs_right;
+                }());
+                return cs_left + cs_right;
+            }())));
             return cs_left / cs_right;
         }())));
         if (num7 < pls::cs::Single((h / 2))) {

@@ -91,6 +91,11 @@ inline std::array<std::uint64_t,4>end_frame(){charge(Clock::now());state.frame=f
 inline void json_string(std::ostream&out,const std::string&s){out<<'"';for(unsigned char c:s){if(c=='"'||c=='\\')out<<'\\'<<c;else if(c<32){const char*h="0123456789abcdef";out<<"\\u00"<<h[c>>4]<<h[c&15];}else out<<c;}out<<'"';}
 inline void dump(std::ostream&out){std::lock_guard<std::mutex>lock(registry_mutex);for(auto&e:registry){out<<"PLS_METHOD={\"assembly\":";json_string(out,e->assembly);out<<",\"id\":";json_string(out,e->id);out<<",\"calls\":"<<e->calls<<",\"completed\":"<<e->completed<<",\"thrown\":"<<e->thrown<<",\"inclusive_ns\":"<<e->inclusive<<",\"exclusive_ns\":"<<e->exclusive<<"}\n";}out.flush();}
 }
+// A call from the game code to the platform or to the KairoLibrary: PLS_API(expr) is the
+// call wrapped in api_call (timed as "kairo" in the diagnostic build; a plain call
+// otherwise). It expands to exactly the text it replaced (2026-11-24), so the tokens
+// after preprocessing and the object code are unchanged.
+#define PLS_API(...) pls::diagnostic::api_call([&]() -> decltype(auto) { return __VA_ARGS__; })
 #if defined(PLS_DIAGNOSTIC_BUILD)
 #define PLS_METHOD_SCOPE(ASSEMBLY,ID,AREA) static auto*const pls_profile_entry=pls::diagnostic::register_method(ASSEMBLY,ID);pls::diagnostic::Scope pls_profile_scope(pls::diagnostic::Area::AREA,pls_profile_entry)
 #define PLS_PROFILE_AREA(AREA) pls::diagnostic::Scope pls_area_scope(pls::diagnostic::Area::AREA)

@@ -226,8 +226,7 @@ bool KairoBase::ConnectLogin(bool enforce, bool retry) {
     {
         kl_cfg::Config::ensure_initialized();
 
-        pls::cs::Ref<kl_java_util::JLocale> jLocale = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::JLocale::GetDefault(); });
+        pls::cs::Ref<kl_java_util::JLocale> jLocale = PLS_API(kl_java_util::JLocale::GetDefault());
         StringArray array = StringArray{};
         bool isRetryEnable = io::Http::get_IsRetryEnable();
         {
@@ -247,17 +246,12 @@ bool KairoBase::ConnectLogin(bool enforce, bool retry) {
                             io::Http::set_IsRetryEnable(true);
                         }
                         array = ([&]() -> StringArray {
-                            pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::SecureString::ToStringSecureStringStatic(userId_);
-                            });
-                            pls::cs::String cs_arg1 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(jLocale)->GetCountry(); });
-                            pls::cs::String cs_arg2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return pls::kairo::IApplication::GetCurrentApp();
-                                       }))
-                                    ->GetPackageName();
-                            });
+                            pls::cs::String cs_arg0 =
+                                PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(userId_));
+                            pls::cs::String cs_arg1 = PLS_API(require(jLocale)->GetCountry());
+                            pls::cs::String cs_arg2 =
+                                PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))
+                                            ->GetPackageName());
                             pls::cs::String cs_arg3 =
                                 ((rootBan_ && CheckRoot()) ? literal(u"1") : literal(u"0"));
                             return CgiLogin(cs_arg0, cs_arg1, cs_arg2, cs_arg3, array2);
@@ -281,54 +275,39 @@ bool KairoBase::ConnectLogin(bool enforce, bool retry) {
                 return cs_flow_211.value();
         }
         SetSystemStartProgress(25);
-        latestVersion_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[0]); });
-        pls::cs::Int64 time = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JLong::ParseLong(array[1]); });
+        latestVersion_ = PLS_API(kl_lang::JInteger::ParseInt(array[0]));
+        pls::cs::Int64 time = PLS_API(kl_lang::JLong::ParseLong(array[1]));
         userId_ = kl_unity_util::SecureString::create(array[2]);
         friendId_ = kl_unity_util::SecureString::create(array[3]);
-        pkgId_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[4]); });
+        pkgId_ = PLS_API(kl_lang::JInteger::ParseInt(array[4]));
         if (5 < array.length()) {
-            illegalPackage_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                  return kl_lang::JInteger::ParseInt(array[5]);
-                              }) == 1;
+            illegalPackage_ = PLS_API(kl_lang::JInteger::ParseInt(array[5])) == 1;
         }
         if (6 < array.length()) {
-            arguments_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_text = array[6];
-                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                    cs_separators.at(0) = u',';
-                    return pls::cs::string_split(cs_text, cs_separators);
-                }());
-            });
+            arguments_ = PLS_API(([&]() {
+                auto cs_text = array[6];
+                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                cs_separators.at(0) = u',';
+                return pls::cs::string_split(cs_text, cs_separators);
+            }()));
             argumentsInt_ = IntArray::make(arguments_.length());
             for (pls::cs::Int32 i = 0; i < arguments_.length(); ++i) {
-                bool flag = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() {
-                        auto cs_text = arguments_[i];
-                        auto cs_value_storage_212_array = argumentsInt_;
-                        auto cs_value_storage_212_index = i;
-                        auto& cs_value_storage_212 =
-                            cs_value_storage_212_array.at(cs_value_storage_212_index);
-                        return pls::cs::int32_try_parse(cs_text, cs_value_storage_212);
-                    }());
-                });
-                if (!flag && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::cs::culture_starts_with(arguments_[i], literal(u"0x"));
-                    })) {
-                    flag = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_text = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return substring1(arguments_[i], 2); });
-                            auto cs_value_storage_213_array = argumentsInt_;
-                            auto cs_value_storage_213_index = i;
-                            auto& cs_value_storage_213 =
-                                cs_value_storage_213_array.at(cs_value_storage_213_index);
-                            return pls::cs::int32_try_parse_hex_number(cs_text, cs_value_storage_213);
-                        }());
-                    });
+                bool flag = PLS_API(([&]() {
+                    auto cs_text = arguments_[i];
+                    auto cs_value_storage_212_array = argumentsInt_;
+                    auto cs_value_storage_212_index = i;
+                    auto& cs_value_storage_212 = cs_value_storage_212_array.at(cs_value_storage_212_index);
+                    return pls::cs::int32_try_parse(cs_text, cs_value_storage_212);
+                }()));
+                if (!flag && PLS_API(pls::cs::culture_starts_with(arguments_[i], literal(u"0x")))) {
+                    flag = PLS_API(([&]() {
+                        auto cs_text = PLS_API(substring1(arguments_[i], 2));
+                        auto cs_value_storage_213_array = argumentsInt_;
+                        auto cs_value_storage_213_index = i;
+                        auto& cs_value_storage_213 =
+                            cs_value_storage_213_array.at(cs_value_storage_213_index);
+                        return pls::cs::int32_try_parse_hex_number(cs_text, cs_value_storage_213);
+                    }()));
                 }
                 if (!flag) {
                     argumentsInt_[i] = 0;
@@ -336,11 +315,8 @@ bool KairoBase::ConnectLogin(bool enforce, bool retry) {
             }
         }
         util::ClockTime::SetTime(time, 10);
-        pls::cs::String country = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(pls::diagnostic::api_call(
-                               [&]() -> decltype(auto) { return kl_java_util::JLocale::GetDefault(); }))
-                ->GetCountry();
-        });
+        pls::cs::String country =
+            PLS_API(require(PLS_API(kl_java_util::JLocale::GetDefault()))->GetCountry());
         if (kl_cfg::Config::LANGUAGE() == 0 && country != literal(u"JP")) {
             illegalCountry_ = true;
         }
@@ -349,10 +325,8 @@ bool KairoBase::ConnectLogin(bool enforce, bool retry) {
         }
         this->Save();
         if (kl_cfg::Config::PRINT() && IsCheater()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::Log::Info(literal(u"不正ユーザー"),
-                                                pls::cs::Ref<pls::cs::ExceptionObject>{});
-            });
+            PLS_API(
+                kl_unity_util::Log::Info(literal(u"不正ユーザー"), pls::cs::Ref<pls::cs::ExceptionObject>{}));
         }
         login_ = true;
         KairoBase::Connect(pls::cs::String{});
@@ -380,25 +354,18 @@ void KairoBase::AccessCounter(pls::cs::Int32 type, pls::cs::String name, pls::cs
         pls::cs::Ref<kl_java_util::Vector> vector = ((type == 0) ? accessCounter_ : userCounter_);
         pls::cs::Ref<KairoBase_AccessCount> accessCount = pls::cs::Ref<KairoBase_AccessCount>{};
         pls::cs::Int32 num = 0;
-        while (num < pls::diagnostic::api_call(
-                         [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(vector)); }) &&
-               is_null(accessCount)) {
+        while (num < PLS_API(kl_java_util::Vector_2_Size(require(vector))) && is_null(accessCount)) {
             pls::cs::Ref<KairoBase_AccessCount> accessCount2 =
                 pls::cs::unbox<pls::cs::Ref<KairoBase_AccessCount>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(require(vector), num);
-                    }));
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return string_equals(name, require(accessCount2)->name_); })) {
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), num)));
+            if (PLS_API(string_equals(name, require(accessCount2)->name_))) {
                 accessCount = accessCount2;
             }
             ++num;
         }
         if (is_null(accessCount)) {
             accessCount = KairoBase_AccessCount::create(name, 0ll);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(accessCount));
-            });
+            PLS_API(kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(accessCount)));
         }
         require(accessCount)->value_ = require(accessCount)->value_ + up;
         try {
@@ -422,35 +389,21 @@ void KairoBase::ConnectAccessCounter() {
         if (!login_) {
             return;
         }
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(accessCounter_));
-            }) > 0) {
+        if (PLS_API(kl_java_util::Vector_2_Size(require(accessCounter_))) > 0) {
             pls::cs::String str = literal(u"");
-            for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(accessCounter_));
-                                       });
+            for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(accessCounter_)));
                  ++i) {
                 if (kl_lang::StringEx::Length(str) > 0) {
-                    str = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::cs::String::concat(str, literal(u",")); });
+                    str = PLS_API(pls::cs::String::concat(str, literal(u",")));
                 }
-                str = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return concat_objects2(
-                        pls::cs::box(str), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(accessCounter_), i);
-                        }));
-                });
+                str = PLS_API(concat_objects2(pls::cs::box(str), PLS_API(kl_java_util::Vector_2_ElementAt(
+                                                                     require(accessCounter_), i))));
             }
             str = KairoBase::MakeQueryString(literal(u"values"), str);
             pls::cs::String str1 = KairoBase::MakeQueryString(
-                literal(u"pkg"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return pls::kairo::IApplication::GetCurrentApp();
-                           }))
-                        ->GetPackageName();
-                }));
-            pls::cs::String str2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return concat_strings3(literal(u"counter.php"), str, str1); });
+                literal(u"pkg"),
+                PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetPackageName()));
+            pls::cs::String str2 = PLS_API(concat_strings3(literal(u"counter.php"), str, str1));
             pls::cs::Ref<kl_java_util::Vector> vector = accessCounter_;
             accessCounter_ = kl_java_util::Vector::create();
             try {
@@ -461,36 +414,24 @@ void KairoBase::ConnectAccessCounter() {
                 {
                     pls::cs::Ref<pls::cs::ExceptionObject> exception = exception1;
                     if (kl_cfg::Config::PRINT()) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::debug_log_exception(exception); });
+                        PLS_API(pls::kairo::debug_log_exception(exception));
                     }
                     accessCounter_ = vector;
                     pls::cs::throw_exception(exception);
                 }
             }
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(userCounter_)); }) > 0) {
+        if (PLS_API(kl_java_util::Vector_2_Size(require(userCounter_))) > 0) {
             pls::cs::String str3 = literal(u"");
-            for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(require(userCounter_));
-                                       });
-                 ++j) {
+            for (pls::cs::Int32 j = 0; j < PLS_API(kl_java_util::Vector_2_Size(require(userCounter_))); ++j) {
                 if (kl_lang::StringEx::Length(str3) > 0) {
-                    str3 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::cs::String::concat(str3, literal(u",")); });
+                    str3 = PLS_API(pls::cs::String::concat(str3, literal(u",")));
                 }
-                str3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return concat_objects2(
-                        pls::cs::box(str3), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(userCounter_), j);
-                        }));
-                });
+                str3 = PLS_API(concat_objects2(
+                    pls::cs::box(str3), PLS_API(kl_java_util::Vector_2_ElementAt(require(userCounter_), j))));
             }
             str3 = KairoBase::MakeQueryString(literal(u"values"), str3);
-            pls::cs::String str4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::String::concat(literal(u"user_counter.php"), str3);
-            });
+            pls::cs::String str4 = PLS_API(pls::cs::String::concat(literal(u"user_counter.php"), str3));
             pls::cs::Ref<kl_java_util::Vector> vector1 = userCounter_;
             userCounter_ = kl_java_util::Vector::create();
             try {
@@ -501,8 +442,7 @@ void KairoBase::ConnectAccessCounter() {
                 {
                     pls::cs::Ref<pls::cs::ExceptionObject> exception2 = exception3;
                     if (kl_cfg::Config::PRINT()) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::debug_log_exception(exception2); });
+                        PLS_API(pls::kairo::debug_log_exception(exception2));
                     }
                     userCounter_ = vector1;
                     pls::cs::throw_exception(exception2);
@@ -517,12 +457,10 @@ StringArray KairoBase::ConnectGift(pls::cs::String pw) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.KairoBase.ConnectGift(System.String)", kairo);
     {
         pw = KairoBase::MakeQueryString(literal(u"pw"), pw);
-        pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::New(
-                KairoBase::ConnectByteArray(pls::cs::String::concat(literal(u"gift.php"), pw),
-                                            static_cast<ByteArray>(ByteArray{})),
-                literal(u"UTF-8"));
-        });
+        pls::cs::String text = PLS_API(kl_lang::JString::New(
+            KairoBase::ConnectByteArray(pls::cs::String::concat(literal(u"gift.php"), pw),
+                                        static_cast<ByteArray>(ByteArray{})),
+            literal(u"UTF-8")));
         if (kl_lang::StringEx::Length(text) == 0) {
             return StringArray::make(0);
         }
@@ -587,17 +525,13 @@ KairoBase::ConnectGameDataGameDataRecordArray(pls::cs::String tbname,
             for (pls::cs::Int32 num = pls::cs::Int32(array2.length()) - 1; num > j; --num) {
                 pls::cs::Ref<GameDataRecord> gameDataRecord = dataList.get_Item(array2[num - 1]);
                 pls::cs::Ref<GameDataRecord> gameDataRecord2 = dataList.get_Item(array2[num]);
-                auto cs_left_309 = pls::cs::Int64(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(require(gameDataRecord)->friendId_)->Get();
-                                   })) *
-                                   1000ll;
+                auto cs_left_309 =
+                    pls::cs::Int64(PLS_API(require(require(gameDataRecord)->friendId_)->Get())) * 1000ll;
                 auto cs_right_309 = pls::cs::Int64(
                     pls::cs::cast_integral<pls::cs::Int64>(require(gameDataRecord)->GetNumber()));
                 pls::cs::Int64 num2 = cs_left_309 + cs_right_309;
-                auto cs_left_310 = pls::cs::Int64(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(require(gameDataRecord2)->friendId_)->Get();
-                                   })) *
-                                   1000ll;
+                auto cs_left_310 =
+                    pls::cs::Int64(PLS_API(require(require(gameDataRecord2)->friendId_)->Get())) * 1000ll;
                 auto cs_right_310 = pls::cs::Int64(
                     pls::cs::cast_integral<pls::cs::Int64>(require(gameDataRecord2)->GetNumber()));
                 pls::cs::Int64 num3 = cs_left_310 + cs_right_310;
@@ -626,43 +560,27 @@ KairoBase::ConnectGameDataGameDataRecordArray(pls::cs::String tbname,
                         for (pls::cs::Int32 l = 0; l < array2.length(); ++l) {
                             pls::cs::Ref<GameDataRecord> gameDataRecord3 =
                                 require(dataList.get_Item(array2[l]))->Copy(k == 0 || k == 1);
-                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_Size(
-                                        require(require(gameDataRecord3)->dataSet_));
-                                }) > 0 &&
+                            if (PLS_API(kl_java_util::Vector_2_Size(
+                                    require(require(gameDataRecord3)->dataSet_))) > 0 &&
                                 (k != 0 || require(gameDataRecord3)->isInsert_) &&
                                 (k != 1 || !require(gameDataRecord3)->isInsert_)) {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_AddElement(require(vector),
-                                                                             pls::cs::box(gameDataRecord3));
-                                });
+                                PLS_API(kl_java_util::Vector_2_AddElement(require(vector),
+                                                                          pls::cs::box(gameDataRecord3)));
                             }
                         }
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(vector));
-                            }) != 0) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::WriteInt(
-                                    static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_Size(require(vector));
-                                    }));
-                            });
+                        if (PLS_API(kl_java_util::Vector_2_Size(require(vector))) != 0) {
+                            PLS_API(kl_unity_util::StreamUtil::WriteInt(
+                                static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
+                                PLS_API(kl_java_util::Vector_2_Size(require(vector)))));
                             for (pls::cs::Int32 m = 0;
-                                 m < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return kl_java_util::Vector_2_Size(require(vector));
-                                 });
-                                 ++m) {
+                                 m < PLS_API(kl_java_util::Vector_2_Size(require(vector))); ++m) {
                                 require((pls::cs::unbox<pls::cs::Ref<GameDataRecord>>(
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_java_util::Vector_2_ElementAt(require(vector), m);
-                                            }))))
+                                            PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), m)))))
                                     ->Pack(byteArrayOutputStream);
                             }
                         }
                     }
-                    send = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(byteArrayOutputStream)->ToByteArray(); });
+                    send = PLS_API(require(byteArrayOutputStream)->ToByteArray());
                 }
             },
             [&]() {
@@ -680,22 +598,14 @@ KairoBase::ConnectGameDataGameDataRecordArray(pls::cs::String tbname,
                 }());
                 byteArrayOutputStream = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
             });
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(array.get_Item(0)));
-            }) == 0 &&
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(array.get_Item(2)));
-            }) == 0 &&
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_Size(require(array.get_Item(1)));
-            }) == 0) {
+        if (PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(0)))) == 0 &&
+            PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(2)))) == 0 &&
+            PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(1)))) == 0) {
             return dataList;
         }
         pls::cs::String text = literal(u"");
         for (pls::cs::Int32 n = 0; n < array.length(); ++n) {
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_Size(require(array.get_Item(n)));
-                }) != 0) {
+            if (PLS_API(kl_java_util::Vector_2_Size(require(array.get_Item(n)))) != 0) {
                 if (kl_lang::StringEx::Length(text) > 0) {
                     text = pls::cs::String::concat(text, literal(u","));
                 }
@@ -736,49 +646,35 @@ KairoBase::ConnectGameDataGameDataRecordArray(pls::cs::String tbname,
                 [&]() {
                     {
                         byteArrayInputStream = kl_io::ByteArrayInputStream::create(array3[num6]);
-                        pls::cs::Int32 num7 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                        });
-                        pls::cs::Int32 num8 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                        });
-                        pls::cs::Int32 num9 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                        });
+                        pls::cs::Int32 num7 =
+                            PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
+                        pls::cs::Int32 num8 =
+                            PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
+                        pls::cs::Int32 num9 =
+                            PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                         pls::cs::Ref<GameDataRecord> gameDataRecord4 = pls::cs::Ref<GameDataRecord>{};
                         for (pls::cs::Int32 spriteIndex = 0; spriteIndex < array4.length(); ++spriteIndex) {
                             pls::cs::Ref<GameDataRecord> gameDataRecord5 = array4.get_Item(spriteIndex);
-                            if ((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return require(require(gameDataRecord5)->userId_)->Get();
-                                 }) == num7 ||
-                                 pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return require(require(gameDataRecord5)->friendId_)->Get();
-                                 }) == num8) &&
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(require(gameDataRecord5)->number_)->Get();
-                                }) == num9) {
+                            if ((PLS_API(require(require(gameDataRecord5)->userId_)->Get()) == num7 ||
+                                 PLS_API(require(require(gameDataRecord5)->friendId_)->Get()) == num8) &&
+                                PLS_API(require(require(gameDataRecord5)->number_)->Get()) == num9) {
                                 gameDataRecord4 = gameDataRecord5;
                                 break;
                             }
                         }
                         require(gameDataRecord4)->exist_ = true;
-                        pls::cs::Int32 num11 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                        });
+                        pls::cs::Int32 num11 =
+                            PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                         for (pls::cs::Int32 num12 = 0; num12 < num11; ++num12) {
-                            pls::cs::String name = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadString(byteArrayInputStream);
-                            });
+                            pls::cs::String name =
+                                PLS_API(kl_unity_util::StreamUtil::ReadString(byteArrayInputStream));
                             ByteArray value = ByteArray{};
-                            pls::cs::Int32 num13 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                            });
+                            pls::cs::Int32 num13 =
+                                PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                             if (num13 != -1) {
-                                value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::Read(
-                                        static_cast<pls::cs::Ref<kl_io::InputStream>>(byteArrayInputStream),
-                                        num13);
-                                });
+                                value = PLS_API(kl_unity_util::StreamUtil::Read(
+                                    static_cast<pls::cs::Ref<kl_io::InputStream>>(byteArrayInputStream),
+                                    num13));
                             }
                             {
                                 pls::cs::String cs_arg0 = name;
@@ -862,17 +758,11 @@ KairoBase::ConnectGameDataSearch(pls::cs::String tbname, pls::cs::String get, pl
                 param = (pls::cs::String::concat(pls::cs::String::concat(column, literal(u",")),
                                                  integer_string(value)));
             }
-            param2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JString::ValueOfLong(low); });
-            param3 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JString::ValueOfLong(high); });
+            param2 = PLS_API(kl_lang::JString::ValueOfLong(low));
+            param3 = PLS_API(kl_lang::JString::ValueOfLong(high));
         }
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(get, literal(u",")); });
-        pls::cs::String param4 =
-            ((logic < 0) ? literal(u"0") : pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JString::ValueOfInt(logic);
-            }));
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(get, literal(u",")));
+        pls::cs::String param4 = ((logic < 0) ? literal(u"0") : PLS_API(kl_lang::JString::ValueOfInt(logic)));
         pls::cs::String param5 = literal(u"search");
         tbname = KairoBase::MakeQueryString(literal(u"tbname"), tbname);
         param5 = KairoBase::MakeQueryString(literal(u"mode"), param5);
@@ -924,32 +814,24 @@ KairoBase::ConnectGameDataSearch(pls::cs::String tbname, pls::cs::String get, pl
                         {
                             auto cs_target = gameDataRecord;
                             auto cs_value = kl_unity_util::SecureInt::create(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream)));
                             require(cs_target)->friendId_ = cs_value;
                         }
                         {
                             auto cs_target = gameDataRecord;
                             auto cs_value = kl_unity_util::SecureInt::create(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                                }));
+                                PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream)));
                             require(cs_target)->number_ = cs_value;
                         }
                         for (pls::cs::Int32 j = 0; j < array.length(); ++j) {
-                            pls::cs::String name = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return pls::cs::string_trim(array[j]); });
-                            pls::cs::Int32 num2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                            });
+                            pls::cs::String name = PLS_API(pls::cs::string_trim(array[j]));
+                            pls::cs::Int32 num2 =
+                                PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                             ByteArray data = ByteArray{};
                             if (num2 != -1) {
-                                data = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::Read(
-                                        static_cast<pls::cs::Ref<kl_io::InputStream>>(byteArrayInputStream),
-                                        num2);
-                                });
+                                data = PLS_API(kl_unity_util::StreamUtil::Read(
+                                    static_cast<pls::cs::Ref<kl_io::InputStream>>(byteArrayInputStream),
+                                    num2));
                             }
                             require(gameDataRecord)->AddByteArray(name, data);
                         }
@@ -1015,8 +897,7 @@ KairoBase::ConnectGameDataRanking(pls::cs::String tbname, pls::cs::String friend
         }
         get = CorrectGetGameData(get);
         where = CorrectWhereGameData(where);
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(get, literal(u",")); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(get, literal(u",")));
         pls::cs::String text;
         pls::cs::String param = literal(u"rank");
         tbname = KairoBase::MakeQueryString(literal(u"tbname"), tbname);
@@ -1055,9 +936,8 @@ KairoBase::ConnectGameDataRanking(pls::cs::String tbname, pls::cs::String friend
                 [&]() {
                     {
                         byteArrayInputStream = kl_io::ByteArrayInputStream::create(array2[i]);
-                        pls::cs::Int32 num = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                        });
+                        pls::cs::Int32 num =
+                            PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                         array3[i] = pls::cs::Array<pls::cs::Ref<GameDataRecord>>::make(num);
                         for (pls::cs::Int32 j = 0; j < array3[i].length(); ++j) {
                             pls::cs::Ref<GameDataRecord> gameDataRecord = (([&]() {
@@ -1070,40 +950,29 @@ KairoBase::ConnectGameDataRanking(pls::cs::String tbname, pls::cs::String friend
                             {
                                 auto cs_target = gameDataRecord;
                                 auto cs_value = kl_unity_util::SecureInt::create(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                                    }));
+                                    PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream)));
                                 require(cs_target)->friendId_ = cs_value;
                             }
                             {
                                 auto cs_target = gameDataRecord;
                                 auto cs_value = kl_unity_util::SecureInt::create(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                                    }));
+                                    PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream)));
                                 require(cs_target)->number_ = cs_value;
                             }
                             {
                                 pls::cs::Int64 cs_arg1 = pls::cs::cast_integral<pls::cs::Int64>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                                    }));
+                                    PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream)));
                                 require(gameDataRecord)->AddLong(literal(u"_rank"), cs_arg1);
                             }
                             for (pls::cs::Int32 k = 0; k < array.length(); ++k) {
-                                pls::cs::String name = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return pls::cs::string_trim(array[k]); });
-                                pls::cs::Int32 num2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                                });
+                                pls::cs::String name = PLS_API(pls::cs::string_trim(array[k]));
+                                pls::cs::Int32 num2 =
+                                    PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
                                 ByteArray data = ByteArray{};
                                 if (num2 != -1) {
-                                    data = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StreamUtil::Read(
-                                            static_cast<pls::cs::Ref<kl_io::InputStream>>(
-                                                byteArrayInputStream),
-                                            num2);
-                                    });
+                                    data = PLS_API(kl_unity_util::StreamUtil::Read(
+                                        static_cast<pls::cs::Ref<kl_io::InputStream>>(byteArrayInputStream),
+                                        num2));
                                 }
                                 require(gameDataRecord)->AddByteArray(name, data);
                             }
@@ -1136,16 +1005,13 @@ pls::cs::String KairoBase::CorrectGetGameData(pls::cs::String get) {
         if (is_null(get)) {
             return pls::cs::String{};
         }
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(get, literal(u",")); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(get, literal(u",")));
         get = literal(u"");
         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
             if (kl_lang::StringEx::Length(get) > 0) {
                 get = pls::cs::String::concat(get, literal(u","));
             }
-            get = pls::cs::String::concat(get, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                              return pls::cs::string_trim(array[i]);
-                                          }));
+            get = pls::cs::String::concat(get, PLS_API(pls::cs::string_trim(array[i])));
         }
         return get;
     }
@@ -1161,14 +1027,12 @@ pls::cs::String KairoBase::CorrectWhereGameData(pls::cs::String where) {
         }
         StringArray array =
             StringArray::from({literal(u"<=>"), literal(u"<>"), literal(u"!="), literal(u"=")});
-        StringArray array2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(where, literal(u",")); });
+        StringArray array2 = PLS_API(kl_unity_util::StringUtil::Split(where, literal(u",")));
         where = literal(u"");
         for (pls::cs::Int32 i = 0; i < array2.length(); ++i) {
             pls::cs::String text = array2[i];
             for (pls::cs::Int32 j = 0; j < array.length(); ++j) {
-                pls::cs::Int32 num = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::culture_index_of(text, array[j]); });
+                pls::cs::Int32 num = PLS_API(pls::cs::culture_index_of(text, array[j]));
                 if (num != -1 && num != 0 && num != kl_lang::StringEx::Length(text) - 1) {
                     pls::cs::String text2 = kl_lang::StringEx::SubstringJ(text, 0, num);
                     if (GetColumnType(literal(u"t_gamedata"), text2) == 1) {
@@ -1178,11 +1042,9 @@ pls::cs::String KairoBase::CorrectWhereGameData(pls::cs::String where) {
                             kl_lang::StringEx::SubstringJ(text, num + kl_lang::StringEx::Length(array[j]));
                         ByteArray bytes =
                             ToDBValue(literal(u"t_gamedata"), text2, kl_lang::StringEx::GetBytes(str));
-                        text = pls::cs::String::concat(pls::cs::String::concat(text2, text3),
-                                                       pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                           return kl_lang::JString::New(bytes,
-                                                                                        literal(u"UTF-8"));
-                                                       }));
+                        text =
+                            pls::cs::String::concat(pls::cs::String::concat(text2, text3),
+                                                    PLS_API(kl_lang::JString::New(bytes, literal(u"UTF-8"))));
                         break;
                     }
                 }
@@ -1249,8 +1111,7 @@ ByteArray KairoBase::FromDBValue(pls::cs::String table, pls::cs::String name, By
         pls::cs::Int32 columnType = GetColumnType(table, name);
         if (columnType == 1) {
             try {
-                array = kl_lang::StringEx::GetBytes(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JString::New(value, literal(u"UTF-8")); }));
+                array = kl_lang::StringEx::GetBytes(PLS_API(kl_lang::JString::New(value, literal(u"UTF-8"))));
             } catch (const pls::cs::Exception& cs_caught_277) {
                 pls::cs::capture_exception(cs_caught_277);
                 {
@@ -1259,13 +1120,10 @@ ByteArray KairoBase::FromDBValue(pls::cs::String table, pls::cs::String name, By
         } else if (columnType == 2 && (value.length() != 0)) {
             bool num = (pls::cs::cast_integral<pls::cs::Int32>(value[0]) == 1);
             array = ByteArray::make(pls::cs::Int32(value.length()) - 1);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JSystem::Arraycopy(pls::cs::box(value), 1, pls::cs::box(array), 0,
-                                                   array.length());
-            });
+            PLS_API(
+                kl_lang::JSystem::Arraycopy(pls::cs::box(value), 1, pls::cs::box(array), 0, array.length()));
             if (num) {
-                array = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::Compressor::Expand(array); });
+                array = PLS_API(kl_unity_util::Compressor::Expand(array));
             }
         }
         return array;
@@ -1288,38 +1146,28 @@ ByteArray KairoBase::ToDBValue(pls::cs::String table, pls::cs::String name, Byte
         ByteArray array = value;
         pls::cs::Int32 columnType = GetColumnType(table, name);
         if (columnType == 1) {
-            pls::cs::String text =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_lang::JString::New(value); });
-            pls::cs::String text2 =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::string_trim(text); });
-            if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return string_equals(text2, literal(u"CURRENT_TIMESTAMP()"));
-                })) {
+            pls::cs::String text = PLS_API(kl_lang::JString::New(value));
+            pls::cs::String text2 = PLS_API(pls::cs::string_trim(text));
+            if (!PLS_API(string_equals(text2, literal(u"CURRENT_TIMESTAMP()")))) {
                 pls::cs::Ref<pls::cs::StringBuilder> stringBuilder = ([&]() {
                     return pls::cs::make_ref<pls::cs::StringBuilder>();
                 }());
                 pls::cs::Int32 num = 0;
                 while (num < kl_lang::StringEx::Length(text2)) {
                     char16_t c = kl_lang::StringEx::CharAt(text2, num);
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(stringBuilder)->Append(c); });
+                    PLS_API(require(stringBuilder)->Append(c));
                     if (pls::cs::cast_integral<pls::cs::Int32>(c) ==
                         pls::cs::cast_integral<pls::cs::Int32>(u'\'')) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(stringBuilder)->Append(c); });
+                        PLS_API(require(stringBuilder)->Append(c));
                     }
                     ++num;
                 }
                 text = pls::cs::String::concat(
-                    pls::cs::String::concat(literal(u"'"), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(stringBuilder)->ToString();
-                                            })),
+                    pls::cs::String::concat(literal(u"'"), PLS_API(require(stringBuilder)->ToString())),
                     literal(u"'"));
             }
             try {
-                array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return java::lang::StringEx::GetBytes(text, literal(u"UTF-8"));
-                });
+                array = PLS_API(java::lang::StringEx::GetBytes(text, literal(u"UTF-8")));
             } catch (const pls::cs::Exception& cs_caught_273) {
                 pls::cs::capture_exception(cs_caught_273);
                 {
@@ -1329,8 +1177,7 @@ ByteArray KairoBase::ToDBValue(pls::cs::String table, pls::cs::String name, Byte
         } else if (columnType == 2) {
             ByteArray array2 = ByteArray{};
             try {
-                array2 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::Compressor::Compress(value); });
+                array2 = PLS_API(kl_unity_util::Compressor::Compress(value));
                 if (array2.length() >= value.length()) {
                     array2 = ByteArray{};
                 }
@@ -1346,17 +1193,13 @@ ByteArray KairoBase::ToDBValue(pls::cs::String table, pls::cs::String name, Byte
                 }()) {
                 array = ByteArray::make(pls::cs::Int32(1) + value.length());
                 array[0] = pls::cs::cast_integral<std::uint8_t>(0);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JSystem::Arraycopy(pls::cs::box(value), 0, pls::cs::box(array), 1,
-                                                       value.length());
-                });
+                PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(value), 0, pls::cs::box(array), 1,
+                                                    value.length()));
             } else {
                 array = ByteArray::make(pls::cs::Int32(1) + array2.length());
                 array[0] = pls::cs::cast_integral<std::uint8_t>(1);
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JSystem::Arraycopy(pls::cs::box(array2), 0, pls::cs::box(array), 1,
-                                                       array2.length());
-                });
+                PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(array2), 0, pls::cs::box(array), 1,
+                                                    array2.length()));
             }
         }
         return array;
@@ -1371,7 +1214,7 @@ pls::cs::Int32 KairoBase::GetColumnType(pls::cs::String table, pls::cs::String c
         if (is_null(table) || is_null(column)) {
             return -1;
         }
-        column = pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::string_trim(column); });
+        column = PLS_API(pls::cs::string_trim(column));
         if (table == literal(u"t_gamedata")) {
             {
                 auto cs_switch_value_35174 = column;
@@ -1390,39 +1233,25 @@ pls::cs::Int32 KairoBase::GetColumnType(pls::cs::String table, pls::cs::String c
                 }
                 default: {
                     {
-                        column = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StringUtil::Split(column, literal(u"_"));
-                        })[0];
+                        column = PLS_API(kl_unity_util::StringUtil::Split(column, literal(u"_")))[0];
                         if (column == literal(u"s") || column == literal(u"str")) {
                             return 1;
                         }
                         pls::cs::Int32 result;
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::culture_starts_with(column, literal(u"s"));
-                            }) &&
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() {
-                                    auto cs_text = pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return substring1(column, 1); });
-                                    return pls::cs::int32_try_parse(cs_text, result);
-                                }());
-                            })) {
+                        if (PLS_API(pls::cs::culture_starts_with(column, literal(u"s"))) && PLS_API(([&]() {
+                                auto cs_text = PLS_API(substring1(column, 1));
+                                return pls::cs::int32_try_parse(cs_text, result);
+                            }()))) {
                             return 1;
                         }
                         if (column == literal(u"d") || column == literal(u"dat")) {
                             return 2;
                         }
                         pls::cs::Int32 result2;
-                        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::culture_starts_with(column, literal(u"d"));
-                            }) &&
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() {
-                                    auto cs_text = pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return substring1(column, 1); });
-                                    return pls::cs::int32_try_parse(cs_text, result2);
-                                }());
-                            })) {
+                        if (PLS_API(pls::cs::culture_starts_with(column, literal(u"d"))) && PLS_API(([&]() {
+                                auto cs_text = PLS_API(substring1(column, 1));
+                                return pls::cs::int32_try_parse(cs_text, result2);
+                            }()))) {
                             return 2;
                         }
                         return 0;
@@ -1454,13 +1283,9 @@ StringArray KairoBase::CgiLogin(pls::cs::String userid, pls::cs::String c, pls::
             pls::cs::String::concat(
                 pls::cs::String::concat(pls::cs::String::concat(literal(u"login.php"), userid), c), pkg),
             r);
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::Split(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JString::New(HttpConnect(MakeUrl(cgi, signature), signature, true));
-                }),
-                literal(u"\n"));
-        });
+        return PLS_API(kl_unity_util::StringUtil::Split(
+            PLS_API(kl_lang::JString::New(HttpConnect(MakeUrl(cgi, signature), signature, true))),
+            literal(u"\n")));
     }
 }
 
@@ -1470,8 +1295,7 @@ pls::cs::String KairoBase::MakeQuery(pls::cs::String query, pls::cs::Int32 param
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.KairoBase.MakeQuery(System.String,System.Int32)",
                      kairo);
     {
-        return KairoBase::MakeQueryString(
-            query, pls::diagnostic::api_call([&]() -> decltype(auto) { return integer_string(param); }));
+        return KairoBase::MakeQueryString(query, PLS_API(integer_string(param)));
     }
 }
 
@@ -1484,9 +1308,7 @@ pls::cs::String KairoBase::MakeQueryString(pls::cs::String query, pls::cs::Strin
         if (is_null(param) || kl_lang::StringEx::Length(param) == 0) {
             return literal(u"");
         }
-        param = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::Replace(param, literal(u"\010"), literal(u""));
-        });
+        param = PLS_API(kl_unity_util::StringUtil::Replace(param, literal(u"\010"), literal(u"")));
         try {
             param = java::net::URLEncoder::Encode(param, literal(u"UTF-8"));
         } catch (const pls::cs::Exception& cs_caught_209) {
@@ -1499,12 +1321,10 @@ pls::cs::String KairoBase::MakeQueryString(pls::cs::String query, pls::cs::Strin
                 throw;
             }
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_starts_with(query, literal(u"&")); })) {
+        if (!PLS_API(pls::cs::culture_starts_with(query, literal(u"&")))) {
             query = pls::cs::String::concat(literal(u"&"), query);
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_ends_with(query, literal(u"=")); })) {
+        if (!PLS_API(pls::cs::culture_ends_with(query, literal(u"=")))) {
             query = pls::cs::String::concat(query, literal(u"="));
         }
         return pls::cs::String::concat(query, param);
@@ -1528,40 +1348,30 @@ pls::cs::String KairoBase::MakeUrl(pls::cs::String cgi, ByteArray send) {
 
         pls::cs::Int32 num;
         pls::cs::String text = pls::cs::String{};
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_starts_with(cgi, literal(u"http://")); }) ||
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::culture_starts_with(cgi, literal(u"https://"));
-            })) {
-            num = pls::diagnostic::api_call([&]() -> decltype(auto) { return last_index_char1(cgi, u'/'); });
+        if (PLS_API(pls::cs::culture_starts_with(cgi, literal(u"http://"))) ||
+            PLS_API(pls::cs::culture_starts_with(cgi, literal(u"https://")))) {
+            num = PLS_API(last_index_char1(cgi, u'/'));
             if (num != -1) {
-                text = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return substring2(cgi, 0, num + 1); });
-                cgi = pls::diagnostic::api_call([&]() -> decltype(auto) { return substring1(cgi, num + 1); });
+                text = PLS_API(substring2(cgi, 0, num + 1));
+                cgi = PLS_API(substring1(cgi, num + 1));
             }
         }
         pls::cs::String text2 = cgi;
-        num = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::culture_index_of(text2, literal(u".php")); });
+        num = PLS_API(pls::cs::culture_index_of(text2, literal(u".php")));
         if (num == -1) {
-            num = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_index_of(text2, literal(u".cgi")); });
+            num = PLS_API(pls::cs::culture_index_of(text2, literal(u".cgi")));
         }
         if (num != -1) {
-            text2 = pls::diagnostic::api_call([&]() -> decltype(auto) { return substring2(text2, 0, num); });
-            num =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return last_index_char1(text2, u'/'); });
+            text2 = PLS_API(substring2(text2, 0, num));
+            num = PLS_API(last_index_char1(text2, u'/'));
             if (num != -1) {
-                text2 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return substring1(text2, num + 1); });
+                text2 = PLS_API(substring1(text2, num + 1));
             }
         }
         pls::cs::String text3 = literal(u"");
-        pls::cs::Int32 num2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::culture_index_of(cgi, literal(u"?")); });
+        pls::cs::Int32 num2 = PLS_API(pls::cs::culture_index_of(cgi, literal(u"?")));
         if (num2 == -1) {
-            num2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_index_of(cgi, literal(u"&")); });
+            num2 = PLS_API(pls::cs::culture_index_of(cgi, literal(u"&")));
         }
         if (num2 != -1) {
             text3 = kl_lang::StringEx::SubstringJ(cgi, num2 + 1);
@@ -1570,58 +1380,41 @@ pls::cs::String KairoBase::MakeUrl(pls::cs::String cgi, ByteArray send) {
                 text3 = pls::cs::String::concat(literal(u"&"), text3);
             }
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return contains_string(text3, literal(u"&pid=")); })) {
+        if (!PLS_API(contains_string(text3, literal(u"&pid=")))) {
             text3 = pls::cs::String::concat(
                 text3, KairoBase::MakeQueryString(
-                           literal(u"pid="), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return kl_lang::JString::ValueOfInt(kl_cfg::Config::PID());
-                           })));
+                           literal(u"pid="), PLS_API(kl_lang::JString::ValueOfInt(kl_cfg::Config::PID()))));
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return contains_string(text3, literal(u"&ver=")); })) {
+        if (!PLS_API(contains_string(text3, literal(u"&ver=")))) {
             text3 = pls::cs::String::concat(
                 text3, KairoBase::MakeQueryString(literal(u"ver="),
-                                                  pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                      return kl_lang::JString::ValueOfInt(appliVersion_);
-                                                  })));
+                                                  PLS_API(kl_lang::JString::ValueOfInt(appliVersion_))));
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return contains_string(text3, literal(u"&userid=")); })) {
+        if (!PLS_API(contains_string(text3, literal(u"&userid=")))) {
             text3 =
                 pls::cs::String::concat(text3, KairoBase::MakeQueryString(literal(u"userid="), GetUserId()));
         }
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return contains_string(text3, literal(u"&pkg=")); })) {
+        if (!PLS_API(contains_string(text3, literal(u"&pkg=")))) {
             text3 = pls::cs::String::concat(
-                text3, KairoBase::MakeQueryString(
-                           literal(u"pkg="), pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return pls::kairo::IApplication::GetCurrentApp();
-                                      }))
-                                   ->GetPackageName();
-                           })));
+                text3,
+                KairoBase::MakeQueryString(
+                    literal(u"pkg="),
+                    PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetPackageName())));
         }
-        text3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::Replace(text3, literal(u"&&"), literal(u"&"));
-        });
+        text3 = PLS_API(kl_unity_util::StringUtil::Replace(text3, literal(u"&&"), literal(u"&")));
         if (kl_lang::StringEx::Length(text3) > 0) {
-            cgi = pls::cs::String::concat(
-                pls::cs::String::concat(cgi, literal(u"?")),
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return substring1(text3, 1); }));
+            cgi = pls::cs::String::concat(pls::cs::String::concat(cgi, literal(u"?")),
+                                          PLS_API(substring1(text3, 1)));
         }
         pls::cs::String text4;
-        bool flag = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return contains_string(cgi, literal(u"virtual_currency.php")); });
-        if (!is_null(text) && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return contains_string(text, GetCommonServer());
-            })) {
+        bool flag = PLS_API(contains_string(cgi, literal(u"virtual_currency.php")));
+        if (!is_null(text) && PLS_API(contains_string(text, GetCommonServer()))) {
             text4 = pls::cs::String::concat(text, cgi);
         } else if (flag) {
             text4 =
                 pls::cs::String::concat(pls::cs::String::concat(GetPaymentHost(), literal(u"vc/cgi/")), cgi);
         } else {
-            text4 = pls::diagnostic::api_call([&]() -> decltype(auto) { return require(host_)->ToString(); });
+            text4 = PLS_API(require(host_)->ToString());
             if (kl_cfg::Config::APPLI_TYPE() == 2) {
                 text4 = pls::cs::String::concat(text4, literal(u"android"));
             } else if (kl_cfg::Config::APPLI_TYPE() == 3) {
@@ -1638,25 +1431,19 @@ pls::cs::String KairoBase::MakeUrl(pls::cs::String cgi, ByteArray send) {
                     literal(u"/cgi/")),
                 cgi);
         }
-        while (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                   return pls::cs::culture_index_of(text4, literal(u"NULLGWDOCOMO"));
-               }) != -1) {
+        while (PLS_API(pls::cs::culture_index_of(text4, literal(u"NULLGWDOCOMO"))) != -1) {
         }
         text3 = literal(u"");
-        pls::cs::Int32 num3 =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return index_char1(text4, u'?'); });
+        pls::cs::Int32 num3 = PLS_API(index_char1(text4, u'?'));
         if (num3 != -1) {
             pls::cs::String str = kl_lang::StringEx::SubstringJ(text4, num3 + 1);
             text4 = kl_lang::StringEx::SubstringJ(text4, 0, num3);
             ByteArray bytes = kl_lang::StringEx::GetBytes(str);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::Encrypter::Encode(
-                    bytes, ByteArray::from({pls::cs::cast_integral<std::uint8_t>(72),
-                                            pls::cs::cast_integral<std::uint8_t>(123),
-                                            pls::cs::cast_integral<std::uint8_t>(54)}));
-            });
-            str = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::Base64::Encode(bytes); });
+            PLS_API(kl_unity_util::Encrypter::Encode(
+                bytes, ByteArray::from({pls::cs::cast_integral<std::uint8_t>(72),
+                                        pls::cs::cast_integral<std::uint8_t>(123),
+                                        pls::cs::cast_integral<std::uint8_t>(54)})));
+            str = PLS_API(kl_unity_util::Base64::Encode(bytes));
             text3 = pls::cs::String::concat(pls::cs::String::concat(text3, literal(u"&_1=")),
                                             java::net::URLEncoder::Encode(str));
             text3 = pls::cs::String::concat(pls::cs::String::concat(text3, literal(u"&_2=")),
@@ -1670,39 +1457,28 @@ pls::cs::String KairoBase::MakeUrl(pls::cs::String cgi, ByteArray send) {
             text3 = pls::cs::String::concat(pls::cs::String::concat(text3, literal(u"&_3=")),
                                             util::MD5::GetValue(send));
         }
-        text3 = pls::cs::String::concat(pls::cs::String::concat(text3, literal(u"&hl=")),
-                                        (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_unity_util::Language::Japanese();
-                                        })
-                                             ? literal(u"ja")
-                                             : literal(u"en")));
+        text3 = pls::cs::String::concat(
+            pls::cs::String::concat(text3, literal(u"&hl=")),
+            (PLS_API(kl_unity_util::Language::Japanese()) ? literal(u"ja") : literal(u"en")));
         pls::cs::Int32 value;
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_dictionary = cgiLogLevel_;
-                    auto cs_key = text2;
-                    return cs_dictionary.TryGetValue(cs_key, value);
-                }());
-            })) {
+        if (!PLS_API(([&]() {
+                auto cs_dictionary = cgiLogLevel_;
+                auto cs_key = text2;
+                return cs_dictionary.TryGetValue(cs_key, value);
+            }()))) {
             value = 222;
         }
         text3 =
             pls::cs::String::concat(pls::cs::String::concat(text3, literal(u"&log=")), integer_string(value));
-        text3 = pls::cs::String::concat(pls::cs::String::concat(text3, literal(u"&pkg=")),
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                       return pls::kairo::IApplication::GetCurrentApp();
-                                                   }))
-                                                ->GetPackageName();
-                                        }));
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return contains_string(cgi, literal(u"startUpSync")); })) {
+        text3 = pls::cs::String::concat(
+            pls::cs::String::concat(text3, literal(u"&pkg=")),
+            PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetPackageName()));
+        if (PLS_API(contains_string(cgi, literal(u"startUpSync")))) {
             text3 = pls::cs::String::concat(text3, literal(u"&sus=1"));
         }
         if (kl_lang::StringEx::Length(text3) > 0) {
-            text4 = pls::cs::String::concat(
-                pls::cs::String::concat(text4, literal(u"?")),
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return substring1(text3, 1); }));
+            text4 = pls::cs::String::concat(pls::cs::String::concat(text4, literal(u"?")),
+                                            PLS_API(substring1(text3, 1)));
         }
         return text4;
     }
@@ -1796,8 +1572,7 @@ void KairoBase::Connected(pls::cs::String cgi, ByteArray send, bool split) {
                 } catch (const pls::cs::Exception& cs_caught_214) {
                     auto t = pls::cs::capture_exception(cs_caught_214);
                     {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                        PLS_API(kl_unity_util::Log::Info(t));
                     }
                 }
             }
@@ -1831,9 +1606,8 @@ void KairoBase::ConnectAsync(pls::cs::String cgi, ByteArray send, pls::cs::Int32
         pls::cs::Ref<KairoBase_ConnectTask> connectTask = KairoBase_ConnectTask::create();
         {
             auto cs_target = connectTask;
-            auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::SecureString::ValueOf(require(instance)->MakeUrl(cgi, send));
-            });
+            auto cs_value =
+                PLS_API(kl_unity_util::SecureString::ValueOf(require(instance)->MakeUrl(cgi, send)));
             require(cs_target)->url_ = cs_value;
         }
         if ([&]() {
@@ -1846,10 +1620,8 @@ void KairoBase::ConnectAsync(pls::cs::String cgi, ByteArray send, pls::cs::Int32
                 auto cs_value = ByteArray::make(send.length());
                 require(cs_target)->send_ = cs_value;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_lang::JSystem::Arraycopy(
-                    pls::cs::box(send), 0, pls::cs::box(require(connectTask)->send_), 0, send.length());
-            });
+            PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(send), 0,
+                                                pls::cs::box(require(connectTask)->send_), 0, send.length()));
         }
         if (count > 100) {
             count = 100;
@@ -1864,10 +1636,8 @@ void KairoBase::ConnectAsync(pls::cs::String cgi, ByteArray send, pls::cs::Int32
             pls::cs::Int64 cs_value = util::ClockTime::GetTime();
             require(cs_target)->time_ = cs_value;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_AddElement(require(require(instance)->connectTaskList_),
-                                                     pls::cs::box(connectTask));
-        });
+        PLS_API(kl_java_util::Vector_2_AddElement(require(require(instance)->connectTaskList_),
+                                                  pls::cs::box(connectTask)));
     }
 }
 
@@ -1875,9 +1645,7 @@ void KairoBase::ConnectAsync(pls::cs::String cgi, ByteArray send, pls::cs::Int32
 pls::cs::String KairoBase::GetUserId() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.KairoBase.GetUserId", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::SecureString::ToStringSecureStringStatic(userId_);
-        });
+        return PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(userId_));
     }
 }
 
@@ -1893,9 +1661,7 @@ bool KairoBase::CheckUserId() {
 pls::cs::String KairoBase::GetFriendId() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.KairoBase.GetFriendId", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::SecureString::ToStringSecureStringStatic(friendId_);
-        });
+        return PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(friendId_));
     }
 }
 
@@ -1915,25 +1681,16 @@ void KairoBase::ExecuteConnectTask() {
         if (!login_) {
             return;
         }
-        while (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                   return kl_java_util::Vector_2_Size(require(connectTaskList_));
-               }) > 0) {
+        while (PLS_API(kl_java_util::Vector_2_Size(require(connectTaskList_))) > 0) {
             pls::cs::Ref<KairoBase_ConnectTask> connectTask =
                 pls::cs::unbox<pls::cs::Ref<KairoBase_ConnectTask>>(
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_FirstElement(require(connectTaskList_));
-                    }));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveElementAt(require(connectTaskList_), 0);
-            });
+                    PLS_API(kl_java_util::Vector_2_FirstElement(require(connectTaskList_))));
+            PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(connectTaskList_), 0));
             try {
                 ++require(connectTask)->count_;
-                pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                        require(connectTask)->url_);
-                });
-                if (!pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return contains_string(text, literal(u"&userid=")); })) {
+                pls::cs::String text = PLS_API(
+                    kl_unity_util::SecureString::ToStringSecureStringStatic(require(connectTask)->url_));
+                if (!PLS_API(contains_string(text, literal(u"&userid=")))) {
                     text = pls::cs::String::concat(pls::cs::String::concat(text, literal(u"&userid=")),
                                                    GetUserId());
                 }
@@ -1955,10 +1712,8 @@ void KairoBase::ExecuteConnectTask() {
                          (num < pls::cs::cast_integral<pls::cs::Int64>(require(connectTask)->dayMax_))) &&
                         (require(connectTask)->countMax_ == -1 ||
                          require(connectTask)->count_ < require(connectTask)->countMax_)) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_AddElement(require(connectTaskList_),
-                                                                     pls::cs::box(connectTask));
-                        });
+                        PLS_API(kl_java_util::Vector_2_AddElement(require(connectTaskList_),
+                                                                  pls::cs::box(connectTask)));
                     }
                     break;
                 }
@@ -2026,8 +1781,7 @@ bool KairoBase::IsLogin() {
 bool KairoBase::Check(pls::cs::Int32 bit) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.KairoBase.Check(System.Int32)", kairo);
     {
-        return (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(flag_)->Get(); }) & bit) !=
-               0;
+        return (PLS_API(require(flag_)->Get()) & bit) != 0;
     }
 }
 
@@ -2035,8 +1789,7 @@ bool KairoBase::Check(pls::cs::Int32 bit) {
 void KairoBase::On(pls::cs::Int32 bit) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.KairoBase.On(System.Int32)", kairo);
     {
-        flag_ = kl_unity_util::SecureInt::create(
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(flag_)->Get(); }) | bit);
+        flag_ = kl_unity_util::SecureInt::create(PLS_API(require(flag_)->Get()) | bit);
     }
 }
 
@@ -2105,14 +1858,8 @@ bool KairoBase::AddPaymentMoney(pls::cs::String product_id, pls::cs::String orde
                 require(paymentDataRecord)->SetTimeStamp(cs_arg0);
             }
             require(paymentDataRecord)->send_ = true;
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return paymemtList_.Add(paymentDataRecord); });
-            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return pls::kairo::IApplication::GetCurrentApp();
-                           }))
-                        ->CheckUiThread();
-                }) &&
+            PLS_API(paymemtList_.Add(paymentDataRecord));
+            if (PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->CheckUiThread()) &&
                 !async) {
                 if (ConnectPaymemtMoney(2, paymemtList_, true) == 0) {
                     try {
@@ -2182,8 +1929,7 @@ pls::cs::Int32 KairoBase::GetPaymentMoney() {
             pls::cs::Ref<payment::PaymentDataRecord> paymentDataRecord =
                 payment::PaymentDataRecord::create(literal(u"get_order"), literal(u"get_product"), 0, 0);
             require(paymentDataRecord)->send_ = true;
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return paymemtList_.Add(paymentDataRecord); });
+            PLS_API(paymemtList_.Add(paymentDataRecord));
             return ConnectPaymemtMoney(1, paymemtList_, false);
         } catch (const pls::cs::Exception& cs_caught_205) {
             pls::cs::capture_exception(cs_caught_205);
@@ -2217,16 +1963,13 @@ KairoBase::ConnectPaymemtMoney(pls::cs::Int32 mode,
         }
         pls::cs::String text = literal(u"");
         for (pls::cs::Int32 i = 0; i < paymemtListData.get_Count(); ++i) {
-            pls::cs::Ref<payment::PaymentDataRecord> paymentDataRecord =
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() {
-                        auto cs_list = paymemtListData;
-                        auto cs_index = i;
-                        if (cs_list.is_null())
-                            throw pls::cs::ArgumentNullException();
-                        return cs_list.get_Item(cs_index);
-                    }());
-                });
+            pls::cs::Ref<payment::PaymentDataRecord> paymentDataRecord = PLS_API(([&]() {
+                auto cs_list = paymemtListData;
+                auto cs_index = i;
+                if (cs_list.is_null())
+                    throw pls::cs::ArgumentNullException();
+                return cs_list.get_Item(cs_index);
+            }()));
             if (require(paymentDataRecord)->send_) {
                 if (text.length() > 0) {
                     text = pls::cs::String::concat(text, literal(u"\t"));
@@ -2267,17 +2010,10 @@ KairoBase::ConnectPaymemtMoney(pls::cs::Int32 mode,
                                                                                                cs_right);
                                                             }()),
                                                             literal(u","));
-                                                        auto cs_right = pls::diagnostic::api_call(
-                                                            [&]() -> decltype(auto) {
-                                                                return require(
-                                                                           pls::diagnostic::api_call(
-                                                                               [&]() -> decltype(auto) {
-                                                                                   return pls::kairo::
-                                                                                       IApplication::
-                                                                                           GetCurrentApp();
-                                                                               }))
-                                                                    ->GetPackageName();
-                                                            });
+                                                        auto cs_right =
+                                                            PLS_API(require(PLS_API(pls::kairo::IApplication::
+                                                                                        GetCurrentApp()))
+                                                                        ->GetPackageName());
                                                         return pls::cs::String::concat(cs_left, cs_right);
                                                     }()),
                                                     literal(u","));
@@ -2319,17 +2055,10 @@ KairoBase::ConnectPaymemtMoney(pls::cs::Int32 mode,
                                                                     literal(u",")),
                                                                 require(paymentDataRecord)->productId_),
                                                             literal(u","));
-                                                        auto cs_right = pls::diagnostic::api_call(
-                                                            [&]() -> decltype(auto) {
-                                                                return require(
-                                                                           pls::diagnostic::api_call(
-                                                                               [&]() -> decltype(auto) {
-                                                                                   return pls::kairo::
-                                                                                       IApplication::
-                                                                                           GetCurrentApp();
-                                                                               }))
-                                                                    ->GetPackageName();
-                                                            });
+                                                        auto cs_right =
+                                                            PLS_API(require(PLS_API(pls::kairo::IApplication::
+                                                                                        GetCurrentApp()))
+                                                                        ->GetPackageName());
                                                         return pls::cs::String::concat(cs_left, cs_right);
                                                     }()),
                                                     literal(u","));
@@ -2394,26 +2123,20 @@ KairoBase::ConnectPaymemtMoney(pls::cs::Int32 mode,
                     for (pls::cs::Int32 j = 0; j < array.length(); ++j) {
                         if (4 < array[j].length()) {
                             result = 1;
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    auto cs_receiver = connectPaymemtMoneyResponse_;
-                                    auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> pls::cs::String {
-                                            auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8();
-                                            auto cs_arg0 = array[j];
-                                            return require(cs_receiver)->GetString(cs_arg0);
-                                        }());
-                                    });
-                                    cs_receiver.Add(cs_arg0);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                auto cs_receiver = connectPaymemtMoneyResponse_;
+                                auto cs_arg0 = PLS_API(([&]() -> pls::cs::String {
+                                    auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8();
+                                    auto cs_arg0 = array[j];
+                                    return require(cs_receiver)->GetString(cs_arg0);
+                                }()));
+                                cs_receiver.Add(cs_arg0);
+                            }()));
                         } else if (array[j].length() != 0) {
                             if (array[j].length() == 1) {
                                 throw pls::cs::Exception();
                             }
-                            result = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::EncodeUtil::ByteAryToInt(array[j], true);
-                            });
+                            result = PLS_API(kl_unity_util::EncodeUtil::ByteAryToInt(array[j], true));
                         }
                     }
                     break;
@@ -2422,8 +2145,7 @@ KairoBase::ConnectPaymemtMoney(pls::cs::Int32 mode,
                 auto t = pls::cs::capture_exception(cs_caught_207);
                 {
                     if (kl_cfg::Config::DEBUG()) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                        PLS_API(kl_unity_util::Log::Info(t));
                     }
                     result = -1;
                 }
@@ -2463,29 +2185,25 @@ bool KairoBase::ConnectLangPackCheck(pls::cs::String file, pls::cs::Int32 ver, p
         "M:kairo.unity.system.KairoBase.ConnectLangPackCheck(System.String,System.Int32,System.Int32)",
         kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                   return pls::cs::int32_parse(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_lang::JString::New(KairoBase::Connect(([&]() {
+        return PLS_API(pls::cs::int32_parse(PLS_API(kl_lang::JString::New(KairoBase::Connect(([&]() {
+                   auto cs_left = ([&]() {
+                       auto cs_left = ([&]() {
                            auto cs_left = ([&]() {
-                               auto cs_left = ([&]() {
-                                   auto cs_left = ([&]() {
-                                       auto cs_left = pls::cs::String::concat(
-                                           GetCommonServer(), literal(u"com/cgi/langpack.php"));
-                                       auto cs_right =
-                                           KairoBase::MakeQueryString(literal(u"mode"), literal(u"check"));
-                                       return pls::cs::String::concat(cs_left, cs_right);
-                                   }());
-                                   auto cs_right = KairoBase::MakeQueryString(literal(u"file"), file);
-                                   return pls::cs::String::concat(cs_left, cs_right);
-                               }());
-                               auto cs_right = KairoBase::MakeQuery(literal(u"ver"), ver);
+                               auto cs_left = pls::cs::String::concat(GetCommonServer(),
+                                                                      literal(u"com/cgi/langpack.php"));
+                               auto cs_right =
+                                   KairoBase::MakeQueryString(literal(u"mode"), literal(u"check"));
                                return pls::cs::String::concat(cs_left, cs_right);
                            }());
-                           auto cs_right = KairoBase::MakeQuery(literal(u"hash"), hash);
+                           auto cs_right = KairoBase::MakeQueryString(literal(u"file"), file);
                            return pls::cs::String::concat(cs_left, cs_right);
-                       }())));
-                   }));
-               }) == 1;
+                       }());
+                       auto cs_right = KairoBase::MakeQuery(literal(u"ver"), ver);
+                       return pls::cs::String::concat(cs_left, cs_right);
+                   }());
+                   auto cs_right = KairoBase::MakeQuery(literal(u"hash"), hash);
+                   return pls::cs::String::concat(cs_left, cs_right);
+               }())))))) == 1;
     }
 }
 
@@ -2514,9 +2232,7 @@ void KairoBase::ConnectLangPackSet(pls::cs::String file, pls::cs::Int32 ver, pls
             }());
             auto cs_right_305 = KairoBase::MakeQuery(literal(u"hash"), hash);
             pls::cs::String cs_arg0 = pls::cs::String::concat(cs_left_305, cs_right_305);
-            ByteArray cs_arg1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::cs::RuntimeEncoding::get_UTF8())->GetBytes(data);
-            });
+            ByteArray cs_arg1 = PLS_API(require(pls::cs::RuntimeEncoding::get_UTF8())->GetBytes(data));
             KairoBase::ConnectByteArray(cs_arg0, cs_arg1);
         }
     }
@@ -2529,13 +2245,9 @@ void KairoBase::ConnectLangPackWeb(pls::cs::String file) {
     {
         ui::Canvas::OpenBrowser(([&]() {
             auto cs_left = pls::cs::String::concat(GetCommonServer(), literal(u"com/cgi/langpack.php?file="));
-            auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::string_replace(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                   return pls::cs::string_replace(file, literal(u" "),
-                                                                                  literal(u""));
-                                               }),
-                                               literal(u"\u3000"), literal(u""));
-            });
+            auto cs_right = PLS_API(
+                pls::cs::string_replace(PLS_API(pls::cs::string_replace(file, literal(u" "), literal(u""))),
+                                        literal(u"\u3000"), literal(u"")));
             return pls::cs::String::concat(cs_left, cs_right);
         }()));
     }
@@ -2549,20 +2261,15 @@ void KairoBase::LoadAppList() {
             try {
                 ByteArray array = ByteArray{};
                 if (i == 0) {
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Storage::Read(3, true, literal(u"applist.txt"));
-                    });
+                    array = PLS_API(pls::kairo::Storage::Read(3, true, literal(u"applist.txt")));
                 } else {
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Storage::Read(1, true, literal(u"app/list.bin"));
-                    });
+                    array = PLS_API(pls::kairo::Storage::Read(1, true, literal(u"app/list.bin")));
                     if ([&]() {
                             auto cs_left = pls::cs::box(array);
                             auto cs_right = pls::cs::box(ByteArray{});
                             return cs_left != cs_right;
                         }()) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Encrypter::Decode(array); });
+                        PLS_API(kl_unity_util::Encrypter::Decode(array));
                     }
                 }
                 if ([&]() {
@@ -2586,8 +2293,7 @@ void KairoBase::LoadAppList() {
             } catch (const pls::cs::Exception& cs_caught_35) {
                 auto t = pls::cs::capture_exception(cs_caught_35);
                 {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                    PLS_API(kl_unity_util::Log::Info(t));
                 }
             }
         }
@@ -2609,12 +2315,8 @@ pls::cs::Array<appli::GameAppli> KairoBase::LoadAppList(ByteArray data, pls::cs:
         pls::cs::run_finally(
             [&]() {
                 {
-                    date = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream);
-                    });
-                    text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StreamUtil::ReadString(byteArrayInputStream);
-                    });
+                    date = PLS_API(kl_unity_util::StreamUtil::ReadInt(byteArrayInputStream));
+                    text = PLS_API(kl_unity_util::StreamUtil::ReadString(byteArrayInputStream));
                 }
             },
             [&]() {
@@ -2632,23 +2334,19 @@ pls::cs::Array<appli::GameAppli> KairoBase::LoadAppList(ByteArray data, pls::cs:
             });
         pls::cs::List<appli::GameAppli> list = pls::cs::List<appli::GameAppli>::make();
         IntArray array = IntArray{};
-        StringArray array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_text = text;
-                auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                cs_separators.at(0) = char16_t(10);
-                return pls::cs::string_split(cs_text, cs_separators);
-            }());
-        });
+        StringArray array2 = PLS_API(([&]() {
+            auto cs_text = text;
+            auto cs_separators = pls::cs::Array<char16_t>::make(1);
+            cs_separators.at(0) = char16_t(10);
+            return pls::cs::string_split(cs_text, cs_separators);
+        }()));
         for (pls::cs::Int32 i = 0; i < array2.length(); ++i) {
-            StringArray array3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_text = array2[i];
-                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                    cs_separators.at(0) = u',';
-                    return pls::cs::string_split(cs_text, cs_separators);
-                }());
-            });
+            StringArray array3 = PLS_API(([&]() {
+                auto cs_text = array2[i];
+                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                cs_separators.at(0) = u',';
+                return pls::cs::string_split(cs_text, cs_separators);
+            }()));
             if ([&]() {
                     auto cs_left = pls::cs::box(array);
                     auto cs_right = pls::cs::box(IntArray{});
@@ -2659,8 +2357,7 @@ pls::cs::Array<appli::GameAppli> KairoBase::LoadAppList(ByteArray data, pls::cs:
                     array[j] = -1;
                 }
                 for (pls::cs::Int32 k = 0; k < array3.length(); ++k) {
-                    array[pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::cs::int32_parse(array3[k]); })] = k;
+                    array[PLS_API(pls::cs::int32_parse(array3[k]))] = k;
                 }
                 continue;
             }
@@ -2668,17 +2365,14 @@ pls::cs::Array<appli::GameAppli> KairoBase::LoadAppList(ByteArray data, pls::cs:
             appli::GameAppli item = appli::GameAppli{};
             if (array[0] != -1) {
                 {
-                    pls::cs::Int32 cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::cs::int32_parse(array3[array[0]]); });
+                    pls::cs::Int32 cs_value = PLS_API(pls::cs::int32_parse(array3[array[0]]));
                     item.Pid = cs_value;
                 }
             }
             if (array[1] != -1) {
                 {
-                    auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::cs::string_trim(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::cs::culture_to_lower(array3[array[1]]); }));
-                    });
+                    auto cs_value =
+                        PLS_API(pls::cs::string_trim(PLS_API(pls::cs::culture_to_lower(array3[array[1]]))));
                     item.Language = cs_value;
                 }
             }
@@ -2697,14 +2391,12 @@ pls::cs::Array<appli::GameAppli> KairoBase::LoadAppList(ByteArray data, pls::cs:
             }
             if (array[11] != -1) {
                 {
-                    pls::cs::Int32 cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::cs::int32_parse(array3[array[11]]); });
+                    pls::cs::Int32 cs_value = PLS_API(pls::cs::int32_parse(array3[array[11]]));
                     item.AndPrice = cs_value;
                 }
             }
             if (array[12] != -1) {
-                num = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::int64_parse(array3[array[12]]); });
+                num = PLS_API(pls::cs::int64_parse(array3[array[12]]));
                 if ((num != pls::cs::cast_integral<pls::cs::Int64>(-1)) &&
                     (num < pls::cs::cast_integral<pls::cs::Int64>(0))) {
                     num = 0ll;
@@ -2729,14 +2421,12 @@ pls::cs::Array<appli::GameAppli> KairoBase::LoadAppList(ByteArray data, pls::cs:
             }
             if (array[21] != -1) {
                 {
-                    pls::cs::Int32 cs_value = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::cs::int32_parse(array3[array[21]]); });
+                    pls::cs::Int32 cs_value = PLS_API(pls::cs::int32_parse(array3[array[21]]));
                     item.IOSPrice = cs_value;
                 }
             }
             if (array[22] != -1) {
-                num = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::cs::int64_parse(array3[array[22]]); });
+                num = PLS_API(pls::cs::int64_parse(array3[array[22]]));
                 if ((num != pls::cs::cast_integral<pls::cs::Int64>(-1)) &&
                     (num < pls::cs::cast_integral<pls::cs::Int64>(0))) {
                     num = 0ll;
@@ -2746,9 +2436,9 @@ pls::cs::Array<appli::GameAppli> KairoBase::LoadAppList(ByteArray data, pls::cs:
                 pls::cs::Int32 cs_value = pls::cs::to_int32(num);
                 item.IOSDate = cs_value;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(item); });
+            PLS_API(list.Add(item));
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return list.ToArray(); });
+        return PLS_API(list.ToArray());
     }
 }
 
@@ -2767,9 +2457,7 @@ pls::cs::Array<appli::GameAppli> KairoBase::GetAppList(bool languageOnly, bool r
         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
             appli::GameAppli item = array[i];
             if ((!languageOnly || ((item.Language).length() <= 0) ||
-                 ((!pls::diagnostic::api_call(
-                       [&]() -> decltype(auto) { return kl_unity_util::Language::Japanese(); }) ||
-                   !((item.Language != literal(u"ja")))) &&
+                 ((!PLS_API(kl_unity_util::Language::Japanese()) || !((item.Language != literal(u"ja")))) &&
                   (!util::Language::English() || !((item.Language != literal(u"en")))))) &&
                 (!releaseOnly || ((kl_cfg::Config::APPLI_TYPE() != 2 || ([&]() {
                                        return appli::GameAppli::IsReleaseAndroid(&item);
@@ -2777,10 +2465,10 @@ pls::cs::Array<appli::GameAppli> KairoBase::GetAppList(bool languageOnly, bool r
                                   (kl_cfg::Config::APPLI_TYPE() != 3 || ([&]() {
                                        return appli::GameAppli::IsReleaseIOS(&item);
                                    }()))))) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(item); });
+                PLS_API(list.Add(item));
             }
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return list.ToArray(); });
+        return PLS_API(list.ToArray());
     }
 }
 
@@ -2793,12 +2481,10 @@ ByteArray KairoBase::HttpConnect(pls::cs::String url, ByteArray send, bool check
         if (connects_.get_Count() <= 0) {
             return io::Http::Connect(url, send, check);
         }
-        return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                   return ([&]() {
-                       auto cs_stack = connects_;
-                       return cs_stack.Peek();
-                   }());
-               }))
+        return require(PLS_API(([&]() {
+                   auto cs_stack = connects_;
+                   return cs_stack.Peek();
+               }())))
             ->Connect(url, send, check);
     }
 }
@@ -2814,12 +2500,10 @@ pls::cs::Array<ByteArray> KairoBase::HttpConnect(pls::cs::String url, ByteArray 
         if (connects_.get_Count() <= 0) {
             return io::Http::Connect(url, send, check, split);
         }
-        return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                   return ([&]() {
-                       auto cs_stack = connects_;
-                       return cs_stack.Peek();
-                   }());
-               }))
+        return require(PLS_API(([&]() {
+                   auto cs_stack = connects_;
+                   return cs_stack.Peek();
+               }())))
             ->Connect(url, send, check, split);
     }
 }

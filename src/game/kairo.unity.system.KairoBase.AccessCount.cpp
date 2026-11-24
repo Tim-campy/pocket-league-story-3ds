@@ -59,12 +59,10 @@ pls::cs::String KairoBase_AccessCount::ToString() {
 std::int32_t KairoBase_AccessCount::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.system.KairoBase.AccessCount.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace kairo::unity::system

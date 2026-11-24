@@ -63,7 +63,7 @@ pls::cs::Ref<JRandom> JRandom::create(pls::cs::Int64 seed) {
 pls::cs::Int32 JRandom::NextInt() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.JRandom.NextInt", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return require(random_)->Next(); });
+        return PLS_API(require(random_)->Next());
     }
 }
 } // namespace java::util

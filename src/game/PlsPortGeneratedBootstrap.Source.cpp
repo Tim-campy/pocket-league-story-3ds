@@ -87,17 +87,15 @@ void Capture(pls::cs::Ref<pls::kairo::FormManagerBase> manager,
                 {literal(u"768:1024,_768_1024_ipad"), literal(u"640:960,_640_960_35inch"),
                  literal(u"640:1136,_640_1136_40inch"), literal(u"750:1334,_750_1334_47inch"),
                  literal(u"1242:2208,_1242_2208_55inch"), literal(u"2048:2732,_2048_2732_129inch")});
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::FormManagerBase> cs_arg0 = manager;
-                pls::cs::Int32 cs_arg1 = require(view)->GetX();
-                pls::cs::Int32 cs_arg2 = require(view)->GetY();
-                pls::cs::Int32 cs_arg3 = require(view)->GetWidth();
-                pls::cs::Int32 cs_arg4 = require(view)->GetHeight();
-                pls::kairo::queue_capture(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, tables, completed,
-                                          temporary);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::FormManagerBase> cs_arg0 = manager;
+            pls::cs::Int32 cs_arg1 = require(view)->GetX();
+            pls::cs::Int32 cs_arg2 = require(view)->GetY();
+            pls::cs::Int32 cs_arg3 = require(view)->GetWidth();
+            pls::cs::Int32 cs_arg4 = require(view)->GetHeight();
+            pls::kairo::queue_capture(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, tables, completed,
+                                      temporary);
+        }()));
     }
 }
 
@@ -227,32 +225,25 @@ void InitializePlatform() {
     {
         kl_cfg::Config::ensure_initialized();
 
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg0 =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Language::Get(); });
-                bool cs_arg1 = kl_cfg::Config::PRINT();
-                pls::cs::String cs_arg2 = kl_cfg::Config::BASE64_PUBLIC_KEY();
-                pls::kairo::native_plugin_init(cs_arg0, cs_arg1, cs_arg2);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg0 = PLS_API(kl_util::Language::Get());
+            bool cs_arg1 = kl_cfg::Config::PRINT();
+            pls::cs::String cs_arg2 = kl_cfg::Config::BASE64_PUBLIC_KEY();
+            pls::kairo::native_plugin_init(cs_arg0, cs_arg1, cs_arg2);
+        }()));
         kairo::unity::native::KairoPlugin::CancelNotifications(true, false);
         kairo::unity::native::KairoPlugin::SetNotificationBackground(false);
         kairo::unity::analytics::AnalyticsTracker::Setup();
         if (!kl_cfg::Config::FULLSCREEN())
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return Source::SetWindowFullscreen(false); });
+            PLS_API(Source::SetWindowFullscreen(false));
         pls::cs::Ref<pls::kairo::DisplayMetrics> metrics = pls::cs::make_ref<pls::kairo::DisplayMetrics>();
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
-                pls::cs::Ref<pls::kairo::IApplication> cs_arg0 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                require(cs_receiver)->SetDisplayCurrent(cs_arg0);
-            }());
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::game::native_install_bootstrap_bindings(); });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = PLS_API(pls::kairo::Canvas::GetInstance());
+            pls::cs::Ref<pls::kairo::IApplication> cs_arg0 =
+                PLS_API(pls::kairo::IApplication::GetCurrentApp());
+            require(cs_receiver)->SetDisplayCurrent(cs_arg0);
+        }()));
+        PLS_API(pls::game::native_install_bootstrap_bindings());
     }
 }
 
@@ -265,9 +256,7 @@ pls::cs::Ref<pls::cs::Object> LoadLibraryResources() {
             pls::cs::String{}, pls::cs::String{}, pls::cs::String{}, pls::cs::String{}, pls::cs::String{},
             pls::cs::String{}, pls::cs::String{});
         {
-            ByteArray cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::kairo::Storage::Read(3, false, literal(u"kairolib.dat"));
-            });
+            ByteArray cs_arg0 = PLS_API(pls::kairo::Storage::Read(3, false, literal(u"kairolib.dat")));
             require(manager)->Load(cs_arg0, 3);
         }
         {
@@ -276,8 +265,7 @@ pls::cs::Ref<pls::cs::Object> LoadLibraryResources() {
                 pls::cs::Ref<pls::kairo::Image> image = cs_each187.get_Item(cs_i187);
                 {
                     if (!is_null(image))
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(image)->SetExpiration(true, 40); });
+                        PLS_API(require(image)->SetExpiration(true, 40));
                 }
             }
         }
@@ -302,8 +290,8 @@ GetApplicationResource(pls::cs::Ref<pls::kairo::IApplication> app) {
                      "M:PlsPortGeneratedBootstrap.Source.GetApplicationResource(kairo.unity.ui.IApplication)",
                      kairo);
     {
-        return pls::cs::unbox<pls::cs::Ref<kairo::unity::ui::ResourceManager>>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::native_application_resource(app); }));
+        return pls::cs::unbox<pls::cs::Ref<kairo::unity::ui::ResourceManager>>(
+            PLS_API(pls::kairo::native_application_resource(app)));
     }
 }
 
@@ -312,22 +300,18 @@ pls::cs::Int64 FreeHeapMemory() {
     Source::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:PlsPortGeneratedBootstrap.Source.FreeHeapMemory", kairo);
     {
-        return pls::cs::unbox<pls::cs::Int64>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                auto cs_receiver = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
-                    pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
-                        nullptr, std::string("M:PlsPortGeneratedBootstrap.Source.FreeHeapMemory:5347"),
-                        []() -> pls::cs::Ref<pls::cs::Object> {
-                            {
-                                return pls::cs::box(pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return pls::kairo::native_heap_free(); }));
-                            }
-                        });
-                return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-            }());
-        }));
+        return pls::cs::unbox<pls::cs::Int64>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+            auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+            pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
+                pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
+                    nullptr, std::string("M:PlsPortGeneratedBootstrap.Source.FreeHeapMemory:5347"),
+                    []() -> pls::cs::Ref<pls::cs::Object> {
+                        {
+                            return pls::cs::box(PLS_API(pls::kairo::native_heap_free()));
+                        }
+                    });
+            return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+        }())));
     }
 }
 
@@ -336,22 +320,18 @@ pls::cs::Int64 TotalHeapMemory() {
     Source::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:PlsPortGeneratedBootstrap.Source.TotalHeapMemory", kairo);
     {
-        return pls::cs::unbox<pls::cs::Int64>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                auto cs_receiver = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
-                    pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
-                        nullptr, std::string("M:PlsPortGeneratedBootstrap.Source.TotalHeapMemory:5476"),
-                        []() -> pls::cs::Ref<pls::cs::Object> {
-                            {
-                                return pls::cs::box(pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return pls::kairo::native_heap_total(); }));
-                            }
-                        });
-                return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-            }());
-        }));
+        return pls::cs::unbox<pls::cs::Int64>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+            auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+            pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
+                pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
+                    nullptr, std::string("M:PlsPortGeneratedBootstrap.Source.TotalHeapMemory:5476"),
+                    []() -> pls::cs::Ref<pls::cs::Object> {
+                        {
+                            return pls::cs::box(PLS_API(pls::kairo::native_heap_total()));
+                        }
+                    });
+            return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+        }())));
     }
 }
 
@@ -364,25 +344,20 @@ void ShowToast(pls::cs::String text, pls::cs::Int32 duration) {
         pls::cs::Ref<pls::cs::Cell<pls::cs::String>> text_cell =
             pls::cs::make_ref<pls::cs::Cell<pls::cs::String>>(text);
         {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                    pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
-                        pls::cs::raw(text_cell),
-                        std::string(
-                            "M:PlsPortGeneratedBootstrap.Source.ShowToast(System.String,System.Int32):5611"),
-                        [text_cell]() -> void {
-                            {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::debug_log(pls::cs::box(text_cell->value));
-                                });
-                            }
-                        },
-                        text_cell);
-                    require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
+                    pls::cs::raw(text_cell),
+                    std::string(
+                        "M:PlsPortGeneratedBootstrap.Source.ShowToast(System.String,System.Int32):5611"),
+                    [text_cell]() -> void {
+                        {
+                            PLS_API(pls::kairo::debug_log(pls::cs::box(text_cell->value)));
+                        }
+                    },
+                    text_cell);
+                require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+            }()));
         }
     }
 }
@@ -399,25 +374,20 @@ void SetWindowFullscreen(bool enabled) {
 
             if (kl_cfg::Config::FULLSCREEN())
                 return;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                    pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
-                        pls::cs::raw(enabled_cell),
-                        std::string(
-                            "M:PlsPortGeneratedBootstrap.Source.SetWindowFullscreen(System.Boolean):5792"),
-                        [enabled_cell]() -> void {
-                            {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::native_window_fullscreen(enabled_cell->value);
-                                });
-                            }
-                        },
-                        enabled_cell);
-                    require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
+                    pls::cs::raw(enabled_cell),
+                    std::string(
+                        "M:PlsPortGeneratedBootstrap.Source.SetWindowFullscreen(System.Boolean):5792"),
+                    [enabled_cell]() -> void {
+                        {
+                            PLS_API(pls::kairo::native_window_fullscreen(enabled_cell->value));
+                        }
+                    },
+                    enabled_cell);
+                require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+            }()));
         }
     }
 }
@@ -427,11 +397,9 @@ void TerminateApplication() {
     Source::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:PlsPortGeneratedBootstrap.Source.TerminateApplication", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::kairo::FormManagerBase::ProcessEvent(
-                static_cast<pls::kairo::AppEventType>(3) /* AppEventType.Exit */,
-                pls::cs::Array<pls::cs::Ref<pls::cs::Object>>::make(0));
-        });
+        PLS_API(pls::kairo::FormManagerBase::ProcessEvent(
+            static_cast<pls::kairo::AppEventType>(3) /* AppEventType.Exit */,
+            pls::cs::Array<pls::cs::Ref<pls::cs::Object>>::make(0)));
         pls::cs::Ref<kairo::unity::system::KairoBase> kairo = kairo::unity::system::KairoBase::GetInstance();
         if (!is_null(kairo))
             require(kairo)->Finish();
@@ -449,20 +417,15 @@ ByteArray ReadImageData(pls::cs::Int32 rs, pls::cs::Int32 rc, pls::cs::String fi
     {
         ByteArray data;
         if (rs == -1) {
-            data = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Storage::Read(3, false, file); });
+            data = PLS_API(pls::kairo::Storage::Read(3, false, file));
             if (!is_null(palette))
                 kairo::unity::ui::Image::OverwritePaletteData(
-                    data, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::Storage::Read(3, false, palette);
-                    }));
+                    data, PLS_API(pls::kairo::Storage::Read(3, false, palette)));
         } else {
             pls::cs::Ref<kl_util::JarInflater> jar = kairo::unity::ui::ResourceManager::OpenJarCache(rs, rc);
-            data = pls::diagnostic::api_call([&]() -> decltype(auto) { return require(jar)->GetData(file); });
+            data = PLS_API(require(jar)->GetData(file));
             if (!is_null(palette))
-                kairo::unity::ui::Image::OverwritePaletteData(
-                    data, pls::diagnostic::api_call(
-                              [&]() -> decltype(auto) { return require(jar)->GetData(palette); }));
+                kairo::unity::ui::Image::OverwritePaletteData(data, PLS_API(require(jar)->GetData(palette)));
         }
         return data;
     }
@@ -500,82 +463,56 @@ void DrawGraphicsText(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Ref<kairo::
         "M:PlsPortGeneratedBootstrap.Source.DrawGraphicsText(kairo.unity.ui.Graphics,kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Int32)",
         kairo);
     {
-        str = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::Language::TranslateText(str, true); });
-        if ((pls::diagnostic::api_call(
-                 [&]() -> decltype(auto) { return pls::kairo::Graphics::PeekAutoTextLayout(); }) &&
-             pls::diagnostic::api_call([&]() -> decltype(auto) { return index_char1(str, u'<'); }) != -1) ||
+        str = PLS_API(kl_util::Language::TranslateText(str, true));
+        if ((PLS_API(pls::kairo::Graphics::PeekAutoTextLayout()) && PLS_API(index_char1(str, u'<')) != -1) ||
             (kairo::unity::ui::Graphics::GetLineSpace() != 0 &&
-             pls::diagnostic::api_call([&]() -> decltype(auto) { return index_char1(str, char16_t(10)); }) !=
-                 -1)) {
-            kairo::unity::ui::TextLayout::Draw(
-                pls::cs::Ref<kairo::unity::ui::TextFormat>{}, g, str, x, y,
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetColor(); }),
-                anchor);
+             PLS_API(index_char1(str, char16_t(10))) != -1)) {
+            kairo::unity::ui::TextLayout::Draw(pls::cs::Ref<kairo::unity::ui::TextFormat>{}, g, str, x, y,
+                                               PLS_API(require(g)->GetColor()), anchor);
             return;
         }
-        pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::native_graphics_read_font(g); });
+        pls::cs::Ref<pls::kairo::Font> font = PLS_API(pls::kairo::native_graphics_read_font(g));
         pls::cs::Int32 previous = -1;
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Language::Japanese(); }) &&
-            !is_null(lf)) {
+        if (!PLS_API(kl_util::Language::Japanese()) && !is_null(lf)) {
             if (require(lf)->GetFont() != -1 && ([&]() -> bool {
                     auto cs_left = require(lf)->GetFont();
-                    auto cs_right = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(font)->GetSize(); });
+                    auto cs_right = PLS_API(require(font)->GetSize());
                     return cs_left != cs_right;
                 }())) {
-                previous =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(font)->GetSize(); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Int32 cs_arg0 = require(lf)->GetFont();
-                        require(font)->SetSize(cs_arg0, true);
-                    }());
-                });
+                previous = PLS_API(require(font)->GetSize());
+                PLS_API(([&]() -> void {
+                    pls::cs::Int32 cs_arg0 = require(lf)->GetFont();
+                    require(font)->SetSize(cs_arg0, true);
+                }()));
             }
             x = require(lf)->GetX(x);
             y = require(lf)->GetY(y);
             anchor = require(lf)->GetAnchor(anchor);
         }
-        bool localize = (is_null(lf) || require(lf)->GetFont() == -1) &&
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(font)->IsNeedLocalizeScale(); });
+        bool localize =
+            (is_null(lf) || require(lf)->GetFont() == -1) && PLS_API(require(font)->IsNeedLocalizeScale());
         if (localize) {
-            previous =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(font)->GetSize(); });
-            pls::cs::Int32 height =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(font)->GetHeight(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(font)->GetLocalizeScale(); });
-                    require(font)->SetSize(cs_arg0, true);
-                }());
-            });
+            previous = PLS_API(require(font)->GetSize());
+            pls::cs::Int32 height = PLS_API(require(font)->GetHeight());
+            PLS_API(([&]() -> void {
+                pls::cs::Int32 cs_arg0 = PLS_API(require(font)->GetLocalizeScale());
+                require(font)->SetSize(cs_arg0, true);
+            }()));
             if ((anchor & 0x60) == 0)
-                y += pls::cs::Single((height - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return require(font)->GetHeight();
-                                      }))) /
-                     2.0f;
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Font::LockLocalizeSetting(); });
+                y += pls::cs::Single((height - PLS_API(require(font)->GetHeight()))) / 2.0f;
+            PLS_API(pls::kairo::Font::LockLocalizeSetting());
         }
         pls::cs::run_finally(
             [&]() {
                 {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::kairo::native_graphics_draw_prepared(g, str, x, y, anchor);
-                    });
+                    PLS_API(pls::kairo::native_graphics_draw_prepared(g, str, x, y, anchor));
                 }
             },
             [&]() {
                 if (localize)
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Font::UnlockLocalizeSetting(); });
+                    PLS_API(pls::kairo::Font::UnlockLocalizeSetting());
                 if (previous != -1)
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(font)->SetSize(previous, true); });
+                    PLS_API(require(font)->SetSize(previous, true));
             });
     }
 }
@@ -588,9 +525,7 @@ void PushGraphicsMatrix(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Ref<kairo
         "M:PlsPortGeneratedBootstrap.Source.PushGraphicsMatrix(kairo.unity.ui.Graphics,kairo.unity.ui.Matrix)",
         kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::kairo::native_graphics_push_matrix(g, Source::MatrixValues(value));
-        });
+        PLS_API(pls::kairo::native_graphics_push_matrix(g, Source::MatrixValues(value)));
     }
 }
 
@@ -602,9 +537,7 @@ void SetGraphicsMatrix(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Ref<kairo:
         "M:PlsPortGeneratedBootstrap.Source.SetGraphicsMatrix(kairo.unity.ui.Graphics,kairo.unity.ui.Matrix)",
         kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::kairo::native_graphics_set_matrix(g, Source::MatrixValues(value));
-        });
+        PLS_API(pls::kairo::native_graphics_set_matrix(g, Source::MatrixValues(value)));
     }
 }
 
@@ -620,8 +553,7 @@ pls::cs::Ref<kairo::unity::ui::Matrix> GetGraphicsMatrix(pls::cs::Ref<pls::kairo
         if (is_null(value))
             value = kairo::unity::ui::Matrix::create();
         {
-            FloatArray cs_arg0 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::native_graphics_read_matrix(g, 0); });
+            FloatArray cs_arg0 = PLS_API(pls::kairo::native_graphics_read_matrix(g, 0));
             require(value)->SetValues(cs_arg0);
         }
         return value;
@@ -640,8 +572,7 @@ pls::cs::Ref<kairo::unity::ui::Matrix> GetGraphicsLocalMatrix(pls::cs::Ref<pls::
         if (is_null(value))
             value = kairo::unity::ui::Matrix::create();
         {
-            FloatArray cs_arg0 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::native_graphics_read_matrix(g, 1); });
+            FloatArray cs_arg0 = PLS_API(pls::kairo::native_graphics_read_matrix(g, 1));
             require(value)->SetValues(cs_arg0);
         }
         return value;
@@ -660,8 +591,7 @@ pls::cs::Ref<kairo::unity::ui::Matrix> GetGraphicsScreenMatrix(pls::cs::Ref<pls:
         if (is_null(value))
             value = kairo::unity::ui::Matrix::create();
         {
-            FloatArray cs_arg0 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::native_graphics_read_matrix(g, 2); });
+            FloatArray cs_arg0 = PLS_API(pls::kairo::native_graphics_read_matrix(g, 2));
             require(value)->SetValues(cs_arg0);
         }
         return value;
@@ -684,9 +614,8 @@ GetGraphicsTransRectGUI(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x,
         require(dst)->Set(x, y, x + width, y + height);
         pls::cs::Single left = require(dst)->left, top = require(dst)->top, right = require(dst)->right,
                         bottom = require(dst)->bottom;
-        pls::cs::Ref<kairo::unity::ui::Matrix> matrix = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return Source::GetGraphicsScreenMatrix(require(g), pls::cs::Ref<kairo::unity::ui::Matrix>{});
-        });
+        pls::cs::Ref<kairo::unity::ui::Matrix> matrix =
+            PLS_API(Source::GetGraphicsScreenMatrix(require(g), pls::cs::Ref<kairo::unity::ui::Matrix>{}));
         {
             auto cs_receiver = static_cast<pls::cs::Ref<kairo::unity::ui::Matrix>>(matrix);
             if (!cs_receiver)
@@ -704,8 +633,7 @@ GetGraphicsTransRectGUI(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x,
             cs_receiver->MapPoints(cs_arg0, cs_arg1);
         }
         require(dst)->Set(left, top, right, bottom);
-        FloatArray clip = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::native_graphics_read_clip(g); });
+        FloatArray clip = PLS_API(pls::kairo::native_graphics_read_clip(g));
         {
             auto cs_target = dst;
             auto cs_old = require(cs_target)->left;
@@ -1003,28 +931,26 @@ void FinishImageTasks(pls::cs::Ref<pls::kairo::Image> image, pls::cs::Ref<pls::c
             }
             return;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(saved)->texts.Clear(); });
+        PLS_API(require(saved)->texts.Clear());
         for (pls::cs::Int32 i = 0; i < require(saved)->touches.get_Count(); ++i)
             require(require(saved)->touches.get_Item(i).Component)->hasCount--;
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(saved)->touches.Clear(); });
+        PLS_API(require(saved)->touches.Clear());
         for (pls::cs::Int32 i_2 = 0;
              i_2 < (require(image)->source_text_tasks<kairo::unity::ui::Image_TextRenderTask>()).get_Count();
              ++i_2) {
             kairo::unity::ui::Image_TextRenderTask task =
                 require(image)->source_text_tasks<kairo::unity::ui::Image_TextRenderTask>().get_Item(i_2);
-            pls::kairo::Vector3 point = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_value_storage_156_owner = offscreen;
-                    auto& cs_value_storage_156 = require(cs_value_storage_156_owner)->dynamicTransform_;
-                    auto cs_arg0 = ([&]() {
-                        auto cs_arg0 = task.X;
-                        auto cs_arg1 = -(task.Y);
-                        auto cs_arg2 = 0.0f;
-                        return pls::kairo::Vector3(cs_arg0, cs_arg1, cs_arg2);
-                    }());
-                    return cs_value_storage_156.MultiplyPoint(cs_arg0);
+            pls::kairo::Vector3 point = PLS_API(([&]() {
+                auto cs_value_storage_156_owner = offscreen;
+                auto& cs_value_storage_156 = require(cs_value_storage_156_owner)->dynamicTransform_;
+                auto cs_arg0 = ([&]() {
+                    auto cs_arg0 = task.X;
+                    auto cs_arg1 = -(task.Y);
+                    auto cs_arg2 = 0.0f;
+                    return pls::kairo::Vector3(cs_arg0, cs_arg1, cs_arg2);
                 }());
-            });
+                return cs_value_storage_156.MultiplyPoint(cs_arg0);
+            }()));
             {
                 pls::cs::Single cs_value = point.x;
                 task.X = cs_value;
@@ -1047,19 +973,17 @@ void FinishImageTasks(pls::cs::Ref<pls::kairo::Image> image, pls::cs::Ref<pls::c
             kairo::unity::ui::Image_BalloonRenderTask task_2 =
                 require(image)->source_balloon_tasks<kairo::unity::ui::Image_BalloonRenderTask>().get_Item(
                     i_3);
-            pls::kairo::Vector3 point_2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_value_storage_159_owner = offscreen;
-                    auto& cs_value_storage_159 = require(cs_value_storage_159_owner)->dynamicTransform_;
-                    auto cs_arg0 = ([&]() {
-                        auto cs_arg0 = task_2.X;
-                        auto cs_arg1 = -(task_2.Y);
-                        auto cs_arg2 = 0.0f;
-                        return pls::kairo::Vector3(cs_arg0, cs_arg1, cs_arg2);
-                    }());
-                    return cs_value_storage_159.MultiplyPoint(cs_arg0);
+            pls::kairo::Vector3 point_2 = PLS_API(([&]() {
+                auto cs_value_storage_159_owner = offscreen;
+                auto& cs_value_storage_159 = require(cs_value_storage_159_owner)->dynamicTransform_;
+                auto cs_arg0 = ([&]() {
+                    auto cs_arg0 = task_2.X;
+                    auto cs_arg1 = -(task_2.Y);
+                    auto cs_arg2 = 0.0f;
+                    return pls::kairo::Vector3(cs_arg0, cs_arg1, cs_arg2);
                 }());
-            });
+                return cs_value_storage_159.MultiplyPoint(cs_arg0);
+            }()));
             {
                 pls::cs::Single cs_value = point_2.x;
                 task_2.X = cs_value;
@@ -1090,62 +1014,44 @@ void QueueImageText(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::String text, 
     {
         if (is_null(require(g)->source_render_))
             return;
-        pls::cs::Ref<pls::kairo::Font> font = pls::cs::make_ref<pls::kairo::Font>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); }));
+        pls::cs::Ref<pls::kairo::Font> font = pls::cs::make_ref<pls::kairo::Font>(
+            PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{})));
         pls::cs::Ref<kairo::unity::graphics::RectangleF> rectangle =
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> pls::cs::Ref<kairo::unity::graphics::RectangleF> {
-                    pls::cs::Single cs_arg2 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::cs::Single(require(font)->GetWidth()); });
-                    pls::cs::Single cs_arg3 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(font)->GetHeight(); });
-                    return Source::GetGraphicsTransRectGUI(
-                        require(g), 0.0f, 0.0f, cs_arg2, cs_arg3,
-                        pls::cs::Ref<kairo::unity::graphics::RectangleF>{});
-                }());
-            });
+            PLS_API(([&]() -> pls::cs::Ref<kairo::unity::graphics::RectangleF> {
+                pls::cs::Single cs_arg2 = PLS_API(pls::cs::Single(require(font)->GetWidth()));
+                pls::cs::Single cs_arg3 = PLS_API(require(font)->GetHeight());
+                return Source::GetGraphicsTransRectGUI(require(g), 0.0f, 0.0f, cs_arg2, cs_arg3,
+                                                       pls::cs::Ref<kairo::unity::graphics::RectangleF>{});
+            }()));
         pls::cs::Single a = ([&]() -> pls::cs::FloatEval {
             auto cs_left = require(rectangle)->Width();
-            auto cs_right = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::Single(require(font)->GetWidth()); });
+            auto cs_right = PLS_API(pls::cs::Single(require(font)->GetWidth()));
             return cs_left / cs_right;
         }()),
                         b = ([&]() -> pls::cs::FloatEval {
                             auto cs_left = require(rectangle)->Height();
-                            auto cs_right = pls::cs::Single(pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(font)->GetHeight(); }));
+                            auto cs_right = pls::cs::Single(PLS_API(require(font)->GetHeight()));
                             return cs_left / cs_right;
                         }()),
                         scale = (a < b ? a : b);
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int32 cs_arg0 =
-                    pls::cs::to_int32((pls::cs::Single(pls::diagnostic::api_call(
-                                           [&]() -> decltype(auto) { return require(font)->GetHeight(); })) *
-                                       scale));
-                require(font)->SetSize(cs_arg0, false);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Int32 cs_arg0 =
+                pls::cs::to_int32((pls::cs::Single(PLS_API(require(font)->GetHeight())) * scale));
+            require(font)->SetSize(cs_arg0, false);
+        }()));
         y += (([&]() -> pls::cs::FloatEval {
-                 auto cs_left = pls::cs::Single(pls::diagnostic::api_call(
-                     [&]() -> decltype(auto) { return require(font)->GetHeight(); }));
-                 auto cs_right = pls::cs::Single(pls::diagnostic::api_call(
-                                     [&]() -> decltype(auto) { return require(font)->GetHeight(); })) *
-                                 scale / b;
+                 auto cs_left = pls::cs::Single(PLS_API(require(font)->GetHeight()));
+                 auto cs_right = pls::cs::Single(PLS_API(require(font)->GetHeight())) * scale / b;
                  return cs_left - cs_right;
              }())) /
              2.0f;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = require(require(g)->source_render_)
-                                       ->source_text_tasks<kairo::unity::ui::Image_TextRenderTask>();
-                auto cs_arg0 = kairo::unity::ui::Image_TextRenderTask::create(
-                    text, x, y, anchor,
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetColor(); }),
-                    font);
-                cs_receiver.Add(cs_arg0);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            auto cs_receiver = require(require(g)->source_render_)
+                                   ->source_text_tasks<kairo::unity::ui::Image_TextRenderTask>();
+            auto cs_arg0 = kairo::unity::ui::Image_TextRenderTask::create(
+                text, x, y, anchor, PLS_API(require(g)->GetColor()), font);
+            cs_receiver.Add(cs_arg0);
+        }()));
     }
 }
 
@@ -1158,7 +1064,7 @@ void DrawImageTouches(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Ref<pls::ka
         "M:PlsPortGeneratedBootstrap.Source.DrawImageTouches(kairo.unity.ui.Graphics,kairo.unity.ui.Image,System.Single,System.Single)",
         kairo);
     {
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->IsGUI(); }))
+        if (!PLS_API(require(g)->IsGUI()))
             return;
         for (pls::cs::Int32 i = 0;
              i < (require(image)->source_touch_tasks<kairo::unity::ui::Image_TouchTask>()).get_Count(); ++i) {
@@ -1192,19 +1098,16 @@ void DrawImageBalloons(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Ref<pls::k
         "M:PlsPortGeneratedBootstrap.Source.DrawImageBalloons(kairo.unity.ui.Graphics,kairo.unity.ui.Image,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)",
         kairo);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->IsGUI(); }) &&
+        if (PLS_API(require(g)->IsGUI()) &&
             ((require(image)->source_text_tasks<kairo::unity::ui::Image_TextRenderTask>()).get_Count() > 0)) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->ClipRect(dx, dy, width, height, true); });
-            pls::cs::Int32 oldColor =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetColor(); });
-            pls::cs::Ref<pls::kairo::Font> oldFont = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
+            PLS_API(require(g)->ClipRect(dx, dy, width, height, true));
+            pls::cs::Int32 oldColor = PLS_API(require(g)->GetColor());
+            pls::cs::Ref<pls::kairo::Font> oldFont =
+                PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
             pls::cs::run_finally(
                 [&]() {
                     {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::Font::PushLocalizeSetting(false); });
+                        PLS_API(pls::kairo::Font::PushLocalizeSetting(false));
                         for (pls::cs::Int32 i = 0;
                              i < (require(image)->source_text_tasks<kairo::unity::ui::Image_TextRenderTask>())
                                      .get_Count();
@@ -1213,73 +1116,53 @@ void DrawImageBalloons(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Ref<pls::k
                                 require(image)
                                     ->source_text_tasks<kairo::unity::ui::Image_TextRenderTask>()
                                     .get_Item(i);
-                            pls::cs::Single ratio = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::math_min_single(width / sw, height / sh);
-                            });
+                            pls::cs::Single ratio =
+                                PLS_API(pls::cs::math_min_single(width / sw, height / sh));
                             if (is_null(Source::drawBitmapFont()))
                                 Source::drawBitmapFont() = pls::cs::make_ref<pls::kairo::Font>();
                             pls::cs::Ref<pls::kairo::Font> font = Source::drawBitmapFont();
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Ref<pls::kairo::Font> cs_arg0 = task.Font;
-                                    require(font)->Copy(cs_arg0);
-                                }());
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Int32 cs_arg0 = pls::cs::to_int32(
-                                        (pls::cs::Single(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                             return require(font)->GetHeight();
-                                         })) *
-                                             ratio +
-                                         0.01f));
-                                    require(font)->SetSize(cs_arg0, false);
-                                }());
-                            });
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->SetFont(font); });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Int32 cs_arg0 = task.Color;
-                                    require(g)->SetColor(cs_arg0);
-                                }());
-                            });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::String cs_arg0 = task.Text;
-                                    pls::cs::Single cs_arg1 = dx + ((task.X - sx)) * ratio;
-                                    pls::cs::Single cs_arg2 = dy + ((task.Y - sy)) * ratio;
-                                    pls::cs::Int32 cs_arg3 = task.Anchor;
-                                    require(g)->DrawString(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                pls::cs::Ref<pls::kairo::Font> cs_arg0 = task.Font;
+                                require(font)->Copy(cs_arg0);
+                            }()));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Int32 cs_arg0 = pls::cs::to_int32(
+                                    (pls::cs::Single(PLS_API(require(font)->GetHeight())) * ratio + 0.01f));
+                                require(font)->SetSize(cs_arg0, false);
+                            }()));
+                            PLS_API(require(g)->SetFont(font));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Int32 cs_arg0 = task.Color;
+                                require(g)->SetColor(cs_arg0);
+                            }()));
+                            PLS_API(([&]() -> void {
+                                pls::cs::String cs_arg0 = task.Text;
+                                pls::cs::Single cs_arg1 = dx + ((task.X - sx)) * ratio;
+                                pls::cs::Single cs_arg2 = dy + ((task.Y - sy)) * ratio;
+                                pls::cs::Int32 cs_arg3 = task.Anchor;
+                                require(g)->DrawString(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                            }()));
                         }
                     }
                 },
                 [&]() {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(oldColor); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetFont(oldFont); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Font::PopLocalizeSetting(); });
+                    PLS_API(require(g)->SetColor(oldColor));
+                    PLS_API(require(g)->SetFont(oldFont));
+                    PLS_API(pls::kairo::Font::PopLocalizeSetting());
                 });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopClip(); });
+            PLS_API(require(g)->PopClip());
         }
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->IsGUI(); }) ||
+        if (!PLS_API(require(g)->IsGUI()) ||
             ((require(image)->source_balloon_tasks<kairo::unity::ui::Image_BalloonRenderTask>())
                  .get_Count() == 0))
             return;
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->ClipRect(dx, dy, width, height, true); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetColor(); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
+        PLS_API(require(g)->ClipRect(dx, dy, width, height, true));
+        PLS_API(require(g)->GetColor());
+        PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
         pls::cs::run_finally(
             [&]() {
                 {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Font::PushLocalizeSetting(false); });
+                    PLS_API(pls::kairo::Font::PushLocalizeSetting(false));
                     for (pls::cs::Int32 i_2 = 0;
                          i_2 <
                          (require(image)->source_balloon_tasks<kairo::unity::ui::Image_BalloonRenderTask>())
@@ -1289,9 +1172,7 @@ void DrawImageBalloons(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Ref<pls::k
                             require(image)
                                 ->source_balloon_tasks<kairo::unity::ui::Image_BalloonRenderTask>()
                                 .get_Item(i_2);
-                        pls::cs::Single scale = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::cs::math_min_single(width / sw, height / sh);
-                        });
+                        pls::cs::Single scale = PLS_API(pls::cs::math_min_single(width / sw, height / sh));
                         pls::kairo::Matrix4x4 matrix = pls::kairo::Matrix4x4::identity();
                         if (!is_null(task_2.Offscreen)) {
                             matrix = require(task_2.Offscreen)->dynamicTransform_;
@@ -1319,11 +1200,8 @@ void DrawImageBalloons(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Ref<pls::k
                     }
                 }
             },
-            [&]() {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Font::PopLocalizeSetting(); });
-            });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopClip(); });
+            [&]() { PLS_API(pls::kairo::Font::PopLocalizeSetting()); });
+        PLS_API(require(g)->PopClip());
     }
 }
 
@@ -1383,8 +1261,7 @@ pls::cs::String Translate(pls::cs::String value) {
     Source::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:PlsPortGeneratedBootstrap.Source.Translate(System.String)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::Language::TranslateText(value, true); });
+        return PLS_API(kl_util::Language::TranslateText(value, true));
     }
 }
 
@@ -1409,9 +1286,8 @@ void MarkupDraw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::String value, pls
         "M:PlsPortGeneratedBootstrap.Source.MarkupDraw(kairo.unity.ui.Graphics,System.String,System.Single,System.Single,System.Int32)",
         kairo);
     {
-        kairo::unity::ui::TextLayout::Draw(
-            pls::cs::Ref<kairo::unity::ui::TextFormat>{}, g, value, x, y,
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetColor(); }), anchor);
+        kairo::unity::ui::TextLayout::Draw(pls::cs::Ref<kairo::unity::ui::TextFormat>{}, g, value, x, y,
+                                           PLS_API(require(g)->GetColor()), anchor);
     }
 }
 
@@ -1420,7 +1296,7 @@ bool Japanese() {
     Source::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:PlsPortGeneratedBootstrap.Source.Japanese", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Language::Japanese(); });
+        return PLS_API(kl_util::Language::Japanese());
     }
 }
 
@@ -1440,8 +1316,7 @@ pls::cs::Int64 Millis() {
     Source::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:PlsPortGeneratedBootstrap.Source.Millis", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JSystem::CurrentTimeMillis(); });
+        return PLS_API(kl_lang::JSystem::CurrentTimeMillis());
     }
 }
 
@@ -1468,11 +1343,7 @@ void Collect() {
     Source::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:PlsPortGeneratedBootstrap.Source.Collect", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(pls::diagnostic::api_call(
-                               [&]() -> decltype(auto) { return kl_lang::JRuntime::GetRuntime(); }))
-                ->Gc();
-        });
+        PLS_API(require(PLS_API(kl_lang::JRuntime::GetRuntime()))->Gc());
     }
 }
 } // namespace PlsPortGeneratedBootstrap::Source

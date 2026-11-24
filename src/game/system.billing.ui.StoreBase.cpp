@@ -160,13 +160,11 @@ pls::cs::Ref<util::Inventory> StoreBase::QueryInventory(bool querySkuDetails,
 
                     } else {
                         for (pls::cs::Int32 j = 0; j < list2.get_Count(); ++j) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    auto cs_receiver = list;
-                                    auto cs_arg0 = list2.get_Item(j);
-                                    cs_receiver.Add(cs_arg0);
-                                }());
-                            });
+                            PLS_API(([&]() -> void {
+                                auto cs_receiver = list;
+                                auto cs_arg0 = list2.get_Item(j);
+                                cs_receiver.Add(cs_arg0);
+                            }()));
                         }
                     }
                 }
@@ -251,7 +249,7 @@ pls::cs::List<pls::cs::Ref<Receipt>> StoreBase::GetIncompletePayments() {
                     if (!(require(item)->IsTicketProduct())) {
                         continue;
                     }
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(item); });
+                    PLS_API(list.Add(item));
                 }
             }
         }
@@ -379,13 +377,11 @@ void StoreBase::ProcessIncompletePayment(pls::cs::Ref<BillingItem> item,
         "M:system.billing.ui.StoreBase.ProcessIncompletePayment(system.billing.ui.BillingItem,system.billing.util.Purchase)",
         game);
     {
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> bool {
-                    auto cs_arg0 = require(item)->GetProvisionType();
-                    auto cs_arg1 = StoreBase::PAYMENT_PRODUCT();
-                    return string_equals(cs_arg0, cs_arg1);
-                }());
-            })) {
+        if (!PLS_API(([&]() -> bool {
+                auto cs_arg0 = require(item)->GetProvisionType();
+                auto cs_arg1 = StoreBase::PAYMENT_PRODUCT();
+                return string_equals(cs_arg0, cs_arg1);
+            }()))) {
             return;
         }
         pls::cs::Ref<kairo::unity::system::KairoBase> instance =
@@ -458,7 +454,7 @@ void StoreBase::ProcessIncompletePayments() {
             if (!is_null(billingItem)) {
                 ProcessIncompletePayment(billingItem, require(receipt)->GetPurchase());
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return incompletePayments.RemoveAt(0); });
+            PLS_API(incompletePayments.RemoveAt(0));
         }
     }
 }
@@ -477,12 +473,10 @@ pls::cs::String StoreBase::GetUnityJson(pls::cs::String json, pls::cs::String or
     PLS_METHOD_SCOPE("Assembly-CSharp",
                      "M:system.billing.ui.StoreBase.GetUnityJson(System.String,System.String)", game);
     {
-        if (!pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return contains_string(json, literal(u"in_app")); })) {
+        if (!PLS_API(contains_string(json, literal(u"in_app")))) {
             return pls::cs::String{};
         }
-        pls::cs::Int32 num = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::culture_index_of(json, literal(u"in_app")); });
+        pls::cs::Int32 num = PLS_API(pls::cs::culture_index_of(json, literal(u"in_app")));
         bool flag = false;
         pls::cs::String text = pls::cs::String(u"");
         for (pls::cs::Int32 i = num; i < json.length(); ++i) {
@@ -511,7 +505,7 @@ pls::cs::String StoreBase::GetUnityJson(pls::cs::String json, pls::cs::String or
             } else if (pls::cs::cast_integral<pls::cs::Int32>(text.at(j)) ==
                        pls::cs::cast_integral<pls::cs::Int32>(u'}')) {
                 flag = false;
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return list.Add(text2); });
+                PLS_API(list.Add(text2));
                 text2 = pls::cs::String(u"");
             } else if ((!(flag)) ||
                        (((text2.length() == 0)) && ((pls::cs::cast_integral<pls::cs::Int32>(text.at(j)) ==
@@ -568,10 +562,8 @@ bool StoreBase::CheckPaymentMaintenance() {
 void StoreBase::Save(pls::cs::Ref<kl_io::OutputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.StoreBase.Save(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(stream, 102); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(stream, receipts_.get_Count()); });
+        PLS_API(kl_util::StreamUtil::WriteInt(stream, 102));
+        PLS_API(kl_util::StreamUtil::WriteInt(stream, receipts_.get_Count()));
         for (pls::cs::Int32 i = 0; i < receipts_.get_Count(); ++i) {
             require(receipts_.get_Item(i))->Save(stream);
         }
@@ -582,27 +574,22 @@ void StoreBase::Save(pls::cs::Ref<kl_io::OutputStream> stream) {
 void StoreBase::Load(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.StoreBase.Load(java.io.InputStream)", game);
     {
-        if (0 < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(stream)->Available(); })) {
-            pls::cs::Int32 num = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
+        if (0 < PLS_API(require(stream)->Available())) {
+            pls::cs::Int32 num = PLS_API(kl_util::StreamUtil::ReadInt(stream));
             if (num == 100 && StoreBase::GetRestoreRequest() == -1) {
                 StoreBase::SetRestoreRequest(1);
             }
             receipts_ = pls::cs::List<pls::cs::Ref<Receipt>>::make();
-            pls::cs::Int32 num2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
+            pls::cs::Int32 num2 = PLS_API(kl_util::StreamUtil::ReadInt(stream));
             for (pls::cs::Int32 i = 0; i < num2; ++i) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = receipts_;
-                        auto cs_arg0 = Receipt::Load(stream);
-                        cs_receiver.Add(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = receipts_;
+                    auto cs_arg0 = Receipt::Load(stream);
+                    cs_receiver.Add(cs_arg0);
+                }()));
             }
             if (num == 101) {
-                pls::cs::Int32 num3 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
+                pls::cs::Int32 num3 = PLS_API(kl_util::StreamUtil::ReadInt(stream));
                 if (StoreBase::GetRestoreRequest() == -1) {
                     StoreBase::SetRestoreRequest((num3 == 1) ? 1 : 0);
                 }
@@ -616,24 +603,19 @@ pls::cs::Int32 StoreBase::GetRestoreRequest() {
     StoreBase::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.StoreBase.GetRestoreRequest", game);
     {
-        return pls::cs::unbox<pls::cs::Int32>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                auto cs_receiver = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
-                    pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
-                        nullptr, std::string("M:system.billing.ui.StoreBase.GetRestoreRequest:8513"),
-                        []() -> pls::cs::Ref<pls::cs::Object> {
-                            {
-                                return pls::cs::box(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::PlayerPrefs::GetInt(literal(u"_restore_transactions"),
-                                                                           -1);
-                                }));
-                            }
-                        });
-                return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-            }());
-        }));
+        return pls::cs::unbox<pls::cs::Int32>(PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+            auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+            pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()> cs_arg0 =
+                pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_closure(
+                    nullptr, std::string("M:system.billing.ui.StoreBase.GetRestoreRequest:8513"),
+                    []() -> pls::cs::Ref<pls::cs::Object> {
+                        {
+                            return pls::cs::box(PLS_API(
+                                pls::kairo::PlayerPrefs::GetInt(literal(u"_restore_transactions"), -1)));
+                        }
+                    });
+            return require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+        }())));
     }
 }
 
@@ -646,27 +628,21 @@ void StoreBase::SetRestoreRequest(pls::cs::Int32 request) {
         pls::cs::Ref<pls::cs::Cell<pls::cs::Int32>> request_cell =
             pls::cs::make_ref<pls::cs::Cell<pls::cs::Int32>>(request);
         {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                    pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
-                        pls::cs::raw(request_cell),
-                        std::string("M:system.billing.ui.StoreBase.SetRestoreRequest(System.Int32):8685"),
-                        [request_cell]() -> void {
-                            {
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return pls::kairo::PlayerPrefs::SetInt(literal(u"_restore_transactions"),
-                                                                           request_cell->value);
-                                });
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return pls::kairo::PlayerPrefs::Save(); });
-                            }
-                        },
-                        request_cell);
-                    require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
+                    pls::cs::raw(request_cell),
+                    std::string("M:system.billing.ui.StoreBase.SetRestoreRequest(System.Int32):8685"),
+                    [request_cell]() -> void {
+                        {
+                            PLS_API(pls::kairo::PlayerPrefs::SetInt(literal(u"_restore_transactions"),
+                                                                    request_cell->value));
+                            PLS_API(pls::kairo::PlayerPrefs::Save());
+                        }
+                    },
+                    request_cell);
+                require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+            }()));
         }
     }
 }
@@ -681,23 +657,19 @@ bool StoreBase::CallRestoreFlow(pls::cs::String& message) {
             pls::cs::Ref<BillingManager> instance2 = BillingManager::GetInstance();
             pls::cs::Int32 testedValue = require(instance2)->Restore();
             if (testedValue != 0 /* RestoreResult.Complete */) {
-                message = ((pls::diagnostic::api_call(
-                               [&]() -> decltype(auto) { return kl_util::Language::Japanese(); }))
-                               ? literal(u"復元エラー")
-                               : literal(u"Error"));
+                message =
+                    ((PLS_API(kl_util::Language::Japanese())) ? literal(u"復元エラー") : literal(u"Error"));
                 return false;
             }
             require(instance2)->UpdateBillingItems(false);
             require(instance2)->UpdateApplyTask(false);
-            message = ((pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return kl_util::Language::Japanese(); }))
-                           ? literal(u"課金情報の復元が完了しました。")
-                           : literal(u"Purchase info restored."));
+            message = ((PLS_API(kl_util::Language::Japanese())) ? literal(u"課金情報の復元が完了しました。")
+                                                                : literal(u"Purchase info restored."));
             return true;
         } catch (const pls::cs::Exception& cs_caught_203) {
             auto t = pls::cs::capture_exception(cs_caught_203);
             {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Log::Info(t); });
+                PLS_API(kl_util::Log::Info(t));
                 message = kairo::unity::io::Http::GetErrorText();
                 return false;
             }

@@ -94,15 +94,10 @@ void TArea::Init(pls::cs::Int32 rootId, pls::cs::Int32 pId) {
 void TArea::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.TArea.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, stateCnt_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(
-                os, pls::cs::cast_integral<std::int16_t>(tGroupAreas_.length()));
-        });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, stateCnt_));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(
+            os, pls::cs::cast_integral<std::int16_t>(tGroupAreas_.length())));
         for (pls::cs::Int32 i = 0; i < tGroupAreas_.length(); ++i) {
             require(tGroupAreas_.get_Item(i))->Serialize(os);
         }
@@ -113,12 +108,11 @@ void TArea::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void TArea::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.TArea.Deserialize(java.io.InputStream)", game);
     {
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        stateCnt_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        pls::cs::Int32 num = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+        state_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        stateCnt_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        pls::cs::Int32 num =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
         for (pls::cs::Int32 i = 0; i < tGroupAreas_.length(); ++i) {
             require(tGroupAreas_.get_Item(i))->Deserialize(stream, this);
         }
@@ -142,31 +136,23 @@ void TArea::Update() {
         stateCnt_ = ((stateCnt_ + 1) % 2147483647 /* Int32.MaxValue */);
         if (state_ == 11) {
             for (pls::cs::Int32 i = 0; i < tGroupAreas_.length(); ++i) {
-                for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(
-                                                   require(require(tGroupAreas_.get_Item(i))->tPlayerList_));
-                                           });
+                for (pls::cs::Int32 j = 0; j < PLS_API(kl_java_util::Vector_2_Size(
+                                                   require(require(tGroupAreas_.get_Item(i))->tPlayerList_)));
                      ++j) {
-                    pls::cs::Ref<TPlayer> tPlayer = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(
-                                require(require(tGroupAreas_.get_Item(i))->tPlayerList_), j);
-                        }));
+                    pls::cs::Ref<TPlayer> tPlayer =
+                        pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                            require(require(tGroupAreas_.get_Item(i))->tPlayerList_), j)));
                     require(tPlayer)->Update_trainings();
                 }
             }
             bool flag = true;
             for (pls::cs::Int32 k = 0; k < tGroupAreas_.length() && flag; ++k) {
-                for (pls::cs::Int32 l = 0; l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(
-                                                   require(require(tGroupAreas_.get_Item(k))->tPlayerList_));
-                                           });
+                for (pls::cs::Int32 l = 0; l < PLS_API(kl_java_util::Vector_2_Size(
+                                                   require(require(tGroupAreas_.get_Item(k))->tPlayerList_)));
                      ++l) {
-                    pls::cs::Ref<TPlayer> tPlayer2 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(
-                                require(require(tGroupAreas_.get_Item(k))->tPlayerList_), l);
-                        }));
+                    pls::cs::Ref<TPlayer> tPlayer2 =
+                        pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                            require(require(tGroupAreas_.get_Item(k))->tPlayerList_), l)));
                     IntArray collisionData = require(udat_)->GetCollisionData(0, 0);
                     if ([&]() -> bool {
                             pls::cs::Single cs_arg0 = ([&]() -> pls::cs::FloatEval {
@@ -207,28 +193,20 @@ void TArea::Update() {
             }
         } else if (state_ == 12) {
             for (pls::cs::Int32 m = 0; m < tGroupAreas_.length(); ++m) {
-                for (pls::cs::Int32 n = 0; n < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                               return kl_java_util::Vector_2_Size(
-                                                   require(require(tGroupAreas_.get_Item(m))->tPlayerList_));
-                                           });
+                for (pls::cs::Int32 n = 0; n < PLS_API(kl_java_util::Vector_2_Size(
+                                                   require(require(tGroupAreas_.get_Item(m))->tPlayerList_)));
                      ++n) {
-                    pls::cs::Ref<TPlayer> tPlayer3 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(
-                                require(require(tGroupAreas_.get_Item(m))->tPlayerList_), n);
-                        }));
+                    pls::cs::Ref<TPlayer> tPlayer3 =
+                        pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                            require(require(tGroupAreas_.get_Item(m))->tPlayerList_), n)));
                     require(tPlayer3)->Update_trainings();
                 }
-                for (pls::cs::Int32 num = 0; num < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                 return kl_java_util::Vector_2_Size(
-                                                     require(require(tGroupAreas_.get_Item(m))->tBallList_));
-                                             });
+                for (pls::cs::Int32 num = 0; num < PLS_API(kl_java_util::Vector_2_Size(require(
+                                                       require(tGroupAreas_.get_Item(m))->tBallList_)));
                      ++num) {
-                    pls::cs::Ref<TBall> tBall = pls::cs::unbox<pls::cs::Ref<TBall>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(
-                                require(require(tGroupAreas_.get_Item(m))->tBallList_), num);
-                        }));
+                    pls::cs::Ref<TBall> tBall =
+                        pls::cs::unbox<pls::cs::Ref<TBall>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                            require(require(tGroupAreas_.get_Item(m))->tBallList_), num)));
                     require(tBall)->Update_training();
                 }
             }
@@ -237,43 +215,33 @@ void TArea::Update() {
             }
         } else if (state_ == 14) {
             for (pls::cs::Int32 num3 = 0; num3 < tGroupAreas_.length(); ++num3) {
-                for (pls::cs::Int32 num4 = 0; num4 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return kl_java_util::Vector_2_Size(require(
-                                                      require(tGroupAreas_.get_Item(num3))->tPlayerList_));
-                                              });
+                for (pls::cs::Int32 num4 = 0;
+                     num4 < PLS_API(kl_java_util::Vector_2_Size(
+                                require(require(tGroupAreas_.get_Item(num3))->tPlayerList_)));
                      ++num4) {
-                    pls::cs::Ref<TPlayer> tPlayer4 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(
-                                require(require(tGroupAreas_.get_Item(num3))->tPlayerList_), num4);
-                        }));
+                    pls::cs::Ref<TPlayer> tPlayer4 =
+                        pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                            require(require(tGroupAreas_.get_Item(num3))->tPlayerList_), num4)));
                     require(tPlayer4)->Update_trainings();
                 }
-                for (pls::cs::Int32 num5 = 0; num5 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return kl_java_util::Vector_2_Size(require(
-                                                      require(tGroupAreas_.get_Item(num3))->tBallList_));
-                                              });
+                for (pls::cs::Int32 num5 = 0; num5 < PLS_API(kl_java_util::Vector_2_Size(require(
+                                                         require(tGroupAreas_.get_Item(num3))->tBallList_)));
                      ++num5) {
-                    pls::cs::Ref<TBall> tBall2 = pls::cs::unbox<pls::cs::Ref<TBall>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(
-                                require(require(tGroupAreas_.get_Item(num3))->tBallList_), num5);
-                        }));
+                    pls::cs::Ref<TBall> tBall2 =
+                        pls::cs::unbox<pls::cs::Ref<TBall>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                            require(require(tGroupAreas_.get_Item(num3))->tBallList_), num5)));
                     require(tBall2)->Update_training();
                 }
             }
             bool flag2 = true;
             for (pls::cs::Int32 num6 = 0; num6 < tGroupAreas_.length() && flag2; ++num6) {
-                for (pls::cs::Int32 num7 = 0; num7 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return kl_java_util::Vector_2_Size(require(
-                                                      require(tGroupAreas_.get_Item(num6))->tPlayerList_));
-                                              });
+                for (pls::cs::Int32 num7 = 0;
+                     num7 < PLS_API(kl_java_util::Vector_2_Size(
+                                require(require(tGroupAreas_.get_Item(num6))->tPlayerList_)));
                      ++num7) {
-                    pls::cs::Ref<TPlayer> tPlayer5 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(
-                                require(require(tGroupAreas_.get_Item(num6))->tPlayerList_), num7);
-                        }));
+                    pls::cs::Ref<TPlayer> tPlayer5 =
+                        pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                            require(require(tGroupAreas_.get_Item(num6))->tPlayerList_), num7)));
                     IntArray collisionData2 = require(udat_)->GetCollisionData(0, 0);
                     if ([&]() -> bool {
                             pls::cs::Single cs_arg0 = ([&]() -> pls::cs::FloatEval {
@@ -326,28 +294,21 @@ void TArea::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             num2 = 1;
         }
         for (pls::cs::Int32 i = 0; i < tGroupAreas_.length(); ++i) {
-            for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(
-                                               require(require(tGroupAreas_.get_Item(i))->tPlayerList_));
-                                       });
+            for (pls::cs::Int32 j = 0; j < PLS_API(kl_java_util::Vector_2_Size(
+                                               require(require(tGroupAreas_.get_Item(i))->tPlayerList_)));
                  ++j) {
                 pls::cs::Ref<TPlayer> tPlayer =
-                    pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(
-                            require(require(tGroupAreas_.get_Item(i))->tPlayerList_), j);
-                    }));
+                    pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                        require(require(tGroupAreas_.get_Item(i))->tPlayerList_), j)));
                 require(tPlayer)->Draw_training(g);
             }
-            for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(
-                                               require(require(tGroupAreas_.get_Item(i))->tBallList_));
-                                       });
+            for (pls::cs::Int32 k = 0;
+                 k <
+                 PLS_API(kl_java_util::Vector_2_Size(require(require(tGroupAreas_.get_Item(i))->tBallList_)));
                  ++k) {
                 pls::cs::Ref<TBall> tBall =
-                    pls::cs::unbox<pls::cs::Ref<TBall>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(
-                            require(require(tGroupAreas_.get_Item(i))->tBallList_), k);
-                    }));
+                    pls::cs::unbox<pls::cs::Ref<TBall>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                        require(require(tGroupAreas_.get_Item(i))->tBallList_), k)));
                 require(tBall)->Draw_training(g);
             }
             require(tGroupAreas_.get_Item(i))->Draw_obj(g);
@@ -371,30 +332,23 @@ void TArea::ChangeState(pls::cs::Int32 next_state) {
                     require(tGroupAreas_.get_Item(i))->ChangeState(10);
                 }
                 for (pls::cs::Int32 j = 0; j < tGroupAreas_.length(); ++j) {
-                    for (pls::cs::Int32 k = 0; k < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                   return kl_java_util::Vector_2_Size(require(
-                                                       require(tGroupAreas_.get_Item(j))->tPlayerList_));
-                                               });
+                    for (pls::cs::Int32 k = 0; k < PLS_API(kl_java_util::Vector_2_Size(require(
+                                                       require(tGroupAreas_.get_Item(j))->tPlayerList_)));
                          ++k) {
-                        pls::cs::Ref<TPlayer> tPlayer = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(
-                                    require(require(tGroupAreas_.get_Item(j))->tPlayerList_), k);
-                            }));
+                        pls::cs::Ref<TPlayer> tPlayer =
+                            pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                                require(require(tGroupAreas_.get_Item(j))->tPlayerList_), k)));
                         pls::cs::Int32 num = (j + k) % 2;
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = require(tPlayer)->pos_;
-                                pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 =
-                                    MapMain::MOVE_POINT().get_Item(1 + num);
-                                require(cs_receiver)->Set(cs_arg0);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = require(tPlayer)->pos_;
+                            pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 =
+                                MapMain::MOVE_POINT().get_Item(1 + num);
+                            require(cs_receiver)->Set(cs_arg0);
+                        }()));
                         {
                             auto cs_target = tPlayer;
-                            pls::cs::Int32 cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::BitUtil::Off(require(tPlayer)->flag_, 1);
-                            });
+                            pls::cs::Int32 cs_value =
+                                PLS_API(kl_unity_util::BitUtil::Off(require(tPlayer)->flag_, 1));
                             require(cs_target)->flag_ = cs_value;
                         }
                         require(tPlayer)->AddCommandWait(require(udat_)->trainig_appearWait);
@@ -504,16 +458,12 @@ void TArea::SetPlayerGatherPos() {
     {
         pls::cs::Int32 num = 0;
         for (pls::cs::Int32 i = 0; i < tGroupAreas_.length(); ++i) {
-            for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(
-                                               require(require(tGroupAreas_.get_Item(i))->tPlayerList_));
-                                       });
+            for (pls::cs::Int32 j = 0; j < PLS_API(kl_java_util::Vector_2_Size(
+                                               require(require(tGroupAreas_.get_Item(i))->tPlayerList_)));
                  ++j) {
                 pls::cs::Ref<TPlayer> tPlayer =
-                    pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(
-                            require(require(tGroupAreas_.get_Item(i))->tPlayerList_), j);
-                    }));
+                    pls::cs::unbox<pls::cs::Ref<TPlayer>>(PLS_API(kl_java_util::Vector_2_ElementAt(
+                        require(require(tGroupAreas_.get_Item(i))->tPlayerList_), j)));
                 pls::cs::Int32 num2 = GameUtil::Random(100);
                 pls::cs::Int32 num3 = GameUtil::Random(100);
                 if (tMode_ == 4) {
@@ -597,21 +547,17 @@ void TArea::SetTrainingArea(pls::cs::Int32 tMode) {
                     2.0f;
                 require(cs_target)->z_ = cs_value;
             }
-            coatW_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
-                             auto cs_left = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(0))->x_;
-                             auto cs_right = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(1))->x_;
-                             return cs_left - cs_right;
-                         }())));
-                     }) +
+            coatW_ = PLS_API(pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
+                         auto cs_left = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(0))->x_;
+                         auto cs_right = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(1))->x_;
+                         return cs_left - cs_right;
+                     }())))) +
                      100.0f;
-            coatH_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                         return pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
-                             auto cs_left = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(0))->z_;
-                             auto cs_right = require(MapMain::TRAIN_COAT_BLOCK()[num + 1].get_Item(1))->z_;
-                             return cs_left - cs_right;
-                         }())));
-                     }) +
+            coatH_ = PLS_API(pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
+                         auto cs_left = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(0))->z_;
+                         auto cs_right = require(MapMain::TRAIN_COAT_BLOCK()[num + 1].get_Item(1))->z_;
+                         return cs_left - cs_right;
+                     }())))) +
                      100.0f;
         } else if (tMode_ == 5) {
 
@@ -639,20 +585,16 @@ void TArea::SetTrainingArea(pls::cs::Int32 tMode) {
                     2.0f;
                 require(cs_target)->z_ = cs_value;
             }
-            coatW_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
-                    auto cs_left = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(0))->x_;
-                    auto cs_right = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(1))->x_;
-                    return cs_left - cs_right;
-                }())));
-            });
-            coatH_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
-                    auto cs_left = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(0))->z_;
-                    auto cs_right = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(1))->z_;
-                    return cs_left - cs_right;
-                }())));
-            });
+            coatW_ = PLS_API(pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
+                auto cs_left = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(0))->x_;
+                auto cs_right = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(1))->x_;
+                return cs_left - cs_right;
+            }()))));
+            coatH_ = PLS_API(pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
+                auto cs_left = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(0))->z_;
+                auto cs_right = require(MapMain::TRAIN_COAT_BLOCK()[num].get_Item(1))->z_;
+                return cs_left - cs_right;
+            }()))));
         }
         if (tMode_ == 0) {
             pls::cs::Int32 num2 = 3;

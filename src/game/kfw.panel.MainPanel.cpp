@@ -122,7 +122,7 @@ void MainPanel::Init(pls::cs::String label, pls::cs::String defaultText, pls::cs
             text = pls::cs::String::concat(text, literal(u"w"));
         }
         maxWidth_ = GetStringWidth(text);
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Language::Japanese(); })) {
+        if (!PLS_API(kl_util::Language::Japanese())) {
             pls::cs::String text2 = literal(u"");
             for (pls::cs::Int32 j = 0; j < defaultText.length(); ++j) {
                 text = pls::cs::String::concat(text2, char_string(defaultText.at(j)));
@@ -212,7 +212,7 @@ pls::cs::String MainPanel::Show(pls::cs::Ref<pls::kairo::Canvas> canvas) {
         end_ = false;
         while (!end_) {
             FepPanel::Show();
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::source_app_sleep(1); });
+            PLS_API(pls::kairo::source_app_sleep(1));
         }
         return result_;
     }
@@ -229,36 +229,30 @@ void MainPanel::Show(pls::cs::Ref<pls::kairo::Canvas> canvas,
         {
             auto cs_target = bkSoftLabels_;
             auto cs_index = 0;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas)->GetSoftLabel(0); });
+            auto cs_value = PLS_API(require(canvas)->GetSoftLabel(0));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = bkSoftLabels_;
             auto cs_index = 1;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas)->GetSoftLabel(1); });
+            auto cs_value = PLS_API(require(canvas)->GetSoftLabel(1));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = bkSoftLabels_;
             auto cs_index = 2;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas)->GetSoftLabel(2); });
+            auto cs_value = PLS_API(require(canvas)->GetSoftLabel(2));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = bkSoftLabels_;
             auto cs_index = 3;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas)->GetSoftLabel(3); });
+            auto cs_value = PLS_API(require(canvas)->GetSoftLabel(3));
             cs_target.set_Item(cs_index, cs_value);
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(canvas)->SetSoftLabel(literal(u""), literal(u""), pls::cs::String{},
-                                                 pls::cs::String{});
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(canvas)->UpdateSoftLabel(); });
+        PLS_API(
+            require(canvas)->SetSoftLabel(literal(u""), literal(u""), pls::cs::String{}, pls::cs::String{}));
+        PLS_API(require(canvas)->UpdateSoftLabel());
         kairo::unity::panel::FepPanel_Display::SetCurrent(static_cast<pls::cs::Ref<FepPanel>>(this));
         end_ = false;
         onFinishMethod_ = onFinishMethod;
@@ -277,16 +271,13 @@ void MainPanel::ComponentAction(pls::cs::Ref<kairo::unity::panel::Component> c, 
         pls::cs::Int32 num = 0;
         if (type == 1) {
             if (pls::cs::box(c) == pls::cs::box(btn)) {
-                pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::cs::string_replace(require(txtBox)->GetText(), char16_t(10), u' ');
-                });
+                pls::cs::String text =
+                    PLS_API(pls::cs::string_replace(require(txtBox)->GetText(), char16_t(10), u' '));
                 if (trim_) {
-                    text = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::cs::string_trim(text); });
+                    text = PLS_API(pls::cs::string_trim(text));
                 }
                 num = 0;
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_util::Language::Japanese(); })) {
+                if (PLS_API(kl_util::Language::Japanese())) {
                     if ([&]() -> bool {
                             auto cs_left = GetStringLength(text);
                             auto cs_right = maxLength_;
@@ -302,35 +293,27 @@ void MainPanel::ComponentAction(pls::cs::Ref<kairo::unity::panel::Component> c, 
                     num = 1;
                 }
                 for (pls::cs::Int32 i = 0; i < prohibition_.length(); ++i) {
-                    if (pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return index_char1(text, prohibition_[i]); }) != -1) {
+                    if (PLS_API(index_char1(text, prohibition_[i])) != -1) {
                         num = 2;
                         break;
                     }
                 }
-                if (kl_lang::StringEx::Length(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::cs::string_trim(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() {
-                                auto cs_text = text;
-                                auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                                cs_separators.at(0) = char16_t(8);
-                                return pls::cs::string_trim(cs_text, cs_separators);
-                            }());
-                        }));
-                    })) == 0) {
+                if (kl_lang::StringEx::Length(PLS_API(pls::cs::string_trim(PLS_API(([&]() {
+                        auto cs_text = text;
+                        auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                        cs_separators.at(0) = char16_t(8);
+                        return pls::cs::string_trim(cs_text, cs_separators);
+                    }()))))) == 0) {
                     num = 3;
                 }
                 if ((num == 0)) {
                     result_ = text;
-                    if (pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return string_equals(result_, defaultText_); })) {
+                    if (PLS_API(string_equals(result_, defaultText_))) {
                         result_ = originalText_;
                     } else {
                         result_ = pls::cs::String::concat(result_, literal(u"\010"));
                     }
-                    while (!endMark_ && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::cs::culture_ends_with(result_, literal(u"\010"));
-                    })) {
+                    while (!endMark_ && PLS_API(pls::cs::culture_ends_with(result_, literal(u"\010")))) {
                         result_ = ([&]() -> pls::cs::String {
                             pls::cs::String cs_arg0 = result_;
                             pls::cs::Int32 cs_arg2 = kl_lang::StringEx::Length(result_) - 1;
@@ -342,8 +325,7 @@ void MainPanel::ComponentAction(pls::cs::Ref<kairo::unity::panel::Component> c, 
                 } else if ((num == 1)) {
                     {
                         pls::cs::Int32 num2 = maxLength_;
-                        if (pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return kl_util::Language::Japanese(); })) {
+                        if (PLS_API(kl_util::Language::Japanese())) {
                             num2 /= 2;
                         }
                         pls::cs::String text3 = literal(u"全角<0>文字以内にして下さい");
@@ -351,26 +333,18 @@ void MainPanel::ComponentAction(pls::cs::Ref<kairo::unity::panel::Component> c, 
                             text3 = literal(u"<0>文字以内にして下さい");
                             num2 = maxLength_;
                         }
-                        if (!pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return kl_util::Language::Japanese(); })) {
+                        if (!PLS_API(kl_util::Language::Japanese())) {
                             text3 = literal(u"内容を短くして下さい");
                         }
                         pls::cs::Ref<kairo::unity::ui::Dialog> dialog3 =
                             kairo::unity::ui::Dialog::create(1, literal(u"ﾒｯｾｰｼﾞ"));
                         {
-                            pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::String {
-                                    pls::cs::String cs_arg0 =
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_util::Language::TranslateText(text3, true);
-                                        });
-                                    pls::cs::String cs_arg1 =
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_lang::JString::ValueOfInt(num2);
-                                        });
-                                    return kl_util::StringUtil::Replace(cs_arg0, cs_arg1);
-                                }());
-                            });
+                            pls::cs::String cs_arg0 = PLS_API(([&]() -> pls::cs::String {
+                                pls::cs::String cs_arg0 =
+                                    PLS_API(kl_util::Language::TranslateText(text3, true));
+                                pls::cs::String cs_arg1 = PLS_API(kl_lang::JString::ValueOfInt(num2));
+                                return kl_util::StringUtil::Replace(cs_arg0, cs_arg1);
+                            }()));
                             require(dialog3)->SetText(cs_arg0);
                         }
                         require(dialog3)->Show();
@@ -387,14 +361,10 @@ void MainPanel::ComponentAction(pls::cs::Ref<kairo::unity::panel::Component> c, 
                             text2 = pls::cs::String::concat(text2, char_string(prohibition_[j]));
                         }
                         {
-                            pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_util::StringUtil::Replace(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_util::Language::TranslateText(
-                                            literal(u"システムの都合上 <0> は使えません"), true);
-                                    }),
-                                    text2);
-                            });
+                            pls::cs::String cs_arg0 = PLS_API(kl_util::StringUtil::Replace(
+                                PLS_API(kl_util::Language::TranslateText(
+                                    literal(u"システムの都合上 <0> は使えません"), true)),
+                                text2));
                             require(dialog2)->SetText(cs_arg0);
                         }
                         require(dialog2)->Show();
@@ -404,17 +374,12 @@ void MainPanel::ComponentAction(pls::cs::Ref<kairo::unity::panel::Component> c, 
                         pls::cs::Ref<kairo::unity::ui::Dialog> dialog =
                             kairo::unity::ui::Dialog::create(1, literal(u"ﾒｯｾｰｼﾞ"));
                         {
-                            pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::String {
-                                    pls::cs::String cs_arg0 =
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_util::Language::TranslateText(
-                                                literal(u"<0>を入力して下さい"), true);
-                                        });
-                                    pls::cs::String cs_arg1 = itemName_;
-                                    return kl_util::StringUtil::Replace(cs_arg0, cs_arg1);
-                                }());
-                            });
+                            pls::cs::String cs_arg0 = PLS_API(([&]() -> pls::cs::String {
+                                pls::cs::String cs_arg0 = PLS_API(
+                                    kl_util::Language::TranslateText(literal(u"<0>を入力して下さい"), true));
+                                pls::cs::String cs_arg1 = itemName_;
+                                return kl_util::StringUtil::Replace(cs_arg0, cs_arg1);
+                            }()));
                             require(dialog)->SetText(cs_arg0);
                         }
                         require(dialog)->Show();
@@ -438,15 +403,13 @@ void MainPanel::ComponentAction(pls::cs::Ref<kairo::unity::panel::Component> c, 
                     cs_delegate(cs_arg0);
                 }
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = bkSoftLabels_[0];
-                    pls::cs::String cs_arg1 = bkSoftLabels_[1];
-                    pls::cs::String cs_arg2 = bkSoftLabels_[2];
-                    pls::cs::String cs_arg3 = bkSoftLabels_[3];
-                    require(bkCanvas_)->SetSoftLabel(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = bkSoftLabels_[0];
+                pls::cs::String cs_arg1 = bkSoftLabels_[1];
+                pls::cs::String cs_arg2 = bkSoftLabels_[2];
+                pls::cs::String cs_arg3 = bkSoftLabels_[3];
+                require(bkCanvas_)->SetSoftLabel(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+            }()));
         } else {
             Start();
         }
@@ -466,9 +429,8 @@ pls::cs::Int32 MainPanel::GetStringWidth(pls::cs::String str) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kfw.panel.MainPanel.GetStringWidth(System.String)", kairo);
     {
         pls::cs::Ref<pls::kairo::Font> font = pls::cs::make_ref<pls::kairo::Font>();
-        pls::cs::Int32 result =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(font)->StringWidth(str); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(font)->Dispose(); });
+        pls::cs::Int32 result = PLS_API(require(font)->StringWidth(str));
+        PLS_API(require(font)->Dispose());
         return result;
     }
 }

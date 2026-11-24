@@ -124,11 +124,9 @@ void ResourceManager::create_init(pls::cs::Ref<ResourceManager> self, pls::cs::S
         kairo);
     {
         ResourceManager::listFile_() = StringArray::make(ResourceManager::LIST_FILE().length());
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JSystem::Arraycopy(pls::cs::box(ResourceManager::LIST_FILE()), 0,
-                                               pls::cs::box(ResourceManager::listFile_()), 0,
-                                               ResourceManager::LIST_FILE().length());
-        });
+        PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(ResourceManager::LIST_FILE()), 0,
+                                            pls::cs::box(ResourceManager::listFile_()), 0,
+                                            ResourceManager::LIST_FILE().length()));
         if (!is_null(imgList)) {
             ResourceManager::listFile_()[0] = imgList;
         }
@@ -172,8 +170,7 @@ pls::cs::Ref<pls::kairo::Image> ResourceManager::LoadImage(ByteArray src, pls::k
         "M:kairo.unity.ui.ResourceManager.LoadImage(System.Byte[],kairo.unity.ui.Image.Format,kairo.unity.ui.Image.Filter)",
         kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::Image::Load(src, format, filterMode); });
+        return PLS_API(pls::kairo::Image::Load(src, format, filterMode));
     }
 }
 
@@ -192,12 +189,10 @@ pls::cs::Ref<pls::kairo::SoundBase> ResourceManager::LoadSound(pls::cs::String f
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.ResourceManager.LoadSound(System.String,System.Int32)",
                      kairo);
     {
-        file = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_cfg::Config::ConvertExtension(file); });
+        file = PLS_API(kl_cfg::Config::ConvertExtension(file));
         pls::cs::Ref<pls::kairo::SoundBase> result = pls::cs::Ref<pls::kairo::SoundBase>{};
         if (format == 6) {
-            result = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::SoundOGG::Load(file); });
+            result = PLS_API(pls::kairo::SoundOGG::Load(file));
         }
         return result;
     }
@@ -230,10 +225,8 @@ void ResourceManager::_init(bool keepFileList) {
         seb = pls::cs::Array<pls::cs::Ref<Seb>>::make(0);
         sound = pls::cs::Array<pls::cs::Ref<pls::kairo::SoundBase>>::make(0);
         if (!keepFileList) {
-            list_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::JTool::MakeArray<StringArray2>(
-                    IntArray::from({ResourceManager::LIST_FILE().length(), 0}));
-            });
+            list_ = PLS_API(kl_java_util::JTool::MakeArray<StringArray2>(
+                IntArray::from({ResourceManager::LIST_FILE().length(), 0})));
         }
         loadCnt_ = 0;
         loadNum_ = loadCnt_;
@@ -256,8 +249,7 @@ void ResourceManager::Load(ByteArray data, pls::cs::Int32 m3dVer) {
             },
             [&]() {
                 if (!is_null(jarInflater)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(jarInflater)->Close(); });
+                    PLS_API(require(jarInflater)->Close());
                 }
                 jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
             });
@@ -280,8 +272,7 @@ void ResourceManager::LoadString(pls::cs::String directory, pls::cs::Int32 m3dVe
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.ResourceManager.Load(System.String,System.Int32)",
                      kairo);
     {
-        pls::cs::Int32 num =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return last_index_char1(directory, u'.'); });
+        pls::cs::Int32 num = PLS_API(last_index_char1(directory, u'.'));
         if (num != -1) {
             directory = kl_lang::StringEx::SubstringJ(directory, 0, num);
         }
@@ -296,8 +287,7 @@ void ResourceManager::LoadString(pls::cs::String directory, pls::cs::Int32 m3dVe
             },
             [&]() {
                 if (!is_null(jarInflater)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(jarInflater)->Close(); });
+                    PLS_API(require(jarInflater)->Close());
                 }
                 jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
             });
@@ -320,9 +310,8 @@ void ResourceManager::LoadReady(pls::cs::Ref<kl_unity_util::JarInflater> jar) {
         loadNum_ = 0;
         for (pls::cs::Int32 i = 0; i < ResourceManager::listFile_().length(); ++i) {
             if (kl_lang::StringEx::Length(ResourceManager::listFile_()[i]) != 0) {
-                StringArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StringUtil::LoadStringArray(jar, ResourceManager::listFile_()[i]);
-                });
+                StringArray array =
+                    PLS_API(kl_unity_util::StringUtil::LoadStringArray(jar, ResourceManager::listFile_()[i]));
                 if ([&]() {
                         auto cs_left = pls::cs::box(array);
                         auto cs_right = pls::cs::box(StringArray{});
@@ -334,8 +323,7 @@ void ResourceManager::LoadReady(pls::cs::Ref<kl_unity_util::JarInflater> jar) {
                     {
                         auto cs_target = list_[i];
                         auto cs_index = j;
-                        auto cs_value = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::cs::string_trim(list_[i][j]); });
+                        auto cs_value = PLS_API(pls::cs::string_trim(list_[i][j]));
                         cs_target.set_Item(cs_index, cs_value);
                     }
                 }
@@ -362,16 +350,13 @@ void ResourceManager::LoadStart(pls::cs::Ref<kl_unity_util::JarInflater> jar, pl
                     array[i] = IntArray::make(list_[i].length());
                     for (pls::cs::Int32 j = 0; j < list_[i].length(); ++j) {
                         array[i][j] = -1;
-                        StringArray array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StringUtil::Split(list_[i][j], literal(u"\t"));
-                        });
+                        StringArray array2 =
+                            PLS_API(kl_unity_util::StringUtil::Split(list_[i][j], literal(u"\t")));
                         if (array2.length() >= 2) {
                             {
                                 auto cs_target = array[i];
                                 auto cs_index = j;
-                                auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_lang::JInteger::ParseInt(array2[0]);
-                                });
+                                auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array2[0]));
                                 cs_target.set_Item(cs_index, cs_value);
                             }
                             list_[i][j] = array2[1];
@@ -390,529 +375,386 @@ void ResourceManager::LoadStart(pls::cs::Ref<kl_unity_util::JarInflater> jar, pl
             pls::cs::Ref<pls::cs::Cell<StringArray>> sebFileName_cell =
                 pls::cs::make_ref<pls::cs::Cell<StringArray>>(StringArray::make(list_[1].length()));
             while (true) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                        pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
-                            pls::cs::raw(loadTask_cell),
-                            std::string(
-                                "M:kairo.unity.ui.ResourceManager.LoadStart(kairo.unity.util.JarInflater,System.Int32):7264") +
-                                std::to_string(reinterpret_cast<std::uintptr_t>(pls::cs::raw(jar_cell))) +
-                                std::to_string(
-                                    reinterpret_cast<std::uintptr_t>(pls::cs::raw(sebFileName_cell))),
-                            [loadTask_cell, jar_cell, sebFileName_cell, self = this]() -> void {
-                                {
-                                    kl_cfg::Config::ensure_initialized();
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                    pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
+                        pls::cs::raw(loadTask_cell),
+                        std::string(
+                            "M:kairo.unity.ui.ResourceManager.LoadStart(kairo.unity.util.JarInflater,System.Int32):7264") +
+                            std::to_string(reinterpret_cast<std::uintptr_t>(pls::cs::raw(jar_cell))) +
+                            std::to_string(reinterpret_cast<std::uintptr_t>(pls::cs::raw(sebFileName_cell))),
+                        [loadTask_cell, jar_cell, sebFileName_cell, self = this]() -> void {
+                            {
+                                kl_cfg::Config::ensure_initialized();
 
-                                    pls::cs::Int64 num17 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_lang::JSystem::CurrentTimeMillis();
-                                    });
-                                    for (pls::cs::Int32 k = 0; k < loadTask_cell->value.length(); ++k) {
-                                        pls::cs::Int32 num18 = loadTask_cell->value[k][0];
-                                        for (pls::cs::Int32 l = loadTask_cell->value[k][1];
-                                             l < self->list_[num18].length();
-                                             ++l, loadTask_cell->value[k][1]++, ++self->loadCnt_) {
-                                            if (self->CheckFileEffective(self->list_[num18][l])) {
-                                                pls::cs::Int32 num19 = 0;
-                                                if ((num18 == 0)) {
-                                                    {
-                                                        pls::cs::String fileName2 =
-                                                            self->GetFileName(self->list_[0][l]);
-                                                        StringArray array7 = pls::diagnostic::api_call(
-                                                            [&]() -> decltype(auto) {
-                                                                return kl_unity_util::StringUtil::Split(
-                                                                    fileName2, literal(u","));
-                                                            });
-                                                        fileName2 = array7[0];
-                                                        bool flag3 = false;
-                                                        bool flag4 = false;
-                                                        pls::cs::String text3 = pls::cs::String{};
-                                                        pls::kairo::Image::Filter filterMode =
-                                                            static_cast<pls::kairo::Image::Filter>(
-                                                                -1) /* Filter.Default */;
-                                                        pls::kairo::Image::Format format =
-                                                            static_cast<pls::kairo::Image::Format>(
-                                                                -1) /* Format.Default */;
-                                                        pls::cs::Int32 renderQueue_ = 0;
-                                                        pls::cs::Int32 imageAtlasId_ = -1;
-                                                        pls::cs::Int32 width = 0;
-                                                        pls::cs::Int32 height = 0;
-                                                        bool flag5 = false;
-                                                        for (pls::cs::Int32 n = 1; n < array7.length(); ++n) {
-                                                            pls::cs::String text4 = pls::diagnostic::api_call(
-                                                                [&]() -> decltype(auto) {
-                                                                    return pls::cs::culture_to_lower(
-                                                                        array7[n]);
-                                                                });
-                                                            if (text4 == literal(u"bin")) {
-                                                                flag3 = true;
-                                                            } else if (text4 == literal(u"res")) {
-                                                                flag4 = true;
-                                                            } else if (text4 == literal(u"pt")) {
-                                                                filterMode =
-                                                                    static_cast<pls::kairo::Image::Filter>(
-                                                                        0) /* Filter.Point */;
-                                                            } else if (text4 == literal(u"bi")) {
-                                                                filterMode =
-                                                                    static_cast<pls::kairo::Image::Filter>(
-                                                                        1) /* Filter.Bilinear */;
-                                                            } else if (text4 == literal(u"tri")) {
-                                                                filterMode =
-                                                                    static_cast<pls::kairo::Image::Filter>(
-                                                                        2) /* Filter.Trilinear */;
-                                                            } else if (text4 == literal(u"24")) {
-                                                                format =
-                                                                    static_cast<pls::kairo::Image::Format>(
-                                                                        3) /* Format.RGB24 */;
-                                                            } else if (text4 == literal(u"565")) {
-                                                                format =
-                                                                    static_cast<pls::kairo::Image::Format>(
-                                                                        7) /* Format.RGB565 */;
-                                                            } else if (text4 == literal(u"32")) {
-                                                                format =
-                                                                    static_cast<pls::kairo::Image::Format>(
-                                                                        5) /* Format.ARGB32 */;
-                                                            } else if (text4 == literal(u"4444")) {
-                                                                format =
-                                                                    static_cast<pls::kairo::Image::Format>(
-                                                                        2) /* Format.ARGB4444 */;
-                                                            } else {
-                                                                if (pls::diagnostic::api_call(
-                                                                        [&]() -> decltype(auto) {
-                                                                            return pls::cs::culture_ends_with(
-                                                                                text4, literal(u".pal"));
-                                                                        })) {
-                                                                    text3 = array7[n];
-                                                                } else if (pls::diagnostic::api_call(
-                                                                               [&]() -> decltype(auto) {
-                                                                                   return pls::cs::
-                                                                                       culture_starts_with(
-                                                                                           text4,
-                                                                                           literal(u"q+"));
-                                                                               }) ||
-                                                                           pls::diagnostic::api_call(
-                                                                               [&]() -> decltype(auto) {
-                                                                                   return pls::cs::
-                                                                                       culture_starts_with(
-                                                                                           text4,
-                                                                                           literal(u"q-"));
-                                                                               })) {
-                                                                    if (pls::cs::cast_integral<
-                                                                            pls::cs::Int32>(text4.at(1)) ==
-                                                                        pls::cs::cast_integral<
-                                                                            pls::cs::Int32>(u'+')) {
-                                                                        text4 = pls::diagnostic::api_call(
-                                                                            [&]() -> decltype(auto) {
-                                                                                return substring1(text4, 2);
-                                                                            });
-                                                                    } else {
-                                                                        text4 = pls::diagnostic::api_call(
-                                                                            [&]() -> decltype(auto) {
-                                                                                return substring1(text4, 1);
-                                                                            });
-                                                                    }
-                                                                    renderQueue_ = pls::diagnostic::api_call(
-                                                                        [&]() -> decltype(auto) {
-                                                                            return pls::cs::int32_parse(
-                                                                                text4);
-                                                                        });
-                                                                } else if (pls::diagnostic::api_call(
-                                                                               [&]() -> decltype(auto) {
-                                                                                   return pls::cs::
-                                                                                       culture_starts_with(
-                                                                                           text4,
-                                                                                           literal(u"@"));
-                                                                               })) {
-                                                                    if (text4.length() == 1) {
-                                                                        imageAtlasId_ = 0;
-                                                                    } else {
-                                                                        imageAtlasId_ = pls::diagnostic::
-                                                                            api_call([&]() -> decltype(auto) {
-                                                                                return pls::cs::int32_parse(
-                                                                                    pls::diagnostic::api_call(
-                                                                                        [&]()
-                                                                                            -> decltype(auto) {
-                                                                                            return substring1(
-                                                                                                text4, 1);
-                                                                                        }));
-                                                                            });
-                                                                    }
-                                                                } else if (pls::diagnostic::api_call(
-                                                                               [&]() -> decltype(auto) {
-                                                                                   return ([&]() {
-                                                                                       auto cs_text = text4;
-                                                                                       auto cs_char = u'x';
-                                                                                       return index_char1(
-                                                                                                  cs_text,
-                                                                                                  cs_char) !=
-                                                                                              -1;
-                                                                                   }());
-                                                                               })) {
-                                                                    if ((pls::cs::cast_integral<
-                                                                             pls::cs::Int32>(text4.at(0)) ==
-                                                                         pls::cs::cast_integral<
-                                                                             pls::cs::Int32>(u'e')) ||
-                                                                        (pls::cs::cast_integral<
-                                                                             pls::cs::Int32>(text4.at(0)) ==
-                                                                         pls::cs::cast_integral<
-                                                                             pls::cs::Int32>(u'E'))) {
-                                                                        text4 = pls::diagnostic::api_call(
-                                                                            [&]() -> decltype(auto) {
-                                                                                return substring1(text4, 1);
-                                                                            });
-                                                                        if (!util::Language::English()) {
-                                                                            continue;
-                                                                        }
-                                                                    }
-                                                                    StringArray array8 = pls::diagnostic::
-                                                                        api_call([&]() -> decltype(auto) {
-                                                                            return ([&]() {
-                                                                                auto cs_text = text4;
-                                                                                auto cs_separators =
-                                                                                    pls::cs::Array<
-                                                                                        char16_t>::make(1);
-                                                                                cs_separators.at(0) = u'x';
-                                                                                return pls::cs::string_split(
-                                                                                    cs_text, cs_separators);
-                                                                            }());
-                                                                        });
-                                                                    width = pls::diagnostic::api_call(
-                                                                        [&]() -> decltype(auto) {
-                                                                            return pls::cs::int32_parse(
-                                                                                array8[0]);
-                                                                        });
-                                                                    height = pls::diagnostic::api_call(
-                                                                        [&]() -> decltype(auto) {
-                                                                            return pls::cs::int32_parse(
-                                                                                array8[1]);
-                                                                        });
+                                pls::cs::Int64 num17 = PLS_API(kl_lang::JSystem::CurrentTimeMillis());
+                                for (pls::cs::Int32 k = 0; k < loadTask_cell->value.length(); ++k) {
+                                    pls::cs::Int32 num18 = loadTask_cell->value[k][0];
+                                    for (pls::cs::Int32 l = loadTask_cell->value[k][1];
+                                         l < self->list_[num18].length();
+                                         ++l, loadTask_cell->value[k][1]++, ++self->loadCnt_) {
+                                        if (self->CheckFileEffective(self->list_[num18][l])) {
+                                            pls::cs::Int32 num19 = 0;
+                                            if ((num18 == 0)) {
+                                                {
+                                                    pls::cs::String fileName2 =
+                                                        self->GetFileName(self->list_[0][l]);
+                                                    StringArray array7 =
+                                                        PLS_API(kl_unity_util::StringUtil::Split(
+                                                            fileName2, literal(u",")));
+                                                    fileName2 = array7[0];
+                                                    bool flag3 = false;
+                                                    bool flag4 = false;
+                                                    pls::cs::String text3 = pls::cs::String{};
+                                                    pls::kairo::Image::Filter filterMode =
+                                                        static_cast<pls::kairo::Image::Filter>(
+                                                            -1) /* Filter.Default */;
+                                                    pls::kairo::Image::Format format =
+                                                        static_cast<pls::kairo::Image::Format>(
+                                                            -1) /* Format.Default */;
+                                                    pls::cs::Int32 renderQueue_ = 0;
+                                                    pls::cs::Int32 imageAtlasId_ = -1;
+                                                    pls::cs::Int32 width = 0;
+                                                    pls::cs::Int32 height = 0;
+                                                    bool flag5 = false;
+                                                    for (pls::cs::Int32 n = 1; n < array7.length(); ++n) {
+                                                        pls::cs::String text4 =
+                                                            PLS_API(pls::cs::culture_to_lower(array7[n]));
+                                                        if (text4 == literal(u"bin")) {
+                                                            flag3 = true;
+                                                        } else if (text4 == literal(u"res")) {
+                                                            flag4 = true;
+                                                        } else if (text4 == literal(u"pt")) {
+                                                            filterMode =
+                                                                static_cast<pls::kairo::Image::Filter>(
+                                                                    0) /* Filter.Point */;
+                                                        } else if (text4 == literal(u"bi")) {
+                                                            filterMode =
+                                                                static_cast<pls::kairo::Image::Filter>(
+                                                                    1) /* Filter.Bilinear */;
+                                                        } else if (text4 == literal(u"tri")) {
+                                                            filterMode =
+                                                                static_cast<pls::kairo::Image::Filter>(
+                                                                    2) /* Filter.Trilinear */;
+                                                        } else if (text4 == literal(u"24")) {
+                                                            format = static_cast<pls::kairo::Image::Format>(
+                                                                3) /* Format.RGB24 */;
+                                                        } else if (text4 == literal(u"565")) {
+                                                            format = static_cast<pls::kairo::Image::Format>(
+                                                                7) /* Format.RGB565 */;
+                                                        } else if (text4 == literal(u"32")) {
+                                                            format = static_cast<pls::kairo::Image::Format>(
+                                                                5) /* Format.ARGB32 */;
+                                                        } else if (text4 == literal(u"4444")) {
+                                                            format = static_cast<pls::kairo::Image::Format>(
+                                                                2) /* Format.ARGB4444 */;
+                                                        } else {
+                                                            if (PLS_API(pls::cs::culture_ends_with(
+                                                                    text4, literal(u".pal")))) {
+                                                                text3 = array7[n];
+                                                            } else if (PLS_API(pls::cs::culture_starts_with(
+                                                                           text4, literal(u"q+"))) ||
+                                                                       PLS_API(pls::cs::culture_starts_with(
+                                                                           text4, literal(u"q-")))) {
+                                                                if (pls::cs::cast_integral<pls::cs::Int32>(
+                                                                        text4.at(1)) ==
+                                                                    pls::cs::cast_integral<pls::cs::Int32>(
+                                                                        u'+')) {
+                                                                    text4 = PLS_API(substring1(text4, 2));
                                                                 } else {
-                                                                    flag5 = true;
+                                                                    text4 = PLS_API(substring1(text4, 1));
                                                                 }
-                                                            }
-                                                        }
-                                                        if (kl_cfg::Config::PRINT() && flag5) {
-                                                            pls::diagnostic::api_call([&]()
-                                                                                          -> decltype(auto) {
-                                                                return kl_unity_util::Log::Info(
-                                                                    pls::cs::String::concat(
-                                                                        literal(
-                                                                            u"ｲﾒｰｼﾞのｵﾌﾟｼｮﾝが[bin][res][pt][bi][tri][24][32][565][4444][*.pal][q][@]のどれにも当てはまりません:"),
-                                                                        self->list_[0][l]),
-                                                                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-                                                            });
-                                                        }
-                                                        try {
-                                                            if (self->rsId_ != -1) {
-                                                                {
-                                                                    auto cs_target = self->img;
-                                                                    auto cs_index = l;
-                                                                    auto cs_value =
-                                                                        pls::kairo::Image::FromRecord(
-                                                                            self->rsId_, self->rcId_,
-                                                                            fileName2, text3, format,
-                                                                            filterMode);
-                                                                    cs_target.set_Item(cs_index, cs_value);
+                                                                renderQueue_ =
+                                                                    PLS_API(pls::cs::int32_parse(text4));
+                                                            } else if (PLS_API(pls::cs::culture_starts_with(
+                                                                           text4, literal(u"@")))) {
+                                                                if (text4.length() == 1) {
+                                                                    imageAtlasId_ = 0;
+                                                                } else {
+                                                                    imageAtlasId_ =
+                                                                        PLS_API(pls::cs::int32_parse(
+                                                                            PLS_API(substring1(text4, 1))));
                                                                 }
-                                                            } else if (flag3) {
-                                                                if (!self->loaded_ ||
-                                                                    util::JarInflater::Exist(
-                                                                        require(jar_cell->value),
-                                                                        fileName2)) {
-                                                                    ByteArray cs_arg0_30 =
-                                                                        pls::diagnostic::api_call(
-                                                                            [&]() -> decltype(auto) {
-                                                                                return require(
-                                                                                           jar_cell->value)
-                                                                                    ->GetData(fileName2);
-                                                                            });
-                                                                    ByteArray cs_arg1_30 =
-                                                                        ((!is_null(text3))
-                                                                             ? pls::diagnostic::api_call(
-                                                                                   [&]() -> decltype(auto) {
-                                                                                       return require(
-                                                                                                  jar_cell
-                                                                                                      ->value)
-                                                                                           ->GetData(text3);
-                                                                                   })
-                                                                             : ByteArray{});
-                                                                    ByteArray src =
-                                                                        Image::OverwritePaletteData(
-                                                                            cs_arg0_30, cs_arg1_30);
-                                                                    {
-                                                                        auto cs_target = self->img;
-                                                                        auto cs_index = l;
-                                                                        auto cs_value =
-                                                                            pls::kairo::Image::FromBytes(
-                                                                                src, format, filterMode);
-                                                                        cs_target.set_Item(cs_index,
-                                                                                           cs_value);
+                                                            } else if (PLS_API(([&]() {
+                                                                           auto cs_text = text4;
+                                                                           auto cs_char = u'x';
+                                                                           return index_char1(cs_text,
+                                                                                              cs_char) != -1;
+                                                                       }()))) {
+                                                                if ((pls::cs::cast_integral<pls::cs::Int32>(
+                                                                         text4.at(0)) ==
+                                                                     pls::cs::cast_integral<pls::cs::Int32>(
+                                                                         u'e')) ||
+                                                                    (pls::cs::cast_integral<pls::cs::Int32>(
+                                                                         text4.at(0)) ==
+                                                                     pls::cs::cast_integral<pls::cs::Int32>(
+                                                                         u'E'))) {
+                                                                    text4 = PLS_API(substring1(text4, 1));
+                                                                    if (!util::Language::English()) {
+                                                                        continue;
                                                                     }
                                                                 }
-                                                            } else if (flag4) {
-                                                                {
-                                                                    auto cs_target = self->img;
-                                                                    auto cs_index = l;
-                                                                    auto cs_value =
-                                                                        pls::kairo::Image::FromFile(
-                                                                            pls::cs::String::concat(
-                                                                                util::JarInflater::
-                                                                                    GetDirectory(require(
-                                                                                        jar_cell->value)),
-                                                                                fileName2),
-                                                                            text3, format, filterMode);
-                                                                    cs_target.set_Item(cs_index, cs_value);
-                                                                }
-                                                            } else if (!self->loaded_ ||
-                                                                       util::JarInflater::Exist(
-                                                                           require(jar_cell->value),
-                                                                           fileName2)) {
-                                                                ByteArray cs_arg0_31 =
-                                                                    pls::diagnostic::api_call(
-                                                                        [&]() -> decltype(auto) {
-                                                                            return require(jar_cell->value)
-                                                                                ->GetData(fileName2);
-                                                                        });
-                                                                ByteArray cs_arg1_31 =
-                                                                    ((!is_null(text3))
-                                                                         ? pls::diagnostic::api_call(
-                                                                               [&]() -> decltype(auto) {
-                                                                                   return require(
-                                                                                              jar_cell->value)
-                                                                                       ->GetData(text3);
-                                                                               })
-                                                                         : ByteArray{});
-                                                                ByteArray src2 = Image::OverwritePaletteData(
-                                                                    cs_arg0_31, cs_arg1_31);
-                                                                {
-                                                                    auto cs_target = self->img;
-                                                                    auto cs_index = l;
-                                                                    auto cs_value =
-                                                                        ResourceManager::LoadImage(
-                                                                            src2, format, filterMode);
-                                                                    cs_target.set_Item(cs_index, cs_value);
-                                                                }
-                                                            }
-                                                            pls::diagnostic::api_call(
-                                                                [&]() -> decltype(auto) {
-                                                                    return require(self->img.get_Item(l))
-                                                                        ->SetStandardResolution(width,
-                                                                                                height);
-                                                                });
-                                                            if (flag3 && !is_null(self->img.get_Item(l))) {
-                                                                require(self->img.get_Item(l))->useBin_ =
-                                                                    true;
-                                                            }
-                                                            if (!is_null(self->img.get_Item(l))) {
-                                                                require(self->img.get_Item(l))
-                                                                    ->imageAtlasId_ = imageAtlasId_;
-                                                            }
-                                                            require(self->img.get_Item(l))->renderQueue_ =
-                                                                renderQueue_;
-                                                            if ((self->recordNameBits_ & 1) != 0 &&
-                                                                !is_null(self->img.get_Item(l))) {
-                                                                pls::diagnostic::api_call(
-                                                                    [&]() -> decltype(auto) {
-                                                                        return require(self->img.get_Item(l))
-                                                                            ->SetName(fileName2);
-                                                                    });
-                                                            }
-                                                            ++num19;
-                                                        } catch (const pls::cs::Exception& cs_caught_62) {
-                                                            auto t2 =
-                                                                pls::cs::capture_exception(cs_caught_62);
-                                                            {
-                                                                util::Log::Error(
-                                                                    pls::cs::String::concat(
-                                                                        literal(u"loadImageに失敗:"),
-                                                                        fileName2),
-                                                                    t2);
-                                                            }
-                                                        }
-                                                    }
-                                                } else if ((num18 == 1)) {
-                                                    {
-                                                        pls::cs::String fileName3 =
-                                                            self->GetFileName(self->list_[1][l]);
-                                                        StringArray array9 = pls::diagnostic::api_call(
-                                                            [&]() -> decltype(auto) {
-                                                                return kl_unity_util::StringUtil::Split(
-                                                                    fileName3, literal(u","));
-                                                            });
-                                                        bool u = false;
-                                                        bool v = false;
-                                                        pls::cs::Int32 num21 = 0;
-                                                        for (pls::cs::Int32 num22 = 1;
-                                                             num22 < array9.length(); ++num22) {
-                                                            char16_t recoveredOptionChar =
-                                                                kl_lang::StringEx::CharAt(array9[num22], 0);
-                                                            if (pls::cs::cast_integral<pls::cs::Int32>(
-                                                                    recoveredOptionChar) ==
-                                                                pls::cs::cast_integral<pls::cs::Int32>(
-                                                                    u'u')) {
-                                                                u = true;
-                                                            } else if (pls::cs::cast_integral<pls::cs::Int32>(
-                                                                           recoveredOptionChar) ==
-                                                                       pls::cs::cast_integral<pls::cs::Int32>(
-                                                                           u'v')) {
-                                                                v = true;
-                                                            } else if (pls::cs::cast_integral<pls::cs::Int32>(
-                                                                           recoveredOptionChar) ==
-                                                                       pls::cs::cast_integral<pls::cs::Int32>(
-                                                                           u'c')) {
-                                                                num21 = pls::diagnostic::api_call(
-                                                                    [&]() -> decltype(auto) {
-                                                                        return kl_lang::JInteger::ParseInt(
-                                                                            pls::diagnostic::api_call(
-                                                                                [&]() -> decltype(auto) {
-                                                                                    return substring1(
-                                                                                        array9[num22], 1);
-                                                                                }));
-                                                                    });
-                                                            }
-                                                        }
-                                                        fileName3 = array9[0];
-                                                        sebFileName_cell->value[l] = fileName3;
-                                                        try {
-                                                            pls::cs::Ref<Seb> seb = pls::cs::Ref<Seb>{};
-                                                            for (pls::cs::Int32 num23 = 0; num23 < l;
-                                                                 ++num23) {
-                                                                if (pls::diagnostic::api_call(
-                                                                        [&]() -> decltype(auto) {
-                                                                            return string_equals(
-                                                                                fileName3,
-                                                                                sebFileName_cell
-                                                                                    ->value[num23]);
-                                                                        })) {
-                                                                    seb = self->seb.get_Item(num23);
-                                                                    break;
-                                                                }
-                                                            }
-                                                            if (is_null(seb)) {
-                                                                {
-                                                                    auto cs_target = self->seb;
-                                                                    auto cs_index = l;
-                                                                    auto cs_value = ResourceManager::LoadSeb(
-                                                                        pls::diagnostic::api_call(
-                                                                            [&]() -> decltype(auto) {
-                                                                                return require(
-                                                                                           jar_cell->value)
-                                                                                    ->GetData(fileName3);
-                                                                            }));
-                                                                    cs_target.set_Item(cs_index, cs_value);
-                                                                }
+                                                                StringArray array8 = PLS_API(([&]() {
+                                                                    auto cs_text = text4;
+                                                                    auto cs_separators =
+                                                                        pls::cs::Array<char16_t>::make(1);
+                                                                    cs_separators.at(0) = u'x';
+                                                                    return pls::cs::string_split(
+                                                                        cs_text, cs_separators);
+                                                                }()));
+                                                                width =
+                                                                    PLS_API(pls::cs::int32_parse(array8[0]));
+                                                                height =
+                                                                    PLS_API(pls::cs::int32_parse(array8[1]));
                                                             } else {
-                                                                {
-                                                                    auto cs_target = self->seb;
-                                                                    auto cs_index = l;
-                                                                    auto cs_value = Seb::create_2(seb);
-                                                                    cs_target.set_Item(cs_index, cs_value);
-                                                                }
-                                                            }
-                                                            if ((self->recordNameBits_ & 2) != 0) {
-                                                                require(self->seb.get_Item(l))
-                                                                    ->SetName(fileName3);
-                                                            }
-                                                            require(self->seb.get_Item(l))->manager_ = self;
-                                                            require(self->seb.get_Item(l))->Reverse(u, v);
-                                                            if (num21 > 0) {
-                                                                require(self->seb.get_Item(l))
-                                                                    ->SetCacheSize(num21);
-                                                            }
-                                                            ++num19;
-                                                        } catch (const pls::cs::Exception& cs_caught_63) {
-                                                            auto t3 =
-                                                                pls::cs::capture_exception(cs_caught_63);
-                                                            {
-                                                                util::Log::Error(
-                                                                    pls::cs::String::concat(
-                                                                        literal(u"loadSebに失敗:"),
-                                                                        fileName3),
-                                                                    t3);
+                                                                flag5 = true;
                                                             }
                                                         }
                                                     }
-                                                } else if ((num18 == 2)) {
-                                                    {
-                                                        pls::cs::String text = pls::diagnostic::api_call(
-                                                            [&]() -> decltype(auto) {
-                                                                return kl_cfg::Config::ConvertExtension(
-                                                                    kl_lang::StringEx::ToLowerCase(
-                                                                        self->list_[2][l]));
-                                                            });
-                                                        pls::cs::Int32 num20 = -1;
-                                                        for (pls::cs::Int32 m = 0;
-                                                             m < ResourceManager::SOUND_EXT().length(); ++m) {
-                                                            if (pls::diagnostic::api_call(
-                                                                    [&]() -> decltype(auto) {
-                                                                        return pls::cs::culture_ends_with(
-                                                                            text,
-                                                                            ResourceManager::SOUND_EXT()[m]);
-                                                                    })) {
-                                                                num20 = m;
+                                                    if (kl_cfg::Config::PRINT() && flag5) {
+                                                        PLS_API(kl_unity_util::Log::Info(
+                                                            pls::cs::String::concat(
+                                                                literal(
+                                                                    u"ｲﾒｰｼﾞのｵﾌﾟｼｮﾝが[bin][res][pt][bi][tri][24][32][565][4444][*.pal][q][@]のどれにも当てはまりません:"),
+                                                                self->list_[0][l]),
+                                                            pls::cs::Ref<pls::cs::ExceptionObject>{}));
+                                                    }
+                                                    try {
+                                                        if (self->rsId_ != -1) {
+                                                            {
+                                                                auto cs_target = self->img;
+                                                                auto cs_index = l;
+                                                                auto cs_value = pls::kairo::Image::FromRecord(
+                                                                    self->rsId_, self->rcId_, fileName2,
+                                                                    text3, format, filterMode);
+                                                                cs_target.set_Item(cs_index, cs_value);
+                                                            }
+                                                        } else if (flag3) {
+                                                            if (!self->loaded_ ||
+                                                                util::JarInflater::Exist(
+                                                                    require(jar_cell->value), fileName2)) {
+                                                                ByteArray cs_arg0_30 =
+                                                                    PLS_API(require(jar_cell->value)
+                                                                                ->GetData(fileName2));
+                                                                ByteArray cs_arg1_30 =
+                                                                    ((!is_null(text3))
+                                                                         ? PLS_API(require(jar_cell->value)
+                                                                                       ->GetData(text3))
+                                                                         : ByteArray{});
+                                                                ByteArray src = Image::OverwritePaletteData(
+                                                                    cs_arg0_30, cs_arg1_30);
+                                                                {
+                                                                    auto cs_target = self->img;
+                                                                    auto cs_index = l;
+                                                                    auto cs_value =
+                                                                        pls::kairo::Image::FromBytes(
+                                                                            src, format, filterMode);
+                                                                    cs_target.set_Item(cs_index, cs_value);
+                                                                }
+                                                            }
+                                                        } else if (flag4) {
+                                                            {
+                                                                auto cs_target = self->img;
+                                                                auto cs_index = l;
+                                                                auto cs_value = pls::kairo::Image::FromFile(
+                                                                    pls::cs::String::concat(
+                                                                        util::JarInflater::GetDirectory(
+                                                                            require(jar_cell->value)),
+                                                                        fileName2),
+                                                                    text3, format, filterMode);
+                                                                cs_target.set_Item(cs_index, cs_value);
+                                                            }
+                                                        } else if (!self->loaded_ ||
+                                                                   util::JarInflater::Exist(
+                                                                       require(jar_cell->value), fileName2)) {
+                                                            ByteArray cs_arg0_31 = PLS_API(
+                                                                require(jar_cell->value)->GetData(fileName2));
+                                                            ByteArray cs_arg1_31 =
+                                                                ((!is_null(text3))
+                                                                     ? PLS_API(require(jar_cell->value)
+                                                                                   ->GetData(text3))
+                                                                     : ByteArray{});
+                                                            ByteArray src2 = Image::OverwritePaletteData(
+                                                                cs_arg0_31, cs_arg1_31);
+                                                            {
+                                                                auto cs_target = self->img;
+                                                                auto cs_index = l;
+                                                                auto cs_value = ResourceManager::LoadImage(
+                                                                    src2, format, filterMode);
+                                                                cs_target.set_Item(cs_index, cs_value);
+                                                            }
+                                                        }
+                                                        PLS_API(require(self->img.get_Item(l))
+                                                                    ->SetStandardResolution(width, height));
+                                                        if (flag3 && !is_null(self->img.get_Item(l))) {
+                                                            require(self->img.get_Item(l))->useBin_ = true;
+                                                        }
+                                                        if (!is_null(self->img.get_Item(l))) {
+                                                            require(self->img.get_Item(l))->imageAtlasId_ =
+                                                                imageAtlasId_;
+                                                        }
+                                                        require(self->img.get_Item(l))->renderQueue_ =
+                                                            renderQueue_;
+                                                        if ((self->recordNameBits_ & 1) != 0 &&
+                                                            !is_null(self->img.get_Item(l))) {
+                                                            PLS_API(require(self->img.get_Item(l))
+                                                                        ->SetName(fileName2));
+                                                        }
+                                                        ++num19;
+                                                    } catch (const pls::cs::Exception& cs_caught_62) {
+                                                        auto t2 = pls::cs::capture_exception(cs_caught_62);
+                                                        {
+                                                            util::Log::Error(
+                                                                pls::cs::String::concat(
+                                                                    literal(u"loadImageに失敗:"), fileName2),
+                                                                t2);
+                                                        }
+                                                    }
+                                                }
+                                            } else if ((num18 == 1)) {
+                                                {
+                                                    pls::cs::String fileName3 =
+                                                        self->GetFileName(self->list_[1][l]);
+                                                    StringArray array9 =
+                                                        PLS_API(kl_unity_util::StringUtil::Split(
+                                                            fileName3, literal(u",")));
+                                                    bool u = false;
+                                                    bool v = false;
+                                                    pls::cs::Int32 num21 = 0;
+                                                    for (pls::cs::Int32 num22 = 1; num22 < array9.length();
+                                                         ++num22) {
+                                                        char16_t recoveredOptionChar =
+                                                            kl_lang::StringEx::CharAt(array9[num22], 0);
+                                                        if (pls::cs::cast_integral<pls::cs::Int32>(
+                                                                recoveredOptionChar) ==
+                                                            pls::cs::cast_integral<pls::cs::Int32>(u'u')) {
+                                                            u = true;
+                                                        } else if (pls::cs::cast_integral<pls::cs::Int32>(
+                                                                       recoveredOptionChar) ==
+                                                                   pls::cs::cast_integral<pls::cs::Int32>(
+                                                                       u'v')) {
+                                                            v = true;
+                                                        } else if (pls::cs::cast_integral<pls::cs::Int32>(
+                                                                       recoveredOptionChar) ==
+                                                                   pls::cs::cast_integral<pls::cs::Int32>(
+                                                                       u'c')) {
+                                                            num21 = PLS_API(kl_lang::JInteger::ParseInt(
+                                                                PLS_API(substring1(array9[num22], 1))));
+                                                        }
+                                                    }
+                                                    fileName3 = array9[0];
+                                                    sebFileName_cell->value[l] = fileName3;
+                                                    try {
+                                                        pls::cs::Ref<Seb> seb = pls::cs::Ref<Seb>{};
+                                                        for (pls::cs::Int32 num23 = 0; num23 < l; ++num23) {
+                                                            if (PLS_API(string_equals(
+                                                                    fileName3,
+                                                                    sebFileName_cell->value[num23]))) {
+                                                                seb = self->seb.get_Item(num23);
                                                                 break;
                                                             }
                                                         }
-                                                        if (num20 == -1) {
-                                                            continue;
-                                                        }
-                                                        try {
-                                                            pls::cs::String text2 =
-                                                                ((is_null(self->directory_))
-                                                                     ? literal(u"")
-                                                                     : self->directory_);
+                                                        if (is_null(seb)) {
                                                             {
-                                                                auto cs_target = self->sound;
+                                                                auto cs_target = self->seb;
                                                                 auto cs_index = l;
-                                                                auto cs_value = ResourceManager::LoadSound(
-                                                                    pls::cs::String::concat(text2, text),
-                                                                    num20);
+                                                                auto cs_value = ResourceManager::LoadSeb(
+                                                                    PLS_API(require(jar_cell->value)
+                                                                                ->GetData(fileName3)));
                                                                 cs_target.set_Item(cs_index, cs_value);
                                                             }
-                                                            if ((self->recordNameBits_ & 4) != 0) {
-                                                                pls::diagnostic::api_call(
-                                                                    [&]() -> decltype(auto) {
-                                                                        return require(
-                                                                                   self->sound.get_Item(l))
-                                                                            ->SetName(text);
-                                                                    });
-                                                            }
-                                                            ++num19;
-                                                        } catch (const pls::cs::Exception& cs_caught_64) {
-                                                            auto t = pls::cs::capture_exception(cs_caught_64);
+                                                        } else {
                                                             {
-                                                                util::Log::Error(
-                                                                    pls::cs::String::concat(
-                                                                        literal(u"loadSoundに失敗:"), text),
-                                                                    t);
+                                                                auto cs_target = self->seb;
+                                                                auto cs_index = l;
+                                                                auto cs_value = Seb::create_2(seb);
+                                                                cs_target.set_Item(cs_index, cs_value);
                                                             }
+                                                        }
+                                                        if ((self->recordNameBits_ & 2) != 0) {
+                                                            require(self->seb.get_Item(l))
+                                                                ->SetName(fileName3);
+                                                        }
+                                                        require(self->seb.get_Item(l))->manager_ = self;
+                                                        require(self->seb.get_Item(l))->Reverse(u, v);
+                                                        if (num21 > 0) {
+                                                            require(self->seb.get_Item(l))
+                                                                ->SetCacheSize(num21);
+                                                        }
+                                                        ++num19;
+                                                    } catch (const pls::cs::Exception& cs_caught_63) {
+                                                        auto t3 = pls::cs::capture_exception(cs_caught_63);
+                                                        {
+                                                            util::Log::Error(
+                                                                pls::cs::String::concat(
+                                                                    literal(u"loadSebに失敗:"), fileName3),
+                                                                t3);
                                                         }
                                                     }
                                                 }
-                                                if (num19 > 0 && ([&]() -> bool {
-                                                        auto cs_left =
-                                                            pls::diagnostic::api_call([&]()
-                                                                                          -> decltype(auto) {
-                                                                return kl_lang::JSystem::CurrentTimeMillis();
-                                                            }) -
-                                                            num17;
-                                                        auto cs_right =
-                                                            pls::cs::cast_integral<pls::cs::Int64>(
-                                                                ResourceManager::get_YieldTime());
-                                                        return cs_left >= cs_right;
-                                                    }())) {
-                                                    return;
+                                            } else if ((num18 == 2)) {
+                                                {
+                                                    pls::cs::String text =
+                                                        PLS_API(kl_cfg::Config::ConvertExtension(
+                                                            kl_lang::StringEx::ToLowerCase(
+                                                                self->list_[2][l])));
+                                                    pls::cs::Int32 num20 = -1;
+                                                    for (pls::cs::Int32 m = 0;
+                                                         m < ResourceManager::SOUND_EXT().length(); ++m) {
+                                                        if (PLS_API(pls::cs::culture_ends_with(
+                                                                text, ResourceManager::SOUND_EXT()[m]))) {
+                                                            num20 = m;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (num20 == -1) {
+                                                        continue;
+                                                    }
+                                                    try {
+                                                        pls::cs::String text2 =
+                                                            ((is_null(self->directory_)) ? literal(u"")
+                                                                                         : self->directory_);
+                                                        {
+                                                            auto cs_target = self->sound;
+                                                            auto cs_index = l;
+                                                            auto cs_value = ResourceManager::LoadSound(
+                                                                pls::cs::String::concat(text2, text), num20);
+                                                            cs_target.set_Item(cs_index, cs_value);
+                                                        }
+                                                        if ((self->recordNameBits_ & 4) != 0) {
+                                                            PLS_API(require(self->sound.get_Item(l))
+                                                                        ->SetName(text));
+                                                        }
+                                                        ++num19;
+                                                    } catch (const pls::cs::Exception& cs_caught_64) {
+                                                        auto t = pls::cs::capture_exception(cs_caught_64);
+                                                        {
+                                                            util::Log::Error(
+                                                                pls::cs::String::concat(
+                                                                    literal(u"loadSoundに失敗:"), text),
+                                                                t);
+                                                        }
+                                                    }
                                                 }
+                                            }
+                                            if (num19 > 0 && ([&]() -> bool {
+                                                    auto cs_left =
+                                                        PLS_API(kl_lang::JSystem::CurrentTimeMillis()) -
+                                                        num17;
+                                                    auto cs_right = pls::cs::cast_integral<pls::cs::Int64>(
+                                                        ResourceManager::get_YieldTime());
+                                                    return cs_left >= cs_right;
+                                                }())) {
+                                                return;
                                             }
                                         }
                                     }
                                 }
-                            },
-                            loadTask_cell, jar_cell, sebFileName_cell, this);
-                        require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-                    }());
-                });
+                            }
+                        },
+                        loadTask_cell, jar_cell, sebFileName_cell, this);
+                    require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+                }()));
                 bool flag = true;
                 for (pls::cs::Int32 num = 0; num < loadTask_cell->value.length(); ++num) {
                     if ([&]() -> bool {
@@ -1013,20 +855,14 @@ void ResourceManager::LoadStart(pls::cs::Ref<kl_unity_util::JarInflater> jar, pl
                 for (pls::cs::Int32 num12 = 0; num12 < img.length(); ++num12) {
                     if (!is_null(img.get_Item(num12))) {
                         pls::cs::String fileName = GetFileName(list_[0][num12]);
-                        fileName = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::StringUtil::Split(fileName, literal(u","));
-                        })[0];
+                        fileName = PLS_API(kl_unity_util::StringUtil::Split(fileName, literal(u",")))[0];
                         fileName = pls::cs::String::concat(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return substring2(fileName, 0, kl_lang::StringEx::Length(fileName) - 3);
-                            }),
+                            PLS_API(substring2(fileName, 0, kl_lang::StringEx::Length(fileName) - 3)),
                             literal(u"opt"));
                         if (util::JarInflater::Exist(require(jar_cell->value), fileName)) {
                             {
                                 auto cs_receiver = img.get_Item(num12);
-                                ByteArray cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(jar_cell->value)->GetData(fileName);
-                                });
+                                ByteArray cs_arg0 = PLS_API(require(jar_cell->value)->GetData(fileName));
                                 pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> cs_arg1 = img;
                                 Image::LoadOptimizeByteArray(require(cs_receiver), cs_arg0, cs_arg1);
                             }
@@ -1038,20 +874,15 @@ void ResourceManager::LoadStart(pls::cs::Ref<kl_unity_util::JarInflater> jar, pl
                 pls::cs::make_ref<pls::cs::Cell<pls::cs::List<IntArray>>>(pls::cs::List<IntArray>::make());
             for (pls::cs::Int32 num13 = 0; num13 < img.length(); ++num13) {
                 if (!is_null(img.get_Item(num13)) && require(img.get_Item(num13))->imageAtlasId_ != -1) {
-                    auto cs_left_32 = pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                          return require(img.get_Item(num13))->GetHeight();
-                                      })) *
-                                      100;
-                    auto cs_right_32 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(img.get_Item(num13))->GetWidth(); });
+                    auto cs_left_32 =
+                        pls::cs::Int32(PLS_API(require(img.get_Item(num13))->GetHeight())) * 100;
+                    auto cs_right_32 = PLS_API(require(img.get_Item(num13))->GetWidth());
                     pls::cs::Int32 num14 = cs_left_32 + cs_right_32;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = atlasIamges_cell->value;
-                            auto cs_arg0 = IntArray::from({num13, num14});
-                            cs_receiver.Add(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = atlasIamges_cell->value;
+                        auto cs_arg0 = IntArray::from({num13, num14});
+                        cs_receiver.Add(cs_arg0);
+                    }()));
                 }
             }
             for (pls::cs::Int32 num15 = 0; num15 < pls::cs::Int32(atlasIamges_cell->value.get_Count()) - 1;
@@ -1079,31 +910,25 @@ void ResourceManager::LoadStart(pls::cs::Ref<kl_unity_util::JarInflater> jar, pl
                     }
                 }
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                    pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
-                        pls::cs::raw(atlasIamges_cell),
-                        std::string(
-                            "M:kairo.unity.ui.ResourceManager.LoadStart(kairo.unity.util.JarInflater,System.Int32):17075"),
-                        [atlasIamges_cell, self = this]() -> void {
-                            {
-                                for (pls::cs::Int32 k_2 = 0; k_2 < atlasIamges_cell->value.get_Count();
-                                     ++k_2) {
-                                    auto cs_array_33 = self->img;
-                                    auto cs_index_33 = atlasIamges_cell->value.get_Item(k_2)[0];
-                                    pls::cs::Ref<pls::kairo::Image> obj = cs_array_33.get_Item(cs_index_33);
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return require(obj)->SetImageAtlasId(require(obj)->imageAtlasId_);
-                                    });
-                                }
+            PLS_API(([&]() -> void {
+                auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
+                    pls::cs::raw(atlasIamges_cell),
+                    std::string(
+                        "M:kairo.unity.ui.ResourceManager.LoadStart(kairo.unity.util.JarInflater,System.Int32):17075"),
+                    [atlasIamges_cell, self = this]() -> void {
+                        {
+                            for (pls::cs::Int32 k_2 = 0; k_2 < atlasIamges_cell->value.get_Count(); ++k_2) {
+                                auto cs_array_33 = self->img;
+                                auto cs_index_33 = atlasIamges_cell->value.get_Item(k_2)[0];
+                                pls::cs::Ref<pls::kairo::Image> obj = cs_array_33.get_Item(cs_index_33);
+                                PLS_API(require(obj)->SetImageAtlasId(require(obj)->imageAtlasId_));
                             }
-                        },
-                        atlasIamges_cell, this);
-                    require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-                }());
-            });
+                        }
+                    },
+                    atlasIamges_cell, this);
+                require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+            }()));
             loaded_ = true;
         }
     }
@@ -1117,10 +942,8 @@ bool ResourceManager::CheckFileEffective(pls::cs::String file) {
         if (is_null(file) || kl_lang::StringEx::Length(file) == 0) {
             return false;
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_index_of(file, literal(u"\\")); }) == -1 &&
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_index_of(file, literal(u"/")); }) == -1) {
+        if (PLS_API(pls::cs::culture_index_of(file, literal(u"\\"))) == -1 &&
+            PLS_API(pls::cs::culture_index_of(file, literal(u"/"))) == -1) {
             return !loaded_;
         }
         return loaded_;
@@ -1131,16 +954,15 @@ bool ResourceManager::CheckFileEffective(pls::cs::String file) {
 pls::cs::String ResourceManager::GetFileName(pls::cs::String file) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.ResourceManager.GetFileName(System.String)", kairo);
     {
-        pls::cs::Int32 num =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return last_index_char1(file, u'\\'); });
+        pls::cs::Int32 num = PLS_API(last_index_char1(file, u'\\'));
         if (num != -1) {
-            file = pls::diagnostic::api_call([&]() -> decltype(auto) { return substring1(file, num + 1); });
+            file = PLS_API(substring1(file, num + 1));
         }
-        num = pls::diagnostic::api_call([&]() -> decltype(auto) { return last_index_char1(file, u'/'); });
+        num = PLS_API(last_index_char1(file, u'/'));
         if (num != -1) {
-            file = pls::diagnostic::api_call([&]() -> decltype(auto) { return substring1(file, num + 1); });
+            file = PLS_API(substring1(file, num + 1));
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::string_trim(file); });
+        return PLS_API(pls::cs::string_trim(file));
     }
 }
 
@@ -1158,8 +980,7 @@ void ResourceManager::Dispose(bool keepFileList) {
     {
         for (pls::cs::Int32 num = pls::cs::Int32(sound.length()) - 1; num >= 0; --num) {
             if (!is_null(sound.get_Item(num))) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(sound.get_Item(num))->Dispose(); });
+                PLS_API(require(sound.get_Item(num))->Dispose());
             }
             sound.set_Item(num, pls::cs::Ref<pls::kairo::SoundBase>{});
         }
@@ -1171,8 +992,7 @@ void ResourceManager::Dispose(bool keepFileList) {
         }
         for (pls::cs::Int32 num3 = pls::cs::Int32(img.length()) - 1; num3 >= 0; --num3) {
             if (!is_null(img.get_Item(num3))) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(img.get_Item(num3))->Dispose(); });
+                PLS_API(require(img.get_Item(num3))->Dispose());
             }
             img.set_Item(num3, pls::cs::Ref<pls::kairo::Image>{});
         }
@@ -1249,15 +1069,12 @@ pls::cs::Ref<kl_unity_util::JarInflater> ResourceManager::OpenJarCache(pls::cs::
             }
         }
         pls::cs::Ref<kl_unity_util::JarInflater> jarInflater =
-            kl_unity_util::JarInflater::create(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::RecordStore::ReadRecord(rsId, rcId); }));
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                auto cs_receiver = ResourceManager::jarCache_();
-                auto cs_arg0 = ResourceManager_JarCache::create(rsId, rcId, jarInflater);
-                cs_receiver.Add(cs_arg0);
-            }());
-        });
+            kl_unity_util::JarInflater::create(PLS_API(pls::kairo::RecordStore::ReadRecord(rsId, rcId)));
+        PLS_API(([&]() -> void {
+            auto cs_receiver = ResourceManager::jarCache_();
+            auto cs_arg0 = ResourceManager_JarCache::create(rsId, rcId, jarInflater);
+            cs_receiver.Add(cs_arg0);
+        }()));
         return jarInflater;
     }
 }
@@ -1273,12 +1090,10 @@ void ResourceManager::CloseJarCache() {
         for (pls::cs::Int32 num = pls::cs::Int32(ResourceManager::jarCache_().get_Count()) - 1; num >= 0;
              --num) {
             if (!is_null(ResourceManager::jarCache_().get_Item(num).Jar)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(ResourceManager::jarCache_().get_Item(num).Jar)->Close();
-                });
+                PLS_API(require(ResourceManager::jarCache_().get_Item(num).Jar)->Close());
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return ResourceManager::jarCache_().Clear(); });
+        PLS_API(ResourceManager::jarCache_().Clear());
     }
 }
 } // namespace kairo::unity::ui

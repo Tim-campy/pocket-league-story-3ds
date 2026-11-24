@@ -584,8 +584,7 @@ void Camera::create_init(pls::cs::Ref<Camera> self) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.#ctor", game);
     {
         self->apdat_ = main::AppData::GetInstance();
-        self->canvas_ =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        self->canvas_ = PLS_API(pls::kairo::Canvas::GetInstance());
         self->udat_ = UserData::GetInstance();
         Camera::pos() = kl_util3d::Vector3D::create();
         Camera::old_pos() = kl_util3d::Vector3D::create();
@@ -598,9 +597,7 @@ void Camera::create_init(pls::cs::Ref<Camera> self) {
         Camera::camera_gpos() = kl_util3d::Vector3D::create();
         Camera::camera_address() = IntArray::make(2);
         Camera::camera_goalGPos() = kl_util3d::Vector3D::create();
-        self->cameraLimitSPos = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2}));
-        });
+        self->cameraLimitSPos = PLS_API(kl_java_util::JTool::MakeArray<IntArray2>(IntArray::from({4, 2})));
         for (pls::cs::Int32 i = 0; i < self->cameraLimitSPos.length(); ++i) {
             {
                 pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = Camera::CAMERALIMIT_GPOS().get_Item(i);
@@ -609,8 +606,7 @@ void Camera::create_init(pls::cs::Ref<Camera> self) {
             }
         }
         Camera::SetScreenData();
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(Camera::pos())->Set(0.0f, 0.0f, 0.0f); });
+        PLS_API(require(Camera::pos())->Set(0.0f, 0.0f, 0.0f));
         self->SetCameraLimitData();
         self->mode_ = 0;
         IntArray screen_pos = IntArray::make(2);
@@ -655,8 +651,7 @@ void Camera::SetMapMainBasePos() {
         require(Camera::pos())->y_ = require(Camera::save_pos())->y_;
         require(Camera::cursor_pos())->x_ = require(Camera::save_cursorPos())->x_;
         require(Camera::cursor_pos())->y_ = require(Camera::save_cursorPos())->y_;
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(Camera::old_pos())->Set(Camera::pos()); });
+        PLS_API(require(Camera::old_pos())->Set(Camera::pos()));
     }
 }
 
@@ -706,18 +701,13 @@ void Camera::Update_pos() {
         form::SoccerForm::ensure_initialized();
         GameManager::ensure_initialized();
 
-        bool flag = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(131072); });
-        bool flag2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(524288); });
-        bool flag3 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(65536); });
-        bool flag4 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(262144); });
+        bool flag = PLS_API(require(canvas_)->CheckKeyState(131072));
+        bool flag2 = PLS_API(require(canvas_)->CheckKeyState(524288));
+        bool flag3 = PLS_API(require(canvas_)->CheckKeyState(65536));
+        bool flag4 = PLS_API(require(canvas_)->CheckKeyState(262144));
         if (form::SoccerForm::DEBUG_PLAYER_NOTACT() == 1) {
             pls::cs::Ref<Player> player = require(udat_)->GetPlayer(0, 0);
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(require(player)->v_)->Set(0.0f, 0.0f, 0.0f); });
+            PLS_API(require(require(player)->v_)->Set(0.0f, 0.0f, 0.0f));
             if (flag) {
                 require(require(player)->v_)->z_ = 35.0f;
                 require(player)->direct_ = 0;
@@ -847,13 +837,12 @@ void Camera::Update_pos() {
                     Camera::camera_spos()[0] = pls::cs::to_int32(require(Camera::cursor_pos())->x_);
                     Camera::camera_spos()[1] = pls::cs::to_int32(require(Camera::cursor_pos())->y_);
                     Camera::ConvertScreenToGlobal(Camera::camera_spos(), Camera::camera_gpos());
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(Camera::CAMERA_ADS_GPOS())
-                            ->Set(
-                                require(Camera::camera_gpos())->x_ - require(Camera::CAMERA_BASE_GPOS())->x_,
-                                0.0f,
-                                require(Camera::camera_gpos())->z_ - require(Camera::CAMERA_BASE_GPOS())->z_);
-                    });
+                    PLS_API(require(Camera::CAMERA_ADS_GPOS())
+                                ->Set(require(Camera::camera_gpos())->x_ -
+                                          require(Camera::CAMERA_BASE_GPOS())->x_,
+                                      0.0f,
+                                      require(Camera::camera_gpos())->z_ -
+                                          require(Camera::CAMERA_BASE_GPOS())->z_));
                     Camera::ConvertGlobalToAddressMain(Camera::CAMERA_ADS_GPOS(), Camera::camera_address());
                     if (cursorCnt_ < 80) {
                         ++cursorCnt_;
@@ -955,20 +944,18 @@ void Camera::Update_pos() {
                         if (require(team)->lastKickeer_ != -1) {
                             pls::cs::Ref<Player> player2 =
                                 require(team)->players_.get_Item(require(team)->lastKickeer_);
-                            num = pls::cs::to_int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
+                            num = pls::cs::to_int32(
+                                PLS_API(pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
                                     auto cs_left = pls::cs::Single(require(player2)->screen_pos_[0]);
                                     auto cs_right = require(Camera::pos())->x_;
                                     return cs_left - cs_right;
-                                }())));
-                            }));
-                            num2 = pls::cs::to_int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
+                                }())))));
+                            num2 = pls::cs::to_int32(
+                                PLS_API(pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
                                     auto cs_left = pls::cs::Single(require(player2)->screen_pos_[1]);
                                     auto cs_right = require(Camera::pos())->y_;
                                     return cs_left - cs_right;
-                                }())));
-                            }));
+                                }())))));
                             num3 = GameUtil::RateConvert(num, 20, 90, 0, 10, true);
                             if ([&]() -> bool {
                                     auto cs_left = pls::cs::Single(require(player2)->screen_pos_[0]);
@@ -990,20 +977,18 @@ void Camera::Update_pos() {
                 } else {
                     pls::cs::Ref<Ball> ball_ = require(udat_)->ball_;
                     if (!is_null(ball_)) {
-                        num = pls::cs::to_int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
+                        num = pls::cs::to_int32(
+                            PLS_API(pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
                                 auto cs_left = pls::cs::Single(require(ball_)->screen_shadowPos_[0]);
                                 auto cs_right = require(Camera::pos())->x_;
                                 return cs_left - cs_right;
-                            }())));
-                        }));
-                        num2 = pls::cs::to_int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
+                            }())))));
+                        num2 = pls::cs::to_int32(
+                            PLS_API(pls::cs::Single(kl_lang::JMath::Abs(([&]() -> pls::cs::FloatEval {
                                 auto cs_left = pls::cs::Single(require(ball_)->screen_shadowPos_[1]);
                                 auto cs_right = require(Camera::pos())->y_;
                                 return cs_left - cs_right;
-                            }())));
-                        }));
+                            }())))));
                         num3 = GameUtil::RateConvert(num, 20, 90, 0, 13, true);
                         if ([&]() -> bool {
                                 auto cs_left = pls::cs::Single(require(ball_)->screen_shadowPos_[0]);
@@ -1354,20 +1339,11 @@ void Camera::SetCameraLimitData() {
 void Camera::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteVector3D(os, Camera::pos()); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteVector3D(os, Camera::old_pos());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteVector3D(os, Camera::save_pos());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteVector3D(os, Camera::save_cursorPos());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteVector3D(os, Camera::cursor_pos());
-        });
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, Camera::pos()));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, Camera::old_pos()));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, Camera::save_pos()));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, Camera::save_cursorPos()));
+        PLS_API(kl_unity_util::StreamUtil::WriteVector3D(os, Camera::cursor_pos()));
     }
 }
 
@@ -1375,16 +1351,11 @@ void Camera::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void Camera::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.Deserialize(java.io.InputStream)", game);
     {
-        Camera::pos() = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-        Camera::old_pos() = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-        Camera::save_pos() = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-        Camera::save_cursorPos() = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
-        Camera::cursor_pos() = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadVector3D(stream); });
+        Camera::pos() = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        Camera::old_pos() = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        Camera::save_pos() = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        Camera::save_cursorPos() = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        Camera::cursor_pos() = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
     }
 }
 
@@ -1438,15 +1409,12 @@ void Camera::DrawCursor(pls::cs::Ref<pls::kairo::Graphics> g) {
             (require(Camera::pos())->y_ + (require(Camera::cursor_pos())->y_ - require(Camera::pos())->y_) *
                                               pls::cs::Single(scale_) / 100.0f));
         Camera::ConvertScreenToCameraIntArray(Camera::temp_cursorSPos(), temp_cpos);
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                    require(require(apdat_)->resCom2_)->img.get_Item(80);
-                pls::cs::Single cs_arg1 = temp_cpos[0];
-                pls::cs::Single cs_arg2 = temp_cpos[1];
-                require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(require(apdat_)->resCom2_)->img.get_Item(80);
+            pls::cs::Single cs_arg1 = temp_cpos[0];
+            pls::cs::Single cs_arg2 = temp_cpos[1];
+            require(g)->DrawImage(cs_arg0, cs_arg1, cs_arg2);
+        }()));
         return;
     }
 }
@@ -1607,7 +1575,7 @@ void Camera::SetCameraRect() {
 void Camera::Update_normal() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.Update_normal", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(v)->Set(0.0f, 0.0f, 0.0f); });
+        PLS_API(require(v)->Set(0.0f, 0.0f, 0.0f));
         pls::cs::Int32 num = 0;
         pls::cs::Int32 num2 = 0;
         pls::cs::Int32 num3;
@@ -1622,14 +1590,10 @@ void Camera::Update_normal() {
             num3 = 8;
             num4 = 10;
         }
-        bool flag = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(131072); });
-        bool flag2 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(524288); });
-        bool flag3 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(65536); });
-        bool flag4 = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->CheckKeyState(262144); });
+        bool flag = PLS_API(require(canvas_)->CheckKeyState(131072));
+        bool flag2 = PLS_API(require(canvas_)->CheckKeyState(524288));
+        bool flag3 = PLS_API(require(canvas_)->CheckKeyState(65536));
+        bool flag4 = PLS_API(require(canvas_)->CheckKeyState(262144));
         if (flag4 && flag) {
             num = num4 / 1;
             num2 = num4 / 2;
@@ -1651,8 +1615,8 @@ void Camera::Update_normal() {
         } else if (flag3) {
             num = -num3;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(v)->Set(num, num2, 0.0f); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(Camera::cursor_pos())->Add(v); });
+        PLS_API(require(v)->Set(num, num2, 0.0f));
+        PLS_API(require(Camera::cursor_pos())->Add(v));
         if (num == 0 && num2 == 0) {
             cursorPressCnt_ = 0;
             pls::cs::Ref<kl_util3d::Vector3D> touchCameraSpeed_ =
@@ -1664,39 +1628,29 @@ void Camera::Update_normal() {
             bool touchDragCamera_ = require(require(apdat_)->frmGame_)->touchDragCamera_;
             bool touchBuildDrag_ = require(require(apdat_)->frmGame_)->touchBuildDrag_;
             if (require(touchCameraSpeed_)->x_ != 0.0f || require(touchCameraSpeed_)->z_ != 0.0f) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(touchCameraDecimal_)->Add(touchCameraSpeed_); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(touchCameraSpeed_)
-                        ->Set(require(touchCameraSpeed_)->x_ / 1.75f, require(touchCameraSpeed_)->y_ / 1.75f,
-                              require(touchCameraSpeed_)->z_ / 1.75f);
-                });
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::cs::Single(kl_lang::JMath::Abs(require(touchCameraSpeed_)->x_));
-                    }) < 0.5f) {
+                PLS_API(require(touchCameraDecimal_)->Add(touchCameraSpeed_));
+                PLS_API(require(touchCameraSpeed_)
+                            ->Set(require(touchCameraSpeed_)->x_ / 1.75f,
+                                  require(touchCameraSpeed_)->y_ / 1.75f,
+                                  require(touchCameraSpeed_)->z_ / 1.75f));
+                if (PLS_API(pls::cs::Single(kl_lang::JMath::Abs(require(touchCameraSpeed_)->x_))) < 0.5f) {
                     require(touchCameraSpeed_)->x_ = 0.0f;
                 }
-                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return pls::cs::Single(kl_lang::JMath::Abs(require(touchCameraSpeed_)->z_));
-                    }) < 0.5f) {
+                if (PLS_API(pls::cs::Single(kl_lang::JMath::Abs(require(touchCameraSpeed_)->z_))) < 0.5f) {
                     require(touchCameraSpeed_)->z_ = 0.0f;
                 }
                 num = pls::cs::to_int32(require(touchCameraDecimal_)->x_);
                 num2 = pls::cs::to_int32(require(touchCameraDecimal_)->z_);
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(touchCameraDecimal_)->Add(-num, 0.0f, -num2); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(Camera::cursor_pos())->Add(num, -num2, 0.0f); });
+                PLS_API(require(touchCameraDecimal_)->Add(-num, 0.0f, -num2));
+                PLS_API(require(Camera::cursor_pos())->Add(num, -num2, 0.0f));
                 ++cursorPressCnt_;
                 flg_disp = false;
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(Camera::pos())->Set(Camera::cursor_pos()); });
+                PLS_API(require(Camera::pos())->Set(Camera::cursor_pos()));
             }
         } else {
             ++cursorPressCnt_;
             flg_disp = true;
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(Camera::pos())->Set(Camera::cursor_pos()); });
+            PLS_API(require(Camera::pos())->Set(Camera::cursor_pos()));
         }
     }
 }
@@ -1725,36 +1679,27 @@ void Camera::Collision(pls::cs::Int32 cursor_sx, pls::cs::Int32 cursor_sy) {
         Camera::temp_spos()[0] = cursor_sx;
         Camera::temp_spos()[1] = cursor_sy;
         Camera::ConvertScreenToGlobal(Camera::temp_spos(), Camera::temp_gpos());
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(Camera::CAMERA_ADS_GPOS())
-                ->Set(require(Camera::temp_gpos())->x_ - require(Camera::CAMERA_BASE_GPOS())->x_, 0.0f,
-                      require(Camera::temp_gpos())->z_ - require(Camera::CAMERA_BASE_GPOS())->z_);
-        });
+        PLS_API(require(Camera::CAMERA_ADS_GPOS())
+                    ->Set(require(Camera::temp_gpos())->x_ - require(Camera::CAMERA_BASE_GPOS())->x_, 0.0f,
+                          require(Camera::temp_gpos())->z_ - require(Camera::CAMERA_BASE_GPOS())->z_));
         Camera::ConvertGlobalToAddressMain(Camera::CAMERA_ADS_GPOS(), Camera::temp_address());
         pls::cs::Ref<form::FormManager> formManager = form::FormManager::GetInstance();
-        pls::cs::Ref<pls::kairo::FormBase> currentForm = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(formManager)->GetCurrentForm(); });
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return require(currentForm)->GetId(); }) ==
-            9) {
+        pls::cs::Ref<pls::kairo::FormBase> currentForm = PLS_API(require(formManager)->GetCurrentForm());
+        if (PLS_API(require(currentForm)->GetId()) == 9) {
             bool flag = false;
             for (pls::cs::Int32 i = 0; i < require(udat_)->tAreas_.length() && !flag; ++i) {
                 for (pls::cs::Int32 j = 0; j < require(udat_)->tAreas_[i].length() && !flag; ++j) {
                     pls::cs::Ref<TArea> tArea = require(udat_)->tAreas_[i].get_Item(j);
                     for (pls::cs::Int32 k = 0; k < require(tArea)->tGroupAreas_.length() && !flag; ++k) {
                         pls::cs::Ref<TGroupArea> tGroupArea = require(tArea)->tGroupAreas_.get_Item(k);
-                        for (pls::cs::Int32 l = 0; l < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                       return kl_java_util::Vector_2_Size(
-                                                           require(require(tGroupArea)->tPlayerList_));
-                                                   });
+                        for (pls::cs::Int32 l = 0;
+                             l <
+                             PLS_API(kl_java_util::Vector_2_Size(require(require(tGroupArea)->tPlayerList_)));
                              ++l) {
                             pls::cs::Ref<TPlayer> tPlayer = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(
-                                        require(require(tGroupArea)->tPlayerList_), l);
-                                }));
-                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::BitUtil::Check(require(tPlayer)->flag_, 1);
-                                })) {
+                                PLS_API(kl_java_util::Vector_2_ElementAt(
+                                    require(require(tGroupArea)->tPlayerList_), l)));
+                            if (PLS_API(kl_unity_util::BitUtil::Check(require(tPlayer)->flag_, 1))) {
                                 continue;
                             }
                             if ([&]() -> bool {

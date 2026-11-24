@@ -78,7 +78,7 @@ def main(argv):
     if argv[:1] == ['--tree']:
         old, new = Path(argv[1]), Path(argv[2]); bad = 0; count = 0
         for f in sorted(old.iterdir()):
-            if f.suffix not in ('.cpp', '.hpp', '.inc', '.h'): continue
+            if f.suffix not in ('.cpp', '.hpp', '.inc', '.h', '.i'): continue
             count += 1; d = compare(f, new / f.name)
             if d:
                 bad += 1; print(f.name); [print('  ', x) for x in d]

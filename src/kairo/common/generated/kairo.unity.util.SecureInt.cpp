@@ -153,7 +153,7 @@ bool SecureInt::Equals(pls::cs::Ref<SecureInt> self, pls::cs::Ref<pls::cs::Objec
 std::int32_t SecureInt::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.util.SecureInt.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return value_hash(value_); });
+        return PLS_API(value_hash(value_));
     }
 }
 } // namespace kairo::unity::util

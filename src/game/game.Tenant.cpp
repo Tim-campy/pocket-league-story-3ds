@@ -107,47 +107,21 @@ void Tenant::Init(pls::cs::Int32 root) {
 void Tenant::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Tenant.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(id_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(address_[0]));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(address_[1]));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, stateCnt_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os,
-                                                         pls::cs::cast_integral<std::int16_t>(tenantDataId_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(root_));
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteInt(os, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                           return kl_java_util::Vector_2_Size(
-                                                               require(useTPlayers_));
-                                                       }));
-        });
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(useTPlayers_));
-                                   });
-             ++i) {
-            pls::cs::Ref<TPlayer> tPlayer =
-                pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(useTPlayers_), i);
-                }));
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StreamUtil::WriteShort(
-                    os, pls::cs::cast_integral<std::int16_t>(require(tPlayer)->trainingId_[0]));
-            });
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(id_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(address_[0])));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(address_[1])));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(os, stateCnt_));
+        PLS_API(
+            kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(tenantDataId_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(root_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteInt(
+            os, PLS_API(kl_java_util::Vector_2_Size(require(useTPlayers_)))));
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(useTPlayers_))); ++i) {
+            pls::cs::Ref<TPlayer> tPlayer = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(useTPlayers_), i)));
+            PLS_API(kl_unity_util::StreamUtil::WriteShort(
+                os, pls::cs::cast_integral<std::int16_t>(require(tPlayer)->trainingId_[0])));
         }
     }
 }
@@ -159,39 +133,35 @@ void Tenant::Deserialize(pls::cs::Ref<kl_io::InputStream> stream, pls::cs::Int32
         data::TenantData::ensure_initialized();
 
         Init(data::TenantData::TENANT_ROOT()[index]);
-        id_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+        id_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
         {
             auto cs_target = address_;
             auto cs_index = 0;
-            auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+            auto cs_value =
+                pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = address_;
             auto cs_index = 1;
-            auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+            auto cs_value =
+                pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
             cs_target.set_Item(cs_index, cs_value);
         }
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        stateCnt_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
-        tenantDataId_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        root_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
-        pls::cs::Int32 num = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+        state_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        stateCnt_ = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
+        tenantDataId_ =
+            pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        root_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
+        pls::cs::Int32 num = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
         useTPlayersId = IntArray::make(num);
         for (pls::cs::Int32 i = 0; i < useTPlayersId.length(); ++i) {
             {
                 auto cs_target = useTPlayersId;
                 auto cs_index = i;
-                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadShort(stream); }));
+                auto cs_value = pls::cs::cast_integral<pls::cs::Int32>(
+                    PLS_API(kl_unity_util::StreamUtil::ReadShort(stream)));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
@@ -206,9 +176,7 @@ void Tenant::Deserialize2() {
         for (pls::cs::Int32 i = 0; i < useTPlayersId.length(); ++i) {
             pls::cs::Ref<TPlayer> obj =
                 require(UserData::GetInstance())->tPlayers_.get_Item(useTPlayersId[i]);
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_AddElement(require(useTPlayers_), pls::cs::box(obj));
-            });
+            PLS_API(kl_java_util::Vector_2_AddElement(require(useTPlayers_), pls::cs::box(obj)));
         }
     }
 }
@@ -261,12 +229,9 @@ void Tenant::Update() {
                 }
             }
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(useTPlayers_)); }) > 0) {
-            pls::cs::Ref<TPlayer> tPlayer =
-                pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(useTPlayers_), 0);
-                }));
+        if (PLS_API(kl_java_util::Vector_2_Size(require(useTPlayers_))) > 0) {
+            pls::cs::Ref<TPlayer> tPlayer = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(useTPlayers_), 0)));
             ++require(tPlayer)->useTenantCnt_;
             if (require(tPlayer)->useTenantCnt_ == 1) {
                 pls::cs::Int32 userPrice = require(tenantData)->GetUserPrice();
@@ -307,9 +272,7 @@ void Tenant::Update() {
                     auto cs_right = Tenant::USETENANT_TIME()[1];
                     return cs_left >= cs_right;
                 }()) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_RemoveElementAt(require(useTPlayers_), 0);
-                });
+                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(useTPlayers_), 0));
                 require(udat_)->SetTenantIn(tPlayer);
             }
         }
@@ -325,12 +288,9 @@ void Tenant::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         form::GameForm::ensure_initialized();
 
         Draw_tenantEffect(g);
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(useTPlayers_)); }) > 0) {
-            pls::cs::Ref<TPlayer> tPlayer =
-                pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(useTPlayers_), 0);
-                }));
+        if (PLS_API(kl_java_util::Vector_2_Size(require(useTPlayers_))) > 0) {
+            pls::cs::Ref<TPlayer> tPlayer = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(useTPlayers_), 0)));
             Camera::ConvertScreenToCameraIntArray(MapMain::MAPCHIP_SPOS()[address_[1]][address_[0]],
                                                   Tenant::camera_pos());
             {
@@ -365,9 +325,7 @@ void Tenant::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                                       0);
                 }
             }
-            if ((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return kl_java_util::Vector_2_Size(require(useTPlayers_));
-                 }) > 1) &&
+            if ((PLS_API(kl_java_util::Vector_2_Size(require(useTPlayers_))) > 1) &&
                 (require(require(apdat_)->save_)->ints[12] == 1)) {
                 {
                     auto cs_target = Tenant::camera_pos();
@@ -381,23 +339,18 @@ void Tenant::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 num = 0;
                 x = num;
                 draw_cnt = 0;
-                pls::cs::Int32 num2 =
-                    main::AppData::ClampMax(4, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                   return kl_java_util::Vector_2_Size(require(useTPlayers_));
-                                               }) - 1);
+                pls::cs::Int32 num2 = main::AppData::ClampMax(
+                    4, PLS_API(kl_java_util::Vector_2_Size(require(useTPlayers_))) - 1);
                 for (pls::cs::Int32 num3 = num2; num3 >= 1; --num3) {
                     x = Tenant::camera_pos()[0] + (num3 - 1) * 8;
                     num = Tenant::camera_pos()[1] + (num3 - 1) * -4;
                     pls::cs::Ref<TPlayer> tPlayer2 = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(useTPlayers_), num3);
-                        }));
+                        PLS_API(kl_java_util::Vector_2_ElementAt(require(useTPlayers_), num3)));
                     require(tPlayer2)->direct_ = 2;
                     {
                         auto cs_target = tPlayer2;
-                        pls::cs::Int32 cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::BitUtil::Off(require(tPlayer2)->flag_, 2);
-                        });
+                        pls::cs::Int32 cs_value =
+                            PLS_API(kl_unity_util::BitUtil::Off(require(tPlayer2)->flag_, 2));
                         require(cs_target)->flag_ = cs_value;
                     }
                     pls::cs::Int32 layer = require(tPlayer2)->SetDrawParam(require(tPlayer2)->seb_, -1);
@@ -438,12 +391,10 @@ void Tenant::Draw_tenantEffect(pls::cs::Ref<pls::kairo::Graphics> g) {
                             pls::cs::Int32 cs_arg0 = Tenant::camera_pos()[0];
                             pls::cs::Int32 cs_arg1 = ([&]() -> pls::cs::Int32 {
                                 auto cs_left = Tenant::camera_pos()[1] + 29;
-                                auto cs_right = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                                auto cs_right = PLS_API(require(image)->GetHeight());
                                 return cs_left - cs_right;
                             }());
-                            pls::cs::Int32 cs_arg3 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(image)->GetHeight(); });
+                            pls::cs::Int32 cs_arg3 = PLS_API(require(image)->GetHeight());
                             return GameUtil::ChRectHitRect(cs_arg0, cs_arg1, 60, cs_arg3,
                                                            form::GameForm::VIEW_X(), form::GameForm::VIEW_Y(),
                                                            form::GameForm::VIEW_W(), form::GameForm::VIEW_H(),
@@ -472,12 +423,10 @@ void Tenant::Draw_tenantEffect(pls::cs::Ref<pls::kairo::Graphics> g) {
                             pls::cs::Int32 cs_arg0 = Tenant::camera_pos()[0];
                             pls::cs::Int32 cs_arg1 = ([&]() -> pls::cs::Int32 {
                                 auto cs_left = Tenant::camera_pos()[1] + 29;
-                                auto cs_right = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(image2)->GetHeight(); });
+                                auto cs_right = PLS_API(require(image2)->GetHeight());
                                 return cs_left - cs_right;
                             }());
-                            pls::cs::Int32 cs_arg3 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(image2)->GetHeight(); });
+                            pls::cs::Int32 cs_arg3 = PLS_API(require(image2)->GetHeight());
                             return GameUtil::ChRectHitRect(cs_arg0, cs_arg1, 60, cs_arg3,
                                                            form::GameForm::VIEW_X(), form::GameForm::VIEW_Y(),
                                                            form::GameForm::VIEW_W(), form::GameForm::VIEW_H(),
@@ -508,12 +457,10 @@ void Tenant::Draw_tenantEffect(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 pls::cs::Int32 cs_arg0 = Tenant::camera_pos()[0];
                                 pls::cs::Int32 cs_arg1 = ([&]() -> pls::cs::Int32 {
                                     auto cs_left = Tenant::camera_pos()[1] + 29;
-                                    auto cs_right = pls::diagnostic::api_call(
-                                        [&]() -> decltype(auto) { return require(image3)->GetHeight(); });
+                                    auto cs_right = PLS_API(require(image3)->GetHeight());
                                     return cs_left - cs_right;
                                 }());
-                                pls::cs::Int32 cs_arg3 = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(image3)->GetHeight(); });
+                                pls::cs::Int32 cs_arg3 = PLS_API(require(image3)->GetHeight());
                                 return GameUtil::ChRectHitRect(
                                     cs_arg0, cs_arg1, 60, cs_arg3, form::GameForm::VIEW_X(),
                                     form::GameForm::VIEW_Y(), form::GameForm::VIEW_W(),
@@ -542,20 +489,12 @@ void Tenant::BuildTenant(pls::cs::Int32 tenantDataId) {
         tenantDataId_ = tenantDataId;
         ChangeState(2);
         for (pls::cs::Int32 num =
-                 pls::diagnostic::api_call([&]() -> decltype(auto) {
-                     return kl_java_util::Vector_2_Size(require(require(udat_)->restTPlayers_));
-                 }) -
-                 1;
+                 PLS_API(kl_java_util::Vector_2_Size(require(require(udat_)->restTPlayers_))) - 1;
              num >= 0; --num) {
-            pls::cs::Ref<TPlayer> tenantIn =
-                pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(require(udat_)->restTPlayers_), num);
-                }));
+            pls::cs::Ref<TPlayer> tenantIn = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(require(udat_)->restTPlayers_), num)));
             if (require(udat_)->SetTenantIn(tenantIn)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_RemoveElementAt(require(require(udat_)->restTPlayers_),
-                                                                  num);
-                });
+                PLS_API(kl_java_util::Vector_2_RemoveElementAt(require(require(udat_)->restTPlayers_), num));
             }
         }
     }
@@ -586,21 +525,13 @@ void Tenant::StrenghTenant() {
 void Tenant::OutUserTPlayers() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Tenant.OutUserTPlayers", game);
     {
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(useTPlayers_));
-                                   });
-             ++i) {
-            pls::cs::Ref<TPlayer> tenantIn =
-                pls::cs::unbox<pls::cs::Ref<TPlayer>>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_ElementAt(require(useTPlayers_), i);
-                }));
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(useTPlayers_))); ++i) {
+            pls::cs::Ref<TPlayer> tenantIn = pls::cs::unbox<pls::cs::Ref<TPlayer>>(
+                PLS_API(kl_java_util::Vector_2_ElementAt(require(useTPlayers_), i)));
             require(udat_)->SetTenantIn(tenantIn);
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(useTPlayers_)); }) > 0) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_java_util::Vector_2_RemoveAllElements(require(useTPlayers_));
-            });
+        if (PLS_API(kl_java_util::Vector_2_Size(require(useTPlayers_))) > 0) {
+            PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(useTPlayers_)));
         }
     }
 }

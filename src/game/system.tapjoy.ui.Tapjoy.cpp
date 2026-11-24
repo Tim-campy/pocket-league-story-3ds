@@ -87,8 +87,7 @@ void Tapjoy::Init() {
         {
             Print(literal(u"[Tapjoy] Init"));
             initialize_ = true;
-            balance_ = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::PlayerPrefs::GetInt(literal(u"_Tapjoy"), 0); });
+            balance_ = PLS_API(pls::kairo::PlayerPrefs::GetInt(literal(u"_Tapjoy"), 0));
             Print(pls::cs::String::concat(literal(u"[Tapjoy] Init_balance:"), integer_string(balance_)));
         }
     }
@@ -146,10 +145,8 @@ void Tapjoy::AddBalance(pls::cs::Int32 add) {
     {
         balance_ = balance_ + add;
         Print(pls::cs::String::concat(literal(u"[Tapjoy] AddBalance:"), integer_string(balance_)));
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::kairo::PlayerPrefs::SetInt(literal(u"_Tapjoy"), balance_);
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::PlayerPrefs::Save(); });
+        PLS_API(pls::kairo::PlayerPrefs::SetInt(literal(u"_Tapjoy"), balance_));
+        PLS_API(pls::kairo::PlayerPrefs::Save());
     }
 }
 
@@ -162,10 +159,8 @@ void Tapjoy::SubBalance(pls::cs::Int32 sub) {
             balance_ = 0;
         }
         Print(pls::cs::String::concat(literal(u"[Tapjoy] SubBalance:"), integer_string(balance_)));
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::kairo::PlayerPrefs::SetInt(literal(u"_Tapjoy"), balance_);
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::PlayerPrefs::Save(); });
+        PLS_API(pls::kairo::PlayerPrefs::SetInt(literal(u"_Tapjoy"), balance_));
+        PLS_API(pls::kairo::PlayerPrefs::Save());
     }
 }
 
@@ -174,9 +169,7 @@ void Tapjoy::Print(pls::cs::String s) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.tapjoy.ui.Tapjoy.Print(System.String)", game);
     {
         if (log_) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_util::Log::Info(s, pls::cs::Ref<pls::cs::ExceptionObject>{});
-            });
+            PLS_API(kl_util::Log::Info(s, pls::cs::Ref<pls::cs::ExceptionObject>{}));
         }
     }
 }

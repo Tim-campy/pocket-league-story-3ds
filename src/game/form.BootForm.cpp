@@ -157,29 +157,24 @@ bool BootForm::Init() {
         if (!require(apdat_)->LoadSystem()) {
             InitApp();
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->SetKeyRepeatInterval(10); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(canvas_)->SetKeyDoubleInterval(4); });
+        PLS_API(require(canvas_)->SetKeyRepeatInterval(10));
+        PLS_API(require(canvas_)->SetKeyDoubleInterval(4));
         try {
             resLoad_ = kairo::unity::ui::ResourceManager::create(
                 pls::cs::String{}, pls::cs::String{}, pls::cs::String{}, pls::cs::String{}, pls::cs::String{},
                 pls::cs::String{}, pls::cs::String{});
             {
                 auto cs_receiver = resLoad_;
-                ByteArray cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return pls::kairo::Storage::Read(3, false, literal(u"load.dat"));
-                });
+                ByteArray cs_arg0 = PLS_API(pls::kairo::Storage::Read(3, false, literal(u"load.dat")));
                 require(cs_receiver)->Load(cs_arg0, 3);
             }
         } catch (const pls::cs::Exception& cs_caught_60) {
             auto t = pls::cs::capture_exception(cs_caught_60);
             {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                PLS_API(kl_unity_util::Log::Info(t));
             }
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::Graphics::SetAutoTextLayout(true); });
+        PLS_API(pls::kairo::Graphics::SetAutoTextLayout(true));
         loop_ = 0;
         {
             auto cs_target = this;
@@ -203,7 +198,7 @@ bool BootForm::Init() {
             require(cs_target)->th_.store(cs_value);
         }
         require(th_.load())->Start();
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(app_)->ResetOrientation(); });
+        PLS_API(require(app_)->ResetOrientation());
         return true;
     }
 }
@@ -219,8 +214,7 @@ bool BootForm::Update() {
         if (!is_null(resLoad_)) {
             require(require(resLoad_)->seb.get_Item(0))->Frame();
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(2); })) {
+        if (PLS_API(require(canvas_)->CheckKeyPulse(2))) {
             {
                 auto cs_value = !kl_cfg::Config::SHOW_DEBUG();
                 kl_cfg::Config::SHOW_DEBUG() = cs_value;
@@ -234,25 +228,19 @@ bool BootForm::Update() {
         frame_main = ((frame_main + 1) % 2147483647 /* Int32.MaxValue */);
         if (state_.load() == 3) {
             if (!is_null(dialog__BootForm)) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->RemoveAllForms(); });
-                if ((pls::cs::Int32(pls::diagnostic::api_call(
-                         [&]() -> decltype(auto) { return require(canvas_)->GetKeypadState(); })) &
-                     0x800) != 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> bool {
-                            auto cs_receiver = formMan_;
-                            pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = SpForm::create(e_.load());
-                            return require(cs_receiver)->Push(cs_arg0);
-                        }());
-                    });
+                PLS_API(require(formMan_)->RemoveAllForms());
+                if ((pls::cs::Int32(PLS_API(require(canvas_)->GetKeypadState())) & 0x800) != 0) {
+                    PLS_API(([&]() -> bool {
+                        auto cs_receiver = formMan_;
+                        pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = SpForm::create(e_.load());
+                        return require(cs_receiver)->Push(cs_arg0);
+                    }()));
                 }
                 return true;
             }
             if (!is_null(require(apdat_)->resCom2_)) {
                 dialog__BootForm = SubForm::MakeDialog(error_.load());
-                return pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->Push(dialog__BootForm); });
+                return PLS_API(require(formMan_)->Push(dialog__BootForm));
             }
             if (MyFormBase::Jp()) {
                 pls::cs::Ref<kairo::unity::ui::Dialog> dialog =
@@ -265,25 +253,19 @@ bool BootForm::Update() {
                 require(dialog2)->SetText(error_.load());
                 require(dialog2)->Show();
             }
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->RemoveAllForms(); });
-            if ((pls::cs::Int32(pls::diagnostic::api_call(
-                     [&]() -> decltype(auto) { return require(canvas_)->GetKeypadState(); })) &
-                 0x800) != 0) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> bool {
-                        auto cs_receiver = formMan_;
-                        pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = SpForm::create(e_.load());
-                        return require(cs_receiver)->Push(cs_arg0);
-                    }());
-                });
+            PLS_API(require(formMan_)->RemoveAllForms());
+            if ((pls::cs::Int32(PLS_API(require(canvas_)->GetKeypadState())) & 0x800) != 0) {
+                PLS_API(([&]() -> bool {
+                    auto cs_receiver = formMan_;
+                    pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = SpForm::create(e_.load());
+                    return require(cs_receiver)->Push(cs_arg0);
+                }()));
             }
             return true;
         }
         if (state_.load() == 5) {
             kairo::unity::ui::Canvas::VersionUp(kl_cfg::Config::URL_VERSIONUP());
-            return pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(formMan_)->RemoveAllForms(); });
+            return PLS_API(require(formMan_)->RemoveAllForms());
         }
         if (state_.load() == 4) {
             if ([&]() {
@@ -291,33 +273,22 @@ bool BootForm::Update() {
                     auto cs_right = pls::cs::box(ByteArray{});
                     return cs_left == cs_right;
                 }()) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(formMan_)->ChangeCurrentForm(require(apdat_)->frmTitle_);
-                });
+                PLS_API(require(formMan_)->ChangeCurrentForm(require(apdat_)->frmTitle_));
             } else {
-                StringArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_unity_util::StringUtil::Split(
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_lang::JString::New(regist_.load()); }),
-                        literal(u"\n"));
-                });
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[1]); }) > 202) {
+                StringArray array = PLS_API(kl_unity_util::StringUtil::Split(
+                    PLS_API(kl_lang::JString::New(regist_.load())), literal(u"\n")));
+                if (PLS_API(kl_lang::JInteger::ParseInt(array[1])) > 202) {
                     require(require(apdat_)->sysSave_)->ints[5] = 1;
                     require(apdat_)->SaveSystem();
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> bool {
-                            auto cs_receiver = formMan_;
-                            pls::cs::Ref<pls::kairo::FormBase> cs_arg0 =
-                                SubForm::MakeDialog(literal(u"ｱﾌﾟﾘのﾊﾞｰｼﾞｮﾝｱｯﾌﾟを行います"));
-                            return require(cs_receiver)->Push(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> bool {
+                        auto cs_receiver = formMan_;
+                        pls::cs::Ref<pls::kairo::FormBase> cs_arg0 =
+                            SubForm::MakeDialog(literal(u"ｱﾌﾟﾘのﾊﾞｰｼﾞｮﾝｱｯﾌﾟを行います"));
+                        return require(cs_receiver)->Push(cs_arg0);
+                    }()));
                     ChangeState(5);
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(formMan_)->ChangeCurrentForm(require(apdat_)->frmTitle_);
-                    });
+                    PLS_API(require(formMan_)->ChangeCurrentForm(require(apdat_)->frmTitle_));
                 }
             }
         }
@@ -330,24 +301,16 @@ bool BootForm::Update() {
 void BootForm::SmartBeginPaint(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.BootForm.SmartBeginPaint(kairo.unity.ui.Graphics)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
+        PLS_API(require(g)->SetOrigin(0, 0));
         pls::cs::Int32 gameWidth = require(view_)->GetGameWidth();
         pls::cs::Int32 gameHeight = require(view_)->GetGameHeight();
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(0, 0, 0); }));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->FillRect(0.0f, 0.0f, gameWidth, gameHeight); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resLoad_)->img.get_Item(1);
-                require(g)->DrawScaledImage(cs_arg0, 0.0f, 0.0f, gameWidth, gameHeight, 0, 0, 5, 240);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetOrigin((gameWidth - 240) / 2, (gameHeight - 240) / 2);
-        });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(0, 0, 0))));
+        PLS_API(require(g)->FillRect(0.0f, 0.0f, gameWidth, gameHeight));
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resLoad_)->img.get_Item(1);
+            require(g)->DrawScaledImage(cs_arg0, 0.0f, 0.0f, gameWidth, gameHeight, 0, 0, 5, 240);
+        }()));
+        PLS_API(require(g)->SetOrigin((gameWidth - 240) / 2, (gameHeight - 240) / 2));
     }
 }
 
@@ -381,7 +344,7 @@ void BootForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 LoadBox(g, empty, 0, 0);
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetOrigin(0, 0); });
+        PLS_API(require(g)->SetOrigin(0, 0));
     }
 }
 
@@ -414,12 +377,10 @@ void BootForm::LoadBox(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::String str
         "Assembly-CSharp",
         "M:form.BootForm.LoadBox(kairo.unity.ui.Graphics,System.String,System.Int32,System.Int32)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resLoad_)->img.get_Item(0);
-                require(g)->DrawImage(cs_arg0, 43.0f, 90.0f);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resLoad_)->img.get_Item(0);
+            require(g)->DrawImage(cs_arg0, 43.0f, 90.0f);
+        }()));
         {
             auto cs_receiver = require(resLoad_)->seb.get_Item(0);
             pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> cs_arg3 = require(resLoad_)->img;
@@ -459,15 +420,12 @@ void BootForm::LoadBox(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::String str
                 require(cs_receiver)->DrawFrame(g, 182.0f, num2, cs_arg3, 2, -1);
             }
         }
-        num4 = game::GameUtil::RateConvert(
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_lang::JMath::AbsInt(num3 - 20); }),
-            20, 0, 66, 174, true);
+        num4 = game::GameUtil::RateConvert(PLS_API(kl_lang::JMath::AbsInt(num3 - 20)), 20, 0, 66, 174, true);
         num5 = num2;
         if (anime_mode == 1) {
             pls::cs::Single num6 = game::GameUtil::SetVStop(anime_ballY, 10);
             pls::cs::Single num7 = game::GameUtil::SetAStop(anime_ballY, 10);
-            pls::cs::Int32 num8 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JMath::AbsInt(num3 - 20); });
+            pls::cs::Int32 num8 = PLS_API(kl_lang::JMath::AbsInt(num3 - 20));
             num5 = pls::cs::to_int32((num6 * pls::cs::Single(num8) +
                                       num7 * pls::cs::Single(num8) * pls::cs::Single((num8 + 1)) / 2.0f)) +
                    num2;
@@ -484,71 +442,38 @@ void BootForm::LoadBox(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::String str
             num9 = 85;
             num2 = 129;
             pls::cs::Int32 num10 = 60;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(169, 33, 0); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg2 = cnt * num10 / num;
-                    require(g)->FillRect(num9, num2 + 1, cs_arg2, 4.0f);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 104, 122); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg2 = cnt * num10 / num;
-                    require(g)->FillRect(num9, num2, cs_arg2, 1.0f);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 25, 51); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg2 = cnt * num10 / num;
-                    require(g)->FillRect(num9, num2 + 1, cs_arg2, 1.0f);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 7, 37); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg2 = cnt * num10 / num;
-                    require(g)->FillRect(num9, num2 + 2, cs_arg2, 1.0f);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(246, 0, 29); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg2 = cnt * num10 / num;
-                    require(g)->FillRect(num9, num2 + 3, cs_arg2, 1.0f);
-                }());
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(169, 33, 0))));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg2 = cnt * num10 / num;
+                require(g)->FillRect(num9, num2 + 1, cs_arg2, 4.0f);
+            }()));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 104, 122))));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg2 = cnt * num10 / num;
+                require(g)->FillRect(num9, num2, cs_arg2, 1.0f);
+            }()));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 25, 51))));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg2 = cnt * num10 / num;
+                require(g)->FillRect(num9, num2 + 1, cs_arg2, 1.0f);
+            }()));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 7, 37))));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg2 = cnt * num10 / num;
+                require(g)->FillRect(num9, num2 + 2, cs_arg2, 1.0f);
+            }()));
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(246, 0, 29))));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg2 = cnt * num10 / num;
+                require(g)->FillRect(num9, num2 + 3, cs_arg2, 1.0f);
+            }()));
         }
         num9 = 83;
         num2 = 112;
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(55, 51, 35); }));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawString(str, num9, num2); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return require(g)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(221, 221, 221); }));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->DrawString(str, num9, num2 - 1); });
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(55, 51, 35))));
+        PLS_API(require(g)->DrawString(str, num9, num2));
+        PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(221, 221, 221))));
+        PLS_API(require(g)->DrawString(str, num9, num2 - 1));
     }
 }
 
@@ -559,13 +484,11 @@ void BootForm::ChangeState(pls::cs::Int32 state) {
         main::AppData::ensure_initialized();
 
         IntArray array = BootForm::softLabels_()[state];
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = main::AppData::softLabels_()[array[0]];
-                pls::cs::String cs_arg1 = main::AppData::softLabels_()[array[1]];
-                this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = main::AppData::softLabels_()[array[0]];
+            pls::cs::String cs_arg1 = main::AppData::softLabels_()[array[1]];
+            this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
         {
             auto cs_target = this;
             pls::cs::Int32 cs_value = state;
@@ -583,30 +506,22 @@ void BootForm::ChangeState(pls::cs::Int32 state) {
 void BootForm::InitApp() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.BootForm.InitApp", game);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::RecordStore::CreateRecordStore(); });
+        PLS_API(pls::kairo::RecordStore::CreateRecordStore());
         pls::cs::Ref<pls::kairo::RecordStore> recordStore = pls::cs::Ref<pls::kairo::RecordStore>{};
         pls::cs::run_finally(
             [&]() {
                 {
-                    recordStore = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::RecordStore::OpenRecordStore(0); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->AddRecord(8192); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->AddRecord(46080); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->AddRecord(46080); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->AddRecord(46080); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->AddRecord(46080); });
+                    recordStore = PLS_API(pls::kairo::RecordStore::OpenRecordStore(0));
+                    PLS_API(require(recordStore)->AddRecord(8192));
+                    PLS_API(require(recordStore)->AddRecord(46080));
+                    PLS_API(require(recordStore)->AddRecord(46080));
+                    PLS_API(require(recordStore)->AddRecord(46080));
+                    PLS_API(require(recordStore)->AddRecord(46080));
                 }
             },
             [&]() {
                 if (!is_null(recordStore)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->CloseRecordStore(); });
+                    PLS_API(require(recordStore)->CloseRecordStore());
                 }
                 recordStore = pls::cs::Ref<pls::kairo::RecordStore>{};
             });
@@ -638,8 +553,7 @@ void BootForm::Run() {
                         if (state_.load() == 0) {
                             {
                                 pls::cs::GcCallSite gc_site("M:form.BootForm.Run");
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return kl_lang::JSystem::Gc(); });
+                                PLS_API(kl_lang::JSystem::Gc());
                             }
                             try {
                                 if (require(require(apdat_)->sysSave_)->ints[0] < 202) {
@@ -660,8 +574,7 @@ void BootForm::Run() {
                                 auto t = pls::cs::capture_exception(cs_caught_72);
                                 {
                                     if (kl_cfg::Config::PRINT()) {
-                                        pls::diagnostic::api_call(
-                                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                                        PLS_API(kl_unity_util::Log::Info(t));
                                     }
                                     {
                                         auto cs_target = this;
@@ -692,8 +605,7 @@ void BootForm::Run() {
                                 auto t2 = pls::cs::capture_exception(cs_caught_73);
                                 {
                                     if (kl_cfg::Config::PRINT()) {
-                                        pls::diagnostic::api_call(
-                                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t2); });
+                                        PLS_API(kl_unity_util::Log::Info(t2));
                                     }
                                     {
                                         auto cs_target = this;
@@ -718,8 +630,7 @@ void BootForm::Run() {
                                 auto t3 = pls::cs::capture_exception(cs_caught_74);
                                 {
                                     if (kl_cfg::Config::PRINT()) {
-                                        pls::diagnostic::api_call(
-                                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t3); });
+                                        PLS_API(kl_unity_util::Log::Info(t3));
                                     }
                                     {
                                         auto cs_target = this;
@@ -747,16 +658,9 @@ void BootForm::Run() {
                                     auto cs_right = pls::cs::box(ByteArray{});
                                     return cs_left != cs_right;
                                 }()) {
-                                StringArray array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StringUtil::Split(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_lang::JString::New(regist_.load());
-                                        }),
-                                        literal(u"\n"));
-                                });
-                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_lang::JInteger::ParseInt(array[1]);
-                                    }) > 202) {
+                                StringArray array = PLS_API(kl_unity_util::StringUtil::Split(
+                                    PLS_API(kl_lang::JString::New(regist_.load())), literal(u"\n")));
+                                if (PLS_API(kl_lang::JInteger::ParseInt(array[1])) > 202) {
                                     {
                                         auto cs_target = this;
                                         pls::cs::Int32 cs_value = 0;
@@ -793,9 +697,7 @@ void BootForm::Run() {
                                 auto cs_new = cs_old - 1;
                                 require(cs_target)->bowWait_.store(cs_new);
                             }
-                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(canvas_)->CheckKeyPulse(1048576);
-                                })) {
+                            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                                 {
                                     auto cs_target = this;
                                     pls::cs::Int32 cs_value = 0;
@@ -828,15 +730,12 @@ void BootForm::Download() {
         kl_cfg::Config::ensure_initialized();
 
         StringArray strDatFileName_ = main::AppData::strDatFileName_();
-        pls::cs::Ref<pls::kairo::RecordStore> recordStore = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::RecordStore::OpenRecordStore(1); });
+        pls::cs::Ref<pls::kairo::RecordStore> recordStore =
+            PLS_API(pls::kairo::RecordStore::OpenRecordStore(1));
         pls::cs::Int32 num = main::AppData::dateFileHead_()[require(require(apdat_)->sysSave_)->ints[2]];
-        pls::cs::Int32 num2 = pls::diagnostic::api_call(
-                                  [&]() -> decltype(auto) { return require(recordStore)->GetNumRecords(); }) -
-                              num;
+        pls::cs::Int32 num2 = PLS_API(require(recordStore)->GetNumRecords()) - num;
         for (pls::cs::Int32 i = 0; i < num2; ++i) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(recordStore)->RemoveLastRecord(); });
+            PLS_API(require(recordStore)->RemoveLastRecord());
         }
         {
             auto cs_target = this;
@@ -846,8 +745,7 @@ void BootForm::Download() {
         {
             auto cs_target = this;
             auto cs_left_25 = require(require(apdat_)->sysSave_)->ints[2] * 2;
-            auto cs_right_25 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(recordStore)->GetNumRecords(); });
+            auto cs_right_25 = PLS_API(require(recordStore)->GetNumRecords());
             pls::cs::Int32 cs_value = cs_left_25 + cs_right_25;
             require(cs_target)->loadCnt_.store(cs_value);
         }
@@ -864,12 +762,10 @@ void BootForm::Download() {
                 require(cs_target)->loadCnt_.store(cs_new);
             }
             for (pls::cs::Int32 k = 0; k < array.length(); ++k) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::Int32 {
-                        ByteArray cs_arg0 = array[k];
-                        return require(recordStore)->AddRecord(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> pls::cs::Int32 {
+                    ByteArray cs_arg0 = array[k];
+                    return require(recordStore)->AddRecord(cs_arg0);
+                }()));
                 {
                     auto cs_target = this;
                     auto cs_old = require(cs_target)->loadCnt_.load();
@@ -886,28 +782,24 @@ void BootForm::Download() {
             require(require(apdat_)->sysSave_)->ints[2]++;
             require(apdat_)->SaveSystem();
         }
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(recordStore)->CloseRecordStore(); });
+        PLS_API(require(recordStore)->CloseRecordStore());
         {
             auto cs_target = require(require(apdat_)->sysSave_)->ints;
             auto cs_index = 1;
-            auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::On(require(require(apdat_)->sysSave_)->ints[1], 1);
-            });
+            auto cs_value =
+                PLS_API(kl_unity_util::BitUtil::On(require(require(apdat_)->sysSave_)->ints[1], 1));
             cs_target.set_Item(cs_index, cs_value);
         }
         require(apdat_)->SaveSystem();
         java::lang::JThread::Sleep(100ll);
         if (kl_cfg::Config::PRINT()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::Log::Info(
+            PLS_API(kl_unity_util::Log::Info(
+                pls::cs::String::concat(
                     pls::cs::String::concat(
-                        pls::cs::String::concat(pls::cs::String::concat(literal(u"ダウンロード="),
-                                                                        integer_string(loadCnt_.load())),
-                                                literal(u"/")),
-                        integer_string(loadMax_.load())),
-                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-            });
+                        pls::cs::String::concat(literal(u"ダウンロード="), integer_string(loadCnt_.load())),
+                        literal(u"/")),
+                    integer_string(loadMax_.load())),
+                pls::cs::Ref<pls::cs::ExceptionObject>{}));
         }
     }
 }
@@ -944,17 +836,13 @@ void BootForm::Load() {
         pls::cs::run_finally(
             [&]() {
                 try {
-                    pls::cs::Ref<pls::kairo::RecordStore> recordStore = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::RecordStore::OpenRecordStore(1); });
-                    ByteArray data = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->ReadRecord(6); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(recordStore)->CloseRecordStore(); });
+                    pls::cs::Ref<pls::kairo::RecordStore> recordStore =
+                        PLS_API(pls::kairo::RecordStore::OpenRecordStore(1));
+                    ByteArray data = PLS_API(require(recordStore)->ReadRecord(6));
+                    PLS_API(require(recordStore)->CloseRecordStore());
                     jarInflater = kl_unity_util::JarInflater::create(data);
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"player.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"player.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::PlayerData>>::make(array.length());
@@ -974,9 +862,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"team.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"team.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::TeamData>>::make(array.length());
@@ -996,10 +883,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"supervisor.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"supervisor.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value =
@@ -1020,10 +905,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"formation.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"formation.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value =
@@ -1044,10 +927,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"mapchip_match.txt"));
-                    });
+                    array = PLS_API(kl_unity_util::StringUtil::LoadStringArray(
+                        jarInflater, literal(u"mapchip_match.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value =
@@ -1068,10 +949,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"mapchip_main.txt"));
-                    });
+                    array = PLS_API(kl_unity_util::StringUtil::LoadStringArray(jarInflater,
+                                                                               literal(u"mapchip_main.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::MapchipMain>>::make(array.length());
@@ -1091,10 +970,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"stadium.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"stadium.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::StadiumData>>::make(array.length());
@@ -1114,10 +991,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"fanActData.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"fanActData.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::FanActData>>::make(array.length());
@@ -1137,10 +1012,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"sponsorData.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"sponsorData.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::SponsorData>>::make(array.length());
@@ -1160,10 +1033,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"fanBonus.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"fanBonus.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value =
@@ -1184,10 +1055,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"questMatch.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"questMatch.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value =
@@ -1208,10 +1077,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"tenantData.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"tenantData.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::TenantData>>::make(array.length());
@@ -1231,10 +1098,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"tradePlayer.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"tradePlayer.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::TradeData>>::make(array.length());
@@ -1254,10 +1119,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"trainingData.txt"));
-                    });
+                    array = PLS_API(kl_unity_util::StringUtil::LoadStringArray(jarInflater,
+                                                                               literal(u"trainingData.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value =
@@ -1278,10 +1141,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"leagueData.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"leagueData.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::LeagueData>>::make(array.length());
@@ -1305,29 +1166,20 @@ void BootForm::Load() {
                     pls::cs::run_finally(
                         [&]() {
                             {
-                                inputStream = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(jarInflater)->GetInputStream(literal(u"manual.txt"));
-                                });
-                                ByteArray bytes = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::Read(inputStream);
-                                });
+                                inputStream =
+                                    PLS_API(require(jarInflater)->GetInputStream(literal(u"manual.txt")));
+                                ByteArray bytes = PLS_API(kl_unity_util::StreamUtil::Read(inputStream));
                                 {
                                     auto cs_target = apdat_;
-                                    auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StringUtil::Split(
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_lang::JString::New(bytes);
-                                            }),
-                                            literal(u"|"));
-                                    });
+                                    auto cs_value = PLS_API(kl_unity_util::StringUtil::Split(
+                                        PLS_API(kl_lang::JString::New(bytes)), literal(u"|")));
                                     require(cs_target)->manualTexts_ = cs_value;
                                 }
                             }
                         },
                         [&]() {
                             if (!is_null(inputStream)) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(inputStream)->Close(); });
+                                PLS_API(require(inputStream)->Close());
                             }
                             inputStream = pls::cs::Ref<kl_io::InputStream>{};
                         });
@@ -1340,25 +1192,16 @@ void BootForm::Load() {
                     pls::cs::run_finally(
                         [&]() {
                             {
-                                inputStream = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(jarInflater)->GetInputStream(literal(u"talk.txt"));
-                                });
-                                ByteArray bytes2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::Read(inputStream);
-                                });
-                                main::AppData::talks_() = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StringUtil::Split(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_lang::JString::New(bytes2);
-                                        }),
-                                        literal(u"|"));
-                                });
+                                inputStream =
+                                    PLS_API(require(jarInflater)->GetInputStream(literal(u"talk.txt")));
+                                ByteArray bytes2 = PLS_API(kl_unity_util::StreamUtil::Read(inputStream));
+                                main::AppData::talks_() = PLS_API(kl_unity_util::StringUtil::Split(
+                                    PLS_API(kl_lang::JString::New(bytes2)), literal(u"|")));
                             }
                         },
                         [&]() {
                             if (!is_null(inputStream)) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(inputStream)->Close(); });
+                                PLS_API(require(inputStream)->Close());
                             }
                             inputStream = pls::cs::Ref<kl_io::InputStream>{};
                         });
@@ -1371,19 +1214,11 @@ void BootForm::Load() {
                     pls::cs::run_finally(
                         [&]() {
                             {
-                                inputStream = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(jarInflater)->GetInputStream(literal(u"news.txt"));
-                                });
-                                ByteArray bytes3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::Read(inputStream);
-                                });
-                                StringArray array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StringUtil::Split(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_lang::JString::New(bytes3);
-                                        }),
-                                        literal(u"|"));
-                                });
+                                inputStream =
+                                    PLS_API(require(jarInflater)->GetInputStream(literal(u"news.txt")));
+                                ByteArray bytes3 = PLS_API(kl_unity_util::StreamUtil::Read(inputStream));
+                                StringArray array2 = PLS_API(kl_unity_util::StringUtil::Split(
+                                    PLS_API(kl_lang::JString::New(bytes3)), literal(u"|")));
                                 {
                                     auto cs_target = apdat_;
                                     auto cs_value = IntArray::make(array2.length());
@@ -1400,16 +1235,12 @@ void BootForm::Load() {
                                     require(cs_target)->newsTexts_ = cs_value;
                                 }
                                 for (pls::cs::Int32 num10 = 0; num10 < array2.length(); ++num10) {
-                                    StringArray array3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StringUtil::Split(array2[num10],
-                                                                                literal(u"\t"));
-                                    });
+                                    StringArray array3 = PLS_API(
+                                        kl_unity_util::StringUtil::Split(array2[num10], literal(u"\t")));
                                     {
                                         auto cs_target = require(apdat_)->newsTypes_;
                                         auto cs_index = num10;
-                                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_lang::JInteger::ParseInt(array3[0]);
-                                        });
+                                        auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array3[0]));
                                         cs_target.set_Item(cs_index, cs_value);
                                     }
                                     require(apdat_)->newsTitles_[num10] = array3[1];
@@ -1419,8 +1250,7 @@ void BootForm::Load() {
                         },
                         [&]() {
                             if (!is_null(inputStream)) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(inputStream)->Close(); });
+                                PLS_API(require(inputStream)->Close());
                             }
                             inputStream = pls::cs::Ref<kl_io::InputStream>{};
                         });
@@ -1433,29 +1263,20 @@ void BootForm::Load() {
                     pls::cs::run_finally(
                         [&]() {
                             {
-                                inputStream = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(jarInflater)->GetInputStream(literal(u"evtmsgs.txt"));
-                                });
-                                ByteArray bytes4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::Read(inputStream);
-                                });
+                                inputStream =
+                                    PLS_API(require(jarInflater)->GetInputStream(literal(u"evtmsgs.txt")));
+                                ByteArray bytes4 = PLS_API(kl_unity_util::StreamUtil::Read(inputStream));
                                 {
                                     auto cs_target = apdat_;
-                                    auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StringUtil::Split(
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return kl_lang::JString::New(bytes4);
-                                            }),
-                                            literal(u"|"));
-                                    });
+                                    auto cs_value = PLS_API(kl_unity_util::StringUtil::Split(
+                                        PLS_API(kl_lang::JString::New(bytes4)), literal(u"|")));
                                     require(cs_target)->eventMsgs_ = cs_value;
                                 }
                             }
                         },
                         [&]() {
                             if (!is_null(inputStream)) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(inputStream)->Close(); });
+                                PLS_API(require(inputStream)->Close());
                             }
                             inputStream = pls::cs::Ref<kl_io::InputStream>{};
                         });
@@ -1465,10 +1286,8 @@ void BootForm::Load() {
                         auto cs_new = cs_old + 1;
                         require(cs_target)->loadCnt_.store(cs_new);
                     }
-                    array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::StringUtil::LoadStringArray(jarInflater,
-                                                                          literal(u"events.txt"));
-                    });
+                    array = PLS_API(
+                        kl_unity_util::StringUtil::LoadStringArray(jarInflater, literal(u"events.txt")));
                     {
                         auto cs_target = apdat_;
                         auto cs_value = pls::cs::Array<pls::cs::Ref<data::EventData>>::make(array.length());
@@ -1500,20 +1319,11 @@ void BootForm::Load() {
                     pls::cs::run_finally(
                         [&]() {
                             {
-                                inputStream = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return require(jarInflater)
-                                        ->GetInputStream(literal(u"talk_specialChara.txt"));
-                                });
-                                ByteArray bytes5 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StreamUtil::Read(inputStream);
-                                });
-                                StringArray array4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::StringUtil::Split(
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_lang::JString::New(bytes5);
-                                        }),
-                                        literal(u"\n"));
-                                });
+                                inputStream = PLS_API(
+                                    require(jarInflater)->GetInputStream(literal(u"talk_specialChara.txt")));
+                                ByteArray bytes5 = PLS_API(kl_unity_util::StreamUtil::Read(inputStream));
+                                StringArray array4 = PLS_API(kl_unity_util::StringUtil::Split(
+                                    PLS_API(kl_lang::JString::New(bytes5)), literal(u"\n")));
                                 pls::cs::Ref<game::UserData> instance = game::UserData::GetInstance();
                                 {
                                     auto cs_target = instance;
@@ -1531,25 +1341,19 @@ void BootForm::Load() {
                                     require(cs_target)->TALK_SCHARA_IMGINDEX = cs_value;
                                 }
                                 for (pls::cs::Int32 num12 = 0; num12 < array4.length(); ++num12) {
-                                    StringArray array5 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_unity_util::StringUtil::Split(array4[num12],
-                                                                                literal(u"\t"));
-                                    });
+                                    StringArray array5 = PLS_API(
+                                        kl_unity_util::StringUtil::Split(array4[num12], literal(u"\t")));
                                     {
                                         auto cs_target = require(instance)->TALK_SCHARA_ID;
                                         auto cs_index = num12;
-                                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_lang::JInteger::ParseInt(array5[0]);
-                                        });
+                                        auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array5[0]));
                                         cs_target.set_Item(cs_index, cs_value);
                                     }
                                     require(instance)->TALK_SCHARA_NAME[num12] = array5[1];
                                     {
                                         auto cs_target = require(instance)->TALK_SCHARA_IMGINDEX;
                                         auto cs_index = num12;
-                                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_lang::JInteger::ParseInt(array5[2]);
-                                        });
+                                        auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array5[2]));
                                         cs_target.set_Item(cs_index, cs_value);
                                     }
                                 }
@@ -1557,8 +1361,7 @@ void BootForm::Load() {
                         },
                         [&]() {
                             if (!is_null(inputStream)) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(inputStream)->Close(); });
+                                PLS_API(require(inputStream)->Close());
                             }
                             inputStream = pls::cs::Ref<kl_io::InputStream>{};
                         });
@@ -1571,30 +1374,24 @@ void BootForm::Load() {
                 } catch (const pls::cs::Exception& cs_caught_66) {
                     auto t = pls::cs::capture_exception(cs_caught_66);
                     {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                        PLS_API(kl_unity_util::Log::Info(t));
                         if (kl_cfg::Config::PRINT()) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::Log::Info(
-                                    pls::cs::String::concat(literal(u"■BootForm.java load() loadCnt_ = "),
-                                                            integer_string(loadCnt_.load())),
-                                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-                            });
+                            PLS_API(kl_unity_util::Log::Info(
+                                pls::cs::String::concat(literal(u"■BootForm.java load() loadCnt_ = "),
+                                                        integer_string(loadCnt_.load())),
+                                pls::cs::Ref<pls::cs::ExceptionObject>{}));
                         }
                         if (kl_cfg::Config::PRINT()) {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::Log::Info(
-                                    literal(u"■BootForm.java load() xlsデータの読み込みでエラー"),
-                                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-                            });
+                            PLS_API(kl_unity_util::Log::Info(
+                                literal(u"■BootForm.java load() xlsデータの読み込みでエラー"),
+                                pls::cs::Ref<pls::cs::ExceptionObject>{}));
                         }
                     }
                 }
             },
             [&]() {
                 if (!is_null(jarInflater)) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(jarInflater)->Close(); });
+                    PLS_API(require(jarInflater)->Close());
                 }
                 jarInflater = pls::cs::Ref<kl_unity_util::JarInflater>{};
             });
@@ -1611,8 +1408,7 @@ void BootForm::Load() {
             }
             {
                 auto cs_receiver = require(apdat_)->resCom2_;
-                ByteArray cs_arg0 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::RecordStore::ReadRecord(1, 1); });
+                ByteArray cs_arg0 = PLS_API(pls::kairo::RecordStore::ReadRecord(1, 1));
                 require(cs_receiver)->Load(cs_arg0, 3);
             }
             {
@@ -1633,8 +1429,7 @@ void BootForm::Load() {
             }
             {
                 auto cs_receiver = require(apdat_)->resHuman2_;
-                ByteArray cs_arg0 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::RecordStore::ReadRecord(1, 9); });
+                ByteArray cs_arg0 = PLS_API(pls::kairo::RecordStore::ReadRecord(1, 9));
                 require(cs_receiver)->Load(cs_arg0, 3);
             }
             {
@@ -1655,8 +1450,7 @@ void BootForm::Load() {
             }
             {
                 auto cs_receiver = require(apdat_)->resHumanHead_;
-                ByteArray cs_arg0 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::RecordStore::ReadRecord(1, 10); });
+                ByteArray cs_arg0 = PLS_API(pls::kairo::RecordStore::ReadRecord(1, 10));
                 require(cs_receiver)->Load(cs_arg0, 3);
             }
             {
@@ -1677,8 +1471,7 @@ void BootForm::Load() {
             }
             {
                 auto cs_receiver = require(apdat_)->resEvent_;
-                ByteArray cs_arg0 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::RecordStore::ReadRecord(1, 3); });
+                ByteArray cs_arg0 = PLS_API(pls::kairo::RecordStore::ReadRecord(1, 3));
                 require(cs_receiver)->Load(cs_arg0, 3);
             }
             {
@@ -1700,44 +1493,34 @@ void BootForm::Load() {
                 require(cs_receiver)->LoadString(cs_arg0, 3);
             }
             for (pls::cs::Int32 num13 = 0; num13 < main::AppData::BGM().length(); ++num13) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(require(require(apdat_)->resSound_)
-                                       ->sound.get_Item(main::AppData::BGM()[num13]))
-                        ->SetLoop(-1);
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(require(require(apdat_)->resSound_)
-                                       ->sound.get_Item(main::AppData::BGM()[num13]))
-                        ->SetSoundType(0);
-                });
+                PLS_API(
+                    require(require(require(apdat_)->resSound_)->sound.get_Item(main::AppData::BGM()[num13]))
+                        ->SetLoop(-1));
+                PLS_API(
+                    require(require(require(apdat_)->resSound_)->sound.get_Item(main::AppData::BGM()[num13]))
+                        ->SetSoundType(0));
             }
             for (pls::cs::Int32 num14 = 0; num14 < main::AppData::SE().length(); ++num14) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(require(require(apdat_)->resSound_)
-                                       ->sound.get_Item(main::AppData::SE()[num14]))
-                        ->SetSoundType(1);
-                });
+                PLS_API(
+                    require(require(require(apdat_)->resSound_)->sound.get_Item(main::AppData::SE()[num14]))
+                        ->SetSoundType(1));
             }
         } catch (const pls::cs::Exception& cs_caught_67) {
             auto t2 = pls::cs::capture_exception(cs_caught_67);
             {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_unity_util::Log::Info(t2); });
+                PLS_API(kl_unity_util::Log::Info(t2));
                 if (kl_cfg::Config::PRINT()) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::Log::Info(
-                            literal(u"■BootForm.java load() リソースデータ読み込みでエラー"),
-                            pls::cs::Ref<pls::cs::ExceptionObject>{});
-                    });
+                    PLS_API(kl_unity_util::Log::Info(
+                        literal(u"■BootForm.java load() リソースデータ読み込みでエラー"),
+                        pls::cs::Ref<pls::cs::ExceptionObject>{}));
                 }
             }
         }
         if (kl_cfg::Config::DEBUG_CMD()) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::Log::Info(
-                    pls::cs::String::concat(literal(u"■BootForm.java load() loadCnt_ = "),
-                                            integer_string(loadCnt_.load())),
-                    pls::cs::Ref<pls::cs::ExceptionObject>{});
-            });
+            PLS_API(kl_unity_util::Log::Info(
+                pls::cs::String::concat(literal(u"■BootForm.java load() loadCnt_ = "),
+                                        integer_string(loadCnt_.load())),
+                pls::cs::Ref<pls::cs::ExceptionObject>{}));
         }
         data::TenantData::Load2();
         data::FanBonusData::Load2();
@@ -1756,33 +1539,22 @@ void BootForm::UpdateScoreFromNetwork() {
     {
         pls::cs::String originalUnusedSlot0;
         ByteArray bytes = require(apdat_)->CgiGetScore(literal(u"0,1"));
-        pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::Split(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_lang::JString::New(bytes); }),
-                literal(u"\n"));
-        })[1];
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_starts_with(text, literal(u",")); })) {
+        pls::cs::String text = PLS_API(
+            kl_unity_util::StringUtil::Split(PLS_API(kl_lang::JString::New(bytes)), literal(u"\n")))[1];
+        if (PLS_API(pls::cs::culture_starts_with(text, literal(u",")))) {
             text = pls::cs::String::concat(literal(u"0"), text);
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_ends_with(text, literal(u",")); })) {
+        if (PLS_API(pls::cs::culture_ends_with(text, literal(u",")))) {
             text = pls::cs::String::concat(text, char_string(u'0'));
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_index_of(text, literal(u",,")); }) != -1) {
-            pls::cs::Int32 num = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::cs::culture_index_of(text, literal(u",,")); });
-            text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::StringUtil::Replace(text, literal(u",,"), literal(u",0,"));
-            });
+        if (PLS_API(pls::cs::culture_index_of(text, literal(u",,"))) != -1) {
+            pls::cs::Int32 num = PLS_API(pls::cs::culture_index_of(text, literal(u",,")));
+            text = PLS_API(kl_unity_util::StringUtil::Replace(text, literal(u",,"), literal(u",0,")));
         }
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Split(text, literal(u",")); });
+        StringArray array = PLS_API(kl_unity_util::StringUtil::Split(text, literal(u",")));
         for (pls::cs::Int32 i = 0; i < array.length(); ++i) {
             if (kl_lang::StringEx::Length(array[i]) == 0 ||
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JLong::ParseLong(array[i]); }) == 0ll) {
+                PLS_API(kl_lang::JLong::ParseLong(array[i])) == 0ll) {
                 if (i == 0) {
                     require(require(apdat_)->sysSave_)->lngs[0] = 0ll;
                     require(require(apdat_)->sysSave_)->lngs[1] = 0ll;
@@ -1792,8 +1564,7 @@ void BootForm::UpdateScoreFromNetwork() {
                 }
                 continue;
             }
-            pls::cs::Int64 num2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JLong::ParseLong(array[i]); });
+            pls::cs::Int64 num2 = PLS_API(kl_lang::JLong::ParseLong(array[i]));
             if (i == 0) {
                 require(require(apdat_)->sysSave_)->lngs[0] = num2;
                 require(require(apdat_)->sysSave_)->lngs[1] = num2;
@@ -1820,8 +1591,7 @@ pls::cs::Array<ByteArray> BootForm::DivServerData(pls::cs::String url) {
         pls::cs::run_finally(
             [&]() {
                 try {
-                    ByteArray array2 = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return pls::kairo::Storage::Read(3, false, url); });
+                    ByteArray array2 = PLS_API(pls::kairo::Storage::Read(3, false, url));
                     dataInputStream =
                         kl_io::DataInputStream::create(kl_io::ByteArrayInputStream::create(array2));
                     num = array2.length();
@@ -1831,52 +1601,36 @@ pls::cs::Array<ByteArray> BootForm::DivServerData(pls::cs::String url) {
                     for (; i < num; i += array3.length()) {
                         chunkLength = num - i;
                         if (flag) {
-                            chunkLength = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(dataInputStream)->ReadInt(); });
+                            chunkLength = PLS_API(require(dataInputStream)->ReadInt());
                             i += 4;
                         }
                         array3 = ByteArray::make(chunkLength);
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(dataInputStream)->Read(array3); });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(array3));
-                        });
+                        PLS_API(require(dataInputStream)->Read(array3));
+                        PLS_API(kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(array3)));
                     }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(vector));
-                        }) == 0) {
-                        array = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::JTool::MakeArray<pls::cs::Array<ByteArray>>(
-                                IntArray::from({1, 0}));
-                        });
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(vector))) == 0) {
+                        array = PLS_API(kl_java_util::JTool::MakeArray<pls::cs::Array<ByteArray>>(
+                            IntArray::from({1, 0})));
                     } else {
                         array = pls::cs::Array<ByteArray>::make(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(require(vector));
-                            }));
+                            PLS_API(kl_java_util::Vector_2_Size(require(vector))));
                     }
-                    for (pls::cs::Int32 j = 0; j < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                   return kl_java_util::Vector_2_Size(require(vector));
-                                               });
+                    for (pls::cs::Int32 j = 0; j < PLS_API(kl_java_util::Vector_2_Size(require(vector)));
                          ++j) {
-                        array[j] =
-                            pls::cs::unbox<ByteArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(require(vector), j);
-                            }));
+                        array[j] = pls::cs::unbox<ByteArray>(
+                            PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), j)));
                     }
                 } catch (const pls::cs::Exception& cs_caught_49) {
                     auto t = pls::cs::capture_exception(cs_caught_49);
                     {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                        PLS_API(kl_unity_util::Log::Info(t));
                     }
                 }
             },
             [&]() {
                 if (!is_null(dataInputStream)) {
                     try {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(dataInputStream)->Close(); });
+                        PLS_API(require(dataInputStream)->Close());
                     } catch (const pls::cs::Exception& cs_caught_48) {
                         pls::cs::capture_exception(cs_caught_48);
                         {
@@ -1960,12 +1714,10 @@ void BootForm::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
 std::int32_t BootForm::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.BootForm.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace form

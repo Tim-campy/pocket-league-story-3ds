@@ -23,8 +23,7 @@ pls::cs::Single ParseFloat(pls::cs::String s) {
     JFloat::ensure_initialized();
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JFloat.ParseFloat(System.String)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::culture_parse_single(s); });
+        return PLS_API(pls::cs::culture_parse_single(s));
     }
 }
 } // namespace java::lang::JFloat

@@ -233,16 +233,14 @@ bool MyFormBase::Init() {
     {
         surface::SurfaceManager::ensure_initialized();
 
-        app_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
+        app_ = PLS_API(pls::kairo::IApplication::GetCurrentApp());
         apdat_ = main::AppData::GetInstance();
-        canvas_ =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Canvas::GetInstance(); });
+        canvas_ = PLS_API(pls::kairo::Canvas::GetInstance());
         formMan_ = FormManager::GetInstance();
         view_ = surface::SurfaceManager::view_();
         pad_ = surface::SurfaceManager::gpad_();
         result_ = -1;
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(canvas_)->DecideKeyState(); });
+        PLS_API(require(canvas_)->DecideKeyState());
         {
             auto cs_receiver = surface::TouchEffectManager::GetInstance();
             pls::cs::Ref<kairo::unity::surface::SurfaceBase> cs_arg0 = view_;
@@ -345,10 +343,8 @@ pls::cs::String MyFormBase::Unit(pls::cs::Int64 value, bool cs) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Unit(System.Int64,System.Boolean)", game);
     {
         bool flag = (value < pls::cs::cast_integral<pls::cs::Int64>(0));
-        pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfLong(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JMath::AbsLong(value); }));
-        });
+        pls::cs::String text =
+            PLS_API(kl_lang::JString::ValueOfLong(PLS_API(kl_lang::JMath::AbsLong(value))));
         if (cs) {
             pls::cs::String str = text;
             text = pls::cs::String(u"");
@@ -383,8 +379,7 @@ pls::cs::String MyFormBase::Comma(pls::cs::Int64 value) {
 pls::cs::String MyFormBase::Format(pls::cs::String str, pls::cs::Int32 len) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Format(System.String,System.Int32)", game);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::FormatString(str, len); });
+        return PLS_API(kl_unity_util::StringUtil::FormatString(str, len));
     }
 }
 
@@ -393,8 +388,7 @@ pls::cs::String MyFormBase::Format(pls::cs::String str, pls::cs::Int32 len, char
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Format(System.String,System.Int32,System.Char)",
                      game);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::FormatString(str, len, padding); });
+        return PLS_API(kl_unity_util::StringUtil::FormatString(str, len, padding));
     }
 }
 
@@ -402,12 +396,8 @@ pls::cs::String MyFormBase::Format(pls::cs::String str, pls::cs::Int32 len, char
 pls::cs::String MyFormBase::FormatInt(pls::cs::Int32 v, pls::cs::Int32 len) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Format(System.Int32,System.Int32)", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::FormatString(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                               return kl_lang::JString::ValueOfInt(v);
-                                                           }),
-                                                           len);
-        });
+        return PLS_API(
+            kl_unity_util::StringUtil::FormatString(PLS_API(kl_lang::JString::ValueOfInt(v)), len));
     }
 }
 
@@ -416,12 +406,8 @@ pls::cs::String MyFormBase::FormatInt(pls::cs::Int32 v, pls::cs::Int32 len, char
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Format(System.Int32,System.Int32,System.Char)",
                      game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::FormatString(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                               return kl_lang::JString::ValueOfInt(v);
-                                                           }),
-                                                           len, padding);
-        });
+        return PLS_API(
+            kl_unity_util::StringUtil::FormatString(PLS_API(kl_lang::JString::ValueOfInt(v)), len, padding));
     }
 }
 
@@ -429,12 +415,8 @@ pls::cs::String MyFormBase::FormatInt(pls::cs::Int32 v, pls::cs::Int32 len, char
 pls::cs::String MyFormBase::FormatLong(pls::cs::Int64 v, pls::cs::Int32 len) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Format(System.Int64,System.Int32)", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::FormatString(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                               return kl_lang::JString::ValueOfLong(v);
-                                                           }),
-                                                           len);
-        });
+        return PLS_API(
+            kl_unity_util::StringUtil::FormatString(PLS_API(kl_lang::JString::ValueOfLong(v)), len));
     }
 }
 
@@ -443,12 +425,8 @@ pls::cs::String MyFormBase::FormatLong(pls::cs::Int64 v, pls::cs::Int32 len, cha
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Format(System.Int64,System.Int32,System.Char)",
                      game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::FormatString(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                               return kl_lang::JString::ValueOfLong(v);
-                                                           }),
-                                                           len, padding);
-        });
+        return PLS_API(
+            kl_unity_util::StringUtil::FormatString(PLS_API(kl_lang::JString::ValueOfLong(v)), len, padding));
     }
 }
 
@@ -457,8 +435,7 @@ pls::cs::String MyFormBase::Replace(pls::cs::String text, pls::cs::String arg) {
     MyFormBase::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Replace(System.String,System.String)", game);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Replace(text, arg); });
+        return PLS_API(kl_unity_util::StringUtil::Replace(text, arg));
     }
 }
 
@@ -467,8 +444,7 @@ pls::cs::String MyFormBase::Replace(pls::cs::String text, pls::cs::String oldStr
     PLS_METHOD_SCOPE("Assembly-CSharp",
                      "M:form.MyFormBase.Replace(System.String,System.String,System.String)", game);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StringUtil::Replace(text, oldStr, newStr); });
+        return PLS_API(kl_unity_util::StringUtil::Replace(text, oldStr, newStr));
     }
 }
 
@@ -477,10 +453,8 @@ bool MyFormBase::Active() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Active", game);
     {
         pls::cs::Ref<FormManager> instance = FormManager::GetInstance();
-        return pls::cs::box(this) == pls::cs::box(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                   return require(instance)->GetTopForm();
-               })) &&
-               pls::diagnostic::api_call([&]() -> decltype(auto) { return require(app_)->Focus(); });
+        return pls::cs::box(this) == pls::cs::box(PLS_API(require(instance)->GetTopForm())) &&
+               PLS_API(require(app_)->Focus());
     }
 }
 
@@ -488,9 +462,8 @@ bool MyFormBase::Active() {
 bool MyFormBase::Push(pls::cs::String text) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Push(System.String)", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(SubForm::MakeDialog(text));
-        });
+        return PLS_API(
+            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(SubForm::MakeDialog(text)));
     }
 }
 
@@ -499,9 +472,7 @@ bool MyFormBase::Push(pls::cs::String text, pls::cs::String cmds) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Push(System.String,System.String)", game);
     {
         dialog_ = SubForm::MakeDialog(text, cmds);
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(dialog_);
-        });
+        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(dialog_));
     }
 }
 
@@ -511,9 +482,7 @@ bool MyFormBase::Push(pls::cs::String text, pls::cs::String cmds, pls::cs::Int32
                      game);
     {
         dialog_ = SubForm::MakeDialog(text, cmds, defaultSelect);
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(dialog_);
-        });
+        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(dialog_));
     }
 }
 
@@ -522,8 +491,7 @@ bool MyFormBase::Pop(pls::cs::Int32 result) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Pop(System.Int32)", game);
     {
         result_ = result;
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop(); });
+        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
     }
 }
 
@@ -540,8 +508,7 @@ bool MyFormBase::Jp() {
     MyFormBase::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.Jp", game);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::Language::Japanese(); });
+        return PLS_API(kl_unity_util::Language::Japanese());
     }
 }
 
@@ -644,20 +611,18 @@ void MyFormBase::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
         kl_cfg::Config::ensure_initialized();
         main::AppData::ensure_initialized();
 
-        pls::cs::Ref<pls::kairo::SoundPlayer> instance = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::SoundPlayer::GetInstance(); });
+        pls::cs::Ref<pls::kairo::SoundPlayer> instance = PLS_API(pls::kairo::SoundPlayer::GetInstance());
         pls::cs::Ref<game::UserData> instance2 = game::UserData::GetInstance();
         type = pls::cs::to_int32((pls::cs::Int64(type) & pls::cs::Int64(0xFFFF0000u)));
         switch (type) {
         case 65536: {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(canvas_)->KeyClick(pls::cs::Int32(1) << value); });
+            PLS_API(require(canvas_)->KeyClick(pls::cs::Int32(1) << value));
             break;
         }
         case 393216: {
             require(require(apdat_)->save_)->ints[12] = value;
             kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), value == 1);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+            PLS_API(require(formMan_)->DrawAllForms());
             break;
         }
         case 458752: {
@@ -669,20 +634,15 @@ void MyFormBase::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
                 break;
             }
             require(require(apdat_)->sysSave_)->ints[3] = value;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Int32 cs_arg1 = require(require(apdat_)->sysSave_)->ints[3] * 51;
-                    require(instance)->SetVolume(0, cs_arg1);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    bool cs_arg1 = require(require(apdat_)->sysSave_)->ints[3] == 0;
-                    require(instance)->SetMute(0, cs_arg1);
-                }());
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(instance)->ReflectVolumeAndMute(); });
+            PLS_API(([&]() -> void {
+                pls::cs::Int32 cs_arg1 = require(require(apdat_)->sysSave_)->ints[3] * 51;
+                require(instance)->SetVolume(0, cs_arg1);
+            }()));
+            PLS_API(([&]() -> void {
+                bool cs_arg1 = require(require(apdat_)->sysSave_)->ints[3] == 0;
+                require(instance)->SetMute(0, cs_arg1);
+            }()));
+            PLS_API(require(instance)->ReflectVolumeAndMute());
             break;
         }
         case 589824: {
@@ -690,20 +650,15 @@ void MyFormBase::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
                 break;
             }
             require(require(apdat_)->sysSave_)->ints[4] = value;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Int32 cs_arg1 = require(require(apdat_)->sysSave_)->ints[4] * 51;
-                    require(instance)->SetVolume(1, cs_arg1);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    bool cs_arg1 = require(require(apdat_)->sysSave_)->ints[4] == 0;
-                    require(instance)->SetMute(1, cs_arg1);
-                }());
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(instance)->ReflectVolumeAndMute(); });
+            PLS_API(([&]() -> void {
+                pls::cs::Int32 cs_arg1 = require(require(apdat_)->sysSave_)->ints[4] * 51;
+                require(instance)->SetVolume(1, cs_arg1);
+            }()));
+            PLS_API(([&]() -> void {
+                bool cs_arg1 = require(require(apdat_)->sysSave_)->ints[4] == 0;
+                require(instance)->SetMute(1, cs_arg1);
+            }()));
+            PLS_API(require(instance)->ReflectVolumeAndMute());
             break;
         }
         case 655360: {
@@ -713,7 +668,7 @@ void MyFormBase::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
             require(require(apdat_)->frmGame_)->offHour_ = -1;
             require(require(apdat_)->frmGame_)->offMoney_ = -1ll;
             require(require(apdat_)->frmGame_)->offSeason_ = -1;
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+            PLS_API(require(formMan_)->DrawAllForms());
             require(require(apdat_)->frmGame_)->SetAllDraw();
             break;
         }
@@ -723,34 +678,26 @@ void MyFormBase::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
             } else {
                 require(require(apdat_)->sysSave_)->ints[13] = value;
                 if (value == -1) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(app_)->SetOrientation(-1); });
+                    PLS_API(require(app_)->SetOrientation(-1));
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = app_;
-                            pls::cs::Int32 cs_arg0 = pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(app_)->GetOrientation(); });
-                            require(cs_receiver)->SetOrientation(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = app_;
+                        pls::cs::Int32 cs_arg0 = PLS_API(require(app_)->GetOrientation());
+                        require(cs_receiver)->SetOrientation(cs_arg0);
+                    }()));
                 }
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
-                if (!is_null(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase> {
-                            auto cs_canvas = canvas_;
-                            return pls::cs::unbox<pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase>>(
-                                require(cs_canvas)->GetSourceSurfaceManager());
-                        }());
-                    }))) {
-                    require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase> {
-                            auto cs_canvas = canvas_;
-                            return pls::cs::unbox<pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase>>(
-                                require(cs_canvas)->GetSourceSurfaceManager());
-                        }());
-                    }))->CheckScreenRotation(true);
+                PLS_API(require(formMan_)->DrawAllForms());
+                if (!is_null(PLS_API(([&]() -> pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase> {
+                        auto cs_canvas = canvas_;
+                        return pls::cs::unbox<pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase>>(
+                            require(cs_canvas)->GetSourceSurfaceManager());
+                    }())))) {
+                    require(PLS_API(([&]() -> pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase> {
+                        auto cs_canvas = canvas_;
+                        return pls::cs::unbox<pls::cs::Ref<kairo::unity::surface::SurfaceManagerBase>>(
+                            require(cs_canvas)->GetSourceSurfaceManager());
+                    }())))
+                        ->CheckScreenRotation(true);
                 }
             }
             break;
@@ -765,19 +712,15 @@ void MyFormBase::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
                 require(instance2)->et_cur[1] = value;
                 if ([&]() -> bool {
                         auto cs_left = require(instance2)->et_cur[1];
-                        auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(
-                                require(require(instance2)->editTest_formation));
-                        });
+                        auto cs_right = PLS_API(
+                            kl_java_util::Vector_2_Size(require(require(instance2)->editTest_formation)));
                         return cs_left >= cs_right;
                     }()) {
                     {
                         auto cs_target = require(instance2)->et_cur;
                         auto cs_index = 1;
-                        auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return kl_java_util::Vector_2_Size(
-                                                require(require(instance2)->editTest_formation));
-                                        }) -
+                        auto cs_value = PLS_API(kl_java_util::Vector_2_Size(
+                                            require(require(instance2)->editTest_formation))) -
                                         1;
                         cs_target.set_Item(cs_index, cs_value);
                     }
@@ -786,37 +729,28 @@ void MyFormBase::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
                     require(instance2)->SetEditForPos(require(instance2)->isSoccerForm_);
                     pls::cs::Ref<data::FormationData> formationData =
                         pls::cs::unbox<pls::cs::Ref<data::FormationData>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> pls::cs::Ref<pls::cs::Object> {
-                                    auto cs_receiver = require(instance2)->editTest_formation;
-                                    pls::cs::Int32 cs_arg0 = require(instance2)->et_cur[1];
-                                    return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
-                                }());
-                            }));
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_unity_util::BitUtil::Check(require(formationData)->flag_, 2);
-                        })) {
-                        pls::cs::Ref<pls::kairo::FormBase> topForm = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::String cs_arg0 = main::AppData::softLabels_()[12];
-                                pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                                require(topForm)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
-                                                               pls::cs::String{});
-                            }());
-                        });
+                            PLS_API(([&]() -> pls::cs::Ref<pls::cs::Object> {
+                                auto cs_receiver = require(instance2)->editTest_formation;
+                                pls::cs::Int32 cs_arg0 = require(instance2)->et_cur[1];
+                                return kl_java_util::Vector_2_ElementAt(require(cs_receiver), cs_arg0);
+                            }())));
+                    if (PLS_API(kl_unity_util::BitUtil::Check(require(formationData)->flag_, 2))) {
+                        pls::cs::Ref<pls::kairo::FormBase> topForm = PLS_API(require(formMan_)->GetTopForm());
+                        PLS_API(([&]() -> void {
+                            pls::cs::String cs_arg0 = main::AppData::softLabels_()[12];
+                            pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                            require(topForm)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
+                                                           pls::cs::String{});
+                        }()));
                     } else {
-                        pls::cs::Ref<pls::kairo::FormBase> topForm2 = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(formMan_)->GetTopForm(); });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                pls::cs::String cs_arg0 = main::AppData::softLabels_()[13];
-                                pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
-                                require(topForm2)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
-                                                                pls::cs::String{});
-                            }());
-                        });
+                        pls::cs::Ref<pls::kairo::FormBase> topForm2 =
+                            PLS_API(require(formMan_)->GetTopForm());
+                        PLS_API(([&]() -> void {
+                            pls::cs::String cs_arg0 = main::AppData::softLabels_()[13];
+                            pls::cs::String cs_arg1 = main::AppData::softLabels_()[2];
+                            require(topForm2)->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{},
+                                                            pls::cs::String{});
+                        }()));
                     }
                 }
                 break;
@@ -892,27 +826,21 @@ bool FriendForm::_update() {
         }
         if (type_ == 0) {
             pls::cs::Int32 num = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 select_ = (select_ - 1 + num) % num;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 select_ = (select_ + 1) % num;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = pls::cs::String(u"");
-                            pls::cs::String cs_arg1 = pls::cs::String(u"");
-                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                                cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                        }());
-                    });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->UpdateSoftLabel(); });
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = pls::cs::String(u"");
+                        pls::cs::String cs_arg1 = pls::cs::String(u"");
+                        static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                            cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                    }()));
+                    PLS_API(require(canvas_)->UpdateSoftLabel());
                     pls::cs::run_finally(
                         [&]() {
                             {
@@ -925,9 +853,7 @@ bool FriendForm::_update() {
                                     }());
                                 {
                                     pls::cs::String cs_arg0 =
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return pls::cs::string_trim(KairoText::LT(literal(u"ﾆｯｸﾈｰﾑ ")));
-                                        });
+                                        PLS_API(pls::cs::string_trim(KairoText::LT(literal(u"ﾆｯｸﾈｰﾑ "))));
                                     require(inputPanel)->SetItemName(cs_arg0);
                                 }
                                 {
@@ -954,31 +880,23 @@ bool FriendForm::_update() {
                                 pls::cs::Int32 cs_arg1 = FriendForm::softLabels_()[type_][1];
                                 SetSoftLabel(cs_arg0, cs_arg1);
                             }
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+                            PLS_API(require(formMan_)->DrawAllForms());
                         });
                 } else if (select_ == 1) {
                     if (kl_lang::StringEx::Length(text_) == 0) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                pls::game::form::SubForm::MakeDialog(
-                                    KairoText::LT(literal(u"ﾆｯｸﾈｰﾑを入力してください"))));
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            pls::game::form::SubForm::MakeDialog(
+                                KairoText::LT(literal(u"ﾆｯｸﾈｰﾑを入力してください")))));
                     }
-                    if (kl_lang::StringEx::Length(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::cs::string_trim(text_); })) == 0) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                pls::game::form::SubForm::MakeDialog(
-                                    KairoText::LT(literal(u"空白以外で入力してください"))));
-                        });
+                    if (kl_lang::StringEx::Length(PLS_API(pls::cs::string_trim(text_))) == 0) {
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            pls::game::form::SubForm::MakeDialog(
+                                KairoText::LT(literal(u"空白以外で入力してください")))));
                     }
                     if (!friend_::ui::FriendData::IsEffectiveRegistName(text_)) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                pls::game::form::SubForm::MakeDialog(
-                                    KairoText::LT(literal(u"利用できない文字があります"))));
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            pls::game::form::SubForm::MakeDialog(
+                                KairoText::LT(literal(u"利用できない文字があります")))));
                     }
                     th_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                         pls::cs::raw(this), std::string("M:system.form.FriendForm._update:8668"),
@@ -993,13 +911,10 @@ bool FriendForm::_update() {
                                                 auto cs_receiver = self->friendData_;
                                                 pls::cs::String cs_arg0 = self->text_;
                                                 pls::cs::Int64 cs_arg1 =
-                                                    pls::cs::cast_integral<pls::cs::Int64>(
-                                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return require(require(require(self->friendData_)
-                                                                                       ->friSave_)
-                                                                               ->ints.get_Item(1))
-                                                                ->Get();
-                                                        }));
+                                                    pls::cs::cast_integral<pls::cs::Int64>(PLS_API(
+                                                        require(require(require(self->friendData_)->friSave_)
+                                                                    ->ints.get_Item(1))
+                                                            ->Get()));
                                                 require(cs_receiver)->CgiRegistFriend(cs_arg0, cs_arg1);
                                             }
                                             require(self->friendData_)->SetFriendName(self->text_);
@@ -1010,47 +925,27 @@ bool FriendForm::_update() {
                                             pls::cs::Ref<pls::game::form::FormManager> instance8 =
                                                 pls::game::form::FormManager::GetInstance();
                                             for (pls::cs::Int32 i = 0;
-                                                 i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                     return require(instance8)->GetFormsNum();
-                                                 });
-                                                 ++i) {
-                                                if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return require(
-                                                                   pls::diagnostic::api_call(
-                                                                       [&]() -> decltype(auto) {
-                                                                           return require(instance8)->GetForm(
-                                                                               i);
-                                                                       }))
-                                                            ->GetId();
-                                                    }) == 0) {
+                                                 i < PLS_API(require(instance8)->GetFormsNum()); ++i) {
+                                                if (PLS_API(require(PLS_API(require(instance8)->GetForm(i)))
+                                                                ->GetId()) == 0) {
                                                     flag9 = true;
                                                     break;
                                                 }
                                             }
                                             if (!flag9) {
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
-                                                        ->Push(FriendForm::create(2));
-                                                });
+                                                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
+                                                            ->Push(FriendForm::create(2)));
                                             }
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
-                                                    ->Pop();
-                                            });
+                                            PLS_API(
+                                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)->Pop());
                                         } catch (const pls::cs::Exception& cs_caught_244) {
                                             auto t2 = pls::cs::capture_exception(cs_caught_244);
                                             {
                                                 if (kl_cfg::Config::PRINT()) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::Log::Info(t2);
-                                                    });
+                                                    PLS_API(kl_unity_util::Log::Info(t2));
                                                 }
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
-                                                        ->Push(self->MakeErrorDialog());
-                                                });
+                                                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
+                                                            ->Push(self->MakeErrorDialog()));
                                             }
                                         }
                                     },
@@ -1063,33 +958,25 @@ bool FriendForm::_update() {
                 }
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 1) {
             pls::cs::Int32 num2 = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(131072))) {
                 select_ = (select_ - 1 + num2) % num2;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyRepeat(524288))) {
                 select_ = (select_ + 1) % num2;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = pls::cs::String(u"");
-                            pls::cs::String cs_arg1 = pls::cs::String(u"");
-                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                                cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                        }());
-                    });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->UpdateSoftLabel(); });
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = pls::cs::String(u"");
+                        pls::cs::String cs_arg1 = pls::cs::String(u"");
+                        static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                            cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                    }()));
+                    PLS_API(require(canvas_)->UpdateSoftLabel());
                     pls::cs::run_finally(
                         [&]() {
                             {
@@ -1102,9 +989,7 @@ bool FriendForm::_update() {
                                     }());
                                 {
                                     pls::cs::String cs_arg0 =
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return pls::cs::string_trim(KairoText::LT(literal(u"ﾆｯｸﾈｰﾑ ")));
-                                        });
+                                        PLS_API(pls::cs::string_trim(KairoText::LT(literal(u"ﾆｯｸﾈｰﾑ "))));
                                     require(inputPanel2)->SetItemName(cs_arg0);
                                 }
                                 {
@@ -1132,45 +1017,31 @@ bool FriendForm::_update() {
                                 pls::cs::Int32 cs_arg1 = FriendForm::softLabels_()[type_][1];
                                 SetSoftLabel(cs_arg0, cs_arg1);
                             }
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+                            PLS_API(require(formMan_)->DrawAllForms());
                         });
                 } else if (select_ == 1) {
                     if (kl_lang::StringEx::Length(text_) == 0) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                pls::game::form::SubForm::MakeDialog(
-                                    KairoText::LT(literal(u"ﾆｯｸﾈｰﾑを入力してください"))));
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            pls::game::form::SubForm::MakeDialog(
+                                KairoText::LT(literal(u"ﾆｯｸﾈｰﾑを入力してください")))));
                     }
-                    if (kl_lang::StringEx::Length(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::cs::string_trim(text_); })) == 0) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                pls::game::form::SubForm::MakeDialog(
-                                    KairoText::LT(literal(u"空白以外で入力してください"))));
-                        });
+                    if (kl_lang::StringEx::Length(PLS_API(pls::cs::string_trim(text_))) == 0) {
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            pls::game::form::SubForm::MakeDialog(
+                                KairoText::LT(literal(u"空白以外で入力してください")))));
                     }
                     if (!friend_::ui::FriendData::IsEffectiveRegistName(text_)) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                pls::game::form::SubForm::MakeDialog(
-                                    KairoText::LT(literal(u"利用できない文字があります"))));
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            pls::game::form::SubForm::MakeDialog(
+                                KairoText::LT(literal(u"利用できない文字があります")))));
                     }
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> bool {
-                                auto cs_arg0 = text_;
-                                auto cs_arg1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                                        require(require(friendData_)->friSave_)->strs.get_Item(0));
-                                });
-                                return string_equals(cs_arg0, cs_arg1);
-                            }());
-                        })) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                        });
+                    if (PLS_API(([&]() -> bool {
+                            auto cs_arg0 = text_;
+                            auto cs_arg1 = PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                require(require(friendData_)->friSave_)->strs.get_Item(0)));
+                            return string_equals(cs_arg0, cs_arg1);
+                        }()))) {
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                     }
                     th_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                         pls::cs::raw(this), std::string("M:system.form.FriendForm._update:11031"),
@@ -1186,33 +1057,23 @@ bool FriendForm::_update() {
                                                 auto cs_target =
                                                     require(require(self->friendData_)->friSave_)->strs;
                                                 auto cs_index = 0;
-                                                auto cs_value =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::SecureString::ValueOf(
-                                                            self->text_);
-                                                    });
+                                                auto cs_value = PLS_API(
+                                                    kl_unity_util::SecureString::ValueOf(self->text_));
                                                 cs_target.set_Item(cs_index, cs_value);
                                             }
                                             pls::cs::Ref<kairo::unity::system::KairoBase> instance7_2 =
                                                 kairo::unity::system::KairoBase::GetInstance();
                                             require(instance7_2)->Save();
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
-                                                    ->Pop();
-                                            });
+                                            PLS_API(
+                                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)->Pop());
                                         } catch (const pls::cs::Exception& cs_caught_245) {
                                             auto t2_2 = pls::cs::capture_exception(cs_caught_245);
                                             {
                                                 if (kl_cfg::Config::PRINT()) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::Log::Info(t2_2);
-                                                    });
+                                                    PLS_API(kl_unity_util::Log::Info(t2_2));
                                                 }
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
-                                                        ->Push(self->MakeErrorDialog());
-                                                });
+                                                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
+                                                            ->Push(self->MakeErrorDialog()));
                                             }
                                         }
                                     },
@@ -1225,21 +1086,17 @@ bool FriendForm::_update() {
                 }
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 2) {
             pls::cs::Int32 num3 = 6;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(131072))) {
                 select_ = (select_ - 1 + num3) % num3;
                 if (select_ < 5 && page_ * 5 + select_ >= require(friendData_)->FRIEND_MAX) {
                     select_ = (require(friendData_)->FRIEND_MAX - 1) % 5;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(524288))) {
                 select_ = (select_ + 1 + num3) % num3;
                 if (select_ < 5 && page_ * 5 + select_ >= require(friendData_)->FRIEND_MAX) {
                     select_ = 5;
@@ -1247,12 +1104,10 @@ bool FriendForm::_update() {
             }
             if (select_ < 5) {
                 pls::cs::Int32 num4 = (require(friendData_)->FRIEND_MAX + 5 - 1) / 5;
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(65536); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(65536))) {
                     page_ = (page_ - 1 + num4) % num4;
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(262144); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(262144))) {
                     page_ = (page_ + 1) % num4;
                 }
                 if (select_ < 5 && page_ * 5 + select_ >= require(friendData_)->FRIEND_MAX) {
@@ -1260,184 +1115,139 @@ bool FriendForm::_update() {
                 }
             } else {
                 pls::cs::Int32 num5 = 2;
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(65536); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(65536))) {
                     select2_ = (select2_ - 1 + num5) % num5;
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(262144); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(262144))) {
                     select2_ = (select2_ + 1) % num5;
                 }
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ < 5) {
                     pls::cs::Int32 num6 = page_ * 5 + select_;
                     pls::cs::Ref<friend_::ui::Friend> friend_ = pls::cs::Ref<friend_::ui::Friend>{};
                     bool flag = false;
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_));
-                        }) > 0 &&
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_))) > 0 &&
                         ([&]() -> bool {
-                            auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_Size(
-                                    require(require(friendData_)->friendList_));
-                            });
+                            auto cs_left = PLS_API(
+                                kl_java_util::Vector_2_Size(require(require(friendData_)->friendList_)));
                             auto cs_right = require(friendData_)->FRIEND_MAX;
                             return cs_left < cs_right;
                         }())) {
                         if (require(friendData_)->FRIEND_MAX <= 5) {
                             if (num6 == require(friendData_)->FRIEND_MAX - 1) {
                                 flag = true;
-                            } else if (num6 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return kl_java_util::Vector_2_Size(
-                                               require(require(friendData_)->friendList_));
-                                       })) {
+                            } else if (num6 < PLS_API(kl_java_util::Vector_2_Size(
+                                                  require(require(friendData_)->friendList_)))) {
                                 friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_ElementAt(
-                                            require(require(friendData_)->friendList_), num6);
-                                    }));
+                                    PLS_API(kl_java_util::Vector_2_ElementAt(
+                                        require(require(friendData_)->friendList_), num6)));
                             }
                         } else if (num6 == 0) {
                             flag = true;
-                        } else if (num6 - 1 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(
-                                           require(require(friendData_)->friendList_));
-                                   })) {
+                        } else if (num6 - 1 < PLS_API(kl_java_util::Vector_2_Size(
+                                                  require(require(friendData_)->friendList_)))) {
                             friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_ElementAt(
-                                        require(require(friendData_)->friendList_), num6 - 1);
-                                }));
+                                PLS_API(kl_java_util::Vector_2_ElementAt(
+                                    require(require(friendData_)->friendList_), num6 - 1)));
                         }
-                    } else if (num6 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                   return kl_java_util::Vector_2_Size(
-                                       require(require(friendData_)->friendList_));
-                               })) {
+                    } else if (num6 < PLS_API(kl_java_util::Vector_2_Size(
+                                          require(require(friendData_)->friendList_)))) {
                         friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_ElementAt(
-                                    require(require(friendData_)->friendList_), num6);
-                            }));
+                            PLS_API(kl_java_util::Vector_2_ElementAt(
+                                require(require(friendData_)->friendList_), num6)));
                     }
                     if (!is_null(friend_)) {
                         pls::cs::Ref<FriendForm> friendForm = FriendForm::create(8);
                         require(friendForm)->friend_ = friend_;
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(friendForm);
-                        });
+                        return PLS_API(
+                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(friendForm));
                     }
                     if (flag) {
                         pls::cs::Ref<FriendForm> friendForm2 = FriendForm::create(6);
                         {
                             auto cs_target = friendForm2;
                             auto cs_value = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return kl_java_util::Vector_2_FirstElement(
-                                        require(require(friendData_)->applyList_));
-                                }));
+                                PLS_API(kl_java_util::Vector_2_FirstElement(
+                                    require(require(friendData_)->applyList_))));
                             require(cs_target)->friend_ = cs_value;
                         }
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(friendForm2);
-                        });
+                        return PLS_API(
+                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(friendForm2));
                     }
                     if (num6 < require(friendData_)->FRIEND_MAX) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                FriendForm::create(3));
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            FriendForm::create(3)));
                     }
                 } else {
                     if (select2_ == 0) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                FriendForm::create(11));
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            FriendForm::create(11)));
                     }
                     if (select2_ == 1) {
                         try {
                             {
                                 pls::cs::String cs_arg0 = require(friendData_)->INTRODUCTION_SUBJECT;
-                                pls::cs::String cs_arg1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return ([&]() -> pls::cs::String {
-                                        pls::cs::String cs_arg0 = require(friendData_)->INTRODUCTION_TEXT;
-                                        pls::cs::String cs_arg1 = require(friendData_)->GetFriendID();
-                                        return kl_unity_util::StringUtil::Replace(cs_arg0, cs_arg1);
-                                    }());
-                                });
+                                pls::cs::String cs_arg1 = PLS_API(([&]() -> pls::cs::String {
+                                    pls::cs::String cs_arg0 = require(friendData_)->INTRODUCTION_TEXT;
+                                    pls::cs::String cs_arg1 = require(friendData_)->GetFriendID();
+                                    return kl_unity_util::StringUtil::Replace(cs_arg0, cs_arg1);
+                                }()));
                                 friend_::ui::FriendData::ActionSendMail(cs_arg0, cs_arg1);
                             }
                         } catch (const pls::cs::Exception& cs_caught_246) {
                             pls::cs::capture_exception(cs_caught_246);
                             {
-                                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                        MakeErrorDialog());
-                                });
+                                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                                    MakeErrorDialog()));
                             }
                         }
                     }
                 }
             } else if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 3) {
             pls::cs::Int32 num7 = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(131072))) {
                 select_ = (select_ - 1 + num7) % num7;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(524288))) {
                 select_ = (select_ + 1) % num7;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select2_ != 0) {
                     select2_ = 0;
                     try {
                         pls::cs::String friendID = require(friendData_)->GetFriendID();
                         {
                             pls::cs::String cs_arg0 = require(friendData_)->INTRODUCTION_SUBJECT;
-                            pls::cs::String cs_arg1 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_unity_util::StringUtil::Replace(
-                                    require(friendData_)->INTRODUCTION_TEXT, friendID);
-                            });
+                            pls::cs::String cs_arg1 = PLS_API(kl_unity_util::StringUtil::Replace(
+                                require(friendData_)->INTRODUCTION_TEXT, friendID));
                             friend_::ui::FriendData::ActionSendMail(cs_arg0, cs_arg1);
                         }
                     } catch (const pls::cs::Exception& cs_caught_247) {
                         pls::cs::capture_exception(cs_caught_247);
                         {
-                            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                    MakeErrorDialog());
-                            });
+                            return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                                MakeErrorDialog()));
                         }
                     }
                 } else if (select_ == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = pls::cs::String(u"");
-                            pls::cs::String cs_arg1 = pls::cs::String(u"");
-                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
-                                cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-                        }());
-                    });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->UpdateSoftLabel(); });
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = pls::cs::String(u"");
+                        pls::cs::String cs_arg1 = pls::cs::String(u"");
+                        static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->SetSoftLabel(
+                            cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+                    }()));
+                    PLS_API(require(canvas_)->UpdateSoftLabel());
                     pls::cs::run_finally(
                         [&]() {
                             {
                                 pls::cs::String cs_arg0_300 = KairoText::LT(literal(u"フレンドのID"));
                                 pls::cs::String cs_arg1_300 = text_;
                                 pls::cs::String cs_arg4_300 =
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::cs::string_trim(KairoText::LT(literal(u"フレンドのID ")));
-                                    });
+                                    PLS_API(pls::cs::string_trim(KairoText::LT(literal(u"フレンドのID "))));
                                 pls::cs::Ref<panel::InputPanel> inputPanel3 =
                                     panel::InputPanel::create(cs_arg0_300, cs_arg1_300, 9, 0, cs_arg4_300);
                                 {
@@ -1465,24 +1275,19 @@ bool FriendForm::_update() {
                                 pls::cs::Int32 cs_arg1 = FriendForm::softLabels_()[type_][1];
                                 SetSoftLabel(cs_arg0, cs_arg1);
                             }
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+                            PLS_API(require(formMan_)->DrawAllForms());
                         });
                 } else if (select_ == 1) {
                     text2_ = text_;
-                    text2_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> pls::cs::String {
-                            pls::cs::String cs_arg0 = text2_;
-                            pls::cs::String cs_arg2 = pls::cs::String(u"");
-                            return kl_unity_util::StringUtil::Replace(cs_arg0, literal(u","), cs_arg2);
-                        }());
-                    });
+                    text2_ = PLS_API(([&]() -> pls::cs::String {
+                        pls::cs::String cs_arg0 = text2_;
+                        pls::cs::String cs_arg2 = pls::cs::String(u"");
+                        return kl_unity_util::StringUtil::Replace(cs_arg0, literal(u","), cs_arg2);
+                    }()));
                     if (kl_lang::StringEx::Length(text2_) == 0) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                pls::game::form::SubForm::MakeDialog(
-                                    KairoText::LT(literal(u"フレンドIDを入力してください"))));
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            pls::game::form::SubForm::MakeDialog(
+                                KairoText::LT(literal(u"フレンドIDを入力してください")))));
                     }
                     th_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                         pls::cs::raw(this), std::string("M:system.form.FriendForm._update:16046"),
@@ -1497,25 +1302,19 @@ bool FriendForm::_update() {
                                                 require(self->friendData_)->CgiSearchFriend(self->text2_);
                                             pls::cs::Ref<FriendForm> createdValue = FriendForm::create(4);
                                             require(createdValue)->friend_ = friend2;
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
-                                                    ->Push(createdValue);
-                                            });
+                                            PLS_API(
+                                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)->Push(
+                                                    createdValue));
                                         } catch (const pls::cs::Exception& cs_caught_248) {
                                             auto t2_3 = pls::cs::capture_exception(cs_caught_248);
                                             {
                                                 if (kl_cfg::Config::PRINT()) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::Log::Info(t2_3);
-                                                    });
+                                                    PLS_API(kl_unity_util::Log::Info(t2_3));
                                                 }
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
-                                                        ->Push(self->MakeErrorDialog(
-                                                            kairo::unity::io::Http::PopErrorText(),
-                                                            pls::cs::String{}));
-                                                });
+                                                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
+                                                            ->Push(self->MakeErrorDialog(
+                                                                kairo::unity::io::Http::PopErrorText(),
+                                                                pls::cs::String{})));
                                             }
                                         }
                                     },
@@ -1528,22 +1327,17 @@ bool FriendForm::_update() {
                 }
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 4) {
             pls::cs::Int32 num8 = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(65536))) {
                 select_ = (select_ - 1 + num8) % num8;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(262144))) {
                 select_ = (select_ + 1) % num8;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ == 0) {
                     th_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                         pls::cs::raw(this), std::string("M:system.form.FriendForm._update:16966"),
@@ -1556,49 +1350,35 @@ bool FriendForm::_update() {
                                         try {
                                             {
                                                 auto cs_receiver = self->friendData_;
-                                                pls::cs::String cs_arg0 =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::SecureString::
-                                                            ToStringSecureStringStatic(
-                                                                require(self->friend_)->friendId_);
-                                                    });
+                                                pls::cs::String cs_arg0 = PLS_API(
+                                                    kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                        require(self->friend_)->friendId_));
                                                 require(cs_receiver)->CgiApplyFriend(cs_arg0);
                                             }
                                             pls::cs::Ref<FriendForm> createdValue_2 = FriendForm::create(5);
                                             require(createdValue_2)->friend_ = self->friend_;
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
-                                                    ->Push(createdValue_2);
-                                            });
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
-                                                    ->Pop();
-                                            });
+                                            PLS_API(
+                                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)->Push(
+                                                    createdValue_2));
+                                            PLS_API(
+                                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)->Pop());
                                         } catch (const pls::cs::Exception& cs_caught_249) {
                                             auto t2_4 = pls::cs::capture_exception(cs_caught_249);
                                             {
                                                 if (kl_cfg::Config::PRINT()) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::Log::Info(t2_4);
-                                                    });
+                                                    PLS_API(kl_unity_util::Log::Info(t2_4));
                                                 }
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
+                                                PLS_API(
+                                                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
                                                         ->Push(([&]() -> pls::cs::Ref<pls::kairo::FormBase> {
                                                             pls::cs::String cs_arg0 =
                                                                 kairo::unity::io::Http::PopErrorText();
-                                                            pls::cs::String cs_arg1 =
-                                                                pls::diagnostic::api_call(
-                                                                    [&]() -> decltype(auto) {
-                                                                        return kl_unity_util::SecureString::
-                                                                            ToStringSecureStringStatic(
-                                                                                require(self->friend_)
-                                                                                    ->name_);
-                                                                    });
+                                                            pls::cs::String cs_arg1 = PLS_API(
+                                                                kl_unity_util::SecureString::
+                                                                    ToStringSecureStringStatic(
+                                                                        require(self->friend_)->name_));
                                                             return self->MakeErrorDialog(cs_arg0, cs_arg1);
-                                                        }()));
-                                                });
+                                                        }())));
                                             }
                                         }
                                     },
@@ -1609,56 +1389,38 @@ bool FriendForm::_update() {
                     require(th_)->Start();
                     return true;
                 }
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 5) {
             pls::cs::Int32 num9 = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(65536))) {
                 select_ = (select_ - 1 + num9) % num9;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(262144))) {
                 select_ = (select_ + 1) % num9;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ == 0) {
                     friend_::ui::FriendData::ActionSendMail(require(friendData_)->INTRODUCTION_APPLY_SUBJECT,
                                                             require(friendData_)->INTRODUCTION_APPLY_TEXT);
                 } else {
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 6) {
             if (!is_null(next_)) {
                 if (require(next_)->type_ == 8) {
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_));
-                        }) > 0) {
-                        friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_java_util::Vector_2_FirstElement(
-                                    require(require(friendData_)->applyList_));
-                            }));
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_))) > 0) {
+                        friend_ = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(PLS_API(
+                            kl_java_util::Vector_2_FirstElement(require(require(friendData_)->applyList_))));
                     } else {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                        });
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                     }
                 } else {
                     th_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
@@ -1671,39 +1433,26 @@ bool FriendForm::_update() {
                                     [&]() {
                                         try {
                                             require(self->friendData_)->RefreshFriendList();
-                                            if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return kl_java_util::Vector_2_Size(
-                                                        require(require(self->friendData_)->applyList_));
-                                                }) > 0) {
+                                            if (PLS_API(kl_java_util::Vector_2_Size(
+                                                    require(require(self->friendData_)->applyList_))) > 0) {
                                                 self->friend_ =
                                                     pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return kl_java_util::Vector_2_FirstElement(
-                                                                require(
-                                                                    require(self->friendData_)->applyList_));
-                                                        }));
+                                                        PLS_API(kl_java_util::Vector_2_FirstElement(require(
+                                                            require(self->friendData_)->applyList_))));
                                             } else {
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
-                                                        ->Pop();
-                                                });
+                                                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
+                                                            ->Pop());
                                             }
                                         } catch (const pls::cs::Exception& cs_caught_250) {
                                             auto t2_5 = pls::cs::capture_exception(cs_caught_250);
                                             {
                                                 if (kl_cfg::Config::PRINT()) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::Log::Info(t2_5);
-                                                    });
+                                                    PLS_API(kl_unity_util::Log::Info(t2_5));
                                                 }
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
-                                                        ->Push(self->MakeErrorDialog(
-                                                            kairo::unity::io::Http::PopErrorText(),
-                                                            pls::cs::String{}));
-                                                });
+                                                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
+                                                            ->Push(self->MakeErrorDialog(
+                                                                kairo::unity::io::Http::PopErrorText(),
+                                                                pls::cs::String{})));
                                             }
                                         }
                                     },
@@ -1712,28 +1461,22 @@ bool FriendForm::_update() {
                         },
                         this));
                     require(th_)->Start();
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_));
-                        }) == 0) {
-                        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                        });
+                    if (PLS_API(kl_java_util::Vector_2_Size(require(require(friendData_)->applyList_))) ==
+                        0) {
+                        return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                     }
                 }
                 next_ = pls::cs::Ref<FriendForm>{};
                 return true;
             }
             pls::cs::Int32 num10 = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(65536))) {
                 select_ = (select_ - 1 + num10) % num10;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(262144))) {
                 select_ = (select_ + 1) % num10;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ == 0) {
                     th_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                         pls::cs::raw(this), std::string("M:system.form.FriendForm._update:19378"),
@@ -1746,45 +1489,33 @@ bool FriendForm::_update() {
                                         try {
                                             {
                                                 auto cs_receiver = self->friendData_;
-                                                pls::cs::String cs_arg0 =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::SecureString::
-                                                            ToStringSecureStringStatic(
-                                                                require(self->friend_)->friendId_);
-                                                    });
+                                                pls::cs::String cs_arg0 = PLS_API(
+                                                    kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                        require(self->friend_)->friendId_));
                                                 require(cs_receiver)->CgiApproveFriend(cs_arg0);
                                             }
                                             self->next_ = FriendForm::create(7);
                                             require(self->next_)->friend_ = self->friend_;
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
-                                                    ->Push(self->next_);
-                                            });
+                                            PLS_API(
+                                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)->Push(
+                                                    self->next_));
                                         } catch (const pls::cs::Exception& cs_caught_251) {
                                             auto t2_6 = pls::cs::capture_exception(cs_caught_251);
                                             {
                                                 if (kl_cfg::Config::PRINT()) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::Log::Info(t2_6);
-                                                    });
+                                                    PLS_API(kl_unity_util::Log::Info(t2_6));
                                                 }
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
+                                                PLS_API(
+                                                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
                                                         ->Push(([&]() -> pls::cs::Ref<pls::kairo::FormBase> {
                                                             pls::cs::String cs_arg0 =
                                                                 kairo::unity::io::Http::PopErrorText();
-                                                            pls::cs::String cs_arg1 =
-                                                                pls::diagnostic::api_call(
-                                                                    [&]() -> decltype(auto) {
-                                                                        return kl_unity_util::SecureString::
-                                                                            ToStringSecureStringStatic(
-                                                                                require(self->friend_)
-                                                                                    ->name_);
-                                                                    });
+                                                            pls::cs::String cs_arg1 = PLS_API(
+                                                                kl_unity_util::SecureString::
+                                                                    ToStringSecureStringStatic(
+                                                                        require(self->friend_)->name_));
                                                             return self->MakeErrorDialog(cs_arg0, cs_arg1);
-                                                        }()));
-                                                });
+                                                        }())));
                                             }
                                         }
                                     },
@@ -1797,53 +1528,39 @@ bool FriendForm::_update() {
                 }
                 next_ = FriendForm::create(8);
                 require(next_)->friend_ = friend_;
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(next_);
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(next_));
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 7) {
             frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
             if (frame_ >= 24) {
                 bool flag2 = false;
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                     flag2 = true;
                 }
                 if (require(apdat_)->IsPushSoftLabel(2)) {
                     flag2 = true;
                 }
                 if (flag2) {
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
             }
         } else if (type_ == 8) {
             pls::cs::Int32 num11 = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(65536))) {
                 select_ = (select_ - 1 + num11) % num11;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(262144))) {
                 select_ = (select_ + 1) % num11;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ == 0) {
-                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(require(friend_)->state_)->Get();
-                        }) == 3) {
+                    if (PLS_API(require(require(friend_)->state_)->Get()) == 3) {
                         pls::cs::Ref<FriendForm> friendForm3 = FriendForm::create(9);
                         require(friendForm3)->friend_ = friend_;
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(friendForm3);
-                        });
+                        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(friendForm3));
                     } else {
                         th_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                             pls::cs::raw(this), std::string("M:system.form.FriendForm._update:20899"),
@@ -1857,45 +1574,33 @@ bool FriendForm::_update() {
                                                 {
                                                     auto cs_receiver = self->friendData_;
                                                     pls::cs::String cs_arg0 =
-                                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return kl_unity_util::SecureString::
-                                                                ToStringSecureStringStatic(
-                                                                    require(self->friend_)->friendId_);
-                                                        });
+                                                        PLS_API(kl_unity_util::SecureString::
+                                                                    ToStringSecureStringStatic(
+                                                                        require(self->friend_)->friendId_));
                                                     require(cs_receiver)->CgiRefuseFriend(cs_arg0);
                                                 }
                                                 require(self->friendData_)->RefreshFriendList();
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
-                                                        ->Pop();
-                                                });
+                                                PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
+                                                            ->Pop());
                                             } catch (const pls::cs::Exception& cs_caught_252) {
                                                 auto t2_7 = pls::cs::capture_exception(cs_caught_252);
                                                 {
                                                     if (kl_cfg::Config::PRINT()) {
-                                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                            return kl_unity_util::Log::Info(t2_7);
-                                                        });
+                                                        PLS_API(kl_unity_util::Log::Info(t2_7));
                                                     }
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return static_cast<
-                                                                   pls::cs::Ref<pls::kairo::FormBase>>(self)
+                                                    PLS_API(
+                                                        static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
                                                             ->Push(([&]() -> pls::cs::Ref<
                                                                               pls::kairo::FormBase> {
                                                                 pls::cs::String cs_arg0 =
                                                                     kairo::unity::io::Http::PopErrorText();
-                                                                pls::cs::String cs_arg1 = pls::diagnostic::
-                                                                    api_call([&]() -> decltype(auto) {
-                                                                        return kl_unity_util::SecureString::
-                                                                            ToStringSecureStringStatic(
-                                                                                require(self->friend_)
-                                                                                    ->name_);
-                                                                    });
+                                                                pls::cs::String cs_arg1 = PLS_API(
+                                                                    kl_unity_util::SecureString::
+                                                                        ToStringSecureStringStatic(
+                                                                            require(self->friend_)->name_));
                                                                 return self->MakeErrorDialog(cs_arg0,
                                                                                              cs_arg1);
-                                                            }()));
-                                                    });
+                                                            }())));
                                                 }
                                             }
                                         },
@@ -1907,27 +1612,20 @@ bool FriendForm::_update() {
                         return true;
                     }
                 }
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 9) {
             pls::cs::Int32 num12 = 2;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(65536); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(65536))) {
                 select_ = (select_ - 1 + num12) % num12;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(262144); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(262144))) {
                 select_ = (select_ + 1) % num12;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (select_ == 0) {
                     th_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                         pls::cs::raw(this), std::string("M:system.form.FriendForm._update:21846"),
@@ -1940,44 +1638,31 @@ bool FriendForm::_update() {
                                         try {
                                             {
                                                 auto cs_receiver = self->friendData_;
-                                                pls::cs::String cs_arg0 =
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::SecureString::
-                                                            ToStringSecureStringStatic(
-                                                                require(self->friend_)->friendId_);
-                                                    });
+                                                pls::cs::String cs_arg0 = PLS_API(
+                                                    kl_unity_util::SecureString::ToStringSecureStringStatic(
+                                                        require(self->friend_)->friendId_));
                                                 require(cs_receiver)->CgiRefuseFriend(cs_arg0);
                                             }
                                             require(self->friendData_)->RefreshFriendList();
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
-                                                    ->Pop();
-                                            });
+                                            PLS_API(
+                                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)->Pop());
                                         } catch (const pls::cs::Exception& cs_caught_253) {
                                             auto t2_8 = pls::cs::capture_exception(cs_caught_253);
                                             {
                                                 if (kl_cfg::Config::PRINT()) {
-                                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                        return kl_unity_util::Log::Info(t2_8);
-                                                    });
+                                                    PLS_API(kl_unity_util::Log::Info(t2_8));
                                                 }
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                                               self)
+                                                PLS_API(
+                                                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(self)
                                                         ->Push(([&]() -> pls::cs::Ref<pls::kairo::FormBase> {
                                                             pls::cs::String cs_arg0 =
                                                                 kairo::unity::io::Http::PopErrorText();
-                                                            pls::cs::String cs_arg1 =
-                                                                pls::diagnostic::api_call(
-                                                                    [&]() -> decltype(auto) {
-                                                                        return kl_unity_util::SecureString::
-                                                                            ToStringSecureStringStatic(
-                                                                                require(self->friend_)
-                                                                                    ->name_);
-                                                                    });
+                                                            pls::cs::String cs_arg1 = PLS_API(
+                                                                kl_unity_util::SecureString::
+                                                                    ToStringSecureStringStatic(
+                                                                        require(self->friend_)->name_));
                                                             return self->MakeErrorDialog(cs_arg0, cs_arg1);
-                                                        }()));
-                                                });
+                                                        }())));
                                             }
                                         }
                                     },
@@ -1988,49 +1673,33 @@ bool FriendForm::_update() {
                     require(th_)->Start();
                     return true;
                 }
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 10) {
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
             if (require(apdat_)->IsPushSoftLabel(2)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 11) {
             if (require(apdat_)->IsPushSoftLabel(2, 1048576)) {
-                return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                });
+                return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
             }
         } else if (type_ == 12) {
             frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+            PLS_API(require(formMan_)->DrawAllForms());
             if (frame_ >= 24) {
                 bool flag3 = false;
                 bool flag4 = false;
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); })) {
+                if (PLS_API(require(canvas_)->CheckKeyRepeat(65536))) {
                     select_ = (select_ - 1 + 2) % 2;
-                } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return require(canvas_)->CheckKeyRepeat(262144);
-                           })) {
+                } else if (PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                     select_ = (select_ + 1 + 2) % 2;
-                } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return require(canvas_)->CheckKeyPulse(1048576);
-                           })) {
+                } else if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                     if (select_ == 0) {
                         flag4 = true;
                     }
@@ -2062,24 +1731,19 @@ bool FriendForm::_update() {
                             {
                             }
                         }
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(friendForm4);
-                        });
+                        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(friendForm4));
                     } else {
                         require(friendData_)->alreadyCheckPlayTimeBonus_ = true;
                     }
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
             }
         } else if (type_ == 13) {
             frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+            PLS_API(require(formMan_)->DrawAllForms());
             if (frame_ >= 50) {
                 bool flag5 = false;
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                     flag5 = true;
                 }
                 if (require(apdat_)->IsPushSoftLabel(2)) {
@@ -2091,30 +1755,22 @@ bool FriendForm::_update() {
                     pls::cs::Ref<kairo::unity::system::KairoBase> instance4 =
                         kairo::unity::system::KairoBase::GetInstance();
                     require(instance4)->SaveAll();
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
-            } else if (pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            } else if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 frame_ = 50;
             }
         } else if (type_ == 14) {
             frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+            PLS_API(require(formMan_)->DrawAllForms());
             if (frame_ >= 24) {
                 bool flag6 = false;
                 bool flag7 = false;
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyRepeat(65536); })) {
+                if (PLS_API(require(canvas_)->CheckKeyRepeat(65536))) {
                     select_ = (select_ - 1 + 2) % 2;
-                } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return require(canvas_)->CheckKeyRepeat(262144);
-                           })) {
+                } else if (PLS_API(require(canvas_)->CheckKeyRepeat(262144))) {
                     select_ = (select_ + 1 + 2) % 2;
-                } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return require(canvas_)->CheckKeyPulse(1048576);
-                           })) {
+                } else if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                     if (select_ == 0) {
                         flag7 = true;
                     }
@@ -2125,69 +1781,52 @@ bool FriendForm::_update() {
                 }
                 if (flag6) {
                     if (flag7) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                    pls::cs::String cs_arg1 = KairoText::LT(literal(
-                                        u"おめでとうございます!<br>新しい<co=60,100,200>フレンド</co>が登録されボーナスが入りました!"));
-                                    pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                    return pls::game::form::SubForm::MakeTalkForm(0, cs_arg1, cs_arg2);
-                                }()));
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                    pls::cs::String cs_arg1 = KairoText::LT(
-                                        literal(u"一緒にプレイしていれば今後もボーナスが入っていきますよ!"));
-                                    pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                    return pls::game::form::SubForm::MakeTalkForm(0, cs_arg1, cs_arg2);
-                                }()));
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
-                                    pls::cs::String cs_arg1 = KairoText::LT(literal(
-                                        u"ちなみに<co=255,0,0>アプリは削除しないで</co>下さいね。削除するとフレンドが全部消えて戻せなくなってしまいます。"));
-                                    pls::cs::String cs_arg2 = pls::cs::String(u"");
-                                    return pls::game::form::SubForm::MakeTalkForm(0, cs_arg1, cs_arg2);
-                                }()));
-                        });
-                        for (pls::cs::Int32 num13 = 0;
-                             num13 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                 return kl_java_util::Vector_2_Size(
-                                     require(require(friendData_)->newFriendList_));
-                             });
+                        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                                pls::cs::String cs_arg1 = KairoText::LT(literal(
+                                    u"おめでとうございます!<br>新しい<co=60,100,200>フレンド</co>が登録されボーナスが入りました!"));
+                                pls::cs::String cs_arg2 = pls::cs::String(u"");
+                                return pls::game::form::SubForm::MakeTalkForm(0, cs_arg1, cs_arg2);
+                            }())));
+                        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                                pls::cs::String cs_arg1 = KairoText::LT(
+                                    literal(u"一緒にプレイしていれば今後もボーナスが入っていきますよ!"));
+                                pls::cs::String cs_arg2 = pls::cs::String(u"");
+                                return pls::game::form::SubForm::MakeTalkForm(0, cs_arg1, cs_arg2);
+                            }())));
+                        PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                            ([&]() -> pls::cs::Ref<pls::game::form::SubForm> {
+                                pls::cs::String cs_arg1 = KairoText::LT(literal(
+                                    u"ちなみに<co=255,0,0>アプリは削除しないで</co>下さいね。削除するとフレンドが全部消えて戻せなくなってしまいます。"));
+                                pls::cs::String cs_arg2 = pls::cs::String(u"");
+                                return pls::game::form::SubForm::MakeTalkForm(0, cs_arg1, cs_arg2);
+                            }())));
+                        for (pls::cs::Int32 num13 = 0; num13 < PLS_API(kl_java_util::Vector_2_Size(require(
+                                                                   require(friendData_)->newFriendList_)));
                              ++num13) {
                             pls::cs::Ref<FriendForm> friendForm5 = FriendForm::create(15);
                             {
                                 auto cs_target = friendForm5;
                                 auto cs_value = pls::cs::unbox<pls::cs::Ref<friend_::ui::Friend>>(
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return kl_java_util::Vector_2_ElementAt(
-                                            require(require(friendData_)->newFriendList_), num13);
-                                    }));
+                                    PLS_API(kl_java_util::Vector_2_ElementAt(
+                                        require(require(friendData_)->newFriendList_), num13)));
                                 require(cs_target)->friend_ = cs_value;
                             }
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                    friendForm5);
-                            });
+                            PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(friendForm5));
                         }
                     } else {
                         require(friendData_)->alreadyCheckNewFriendBonus_ = true;
                     }
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
             }
         } else if (type_ == 15) {
             frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+            PLS_API(require(formMan_)->DrawAllForms());
             if (frame_ >= 50) {
                 bool flag8 = false;
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+                if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                     flag8 = true;
                 }
                 if (require(apdat_)->IsPushSoftLabel(2)) {
@@ -2196,10 +1835,8 @@ bool FriendForm::_update() {
                 if (flag8) {
                     pls::cs::Ref<friend_::MyFriend> instance5 = friend_::MyFriend::GetInstance();
                     require(instance5)->PlayBonus(require(friendData_)->PLAY_NEW_FRIEND_BONUS);
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_RemoveElement(
-                            require(require(friendData_)->newFriendList_), pls::cs::box(friend_));
-                    });
+                    PLS_API(kl_java_util::Vector_2_RemoveElement(
+                        require(require(friendData_)->newFriendList_), pls::cs::box(friend_)));
                     try {
                         pls::cs::Ref<kairo::unity::system::KairoBase> instance6 =
                             kairo::unity::system::KairoBase::GetInstance();
@@ -2208,17 +1845,13 @@ bool FriendForm::_update() {
                         auto t = pls::cs::capture_exception(cs_caught_255);
                         {
                             if (kl_cfg::Config::PRINT()) {
-                                pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                                PLS_API(kl_unity_util::Log::Info(t));
                             }
                         }
                     }
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
-            } else if (pls::diagnostic::api_call(
-                           [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); })) {
+            } else if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 frame_ = 50;
             }
         }
@@ -2293,9 +1926,7 @@ IntArray MyFormBase::DrawWindow2(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::
         drawWindow_tmp[MyFormBase::WNDRET_BOX_TOP()] = drawWindow_tmp[MyFormBase::WNDRET_TOP()] + topSpace;
         drawWindow_tmp[MyFormBase::WNDRET_BOX_BOTTOM()] =
             drawWindow_tmp[MyFormBase::WNDRET_BOTTOM()] - bottomSpace;
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return kl_unity_util::BitUtil::Check(flag, MyFormBase::WNDFLAG_BOX());
-            })) {
+        if (PLS_API(kl_unity_util::BitUtil::Check(flag, MyFormBase::WNDFLAG_BOX()))) {
             {
                 pls::cs::Int32 cs_arg1 = drawWindow_tmp[MyFormBase::WNDRET_BOX_LEFT()];
                 pls::cs::Int32 cs_arg2 = drawWindow_tmp[MyFormBase::WNDRET_BOX_TOP()] - 12 + ay;
@@ -2331,8 +1962,7 @@ pls::cs::String MyFormBase::LT(pls::cs::String text) {
     MyFormBase::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.LT(System.String)", game);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::Language::TranslateText(text, true); });
+        return PLS_API(kl_unity_util::Language::TranslateText(text, true));
     }
 }
 
@@ -2341,10 +1971,7 @@ pls::cs::String MyFormBase::LT(pls::cs::String text, pls::cs::String arg) {
     MyFormBase::ensure_initialized();
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.LT(System.String,System.String)", game);
     {
-        return MyFormBase::Replace(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_unity_util::Language::TranslateText(text, true);
-                                   }),
-                                   arg);
+        return MyFormBase::Replace(PLS_API(kl_unity_util::Language::TranslateText(text, true)), arg);
     }
 }
 
@@ -2354,10 +1981,8 @@ pls::cs::String MyFormBase::LTLong(pls::cs::String text, pls::cs::Int64 arg) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.LT(System.String,System.Int64)", game);
     {
         {
-            pls::cs::String cs_arg0_126 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::Language::TranslateText(text, true); });
-            pls::cs::String cs_arg1_126 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JString::ValueOfLong(arg); });
+            pls::cs::String cs_arg0_126 = PLS_API(kl_unity_util::Language::TranslateText(text, true));
+            pls::cs::String cs_arg1_126 = PLS_API(kl_lang::JString::ValueOfLong(arg));
             return MyFormBase::Replace(cs_arg0_126, cs_arg1_126);
         }
     }
@@ -2388,10 +2013,8 @@ pls::cs::String MyFormBase::YEN(pls::cs::String text, pls::cs::Int64 value, bool
     {
         if (kairo::unity::util::Language::GetLanguageCode() != literal(u"ja-JP") &&
             kairo::unity::util::Language::GetLanguageCode() != literal(u"en-US") &&
-            !pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::culture_starts_with(kairo::unity::util::Language::GetLanguageCode(),
-                                                    literal(u"*"));
-            })) {
+            !PLS_API(pls::cs::culture_starts_with(kairo::unity::util::Language::GetLanguageCode(),
+                                                  literal(u"*")))) {
             value = value * 10;
             return pls::cs::String::concat(
                 ((comma) ? (MyFormBase::Comma(value))
@@ -2399,10 +2022,7 @@ pls::cs::String MyFormBase::YEN(pls::cs::String text, pls::cs::Int64 value, bool
                 literal(u"G"));
         }
         bool flag = require(require(main::AppData::GetInstance())->sysSave_)->ints[14] == 1;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return string_equals(text, literal(u"万円")); }) ||
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return string_equals(text, literal(u"万")); })) {
+        if (PLS_API(string_equals(text, literal(u"万円"))) || PLS_API(string_equals(text, literal(u"万")))) {
             if (flag) {
                 return pls::cs::String::concat(
                     ([&]() {
@@ -2413,10 +2033,8 @@ pls::cs::String MyFormBase::YEN(pls::cs::String text, pls::cs::Int64 value, bool
                                                               pls::cs::String(u""),
                                                               integer_string(value / pls::cs::Int64(10))))))),
                             literal(u"."));
-                        auto cs_right = integer_string(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                           return kl_lang::JMath::AbsLong(value);
-                                                       }) %
-                                                       pls::cs::Int64(10));
+                        auto cs_right =
+                            integer_string(PLS_API(kl_lang::JMath::AbsLong(value)) % pls::cs::Int64(10));
                         return pls::cs::String::concat(cs_left, cs_right);
                     }()),
                     literal(u"K"));
@@ -2430,8 +2048,7 @@ pls::cs::String MyFormBase::YEN(pls::cs::String text, pls::cs::Int64 value, bool
                                                              integer_string(value * pls::cs::Int64(10))))))),
                     literal(u"K"));
             }
-        } else if (pls::diagnostic::api_call(
-                       [&]() -> decltype(auto) { return string_equals(text, literal(u"円")); })) {
+        } else if (PLS_API(string_equals(text, literal(u"円")))) {
             if (flag) {
                 return pls::cs::String::concat(
                     literal(u"$"),
@@ -2445,8 +2062,7 @@ pls::cs::String MyFormBase::YEN(pls::cs::String text, pls::cs::Int64 value, bool
                     ((comma) ? (MyFormBase::Comma(value))
                              : ((pls::cs::String::concat(pls::cs::String(u""), integer_string(value))))));
             }
-        } else if (pls::diagnostic::api_call(
-                       [&]() -> decltype(auto) { return string_equals(text, literal(u"\\")); })) {
+        } else if (PLS_API(string_equals(text, literal(u"\\")))) {
             if (flag) {
                 return pls::cs::String::concat(
                     literal(u"$"),
@@ -2489,14 +2105,10 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             return;
         }
         pls::cs::Int32 num = 48;
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return kl_java_util::Vector_2_Size(require(commands_));
-                                   });
-             ++i) {
-            StringArray array = pls::cs::unbox<StringArray>(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_java_util::Vector_2_ElementAt(require(commands_), i); }));
-            pls::cs::Int32 num2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[0]); });
+        for (pls::cs::Int32 i = 0; i < PLS_API(kl_java_util::Vector_2_Size(require(commands_))); ++i) {
+            StringArray array =
+                pls::cs::unbox<StringArray>(PLS_API(kl_java_util::Vector_2_ElementAt(require(commands_), i)));
+            pls::cs::Int32 num2 = PLS_API(kl_lang::JInteger::ParseInt(array[0]));
             if (num2 >= 0) {
                 num = (num + 35);
             } else {
@@ -2526,16 +2138,11 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         num4 = array2[MyFormBase::WNDRET_BOX_TOP()] + 6;
         if (state_ == 0) {
             pls::cs::Int32 num5 = 0;
-            while (num5 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return kl_java_util::Vector_2_Size(require(commands_));
-                   })) {
-                StringArray array3 =
-                    pls::cs::unbox<StringArray>(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_ElementAt(require(commands_), num5);
-                    }));
+            while (num5 < PLS_API(kl_java_util::Vector_2_Size(require(commands_)))) {
+                StringArray array3 = pls::cs::unbox<StringArray>(
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(commands_), num5)));
                 bool flag = (array3.length() > 2);
-                pls::cs::Int32 num6 = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array3[0]); });
+                pls::cs::Int32 num6 = PLS_API(kl_lang::JInteger::ParseInt(array3[0]));
                 pls::cs::String str = array3[1];
                 pls::cs::Int32 num7 = array2[MyFormBase::WNDRET_BOX_LEFT()] + 10;
                 pls::cs::Int32 num8 = ([&]() -> pls::cs::Int32 {
@@ -2546,45 +2153,30 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                       20;
                 pls::cs::Int32 num9 = 0;
                 if (select_ == num5) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(200, 200, 255); });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->FillRect(num7 - 6, num4 - 2, num8 + 12, num9 + 16);
-                    });
+                    PLS_API(require(g)->SetColor(200, 200, 255));
+                    PLS_API(require(g)->FillRect(num7 - 6, num4 - 2, num8 + 12, num9 + 16));
                 }
                 surface::GameView::AddTouch(
                     g, 3, num7 - 6, num4 - 2, num8 + 12, 16, 0x20000 | num5,
                     require(kairo::unity::surface::TouchOption::Create())->Margin(0, 0, 10, num9 + 10));
                 if (flag) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(30, 30, 30); });
+                    PLS_API(require(g)->SetColor(30, 30, 30));
                 } else {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(128, 128, 128); });
+                    PLS_API(require(g)->SetColor(128, 128, 128));
                 }
                 if (MyFormBase::En()) {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->DrawString(str, num3 + 3, num4); });
+                    PLS_API(require(g)->DrawString(str, num3 + 3, num4));
                 } else {
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->DrawString(str, num3 + 20, num4); });
+                    PLS_API(require(g)->DrawString(str, num3 + 20, num4));
                 }
-                if (flag && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return kl_lang::JInteger::ParseInt(array3[2]);
-                            }) != -1) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = pls::cs::String::concat(
-                                integer_string((pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return kl_lang::JInteger::ParseInt(array3[2]);
-                                                }) +
-                                                1023) /
-                                               1024),
-                                literal(u"k"));
-                            pls::cs::Single cs_arg1 = array2[MyFormBase::WNDRET_BOX_RIGHT()] - 10;
-                            require(g)->DrawString(cs_arg0, cs_arg1, num4, 4);
-                        }());
-                    });
+                if (flag && PLS_API(kl_lang::JInteger::ParseInt(array3[2])) != -1) {
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = pls::cs::String::concat(
+                            integer_string((PLS_API(kl_lang::JInteger::ParseInt(array3[2])) + 1023) / 1024),
+                            literal(u"k"));
+                        pls::cs::Single cs_arg1 = array2[MyFormBase::WNDRET_BOX_RIGHT()] - 10;
+                        require(g)->DrawString(cs_arg0, cs_arg1, num4, 4);
+                    }()));
                 }
                 if (num6 >= 0) {
                     pls::cs::Int32 num10 = 0;
@@ -2594,12 +2186,10 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         num10 = (num7 + 20 + 60);
                     }
                     pls::cs::Int32 num11 = array2[MyFormBase::WNDRET_BOX_RIGHT()] - 10 - 24;
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = ((flag) ? (array3[3]) : (pls::cs::String(u"")));
-                            require(g)->DrawString(cs_arg0, num10 + (num11 - num10) / 2, num4, 2);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = ((flag) ? (array3[3]) : (pls::cs::String(u"")));
+                        require(g)->DrawString(cs_arg0, num10 + (num11 - num10) / 2, num4, 2);
+                    }()));
                 }
                 pls::cs::Int32 num12 = num4 - 2;
                 if (num6 >= 0) {
@@ -2607,31 +2197,22 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
                 if (select_ != num5 || Active()) {
                 }
-                if (num5 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                               return kl_java_util::Vector_2_Size(require(commands_));
-                           }) - 1) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return require(g)->SetColor(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return pls::kairo::Graphics::GetColorOfRGB(206, 187, 153);
-                        }));
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::Single cs_arg0 = array2[MyFormBase::WNDRET_BOX_LEFT()] + 2;
-                            pls::cs::Single cs_arg2 = array2[MyFormBase::WNDRET_BOX_RIGHT()] - 3;
-                            require(g)->DrawLine(cs_arg0, num4 + 15, cs_arg2, num4 + 15, 1.0f);
-                        }());
-                    });
+                if (num5 < PLS_API(kl_java_util::Vector_2_Size(require(commands_))) - 1) {
+                    PLS_API(
+                        require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(206, 187, 153))));
+                    PLS_API(([&]() -> void {
+                        pls::cs::Single cs_arg0 = array2[MyFormBase::WNDRET_BOX_LEFT()] + 2;
+                        pls::cs::Single cs_arg2 = array2[MyFormBase::WNDRET_BOX_RIGHT()] - 3;
+                        require(g)->DrawLine(cs_arg0, num4 + 15, cs_arg2, num4 + 15, 1.0f);
+                    }()));
                     num4 += 3;
                 }
                 ++num5;
                 num4 += 16;
             }
             num4 = MyFormBase::GetBoxFooterY(array2[MyFormBase::WNDRET_BOX_BOTTOM()]);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(60, 100, 200); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->DrawString(literal(u"送る内容を選んでください"), 120.0f, num4, 2);
-            });
+            PLS_API(require(g)->SetColor(60, 100, 200));
+            PLS_API(require(g)->DrawString(literal(u"送る内容を選んでください"), 120.0f, num4, 2));
         } else if (state_ == 1) {
             num4 = ([&]() -> pls::cs::Int32 {
                 auto cs_left = array2[MyFormBase::WNDRET_BOX_TOP()];
@@ -2644,9 +2225,9 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 2;
                 return cs_left + cs_right;
             }());
-            pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(30, 30, 30); });
+            pls::cs::Ref<pls::kairo::Font> font =
+                PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
+            PLS_API(require(g)->SetColor(30, 30, 30));
             pls::cs::String text = MyFormBase::LT(literal(u"データの送信中"));
             pls::cs::String text2 = pls::cs::String(u"");
             for (pls::cs::Int32 j = 4; j < frame_ % 16; j += 4) {
@@ -2666,9 +2247,7 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 return kl_java_util::Vector_2_op_Equality(cs_left, cs_right);
                             }())))
                                                  ? pls::cs::Int32(0)
-                                                 : (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                       return kl_java_util::Vector_2_Size(require(task_));
-                                                   })));
+                                                 : (PLS_API(kl_java_util::Vector_2_Size(require(task_)))));
                             return cs_left - cs_right;
                         }())) *
                         100;
@@ -2676,30 +2255,20 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     return cs_left / cs_right;
                 }());
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = pls::cs::String::concat(text, text2);
-                    pls::cs::Single cs_arg1 =
-                        105.0f - pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return pls::cs::Single(require(font)->StringWidthF(text));
-                                 }) / 2.0f;
-                    require(g)->DrawString(cs_arg0, cs_arg1, num4);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = pls::cs::String::concat(integer_string(num13), literal(u"%"));
-                    pls::cs::Single cs_arg1 = 105.0f +
-                                              pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                  return pls::cs::Single(require(font)->StringWidthF(text));
-                                              }) / 2.0f +
-                                              19.0f;
-                    require(g)->DrawString(cs_arg0, cs_arg1, num4);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = pls::cs::String::concat(text, text2);
+                pls::cs::Single cs_arg1 =
+                    105.0f - PLS_API(pls::cs::Single(require(font)->StringWidthF(text))) / 2.0f;
+                require(g)->DrawString(cs_arg0, cs_arg1, num4);
+            }()));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = pls::cs::String::concat(integer_string(num13), literal(u"%"));
+                pls::cs::Single cs_arg1 =
+                    105.0f + PLS_API(pls::cs::Single(require(font)->StringWidthF(text))) / 2.0f + 19.0f;
+                require(g)->DrawString(cs_arg0, cs_arg1, num4);
+            }()));
             text = literal(u"電源キーを押さないでください。");
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawString(text, 120.0f, num4 + 16, 2); });
+            PLS_API(require(g)->DrawString(text, 120.0f, num4 + 16, 2));
         } else if (state_ == 2) {
             num4 = ([&]() -> pls::cs::Int32 {
                 auto cs_left = array2[MyFormBase::WNDRET_BOX_TOP()];
@@ -2712,9 +2281,9 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 2;
                 return cs_left + cs_right;
             }());
-            pls::cs::Ref<pls::kairo::Font> font2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(30, 30, 30); });
+            pls::cs::Ref<pls::kairo::Font> font2 =
+                PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
+            PLS_API(require(g)->SetColor(30, 30, 30));
             pls::cs::String text3 = MyFormBase::LT(literal(u"データの受信中"));
             pls::cs::String text4 = pls::cs::String(u"");
             for (pls::cs::Int32 k = 4; k < frame_ % 16; k += 4) {
@@ -2734,9 +2303,7 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 return kl_java_util::Vector_2_op_Equality(cs_left, cs_right);
                             }())))
                                                  ? pls::cs::Int32(0)
-                                                 : (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                       return kl_java_util::Vector_2_Size(require(task_));
-                                                   })));
+                                                 : (PLS_API(kl_java_util::Vector_2_Size(require(task_)))));
                             return cs_left - cs_right;
                         }())) *
                         100;
@@ -2744,31 +2311,20 @@ void SpForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     return cs_left / cs_right;
                 }());
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = pls::cs::String::concat(text3, text4);
-                    pls::cs::Single cs_arg1 =
-                        105 - pls::cs::Int32(pls::diagnostic::api_call(
-                                  [&]() -> decltype(auto) { return require(font2)->StringWidth(text3); })) /
-                                  2;
-                    require(g)->DrawString(cs_arg0, cs_arg1, num4);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::String cs_arg0 = pls::cs::String::concat(integer_string(num14), literal(u"%"));
-                    pls::cs::Single cs_arg1 =
-                        105 +
-                        pls::cs::Int32(pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return require(font2)->StringWidth(text3); })) /
-                            2 +
-                        19;
-                    require(g)->DrawString(cs_arg0, cs_arg1, num4);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = pls::cs::String::concat(text3, text4);
+                pls::cs::Single cs_arg1 =
+                    105 - pls::cs::Int32(PLS_API(require(font2)->StringWidth(text3))) / 2;
+                require(g)->DrawString(cs_arg0, cs_arg1, num4);
+            }()));
+            PLS_API(([&]() -> void {
+                pls::cs::String cs_arg0 = pls::cs::String::concat(integer_string(num14), literal(u"%"));
+                pls::cs::Single cs_arg1 =
+                    105 + pls::cs::Int32(PLS_API(require(font2)->StringWidth(text3))) / 2 + 19;
+                require(g)->DrawString(cs_arg0, cs_arg1, num4);
+            }()));
             text3 = literal(u"電源キーを押さないでください。");
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->DrawString(text3, 120.0f, num4 + 16, 2); });
+            PLS_API(require(g)->DrawString(text3, 120.0f, num4 + 16, 2));
         }
     }
 }
@@ -2791,27 +2347,23 @@ pls::cs::String MyFormBase::UNI(pls::cs::String text, pls::cs::Int64 value, bool
         pls::cs::String text2 = literal(u"K");
         if (MyFormBase::Jp()) {
             return pls::cs::String::concat(
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_lang::JString::ValueOfObject(static_cast<pls::cs::Ref<pls::cs::Object>>(
-                        pls::cs::box((comma) ? (MyFormBase::Comma(value))
-                                             : ((pls::cs::String::concat(pls::cs::String(u""),
-                                                                         integer_string(value)))))));
-                }),
+                PLS_API(kl_lang::JString::ValueOfObject(static_cast<pls::cs::Ref<pls::cs::Object>>(
+                    pls::cs::box((comma) ? (MyFormBase::Comma(value))
+                                         : ((pls::cs::String::concat(pls::cs::String(u""),
+                                                                     integer_string(value)))))))),
                 text);
         }
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return contains_string(text, literal(u"万")); })) {
+        if (PLS_API(contains_string(text, literal(u"万")))) {
             return pls::cs::String::concat(
                 ((comma) ? (MyFormBase::Comma(value * pls::cs::Int64(10)))
                          : ((pls::cs::String::concat(pls::cs::String(u""),
                                                      integer_string(value * pls::cs::Int64(10)))))),
                 literal(u"k"));
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfObject(static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(
+        return PLS_API(
+            kl_lang::JString::ValueOfObject(static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(
                 (comma) ? (MyFormBase::Comma(value))
-                        : ((pls::cs::String::concat(pls::cs::String(u""), integer_string(value)))))));
-        });
+                        : ((pls::cs::String::concat(pls::cs::String(u""), integer_string(value))))))));
     }
 }
 
@@ -2822,12 +2374,11 @@ void MyFormBase::PushFontSize(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int
                      "M:form.MyFormBase.PushFontSize(kairo.unity.ui.Graphics,System.Int32)", game);
     {
         if (MyFormBase::En()) {
-            pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
-            MyFormBase::fontSize_() =
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(font)->GetSize(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(font)->SetSize(size, true); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(font); });
+            pls::cs::Ref<pls::kairo::Font> font =
+                PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
+            MyFormBase::fontSize_() = PLS_API(require(font)->GetSize());
+            PLS_API(require(font)->SetSize(size, true));
+            PLS_API(require(g)->SetFont(font));
         }
     }
 }
@@ -2838,11 +2389,10 @@ void MyFormBase::BackFontSize(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:form.MyFormBase.BackFontSize(kairo.unity.ui.Graphics)", game);
     {
         if (MyFormBase::En()) {
-            pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(font)->SetSize(MyFormBase::fontSize_(), true); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(font); });
+            pls::cs::Ref<pls::kairo::Font> font =
+                PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
+            PLS_API(require(font)->SetSize(MyFormBase::fontSize_(), true));
+            PLS_API(require(g)->SetFont(font));
         }
     }
 }

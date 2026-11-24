@@ -156,9 +156,8 @@ void KairoService::OnStart() {
             }()) {
             pls::cs::Ref<pls::game::form::SubForm> subForm =
                 pls::game::form::SubForm::MakeDialog(KairoText::LT(literal(u"ｱﾌﾟﾘのﾊﾞｰｼﾞｮﾝｱｯﾌﾟを行います")));
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Push(subForm); });
-            while (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(subForm)->CheckUsable(); })) {
+            PLS_API(require(instance)->Push(subForm));
+            while (PLS_API(require(subForm)->CheckUsable())) {
                 try {
                     java::lang::JThread::Sleep(10ll);
                 } catch (const pls::cs::Exception& cs_caught_282) {
@@ -167,12 +166,8 @@ void KairoService::OnStart() {
                     }
                 }
             }
-            pls::cs::String packageName = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return pls::kairo::IApplication::GetCurrentApp();
-                       }))
-                    ->GetPackageName();
-            });
+            pls::cs::String packageName =
+                PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetPackageName());
             kairo::unity::ui::Canvas::OpenBrowser(pls::cs::String::concat(
                 pls::cs::String::concat(
                     pls::cs::String::concat(
@@ -180,8 +175,7 @@ void KairoService::OnStart() {
                         literal(u"&referrer=utm_source%3Dappli%26utm_medium%3Dhouse_ad%26utm_content%3D")),
                     packageName),
                 literal(u"_lite%26utm_campaign%3Dbanner")));
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(instance)->RemoveAllForms(); });
+            PLS_API(require(instance)->RemoveAllForms());
             return;
         }
         for (pls::cs::Int32 i = 0; i < 3; ++i) {
@@ -198,10 +192,8 @@ void KairoService::OnStart() {
         }
         if (CheckUserId() && !require(KairoService::friend_())->CheckRegistFriend()) {
             pls::cs::Ref<form::FriendForm> friendForm = form::FriendForm::create(0);
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(instance)->Push(friendForm); });
-            while (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(friendForm)->CheckUsable(); })) {
+            PLS_API(require(instance)->Push(friendForm));
+            while (PLS_API(require(friendForm)->CheckUsable())) {
                 try {
                     java::lang::JThread::Sleep(10ll);
                 } catch (const pls::cs::Exception& cs_caught_284) {
@@ -216,16 +208,11 @@ void KairoService::OnStart() {
             try {
                 {
                     auto cs_receiver = KairoService::friend_();
-                    pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_unity_util::SecureString::ToStringSecureStringStatic(
-                            require(require(KairoService::friend_())->friSave_)->strs.get_Item(0));
-                    });
+                    pls::cs::String cs_arg0 = PLS_API(kl_unity_util::SecureString::ToStringSecureStringStatic(
+                        require(require(KairoService::friend_())->friSave_)->strs.get_Item(0)));
                     pls::cs::Int64 cs_arg1 = pls::cs::cast_integral<pls::cs::Int64>(
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(
-                                       require(require(KairoService::friend_())->friSave_)->ints.get_Item(1))
-                                ->Get();
-                        }));
+                        PLS_API(require(require(require(KairoService::friend_())->friSave_)->ints.get_Item(1))
+                                    ->Get()));
                     require(cs_receiver)->CgiRegistFriend(cs_arg0, cs_arg1);
                 }
                 require(KairoService::friend_())->RefreshFriendList();
@@ -233,16 +220,13 @@ void KairoService::OnStart() {
                 auto t = pls::cs::capture_exception(cs_caught_285);
                 {
                     if (kl_cfg::Config::PRINT()) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return kl_unity_util::Log::Info(t); });
+                        PLS_API(kl_unity_util::Log::Info(t));
                     }
                 }
             }
             if ([&]() -> bool {
-                    auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return kl_java_util::Vector_2_Size(
-                            require(require(KairoService::friend_())->friendList_));
-                    });
+                    auto cs_left = PLS_API(
+                        kl_java_util::Vector_2_Size(require(require(KairoService::friend_())->friendList_)));
                     auto cs_right = require(KairoService::friend_())->FRIEND_MAX;
                     return cs_left < cs_right;
                 }()) {
@@ -257,10 +241,8 @@ void KairoService::OnStart() {
         pls::cs::Ref<form::LineupForm> lineupForm = pls::cs::Ref<form::LineupForm>{};
         if (require(instance2)->CheckShowableLineup()) {
             lineupForm = form::LineupForm::create(0);
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(instance)->Push(lineupForm); });
-            while (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(lineupForm)->CheckUsable(); })) {
+            PLS_API(require(instance)->Push(lineupForm));
+            while (PLS_API(require(lineupForm)->CheckUsable())) {
                 try {
                     java::lang::JThread::Sleep(10ll);
                 } catch (const pls::cs::Exception& cs_caught_286) {
@@ -309,20 +291,18 @@ void KairoService::Update() {
             return;
         }
         pls::cs::Ref<pls::game::form::FormManager> instance = pls::game::form::FormManager::GetInstance();
-        pls::cs::Ref<pls::kairo::FormBase> form =
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->GetForm(0); });
+        pls::cs::Ref<pls::kairo::FormBase> form = PLS_API(require(instance)->GetForm(0));
         if (autoProvision_ && ([&]() {
                 pls::cs::Ref<java::lang::JThread> cs_left = provideThread_;
                 pls::cs::Ref<java::lang::JThread> cs_right = pls::cs::Ref<java::lang::JThread>{};
                 return java::lang::JThread::op_Equality(cs_left, cs_right);
             }()) &&
             ([&]() -> bool {
-                auto cs_left =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(form)->GetId(); });
+                auto cs_left = PLS_API(require(form)->GetId());
                 auto cs_right = lastFormId_;
                 return cs_left != cs_right;
             }()) &&
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(form)->GetId(); }) != 0) {
+            PLS_API(require(form)->GetId()) != 0) {
             if (require(KairoService::billing_())->CheckNextConsume()) {
                 provideThread_ = java::lang::JThread::create_2(pls::cs::Delegate<void()>::from_closure(
                     pls::cs::raw(this), std::string("M:system.KairoService.Update:4117"),
@@ -345,9 +325,7 @@ void KairoService::Update() {
                                         auto t = pls::cs::capture_exception(cs_caught_298);
                                         {
                                             if (kl_cfg::Config::PRINT()) {
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return kl_unity_util::Log::Info(t);
-                                                });
+                                                PLS_API(kl_unity_util::Log::Info(t));
                                             }
                                             self->autoProvision_ = false;
                                         }
@@ -373,18 +351,16 @@ void KairoService::Update() {
                         pls::cs::Ref<java::lang::JThread> cs_right = pls::cs::Ref<java::lang::JThread>{};
                         return java::lang::JThread::op_Inequality(cs_left, cs_right);
                     }()) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> bool {
-                            pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::ConnectForm::create();
-                            return require(instance)->Push(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> bool {
+                        pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = form::ConnectForm::create();
+                        return require(instance)->Push(cs_arg0);
+                    }()));
                 }
             } else {
                 require(KairoService::billing_())->UpdateApplyTask(true);
             }
         }
-        lastFormId_ = pls::diagnostic::api_call([&]() -> decltype(auto) { return require(form)->GetId(); });
+        lastFormId_ = PLS_API(require(form)->GetId());
     }
 }
 
@@ -405,20 +381,17 @@ void KairoService::OnLoad(pls::cs::Ref<kl_io::InputStream> stream) {
     {
         {
             auto cs_receiver = KairoService::billing_();
-            ByteArray cs_arg0 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBool(stream, true); });
+            ByteArray cs_arg0 = PLS_API(kl_unity_util::StreamUtil::ReadBool(stream, true));
             require(cs_receiver)->Load(cs_arg0);
         }
         {
             auto cs_receiver = KairoService::friend_();
-            ByteArray cs_arg0 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBool(stream, true); });
+            ByteArray cs_arg0 = PLS_API(kl_unity_util::StreamUtil::ReadBool(stream, true));
             require(cs_receiver)->Load(cs_arg0);
         }
         {
             auto cs_receiver = KairoService::lineup_();
-            ByteArray cs_arg0 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBool(stream, true); });
+            ByteArray cs_arg0 = PLS_API(kl_unity_util::StreamUtil::ReadBool(stream, true));
             require(cs_receiver)->Load(cs_arg0);
         }
     }
@@ -428,15 +401,9 @@ void KairoService::OnLoad(pls::cs::Ref<kl_io::InputStream> stream) {
 void KairoService::OnWrite(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.KairoService.OnWrite(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::Write(os, require(KairoService::billing_())->Write(), true);
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::Write(os, require(KairoService::friend_())->Write(), true);
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::Write(os, require(KairoService::lineup_())->Write(), true);
-        });
+        PLS_API(kl_unity_util::StreamUtil::Write(os, require(KairoService::billing_())->Write(), true));
+        PLS_API(kl_unity_util::StreamUtil::Write(os, require(KairoService::friend_())->Write(), true));
+        PLS_API(kl_unity_util::StreamUtil::Write(os, require(KairoService::lineup_())->Write(), true));
     }
 }
 
@@ -455,14 +422,12 @@ void KairoService::OnLoadGame(pls::cs::Ref<kl_io::InputStream> stream) {
     {
         {
             auto cs_receiver = KairoService::billing_();
-            ByteArray cs_arg0 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBool(stream, true); });
+            ByteArray cs_arg0 = PLS_API(kl_unity_util::StreamUtil::ReadBool(stream, true));
             require(cs_receiver)->LoadGame(cs_arg0);
         }
         {
             auto cs_receiver = KairoService::friend_();
-            ByteArray cs_arg0 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBool(stream, true); });
+            ByteArray cs_arg0 = PLS_API(kl_unity_util::StreamUtil::ReadBool(stream, true));
             require(cs_receiver)->LoadGame(cs_arg0);
         }
     }
@@ -472,12 +437,8 @@ void KairoService::OnLoadGame(pls::cs::Ref<kl_io::InputStream> stream) {
 void KairoService::OnWriteGame(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.KairoService.OnWriteGame(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::Write(os, require(KairoService::billing_())->WriteGame(), true);
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::Write(os, require(KairoService::friend_())->WriteGame(), true);
-        });
+        PLS_API(kl_unity_util::StreamUtil::Write(os, require(KairoService::billing_())->WriteGame(), true));
+        PLS_API(kl_unity_util::StreamUtil::Write(os, require(KairoService::friend_())->WriteGame(), true));
     }
 }
 

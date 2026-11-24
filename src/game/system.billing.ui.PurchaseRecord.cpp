@@ -146,40 +146,18 @@ pls::cs::String PurchaseRecord::GetTimeStamp(pls::cs::Int32 state) {
         if (timestamp_[state] <= 0) {
             return pls::cs::String(u"");
         }
-        pls::cs::Ref<kl_java_util::JCalendar> instance = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::JCalendar::GetInstance(); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int64 cs_arg0 = pls::cs::Int64(timestamp_[state]) * 1000ll;
-                require(instance)->SetTimeInMillis(cs_arg0);
-            }());
-        });
-        pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(1); }));
-        });
-        pls::cs::String text2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::cs::Int32(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(instance)->Get(2); })) +
-                1);
-        });
-        pls::cs::String text3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(5); }));
-        });
-        pls::cs::String text4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(11); }));
-        });
-        pls::cs::String text5 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(12); }));
-        });
-        pls::cs::String text6 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(13); }));
-        });
+        pls::cs::Ref<kl_java_util::JCalendar> instance = PLS_API(kl_java_util::JCalendar::GetInstance());
+        PLS_API(([&]() -> void {
+            pls::cs::Int64 cs_arg0 = pls::cs::Int64(timestamp_[state]) * 1000ll;
+            require(instance)->SetTimeInMillis(cs_arg0);
+        }()));
+        pls::cs::String text = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(1))));
+        pls::cs::String text2 =
+            PLS_API(kl_lang::JString::ValueOfInt(pls::cs::Int32(PLS_API(require(instance)->Get(2))) + 1));
+        pls::cs::String text3 = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(5))));
+        pls::cs::String text4 = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(11))));
+        pls::cs::String text5 = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(12))));
+        pls::cs::String text6 = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(13))));
         if (kl_lang::StringEx::Length(text2) == 1) {
             text2 = pls::cs::String::concat(literal(u"0"), text2);
         }
@@ -224,40 +202,18 @@ pls::cs::String PurchaseRecord::GetTimeStampNengappi(pls::cs::Int32 state) {
         if (timestamp_[state] <= 0) {
             return pls::cs::String(u"");
         }
-        pls::cs::Ref<kl_java_util::JCalendar> instance = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_java_util::JCalendar::GetInstance(); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Int64 cs_arg0 = pls::cs::Int64(timestamp_[state]) * 1000ll;
-                require(instance)->SetTimeInMillis(cs_arg0);
-            }());
-        });
-        pls::cs::String text = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(1); }));
-        });
-        pls::cs::String text2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::cs::Int32(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(instance)->Get(2); })) +
-                1);
-        });
-        pls::cs::String text3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(5); }));
-        });
-        pls::cs::String text4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(11); }));
-        });
-        pls::cs::String text5 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(12); }));
-        });
-        pls::cs::String text6 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JString::ValueOfInt(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(instance)->Get(13); }));
-        });
+        pls::cs::Ref<kl_java_util::JCalendar> instance = PLS_API(kl_java_util::JCalendar::GetInstance());
+        PLS_API(([&]() -> void {
+            pls::cs::Int64 cs_arg0 = pls::cs::Int64(timestamp_[state]) * 1000ll;
+            require(instance)->SetTimeInMillis(cs_arg0);
+        }()));
+        pls::cs::String text = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(1))));
+        pls::cs::String text2 =
+            PLS_API(kl_lang::JString::ValueOfInt(pls::cs::Int32(PLS_API(require(instance)->Get(2))) + 1));
+        pls::cs::String text3 = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(5))));
+        pls::cs::String text4 = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(11))));
+        pls::cs::String text5 = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(12))));
+        pls::cs::String text6 = PLS_API(kl_lang::JString::ValueOfInt(PLS_API(require(instance)->Get(13))));
         if (kl_lang::StringEx::Length(text2) == 1) {
             text2 = pls::cs::String::concat(literal(u"0"), text2);
         }
@@ -315,19 +271,13 @@ void PurchaseRecord::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.PurchaseRecord.Serialize(java.io.OutputStream)",
                      game);
     {
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteStringString(os, productId_); });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteStringString(os, orderId_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteStringString(os, productId_));
+        PLS_API(kl_unity_util::StreamUtil::WriteStringString(os, orderId_));
         for (pls::cs::Int32 i = 0; i < timestamp_.length(); ++i) {
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteInt(os, timestamp_[i]); });
+            PLS_API(kl_unity_util::StreamUtil::WriteInt(os, timestamp_[i]));
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StreamUtil::WriteByteByte(os, pls::cs::cast_integral<std::uint8_t>(state_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::WriteBoolean(os, send_); });
+        PLS_API(kl_unity_util::StreamUtil::WriteByteByte(os, pls::cs::cast_integral<std::uint8_t>(state_)));
+        PLS_API(kl_unity_util::StreamUtil::WriteBoolean(os, send_));
     }
 }
 
@@ -336,23 +286,18 @@ void PurchaseRecord::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.PurchaseRecord.Deserialize(java.io.InputStream)",
                      game);
     {
-        productId_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadString(stream); });
-        orderId_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadString(stream); });
+        productId_ = PLS_API(kl_unity_util::StreamUtil::ReadString(stream));
+        orderId_ = PLS_API(kl_unity_util::StreamUtil::ReadString(stream));
         for (pls::cs::Int32 i = 0; i < timestamp_.length(); ++i) {
             {
                 auto cs_target = timestamp_;
                 auto cs_index = i;
-                auto cs_value = pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadInt(stream); });
+                auto cs_value = PLS_API(kl_unity_util::StreamUtil::ReadInt(stream));
                 cs_target.set_Item(cs_index, cs_value);
             }
         }
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadByte(stream); }));
-        send_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_unity_util::StreamUtil::ReadBoolean(stream); });
+        state_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_unity_util::StreamUtil::ReadByte(stream)));
+        send_ = PLS_API(kl_unity_util::StreamUtil::ReadBoolean(stream));
     }
 }
 
@@ -360,12 +305,10 @@ void PurchaseRecord::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
 std::int32_t PurchaseRecord::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.ui.PurchaseRecord.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace system::billing::ui

@@ -73,8 +73,8 @@ void WebBox::SetViewRect(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 x,
         "M:main.WebBox.SetViewRect(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        x += pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginX(); });
-        y += pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetOriginY(); });
+        x += PLS_API(require(g)->GetOriginX());
+        y += PLS_API(require(g)->GetOriginY());
         pls::cs::Ref<surface::GameView> instance = surface::GameView::GetInstance();
         x = ([&]() -> pls::cs::Int32 {
             auto cs_left = require(instance)->GetX();

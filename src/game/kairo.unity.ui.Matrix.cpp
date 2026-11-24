@@ -101,10 +101,8 @@ pls::cs::Ref<Matrix> Matrix::create() {
 pls::cs::Ref<Matrix> Matrix::Reset() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.Matrix.Reset", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JSystem::Arraycopy(pls::cs::box(Matrix::identityMatrix_()), 0, pls::cs::box(mtx_),
-                                               0, Matrix::identityMatrix_().length());
-        });
+        PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(Matrix::identityMatrix_()), 0, pls::cs::box(mtx_), 0,
+                                            Matrix::identityMatrix_().length()));
         return this;
     }
 }
@@ -113,10 +111,7 @@ pls::cs::Ref<Matrix> Matrix::Reset() {
 pls::cs::Ref<Matrix> Matrix::SetValues(FloatArray matrix) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.Matrix.SetValues(System.Single[])", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JSystem::Arraycopy(pls::cs::box(matrix), 0, pls::cs::box(mtx_), 0,
-                                               matrix.length());
-        });
+        PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(matrix), 0, pls::cs::box(mtx_), 0, matrix.length()));
         return this;
     }
 }
@@ -125,10 +120,7 @@ pls::cs::Ref<Matrix> Matrix::SetValues(FloatArray matrix) {
 void Matrix::GetValues(FloatArray matrix) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.Matrix.GetValues(System.Single[])", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_lang::JSystem::Arraycopy(pls::cs::box(mtx_), 0, pls::cs::box(matrix), 0,
-                                               matrix.length());
-        });
+        PLS_API(kl_lang::JSystem::Arraycopy(pls::cs::box(mtx_), 0, pls::cs::box(matrix), 0, matrix.length()));
     }
 }
 
@@ -208,7 +200,7 @@ pls::cs::Ref<Matrix> Matrix::PostRotate(pls::cs::Single angle, pls::cs::Single p
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.ui.Matrix.PostRotate(System.Single,System.Single,System.Single)", kairo);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return std::isnan(angle); })) {
+        if (PLS_API(std::isnan(angle))) {
             throw pls::cs::ArgumentException();
         }
         if (px != 0.0f || py != 0.0f) {
@@ -262,8 +254,7 @@ pls::cs::Ref<Matrix> Matrix::PostScale(pls::cs::Single x, pls::cs::Single y, pls
         "KairoLibrary",
         "M:kairo.unity.ui.Matrix.PostScale(System.Single,System.Single,System.Single,System.Single)", kairo);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return std::isnan(x); }) ||
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return std::isnan(y); })) {
+        if (PLS_API(std::isnan(x)) || PLS_API(std::isnan(y))) {
             throw pls::cs::ArgumentException();
         }
         if (px != 0.0f || py != 0.0f) {
@@ -355,8 +346,7 @@ pls::cs::Ref<Matrix> Matrix::PostTranslate(pls::cs::Single x, pls::cs::Single y)
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.Matrix.PostTranslate(System.Single,System.Single)",
                      kairo);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) { return std::isnan(x); }) ||
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return std::isnan(y); })) {
+        if (PLS_API(std::isnan(x)) || PLS_API(std::isnan(y))) {
             throw pls::cs::ArgumentException();
         }
         {
@@ -461,13 +451,11 @@ bool Matrix::Equals(pls::cs::Ref<Matrix> self, pls::cs::Ref<pls::cs::Object> obj
                 }
             }
         }
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(self));
-                auto cs_argument = obj;
-                return require(cs_receiver)->pls::cs::Object::Equals(cs_argument);
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(self));
+            auto cs_argument = obj;
+            return require(cs_receiver)->pls::cs::Object::Equals(cs_argument);
+        }()));
     }
 }
 
@@ -475,12 +463,10 @@ bool Matrix::Equals(pls::cs::Ref<Matrix> self, pls::cs::Ref<pls::cs::Object> obj
 std::int32_t Matrix::GetHashCode() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.Matrix.GetHashCode", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace kairo::unity::ui

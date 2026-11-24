@@ -35,15 +35,13 @@ pls::cs::String Error(pls::cs::String text, pls::cs::Ref<pls::cs::ExceptionObjec
     {
         kl_cfg::Config::ensure_initialized();
 
-        text = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::Log::GetThrowableLog(text, t); });
+        text = PLS_API(kl_util::Log::GetThrowableLog(text, t));
         if (kl_cfg::Config::PRINT()) {
             if (!is_null(text)) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_util::Log::DebugLog(text); });
+                PLS_API(kl_util::Log::DebugLog(text));
             }
             if (!is_null(t)) {
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::debug_log(pls::cs::box(t)); });
+                PLS_API(pls::kairo::debug_log(pls::cs::box(t)));
             }
         }
         if (!is_null(Log::listener_())) {

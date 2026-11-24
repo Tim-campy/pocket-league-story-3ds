@@ -132,45 +132,32 @@ void SponsorData::Load(pls::cs::String src) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.SponsorData.Load(System.String)", game);
     {
         pls::cs::Int32 num = 0;
-        StringArray array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StringUtil::Split(src, literal(u"\t")); });
-        id_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        StringArray array = PLS_API(kl_util::StringUtil::Split(src, literal(u"\t")));
+        id_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         name_ = array[num++];
-        charaIndex_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        privilegeType_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        privilegeValue_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        costType_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        cost_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        charaIndex_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        privilegeType_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        privilegeValue_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        costType_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        cost_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         {
             auto cs_target = income_;
             auto cs_index = 0;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+            auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
             cs_target.set_Item(cs_index, cs_value);
         }
         {
             auto cs_target = income_;
             auto cs_index = 1;
-            auto cs_value = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+            auto cs_value = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
             cs_target.set_Item(cs_index, cs_value);
         }
-        satisfactDifficult_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        difficult_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
-        feelPtInt_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        satisfactDifficult_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        difficult_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+        feelPtInt_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         explain_ = array[num++];
         execsScript_ = EventData::ReadScript(array[num++]);
-        flag_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+        flag_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
         feelPt_ = feelPtInt_;
     }
 }
@@ -180,8 +167,7 @@ void SponsorData::NewGame() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.SponsorData.NewGame", game);
     {
         state_ = 0;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_util::BitUtil::Check(flag_, 1); })) {
+        if (PLS_API(kl_util::BitUtil::Check(flag_, 1))) {
             ChangeState(1);
         }
     }
@@ -191,16 +177,10 @@ void SponsorData::NewGame() {
 void SponsorData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.SponsorData.Serialize(java.io.OutputStream)", game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteInt(os, satisfactPoint_); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(feelPt_));
-        });
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::WriteBoolean(os, new_); });
+        PLS_API(kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_)));
+        PLS_API(kl_util::StreamUtil::WriteInt(os, satisfactPoint_));
+        PLS_API(kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(feelPt_)));
+        PLS_API(kl_util::StreamUtil::WriteBoolean(os, new_));
     }
 }
 
@@ -208,14 +188,10 @@ void SponsorData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 void SponsorData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:data.SponsorData.Deserialize(java.io.InputStream)", game);
     {
-        state_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadShort(stream); }));
-        satisfactPoint_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadInt(stream); });
-        feelPt_ = pls::cs::cast_integral<pls::cs::Int32>(pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadShort(stream); }));
-        new_ = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return kl_util::StreamUtil::ReadBoolean(stream); });
+        state_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_util::StreamUtil::ReadShort(stream)));
+        satisfactPoint_ = PLS_API(kl_util::StreamUtil::ReadInt(stream));
+        feelPt_ = pls::cs::cast_integral<pls::cs::Int32>(PLS_API(kl_util::StreamUtil::ReadShort(stream)));
+        new_ = PLS_API(kl_util::StreamUtil::ReadBoolean(stream));
     }
 }
 
@@ -239,14 +215,12 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
         "M:data.SponsorData.Draw_sponsorChara(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32)",
         game);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                    require(require(SponsorData::apdat_())->resCom2_)->img.get_Item(169);
-                require(g)->DrawImage(cs_arg0, dx - 10, dy - 30, 20 * (charaId % 12), 30 * (charaId / 12), 20,
-                                      30);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                require(require(SponsorData::apdat_())->resCom2_)->img.get_Item(169);
+            require(g)->DrawImage(cs_arg0, dx - 10, dy - 30, 20 * (charaId % 12), 30 * (charaId / 12), 20,
+                                  30);
+        }()));
     }
 }
 

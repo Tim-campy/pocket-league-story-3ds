@@ -13,11 +13,10 @@ void Draw(pls::cs::Ref<pls::kairo::Font> self, pls::cs::Ref<pls::kairo::Graphics
         "M:kairo.unity.ui.Font.Draw(kairo.unity.ui.Graphics,System.String,System.Single,System.Single)",
         kairo);
     {
-        pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(self); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->DrawString(text, x, y); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetFont(font); });
+        pls::cs::Ref<pls::kairo::Font> font = PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
+        PLS_API(require(g)->SetFont(self));
+        PLS_API(require(g)->DrawString(text, x, y));
+        PLS_API(require(g)->SetFont(font));
     }
 }
 } // namespace kairo::unity::ui::Font

@@ -85,13 +85,8 @@ pls::cs::Ref<kl_java_util::Vector_2<pls::cs::Ref<SurfaceBase>>> SurfaceManagerBa
 void SurfaceManagerBase::ClearTouchComponent() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.SurfaceManagerBase.ClearTouchComponent", kairo);
     {
-        for (pls::cs::Int32 num = pls::diagnostic::api_call(
-                                      [&]() -> decltype(auto) { return require(surfaceList_)->Size(); }) -
-                                  1;
-             num >= 0; --num) {
-            require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(surfaceList_)->ElementAt(num);
-            }))->ClearTouchComponent();
+        for (pls::cs::Int32 num = PLS_API(require(surfaceList_)->Size()) - 1; num >= 0; --num) {
+            require(PLS_API(require(surfaceList_)->ElementAt(num)))->ClearTouchComponent();
         }
     }
 }
@@ -102,30 +97,19 @@ void SurfaceManagerBase::DoEvents() {
     {
         kl_cfg::Config::ensure_initialized();
 
-        for (pls::cs::Int32 i = 0;
-             i < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(surfaceList_)->Size(); });
-             ++i) {
-            require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(surfaceList_)->ElementAt(i);
-            }))->DoBegin();
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(surfaceList_)->Size()); ++i) {
+            require(PLS_API(require(surfaceList_)->ElementAt(i)))->DoBegin();
         }
         pls::cs::Int32 num = 0;
-        for (pls::cs::Int32 j = 0;
-             j < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(surfaceList_)->Size(); });
-             ++j) {
-            num += require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                       return require(surfaceList_)->ElementAt(j);
-                   }))->GetComponentLength();
+        for (pls::cs::Int32 j = 0; j < PLS_API(require(surfaceList_)->Size()); ++j) {
+            num += require(PLS_API(require(surfaceList_)->ElementAt(j)))->GetComponentLength();
         }
         if (components_.length() < num) {
             components_ = pls::cs::Array<pls::cs::Ref<TouchComponent>>::make(num);
         }
         pls::cs::Int32 num2 = 0;
-        for (pls::cs::Int32 k = 0;
-             k < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(surfaceList_)->Size(); });
-             ++k) {
-            pls::cs::Ref<SurfaceBase> surfaceBase = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(surfaceList_)->ElementAt(k); });
+        for (pls::cs::Int32 k = 0; k < PLS_API(require(surfaceList_)->Size()); ++k) {
+            pls::cs::Ref<SurfaceBase> surfaceBase = PLS_API(require(surfaceList_)->ElementAt(k));
             for (pls::cs::Int32 l = 0; l < require(surfaceBase)->GetComponentLength(); ++l) {
                 {
                     auto cs_target = components_;
@@ -154,25 +138,13 @@ void SurfaceManagerBase::DoEvents() {
                 break;
             }
         }
-        for (pls::cs::Int32 num5 = pls::diagnostic::api_call(
-                                       [&]() -> decltype(auto) { return require(surfaceList_)->Size(); }) -
-                                   1;
-             num5 >= 0; --num5) {
-            require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(surfaceList_)->ElementAt(num5);
-            }))->DoEnd();
+        for (pls::cs::Int32 num5 = PLS_API(require(surfaceList_)->Size()) - 1; num5 >= 0; --num5) {
+            require(PLS_API(require(surfaceList_)->ElementAt(num5)))->DoEnd();
         }
-        if (kl_cfg::Config::DEBUG() && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(surfaceList_)->Size();
-                                       }) > 0 &&
-            (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                 return pls::kairo::DebugInput::GetKey(304 /* KeyCode.LeftShift */);
-             }) ||
-             pls::diagnostic::api_call([&]() -> decltype(auto) {
-                 return pls::kairo::DebugInput::GetKey(303 /* KeyCode.RightShift */);
-             }))) {
-            pls::cs::Ref<SurfaceBase> surfaceBase2 = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(surfaceList_)->FirstElement(); });
+        if (kl_cfg::Config::DEBUG() && PLS_API(require(surfaceList_)->Size()) > 0 &&
+            (PLS_API(pls::kairo::DebugInput::GetKey(304 /* KeyCode.LeftShift */)) ||
+             PLS_API(pls::kairo::DebugInput::GetKey(303 /* KeyCode.RightShift */)))) {
+            pls::cs::Ref<SurfaceBase> surfaceBase2 = PLS_API(require(surfaceList_)->FirstElement());
             auto cs_left_2 = (([&]() -> pls::cs::FloatEval {
                                  auto cs_left_2 = pls::kairo::DebugInput::get_mousePosition().x;
                                  auto cs_right_2 = pls::cs::Single(require(surfaceBase2)->GetX());
@@ -224,8 +196,7 @@ void SurfaceManagerBase::DoEvents() {
                     return cs_left / cs_right;
                 }());
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::DebugInput::GetMouseButtonDown(0); })) {
+            if (PLS_API(pls::kairo::DebugInput::GetMouseButtonDown(0))) {
                 pls::cs::Int32 rectIndex;
                 pls::cs::Int32 handleIndex;
                 if (!([&]() -> bool {
@@ -238,23 +209,21 @@ void SurfaceManagerBase::DoEvents() {
                         auto& cs_arg3 = handleIndex;
                         return cs_receiver->GetSelectPaintPoint(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
                     }())) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            auto cs_receiver = paintRects_;
-                            auto cs_arg0 = pls::cs::Array<pls::kairo::Vector2>::from(
-                                {([&]() {
-                                     auto cs_arg0 = num8;
-                                     auto cs_arg1 = num9;
-                                     return pls::kairo::Vector2(cs_arg0, cs_arg1);
-                                 }()),
-                                 ([&]() {
-                                     auto cs_arg0 = num8;
-                                     auto cs_arg1 = num9;
-                                     return pls::kairo::Vector2(cs_arg0, cs_arg1);
-                                 }())});
-                            cs_receiver.Add(cs_arg0);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        auto cs_receiver = paintRects_;
+                        auto cs_arg0 = pls::cs::Array<pls::kairo::Vector2>::from(
+                            {([&]() {
+                                 auto cs_arg0 = num8;
+                                 auto cs_arg1 = num9;
+                                 return pls::kairo::Vector2(cs_arg0, cs_arg1);
+                             }()),
+                             ([&]() {
+                                 auto cs_arg0 = num8;
+                                 auto cs_arg1 = num9;
+                                 return pls::kairo::Vector2(cs_arg0, cs_arg1);
+                             }())});
+                        cs_receiver.Add(cs_arg0);
+                    }()));
                     currentPaintRect_ = pls::cs::Int32(paintRects_.get_Count()) - 1;
                     currentPaintPoint_ = 1;
                     return;
@@ -262,124 +231,97 @@ void SurfaceManagerBase::DoEvents() {
                 currentPaintRect_ = rectIndex;
                 IntArray paintRect = GetPaintRect(paintRects_.get_Item(currentPaintRect_));
                 if (handleIndex == 0) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_value_storage_7_array = paintRects_.get_Item(currentPaintRect_);
-                            auto cs_value_storage_7_index = 0;
-                            auto& cs_value_storage_7 = cs_value_storage_7_array.at(cs_value_storage_7_index);
-                            auto cs_arg0 = paintRect[0];
-                            auto cs_arg1 = paintRect[1];
-                            cs_value_storage_7.Set(cs_arg0, cs_arg1);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_value_storage_8_array = paintRects_.get_Item(currentPaintRect_);
-                            auto cs_value_storage_8_index = 1;
-                            auto& cs_value_storage_8 = cs_value_storage_8_array.at(cs_value_storage_8_index);
-                            auto cs_arg0 = (paintRect[0] + paintRect[2]);
-                            auto cs_arg1 = (paintRect[1] + paintRect[3]);
-                            cs_value_storage_8.Set(cs_arg0, cs_arg1);
-                        }());
-                    });
+                    PLS_API(([&]() {
+                        auto cs_value_storage_7_array = paintRects_.get_Item(currentPaintRect_);
+                        auto cs_value_storage_7_index = 0;
+                        auto& cs_value_storage_7 = cs_value_storage_7_array.at(cs_value_storage_7_index);
+                        auto cs_arg0 = paintRect[0];
+                        auto cs_arg1 = paintRect[1];
+                        cs_value_storage_7.Set(cs_arg0, cs_arg1);
+                    }()));
+                    PLS_API(([&]() {
+                        auto cs_value_storage_8_array = paintRects_.get_Item(currentPaintRect_);
+                        auto cs_value_storage_8_index = 1;
+                        auto& cs_value_storage_8 = cs_value_storage_8_array.at(cs_value_storage_8_index);
+                        auto cs_arg0 = (paintRect[0] + paintRect[2]);
+                        auto cs_arg1 = (paintRect[1] + paintRect[3]);
+                        cs_value_storage_8.Set(cs_arg0, cs_arg1);
+                    }()));
                     currentPaintPoint_ = 0;
                 }
                 if (handleIndex == 1) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_value_storage_9_array = paintRects_.get_Item(currentPaintRect_);
-                            auto cs_value_storage_9_index = 0;
-                            auto& cs_value_storage_9 = cs_value_storage_9_array.at(cs_value_storage_9_index);
-                            auto cs_arg0 = paintRect[0];
-                            auto cs_arg1 = (paintRect[1] + paintRect[3]);
-                            cs_value_storage_9.Set(cs_arg0, cs_arg1);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_value_storage_10_array = paintRects_.get_Item(currentPaintRect_);
-                            auto cs_value_storage_10_index = 1;
-                            auto& cs_value_storage_10 =
-                                cs_value_storage_10_array.at(cs_value_storage_10_index);
-                            auto cs_arg0 = (paintRect[0] + paintRect[2]);
-                            auto cs_arg1 = paintRect[1];
-                            cs_value_storage_10.Set(cs_arg0, cs_arg1);
-                        }());
-                    });
+                    PLS_API(([&]() {
+                        auto cs_value_storage_9_array = paintRects_.get_Item(currentPaintRect_);
+                        auto cs_value_storage_9_index = 0;
+                        auto& cs_value_storage_9 = cs_value_storage_9_array.at(cs_value_storage_9_index);
+                        auto cs_arg0 = paintRect[0];
+                        auto cs_arg1 = (paintRect[1] + paintRect[3]);
+                        cs_value_storage_9.Set(cs_arg0, cs_arg1);
+                    }()));
+                    PLS_API(([&]() {
+                        auto cs_value_storage_10_array = paintRects_.get_Item(currentPaintRect_);
+                        auto cs_value_storage_10_index = 1;
+                        auto& cs_value_storage_10 = cs_value_storage_10_array.at(cs_value_storage_10_index);
+                        auto cs_arg0 = (paintRect[0] + paintRect[2]);
+                        auto cs_arg1 = paintRect[1];
+                        cs_value_storage_10.Set(cs_arg0, cs_arg1);
+                    }()));
                     currentPaintPoint_ = 1;
                 }
                 if (handleIndex == 2) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_value_storage_11_array = paintRects_.get_Item(currentPaintRect_);
-                            auto cs_value_storage_11_index = 0;
-                            auto& cs_value_storage_11 =
-                                cs_value_storage_11_array.at(cs_value_storage_11_index);
-                            auto cs_arg0 = paintRect[0];
-                            auto cs_arg1 = paintRect[1];
-                            cs_value_storage_11.Set(cs_arg0, cs_arg1);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_value_storage_12_array = paintRects_.get_Item(currentPaintRect_);
-                            auto cs_value_storage_12_index = 1;
-                            auto& cs_value_storage_12 =
-                                cs_value_storage_12_array.at(cs_value_storage_12_index);
-                            auto cs_arg0 = (paintRect[0] + paintRect[2]);
-                            auto cs_arg1 = (paintRect[1] + paintRect[3]);
-                            cs_value_storage_12.Set(cs_arg0, cs_arg1);
-                        }());
-                    });
+                    PLS_API(([&]() {
+                        auto cs_value_storage_11_array = paintRects_.get_Item(currentPaintRect_);
+                        auto cs_value_storage_11_index = 0;
+                        auto& cs_value_storage_11 = cs_value_storage_11_array.at(cs_value_storage_11_index);
+                        auto cs_arg0 = paintRect[0];
+                        auto cs_arg1 = paintRect[1];
+                        cs_value_storage_11.Set(cs_arg0, cs_arg1);
+                    }()));
+                    PLS_API(([&]() {
+                        auto cs_value_storage_12_array = paintRects_.get_Item(currentPaintRect_);
+                        auto cs_value_storage_12_index = 1;
+                        auto& cs_value_storage_12 = cs_value_storage_12_array.at(cs_value_storage_12_index);
+                        auto cs_arg0 = (paintRect[0] + paintRect[2]);
+                        auto cs_arg1 = (paintRect[1] + paintRect[3]);
+                        cs_value_storage_12.Set(cs_arg0, cs_arg1);
+                    }()));
                     currentPaintPoint_ = 1;
                 }
                 if (handleIndex == 3) {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_value_storage_13_array = paintRects_.get_Item(currentPaintRect_);
-                            auto cs_value_storage_13_index = 0;
-                            auto& cs_value_storage_13 =
-                                cs_value_storage_13_array.at(cs_value_storage_13_index);
-                            auto cs_arg0 = paintRect[0];
-                            auto cs_arg1 = (paintRect[1] + paintRect[3]);
-                            cs_value_storage_13.Set(cs_arg0, cs_arg1);
-                        }());
-                    });
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() {
-                            auto cs_value_storage_14_array = paintRects_.get_Item(currentPaintRect_);
-                            auto cs_value_storage_14_index = 1;
-                            auto& cs_value_storage_14 =
-                                cs_value_storage_14_array.at(cs_value_storage_14_index);
-                            auto cs_arg0 = (paintRect[0] + paintRect[2]);
-                            auto cs_arg1 = paintRect[1];
-                            cs_value_storage_14.Set(cs_arg0, cs_arg1);
-                        }());
-                    });
+                    PLS_API(([&]() {
+                        auto cs_value_storage_13_array = paintRects_.get_Item(currentPaintRect_);
+                        auto cs_value_storage_13_index = 0;
+                        auto& cs_value_storage_13 = cs_value_storage_13_array.at(cs_value_storage_13_index);
+                        auto cs_arg0 = paintRect[0];
+                        auto cs_arg1 = (paintRect[1] + paintRect[3]);
+                        cs_value_storage_13.Set(cs_arg0, cs_arg1);
+                    }()));
+                    PLS_API(([&]() {
+                        auto cs_value_storage_14_array = paintRects_.get_Item(currentPaintRect_);
+                        auto cs_value_storage_14_index = 1;
+                        auto& cs_value_storage_14 = cs_value_storage_14_array.at(cs_value_storage_14_index);
+                        auto cs_arg0 = (paintRect[0] + paintRect[2]);
+                        auto cs_arg1 = paintRect[1];
+                        cs_value_storage_14.Set(cs_arg0, cs_arg1);
+                    }()));
                     currentPaintPoint_ = 0;
                 }
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return pls::kairo::DebugInput::GetMouseButtonDown(1);
-                       })) {
+            } else if (PLS_API(pls::kairo::DebugInput::GetMouseButtonDown(1))) {
                 if (paintRects_.get_Count() > 0) {
                     if (currentPaintRect_ != -1) {
-                        pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return paintRects_.RemoveAt(currentPaintRect_); });
+                        PLS_API(paintRects_.RemoveAt(currentPaintRect_));
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() -> void {
-                                auto cs_receiver = paintRects_;
-                                auto cs_arg0 = pls::cs::Int32(paintRects_.get_Count()) - 1;
-                                cs_receiver.RemoveAt(cs_arg0);
-                            }());
-                        });
+                        PLS_API(([&]() -> void {
+                            auto cs_receiver = paintRects_;
+                            auto cs_arg0 = pls::cs::Int32(paintRects_.get_Count()) - 1;
+                            cs_receiver.RemoveAt(cs_arg0);
+                        }()));
                     }
                 }
                 currentPaintPoint_ = -1;
                 currentPaintRect_ = currentPaintPoint_;
             } else if ([&]() -> bool {
-                           auto cs_left = pls::diagnostic::api_call(
-                               [&]() -> decltype(auto) { return pls::kairo::DebugInput::GetMouseButton(0); });
+                           auto cs_left = PLS_API(pls::kairo::DebugInput::GetMouseButton(0));
                            auto cs_right = (currentPaintRect_ != -1);
                            return cs_left & cs_right;
                        }()) {
@@ -512,23 +454,14 @@ void SurfaceManagerBase::BeginTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) 
     {
         TouchOption::ensure_initialized();
 
-        for (pls::cs::Int32 i = 0; i < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                       return require(TouchOption::buffer())->Size();
-                                   });
-             ++i) {
-            pls::cs::Ref<TouchOption> touchOption = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(TouchOption::buffer())->ElementAt(i); });
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(TouchOption::buffer())->Size()); ++i) {
+            pls::cs::Ref<TouchOption> touchOption = PLS_API(require(TouchOption::buffer())->ElementAt(i));
             if (require(touchOption)->hasCount <= 0) {
                 require(touchOption)->Lock = false;
             }
         }
-        for (pls::cs::Int32 num = pls::diagnostic::api_call(
-                                      [&]() -> decltype(auto) { return require(surfaceList_)->Size(); }) -
-                                  1;
-             num >= 0; --num) {
-            require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(surfaceList_)->ElementAt(num);
-            }))->BeginTouchRegist(g);
+        for (pls::cs::Int32 num = PLS_API(require(surfaceList_)->Size()) - 1; num >= 0; --num) {
+            require(PLS_API(require(surfaceList_)->ElementAt(num)))->BeginTouchRegist(g);
         }
     }
 }
@@ -539,13 +472,8 @@ void SurfaceManagerBase::EndTouchRegist(pls::cs::Ref<pls::kairo::Graphics> g) {
                      "M:kairo.unity.surface.SurfaceManagerBase.EndTouchRegist(kairo.unity.ui.Graphics)",
                      kairo);
     {
-        for (pls::cs::Int32 num = pls::diagnostic::api_call(
-                                      [&]() -> decltype(auto) { return require(surfaceList_)->Size(); }) -
-                                  1;
-             num >= 0; --num) {
-            require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(surfaceList_)->ElementAt(num);
-            }))->EndTouchRegist(g);
+        for (pls::cs::Int32 num = PLS_API(require(surfaceList_)->Size()) - 1; num >= 0; --num) {
+            require(PLS_API(require(surfaceList_)->ElementAt(num)))->EndTouchRegist(g);
         }
     }
 }
@@ -564,42 +492,30 @@ void SurfaceManagerBase::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                  i = cs_value;
                  return cs_value;
              }());
-             i < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(surfaceList_)->Size(); });
-             ++i) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->ResetRender(); });
+             i < PLS_API(require(surfaceList_)->Size()); ++i) {
+            PLS_API(require(g)->ResetRender());
             if (flag) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->BeginGLRender(SurfaceManagerBase::autoGLRenderClipEnable_());
-                });
+                PLS_API(require(g)->BeginGLRender(SurfaceManagerBase::autoGLRenderClipEnable_()));
             }
-            require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(surfaceList_)->ElementAt(i);
-            }))->OnDraw(g);
+            require(PLS_API(require(surfaceList_)->ElementAt(i)))->OnDraw(g);
             if (flag) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->EndGLRender(false); });
+                PLS_API(require(g)->EndGLRender(false));
             }
         }
-        if (kl_cfg::Config::DEBUG() && pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(surfaceList_)->Size();
-                                       }) > 0 &&
+        if (kl_cfg::Config::DEBUG() && PLS_API(require(surfaceList_)->Size()) > 0 &&
             (paintRects_.get_Count() > 0)) {
-            pls::cs::Ref<SurfaceBase> surfaceBase = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(surfaceList_)->FirstElement(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Int32 cs_arg0 = require(surfaceBase)->GetX();
-                    pls::cs::Int32 cs_arg1 = require(surfaceBase)->GetY();
-                    pls::cs::Int32 cs_arg2 = require(surfaceBase)->GetWidth();
-                    pls::cs::Int32 cs_arg3 = require(surfaceBase)->GetHeight();
-                    require(g)->SetRenderRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg0 = require(surfaceBase)->GetScaleRatio();
-                    require(g)->Scale(cs_arg0);
-                }());
-            });
+            pls::cs::Ref<SurfaceBase> surfaceBase = PLS_API(require(surfaceList_)->FirstElement());
+            PLS_API(([&]() -> void {
+                pls::cs::Int32 cs_arg0 = require(surfaceBase)->GetX();
+                pls::cs::Int32 cs_arg1 = require(surfaceBase)->GetY();
+                pls::cs::Int32 cs_arg2 = require(surfaceBase)->GetWidth();
+                pls::cs::Int32 cs_arg3 = require(surfaceBase)->GetHeight();
+                require(g)->SetRenderRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+            }()));
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg0 = require(surfaceBase)->GetScaleRatio();
+                require(g)->Scale(cs_arg0);
+            }()));
             pls::cs::run_finally(
                 [&]() {
                     {
@@ -640,8 +556,7 @@ void SurfaceManagerBase::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         }
                         for (pls::cs::Int32 j = 0; j < paintRects_.get_Count(); ++j) {
                             IntArray paintRect = GetPaintRect(paintRects_.get_Item(j));
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->SetColor(255, 0, 0); });
+                            PLS_API(require(g)->SetColor(255, 0, 0));
                             {
                                 pls::cs::Single cs_arg0 = paintRect[0] - 1;
                                 pls::cs::Single cs_arg1 = paintRect[1] - 1;
@@ -650,41 +565,27 @@ void SurfaceManagerBase::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                 ui::Graphics::DrawRect2(require(g), cs_arg0, cs_arg1, cs_arg2, cs_arg3);
                             }
                             if (currentPaintRect_ != j &&
-                                (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return pls::kairo::DebugInput::GetKey(304 /* KeyCode.LeftShift */);
-                                 }) ||
-                                 pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                     return pls::kairo::DebugInput::GetKey(303 /* KeyCode.RightShift */);
-                                 }))) {
+                                (PLS_API(pls::kairo::DebugInput::GetKey(304 /* KeyCode.LeftShift */)) ||
+                                 PLS_API(pls::kairo::DebugInput::GetKey(303 /* KeyCode.RightShift */)))) {
                                 pls::cs::Array<pls::kairo::Vector2> paintHandlePoint =
                                     GetPaintHandlePoint(paintRects_.get_Item(j));
                                 for (pls::cs::Int32 k = 0; k < paintHandlePoint.length(); ++k) {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return require(g)->SetColor(255, 150, 255);
-                                    });
+                                    PLS_API(require(g)->SetColor(255, 150, 255));
                                     if (currentPaintRect_ == -1 && rectIndex == j && handleIndex == k) {
-                                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(g)->SetColor(255, 255, 255);
-                                        });
+                                        PLS_API(require(g)->SetColor(255, 255, 255));
                                     }
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> void {
-                                            pls::cs::Single cs_arg0 = (paintHandlePoint[k].x - 0.5f);
-                                            pls::cs::Single cs_arg1 = (paintHandlePoint[k].y - 0.5f);
-                                            require(g)->FillRect(cs_arg0, cs_arg1, 2.0f, 2.0f);
-                                        }());
-                                    });
+                                    PLS_API(([&]() -> void {
+                                        pls::cs::Single cs_arg0 = (paintHandlePoint[k].x - 0.5f);
+                                        pls::cs::Single cs_arg1 = (paintHandlePoint[k].y - 0.5f);
+                                        require(g)->FillRect(cs_arg0, cs_arg1, 2.0f, 2.0f);
+                                    }()));
                                 }
                             }
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->PushFont(6); });
+                            PLS_API(require(g)->PushFont(6));
                             pls::cs::String text;
-                            pls::cs::Int32 height = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                           return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{});
-                                       }))
-                                    ->GetHeight();
-                            });
+                            pls::cs::Int32 height = PLS_API(
+                                require(PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{})))
+                                    ->GetHeight());
                             text = ([&]() {
                                 auto cs_left =
                                     pls::cs::String::concat(integer_string(paintRect[0]), literal(u","));
@@ -696,24 +597,16 @@ void SurfaceManagerBase::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             if (num2 < 0) {
                                 num2 = 0;
                             }
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->SetColor(0, 0, 0, 150); });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = pls::cs::Single(num) - 0.5f;
-                                    pls::cs::Single cs_arg1 = pls::cs::Single(num2) - 0.5f;
-                                    pls::cs::Single cs_arg2 =
-                                        pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(g)->StringWidth(text);
-                                        })) +
-                                        1;
-                                    require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, height + 1);
-                                }());
-                            });
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 255); });
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->DrawString(text, num, num2); });
+                            PLS_API(require(g)->SetColor(0, 0, 0, 150));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = pls::cs::Single(num) - 0.5f;
+                                pls::cs::Single cs_arg1 = pls::cs::Single(num2) - 0.5f;
+                                pls::cs::Single cs_arg2 =
+                                    pls::cs::Int32(PLS_API(require(g)->StringWidth(text))) + 1;
+                                require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, height + 1);
+                            }()));
+                            PLS_API(require(g)->SetColor(255, 255, 255));
+                            PLS_API(require(g)->DrawString(text, num, num2));
                             text = ([&]() {
                                 auto cs_left =
                                     pls::cs::String::concat(integer_string(paintRect[2]), literal(u"x"));
@@ -722,8 +615,7 @@ void SurfaceManagerBase::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             }());
                             num = ([&]() -> pls::cs::Int32 {
                                 auto cs_left = paintRect[0] + paintRect[2];
-                                auto cs_right = pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(g)->StringWidth(text); });
+                                auto cs_right = PLS_API(require(g)->StringWidth(text));
                                 return cs_left - cs_right;
                             }());
                             num2 = paintRect[1] + paintRect[3] + 1;
@@ -741,33 +633,23 @@ void SurfaceManagerBase::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                                           }()) -
                                                           pls::cs::Single(height)));
                             }
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->SetColor(0, 0, 0, 150); });
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return ([&]() -> void {
-                                    pls::cs::Single cs_arg0 = pls::cs::Single(num) - 0.5f;
-                                    pls::cs::Single cs_arg1 = pls::cs::Single(num2) - 0.5f;
-                                    pls::cs::Single cs_arg2 =
-                                        pls::cs::Int32(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return require(g)->StringWidth(text);
-                                        })) +
-                                        1;
-                                    require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, height + 1);
-                                }());
-                            });
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 255); });
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->DrawString(text, num, num2); });
-                            pls::diagnostic::api_call(
-                                [&]() -> decltype(auto) { return require(g)->PopFont(); });
+                            PLS_API(require(g)->SetColor(0, 0, 0, 150));
+                            PLS_API(([&]() -> void {
+                                pls::cs::Single cs_arg0 = pls::cs::Single(num) - 0.5f;
+                                pls::cs::Single cs_arg1 = pls::cs::Single(num2) - 0.5f;
+                                pls::cs::Single cs_arg2 =
+                                    pls::cs::Int32(PLS_API(require(g)->StringWidth(text))) + 1;
+                                require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, height + 1);
+                            }()));
+                            PLS_API(require(g)->SetColor(255, 255, 255));
+                            PLS_API(require(g)->DrawString(text, num, num2));
+                            PLS_API(require(g)->PopFont());
                         }
                     }
                 },
                 [&]() {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->Scale(100.0f); });
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->ClearRenderRect(); });
+                    PLS_API(require(g)->Scale(100.0f));
+                    PLS_API(require(g)->ClearRenderRect());
                 });
         }
     }
@@ -794,59 +676,49 @@ void SurfaceManagerBase::DrawComponents(pls::cs::Ref<pls::kairo::Graphics> g) {
                      "M:kairo.unity.surface.SurfaceManagerBase.DrawComponents(kairo.unity.ui.Graphics)",
                      kairo);
     {
-        for (pls::cs::Int32 i = 0;
-             i < pls::diagnostic::api_call([&]() -> decltype(auto) { return require(surfaceList_)->Size(); });
-             ++i) {
-            pls::cs::Ref<SurfaceBase> surfaceBase = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(surfaceList_)->ElementAt(i); });
+        for (pls::cs::Int32 i = 0; i < PLS_API(require(surfaceList_)->Size()); ++i) {
+            pls::cs::Ref<SurfaceBase> surfaceBase = PLS_API(require(surfaceList_)->ElementAt(i));
             pls::cs::Double num = pls::cs::Double(require(surfaceBase)->GetScaleRatio()) / 100.0;
             for (pls::cs::Int32 num2 = require(surfaceBase)->GetComponentLength() - 1; num2 >= 0; --num2) {
                 pls::cs::Ref<TouchComponent> component = require(surfaceBase)->GetComponent(num2);
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetColor(0, 255, 255); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetRenderMode(1, 32, 223); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = ([&]() -> pls::cs::Int32 {
-                            auto cs_left = require(surfaceBase)->GetX();
-                            auto cs_right = pls::cs::to_int32((pls::cs::Double(require(component)->x) * num));
-                            return cs_left + cs_right;
-                        }());
-                        pls::cs::Single cs_arg1 = ([&]() -> pls::cs::Int32 {
-                            auto cs_left = require(surfaceBase)->GetY();
-                            auto cs_right = pls::cs::to_int32((pls::cs::Double(require(component)->y) * num));
-                            return cs_left + cs_right;
-                        }());
-                        pls::cs::Single cs_arg2 =
-                            pls::cs::to_int32((pls::cs::Double(require(component)->width) * num));
-                        pls::cs::Single cs_arg3 =
-                            pls::cs::to_int32((pls::cs::Double(require(component)->height) * num));
-                        require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                PLS_API(require(g)->SetColor(0, 255, 255));
+                PLS_API(require(g)->SetRenderMode(1, 32, 223));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = ([&]() -> pls::cs::Int32 {
+                        auto cs_left = require(surfaceBase)->GetX();
+                        auto cs_right = pls::cs::to_int32((pls::cs::Double(require(component)->x) * num));
+                        return cs_left + cs_right;
                     }());
-                });
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetRenderMode(); });
-                pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(g)->SetColor(255, 0, 0); });
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Single cs_arg0 = ([&]() -> pls::cs::Int32 {
-                            auto cs_left = require(surfaceBase)->GetX();
-                            auto cs_right = pls::cs::to_int32((pls::cs::Double(require(component)->x) * num));
-                            return cs_left + cs_right;
-                        }());
-                        pls::cs::Single cs_arg1 = ([&]() -> pls::cs::Int32 {
-                            auto cs_left = require(surfaceBase)->GetY();
-                            auto cs_right = pls::cs::to_int32((pls::cs::Double(require(component)->y) * num));
-                            return cs_left + cs_right;
-                        }());
-                        pls::cs::Single cs_arg2 =
-                            pls::cs::to_int32((pls::cs::Double(require(component)->width) * num)) - 1;
-                        pls::cs::Single cs_arg3 =
-                            pls::cs::to_int32((pls::cs::Double(require(component)->height) * num)) - 1;
-                        require(g)->DrawRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                    pls::cs::Single cs_arg1 = ([&]() -> pls::cs::Int32 {
+                        auto cs_left = require(surfaceBase)->GetY();
+                        auto cs_right = pls::cs::to_int32((pls::cs::Double(require(component)->y) * num));
+                        return cs_left + cs_right;
                     }());
-                });
+                    pls::cs::Single cs_arg2 =
+                        pls::cs::to_int32((pls::cs::Double(require(component)->width) * num));
+                    pls::cs::Single cs_arg3 =
+                        pls::cs::to_int32((pls::cs::Double(require(component)->height) * num));
+                    require(g)->FillRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                }()));
+                PLS_API(require(g)->SetRenderMode());
+                PLS_API(require(g)->SetColor(255, 0, 0));
+                PLS_API(([&]() -> void {
+                    pls::cs::Single cs_arg0 = ([&]() -> pls::cs::Int32 {
+                        auto cs_left = require(surfaceBase)->GetX();
+                        auto cs_right = pls::cs::to_int32((pls::cs::Double(require(component)->x) * num));
+                        return cs_left + cs_right;
+                    }());
+                    pls::cs::Single cs_arg1 = ([&]() -> pls::cs::Int32 {
+                        auto cs_left = require(surfaceBase)->GetY();
+                        auto cs_right = pls::cs::to_int32((pls::cs::Double(require(component)->y) * num));
+                        return cs_left + cs_right;
+                    }());
+                    pls::cs::Single cs_arg2 =
+                        pls::cs::to_int32((pls::cs::Double(require(component)->width) * num)) - 1;
+                    pls::cs::Single cs_arg3 =
+                        pls::cs::to_int32((pls::cs::Double(require(component)->height) * num)) - 1;
+                    require(g)->DrawRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                }()));
             }
         }
     }
@@ -857,13 +729,8 @@ void SurfaceManagerBase::OnKeyDown(pls::cs::Int32 key) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.SurfaceManagerBase.OnKeyDown(System.Int32)",
                      kairo);
     {
-        for (pls::cs::Int32 num = pls::diagnostic::api_call(
-                                      [&]() -> decltype(auto) { return require(surfaceList_)->Size(); }) -
-                                  1;
-             num >= 0; --num) {
-            require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(surfaceList_)->ElementAt(num);
-            }))->OnKeyDown(key);
+        for (pls::cs::Int32 num = PLS_API(require(surfaceList_)->Size()) - 1; num >= 0; --num) {
+            require(PLS_API(require(surfaceList_)->ElementAt(num)))->OnKeyDown(key);
         }
     }
 }
@@ -872,13 +739,8 @@ void SurfaceManagerBase::OnKeyDown(pls::cs::Int32 key) {
 void SurfaceManagerBase::OnKeyUp(pls::cs::Int32 key) {
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.surface.SurfaceManagerBase.OnKeyUp(System.Int32)", kairo);
     {
-        for (pls::cs::Int32 num = pls::diagnostic::api_call(
-                                      [&]() -> decltype(auto) { return require(surfaceList_)->Size(); }) -
-                                  1;
-             num >= 0; --num) {
-            require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(surfaceList_)->ElementAt(num);
-            }))->OnKeyUp(key);
+        for (pls::cs::Int32 num = PLS_API(require(surfaceList_)->Size()) - 1; num >= 0; --num) {
+            require(PLS_API(require(surfaceList_)->ElementAt(num)))->OnKeyUp(key);
         }
     }
 }
@@ -889,13 +751,8 @@ void SurfaceManagerBase::OnKeyDown(pls::cs::Int32 keyCode, pls::cs::Ref<pls::kai
         "KairoLibrary",
         "M:kairo.unity.surface.SurfaceManagerBase.OnKeyDown(System.Int32,kairo.unity.ui.KeyEvent)", kairo);
     {
-        for (pls::cs::Int32 num = pls::diagnostic::api_call(
-                                      [&]() -> decltype(auto) { return require(surfaceList_)->Size(); }) -
-                                  1;
-             num >= 0; --num) {
-            require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(surfaceList_)->ElementAt(num);
-            }))->OnKeyDown(keyCode, evt);
+        for (pls::cs::Int32 num = PLS_API(require(surfaceList_)->Size()) - 1; num >= 0; --num) {
+            require(PLS_API(require(surfaceList_)->ElementAt(num)))->OnKeyDown(keyCode, evt);
         }
     }
 }

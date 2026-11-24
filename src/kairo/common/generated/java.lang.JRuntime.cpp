@@ -63,7 +63,7 @@ pls::cs::Ref<JRuntime> JRuntime::GetRuntime() {
 void JRuntime::Gc() {
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.lang.JRuntime.Gc", kairo);
     {
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::cs::gc_collect(0); });
+        PLS_API(pls::cs::gc_collect(0));
     }
 }
 } // namespace java::lang

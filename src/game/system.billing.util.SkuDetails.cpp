@@ -134,27 +134,21 @@ pls::cs::String SkuDetails::ReadJSon(pls::cs::String json, pls::cs::String key) 
         if (is_null(key) || is_null(json)) {
             return pls::cs::String{};
         }
-        pls::cs::Ref<pls::cs::RegexMatch> match = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return pls::cs::RuntimeRegex::Match(json, pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return pls::cs::string_replace(
-                                                        literal(u"\"<key>\"\\s*:\\s*(\"[^\"]*\"|[0-9.]*)"),
-                                                        literal(u"<key>"), key);
-                                                }));
-        });
+        pls::cs::Ref<pls::cs::RegexMatch> match = PLS_API(pls::cs::RuntimeRegex::Match(
+            json, PLS_API(pls::cs::string_replace(literal(u"\"<key>\"\\s*:\\s*(\"[^\"]*\"|[0-9.]*)"),
+                                                  literal(u"<key>"), key))));
         if (require(match)->get_Success()) {
-            return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() {
-                    auto cs_text = require(([&]() {
-                                       auto cs_receiver = require(match)->get_Groups();
-                                       auto cs_index = 1;
-                                       return require(cs_receiver)->get_Item(cs_index);
-                                   }()))
-                                       ->get_Value();
-                    auto cs_separators = pls::cs::Array<char16_t>::make(1);
-                    cs_separators.at(0) = u'"';
-                    return pls::cs::string_trim(cs_text, cs_separators);
-                }());
-            });
+            return PLS_API(([&]() {
+                auto cs_text = require(([&]() {
+                                   auto cs_receiver = require(match)->get_Groups();
+                                   auto cs_index = 1;
+                                   return require(cs_receiver)->get_Item(cs_index);
+                               }()))
+                                   ->get_Value();
+                auto cs_separators = pls::cs::Array<char16_t>::make(1);
+                cs_separators.at(0) = u'"';
+                return pls::cs::string_trim(cs_text, cs_separators);
+            }()));
         }
         return pls::cs::String{};
     }
@@ -172,12 +166,10 @@ pls::cs::String SkuDetails::ToString() {
 std::int32_t SkuDetails::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.billing.util.SkuDetails.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace system::billing::util

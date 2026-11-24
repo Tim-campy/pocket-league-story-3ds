@@ -35,9 +35,7 @@ void TextBox::create_init(pls::cs::Ref<TextBox> self, pls::cs::String text, pls:
         "KairoLibrary",
         "M:kairo.unity.panel.TextBox.#ctor(System.String,System.Int32,System.Int32,System.Int32)", kairo);
     {
-        self->text_ = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_util::StringUtil::Replace(text, literal(u"\010"), literal(u""));
-        });
+        self->text_ = PLS_API(kl_util::StringUtil::Replace(text, literal(u"\010"), literal(u"")));
         self->columns_ = columns;
         self->mode_ = 2;
     }

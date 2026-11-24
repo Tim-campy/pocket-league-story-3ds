@@ -49,8 +49,7 @@ void MyFriend::create_init(pls::cs::Ref<MyFriend> self) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.friend.MyFriend.#ctor", game);
     {
         self->FRIEND_MAX = 5;
-        if (pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return kl_unity_util::Language::Japanese(); })) {
+        if (PLS_API(kl_unity_util::Language::Japanese())) {
             self->INTRODUCTION_SUBJECT = KairoText::LT(literal(u"フレンド申請 お住まい夢物語"));
             self->INTRODUCTION_APPLY_SUBJECT = self->INTRODUCTION_SUBJECT;
             self->INTRODUCTION_APPLY_TEXT =
@@ -130,63 +129,38 @@ pls::cs::Ref<kl_java_util::Vector> MyFriend::CgiGetFriendList() {
         if (array.length() == 0) {
             return friendList_;
         }
-        StringArray array2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_unity_util::StringUtil::Split(
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return kl_lang::JString::New(array); }),
-                literal(u","));
-        });
+        StringArray array2 =
+            PLS_API(kl_unity_util::StringUtil::Split(PLS_API(kl_lang::JString::New(array)), literal(u",")));
         pls::cs::Int32 num = 0;
         while (num < array2.length()) {
             pls::cs::Ref<ui::Friend> friend_ = ui::Friend::create_2(array2[num]);
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(require(friend_)->state_)->Get(); }) == 1) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_AddElement(require(vector2), pls::cs::box(friend_));
-                });
-            } else if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                           return require(require(friend_)->state_)->Get();
-                       }) == 3) {
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(friend_));
-                });
+            if (PLS_API(require(require(friend_)->state_)->Get()) == 1) {
+                PLS_API(kl_java_util::Vector_2_AddElement(require(vector2), pls::cs::box(friend_)));
+            } else if (PLS_API(require(require(friend_)->state_)->Get()) == 3) {
+                PLS_API(kl_java_util::Vector_2_AddElement(require(vector), pls::cs::box(friend_)));
             }
             ++num;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_RemoveAllElements(require(friendList_));
-        });
+        PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(friendList_)));
         pls::cs::Int32 num2 = 0;
-        while (num2 < pls::diagnostic::api_call(
-                          [&]() -> decltype(auto) { return kl_java_util::Vector_2_Size(require(vector)); })) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = friendList_;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(vector), num2);
-                        });
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
+        while (num2 < PLS_API(kl_java_util::Vector_2_Size(require(vector)))) {
+            PLS_API(([&]() -> void {
+                auto cs_receiver = friendList_;
+                pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(vector), num2));
+                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+            }()));
             ++num2;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return kl_java_util::Vector_2_RemoveAllElements(require(applyList_));
-        });
+        PLS_API(kl_java_util::Vector_2_RemoveAllElements(require(applyList_)));
         pls::cs::Int32 num3 = 0;
-        while (num3 < pls::diagnostic::api_call([&]() -> decltype(auto) {
-                   return kl_java_util::Vector_2_Size(require(vector2));
-               })) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = applyList_;
-                    pls::cs::Ref<pls::cs::Object> cs_arg0 =
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_java_util::Vector_2_ElementAt(require(vector2), num3);
-                        });
-                    kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
-                }());
-            });
+        while (num3 < PLS_API(kl_java_util::Vector_2_Size(require(vector2)))) {
+            PLS_API(([&]() -> void {
+                auto cs_receiver = applyList_;
+                pls::cs::Ref<pls::cs::Object> cs_arg0 =
+                    PLS_API(kl_java_util::Vector_2_ElementAt(require(vector2), num3));
+                kl_java_util::Vector_2_AddElement(require(cs_receiver), cs_arg0);
+            }()));
             ++num3;
         }
         return friendList_;

@@ -12,8 +12,7 @@ pls::cs::Int32 NextInt(pls::cs::Ref<kl_util::JRandom> self, pls::cs::Int32 n) {
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.JRandom.NextInt(System.Int32)", kairo);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) { return require(self->random_)->Next(); }) %
-               n;
+        return PLS_API(require(self->random_)->Next()) % n;
     }
 }
 

@@ -118,9 +118,7 @@ bool LineupForm::Init() {
                 ->SetRecordNameBits(0);
         {
             auto cs_receiver = LineupForm::resLineupLayout_();
-            ByteArray cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::kairo::Storage::Read(3, false, literal(u"lineup_layout.dat"));
-            });
+            ByteArray cs_arg0 = PLS_API(pls::kairo::Storage::Read(3, false, literal(u"lineup_layout.dat")));
             require(cs_receiver)->Load(cs_arg0, 3);
         }
         linups_ = require(instance)->GetShowableLineups();
@@ -136,8 +134,7 @@ void LineupForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.LineupForm.Draw(kairo.unity.ui.Graphics)", game);
     {
         MyFormBase::Draw(g);
-        pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::Font::PushLocalizeSetting(false); });
+        PLS_API(pls::kairo::Font::PushLocalizeSetting(false));
         IntArray sprite = require(require(LineupForm::resLineupLayout_())->seb.get_Item(0))->GetSprite(0, 0);
         pls::cs::Int32 num = (require(view_)->GetGameWidth() - 240) / 2;
         pls::cs::Int32 num2 = (([&]() -> pls::cs::Int32 {
@@ -146,45 +143,34 @@ void LineupForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                   return cs_left - cs_right;
                               }())) /
                               2;
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 255); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = KairoText::LT(literal(u"オススメアプリ情報"));
-                require(g)->DrawString(cs_arg0, 120.0f, num2 - 31, 2);
-            }());
-        });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                    require(LineupForm::resLineupLayout_())->img.get_Item(sprite[1]);
-                pls::cs::Single cs_arg2 = num2;
-                pls::cs::Single cs_arg3 = require(view_)->GetGameWidth();
-                pls::cs::Single cs_arg4 = sprite[5];
-                pls::cs::Int32 cs_arg5 = sprite[2];
-                pls::cs::Int32 cs_arg6 = sprite[3];
-                pls::cs::Int32 cs_arg7 = sprite[4];
-                pls::cs::Int32 cs_arg8 = sprite[5];
-                require(g)->DrawScaledImage(cs_arg0, 0.0f, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6,
-                                            cs_arg7, cs_arg8);
-            }());
-        });
+        PLS_API(require(g)->SetColor(255, 255, 255));
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = KairoText::LT(literal(u"オススメアプリ情報"));
+            require(g)->DrawString(cs_arg0, 120.0f, num2 - 31, 2);
+        }()));
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                require(LineupForm::resLineupLayout_())->img.get_Item(sprite[1]);
+            pls::cs::Single cs_arg2 = num2;
+            pls::cs::Single cs_arg3 = require(view_)->GetGameWidth();
+            pls::cs::Single cs_arg4 = sprite[5];
+            pls::cs::Int32 cs_arg5 = sprite[2];
+            pls::cs::Int32 cs_arg6 = sprite[3];
+            pls::cs::Int32 cs_arg7 = sprite[4];
+            pls::cs::Int32 cs_arg8 = sprite[5];
+            require(g)->DrawScaledImage(cs_arg0, 0.0f, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6, cs_arg7,
+                                        cs_arg8);
+        }()));
         pls::cs::Ref<kairo::unity::system::lineup::ui::LineupData> lineupData = linups_.get_Item(0);
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(lineupData)->GetImage();
-                require(g)->DrawImage(cs_arg0, num + 5, num2 + 9);
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(lineupData)->GetImage();
+            require(g)->DrawImage(cs_arg0, num + 5, num2 + 9);
+        }()));
         pls::cs::Int32 num3 = num + 40 + 33;
         pls::cs::Int32 num4 = num2 + 12;
         if (select_ < linups_.length() && push_) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->SetColor(pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 187, 76); }));
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->FillRect(num3, num4 + 22 - 26, 160.0f, 61.0f);
-            });
+            PLS_API(require(g)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 187, 76))));
+            PLS_API(require(g)->FillRect(num3, num4 + 22 - 26, 160.0f, 61.0f));
         }
         if (is_null(lay_)) {
             pls::cs::String explain = require(lineupData)->GetExplain();
@@ -192,8 +178,7 @@ void LineupForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             lay_ = kairo::unity::ui::TextLayout::create();
             require(lay_)->SetSize(160.0f, num5);
             require(lay_)->SetAnchor(34);
-            require(lay_)->SetColor(pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return pls::kairo::Graphics::GetColorOfRGB(255, 255, 254); }));
+            require(lay_)->SetColor(PLS_API(pls::kairo::Graphics::GetColorOfRGB(255, 255, 254)));
             require(lay_)->SetLineSpace(8);
             require(lay_)->SetText(explain);
             require(lay_)->Flush();
@@ -215,37 +200,27 @@ void LineupForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             if (num7 >= clip_.length()) {
                 num7 = pls::cs::Int32(clip_.length()) - 1;
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Single cs_arg1 = num4 - 2;
-                    pls::cs::Single cs_arg2 = require(view_)->GetGameWidth();
-                    pls::cs::Single cs_arg3 = clip_[num7];
-                    require(g)->ClipRect(0.0f, cs_arg1, cs_arg2, cs_arg3, true);
-                }());
-            });
+            PLS_API(([&]() -> void {
+                pls::cs::Single cs_arg1 = num4 - 2;
+                pls::cs::Single cs_arg2 = require(view_)->GetGameWidth();
+                pls::cs::Single cs_arg3 = clip_[num7];
+                require(g)->ClipRect(0.0f, cs_arg1, cs_arg2, cs_arg3, true);
+            }()));
             require(lay_)->Draw(g, num3, num4 - 2);
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopClip(); });
+            PLS_API(require(g)->PopClip());
         }
         if (push_) {
             pls::game::surface::GameView::AddTouch(g, 2, 0, num2, require(view_)->GetGameWidth(), 77, 131072);
         }
         pls::cs::Int32 num8 = num2 + 109;
         if (push_) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->SetColor(79, 79, 79); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->FillRect(num + 49, num8, 148.0f, 37.0f); });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(217, 237, 255); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->FillRect(num + 49 + 1, num8 + 1, 146.0f, 1.0f);
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(108, 167, 255); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(g)->FillRect(num + 49 + 1, num8 + 2, 146.0f, 34.0f);
-            });
-            pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->SetColor(255, 255, 254); });
+            PLS_API(require(g)->SetColor(79, 79, 79));
+            PLS_API(require(g)->FillRect(num + 49, num8, 148.0f, 37.0f));
+            PLS_API(require(g)->SetColor(217, 237, 255));
+            PLS_API(require(g)->FillRect(num + 49 + 1, num8 + 1, 146.0f, 1.0f));
+            PLS_API(require(g)->SetColor(108, 167, 255));
+            PLS_API(require(g)->FillRect(num + 49 + 1, num8 + 2, 146.0f, 34.0f));
+            PLS_API(require(g)->SetColor(255, 255, 254));
             pls::cs::Ref<pls::kairo::Graphics> cs_arg0_306 = g;
             pls::cs::String cs_arg1_306 = KairoText::LT(literal(u"タイトル画面へ"));
             bool cs_arg5_306 = select_ == linups_.length();
@@ -262,7 +237,7 @@ void LineupForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                                                        opt);
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return pls::kairo::Font::PopLocalizeSetting(); });
+        PLS_API(pls::kairo::Font::PopLocalizeSetting());
     }
 }
 
@@ -298,26 +273,21 @@ bool LineupForm::Update() {
         frame_ = ((frame_ + 1) % 2147483647 /* Int32.MaxValue */);
         if (push_) {
             pls::cs::Int32 num = pls::cs::Int32(linups_.length()) + 1;
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(131072); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(131072))) {
                 select_ = (select_ - 1 + num) % num;
             }
-            if (pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(524288); })) {
+            if (PLS_API(require(canvas_)->CheckKeyPulse(524288))) {
                 select_ = (select_ + 1 + num) % num;
             }
-            if ((pls::diagnostic::api_call(
-                    [&]() -> decltype(auto) { return require(canvas_)->CheckKeyPulse(1048576); }))) {
+            if ((PLS_API(require(canvas_)->CheckKeyPulse(1048576)))) {
                 if (select_ < linups_.length()) {
                     kairo::unity::ui::Canvas::OpenBrowser(require(linups_.get_Item(select_))->GetURL());
                 } else {
-                    return pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop();
-                    });
+                    return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Pop());
                 }
             }
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(formMan_)->DrawAllForms(); });
+        PLS_API(require(formMan_)->DrawAllForms());
         SetSoftlabel();
         return true;
     }
@@ -391,13 +361,11 @@ void LineupForm::SetSoftlabel() {
 
         pls::cs::Int32 num = LineupForm::configData_()[type_][0];
         pls::cs::Int32 num2 = LineupForm::configData_()[type_][1];
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> void {
-                pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
-                pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
-                this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
-            }());
-        });
+        PLS_API(([&]() -> void {
+            pls::cs::String cs_arg0 = main::AppData::softLabels_()[num];
+            pls::cs::String cs_arg1 = main::AppData::softLabels_()[num2];
+            this->SetSoftLabel(cs_arg0, cs_arg1, pls::cs::String{}, pls::cs::String{});
+        }()));
     }
 }
 
@@ -405,12 +373,10 @@ void LineupForm::SetSoftlabel() {
 std::int32_t LineupForm::GetHashCode() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:system.form.LineupForm.GetHashCode", game);
     {
-        return pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-                return require(cs_receiver)->pls::cs::Object::GetHashCode();
-            }());
-        });
+        return PLS_API(([&]() {
+            auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+            return require(cs_receiver)->pls::cs::Object::GetHashCode();
+        }()));
     }
 }
 } // namespace system::form

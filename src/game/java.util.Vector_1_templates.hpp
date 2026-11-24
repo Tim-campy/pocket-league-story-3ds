@@ -12,8 +12,7 @@ template<typename T_T> bool Contains(pls::cs::Ref<generated::java::util::Vector_
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:java.util.Vector\u00601.Contains(\u00600)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return self->list_.Contains(pls::cs::box(elem)); });
+        return PLS_API(self->list_.Contains(pls::cs::box(elem)));
     }
 }
 } // namespace java::util::Vector

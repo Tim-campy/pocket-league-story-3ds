@@ -31,33 +31,26 @@ pls::cs::Ref<pls::cs::ArrayBase> MakeArrayRecursive(pls::cs::Ref<pls::cs::Runtim
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:java.util.JTool.MakeArrayRecursive(System.Type,System.Int32[],System.Int32)", kairo);
     {
-        pls::cs::Ref<pls::cs::ArrayBase> array = pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::cs::runtime_create_array(type, counts[index]); });
+        pls::cs::Ref<pls::cs::ArrayBase> array = PLS_API(pls::cs::runtime_create_array(type, counts[index]));
         if (index + 1 >= counts.length()) {
             return array;
         }
-        type = pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() -> pls::cs::Ref<pls::cs::RuntimeType> {
-                auto cs_receiver = require(type)->get_Assembly();
-                auto cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> pls::cs::String {
-                        auto cs_arg0 = require(type)->get_FullName();
-                        auto cs_arg1 = 0;
-                        auto cs_arg2 = pls::cs::Int32(require(type)->get_FullName().length()) - 2;
-                        return substring2(cs_arg0, cs_arg1, cs_arg2);
-                    }());
-                });
-                return require(cs_receiver)->GetType(cs_arg0);
-            }());
-        });
+        type = PLS_API(([&]() -> pls::cs::Ref<pls::cs::RuntimeType> {
+            auto cs_receiver = require(type)->get_Assembly();
+            auto cs_arg0 = PLS_API(([&]() -> pls::cs::String {
+                auto cs_arg0 = require(type)->get_FullName();
+                auto cs_arg1 = 0;
+                auto cs_arg2 = pls::cs::Int32(require(type)->get_FullName().length()) - 2;
+                return substring2(cs_arg0, cs_arg1, cs_arg2);
+            }()));
+            return require(cs_receiver)->GetType(cs_arg0);
+        }()));
         if (is_null(type)) {
             return array;
         }
         for (pls::cs::Int32 i = 0; i < require(array)->get_Length(); ++i) {
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return pls::cs::runtime_array_set_value(
-                    array, pls::cs::box(JTool::MakeArrayRecursive(type, counts, index + 1)), i);
-            });
+            PLS_API(pls::cs::runtime_array_set_value(
+                array, pls::cs::box(JTool::MakeArrayRecursive(type, counts, index + 1)), i));
         }
         return array;
     }

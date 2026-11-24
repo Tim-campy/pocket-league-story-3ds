@@ -209,7 +209,7 @@ void Balloon::Init(pls::cs::String text, pls::cs::Int32 color) {
         isClip_ = false;
         Balloon::set_Seb(this, pls::cs::Ref<Seb>{});
         Balloon::set_FontSize(this, 9);
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return maskList_.Clear(); });
+        PLS_API(maskList_.Clear());
     }
 }
 
@@ -237,14 +237,12 @@ void Balloon::Init(pls::cs::Ref<Balloon> from) {
         Balloon::set_Seb(this, Balloon::get_Seb(from));
         Balloon::set_FontSize(this, Balloon::get_FontSize(from));
         require(clip_)->Set(require(from)->clip_);
-        pls::diagnostic::api_call([&]() -> decltype(auto) { return maskList_.Clear(); });
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return ([&]() {
-                auto cs_list = maskList_;
-                auto cs_arg0 = require(from)->maskList_;
-                cs_list.AddRange(cs_arg0);
-            }());
-        });
+        PLS_API(maskList_.Clear());
+        PLS_API(([&]() {
+            auto cs_list = maskList_;
+            auto cs_arg0 = require(from)->maskList_;
+            cs_list.AddRange(cs_arg0);
+        }()));
     }
 }
 
@@ -299,15 +297,13 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
         kairo);
     {
         Balloon::set_Text(this, util::Language::LT(Balloon::get_Text(this), literal(u"")));
-        if (!pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->IsGUI(); })) {
+        if (!PLS_API(require(g)->IsGUI())) {
             if (!is_null(require(g)->source_render_)) {
                 pls::cs::Int32 num = 60;
                 pls::cs::Int32 num2 = 20;
                 pls::cs::Ref<graphics::RectangleF> transRectGUI =
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return PlsPortGeneratedBootstrap::Source::GetGraphicsTransRectGUI(
-                            require(g), 0.0f, 0.0f, num, num2, Balloon::Draw_tmp());
-                    });
+                    PLS_API(PlsPortGeneratedBootstrap::Source::GetGraphicsTransRectGUI(
+                        require(g), 0.0f, 0.0f, num, num2, Balloon::Draw_tmp()));
                 pls::cs::Single num3 = require(transRectGUI)->Width() / pls::cs::Single(num);
                 pls::cs::Single num4 = require(transRectGUI)->Height() / pls::cs::Single(num2);
                 pls::cs::Single num5 = ((num3 < num4) ? num3 : num4);
@@ -320,10 +316,8 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
                     pls::cs::Single cs_value = cs_old * cs_rhs;
                     Balloon::set_Scale(cs_receiver, cs_value);
                 }
-                if (pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->IsClipEnable(); })) {
-                    IntArray clip =
-                        pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->GetClip(); });
+                if (PLS_API(require(g)->IsClipEnable())) {
+                    IntArray clip = PLS_API(require(g)->GetClip());
                     if ([&]() {
                             auto cs_left = pls::cs::box(clip);
                             auto cs_right = pls::cs::box(IntArray{});
@@ -339,8 +333,7 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
                         }
                     }
                 } else {
-                    FloatArray imageClip = pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->GetImageClip(); });
+                    FloatArray imageClip = PLS_API(require(g)->GetImageClip());
                     if ([&]() {
                             auto cs_left = pls::cs::box(imageClip);
                             auto cs_right = pls::cs::box(FloatArray{});
@@ -356,68 +349,55 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
                         }
                     }
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(require(g)->source_render_)
-                        ->source_balloon_tasks<Image_BalloonRenderTask>()
-                        .Add(item);
-                });
+                PLS_API(require(require(g)->source_render_)
+                            ->source_balloon_tasks<Image_BalloonRenderTask>()
+                            .Add(item));
                 return;
             }
         } else {
             pls::cs::Single num6 = x;
             pls::cs::Single num7 = y;
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Ref<Matrix> cs_arg0 = ([&]() -> pls::cs::Ref<Matrix> {
-                        pls::cs::Single cs_arg0 = ([&]() -> pls::cs::FloatEval {
-                            auto cs_left = Balloon::get_Scale(this);
-                            auto cs_right = scale2_;
-                            return cs_left * cs_right;
-                        }());
-                        pls::cs::Single cs_arg1 = ([&]() -> pls::cs::FloatEval {
-                            auto cs_left = Balloon::get_Scale(this);
-                            auto cs_right = scale2_;
-                            return cs_left * cs_right;
-                        }());
-                        return Matrix::ScaleTemporary(cs_arg0, cs_arg1, 0.0f, 0.0f);
+            PLS_API(([&]() -> void {
+                pls::cs::Ref<Matrix> cs_arg0 = ([&]() -> pls::cs::Ref<Matrix> {
+                    pls::cs::Single cs_arg0 = ([&]() -> pls::cs::FloatEval {
+                        auto cs_left = Balloon::get_Scale(this);
+                        auto cs_right = scale2_;
+                        return cs_left * cs_right;
                     }());
-                    PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
+                    pls::cs::Single cs_arg1 = ([&]() -> pls::cs::FloatEval {
+                        auto cs_left = Balloon::get_Scale(this);
+                        auto cs_right = scale2_;
+                        return cs_left * cs_right;
+                    }());
+                    return Matrix::ScaleTemporary(cs_arg0, cs_arg1, 0.0f, 0.0f);
                 }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
-                    if (!cs_receiver)
-                        throw pls::cs::NullReferenceException();
-                    auto& cs_arg0 = x;
-                    auto& cs_arg1 = y;
-                    cs_receiver->BeginLocalCoordination(cs_arg0, cs_arg1);
-                }());
-            });
-            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> void {
-                    pls::cs::Int32 cs_arg0 = Balloon::get_FontSize(this);
-                    require(g)->PushFont(cs_arg0);
-                }());
-            });
+                PlsPortGeneratedBootstrap::Source::PushGraphicsMatrix(require(g), cs_arg0);
+            }()));
+            PLS_API(([&]() -> void {
+                auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
+                if (!cs_receiver)
+                    throw pls::cs::NullReferenceException();
+                auto& cs_arg0 = x;
+                auto& cs_arg1 = y;
+                cs_receiver->BeginLocalCoordination(cs_arg0, cs_arg1);
+            }()));
+            PLS_API(([&]() -> void {
+                pls::cs::Int32 cs_arg0 = Balloon::get_FontSize(this);
+                require(g)->PushFont(cs_arg0);
+            }()));
             pls::cs::Ref<Seb> seb = Balloon::get_Seb(this);
             if (is_null(seb)) {
-                seb = require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                          return PlsPortGeneratedBootstrap::Source::GetApplicationResource(
-                              require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                  return pls::kairo::IApplication::GetCurrentApp();
-                              })));
-                      }))->seb.get_Item(3);
+                seb = require(PLS_API(PlsPortGeneratedBootstrap::Source::GetApplicationResource(
+                                  require(PLS_API(pls::kairo::IApplication::GetCurrentApp())))))
+                          ->seb.get_Item(3);
             }
             pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> img = require(require(seb)->manager_)->img;
-            pls::cs::Ref<pls::kairo::Font> font = pls::diagnostic::api_call(
-                [&]() -> decltype(auto) { return require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}); });
-            pls::cs::Int32 num8 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return ([&]() -> pls::cs::Int32 {
-                    pls::cs::String cs_arg0 = Balloon::get_Text(this);
-                    return require(font)->StringWidth(cs_arg0);
-                }());
-            });
+            pls::cs::Ref<pls::kairo::Font> font =
+                PLS_API(require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{}));
+            pls::cs::Int32 num8 = PLS_API(([&]() -> pls::cs::Int32 {
+                pls::cs::String cs_arg0 = Balloon::get_Text(this);
+                return require(font)->StringWidth(cs_arg0);
+            }()));
             pls::cs::Int32 num9 = (num8 - 3) / 2 * 2;
             if (num9 < 0) {
                 num9 = 0;
@@ -450,26 +430,22 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
             pls::cs::Single num24 = num20 + 200.0f;
             pls::cs::Single num25 = num21 + 200.0f;
             if (isClip_) {
-                pls::kairo::Vector3 vector = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() {
-                        auto cs_arg0 = ([&]() {
-                            auto cs_arg0 = require(clip_)->left;
-                            auto cs_arg1 = require(clip_)->top;
-                            return pls::kairo::Vector3(cs_arg0, cs_arg1);
-                        }());
-                        return matrix.MultiplyPoint(cs_arg0);
+                pls::kairo::Vector3 vector = PLS_API(([&]() {
+                    auto cs_arg0 = ([&]() {
+                        auto cs_arg0 = require(clip_)->left;
+                        auto cs_arg1 = require(clip_)->top;
+                        return pls::kairo::Vector3(cs_arg0, cs_arg1);
                     }());
-                });
-                pls::kairo::Vector3 vector2 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() {
-                        auto cs_arg0 = ([&]() {
-                            auto cs_arg0 = require(clip_)->right;
-                            auto cs_arg1 = require(clip_)->bottom;
-                            return pls::kairo::Vector3(cs_arg0, cs_arg1);
-                        }());
-                        return matrix.MultiplyPoint(cs_arg0);
+                    return matrix.MultiplyPoint(cs_arg0);
+                }()));
+                pls::kairo::Vector3 vector2 = PLS_API(([&]() {
+                    auto cs_arg0 = ([&]() {
+                        auto cs_arg0 = require(clip_)->right;
+                        auto cs_arg1 = require(clip_)->bottom;
+                        return pls::kairo::Vector3(cs_arg0, cs_arg1);
                     }());
-                });
+                    return matrix.MultiplyPoint(cs_arg0);
+                }()));
                 pls::cs::Ref<graphics::RectangleF> draw_tmp = Balloon::Draw_tmp();
                 {
                     auto cs_left_44 = ([&]() -> pls::cs::FloatEval {
@@ -594,26 +570,22 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
                 while (cs_list_enum84.MoveNext()) {
                     pls::cs::Ref<graphics::Rectangle> item2 = cs_list_enum84.get_Current();
                     {
-                        pls::kairo::Vector3 vector3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() {
-                                auto cs_arg0 = ([&]() {
-                                    auto cs_arg0 = require(item2)->left;
-                                    auto cs_arg1 = require(item2)->top;
-                                    return pls::kairo::Vector3(cs_arg0, cs_arg1);
-                                }());
-                                return matrix.MultiplyPoint(cs_arg0);
+                        pls::kairo::Vector3 vector3 = PLS_API(([&]() {
+                            auto cs_arg0 = ([&]() {
+                                auto cs_arg0 = require(item2)->left;
+                                auto cs_arg1 = require(item2)->top;
+                                return pls::kairo::Vector3(cs_arg0, cs_arg1);
                             }());
-                        });
-                        pls::kairo::Vector3 vector4 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return ([&]() {
-                                auto cs_arg0 = ([&]() {
-                                    auto cs_arg0 = require(item2)->right;
-                                    auto cs_arg1 = require(item2)->bottom;
-                                    return pls::kairo::Vector3(cs_arg0, cs_arg1);
-                                }());
-                                return matrix.MultiplyPoint(cs_arg0);
+                            return matrix.MultiplyPoint(cs_arg0);
+                        }()));
+                        pls::kairo::Vector3 vector4 = PLS_API(([&]() {
+                            auto cs_arg0 = ([&]() {
+                                auto cs_arg0 = require(item2)->right;
+                                auto cs_arg1 = require(item2)->bottom;
+                                return pls::kairo::Vector3(cs_arg0, cs_arg1);
                             }());
-                        });
+                            return matrix.MultiplyPoint(cs_arg0);
+                        }()));
                         pls::cs::Ref<graphics::RectangleF> draw_tmp2 = Balloon::Draw_tmp();
                         {
                             auto cs_left_48 = ([&]() -> pls::cs::FloatEval {
@@ -790,10 +762,7 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
                 num23 = num23 * Balloon::get_Scale(this) + num7;
                 num24 = num24 * Balloon::get_Scale(this) + num6;
                 num25 = num25 * Balloon::get_Scale(this) + num7;
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return require(g)->ClipRect(num22 - num6, num23 - num7, num24 - num22, num25 - num23,
-                                                true);
-                });
+                PLS_API(require(g)->ClipRect(num22 - num6, num23 - num7, num24 - num22, num25 - num23, true));
                 pls::cs::Single num28 =
                     num16 + pls::cs::Single(num10) - pls::cs::Single((num8 - num9)) / 2.0f;
                 pls::cs::Single num29 = num16 + pls::cs::Single(num14) - pls::cs::Single(num11) -
@@ -822,58 +791,45 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
                 pls::cs::Single x2 = num16 + pls::cs::Single(num10) + pls::cs::Single(leftSpace_) -
                                      pls::cs::Single((num8 - num9)) / 2.0f;
                 pls::cs::Single num31 = num17 + pls::cs::Single((9 - Balloon::get_FontSize(this))) / 2.0f;
-                bool flag10 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() {
-                        auto cs_text = Balloon::get_Text(this);
-                        auto cs_char = u'<';
-                        return index_char1(cs_text, cs_char) != -1;
-                    }());
-                });
+                bool flag10 = PLS_API(([&]() {
+                    auto cs_text = Balloon::get_Text(this);
+                    auto cs_char = u'<';
+                    return index_char1(cs_text, cs_char) != -1;
+                }()));
                 if (isShadow_) {
                     bool pictographVisible = TextLayout::IsPictographVisible();
                     TextLayout::SetPictographVisible(false);
-                    pls::diagnostic::api_call(
-                        [&]() -> decltype(auto) { return require(g)->SetColor(shadowColor_); });
+                    PLS_API(require(g)->SetColor(shadowColor_));
                     pls::cs::String str = TextLayout::RemoveColorTag(Balloon::get_Text(this));
                     if (native::KairoPlugin::IsWeakDrawDevice()) {
                         if (flag10) {
                             Graphics::DrawString2(require(g), str, x2, num31 + 0.5f);
                         } else {
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return require(g)->DrawString(str, x2, num31 + 0.5f);
-                            });
+                            PLS_API(require(g)->DrawString(str, x2, num31 + 0.5f));
                         }
                     } else if (flag10) {
                         Graphics::DrawString2(require(g), str, x2, num31 + 0.5f);
                         Graphics::DrawString2(require(g), str, x2, num31 + 0.25f);
                     } else {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->DrawString(str, x2, num31 + 0.5f);
-                        });
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return require(g)->DrawString(str, x2, num31 + 0.25f);
-                        });
+                        PLS_API(require(g)->DrawString(str, x2, num31 + 0.5f));
+                        PLS_API(require(g)->DrawString(str, x2, num31 + 0.25f));
                     }
                     TextLayout::SetPictographVisible(pictographVisible);
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Int32 cs_arg0 = Balloon::get_TextColor(this);
-                        require(g)->SetColor(cs_arg0);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Int32 cs_arg0 = Balloon::get_TextColor(this);
+                    require(g)->SetColor(cs_arg0);
+                }()));
                 if (flag10) {
                     {
                         pls::cs::String cs_arg0 = Balloon::get_Text(this);
                         Graphics::DrawString2(require(g), cs_arg0, x2, num31);
                     }
                 } else {
-                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                        return ([&]() -> void {
-                            pls::cs::String cs_arg0 = Balloon::get_Text(this);
-                            require(g)->DrawString(cs_arg0, x2, num31);
-                        }());
-                    });
+                    PLS_API(([&]() -> void {
+                        pls::cs::String cs_arg0 = Balloon::get_Text(this);
+                        require(g)->DrawString(cs_arg0, x2, num31);
+                    }()));
                 }
                 if (!is_null(leftSpaceSeb_)) {
                     ShortArray boundingRect = require(leftSpaceSeb_)->GetBoundingRect(leftSpaceSebFrame_);
@@ -884,8 +840,7 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
                         auto cs_left_52 = num17 - pls::cs::Single(boundingRect[1]);
                         auto cs_right_52 =
                             pls::cs::Single((([&]() -> pls::cs::Int32 {
-                                auto cs_left_52 = pls::cs::Int32(pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(font)->GetHeight(); }));
+                                auto cs_left_52 = pls::cs::Int32(PLS_API(require(font)->GetHeight()));
                                 auto cs_right_52 = pls::cs::cast_integral<pls::cs::Int32>(boundingRect[3]);
                                 return cs_left_52 - cs_right_52;
                             }()))) /
@@ -906,8 +861,7 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
                         auto cs_left_53 = num17 - pls::cs::Single(boundingRect2[1]);
                         auto cs_right_53 =
                             pls::cs::Single((([&]() -> pls::cs::Int32 {
-                                auto cs_left_53 = pls::cs::Int32(pls::diagnostic::api_call(
-                                    [&]() -> decltype(auto) { return require(font)->GetHeight(); }));
+                                auto cs_left_53 = pls::cs::Int32(PLS_API(require(font)->GetHeight()));
                                 auto cs_right_53 = pls::cs::cast_integral<pls::cs::Int32>(boundingRect2[3]);
                                 return cs_left_53 - cs_right_53;
                             }()))) /
@@ -943,11 +897,11 @@ void Balloon::Draw(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, pls:
                         cs_delegate(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
                     }
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopClip(); });
+                PLS_API(require(g)->PopClip());
             }
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopFont(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->EndLocalCoordination(); });
-            pls::diagnostic::api_call([&]() -> decltype(auto) { return require(g)->PopMatrix(); });
+            PLS_API(require(g)->PopFont());
+            PLS_API(require(g)->EndLocalCoordination());
+            PLS_API(require(g)->PopMatrix());
         }
     }
 }
@@ -980,16 +934,14 @@ void Balloon::DrawRepeat(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x
                 if (num4 > sprite[4]) {
                     num4 = sprite[4];
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        pls::cs::Ref<pls::kairo::Image> cs_arg0 =
-                            require(require(seb)->manager_)->img.get_Item(sprite[1]);
-                        pls::cs::Int32 cs_arg3 = sprite[2];
-                        pls::cs::Int32 cs_arg4 = sprite[3];
-                        require(g)->DrawImage(cs_arg0, x + pls::cs::Single(num3), y + pls::cs::Single(num),
-                                              cs_arg3, cs_arg4, num4, num2);
-                    }());
-                });
+                PLS_API(([&]() -> void {
+                    pls::cs::Ref<pls::kairo::Image> cs_arg0 =
+                        require(require(seb)->manager_)->img.get_Item(sprite[1]);
+                    pls::cs::Int32 cs_arg3 = sprite[2];
+                    pls::cs::Int32 cs_arg4 = sprite[3];
+                    require(g)->DrawImage(cs_arg0, x + pls::cs::Single(num3), y + pls::cs::Single(num),
+                                          cs_arg3, cs_arg4, num4, num2);
+                }()));
                 num3 += num4;
             }
             num += num2;

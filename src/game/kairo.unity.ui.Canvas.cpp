@@ -40,11 +40,8 @@ bool OpenBrowser(pls::cs::String url) {
                 if (kl_cfg::Config::APPLI_TYPE() == 3) {
                     pls::cs::Ref<system::KairoBase> instance = system::KairoBase::GetInstance();
                     if (!is_null(instance)) {
-                        pls::cs::Ref<pls::cs::RegexMatch> match =
-                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                return pls::cs::RuntimeRegex::Match(
-                                    url_cell->value, literal(u"market://details\\?id=([\\w.]+)"));
-                            });
+                        pls::cs::Ref<pls::cs::RegexMatch> match = PLS_API(pls::cs::RuntimeRegex::Match(
+                            url_cell->value, literal(u"market://details\\?id=([\\w.]+)")));
                         if (require(match)->get_Success()) {
                             pls::cs::String value = require(([&]() {
                                                         auto cs_receiver = require(match)->get_Groups();
@@ -59,31 +56,22 @@ bool OpenBrowser(pls::cs::String url) {
                             for (pls::cs::Int32 i = 0; i < appList.length(); ++i) {
                                 system::appli::GameAppli gameAppli2 = appList[i];
                                 if ((!is_null(gameAppli2.IOSId) && ((gameAppli2.IOSId).length() > 0)) &&
-                                    (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                         return ([&]() {
-                                             auto cs_receiver = gameAppli2.AndPkg;
-                                             auto cs_argument = value;
-                                             cs_receiver.length();
-                                             return pls::cs::culture_equals_ignore_case(cs_receiver,
-                                                                                        cs_argument);
-                                         }());
-                                     }) ||
-                                     pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                         return ([&]() {
-                                             auto cs_receiver = gameAppli2.IOSPkg;
-                                             auto cs_argument = value;
-                                             cs_receiver.length();
-                                             return pls::cs::culture_equals_ignore_case(cs_receiver,
-                                                                                        cs_argument);
-                                         }());
-                                     }))) {
+                                    (PLS_API(([&]() {
+                                         auto cs_receiver = gameAppli2.AndPkg;
+                                         auto cs_argument = value;
+                                         cs_receiver.length();
+                                         return pls::cs::culture_equals_ignore_case(cs_receiver, cs_argument);
+                                     }())) ||
+                                     PLS_API(([&]() {
+                                         auto cs_receiver = gameAppli2.IOSPkg;
+                                         auto cs_argument = value;
+                                         cs_receiver.length();
+                                         return pls::cs::culture_equals_ignore_case(cs_receiver, cs_argument);
+                                     }())))) {
                                     pls::cs::Int32 num2 = 1;
                                     if ([&]() -> bool {
                                             auto cs_left = (gameAppli2.Language == literal(u"ja"));
-                                            auto cs_right =
-                                                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                    return kl_util::Language::Japanese();
-                                                });
+                                            auto cs_right = PLS_API(kl_util::Language::Japanese());
                                             return cs_left == cs_right;
                                         }()) {
                                         ++num2;
@@ -117,77 +105,55 @@ bool OpenBrowser(pls::cs::String url) {
                         }
                     }
                 }
-                pls::diagnostic::api_call([&]() -> decltype(auto) {
-                    return ([&]() -> void {
-                        auto cs_receiver = pls::diagnostic::api_call(
-                            [&]() -> decltype(auto) { return pls::kairo::IApplication::GetCurrentApp(); });
-                        pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
-                            pls::cs::raw(url_cell),
-                            std::string("M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32082"),
-                            [url_cell]() -> void {
+                PLS_API(([&]() -> void {
+                    auto cs_receiver = PLS_API(pls::kairo::IApplication::GetCurrentApp());
+                    pls::cs::Delegate<void()> cs_arg0 = pls::cs::Delegate<void()>::from_closure(
+                        pls::cs::raw(url_cell),
+                        std::string("M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32082"),
+                        [url_cell]() -> void {
+                            {
+                                PLS_API(([&]() -> void {
+                                    pls::kairo::AppEventType cs_arg0 =
+                                        static_cast<pls::kairo::AppEventType>(2) /* AppEventType.Browser */;
+                                    auto cs_arg1 = pls::cs::Array<pls::cs::Ref<pls::cs::Object>>::make(1);
+                                    cs_arg1.at(0) = pls::cs::box(url_cell->value);
+                                    pls::kairo::FormManagerBase::ProcessEvent(cs_arg0, cs_arg1);
+                                }()));
                                 {
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return ([&]() -> void {
-                                            pls::kairo::AppEventType cs_arg0 =
-                                                static_cast<pls::kairo::AppEventType>(
-                                                    2) /* AppEventType.Browser */;
-                                            auto cs_arg1 =
-                                                pls::cs::Array<pls::cs::Ref<pls::cs::Object>>::make(1);
-                                            cs_arg1.at(0) = pls::cs::box(url_cell->value);
-                                            pls::kairo::FormManagerBase::ProcessEvent(cs_arg0, cs_arg1);
-                                        }());
-                                    });
-                                    {
-                                        pls::cs::Int32 cs_value =
-                                            pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                return require(
-                                                           pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                                               return pls::kairo::IApplication::
-                                                                   GetCurrentApp();
-                                                           }))
-                                                    ->GetTotalFrames();
-                                            });
-                                        pls::kairo::Canvas::source_last_browser_frame() = cs_value;
-                                    }
-                                    pls::cs::String text = pls::cs::String::concat(
-                                        literal(u"_lh="), util::Language::GetLanguageCode());
-                                    if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return contains_string(url_cell->value, literal(u"?"));
-                                        })) {
-                                        text = (pls::cs::String::concat(literal(u"&"), text));
-                                    } else {
-                                        text = (pls::cs::String::concat(literal(u"?"), text));
-                                    }
-                                    pls::cs::Int32 num3 = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return last_index_char1(url_cell->value, u'#');
-                                    });
-                                    if (num3 != -1) {
-                                        url_cell->value = pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                            return pls::cs::string_insert(url_cell->value, num3, text);
-                                        });
-                                    } else {
-                                        url_cell->value = pls::cs::String::concat(url_cell->value, text);
-                                    }
-                                    pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                        return pls::kairo::UnityApplication::OpenURL(url_cell->value);
-                                    });
+                                    pls::cs::Int32 cs_value =
+                                        PLS_API(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))
+                                                    ->GetTotalFrames());
+                                    pls::kairo::Canvas::source_last_browser_frame() = cs_value;
                                 }
-                            },
-                            url_cell);
-                        require(cs_receiver)->RunOnUiThread(cs_arg0, true);
-                    }());
-                });
+                                pls::cs::String text = pls::cs::String::concat(
+                                    literal(u"_lh="), util::Language::GetLanguageCode());
+                                if (PLS_API(contains_string(url_cell->value, literal(u"?")))) {
+                                    text = (pls::cs::String::concat(literal(u"&"), text));
+                                } else {
+                                    text = (pls::cs::String::concat(literal(u"?"), text));
+                                }
+                                pls::cs::Int32 num3 = PLS_API(last_index_char1(url_cell->value, u'#'));
+                                if (num3 != -1) {
+                                    url_cell->value =
+                                        PLS_API(pls::cs::string_insert(url_cell->value, num3, text));
+                                } else {
+                                    url_cell->value = pls::cs::String::concat(url_cell->value, text);
+                                }
+                                PLS_API(pls::kairo::UnityApplication::OpenURL(url_cell->value));
+                            }
+                        },
+                        url_cell);
+                    require(cs_receiver)->RunOnUiThread(cs_arg0, true);
+                }()));
                 return true;
             } catch (const pls::cs::Exception& cs_caught_33) {
                 pls::cs::capture_exception(cs_caught_33);
                 {
                     if (kl_cfg::Config::PRINT()) {
-                        pls::diagnostic::api_call([&]() -> decltype(auto) {
-                            return kl_util::Log::Info(
-                                pls::cs::String::concat(literal(u"ブラウザの起動に失敗しました。"),
-                                                        url_cell->value),
-                                pls::cs::Ref<pls::cs::ExceptionObject>{});
-                        });
+                        PLS_API(kl_util::Log::Info(
+                            pls::cs::String::concat(literal(u"ブラウザの起動に失敗しました。"),
+                                                    url_cell->value),
+                            pls::cs::Ref<pls::cs::ExceptionObject>{}));
                     }
                 }
             }
@@ -210,8 +176,7 @@ pls::cs::String ImeOnBlock(pls::cs::Ref<pls::kairo::Canvas> self, pls::cs::Strin
     PLS_METHOD_SCOPE("KairoLibrary",
                      "M:kairo.unity.ui.Canvas.ImeOnBlock(System.String,System.Int32,System.Int32)", kairo);
     {
-        return pls::diagnostic::api_call(
-            [&]() -> decltype(auto) { return pls::kairo::request_text_input(text, displayMode, inputMode); });
+        return PLS_API(pls::kairo::request_text_input(text, displayMode, inputMode));
     }
 }
 
@@ -220,17 +185,11 @@ void Fullscreen(pls::cs::Ref<pls::kairo::Canvas> self, bool enable) {
     require(self);
     PLS_METHOD_SCOPE("KairoLibrary", "M:kairo.unity.ui.Canvas.Fullscreen(System.Boolean)", kairo);
     {
-        if (pls::diagnostic::api_call([&]() -> decltype(auto) {
-                return require(require(pls::diagnostic::api_call([&]() -> decltype(auto) {
-                                   return pls::kairo::IApplication::GetCurrentApp();
-                               }))->GetFormManager())
-                    ->IsCapturing();
-            })) {
+        if (PLS_API(require(require(PLS_API(pls::kairo::IApplication::GetCurrentApp()))->GetFormManager())
+                        ->IsCapturing())) {
             return;
         }
-        pls::diagnostic::api_call([&]() -> decltype(auto) {
-            return PlsPortGeneratedBootstrap::Source::SetWindowFullscreen(enable);
-        });
+        PLS_API(PlsPortGeneratedBootstrap::Source::SetWindowFullscreen(enable));
     }
 }
 

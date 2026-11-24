@@ -1,6 +1,6 @@
 # Documentação — índice
 
-Regras do projeto e do agente: [`../AGENTS.md`](../AGENTS.md). Estado: versão fiel
+Regras do projeto e do agente: [`../AGENTS.md`](../AGENTS.md). Ferramentas: [`../tools/README.md`](../tools/README.md). Estado: versão fiel
 congelada na tag `v1.0.0-faithful` (2026-11-23); o código do jogo (`src/game/`) é
 mantido à mão; a próxima fase proposta é o backend 3DS.
 

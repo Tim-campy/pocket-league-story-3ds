@@ -9,6 +9,7 @@
     python tools/dev.py full               # complete verification (verify_phase2.py --full)
     python tools/dev.py arm                # 3DS build (.3dsx, null backend)
     python tools/dev.py ci [COMMIT]        # CI result of a published commit (GitHub API)
+    python tools/dev.py clean [--apply]    # delete old attempts, review bundles, captures (safe only)
 
 Local paths (never committed): the APK and the extracted Managed folder come from the
 environment (PLS_APK, PLS_MANAGED) or from build/dev-local.json:
@@ -226,6 +227,41 @@ def cmd_arm(a):
     return code
 
 
+def cmd_clean(a):
+    """Delete only what is safe and regenerable: old route attempts (not cited by a kept route-set
+    state), old review bundles and capture folders, dated backups of route-set states."""
+    build = ROOT / 'build'; victims = []
+    states = sorted(build.glob('c6b-route-set-frozen*.json'))
+    backups = sorted((s for s in states if s.stem[len('c6b-route-set-frozen-'):][:2] == '20'), key=lambda s: s.stat().st_mtime)
+    victims += backups[:-3]
+    kept_states = [s for s in states if s not in victims]
+    cited = set()
+    for s in kept_states:
+        try: cited |= {str(r.get('readable_attempt')) for r in json.loads(s.read_text(encoding='utf8'))['runs'].values()}
+        except (ValueError, KeyError): pass
+    attempts = build / 'pc-frozen-diagnostic-release/attempts'
+    if attempts.is_dir():
+        numbers = sorted(int(d.name) for d in attempts.iterdir() if d.name.isdecimal())
+        recent = {str(n) for n in numbers[-a.keep:]}
+        victims += [attempts / str(n) for n in numbers if str(n) not in recent and str(n) not in cited]
+    for folder, pattern in ((build / 'review', 'review-*.txt'), (build / 'captures', '*')):
+        if folder.is_dir():
+            items = sorted(folder.glob(pattern), key=lambda x: x.stat().st_mtime)
+            victims += items[:-3]
+    def size(x):
+        return x.stat().st_size if x.is_file() else sum(f.stat().st_size for f in x.rglob('*') if f.is_file())
+    total = sum(size(v) for v in victims)
+    print(f"{'apagando' if a.apply else 'apagaria'} {len(victims)} itens, {total / 2**20:,.0f} MB"
+          + ('' if a.apply else ' (rode com --apply para apagar)'))
+    for v in victims[:15]: print('  ', v.relative_to(ROOT))
+    if len(victims) > 15: print(f'   ... e mais {len(victims) - 15}')
+    if a.apply:
+        for v in victims:
+            if v.is_dir(): shutil.rmtree(v)
+            else: v.unlink()
+    return 0
+
+
 def cmd_ci(a):
     """CI result of a commit (default: HEAD) from the GitHub API (no gh CLI on this machine)."""
     import re, urllib.request
@@ -265,6 +301,9 @@ def main():
     sub.add_parser('full').set_defaults(func=cmd_full)
     sub.add_parser('arm').set_defaults(func=cmd_arm)
     p = sub.add_parser('ci'); p.set_defaults(func=cmd_ci); p.add_argument('commit', nargs='?', default='HEAD')
+    p = sub.add_parser('clean'); p.set_defaults(func=cmd_clean)
+    p.add_argument('--apply', action='store_true', help='apagar de fato (sem isso, só lista)')
+    p.add_argument('--keep', type=int, default=30, help='tentativas de roteiro mais recentes a manter (além das citadas)')
     a = ap.parse_args()
     sys.path.insert(0, str(ROOT / 'tools'))
     sys.exit(a.func(a))

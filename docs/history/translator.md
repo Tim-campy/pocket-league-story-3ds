@@ -54,9 +54,9 @@ As 72 observações diferenciais de encoding cobrem NUL, astral, surrogates isol
 Interning, observação da identidade física de strings, comparação cultural, Unicode case folding e regras específicas de parsing/formatting não são presumidos equivalentes apenas por usar `std::u16string`. Precisam de implementações/fixtures próprias quando usados.
 
 As folhas culturais medidas agora usam o componente histórico Mono, com
-proveniência e licenças separadas. [Censo por método e dado](culture-usage.md),
-[colação](notes/phase2-mono-collation.md) e
-[Trim/Replace/Split/HexNumber](notes/managed-string-ops.md) registram os limites
+proveniência e licenças separadas. [Censo por método e dado](../culture-usage.md),
+[colação](../notes/phase2-mono-collation.md) e
+[Trim/Replace/Split/HexNumber](../notes/managed-string-ops.md) registram os limites
 e diferenças preservadas. O oráculo de produção executa sobre o perfil SDK
 `unity`, cujo mscorlib é integralmente idêntico ao do APK; o perfil `2.0` não
 é intercambiável. O `IndexOf(string)` de um argumento é ordinal nesse core,
@@ -92,8 +92,8 @@ exigir outra representação de lifetime. A semântica foreach C#6 da Kairo não
 do símbolo foreach. Ver o diário e o recibo do emissor para cobertura atual.
 
 Threads reais expõem outra obrigação: campos lidos/escritos em UI e worker
-precisam evitar data races C++. O [inventário do boot](notes/phase2-boot-fields.md)
-e [SharedField](notes/managed-shared-fields.md) distinguem cargas/stores de RMW.
+precisam evitar data races C++. O [inventário do boot](../notes/phase2-boot-fields.md)
+e [SharedField](../notes/managed-shared-fields.md) distinguem cargas/stores de RMW.
 A fundação está testada; os acessos do Game ainda não foram reescritos nesse
 marco. As fixtures de Thread/GC não justificam promover execução do jogo.
 
@@ -105,7 +105,7 @@ O gerenciamento usa ownership compartilhado com coleta explícita de ciclos por 
 
 O coletor cria um snapshot forte, conta arestas internas e considera raízes os objetos com owners além das arestas e da referência do snapshot. Marca os alcançáveis e quebra as arestas dos demais. Capturas opacas de std::function são raízes conservadoras: preservam segurança, mas podem reter ciclos. Um binding com alvo forte e lambda que captura alvo fraco permite coleta. Hooks incorretos que duplicam/omitem slots não constituem suporte fiel; devem ser gerados e testados, não inferidos por RTTI.
 
-O fonte de `JRuntime.Gc` chama **GC.Collect(0)**. O oráculo Mono Unity Windows mediu MaxGeneration=0; nesse perfil toda coleta não negativa abrange o heap. A análise estática autenticada dos dois `libmono.so` do APK também comprovou que `mono_gc_max_generation` retorna zero em x86 e armeabi-v7a, sem extrair/executar a biblioteca: [recibo](../config/phase2-android-gc.json). O contraste .NET10 usa idades 0/1/2, protege gerações mais antigas que a solicitada e promove sobreviventes. O modelo não comprova todos os detalhes geracionais/LOH do CLR; timing e demais comportamentos do coletor Android continuam UNKNOWN.
+O fonte de `JRuntime.Gc` chama **GC.Collect(0)**. O oráculo Mono Unity Windows mediu MaxGeneration=0; nesse perfil toda coleta não negativa abrange o heap. A análise estática autenticada dos dois `libmono.so` do APK também comprovou que `mono_gc_max_generation` retorna zero em x86 e armeabi-v7a, sem extrair/executar a biblioteca: [recibo](../../config/phase2-android-gc.json). O contraste .NET10 usa idades 0/1/2, protege gerações mais antigas que a solicitada e promove sobreviventes. O modelo não comprova todos os detalhes geracionais/LOH do CLR; timing e demais comportamentos do coletor Android continuam UNKNOWN.
 
 Cada worker que acessa objetos gerenciados precisa permanecer em `GcMutatorScope`, criado antes de seus locais, e cooperar com `gc_safepoint` nas entradas/backedges. Registro de novas alocações também é safepoint. A coleta solicita estacionamento, sem suspender threads do sistema; um worker registrado que não coopere dentro de um segundo provoca NotSupported antes de quebrar arestas. A disciplina não é garantida para threads nativas não registradas. Integrar JThread requer o adapter e os safepoints do emissor; possuir gc_collect não prova o jogo multithread.
 

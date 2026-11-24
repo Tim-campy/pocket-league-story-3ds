@@ -67,3 +67,6 @@ __pycache__/
 # graphify output (derived, local)
 /graphify-out/
 *.obj
+
+# Local Claude Code worktrees
+/.claude/worktrees/

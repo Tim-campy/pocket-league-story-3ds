@@ -142,13 +142,13 @@ início. Um script novo que compile C++/C# deve chamar `environment()` ou
 | Amostra do modo legível (critério 5) | `python translator/readable.py sample --original-managed MANAGED` | ~8 min; grava em `build/readable-sample/` e copia as três classes para `docs/readable-sample/`; nada em `config/` nem `src/` |
 | Diferencial do modo legível | `python translator/readable.py lowering` | ~4 min; fixtures de rebaixamento emitidas legíveis contra o Mono (1.715) |
 | Tipos numéricos legíveis (C1) | `python tools/test_readable_numeric.py` | segundos; `Int32`/`Single`/`FloatEval` (wrap, exceções, estreitamento); a regressão ARM de ponto flutuante (`tools/test_arm_float_model.py`) também roda em modo legível |
-| Jogo inteiro legível no PC (C6b, só compilar) | `python tools/build_readable_pc.py` | depois de `translator/readable.py sample`; grava `build/c6b-pc-release/`; não executa (o save iria para `%APPDATA%`) |
+| Jogo inteiro legível no PC (C6b, só compilar) | `python tools/archived/build_readable_pc.py` | depois de `translator/readable.py sample`; grava `build/c6b-pc-release/`; não executa (o save iria para `%APPDATA%`) |
 | Jogo legível com diagnóstico (C6b) | `python translator/readable.py diagnostic --original-managed MANAGED --output build/<nova>` e `python tools/build_pc.py ... --readable-diagnostic build/<nova>` | mesmos roteiros, salvaguarda, estresse e saves isolados; histórico próprio `build/c6b-readable-attempts.json` (nunca promove o livro-razão) |
-| Conjunto de roteiros num build (C6b) | `python tools/run_readable_routes.py --apk APK --readable build/<diag>` ou `--canonical-snapshot build/<snapshot>`; depois `python tools/compare_route_sets.py` | ~3 h por build com estresse; `build/c6b-route-set-*.json`, `build/c6b-route-compare.json` |
+| Conjunto de roteiros num build (C6b) | `python tools/run_readable_routes.py --apk APK --readable build/<diag>` ou `--canonical-snapshot build/<snapshot>`; depois `python tools/archived/compare_route_sets.py` | ~3 h por build com estresse; `build/c6b-route-set-*.json`, `build/c6b-route-compare.json` |
 | ARM legível | `python tools/build_arm11_null.py --apk APK --readable build/<diag> --output build/<nova>` | ~37 min; depois `prepare_arm11_sd.py` como no canônico |
 | Literais do legível contra o C# | `python tools/check_readable_literals.py [--readable build/<diag>]` | segundos; padrão `src/game` + `src/kairo/common/generated` |
 | Código de apoio do legível (A.5) | `python tools/check_readable_support.py [--readable build/<diag>]` | `PLS_MANAGED_CLASS` em toda classe, todo `override` em `PLS_DELEGATE_SLOTS` |
-| Contagem de blocos de ordem (A.1f/A.6) | `python tools/readable_census.py PASTA [ARQUIVO ...]` | linhas, blocos, `cs_arg`, `cs_receiver`, `cs_target` |
+| Contagem de blocos de ordem (A.1f/A.6) | `python tools/archived/readable_census.py PASTA [ARQUIVO ...]` | linhas, blocos, `cs_arg`, `cs_receiver`, `cs_target` |
 | Simbolizar pilha ARM | `arm-none-eabi-addr2line -f -C -i -e <elf> <endereços>` | em `C:/devkitPro/devkitARM/bin` |
 
 Nomes do C++ gerado são hashes (`cs_<hash>`); para achar o método original,

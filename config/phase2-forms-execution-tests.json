@@ -481,7 +481,7 @@
   ],
   "native_executable": {
     "path": "build/forms-execution-tests/forms-execution-fixtures.exe",
-    "sha256": "314e0f3c3602f136e806e37fdf271b7544f3be4de55cfd2e5a2b96a1a06f934a"
+    "sha256": "237bf50474ddaa97d1a100aaaf78eb1e1e109ef32e5b0b2aa4d275914eab31bf"
   },
   "limits": [
     "Synthetic services prove call order, states, forced save unlock, retries/finally and rendering through SurfaceManager; not a game boot.",

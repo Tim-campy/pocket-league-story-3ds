@@ -252,7 +252,7 @@
   },
   "native_executable": {
     "path": "build/pc/graphics_arcs_test.exe",
-    "sha256": "509e340b6587928047b1c704a8e88e084e153b648d7c15f7f8640bb557cb77af"
+    "sha256": "c12d9b510bbe21c14ddbadff9afd29bbe40daaedea38ef8c9a23371bb38ddb0b"
   },
   "verified_boundary_ids": [],
   "limitations": [

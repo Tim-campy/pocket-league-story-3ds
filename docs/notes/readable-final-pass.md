@@ -355,7 +355,7 @@ escreve.
 
 | Etapa | Estado |
 |---|---|
-| 1. Compilar e linkar no PC | **Feito.** `python tools/build_readable_pc.py` (depois de `translator/readable.py sample`) compila as 401 unidades do jogo e as 121 da KairoLibrary portável legíveis e linka `pc_game.exe` (7,2 MB). O CMake ganhou `PLS_GAME_SOURCE_DIR` e `PLS_PORTABLE_GENERATED_DIR` (padrões iguais aos de antes). |
+| 1. Compilar e linkar no PC | **Feito.** `python tools/archived/build_readable_pc.py` (depois de `translator/readable.py sample`) compila as 401 unidades do jogo e as 121 da KairoLibrary portável legíveis e linka `pc_game.exe` (7,2 MB). O CMake ganhou `PLS_GAME_SOURCE_DIR` e `PLS_PORTABLE_GENERATED_DIR` (padrões iguais aos de antes). |
 | 2. Executar sob roteiros com salvaguarda e estresse moderado do coletor | **Não feito.** O executor de roteiros, a salvaguarda e o isolamento de saves só existem no build de diagnóstico, que hoje aceita apenas o snapshot do código canônico (`src/game`, conferido por hash contra `config/phase2-game-translation.json`). Falta uma variante de diagnóstico legível: o emissor manter `PLS_METHOD_SCOPE`/`api_call` no modo legível sob uma opção privada, `diagnostic_snapshot.py` aceitar a árvore legível como variante sem promoção de cobertura (como `candidate_generation`) e `build_pc.py` validar essa procedência. O executável legível não foi rodado fora do diagnóstico porque gravaria o save em `%APPDATA%`, fora de `build/`. |
 | 3. Verificação completa com o jogo legível | **Não feito** (depende de 2 e de o legível passar a ser a árvore verificada). |
 | 4. Build ARM e benchmark para o New 3DS | **Não feito** (depende de 2). |
@@ -451,8 +451,8 @@ Ferramentas: `translator/readable.py diagnostic --original-managed M --output bu
 build/<nova>` (mesmos roteiros, salvaguarda, estresse do coletor e saves
 isolados em `build/`; histórico próprio `build/c6b-readable-attempts.json`, que
 nunca promove o livro-razão canônico), `tools/run_readable_routes.py` (reexecuta
-o conjunto de roteiros do critério 3 num build), `tools/compare_route_sets.py`,
-`tools/compare_readable_coverage.py`, `tools/compare_readable_determinism.py`.
+o conjunto de roteiros do critério 3 num build), `tools/archived/compare_route_sets.py`,
+`tools/archived/compare_readable_coverage.py`, `tools/archived/compare_readable_determinism.py`.
 
 **Conjunto de roteiros do critério 3** (85 execuções = cada roteiro concluído do
 histórico canônico, por par roteiro/save; os dois builds com o código atual,

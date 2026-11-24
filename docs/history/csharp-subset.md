@@ -2,7 +2,7 @@
 
 Inventário de leitura, não tradutor. Nenhum C++, asset, texto do jogo ou valor literal foi gerado/publicado. Fonte fixado em `reference/`, tag `v1.0.0-csharp-reconstruction`.
 
-Roslyn `5.8.0.0` analisou **97 fontes Assembly-CSharp**, **448825 nós AST** e **123 SyntaxKinds presentes**. A contagem completa por SyntaxKind está em [config/csharp-syntax.csv](../config/csharp-syntax.csv); tokens, opções, hashes, evidências por ocorrência e diagnósticos agregados estão no [relatório estruturado](../config/csharp-subset-summary.json).
+Roslyn `5.8.0.0` analisou **97 fontes Assembly-CSharp**, **448825 nós AST** e **123 SyntaxKinds presentes**. A contagem completa por SyntaxKind está em [config/csharp-syntax.csv](../../config/csharp-syntax.csv); tokens, opções, hashes, evidências por ocorrência e diagnósticos agregados estão no [relatório estruturado](../../config/csharp-subset-summary.json).
 
 A tabela de tradução contém **1.958 métodos**, todos `todo`, gerados do cadastro anterior. Isso inclui métodos gerados pelo compilador e declarações sem corpo; os números de declarações AST abaixo não usam esse mesmo denominador.
 
@@ -78,7 +78,7 @@ Os números medem **ocorrências**, não frases distintas. Não são inferidos p
 | Assembly-CSharp | 2231 | 1 | 341 | 97 | 5 | 443 | 18 | 1770 |
 | KairoLibrary | 3008 | 159 | 15 | 1 | 4 | 14 | 151 | 2837 |
 
-**Quantidade por classe:** a lista integral é [config/visible-text-counts.csv](../config/visible-text-counts.csv). As classes com pelo menos um literal de fluxo UI identificado estão abaixo; nenhuma frase é reproduzida.
+**Quantidade por classe:** a lista integral é [config/visible-text-counts.csv](../../config/visible-text-counts.csv). As classes com pelo menos um literal de fluxo UI identificado estão abaixo; nenhuma frase é reproduzida.
 
 | Assembly | Classe | Ocorrências UI | UI não vazias |
 |---|---|---:|---:|

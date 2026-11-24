@@ -38,9 +38,9 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 | Menu | 3 / 900 | 1.684027778 | 2.663107222 | 0 |
 | Partida | 3 / 900 | 1.631944444 | 2.335065556 | 0 |
 
-GetThreadTimes/QueryThreadCycleTime, sem elevação, três repetições ociosas. A granularidade do relógio de CPU limita p95/máximo por frame; ciclos brutos e tempos monotônicos estão no recibo. A baseline 7,15/9,04 ms usou ETW. Zero coletas na janela não prova a meta de pausa nos carregamentos. [Detalhes e resultados negativos](docs/notes/runtime-cost-round.md).
+GetThreadTimes/QueryThreadCycleTime, sem elevação, três repetições ociosas. A granularidade do relógio de CPU limita p95/máximo por frame; ciclos brutos e tempos monotônicos estão no recibo. A baseline 7,15/9,04 ms usou ETW. Zero coletas na janela não prova a meta de pausa nos carregamentos. [Detalhes e resultados negativos](../notes/runtime-cost-round.md).
 
-A conversão para rastreamento está integrada e em validação. Pico comparativo de texturas da revisão atual: **UNKNOWN**. Kernels isolados não qualificam o jogo convertido. Consulte [a rodada de medições](docs/notes/tracing-gc-measurement-round.md), [a matriz de ablação](docs/notes/tracing-gc-ablation.md) e [as fixtures ARM](docs/notes/tracing-gc-arm-stacks.md). Orçamento: 50 ms por frame no New 3DS real; resultado em hardware: **UNKNOWN**.
+A conversão para rastreamento está integrada e em validação. Pico comparativo de texturas da revisão atual: **UNKNOWN**. Kernels isolados não qualificam o jogo convertido. Consulte [a rodada de medições](../notes/tracing-gc-measurement-round.md), [a matriz de ablação](../notes/tracing-gc-ablation.md) e [as fixtures ARM](../notes/tracing-gc-arm-stacks.md). Orçamento: 50 ms por frame no New 3DS real; resultado em hardware: **UNKNOWN**.
 
 ## Assets
 
@@ -67,7 +67,7 @@ A conversão para rastreamento está integrada e em validação. Pico comparativ
 - Memória e frame time do menu PC têm medição parcial em Release; cobertura completa e medições 3DS continuam pendentes. O 3DS antigo não foi descartado.
 - SDL2 SDK preparado. Toolchain ARM11 e Azahar inventariados em config/phase2-arm11-tools.json para o benchmark autorizado; isso não comprova desempenho no hardware nem implementação do backend gráfico 3DS.
 
-Documentos: [fronteira](docs/boundary.md), [C#](docs/history/csharp-subset.md), [assets](docs/assets.md), [toolchain](docs/toolchain.md), [serviços offline](docs/notes/offline-behavior.md).
+Documentos: [fronteira](../boundary.md), [C#](csharp-subset.md), [assets](../assets.md), [toolchain](../toolchain.md), [serviços offline](../notes/offline-behavior.md).
 
 ## Evidência atual da Fase 2
 
@@ -77,7 +77,7 @@ Documentos: [fronteira](docs/boundary.md), [C#](docs/history/csharp-subset.md), 
 - Sintaxe: 69/123 SyntaxKinds na união dos corpos emitidos (63 Kairo, 69 Game); observação não comprova cobertura semântica integral de cada construção.
 - Serviços: 69 contratos explícitos e 49 assertions nativas; essas fixtures não qualificam a integração de todos os chamadores nem promovem símbolos da fronteira.
 - Assets: 654 RGBA8 únicos (16933248 bytes) com readback integral; 2 TTF e 27 Ogg exercitados pelos consumidores nativos de rasterização/streaming; nenhuma API do jogo promovida apenas por isso.
-- Marco de partida completa e retorno ao menu registrado em [recibo](config/phase2-match-complete.json) e [evidencia](docs/notes/phase2-match-complete.md). Cobertura por metodo depende dos recibos autenticados; comparacao Android pendente.
+- Marco de partida completa e retorno ao menu registrado em [recibo](../../config/phase2-match-complete.json) e [evidencia](../notes/phase2-match-complete.md). Cobertura por metodo depende dos recibos autenticados; comparacao Android pendente.
 - Próxima integração: completar corpos, slots e serviços restantes; medir o runtime sem rasterização. Nenhuma decisão de telas 3DS foi tomada.
 
 ## Limites das contagens e dos bindings
@@ -86,11 +86,11 @@ translated significa apenas que o corpo C++ gerado compilou em objeto, com produ
 O vínculo do jogo usa tipo declarante, nome, todos os tipos de parâmetros e retorno; construtores retornam System.Void. Não há vínculo só por aridade. Correspondências ambíguas, assinaturas abertas e DocIDs sem identidade IL única ficam registrados como UNKNOWN no recibo. Métodos gerados/auxiliares do IL não são contados como traduzidos por haver uma declaração fonte relacionada.
 Provas de framework/SDL, fontes e áudio não equivalem a bindings do jogo. Somente IDs explícitos exercitados por um oráculo de API promovem a fronteira. Alterações transitórias em produtores/headers/gerados suspendem a publicação inteira; preserva-se o último conjunto consistente de documentos/CSVs até os recibos serem regenerados.
 
-Recibos e hashes conferidos pelo gerador: [resumo](docs/history/config/phase2-progress.json), [portáveis](config/phase2-translation.json), [diferencial](docs/history/config/phase2-portable-differential.json), [imagens](config/phase2-image-tests.json).
+Recibos e hashes conferidos pelo gerador: [resumo](config/phase2-progress.json), [portáveis](../../config/phase2-translation.json), [diferencial](config/phase2-portable-differential.json), [imagens](../../config/phase2-image-tests.json).
 
 ## Contratos culturais e fundação
 
-- Inventário cultural: 104 chamadas em 61 métodos; 24 chamadas ordinais do Mono separadas; 0 atribuições de cultura no fonte. Dados e limites: [medição](docs/culture-usage.md).
+- Inventário cultural: 104 chamadas em 61 métodos; 24 chamadas ordinais do Mono separadas; 0 atribuições de cultura no fonte. Dados e limites: [medição](../culture-usage.md).
 - Fundação `type-init-fixtures`: 24/24 observações aprovadas, sem promover métodos arbitrários da fronteira.
 - Fundação `exception-objects-fixtures`: 74/74 observações aprovadas, sem promover métodos arbitrários da fronteira.
 - Fundação `runtime-encoding-fixtures`: 134/134 observações aprovadas, sem promover métodos arbitrários da fronteira.
@@ -98,7 +98,7 @@ Recibos e hashes conferidos pelo gerador: [resumo](docs/history/config/phase2-pr
 - Fundação `path-fixtures`: 378/378 observações aprovadas, sem promover métodos arbitrários da fronteira.
 - Fundação `stream-reader-tests`: 508/508 observações aprovadas, sem promover métodos arbitrários da fronteira.
 - Fundação `mono-collation-tests`: 615648/615648 observações aprovadas, sem promover métodos arbitrários da fronteira.
-  Payload de tabelas: 384190 bytes (337358 MIT/X11 + 46832 GNU Library GPLv2); licenças/proveniência separadas em [THIRD_PARTY.md](THIRD_PARTY.md). Footprint no 3DS não medido.
+  Payload de tabelas: 384190 bytes (337358 MIT/X11 + 46832 GNU Library GPLv2); licenças/proveniência separadas em [THIRD_PARTY.md](../../THIRD_PARTY.md). Footprint no 3DS não medido.
 - Fundação `thread-tests`: 71/71 observações aprovadas, sem promover métodos arbitrários da fronteira.
 - Fundação `globalization-tests`: 39/39 observações aprovadas, sem promover métodos arbitrários da fronteira.
 - Fundação `bootstrap-tests`: 12/12 observações aprovadas, sem promover métodos arbitrários da fronteira.

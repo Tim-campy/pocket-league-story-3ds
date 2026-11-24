@@ -11,7 +11,7 @@ flutuante. O resultado do ensaio em ramo separado fica na seção 6.
 | Critério | Estado | Evidência |
 |---|---|---|
 | 1. Tradução completa | **cumprido** (aprovado em 2026-11-14) | `docs/history/PROGRESS-phase2.md`; 1.860 métodos emitidos, 0 rejeitados, 0 slots virtuais pendentes; `config/phase2-game-translation.json` |
-| 2. Coletor e desempenho | **cumprido** — canônico (v6, 2026-11-14) e legível (três execuções com `result.txt`, 2026-11-20; marcado pela regra do usuário) | `docs/benchmark-hardware.md`; legível: `build/c6b-sd-readable/execucao-1..3`, `tools/hardware_window_report.py` |
+| 2. Coletor e desempenho | **cumprido** — canônico (v6, 2026-11-14) e legível (três execuções com `result.txt`, 2026-11-20; marcado pela regra do usuário) | `docs/benchmark-hardware.md`; legível: `build/c6b-sd-readable/execucao-1..3`, `tools/archived/hardware_window_report.py` |
 | 3. Percurso completo no PC | **cumprido** (aprovado em 2026-11-16) | `docs/history/PROGRESS-phase2.md` (1.044/1.248 alcançáveis); C6b: legível = canônico na união de cobertura (1.573 métodos, `build/c6b-route-compare.json`) |
 | 4a. Fidelidade do código gerado | **em andamento** | regra de ponto flutuante confirmada em emulador Android ARM; `ref` de campo nulo e `JMath.Sin(-0)` decididos; `BeforeFieldInit` e construtores iguais ao Mono (`type-init-translated`); falta a repetição em aparelho Android (`docs/notes/criterion4a-status.md`) |
 | 4b. Telas | movido para a Fase 4 (decisão de 2026-11-16) | — |
@@ -20,7 +20,7 @@ flutuante. O resultado do ensaio em ramo separado fica na seção 6.
 ### Critério 2 no código legível (New 3DS XL, modelo 4, três execuções, 2026-11-20)
 
 Mesmo pacote e mesmas janelas da v6 (menu 191–420, partida 1.201–1.500),
-analisados pelo mesmo script para os dois (`tools/hardware_window_report.py`):
+analisados pelo mesmo script para os dois (`tools/archived/hardware_window_report.py`):
 
 | Medida | v6 canônico | legível (exec. 1 / 2 / 3) | limite |
 |---|---|---|---|
@@ -132,7 +132,7 @@ Pré-condições: os cinco critérios aceitos pelo usuário; aprovação explíc
    O código com `PLS_METHOD_SCOPE` não entra na árvore final (ver item 8).
 2. **Verificação completa integral:** `python tools/verify_phase2.py --apk APK --original-managed MANAGED --jobs 1 --full`.
 3. **Conjunto de rotas:** `tools/run_readable_routes.py` sobre a árvore legível
-   (com estresse do coletor) e `tools/compare_route_sets.py` contra o canônico;
+   (com estresse do coletor) e `tools/archived/compare_route_sets.py` contra o canônico;
    aceitar só com a mesma união de cobertura e 0 alertas.
 4. **Substituição de `src/game/`** pela árvore legível do jogo e de
    `src/kairo/common/generated/` pela da KairoLibrary portável, em um commit
@@ -283,7 +283,7 @@ numéricos estendidos (B), gerada de `build/claude-readable-b1`.
 
 | Passo | Resultado |
 |---|---|
-| `tools/freeze_tree.py` (troca da árvore) | 404 unidades do jogo (2 partes `.inc`) + 115 da KairoLibrary; cabeçalho de código mantido; nenhum "Do not edit" |
+| `tools/archived/freeze_tree.py` (troca da árvore) | 404 unidades do jogo (2 partes `.inc`) + 115 da KairoLibrary; cabeçalho de código mantido; nenhum "Do not edit" |
 | Tradutor arquivado | `tools/translator-archived/` |
 | Build PC (sem tradutor) | **PASS** — 6,67 MB, 597 s |
 | Build ARM `--frozen` | **PASS** — `.3dsx` 7.409.864 B, 2.004 s |
@@ -315,7 +315,7 @@ sem push). Árvore: legível final da rodada de 2026-11-22
 
 | Passo | Resultado |
 |---|---|
-| `tools/freeze_tree.py` (troca da árvore) | 402 unidades do jogo + 115 da KairoLibrary; cabeçalho de código mantido; nenhum "Do not edit" |
+| `tools/archived/freeze_tree.py` (troca da árvore) | 402 unidades do jogo + 115 da KairoLibrary; cabeçalho de código mantido; nenhum "Do not edit" |
 | Tradutor arquivado | `tools/translator-archived/` (com `README-ARCHIVED.md`) |
 | Build ARM `--frozen` | **PASS** — `.3dsx` 7.286.380 B |
 | `match-touch` (`--frozen-diagnostic`) | **PASS** — quadro 2.972; 127 passos, 19 estados e `rs/0003` idênticos ao legível final; 0 alertas |
@@ -339,7 +339,7 @@ Procedimento da seção 4, como no ensaio 3:
 |---|---|
 | Última geração legível (com `PLS_METHOD_SCOPE`) | `build/claude-readable-final2`, a árvore validada: 85 roteiros (0 alertas, 1.572 × 1.573 métodos contra o canônico atual), build ARM, código de máquina dos kernels, Azahar |
 | Verificação completa antes da troca | 127/127 (`c8cd1ed`) |
-| Troca de `src/game/` e `src/kairo/common/generated/` (`tools/freeze_tree.py`) | 402 + 115 unidades; cabeçalho de código mantido à mão; nenhum "Do not edit" |
+| Troca de `src/game/` e `src/kairo/common/generated/` (`tools/archived/freeze_tree.py`) | 402 + 115 unidades; cabeçalho de código mantido à mão; nenhum "Do not edit" |
 | Corpos iguais à árvore validada | 517/517 arquivos idênticos fora das linhas de cabeçalho |
 | Tradutor | `tools/translator-archived/` (somente leitura, `README-ARCHIVED.md`); `tools/translate` recusa com mensagem |
 | PC a partir da árvore congelada (`--frozen-diagnostic`) | partida (127 passos, 19 estados, `rs/0003`) e menu (180 passos, 331 estados, `rs/0003`) idênticos à árvore validada; 0 alertas |

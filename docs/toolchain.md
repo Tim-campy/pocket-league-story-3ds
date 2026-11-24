@@ -101,7 +101,7 @@ python tools/build-pc --apk 'CAMINHO_DO_SEU_APK' --run
 
 Esses comandos requerem os inventários privados já preparados, descritos em [catálogo](notes/phase2-private-catalog.md). O último só inicia o programa depois de um link bem-sucedido; não conta um processo lançado como título/menu aprovado. As diferenças culturais das strings são medidas por `python tools/probe_string_culture.py`, sem alterar o contrato do jogo; [evidência e dependência pendente](notes/phase2-string-culture.md). `python tools/inspect_android_gc.py --apk 'CAMINHO_DO_SEU_APK'` verifica o export de GC de ambas as bibliotecas Android em memória, sem extrair nem executar o runtime.
 
-Roslyn moderno e .NET10 são ferramentas de desenvolvimento; o programa nativo não incorpora CLR, Mono ou Unity. As sondas sintéticas históricas usam o smcs/Mono da instalação Unity 5.3.4f1 já existente, fora do port, somente como oráculo de testes próprios. [Contrato semântico e limites](translator.md); [streams](notes/managed-streams.md). Compatibilidade observada no Mono Windows não comprova o Mono Android nos casos de borda.
+Roslyn moderno e .NET10 são ferramentas de desenvolvimento; o programa nativo não incorpora CLR, Mono ou Unity. As sondas sintéticas históricas usam o smcs/Mono da instalação Unity 5.3.4f1 já existente, fora do port, somente como oráculo de testes próprios. [Contrato semântico e limites](history/translator.md); [streams](notes/managed-streams.md). Compatibilidade observada no Mono Windows não comprova o Mono Android nos casos de borda.
 
 ## Conversão local, fontes e áudio
 

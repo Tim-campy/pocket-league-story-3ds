@@ -167,3 +167,20 @@ menos unidades (hoje `main.AppData.hpp` → 52 unidades, ~6 min;
 `docs/notes/rebuild-times.md`). Só forma; prova pelos objetos idênticos
 (`tools/compare_objects.py`). O cabeçalho pré-compilado foi medido (−55 % no build
 completo) e não entrou: objetos diferentes e auditoria de dependências quebrada.
+
+### Roteiros determinísticos: carga de assets em tempo virtual (decisão do usuário)
+
+Com `--fast`, os quadros correm na velocidade da CPU enquanto a carga de assets acontece em
+threads que esperam em tempo real; por isso duas execuções do mesmo roteiro diferem no quadro
+de cada passo (até 5 quadros em série, até 34 em paralelo) e o save do menu varia nos campos
+do sorteio de treino (`docs/notes/route-speed-2026-11-24.md`). Fazer a carga avançar em tempo
+virtual (ou sincronizar o quadro com o fim da carga no modo de diagnóstico) tornaria os
+roteiros determinísticos e a comparação byte a byte possível. É mudança de runtime ou de
+plataforma: exige decisão do usuário.
+
+### `dev.py routes --affected` mais fino para `.hpp`
+
+Hoje qualquer `.hpp` alterado leva ao conjunto completo (~65 min). Se pesar, a seleção pode
+seguir as unidades que incluem o cabeçalho (o mesmo `grep` do `AGENTS.md`, seção 5) e os
+métodos dessas unidades; cuidado com mudanças de layout (campo novo muda todos os usuários
+da classe) e com funções em linha.

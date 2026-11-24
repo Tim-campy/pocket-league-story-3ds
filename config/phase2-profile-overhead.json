@@ -3,58 +3,58 @@
   "status": "PASS",
   "samples": [
     [
-      180700,
-      1313300,
-      6460800,
+      143300,
+      1294800,
+      6702600,
       100000
     ],
     [
-      180800,
-      1148100,
-      6393800,
+      203100,
+      1264000,
+      6617300,
       100000
     ],
     [
-      175300,
-      1254500,
-      6343400,
+      184000,
+      1169200,
+      6677000,
       100000
     ],
     [
-      175500,
-      1125200,
-      6464600,
+      183600,
+      1272600,
+      6733100,
       100000
     ],
     [
-      175700,
-      1166000,
-      6437900,
+      184000,
+      1217000,
+      6822300,
       100000
     ],
     [
-      170400,
-      1393300,
-      7063300,
+      183600,
+      1215800,
+      6629700,
       100000
     ],
     [
-      175500,
-      1226200,
-      6529900,
+      184300,
+      1326700,
+      6668400,
       100000
     ]
   ],
-  "median_baseline_ns_per_call": 1.755,
-  "median_disabled_ns_per_call": 12.262,
-  "median_instrumented_ns_per_call": 64.608,
-  "median_increment_ns_per_call": 62.801,
+  "median_baseline_ns_per_call": 1.84,
+  "median_disabled_ns_per_call": 12.64,
+  "median_instrumented_ns_per_call": 66.77,
+  "median_increment_ns_per_call": 64.93,
   "inputs_sha256": {
     "tests/kairo/profile_overhead.cpp": "55c68f066fee193a1aea51b8eed84a0bad2740b20af7f47521533c6cdcf3a4ba",
     "tools/test_profile_overhead.py": "16d3e23d7470b6b6ecaa23a445fc7e006929adcc28bd2e11c8f6d02f42631c65",
-    "src/kairo/common/diagnostic_profile.hpp": "49b08cdf04c808d4df42ba5419eb08fa9b6193e9a54367d0b393b8e4c04f3a0c"
+    "src/kairo/common/diagnostic_profile.hpp": "4b20400a880938fc91b85debb1e1dca51ee240b8d64d3e2db5d24756f229d9b9"
   },
-  "executable_sha256": "efb4dc574a7a0dd5986cec870950986f116bb9273f574918b11593065dc7a453",
+  "executable_sha256": "a244d85bc946a57521f91c4cc74541e7e2f4234cb9addd123efa39380cc278a7",
   "limitations": [
     "Own microbenchmark, not a correction factor for game timing.",
     "No benchmark overhead is subtracted from reported game samples."

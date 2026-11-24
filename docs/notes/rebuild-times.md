@@ -9,12 +9,18 @@ build de diagnóstico de `src/game`, 2 compilações em paralelo, padrão de
 | nada mudou | 2 s | nada (Ninja confere e sai) |
 | um `.cpp` do jogo editado (`game.Team.cpp`) | 17 s | 1 unidade + link |
 | um `.hpp` muito incluído editado (`main.AppData.hpp`, incluído por 52 `.cpp`) | 379 s (6,3 min) | 52 unidades + link |
-| tudo (depois da formatação, ou na primeira build depois de `dev.py full`) | 754–914 s (13–15 min) | 253 unidades do jogo e da KairoLibrary |
+| tudo (depois da formatação; uma vez, depois de `dev.py full`) | 754–914 s (13–15 min) | 253 unidades do jogo e da KairoLibrary |
 | ARM (`dev.py arm`), tudo | 1.772 s (30 min) | idem, devkitARM |
 
-A primeira build do PC depois de `dev.py full` recompilou tudo (754 s). Causa
-`UNKNOWN`; hipótese não verificada: a verificação regenera arquivos compartilhados de
-`build/` (tabelas geradas) com hora nova.
+**Build depois de `dev.py full`.** Em 2026-11-23 a primeira build depois da verificação
+completa recompilou tudo (754 s). Investigação de 2026-11-24 (limite curto):
+- Achado e corrigido: o check `mono-collation-generation` reescrevia as tabelas de
+  colação (`build/generated/mono-collation/*.inc`, `src/kairo/common/mono_*_methods.inc`)
+  com conteúdo igual e hora nova, e o runtime as inclui. `tools/generate_mono_collator.py`
+  agora só grava o que mudou. Medido: build depois de `full` 15 s (só o runtime) antes
+  da correção; 2 s depois (gerador rodado de novo, horas iguais).
+- Não explicado: a recompilação de tudo em 2026-11-23. Repetindo a sequência em
+  2026-11-24 (`full` e depois `build`), não houve recompilação do jogo. Causa `UNKNOWN`.
 
 Para comparação: o cabeçalho de apoio `game_generated_forward.hpp` é incluído por 197
 `.cpp`; mudá-lo equivale a recompilar quase tudo. Ele é infraestrutura (`AGENTS.md`,

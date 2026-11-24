@@ -14,7 +14,7 @@
     "src/kairo/common/baked_arrays.hpp": "4aa51f18839dae33f5353e8fa2cbbb40782ad52b98bbd82e9a5734435978b7df",
     "src/kairo/common/canvas_back.hpp": "287aea59581ef71653b8fcc73947190f1a137fa6d557360fecb315d570c08568",
     "src/kairo/common/ctr_texture.hpp": "1fee5b07af1f711b6d4ca560c79ede7a9fbf40f26ced31a10dabc4407becb59b",
-    "src/kairo/common/diagnostic_profile.hpp": "49b08cdf04c808d4df42ba5419eb08fa9b6193e9a54367d0b393b8e4c04f3a0c",
+    "src/kairo/common/diagnostic_profile.hpp": "4b20400a880938fc91b85debb1e1dca51ee240b8d64d3e2db5d24756f229d9b9",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "src/kairo/common/managed_collections.hpp": "54074b647571027deba2015138e065dec79d981a793905054b27f4bc34fc79e4",
     "src/kairo/common/managed_dictionary.hpp": "e50e50d4816852830af714e9dca9cdc62dc96ef37d5e479477b937984cc43536",
@@ -55,6 +55,6 @@
     "src/runtime/tracing_gc.hpp": "2884c7ec0fddec33b251aff33b0b360b53230066fa28fbf4e8aaaa6ca86faaef"
   },
   "game_assets_used": false,
-  "executable_sha256": "cb779a4748d89e1b377cd4fc49ba11ef5291a188fbf8bee0c34fb04aa5af7a97",
+  "executable_sha256": "f4318f5459dff4d6abfe06fdb594a7a5bc656dc467a6588a4974d26addf626cb",
   "log_sha256": "5b36650d5b59545d1c2d712cb817adaa7ccb4359b07d310adb2f7d5dd79a79b5"
 }

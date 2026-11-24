@@ -20,6 +20,39 @@ Hoje o jogo roda inteiro no PC (SDL2, build de diagnóstico, com as duas telas d
 em janelas) e no 3DS com backend nulo (sem vídeo e sem som; serve de benchmark).
 Vídeo, som e controles no 3DS são a próxima fase (`docs/plan-next-phases.md`).
 
+### Design decidido para o 3DS (resumo; completo em `docs/design/phase3-decision.md`)
+
+- **Tela superior (400×240):** o jogo.
+- **Tela inferior (320×240, toque):** menus, registro de acontecimentos (gestão) e
+  painel da partida; diálogos do port.
+- **Controles:** A confirma; B volta; Y abre o menu; X faz o comando especial (rótulo
+  esquerdo: salvar, trocar, demolir...); direcional move o cursor e a seleção; circle
+  pad move a câmera; L e R dão zoom; START abre o diálogo de sair.
+- **Texto:** teclado do sistema (`swkbd`) com o limite e a validação do jogo.
+- **Idioma:** o do console ao iniciar (japonês ou inglês; outro idioma → inglês), com
+  painel para trocar.
+
+O que já existe — **só no PC**, protótipo de plataforma (`src/main/pc_dual_screen.cpp`,
+`docs/design/phase3-prototype.md`): as duas janelas; A, B, X, Y, START e direcional
+ligados aos rótulos do jogo; circle pad como arraste de câmera (o cursor acompanha o
+centro); L/R como pinça de zoom; a barra de rótulos do jogo (`GamePad`) na tela
+inferior; diálogos do port na inferior; texto pelo teclado do PC (SDL).
+O que ainda não existe: qualquer coisa disso no 3DS (o backend do console é nulo: sem
+vídeo, som nem entrada); menus, registro de acontecimentos e painel da partida na
+inferior (exigem mudar o código do jogo; etapa 2); câmera independente do cursor;
+`swkbd`; idioma do console. As mudanças já decididas estão em
+`docs/changes-from-original.md`.
+
+### Orçamentos no New 3DS
+
+- **50 ms por quadro**: o jogo pede 20 quadros por segundo.
+- **Lógica hoje** (New 3DS XL, backend nulo, três execuções): partida com média de
+  9,7–10,6 ms por quadro; menu 6,5–6,7 ms; maior quadro sem coleta ≤ 12,2 ms.
+- **Transições e coletas explícitas** (fechar janela, `GameManager.ChangeState(0)`):
+  até **150 ms** (medido: pausa ≤ 114 ms, quadro ≤ 124 ms).
+- **O custo de desenho no 3DS ainda não foi medido** (o backend é nulo). Toda mudança
+  que acrescente trabalho por quadro come a margem que o desenho vai precisar.
+
 ## 2. Seu papel e seus limites
 
 **Você edita o código do jogo: `src/game/`** (as classes `*.hpp`/`*.cpp` com nomes
@@ -104,6 +137,45 @@ Recompilar no PC depois de editar um `.cpp` do jogo: ~17 s. Depois de editar um
 
 A máquina tem 8 GB: rode **um trabalho pesado por vez** (build, roteiros, emulador).
 
+### Testar no PC uma mudança de tela ou de controle
+
+- `python tools/dev.py run --save 50` abre **duas janelas**: em cima a tela superior
+  (400×240), embaixo a inferior (320×240, toque com o mouse), ampliadas 2× (`--scale`).
+  Confirmado por captura em 2026-11-24.
+- **Teclado → botões do 3DS:** A = `A`, B = `S`, X = `Z`, Y = `X`, L = `Q`, R = `W`,
+  START = `M`, SELECT = `N`; direcional = setas; circle pad = `I`/`J`/`K`/`L`. Um
+  controle USB também serve (posições do padrão Nintendo; analógico esquerdo = circle
+  pad).
+- **Capturar as telas:** `--capture build/captures/<nome>:K` grava `NNNNNN-top.bmp` e
+  `NNNNNN-bottom.bmp` a cada K quadros. Capturas ficam em `build/`, **nunca no Git**
+  (são imagens do jogo).
+- **Roteiro curto** (o jogo se joga sozinho; formato em
+  `docs/notes/route-runner-design.md`): um arquivo `tests/routes/<nome>.route`, um
+  passo por linha, e `dev.py run --save 50 --route tests/routes/<nome>.route`:
+
+  ```
+  # Do título até o mapa com o save 50 e abre o menu (testado: termina no quadro 222).
+  anchor timeout=2400
+  wait frames=104
+  key SELECT
+  wait frames=36
+  key UP
+  wait frames=24
+  key SELECT
+  wait form=GameForm label_right=* timeout=600
+  dismiss until depth=1 timeout=300 optional
+  key SOFT2
+  wait depth=2 timeout=120 optional
+  wait frames=40
+  end
+  ```
+
+  Os roteiros apertam as teclas do jogo (`SELECT`, `UP`, `DOWN`, `LEFT`, `RIGHT`,
+  `SOFT1`, `SOFT2`), não os botões do 3DS. Para L/R há o ambiente
+  `PLS_PC_DUAL_HOLD="R:700-760,L:1000-1060"` (quadros em que o botão fica apertado).
+  O resultado de cada execução fica em `build/pc-frozen-diagnostic-release/attempts/<n>/`
+  (`game-run.stderr`: `PLS_ROUTE_*`, `PLS_UI_STATE`).
+
 ## 6. Como ler o código do jogo
 
 Cada classe C# virou uma `struct` em `namespace pls::game::<namespace C#>`. Cada
@@ -129,7 +201,7 @@ ex.: `// M:game.Team.Update`). Para ver o original, procure o mesmo método em
 | `PLS_DELEGATE_SLOTS(Base, {"Slot", "M:..."}, ...)` | para cada `override`, qual método C# um delegate criado a partir dele representa | `override` novo: acrescente a entrada |
 | `Delegate<R(Args...)>::from_closure(identidade, "M:...:N", lambda, capturados...)` | lambda do C# como delegate | todo valor gerenciado usado pela lambda vai também na lista final `capturados...` (é por ela que o coletor o enxerga) |
 | blocos `{ auto cs_target = ...; auto cs_arg0 = ...; ... }` (`cs_target`, `cs_index`, `cs_value`, `cs_arg*`, `cs_left`, `cs_right`, `cs_receiver`) | fixam a ordem de avaliação do C# onde o C++ não a garante (argumentos, lados de um operador, alvo de uma atribuição) | ao editar um trecho desses, mantenha a ordem: avalie em variáveis, na ordem do C#, antes de combinar |
-| `pls::diagnostic::api_call([&]() -> decltype(auto) { return ...; })` | chamada à plataforma ou à KairoLibrary; no build de diagnóstico, mede o tempo dela | mantenha o embrulho nas chamadas à plataforma; não muda o resultado |
+| `PLS_API(expr)` | chamada à plataforma ou à KairoLibrary (`kl_*::...`, `pls::kairo::...`); no build de diagnóstico separa o tempo dela do tempo do jogo; nos outros é a própria chamada | use em toda chamada nova à plataforma; não muda o resultado |
 | `PLS_METHOD_SCOPE("Assembly-CSharp", "M:...", game)` | no build de diagnóstico, registra a chamada do método (cobertura, salvaguarda, perfil); some no build normal | método novo do jogo: acrescente com um DocID novo (ex.: `M:game.Team.MyNewMethod`), para a cobertura dos roteiros o enxergar |
 | `pls::cs::run_finally(corpo, finally)`, `capture_exception(e)` | `try/finally` e `catch` do C# | não troque `finally` por destrutor (RAII) se o bloco puder lançar |
 | `pls::cs::box(x)` / `unbox<T>(o)` | boxing do C# (valor → `object`) | `box` aloca; evite em código por quadro (seção 7) |
@@ -260,6 +332,16 @@ se falhar de novo, é falha. A máquina não pode dormir durante os roteiros (um
 suspensão trava o quadro em curso e o roteiro falha): `dev.py routes` e `dev.py full`
 pedem ao Windows que não suspenda enquanto rodam.
 
+### Git
+
+- Nunca `push --force`, nunca reescrever histórico publicado.
+- **Nunca mover, apagar ou recriar a tag `v1.0.0-faithful`** (nem outra tag).
+- Commits pequenos, um assunto por commit; mudança de comportamento sempre sozinha
+  (seção 9). Experimentos em ramo descartável, apagado depois.
+- Um checkpoint só vale com **CI verde**: depois do push, `python tools/dev.py ci`
+  (resultado do CI do commit publicado). Se ficar vermelho, corrija num commit novo.
+- Nunca commite `build/`, capturas, saves, o APK ou o que vem dele (seção 3).
+
 ## 11. Como relatar
 
 Em português, com números exatos. `UNKNOWN` para o que não foi medido ou verificado;
@@ -278,3 +360,14 @@ sempre com os resultados negativos e o que depende do usuário.
 - `docs/benchmark-hardware.md` — como medir no New 3DS.
 - Pacote de código para revisão externa: `python tools/make_review_bundle.py ITEM ...`
   (arquivos, `Classe::Método` ou DocID; saída em `build/review/`).
+
+## 13. Pendências herdadas
+
+| Pendência | Dono |
+|---|---|
+| Teste numérico da regra de ponto flutuante num aparelho Android (`docs/notes/criterion4a-status.md`) | usuário |
+| Cobertura de `AppData.DrawMoney2` e `MapMain.UpdateTrainingCoatNum` (só por log textual; exige vídeo) | Fase 4 |
+| Fase 4: vídeo (GPU), som, controles e saves no 3DS; comparação de telas com o Android; medição com vídeo e som no New 3DS (`docs/plan-next-phases.md`) | Fase 4, por decisão do usuário |
+| Reforma do coletor, grafias de `Graphics` (A.4e), coleções `Vector` (A.4d), declarações antecipadas nos `.hpp` | `docs/backlog.md` |
+
+Nenhuma delas é trabalho seu sem pedido do usuário.

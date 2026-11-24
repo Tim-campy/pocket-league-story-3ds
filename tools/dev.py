@@ -1,13 +1,14 @@
 """One command for the edit cycle of the game code (src/game).
 
     python tools/dev.py build              # PC build of src/game (diagnostic, Release)
-    python tools/dev.py run [--save 31|50] [--seconds 600] [--scale 2]
+    python tools/dev.py run [--save 31|50] [--seconds 600] [--scale 2] [--capture build/DIR:K] [--route R]
                                            # PC run with both 3DS screens in windows
     python tools/dev.py check [--all]      # fast checks of the game code
     python tools/dev.py routes [--resume] [--only NAME ...]
                                            # the route set (87 runs), moderate GC stress
     python tools/dev.py full               # complete verification (verify_phase2.py --full)
     python tools/dev.py arm                # 3DS build (.3dsx, null backend)
+    python tools/dev.py ci [COMMIT]        # CI result of a published commit (GitHub API)
 
 Local paths (never committed): the APK and the extracted Managed folder come from the
 environment (PLS_APK, PLS_MANAGED) or from build/dev-local.json:
@@ -54,7 +55,7 @@ def run(command, label):
 
 def cmd_build(a):
     apk, _ = local_paths()
-    return run(tool('tools/build_pc.py', '--apk', apk, '--frozen-diagnostic', '--configuration', 'Release'), 'build PC')
+    return run(tool('tools/build_pc.py', '--apk', apk, '--frozen-diagnostic', '--configuration', 'Release', '--jobs', a.jobs), 'build PC')
 
 
 def cmd_run(a):
@@ -62,6 +63,8 @@ def cmd_run(a):
     args = ['--apk', apk, '--frozen-diagnostic', '--configuration', 'Release', '--run', '--run-seconds', a.seconds,
             '--dual-screen', a.scale]
     if a.save: args += ['--diagnostic-save-from-attempt', a.save]
+    if a.capture: args += ['--dual-capture', a.capture]
+    if a.route: args += ['--diagnostic-route', a.route, '--virtual-clock', '1767225600000,1000,50']
     return run(tool('tools/build_pc.py', *args), 'run PC (duas telas)')
 
 
@@ -123,10 +126,14 @@ def cmd_routes(a):
         # Two replays (actions.route from save 95, dialogs-exit.route) never complete in
         # replay, canonical included; every route completed there must complete here.
         baseline = ROOT / 'build/c6b-route-set-canonical.json'
-        expected = ({k for k, r in json.loads(baseline.read_text(encoding='utf8'))['runs'].items() if r['status'] == 'done'}
-                    if baseline.exists() else set(current['runs']))
-        missing = sorted(k for k in expected if current['runs'].get(k, {}).get('status') != 'done')
-        if a.only: missing = [k for k in missing if current['runs'].get(k, {}).get('route') in a.only]
+        # Compared by (route, save): the run numbers follow the latest original run of each
+        # route in the history and may differ between the two sets.
+        key = lambda r: (r['route'], r.get('save'))
+        expected = ({key(r) for r in json.loads(baseline.read_text(encoding='utf8'))['runs'].values() if r['status'] == 'done'}
+                    if baseline.exists() else {key(r) for r in current['runs'].values()})
+        done = {key(r) for r in current['runs'].values() if r['status'] == 'done'}
+        missing = sorted(f'{route} (save {save})' for route, save in expected - done
+                         if not a.only or route in a.only)
         ok = not missing and not union.get('safeguard_alerts') and not union.get('translation_gaps')
         print('roteiros:', json.dumps({k: union.get(k) for k in ('runs', 'routes_done', 'safeguard_alerts', 'readable', 'canonical')}),
               f'esperados concluídos: {len(expected)}; faltando: {missing}', 'PASS' if ok and code == 0 else 'FAIL')
@@ -147,13 +154,30 @@ def cmd_arm(a):
     return code
 
 
+def cmd_ci(a):
+    """CI result of a commit (default: HEAD) from the GitHub API (no gh CLI on this machine)."""
+    import re, urllib.request
+    url = subprocess.run(['git', 'remote', 'get-url', 'origin'], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+    m = re.search(r'github\.com[:/]([^/]+)/([^/.]+)', url)
+    if not m: sys.exit('origin não é um repositório do GitHub: ' + url)
+    sha = subprocess.run(['git', 'rev-parse', a.commit], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+    api = f'https://api.github.com/repos/{m.group(1)}/{m.group(2)}/actions/runs?head_sha={sha}'
+    runs = json.loads(urllib.request.urlopen(urllib.request.Request(api, headers={'User-Agent': 'pls-dev'}), timeout=30).read())['workflow_runs']
+    if not runs: print(sha[:7], 'sem execução de CI (commit não publicado, ou não é o último de um push)'); return 1
+    for r in runs: print(sha[:7], r['name'], r['status'], r['conclusion'])
+    return 0 if all(r['status'] == 'completed' and r['conclusion'] == 'success' for r in runs) else 1
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest='command', required=True)
-    sub.add_parser('build').set_defaults(func=cmd_build)
+    p = sub.add_parser('build'); p.set_defaults(func=cmd_build)
+    p.add_argument('--jobs', type=int, default=2, help='compilações em paralelo (8 GB de RAM: veja docs/notes/rebuild-times.md)')
     p = sub.add_parser('run'); p.set_defaults(func=cmd_run)
     p.add_argument('--save', type=int, help='começar de um save de diagnóstico: 31 (antes da 1ª partida), 50 (depois)')
     p.add_argument('--seconds', type=int, default=600); p.add_argument('--scale', type=int, default=2)
+    p.add_argument('--capture', metavar='DIR:K', help='gravar as duas telas em BMP a cada K quadros em DIR (dentro de build/; nunca no Git)')
+    p.add_argument('--route', help='jogar sozinho por um roteiro (tests/routes/*.route) em vez do teclado')
     p = sub.add_parser('check'); p.set_defaults(func=cmd_check)
     p.add_argument('--all', action='store_true', help='conferir a formatação de todos os arquivos (~4 min)')
     p = sub.add_parser('routes'); p.set_defaults(func=cmd_routes)
@@ -161,6 +185,7 @@ def main():
     p.add_argument('--only', nargs='*'); p.add_argument('--stress-every', type=int, default=50)
     sub.add_parser('full').set_defaults(func=cmd_full)
     sub.add_parser('arm').set_defaults(func=cmd_arm)
+    p = sub.add_parser('ci'); p.set_defaults(func=cmd_ci); p.add_argument('commit', nargs='?', default='HEAD')
     a = ap.parse_args()
     sys.path.insert(0, str(ROOT / 'tools'))
     sys.exit(a.func(a))

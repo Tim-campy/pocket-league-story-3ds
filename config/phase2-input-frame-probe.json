@@ -494,7 +494,7 @@
   },
   "normal_key_regression": {
     "receipt": "config/phase2-input-tests.json",
-    "sha256": "1a859a6a4db926ed95bfb8930afb1e8aed26e770dbdc777dedbed7a03bafc19a",
+    "sha256": "99b768dc97ae4a133177d888ac94384a9931468bb183d1e299c1f15512a4c243",
     "fixture_cases": 56,
     "passed": 56,
     "native_adapter_assertions": 19,
@@ -523,7 +523,7 @@
     "src/kairo/api/input.hpp": "0ad98903cf66860b1f4faed60e5f4c57dcf4423fa7360a4bf41b2654eaa68669",
     "src/kairo/common/semantic_runtime.hpp": "e1a925dfc989e2a4bf93ef2538bcdd85e7bbb2e857747b013a3cf3e9fe7b6774",
     "src/kairo/common/managed_shared_field.hpp": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f",
-    "config/phase2-input-tests.json": "1a859a6a4db926ed95bfb8930afb1e8aed26e770dbdc777dedbed7a03bafc19a"
+    "config/phase2-input-tests.json": "99b768dc97ae4a133177d888ac94384a9931468bb183d1e299c1f15512a4c243"
   },
   "source_manifest": [
     {
@@ -534,7 +534,7 @@
   "keycode_metadata_sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",
   "native_executable": {
     "path": "build/input-frame-probe/input-frame-fixtures.exe",
-    "sha256": "76e508bf1f47498772b8bcefc75f2f55c59b7a9e62c48ec8c3f423326cf47da7"
+    "sha256": "d34b41220b439a04db181dfc0b1b9083169570a423829b68683457a420c1cd24"
   },
   "original_methods": [
     "public void DecideKeyState(): complete body",

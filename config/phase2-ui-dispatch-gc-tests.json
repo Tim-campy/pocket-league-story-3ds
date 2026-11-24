@@ -9,7 +9,7 @@
   "verified_boundary_ids": [],
   "native_executable": {
     "path": "build/ui-dispatch-gc/fixture.exe",
-    "sha256": "d44b294692ec91da5e2572d369fbad81491e32d3b31cdcf813660d53335a3447"
+    "sha256": "67e32615ab5e7774a2c0d795a38f6038745c33323a2b6ac4105e257d646b5e16"
   },
   "inputs": {
     "tools/test_ui_dispatch_gc.py": "3c5e487e2cae38730cec76aa2c93f23447df164a181de82424bc5a350a196baa",

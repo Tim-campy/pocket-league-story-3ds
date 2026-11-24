@@ -14,6 +14,15 @@ sys.path.insert(0, str(ROOT/'tools'))
 from setup_mono_collation import PINNED, LGPL_PINNED
 
 
+
+def write_if_changed(path, text):
+    """Keep the file (and its modification time) when the content is the same: these
+    tables are included by every unit, and a new timestamp rebuilds the whole game
+    (found 2026-11-24: the first build after verify_phase2 --full recompiled everything)."""
+    path = Path(path)
+    if path.exists() and path.read_text(encoding='utf-8') == text: return
+    path.write_text(text, encoding='utf-8', newline='\n')
+
 def active_source(text):
     # Strip comments before preprocessing (disabled blocks contain nested #ifs).
     text = re.sub(r'/\*.*?\*/', '', text, flags=re.S)
@@ -86,7 +95,7 @@ def main():
 // Do not edit this include; change the explicit component adaptation instead.
 '''
     output = ROOT/'src/kairo/common/mono_collator_methods.inc'
-    output.write_text(notice+text+'\n', encoding='utf-8', newline='\n')
+    write_if_changed(output, notice+text+'\n')
     relative = 'mcs/class/corlib/Mono.Globalization.Unicode/MSCompatUnicodeTable.cs'
     unicode_source = ROOT/'build/deps/mono-collation'/relative
     if hashlib.sha256(unicode_source.read_bytes()).hexdigest() != PINNED[relative]:
@@ -97,7 +106,7 @@ def main():
     unicode_text = re.sub(r'\bpublic\s+', '', unicode_text)
     unicode_text = re.sub(r'\bchar\b', 'char16_t', unicode_text)
     unicode_text = re.sub(r"'\\u([a-fA-F0-9]{4})'", r'static_cast<char16_t>(0x\1)', unicode_text)
-    (ROOT/'src/kairo/common/mono_unicode_methods.inc').write_text(notice+unicode_text+'\n', encoding='utf-8', newline='\n')
+    write_if_changed((ROOT/'src/kairo/common/mono_unicode_methods.inc'), notice+unicode_text+'\n')
     # Tables below come ONLY from hash-checked upstream open-source resources.
     folder = ROOT/'build/generated/mono-collation'
     folder.mkdir(parents=True, exist_ok=True)
@@ -114,7 +123,7 @@ def main():
         lines += [','.join(str(n) for n in data[start:start+32])+',' for start in range(0,len(data),32)]
         lines.append('};')
         total += len(data)
-    (folder/'mono_collation_tables.inc').write_text('\n'.join(lines)+'\n', encoding='utf-8', newline='\n')
+    write_if_changed((folder/'mono_collation_tables.inc'), '\n'.join(lines)+'\n')
     print('Official collation table bytes:', total)
     # Separately authorized GNU Library GPLv2 data. Do not merge its attribution
     # into the MIT sources/resources above. NumericData (unused) is not emitted.
@@ -143,7 +152,7 @@ def main():
                  '// Separate license/provenance: THIRD_PARTY.md and third_party/mono-lgpl/COPYING.LIB.',
                  'static constexpr char16_t DecimalDigitRanges[][2] = {']
     digit_lines += ['{'+str(a)+','+str(b)+'},' for a,b in ranges];digit_lines.append('};')
-    (folder/'mono_decimal_digit_ranges.inc').write_text('\n'.join(digit_lines)+'\n',encoding='utf-8',newline='\n')
+    write_if_changed((folder/'mono_decimal_digit_ranges.inc'), '\n'.join(digit_lines)+'\n')
     print('Historical decimal-digit range bytes:',len(ranges)*4)
     data_lines=['// Derived from official Mono char-conversions.h, GNU Library GPL version2.',
                 '// Separate license/provenance: THIRD_PARTY.md and third_party/mono-lgpl/COPYING.LIB.']
@@ -152,7 +161,7 @@ def main():
     for name,values in arrays.items():
         data_lines.append('static constexpr char16_t '+name+'[] = {')
         data_lines += [','.join(str(v) for v in values[i:i+24])+',' for i in range(0,len(values),24)];data_lines.append('};')
-    (folder/'mono_character_tables.inc').write_text('\n'.join(data_lines)+'\n',encoding='utf-8',newline='\n')
+    write_if_changed((folder/'mono_character_tables.inc'), '\n'.join(data_lines)+'\n')
     print('Separately licensed historical BMP data bytes:',len(flags)+sum(len(v)*2 for v in arrays.values()))
 
 if __name__ == '__main__':

@@ -9,16 +9,13 @@ Resumo: o código do jogo é `src/game/` (C++ mantido à mão desde a tag
 fora de `src/game/` nada muda sem aprovação do usuário. O histórico da Fase 2 (as
 instruções antigas deste arquivo inclusive) está em `docs/history/`.
 
-## graphify (grafo de conhecimento do código, opcional)
+## graphify (grafo de conhecimento do código)
 
-Ferramenta local do usuário (`uv tool install graphifyy`), fora de `build/deps/`.
-Integração: hooks em `.claude/settings.json`, skill em `.claude/skills/graphify/`.
-
-- **Só código, local:** `GRAPHIFY_BACKEND=none graphify extract . --code-only` e depois
-  `graphify cluster-only . --no-label` (análise sintática local; nada sai da máquina).
-  Não use o passe semântico de documentos com API externa sem perguntar ao usuário.
-- **Uso:** `graphify query "<pergunta>"`, `graphify path "<A>" "<B>"`,
-  `graphify explain "<nome exato>"`; depois leia só as linhas que o grafo apontou.
-- **Depois de mudar código:** `graphify update .` (local, sem API).
-- `graphify-out/` fica fora do Git. Desde o congelamento `src/game/` entra no grafo
-  (`.graphifyignore`).
+Como e quando usar: `AGENTS.md`, seção 6 (comandos testados, o que o grafo responde bem e o
+que fica para a busca direta). Ferramenta local do usuário (`uv tool install graphifyy`,
+0.9.111), fora de `build/deps/`; hooks em `.claude/settings.json`, skill em
+`.claude/skills/graphify/`. Só análise local (`GRAPHIFY_BACKEND=none`): não use o passe
+semântico com API externa sem perguntar ao usuário. Gerar do zero:
+`GRAPHIFY_BACKEND=none graphify extract . --code-only` e `graphify cluster-only . --no-label`
+(~14 min); atualizar: `GRAPHIFY_BACKEND=none graphify update .` (~7 min). `graphify-out/`
+fica fora do Git; `.graphifyignore` diz o que entra.

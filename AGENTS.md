@@ -32,16 +32,12 @@ Vídeo, som e controles no 3DS são a próxima fase (`docs/plan-next-phases.md`)
 - **Idioma:** o do console ao iniciar (japonês ou inglês; outro idioma → inglês), com
   painel para trocar.
 
-O que já existe — **só no PC**, protótipo de plataforma (`src/main/pc_dual_screen.cpp`,
-`docs/design/phase3-prototype.md`): as duas janelas; A, B, X, Y, START e direcional
-ligados aos rótulos do jogo; circle pad como arraste de câmera (o cursor acompanha o
-centro); L/R como pinça de zoom; a barra de rótulos do jogo (`GamePad`) na tela
-inferior; diálogos do port na inferior; texto pelo teclado do PC (SDL).
-O que ainda não existe: qualquer coisa disso no 3DS (o backend do console é nulo: sem
-vídeo, som nem entrada); menus, registro de acontecimentos e painel da partida na
-inferior (exigem mudar o código do jogo; etapa 2); câmera independente do cursor;
-`swkbd`; idioma do console. As mudanças já decididas estão em
-`docs/changes-from-original.md`.
+Já existe **só no PC** (protótipo, `src/main/pc_dual_screen.cpp`, `docs/design/phase3-prototype.md`):
+duas janelas; A/B/X/Y/START/direcional ligados aos rótulos do jogo; circle pad como arraste
+de câmera; L/R como pinça de zoom; barra de rótulos (`GamePad`) e diálogos na inferior.
+Não existe: nada disso no 3DS (backend nulo: sem vídeo, som nem entrada); menus, registro e
+painel na inferior (etapa 2, muda o jogo); câmera independente; `swkbd`; idioma do console.
+Mudanças decididas: `docs/changes-from-original.md`.
 
 ### Orçamentos no New 3DS
 
@@ -106,12 +102,13 @@ usuário o que precisa mudar e por quê, antes de mudar.
 | `reference/` | **C# reconstruído** (submódulo, tag `v1.0.0-csharp-reconstruction`): a referência de comportamento | **somente leitura** |
 | `tests/routes/` | roteiros que jogam o jogo no PC (`*.route`) | sim, para roteiros novos |
 | `tests/repository/`, `tests/kairo/`, `tests/translator/` | testes do repositório, da plataforma e do runtime | não, sem aprovação |
-| `tools/` | build, execução e verificação (`tools/dev.py` é a porta de entrada) | não, sem aprovação |
-| `tools/translator-archived/` | tradutor aposentado | **somente leitura; nunca executar** |
+| `tools/` | build, execução e verificação; `tools/dev.py` é a porta de entrada e `tools/README.md` diz o que é vigente | não, sem aprovação |
+| `tools/translator-archived/`, `tools/archived/` | tradutor aposentado e ferramentas da Fase 2 que nada usa | **somente leitura; nunca executar** |
 | `config/` | dados e recibos lidos e escritos pelas ferramentas | não edite à mão |
 | `docs/` | documentação; índice em `docs/README.md` (vigente × histórico) | sim, os vigentes |
 | `docs/history/` | registro da Fase 2 (antigo AGENTS.md, congelamento, livro-razão) | somente leitura |
-| `build/` | tudo o que é local: builds, assets convertidos, saves, logs (fora do Git) | gerado |
+| `build/` | tudo o que é local (fora do Git): builds, dependências, saves e roteiros de referência, resultados; `dev.py clean` apaga só o que é seguro | gerado |
+| `graphify-out/` | grafo de conhecimento do código (local, fora do Git; seção 6) | gerado |
 
 ## 5. Ambiente e comandos
 
@@ -127,19 +124,21 @@ extraída dele ficam em `build/dev-local.json` (fora do Git) ou nas variáveis
 | `build` | build do PC (diagnóstico, Release) a partir de `src/game` | 17 s depois de editar um `.cpp`; 2 s sem mudança; 15–17 min do zero |
 | `run [--save 31\|50]` | roda no PC com as duas telas do 3DS em janelas (até 600 s); `--save 31` começa antes da 1ª partida, `--save 50` depois | build + jogo |
 | `check [--all]` | checks rápidos: mapa do coletor e raízes, código de apoio, literais, formatação dos arquivos alterados (`--all`: todos) | ~5 s, mais ~0,5 s por arquivo alterado (formatação); `--all`: ~4 min |
-| `routes` | os roteiros do jogo (87 execuções) com estresse moderado do coletor | ~3 h |
+| `routes [--smoke \| --affected] [--jobs 4]` | roteiros do jogo com estresse moderado do coletor, 4 ao mesmo tempo: `--smoke` = 10 execuções fixas (título, menu, partida, salvar/carregar, novo jogo); `--affected` = só as que executam os métodos alterados desde o último push; sem opção = conjunto completo (87 execuções) | smoke ~3 min; completo ~65 min |
 | `full` | verificação completa (`tools/verify_phase2.py --full`) | ~20 min (105 checks) |
-| `arm` | build do 3DS (`build/frozen-arm/null_game.3dsx`, backend nulo) | ~30 min do zero |
+| `arm` | build do 3DS (`build/frozen-arm/null_game.3dsx`, backend nulo) | ~30–40 min do zero |
+| `ci [COMMIT]` | resultado do CI de um commit publicado | segundos |
+| `clean [--apply]` | apaga tentativas de roteiro antigas, pacotes de revisão e capturas antigos (só lista sem `--apply`) | segundos |
 
-Recompilar no PC depois de editar um `.cpp` do jogo: ~17 s. Depois de editar um
-`.hpp` muito incluído: ~6 min (`main.AppData.hpp`, 52 unidades); veja quantos `.cpp`
-incluem um cabeçalho antes de mexer nele: `grep -l '"data.SponsorData.hpp"' src/game/*.cpp`.
-Uma pasta de build nova (clone ou worktree novo) compila tudo: ~15–17 min. Detalhes em
-`docs/notes/rebuild-times.md`. `dev.py` usa `build/claude-run-utf8.py` quando existe
-(arquivo local que fixa a página de código das mensagens do compilador); sem ele
-funciona igual.
+Recompilar: ~17 s por `.cpp`; um `.hpp` muito incluído, ~6 min (`main.AppData.hpp`, 52
+unidades; conte antes: `grep -l '"data.SponsorData.hpp"' src/game/*.cpp`); pasta de build nova,
+~15–17 min (`docs/notes/rebuild-times.md`). `build/claude-run-utf8.py` (local, opcional) fixa a
+página de código das mensagens do compilador.
 
-A máquina tem 8 GB: rode **um trabalho pesado por vez** (build, roteiros, emulador).
+A máquina tem 8 GB: rode **um trabalho pesado por vez** (build, roteiros, emulador). Durante
+os roteiros e a verificação completa, **tampa aberta e notebook na tomada**: com a tampa
+fechada, a queda para a bateria suspende a máquina (o executor refaz a execução atingida,
+mas o tempo se perde).
 
 ### Testar no PC uma mudança de tela ou de controle
 
@@ -157,36 +156,65 @@ A máquina tem 8 GB: rode **um trabalho pesado por vez** (build, roteiros, emula
   `docs/notes/route-runner-design.md`): um arquivo `tests/routes/<nome>.route`, um
   passo por linha, e `dev.py run --save 50 --route tests/routes/<nome>.route`:
 
-  ```
-  # Do título até o mapa com o save 50 e abre o menu (testado: termina no quadro 222).
-  anchor timeout=2400
-  wait frames=104
-  key SELECT
-  wait frames=36
-  key UP
-  wait frames=24
-  key SELECT
-  wait form=GameForm label_right=* timeout=600
-  dismiss until depth=1 timeout=300 optional
-  key SOFT2
-  wait depth=2 timeout=120 optional
-  wait frames=40
-  end
-  ```
+  (exemplo testado, do título até o mapa com o save 50: `docs/notes/route-runner-design.md`, seção "Exemplo")
 
-  Os roteiros apertam as teclas do jogo (`SELECT`, `UP`, `DOWN`, `LEFT`, `RIGHT`,
-  `SOFT1`, `SOFT2`), não os botões do 3DS. Para L/R há o ambiente
-  `PLS_PC_DUAL_HOLD="R:700-760,L:1000-1060"` (quadros em que o botão fica apertado).
-  O resultado de cada execução fica em `build/pc-frozen-diagnostic-release/attempts/<n>/`
-  (`game-run.stderr`: `PLS_ROUTE_*`, `PLS_UI_STATE`).
+  Os roteiros apertam teclas do jogo (`SELECT`, setas, `SOFT1`, `SOFT2`), não botões do 3DS
+  (L/R: `PLS_PC_DUAL_HOLD="R:700-760,L:1000-1060"`). Resultado de cada execução:
+  `build/pc-frozen-diagnostic-release/attempts/<n>/game-run.stderr` (`PLS_ROUTE_*`, `PLS_UI_STATE`).
 
-## 6. Como ler o código do jogo
+## 6. Como navegar e ler o código do jogo
 
-Cada classe C# virou uma `struct` em `namespace pls::game::<namespace C#>`. Cada
-método traz antes um comentário `// M:<DocID>` (o identificador do método no C#,
-ex.: `// M:game.Team.Update`). Para ver o original, procure o mesmo método em
-`reference/` (C# reconstruído). As regras completas de manutenção estão em
-`docs/maintaining-game-code.md`.
+**Para localizar, use primeiro o grafo (graphify), depois a busca e o comentário `// M:`.**
+O grafo cobre `src/` (o jogo inclusive), `reference/` (o C# reconstruído), `tools/` e os
+documentos vigentes; fica em `graphify-out/` (local, fora do Git; ~185 MB). Comandos,
+como estão instalados nesta máquina (graphify 0.9.111, só análise local, nada sai da
+máquina):
+
+```
+graphify query "GameForm SubForm menu" --budget 2000     # mapa: nós ligados às palavras (classes, métodos, linhas)
+graphify explain "<caminho>::<símbolo>" --all             # um nó e suas ligações; ex.: reference/src/Assembly-CSharp/form/SubForm.cs::SubForm.DrawMenu()
+graphify affected <id do nó> --depth 1                   # quem chama/usa o nó (no C# de reference/)
+GRAPHIFY_BACKEND=none graphify update .                   # atualizar (~7 min, mesmo para uma linha)
+```
+
+O que o teste de 2026-11-24 mostrou:
+- **Bom para:** achar onde uma classe ou método está, com linha (C++ e C#; quando o nome
+  é ambíguo o grafo lista os dois, use `caminho::símbolo` ou o id); mapa dos métodos de
+  uma classe; **quem chama um método no C# de `reference/`** (ex.: `SubForm._draw()` chama
+  `SubForm.DrawMenu()`). Do C# para o C++, use o mesmo nome (o `// M:<DocID>` liga os dois).
+- **Fraco para:** chamadas no C++ do jogo (chamadas sem qualificação, como `DrawMenu(g, 0)`,
+  não viram arestas); chamadas a outra classe por campo (`udat_.teams_[i].Draw(g)` não
+  aparece); fluxo entre formulários (`Push(menu_)` e o desenho do formulário do topo).
+  `graphify path` pode devolver um caminho errado por arestas inferidas — confira no código.
+- **Faça por busca direta** (`grep -n` em `reference/src/Assembly-CSharp/` e em `src/game/`):
+  quem lê ou escreve um campo, chamadas por campo, onde um formulário é empilhado.
+- **Atualize o grafo** antes de uma tarefa nova e depois de criar classe ou método; não
+  depois de cada edição.
+
+**Mapa das telas** (o jogo é uma pilha de formulários; o do topo recebe teclas e é desenhado):
+
+| Tela | Classe (`src/game/`) | Observação |
+|---|---|---|
+| título | `form.TitleForm` | id 1 |
+| mapa da gestão | `form.GameForm` | id 9; teclas no `_update`, desenho no `_draw` |
+| menu da gestão | `form.SubForm` tipo 3, no campo `GameForm::menu_` | criado em `GameForm::Init`; aberto por `Push(menu_)` em `GameForm::_update` quando a tecla do rótulo "Menu" (`IsPushSoftLabel(4)`) é apertada; desenhado por `SubForm::_draw` → `DrawMenu`/`DrawMenu_btmInfo` |
+| janelas, diálogos e menus | `form.SubForm` (o `type_` escolhe a janela) | id 4 |
+| partida | `form.SoccerForm`, com `game.Team`, `game.Player`, `game.Ball` | id 2; o campo é desenhado por `SoccerForm::_draw` e pelos `Draw` de mapa, times e bola |
+
+Receitas: **por onde uma tela abre** — `grep -n "Push(" ` no formulário que está embaixo
+dela; **quem desenha** — o formulário do topo: `FormManagerBase::Draw`
+(`src/kairo/common/forms.cpp`) chama `Draw` → `_draw`. Teclas do jogo (`Canvas`,
+`src/kairo/api/canvas.hpp`): `KEY_SELECT` = 1048576, `KEY_SOFT1` = 2097152
+(rótulo esquerdo), `KEY_SOFT2` = 4194304 (rótulo direito), setas 65536–524288. Parte da
+KairoLibrary é escrita à mão, sem `// M:`, em `src/kairo/common/` (`forms.cpp` — formulários e
+`FormManagerBase`; `graphics.cpp`, `canvas.cpp`, `font.cpp`, `offscreen.cpp`, `sound.cpp`,
+`storage.cpp`); o resto, traduzido, está em `src/kairo/common/generated/`.
+
+### Como ler o código
+
+Cada classe C# virou uma `struct` em `namespace pls::game::<namespace C#>`; cada método traz
+antes `// M:<DocID>` (ex.: `// M:game.Team.Update`), o mesmo método em `reference/`.
+Regras completas: `docs/maintaining-game-code.md`.
 
 | Elemento | O que é | O que não se pode quebrar |
 |---|---|---|
@@ -324,26 +352,25 @@ ainda não é chamado, nomes locais, formatação e comentários não são.
 
 ## 10. Antes de cada commit e antes de publicar
 
-Entre commits pequenos: `python tools/dev.py build` e `python tools/dev.py check`.
+- **Todo commit:** `python tools/dev.py build` e `python tools/dev.py check`.
+- **Commit que muda comportamento:** também `python tools/dev.py routes --smoke` (~3 min).
+- **Antes de cada push:** `python tools/dev.py check --all`, `python tools/dev.py full`
+  (~20 min), `python tools/dev.py routes --affected` (mudança em `.hpp`, em infraestrutura
+  ou fora de `src/game/*.cpp` vira o conjunto completo sozinha), `python tools/dev.py arm`
+  e `python tools/check_repository.py --staged`.
+- **Conjunto completo com estresse** (`python tools/dev.py routes`, ~65 min) nos marcos:
+  antes de qualquer tag; depois de mudar um cabeçalho incluído por muitas unidades; a cada
+  5 pushes ou uma vez por semana de trabalho, o que vier primeiro.
 
-Antes de publicar (push) — o ciclo do checkpoint:
-
-1. `python tools/dev.py check --all` (mapa do coletor, raízes, código de apoio,
-   literais, formatação de tudo);
-2. `python tools/dev.py full` (verificação completa);
-3. `python tools/dev.py routes` (87 execuções de roteiro; aceito quando o comando diz
-   PASS: os 85 que a reexecução do código canônico conclui também concluídos, 0 alertas
-   — as 2 restantes, `actions.route` a partir do save 95 e `dialogs-exit.route`, não
-   concluem em reexecução nem no canônico);
-4. `python tools/dev.py arm` (o 3DS compila);
-5. `python tools/check_repository.py --staged`.
+Aceite dos roteiros: o comando diz **PASS** — todo roteiro que o código anterior ao
+congelamento conclui também conclui, 0 alertas da salvaguarda. Hoje: 86 de 87 execuções
+concluem; só `dialogs-exit.route` não, porque termina fechando o jogo (igual no original).
+O quadro exato de cada passo varia alguns quadros entre execuções (a carga de assets
+acontece em tempo real; `docs/notes/route-speed-2026-11-24.md`): é normal.
 
 Relate o resultado de cada passo com números. Se um passo falhar, não publique: relate.
-Uma falha intermitente conhecida de um roteiro (tempo esgotado na parada de threads
-do coletor, `tests/routes/saves.route`) se repete uma vez com `dev.py routes --resume`;
-se falhar de novo, é falha. A máquina não pode dormir durante os roteiros (uma
-suspensão trava o quadro em curso e o roteiro falha): `dev.py routes` e `dev.py full`
-pedem ao Windows que não suspenda enquanto rodam.
+Uma falha intermitente conhecida (tempo esgotado na parada de threads do coletor) se
+repete uma vez com `dev.py routes --resume`; se falhar de novo, é falha.
 
 ### Git
 
@@ -365,7 +392,7 @@ sempre com os resultados negativos e o que depende do usuário.
 
 ## 12. Onde procurar mais
 
-- `docs/README.md` — índice: o que é vigente e o que é histórico.
+- `docs/README.md` — índice: o que é vigente e o que é histórico; `tools/README.md` — as ferramentas.
 - `docs/maintaining-game-code.md` — receitas de edição (classe, campo, estático,
   literal, chamada à plataforma, delegate), as macros e os erros comuns.
 - `docs/changes-from-original.md`, `docs/backlog.md`, `docs/plan-next-phases.md`.

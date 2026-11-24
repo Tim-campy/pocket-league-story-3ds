@@ -1,9 +1,13 @@
 # graphify (knowledge graph of the code, local AST only; output in graphify-out/, not in Git).
-# src/game/ and src/kairo/common/generated/ are readable, maintained sources since
-# v1.0.0-faithful and belong in the graph.
-# Local-only content (already ignored by .gitignore; repeated for --no-gitignore runs).
+# In the graph: src/ (the game in src/game/ included), reference/ (the reconstructed C#),
+# the current tools/ and docs/. Out: local and generated content, history, archived tools.
 build/
 original/
 assets/
 data/
 graphify-out/
+config/
+docs/history/
+tools/translator-archived/
+tools/archived/
+reference/.git/

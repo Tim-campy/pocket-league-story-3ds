@@ -57,3 +57,24 @@ linha da tentativa; `--ui-trace` registra `PLS_UI_STATE=` a cada mudança.
 - `PLS_PC_PRINT_EXCEPTIONS=1` (ambiente): registra o local de criação de cada
   exceção gerenciada (`PLS_EXCEPTION_SITE=`), útil quando o jogo captura e só
   mostra o diálogo genérico de erro.
+
+## Exemplo (testado em 2026-11-24)
+
+`python tools/dev.py run --save 50 --route <arquivo>`; termina no quadro 222.
+
+```
+# Do título até o mapa com o save 50 e abre o menu (testado: termina no quadro 222).
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait form=GameForm label_right=* timeout=600
+dismiss until depth=1 timeout=300 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=40
+end
+```

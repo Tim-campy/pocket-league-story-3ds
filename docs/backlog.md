@@ -69,7 +69,7 @@ Registrado em 2026-11-11, por pedido do usuário. Não tratar agora.
 
 O emissor atual gera identificadores em hash para tipos, métodos, campos e
 arquivos (`cs_57400ccf89951052`, `game_generated_type_b728593e3dcffe31.cpp`).
-O critério 5 do congelamento (`AGENTS.md`, seção 4) exige nomes originais de
+O critério 5 do congelamento (`docs/history/AGENTS-phase2.md`, seção 4) exigia nomes originais de
 tipos, membros e parâmetros. Na geração legível, esses hashes precisam virar
 os nomes do C# reconstruído (com tratamento de sobrecargas, tipos aninhados,
 genéricos e colisões com palavras reservadas do C++), um arquivo por classe.
@@ -95,7 +95,7 @@ de média com backend nulo, contra 50 ms de orçamento.
 
 Trabalho de runtime posterior, provável requisito para o 3DS antigo. Pode
 entrar depois do congelamento sem alterar o código do jogo, mantendo a
-interface usada pelo código gerado (`AGENTS.md`, seção 5, regra 9).
+interface usada pelo código do jogo (decisão de 2026-11-13; hoje toda mudança no runtime precisa de aprovação, `AGENTS.md`, seção 2).
 
 - **Plano:** [`docs/notes/gc-reform-plan.md`](notes/gc-reform-plan.md) — heap
   por classes de tamanho em blocos, marcas em bitmap, tabela de páginas,
@@ -131,3 +131,29 @@ membro exige que a unidade inclua `java.util.Vector.hpp` (o tipo derivado comple
 o que o empacotador do tradutor não sabia decidir. Depois do congelamento: incluir o
 cabeçalho onde falta e trocar as chamadas; o sufixo `_2` some se `Vector<T>` e
 `Vector` forem fundidos (o C# usa `Vector` só como apelido de `Vector<object>`).
+
+### Forma mais curta para `api_call` (proposta de 2026-11-23, não aplicada)
+
+O jogo tem 10.145 chamadas `pls::diagnostic::api_call([&]() -> decltype(auto) { return EXPR; })`
+em 140 arquivos de `src/game/` (e 252 em `src/kairo/common/generated/`), todas nesta
+forma exata. Proposta: uma macro variádica em `src/kairo/common/diagnostic_profile.hpp`
+
+```cpp
+#define PLS_API(...) ::pls::diagnostic::api_call([&]() -> decltype(auto) { return __VA_ARGS__; })
+```
+
+e a troca mecânica `pls::diagnostic::api_call([&]() -> decltype(auto) { return X; })` →
+`PLS_API(X)`. Antes/depois:
+
+```cpp
+cost_ = pls::diagnostic::api_call(
+    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(array[num++]); });
+cost_ = PLS_API(kl_lang::JInteger::ParseInt(array[num++]));
+```
+
+Prova de equivalência: a macro se expande para os mesmos tokens (mesma lambda, mesma
+captura, mesmo `decltype(auto)`), então (1) a sequência de tokens depois do
+pré-processador é idêntica (`cl /P` antes e depois, comparada com
+`tools/cpp_tokens.py`) e (2) os objetos de cada unidade são idênticos em código e
+dados no PC e no ARM (`tools/compare_objects.py`, como na formatação de 2026-11-23).
+Custo: uma macro no runtime (decisão do usuário) e um commit grande, só de forma.

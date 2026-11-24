@@ -22,7 +22,7 @@ e +151 corpos. Houve uma retirada de qualificação: `JMath.Sin(-0)` retorna +0
 no juiz Mono Windows e −0 no C++; o resultado Android continua UNKNOWN.
 Os juízes anterior e atual diferem, portanto não se afirma comparação homogênea
 de verificações. A implementação não foi normalizada para esconder a diferença.
-Prova por IDs: `config/phase2-checkpoint-comparison.json`.
+Prova por IDs: `docs/history/config/phase2-checkpoint-comparison.json`.
 
 | Classificação | Total | verified | implemented | todo |
 |---|---:|---:|---:|---:|

@@ -1,7 +1,7 @@
 # Consolidação antes do diagnóstico de CPU
 
 Em 2026-11-10, as alterações locais posteriores a `b2acf47` passaram na
-verificação completa: **108/108 checks**, com recibos renovados e PROGRESS.md
+verificação completa: **108/108 checks**, com recibos renovados e docs/history/PROGRESS-phase2.md
 regenerado. Comando:
 
 ```powershell

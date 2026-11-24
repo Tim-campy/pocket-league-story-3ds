@@ -17,7 +17,7 @@ comparador foi relaxada. Na nova tentativa, a compilação levou 87,790052 s e a
 execução nativa 26,589302 s. O diferencial manteve 2617/2618 observações e a
 diferença de plataforma já registrada. A suíte completa foi reiniciada.
 
-O gerador de PROGRESS.md foi corrigido para não declarar ausência do SDK,
+O gerador de docs/history/PROGRESS-phase2.md foi corrigido para não declarar ausência do SDK,
 ausência do marco de partida completa ou zero métodos executados. Estados e
 contagens continuam provenientes dos recibos: 1768/1958 métodos compilados,
 751 em runs, 374 métodos portáveis compilados/exercitados, 252 símbolos da

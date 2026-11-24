@@ -20,7 +20,7 @@ divergente. A raiz permanece compilada/exercitada e sem verificação estrita.
 
 O exame estático registrou a importação sin no Mono Android, mas não mede o
 resultado da execução no aparelho. O sinal efetivo no Android é UNKNOWN.
-Recibos: config/phase2-portable-differential.json e
+Recibos: docs/history/config/phase2-portable-differential.json e
 config/phase2-android-math.json.
 
 ## Campo de referência nula passado por ref
@@ -43,5 +43,5 @@ não foi adotada no oráculo canônico. O flag efetivo e a ordem de exceções d
 Android são UNKNOWN. Não se forma uma referência C++ nula para imitar a VM.
 
 Fonte oficial, hashes e controle completo em docs/notes/mono-ref-null-order.md;
-recibo em config/phase2-ref-lowering-fixtures.json. Os números dos casos
+recibo em docs/history/config/phase2-ref-lowering-fixtures.json. Os números dos casos
 identificam a revisão atual do harness; os DocIDs identificam os métodos.

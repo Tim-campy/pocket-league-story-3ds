@@ -181,9 +181,9 @@ def game_evidence(ledger):
     if report.get('game_executed_methods',0) or report.get('executed_methods',0):raise ValueError('Game execution requires boot-specific proof, currently absent')
     mapped,unmapped=map_game_identities([methods[i] for i in sorted(compiled)],ledger)
     source_declarations=None
-    diagnostic_path=ROOT/'config/phase2-game-diagnostics.json'
+    diagnostic_path=ROOT/'docs/history/config/phase2-game-diagnostics.json'
     if diagnostic_path.exists():
-        diagnostic=load('config/phase2-game-diagnostics.json')
+        diagnostic=load('docs/history/config/phase2-game-diagnostics.json')
         # Combined translation also binds Kairo helpers; the declaration census
         # describes only Game source and retains its own complete input hashes.
         original_manifest={r['path']:r['sha256'] for r in report['source_manifest'] if r['path'].startswith('src/Assembly-CSharp/')}
@@ -214,7 +214,7 @@ def read_csv(name):
 
 def translator_evidence():
     emitted = load('config/phase2-translation.json')
-    differential = load('config/phase2-portable-differential.json')
+    differential = load('docs/history/config/phase2-portable-differential.json')
     commit = subprocess.check_output(['git','-C',str(ROOT/'reference'),'rev-parse','HEAD'],text=True).strip()
     if commit != REFERENCE or emitted['reference_commit'] != commit:
         raise ValueError('Reference commit differs from Phase2 evidence')
@@ -631,7 +631,7 @@ def refresh():
     write_csv('config/boundary.csv',boundary)
     write_csv('config/assets.csv',assets)
     write_csv('config/translation.csv',translation)
-    (ROOT/'config/phase2-progress.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
+    (ROOT/'docs/history/config/phase2-progress.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     return report
 
 

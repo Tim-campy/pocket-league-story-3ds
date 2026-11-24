@@ -245,14 +245,14 @@ def main():
         # Generated proof receipts in config/ are excluded from the snapshot.
         return dict(code=group_digest(snapshot if snapshot is not None else code_snapshot(),groups_for(name)),apk=EXPECTED,managed=managed_hash,producer=producer)
     # After the freeze (v1.0.0-faithful, 2026-11-23) the translator is archived and these
-    # checks go with it (docs/notes/freeze-audit.md, section 7; confirmed by rehearsal 3 and
+    # checks go with it (docs/history/freeze-audit.md, section 7; confirmed by rehearsal 3 and
     # by a keep-going run on the frozen tree). They validated the translation; the frozen
     # result stays covered by the route set and the remaining checks.
     frozen=(ROOT/'tools/translator-archived').is_dir() and not (ROOT/'translator').exists()
     archived=[name for name,_ in commands if name in ARCHIVED_AT_FREEZE] if frozen else []
     if frozen:
         commands=[(name,command) for name,command in commands if name not in ARCHIVED_AT_FREEZE]
-        # Checks of the maintained game code (AGENTS.md, rule 9a): collector map and roots,
+        # Checks of the maintained game code (AGENTS.md, section 10): collector map and roots,
         # support code of every class, text literals against the reconstructed C#.
         commands+=[('game-gc-map-and-roots',['tests/repository/test_gc_field_tracing.py','src/game','src/kairo/common/generated']),
                    ('game-support-code',['tools/check_readable_support.py']),

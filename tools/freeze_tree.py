@@ -1,4 +1,4 @@
-"""Freeze step: replace the generated trees by the readable sources (docs/notes/freeze-audit.md, section 4).
+"""Freeze step: replace the generated trees by the readable sources (docs/history/freeze-audit.md, section 4).
 
 Copies every unit of a readable diagnostic tree (translator/readable.py
 diagnostic) -- .cpp, .hpp and the .inc parts of split units -- into src/game and

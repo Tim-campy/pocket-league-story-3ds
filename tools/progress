@@ -1,3 +1,12 @@
 #!/usr/bin/env python3
-from progress import main
-main()
+"""Frozen at v1.0.0-faithful (2026-11-23).
+
+The Phase 2 translation ledger (PROGRESS.md and its receipts) is a record now:
+docs/history/PROGRESS-phase2.md and docs/history/config/. The generator
+(tools/progress.py, tools/update_phase2_progress.py) is kept because other tools
+import helpers from it, but the ledger is not regenerated after the freeze.
+"""
+import sys
+sys.stderr.write('tools/progress: o livro-razão da Fase 2 foi congelado em v1.0.0-faithful; '
+                 'o registro está em docs/history/PROGRESS-phase2.md e docs/history/config/.\n')
+sys.exit(2)

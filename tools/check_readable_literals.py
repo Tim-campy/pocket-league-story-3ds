@@ -1,5 +1,7 @@
 """Every text literal of the readable code equals a C# literal, character by character.
 
+Texts added after the freeze must be listed in config/added-literals.json.
+
 Decodes each u"..." literal of a readable tree (C++ escapes, adjacent pieces
 joined) and each string literal of the reconstructed C# (regular and verbatim),
 and requires every emitted literal to be, exactly, a C# literal of the same
@@ -107,7 +109,14 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--readable', type=Path, help='Readable tree with game/ and include/generated/ (default after the freeze: src/game and src/kairo/common/generated)')
     a = p.parse_args()
-    report = dict(checked=0, by_file=0, by_assembly=0, folded=0, synthesized=0, mismatches=[])
+    report = dict(checked=0, by_file=0, by_assembly=0, folded=0, synthesized=0, added=0, mismatches=[])
+    # After the freeze: texts decided by the user, each recorded in docs/changes-from-original.md.
+    added_file = ROOT / 'config/added-literals.json'
+    added = {}
+    if added_file.is_file():
+        for row in json.loads(added_file.read_text(encoding='utf-8'))['literals']:
+            if not row.get('change'): sys.exit(f'{added_file}: every literal needs "change" (its entry in docs/changes-from-original.md)')
+            added[row['text']] = row['change']
     roots = [ROOT / 'reference/src/Assembly-CSharp', ROOT / 'reference/src/KairoLibrary']
     sources = {path: cs_literals(path.read_text(encoding='utf-8-sig')) for root in roots for path in root.rglob('*.cs')}
     everything = set(v for values in sources.values() for v in values)
@@ -127,6 +136,7 @@ def main():
                 elif literal in everything: report['by_assembly'] += 1
                 elif literal in SYNTHESIZED: report['synthesized'] += 1
                 elif concatenation(literal, own or everything): report['folded'] += 1
+                elif literal in added: report['added'] += 1
                 else: report['mismatches'].append(dict(unit=f'{unit_dir}/{unit.name}', literal=literal))
     report['status'] = 'PASS' if not report['mismatches'] else 'FAIL'
     out = dict(report, mismatches=report['mismatches'][:40], mismatch_count=len(report['mismatches']))

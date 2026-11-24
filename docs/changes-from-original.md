@@ -1,9 +1,11 @@
 # Mudanças em relação ao original
 
 Lista do que o port faz de forma diferente do Pocket League Story original
-(Android). Cada item tem a decisão do usuário que o autoriza e a etapa em que
-entra. Antes do congelamento, a lógica do jogo não muda (`AGENTS.md`); itens
-que tocam o código traduzido esperam o congelamento.
+(Android) e da tag `v1.0.0-faithful`, que o reproduz. Cada item tem a decisão do
+usuário que o autoriza e a etapa em que entra. Uma mudança de comportamento no
+código do jogo entra aqui no mesmo commit que a faz (`AGENTS.md`, seção 9), com o
+commit, o que muda, a decisão e como verificar. Mudanças só de forma (formatação,
+comentários, nomes locais) não entram: não mudam o código de máquina.
 
 | Item | O que muda | Decisão | Etapa / estado |
 |---|---|---|---|

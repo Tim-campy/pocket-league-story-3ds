@@ -67,7 +67,7 @@ A conversão para rastreamento está integrada e em validação. Pico comparativ
 - Memória e frame time do menu PC têm medição parcial em Release; cobertura completa e medições 3DS continuam pendentes. O 3DS antigo não foi descartado.
 - SDL2 SDK preparado. Toolchain ARM11 e Azahar inventariados em config/phase2-arm11-tools.json para o benchmark autorizado; isso não comprova desempenho no hardware nem implementação do backend gráfico 3DS.
 
-Documentos: [fronteira](docs/boundary.md), [C#](docs/csharp-subset.md), [assets](docs/assets.md), [toolchain](docs/toolchain.md), [serviços offline](docs/notes/offline-behavior.md).
+Documentos: [fronteira](docs/boundary.md), [C#](docs/history/csharp-subset.md), [assets](docs/assets.md), [toolchain](docs/toolchain.md), [serviços offline](docs/notes/offline-behavior.md).
 
 ## Evidência atual da Fase 2
 
@@ -86,7 +86,7 @@ translated significa apenas que o corpo C++ gerado compilou em objeto, com produ
 O vínculo do jogo usa tipo declarante, nome, todos os tipos de parâmetros e retorno; construtores retornam System.Void. Não há vínculo só por aridade. Correspondências ambíguas, assinaturas abertas e DocIDs sem identidade IL única ficam registrados como UNKNOWN no recibo. Métodos gerados/auxiliares do IL não são contados como traduzidos por haver uma declaração fonte relacionada.
 Provas de framework/SDL, fontes e áudio não equivalem a bindings do jogo. Somente IDs explícitos exercitados por um oráculo de API promovem a fronteira. Alterações transitórias em produtores/headers/gerados suspendem a publicação inteira; preserva-se o último conjunto consistente de documentos/CSVs até os recibos serem regenerados.
 
-Recibos e hashes conferidos pelo gerador: [resumo](config/phase2-progress.json), [portáveis](config/phase2-translation.json), [diferencial](config/phase2-portable-differential.json), [imagens](config/phase2-image-tests.json).
+Recibos e hashes conferidos pelo gerador: [resumo](docs/history/config/phase2-progress.json), [portáveis](config/phase2-translation.json), [diferencial](docs/history/config/phase2-portable-differential.json), [imagens](config/phase2-image-tests.json).
 
 ## Contratos culturais e fundação
 

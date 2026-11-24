@@ -24,7 +24,7 @@ em `surface.GamePad.OnTouchEvent(TouchEvent)`. Seu primeiro bloqueio de lowering
 era `GamePad.SetLayoutMode` → `IApplication.SetScaleRatio(Single)`. O setter
 nativo já existia; foi acrescentado o binding exato, correspondente à atribuição
 de `fixedScaleRatio_` no C# original. A nova geração normal emitiu 1.761 corpos,
-sem promoção a compilados; `PROGRESS.md` conserva os 1.760 do checkpoint.
+sem promoção a compilados; `docs/history/PROGRESS-phase2.md` conserva os 1.760 do checkpoint.
 
 ## Guarda privada na API ausente
 

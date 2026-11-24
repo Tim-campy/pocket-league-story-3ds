@@ -1,182 +1,225 @@
-# Manter o C++ legível do jogo (depois do congelamento)
+# Manter o código do jogo (`src/game/`)
 
-Estado: **preparação (critério 5, itens C5b e C5c).** Antes do congelamento,
-`src/game/` é saída do tradutor e não se edita à mão. No congelamento, o modo
-legível passa a gerar `src/game/` uma última vez (C6b). A partir daí, este código
-é mantido à mão, e as regras abaixo valem para cada mudança.
+Vale para o código como está na tag `v1.0.0-faithful` e depois dela: C++17 formatado
+por `src/game/.clang-format`, mantido à mão. As regras gerais e os limites do agente
+estão em `AGENTS.md`; aqui estão as receitas e o porquê de cada convenção.
 
-## Cabeçalho dos arquivos
-
-Hoje cada unidade legível abre com:
-
-```
-// GENERATED (readable mode) by translator/Translator.cs from the reconstructed C#. Do not edit.
-```
-
-No congelamento, a geração final troca esse cabeçalho por:
-
-```
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on <data do congelamento>; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
-```
-
-O comentário `// M:<DocID>` antes de cada método continua: liga o C++ ao método
-C# de origem e serve para comparar com a referência.
-
-## O que o código pressupõe (não quebrar)
-
-### Coletor de lixo
-
-- **Campos de referência.** Todo campo que guarda uma referência gerenciada
-  (`pls::cs::Ref<...>`, `String`, `Array<...>`, `Delegate<...>`) precisa aparecer
-  em `trace_edges` da classe. Um campo esquecido em `trace_edges` deixa o
-  coletor liberar um objeto ainda em uso.
-- **Estáticos de referência.** Toda variável estática que guarda uma referência
-  entra no `GcRootProvider` da classe.
-- **Conferência automática:**
-  `python tests/repository/test_gc_field_tracing.py src/game` (obrigatória
-  depois do congelamento; faz parte da verificação completa).
-- **Só `trace_edges` (A6, 2026-11-18).** O coletor (`src/runtime/tracing_gc.cpp`)
-  marca a partir das raízes e libera o que não alcança; não há outro gancho por
-  classe. `release_edges` e o build histórico com `shared_ptr`
-  (`PLS_TRACING_GC=0`) foram removidos por decisão do usuário (2026-11-17, A6),
-  depois de a verificação completa confirmar que nada dependia deles.
-  `pls::cs::release_value` continua existindo só para liberações explícitas e
-  imediatas (ex.: `Offscreen::cleanup`), que não dependem da coleta.
-- **Ponteiros fora do heap gerenciado.** Uma referência guardada num objeto C++
-  comum (não `pls::cs::Object`) não é vista pelo coletor, a não ser que esteja na
-  pilha. Use um objeto gerenciado com `trace_edges` ou uma raiz.
-
-### Verificações (obrigatórias)
-
-- **Nulo:** `require(x)->campo` e `nonnull(...)` lançam a
-  `NullReferenceException` do C#. Uma chamada `objeto->Método(...)` faz a
-  checagem do receptor **depois** de avaliar os argumentos, como o C#.
-- **Limites:** `a[i]`, `get_Item` e `set_Item` checam o índice. `set_Item`
-  continua para arrays de referência porque também checa a covariância
-  (`ArrayTypeMismatchException`).
-- Nenhuma verificação é removida sem aprovação do usuário (regra do projeto).
-
-### Números
-
-- `pls::cs::Int32` tem estouro com volta (`unchecked` do C#), e `/` e `%` lançam
-  as exceções do C#. Não troque por `int` puro: o estouro de `int` é indefinido
-  em C++.
-- `pls::cs::Single` guarda um `float`. A aritmética de `float` é avaliada em
-  binary64 (`FloatEval`) e estreitada ao guardar, ao passar como argumento e ao
-  retornar (regra Mono ARM, `docs/notes/mono-arm-float-rule.md`). Mantenha o
-  tipo `Single` ou `float` nos armazenamentos; não acumule em `double`.
-- Compile sempre com `/fp:strict` (PC) e sem `-ffast-math` (3DS).
-- Teste: `python tools/test_readable_numeric.py` e
-  `python tools/test_arm_float_model.py`.
-
-### Ordem de avaliação
-
-- O C++ não garante a ordem de avaliação dos argumentos nem dos dois lados de
-  `+`, `<` etc. Onde a ordem importa (chamadas, exceções), o código usa
-  temporários nomeados (`cs_receiver`, `cs_arg0`, ...) ou lambdas imediatos.
-  Ao editar, mantenha a ordem do C#: avalie em variáveis antes de combinar.
-
-### Exceções e `finally`
-
-- `pls::cs::run_finally(corpo, finally)` reproduz o `finally` do C#, inclusive
-  quando o `finally` lança durante outra exceção. Não troque por destrutor (RAII)
-  sem garantir que o bloco nunca lança: um destrutor que lança durante outra
-  exceção encerra o programa.
-- `catch (const pls::cs::Exception& e)` pega toda exceção gerenciada;
-  `pls::cs::capture_exception(e)` dá o objeto do C# (`Exception`) e registra a
-  exceção no diagnóstico.
-
-### Inicialização de tipos
-
-- `Classe::ensure_initialized()` reproduz o construtor estático do C# na ordem
-  do original. Não remova nem reordene sem rodar as fixtures de inicialização
-  (`python tools/test_type_init.py`).
-
-### Código de apoio das classes
-
-Cada classe traduzida traz, no cabeçalho, duas linhas que não são lógica do jogo e sim
-o que o runtime precisa para reproduzir o C#
-(`PLS_MANAGED_CLASS` e `PLS_DELEGATE_SLOTS`, definidas em
-`src/kairo/common/semantic_runtime.hpp`):
+Cada arquivo abre com a linha de origem:
 
 ```cpp
-struct TitleForm : MyFormBase, pls::kairo::TouchValueAccessor {
-PLS_MANAGED_CLASS("form.TitleForm", TitleForm, MyFormBase, pls::kairo::TouchValueAccessor)
-PLS_DELEGATE_SLOTS(MyFormBase,
-    {"Update", "M:form.TitleForm.Update"},
-    {"Draw", "M:form.TitleForm.Draw(kairo.unity.ui.Graphics)"});
-...
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 ```
 
-- `PLS_MANAGED_CLASS(nome C#, Classe, Base, interfaces...)`: o nome do tipo no C#
-  (`GetType()`, mensagens) e a compatibilidade de referência usada por `is`, `as` e
-  pelos casts (a classe, a cadeia de bases e as interfaces que ela implementa).
-- `PLS_DELEGATE_SLOTS(Base, {slot, método}, ...)`: para cada método virtual que a classe
-  redefine, o método C# que um delegate criado a partir dele representa (igualdade e
-  remoção de delegates, `+=`/`-=`). Os slots que a classe não redefine vão para a base;
-  uma classe sem redefinições não tem a linha.
+Cada método traz antes o comentário `// M:<DocID>`, que o liga ao método do C# em
+`reference/` (ex.: `// M:game.Team.Update` ↔ `reference/src/Assembly-CSharp/game/Team.cs`,
+método `Update`). Mantenha o comentário; num método novo, invente um DocID no mesmo
+formato (`M:game.Team.NovoMetodo(System.Int32)`).
 
-**Ao mudar uma classe:**
+## 1. Receitas
 
-- classe nova: escreva o `PLS_MANAGED_CLASS` com o nome C#, a classe, a base e as
-  interfaces;
-- base ou interface nova: atualize o `PLS_MANAGED_CLASS`;
-- redefinição nova de um método virtual (`override`): acrescente a linha em
-  `PLS_DELEGATE_SLOTS` (crie a tabela se for a primeira).
+### Classe gerenciada nova
 
-`python tools/check_readable_support.py` falha se uma classe não tiver o
-`PLS_MANAGED_CLASS` com o próprio nome, ou se um `override` de método C# não estiver
-na tabela. Os ganchos do runtime (`trace_edges`, `memory_ranges` e semelhantes) não
-são métodos C# e ficam fora da tabela.
+`src/game/game.MinhaClasse.hpp`:
 
-### Threads e memória (suposição de um núcleo)
+```cpp
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
+#pragma once
+#include "game_generated_forward.hpp"
 
-O caminho rápido da inicialização de tipos (`TypeInitFlag::ready()`,
-`src/kairo/common/managed_type_init.hpp`) lê o indicador "tipo pronto" com uma
-leitura comum, sem barreira de memória. Isso só é correto onde uma thread que vê
-o indicador também vê as escritas do inicializador. A escolha é feita por
-`PLS_TYPE_INIT_UNFENCED_READ`, uma por alvo:
+namespace pls::game {
+namespace game {
 
-| Alvo | Caminho | Por que é correto |
+struct MinhaClasse : pls::cs::Object {
+    void trace_edges(const pls::cs::EdgeVisitor& visitor) const override;
+    PLS_MANAGED_CLASS("game.MinhaClasse", MinhaClasse, pls::cs::Object)
+    pls::cs::String nome_{};
+    pls::cs::Int32 valor_{};
+    static void create_init(pls::cs::Ref<MinhaClasse> self);
+    static pls::cs::Ref<MinhaClasse> create();
+    pls::cs::Int32 Dobro();
+};
+} // namespace game
+}
+```
+
+`src/game/game.MinhaClasse.cpp`:
+
+```cpp
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
+#include "game.MinhaClasse.hpp"
+
+namespace pls::game {
+namespace game {
+
+void MinhaClasse::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
+    pls::cs::Object::trace_edges(visitor);          // numa classe derivada: Base::trace_edges
+    pls::cs::trace_value(nome_, visitor);
+}
+
+void MinhaClasse::create_init(pls::cs::Ref<MinhaClasse> self) {
+    // 1) inicializadores de campo, 2) construtor da base, 3) corpo (ordem do C#)
+    PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.MinhaClasse.#ctor", game);
+    { self->nome_ = literal(u"..."); }
+}
+
+// M:game.MinhaClasse.#ctor
+pls::cs::Ref<MinhaClasse> MinhaClasse::create() {
+    auto self = pls::cs::make_ref<MinhaClasse>();
+    MinhaClasse::create_init(self);
+    return self;
+}
+
+// M:game.MinhaClasse.Dobro
+pls::cs::Int32 MinhaClasse::Dobro() {
+    PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.MinhaClasse.Dobro", game);
+    { return valor_ * 2; }
+}
+} // namespace game
+}
+```
+
+O build encontra o `.cpp` sozinho (`CMakeLists.txt` usa `GLOB` em `src/game/*.cpp`).
+Para um modelo real e curto, veja `src/game/data.SponsorData.*`. Classe que herda de
+outra do jogo: `PLS_MANAGED_CLASS("ns.Classe", Classe, Base, Interface1, ...)`,
+`Base::trace_edges(visitor)` no começo de `trace_edges` e
+`Base::create_init(pls::cs::static_pointer_cast<Base>(self))` em `create_init`.
+
+### Campo
+
+- **Valor** (`Int32`, `Single`, `bool`, `Int64`...): declare com `{}`; nada mais.
+- **Referência** (`Ref<...>`, `String`, `Array<...>`, `Delegate<...>`, `List`,
+  `Dictionary`...): declare com `{}` **e** acrescente
+  `pls::cs::trace_value(campo_, visitor);` no `trace_edges` da classe.
+
+### Estático
+
+O valor mora num armazenamento do `.cpp`; o acesso passa por uma função que garante a
+inicialização do tipo; referências entram nas raízes:
+
+```cpp
+// .hpp
+static pls::cs::Array<pls::cs::String>& nomes();
+// .cpp
+static StringArray MinhaClasse_nomes_storage{};
+static PLS_NOINLINE void cs_init_<hash>_slow(pls::cs::TypeInitFlag& flag) {   // já existe na classe
+    static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor) {
+        pls::cs::trace_value(MinhaClasse_nomes_storage, visitor);             // + esta linha
+    });
+    static pls::cs::TypeInitState state;
+    state.run("game.MinhaClasse", flag, []() { /* inicializadores estáticos, na ordem do C# */ });
+}
+StringArray& MinhaClasse::nomes() {
+    MinhaClasse::ensure_initialized();
+    return MinhaClasse_nomes_storage;
+}
+```
+
+Classe sem estáticos ainda não tem `ensure_initialized`/`cs_init_*`: copie o padrão de
+`data.SponsorData.cpp` (o nome `cs_init_<hash>_slow` é só um identificador único do
+arquivo; um nome legível serve). Constantes (`const` do C#) são
+`static constexpr pls::cs::Int32 NOME = 1;` e não precisam de nada disso.
+
+### Literal
+
+- Texto: `literal(u"...")` (UTF-16; cria a string uma vez). Texto visível novo passa
+  pelo mecanismo de idioma (`AGENTS.md`, seção 7) e precisa de decisão do usuário.
+  O check de literais aceita só textos do C# reconstruído e os listados em
+  `config/added-literals.json` (cada um com a entrada correspondente em
+  `docs/changes-from-original.md`).
+- Array constante: `IntArray::from({4, 2})`; de referências, `StringArray::from({...})`.
+
+### Chamada à plataforma ou à KairoLibrary
+
+Embrulhe em `api_call` (mede o tempo no diagnóstico; não muda o resultado):
+
+```cpp
+pls::cs::Int32 n = pls::diagnostic::api_call(
+    [&]() -> decltype(auto) { return kl_lang::JInteger::ParseInt(texto); });
+```
+
+Os apelidos `kl_*` são `namespace` declarados no topo de cada `.cpp`
+(ex.: `namespace kl_lang = pls::generated::java::lang;`). A API disponível está nos
+cabeçalhos de `src/kairo/common/generated/` (KairoLibrary) e `src/kairo/api/`
+(plataforma); você chama, não muda.
+
+### Delegate
+
+- Método estático:
+  `pls::cs::Delegate<void()>::from_static("M:ns.Classe.Metodo", []() { Classe::Metodo(); })`.
+- Lambda (`() => ...` do C#):
+
+  ```cpp
+  pls::cs::Delegate<void()>::from_closure(
+      pls::cs::raw(this), std::string("M:ns.Classe.Metodo:<id único>"),
+      [self = this]() -> void { require(self->alvo_)->Fazer(); },
+      this);        // <- todo valor gerenciado usado pela lambda, de novo aqui
+  ```
+
+  O identificador (`raw(this)` + texto) reproduz a igualdade de delegates do C#
+  (`+=`/`-=`). **A lista final é o que o coletor enxerga**: uma `Ref` capturada só na
+  lambda C++ não é rastreada.
+- Método de instância (`new Delegate(obj.Metodo)`): use `Delegate<...>::bind(alvo,
+  "M:...", [cs_weak = pls::cs::DelegateCapture<T>(alvo)](args...) { ... })`, como em
+  `form.GameForm.cpp` (`RenderGameScreen`).
+
+## 2. O que cada macro e cada bloco faz
+
+| Macro ou forma | Efeito | Definição |
 |---|---|---|
-| Nintendo 3DS | sem barreira (`unfenced`) | todas as threads gerenciadas rodam no núcleo da aplicação; um núcleo só não reordena as próprias escritas para si |
-| PC x86/x64 | sem barreira (`unfenced`) | o x86 não reordena leituras entre si (TSO); o `atomic_signal_fence` impede o compilador de antecipar as leituras |
-| Qualquer outro (ARM com vários núcleos, Android, etc.) | `acquire` | leitura com ordem de aquisição; é o caminho portátil |
+| `PLS_MANAGED_CLASS(nome C#, Classe, Base, interfaces...)` | identidade do tipo: `GetType()`, `is`/`as`, casts, mensagens | `src/kairo/common/semantic_runtime.hpp` |
+| `PLS_DELEGATE_SLOTS(Base, {slot, "M:..."}, ...)` | para cada `override`, o método C# que um delegate criado a partir dele representa (igualdade e remoção de delegates). Slots não redefinidos vão para a base; classe sem `override` não tem a linha | idem |
+| `PLS_METHOD_SCOPE(assembly, DocID, área)` | build de diagnóstico: conta a chamada, mede o tempo, alimenta a cobertura dos roteiros e a salvaguarda de métodos inalcançáveis. No build normal some | `src/kairo/common/diagnostic_profile.hpp` |
+| `pls::diagnostic::api_call(lambda)` | build de diagnóstico: mede o tempo da chamada à plataforma; senão só chama | idem |
+| `pls::cs::GcCallSite gc_site("M:...")` | marca a origem de uma coleta explícita (`GC.Collect` do jogo) para a classificação do benchmark | `semantic_runtime.hpp` |
+| `PLS_NOINLINE` | mantém fora de linha o caminho lento da inicialização de tipos | `managed_type_init.hpp` |
+| blocos `{ auto cs_target = ...; auto cs_index = ...; auto cs_value = ...; ... }` | atribuição a elemento/campo na ordem do C#: alvo, índice, valor, e só então a escrita | — |
+| `cs_arg0`, `cs_arg1`... | argumentos avaliados em ordem antes da chamada (o C++ não garante a ordem dos argumentos) | — |
+| `cs_left`, `cs_right`, `cs_receiver` | lados de um operador e receptor de uma chamada, avaliados na ordem do C# | — |
+| `[&]() -> T { ... }()` (lambda imediata) | expressão do C# que precisa de comandos (ordem, exceção, `?.`) | — |
+| `pls::cs::run_finally(corpo, finally)` | `try/finally` do C#, inclusive quando o `finally` lança | `semantic_runtime.hpp` |
 
-No 3DS a suposição é **verificada**, não só presumida:
-`Thread::entry()` (`src/kairo/common/managed_thread.cpp`) compara, antes de
-qualquer código gerenciado da thread nova, o núcleo ideal da thread
-(`svcGetThreadIdealProcessor`) com o núcleo da aplicação, lido na inicialização
-do programa. Se diferirem, ou se o núcleo não puder ser lido, o programa para
-com `PLS_FATAL managed thread ...` no `stderr`, que no console vai para
-`sdmc:/pls-benchmark/stderr.log`. Cada thread registra
-`PLS_THREAD_CORE application=N thread=N read=unfenced`.
+## 3. O que o código pressupõe
 
-**Não quebrar:**
+- **Coletor:** marcar e varrer, sem mover; vê campos em `trace_edges`, estáticos nas
+  raízes (`GcRootProvider`) e a pilha. Não vê contêineres C++ nem objetos C++ comuns.
+  Liberações explícitas de recursos (`Image.Unuse/Dispose`, `Offscreen.Dispose`,
+  `SoundBase.Dispose`) são imediatas e independem da coleta.
+- **Verificações:** `require(x)` e `nonnull(x)` lançam `NullReferenceException`;
+  `a[i]`, `get_Item`, `set_Item` checam limites; `set_Item` em array de referências
+  checa covariância. Nenhuma é removida sem aprovação.
+- **Números:** `Int32` com volta e exceções do C# em `/` e `%`; `float` avaliado em
+  binary64 e estreitado em armazenamentos, argumentos, retornos e conversões (regra
+  do Mono ARM, `docs/notes/mono-arm-float-rule.md`). `/fp:strict` no PC, sem
+  `-ffast-math` no 3DS.
+- **Inicialização de tipos:** `ensure_initialized()` reproduz o construtor estático na
+  ordem do original; o caminho rápido supõe um núcleo só no 3DS (todas as threads por
+  `pls::cs::Thread`; verificado em tempo de execução, `PLS_FATAL managed thread`).
+- **Nomes:** sobrecargas de mesma aridade levam sufixo (`RateConvert_3`) porque o C++
+  as resolveria de outro jeito; chamadas não virtuais à base são qualificadas
+  (`MyFormBase::Update()`).
 
-- Não crie threads gerenciadas por fora de `pls::cs::Thread` (nem `std::thread`
-  direto, nem `threadCreate` da libctru com outro núcleo, como o núcleo 2 do
-  New 3DS). Uma thread em outro núcleo invalida o caminho sem barreira.
-- Ao portar para um alvo novo, ele cai no caminho `acquire` automaticamente.
-  Só ligue `PLS_TYPE_INIT_UNFENCED_READ=1` com uma justificativa como as da tabela.
-- `python tools/test_type_init_translated.py` roda os dois caminhos no PC (o
-  padrão e o `acquire` forçado) e confere qual cada executável usou.
+## 4. Erros comuns e qual check pega
 
-### Nomes
+| Erro | Sintoma | Quem pega |
+|---|---|---|
+| campo de referência fora de `trace_edges` | objeto liberado em uso, falha aleatória longe da causa | `dev.py check` (mapa do coletor); `dev.py routes` (estresse e envenenamento) |
+| estático de referência fora das raízes | idem | `dev.py check` (raízes) |
+| referência guardada em `std::vector`, `std::map` ou objeto C++ comum | idem | só `dev.py routes` (estresse com envenenamento); revise à mão |
+| `Ref` capturada numa lambda e não na lista de `from_closure` | idem, dentro de um delegate | só `dev.py routes`; revise à mão |
+| classe sem `PLS_MANAGED_CLASS` ou com o nome errado | `is`/`as`/cast e `GetType()` errados | `dev.py check` (código de apoio) |
+| `override` sem entrada em `PLS_DELEGATE_SLOTS` | delegate do método aponta para o da base | `dev.py check` (código de apoio) |
+| texto alterado ou novo sem registro | texto diferente do original sem decisão | `dev.py check` (literais) |
+| arquivo fora do estilo | diff ruidoso | `dev.py check` (formatação dos alterados) |
+| `int`/`float` puros, acumular em `double`, `static_cast` no lugar de `to_int32` | resultado diferente do original (estouro, arredondamento) | nenhum automático; `dev.py routes` compara o percurso; revise à mão |
+| ordem de avaliação mudada num trecho com efeito | resultado ou exceção diferente | nenhum automático; `dev.py routes`; revise à mão |
+| alocação nova por quadro | pausas do coletor mais frequentes | nenhum automático; benchmark (`docs/benchmark-hardware.md`) |
+| `require` removido | crash em vez de `NullReferenceException` | nenhum automático; não remova |
+| mudança de comportamento sem registro | — | revisão; `docs/changes-from-original.md` |
 
-- Sobrecargas de mesma aridade levam sufixo (`RateConvert_3`) de propósito: o
-  C++ resolveria sobrecargas de outro jeito que o C#.
-- Métodos virtuais: o corpo está no próprio membro (`override`); chamadas não
-  virtuais (`base.M()`) são qualificadas (`MyFormBase::Update()`).
+O que nenhum check pega precisa de cuidado na edição e de menção no relatório.
 
-## Antes de cada commit em `src/game/`
+## 5. Verificação
 
-1. Compilar PC (`python tools/build_pc.py --apk APK ...`) e 3DS
-   (`python tools/build_arm11_null.py ...`).
-2. `python tests/repository/test_gc_field_tracing.py src/game`.
-3. Rotas do critério 3 no PC (`tests/routes/*.route`) e a verificação completa
-   (`python tools/verify_phase2.py --apk APK --original-managed MANAGED --jobs 1`).
-4. Mudança de lógica: só depois do congelamento, registrada em `docs/backlog.md`
-   com o motivo.
+`python tools/dev.py check` depois de cada edição; antes de publicar, o ciclo completo
+do `AGENTS.md` (seção 10). Os checks do código do jogo também estão na verificação
+completa (`game-gc-map-and-roots`, `game-support-code`, `game-literals`).

@@ -1,133 +1,280 @@
-# AGENTS.md — Port de Pocket League Story para Nintendo 3DS
+# AGENTS.md — Pocket League Story para Nintendo 3DS
 
-## 1. Missão
+Leia este arquivo inteiro antes de qualquer ação. Ele é autossuficiente: tudo o que
+você precisa para trabalhar com segurança está aqui ou apontado por caminho exato.
+O usuário fala português; escreva relatórios e mensagens em português. Comentários e
+nomes no código ficam em inglês, como no resto do código.
 
-Portar Pocket League Story (Kairosoft, Android, Unity 5.3.4f1 com Mono) para o Nintendo 3DS, a partir do código C# reconstruído na fase anterior (tag `v1.0.0-csharp-reconstruction`), idêntico ao original em todos os métodos.
+## 1. O projeto
 
-O alvo principal é o **New Nintendo 3DS XL**. O 3DS original é bônus: não sacrifique o alvo principal por ele.
+Port **não oficial** de Pocket League Story (Kairosoft; Android, Unity 5.3.4 com Mono)
+para o Nintendo 3DS (alvo principal: New 3DS XL). O C# do jogo foi reconstruído
+byte a byte a partir do APK (submódulo `reference/`) e traduzido para C++17 por um
+tradutor próprio, com o comportamento do original: mesma ordem de avaliação, exceções,
+aritmética de inteiros e de ponto flutuante do Mono no Android ARM, inicialização de
+tipos, textos. A tag **`v1.0.0-faithful`** é a versão fiel ao original. Daqui em diante
+o jogo é adaptado ao 3DS, e o código C++ do jogo em `src/game/` é código-fonte
+mantido à mão. O tradutor foi aposentado.
 
-O projeto tem duas metades, separadas por um marco chamado **congelamento** (seção 4):
+Hoje o jogo roda inteiro no PC (SDL2, build de diagnóstico, com as duas telas do 3DS
+em janelas) e no 3DS com backend nulo (sem vídeo e sem som; serve de benchmark).
+Vídeo, som e controles no 3DS são a próxima fase (`docs/plan-next-phases.md`).
 
-- **Antes do congelamento — fidelidade.** O C# é traduzido mecanicamente para C++ por um tradutor próprio. O C++ do jogo é gerado, nunca editado à mão, e a lógica do jogo não é alterada. A referência de comportamento é o jogo original no Android ARM.
-- **Depois do congelamento — evolução.** O C++ gerado pela última vez passa a ser o código-fonte do projeto. O tradutor é aposentado. A partir daí entram a adaptação ao 3DS e as melhorias de jogo decididas pelo usuário.
+## 2. Seu papel e seus limites
 
-**O congelamento foi feito em 2026-11-23 (tag `v1.0.0-faithful`).** O projeto está na segunda metade: valem as regras "Depois do congelamento" e "Sempre" da seção 5; as de "Antes do congelamento" ficam como registro.
+**Você edita o código do jogo: `src/game/`** (as classes `*.hpp`/`*.cpp` com nomes
+como `form.TitleForm`, `game.Team`, `data.SponsorData`).
 
-## 2. Regras de conteúdo (invioláveis, valem nas duas metades)
+Sem aprovação explícita do usuário **você não edita**:
 
-1. **O repositório contém apenas código obtido por engenharia reversa e código novo escrito para o port:** o C# reconstruído (como submódulo), o C++ traduzido, a reimplementação da KairoLibrary, o runtime, o tradutor, ferramentas, scripts e documentação.
-2. **Nenhum asset do jogo entra no repositório nem em arquivo distribuído:** imagens, sprites, fontes, áudio, dados de jogo, pacotes de idioma, cenas, nem em forma original, convertida ou embutida em código. Capturas de tela e saves ficam fora do Git.
-3. **Os assets vêm exclusivamente do APK do próprio usuário, em tempo de build**, verificado pelo SHA-256 registrado em `docs/apk.md`. O pipeline nunca baixa, procura ou indica onde obter o APK, e o build falha com mensagem clara sem ele.
-4. **Nenhum binário do jogo original ou do Unity** entra no repositório ou no build. DLLs usadas como oráculo de teste ficam locais e não são incorporadas.
-5. **Nada de marca.** Ícone e banner do homebrew são originais e dizem que o port é não oficial.
-6. **O distribuível é um binário sem assets** (`.3dsx`/`.cia`) que lê os assets de um diretório do SD gerado pelo pipeline do usuário.
-7. **Textos e arrays constantes:** os literais presentes no C# reconstruído — textos e inicializadores de arrays constantes (`new int[] { 4, 2 }`) — fazem parte do código de engenharia reversa e permanecem no C++ (decisão do usuário de 2026-11-16; no modo legível já saem como literais; o maior array tem 224 bytes, total de cerca de 13 KB). Os textos e dados que estão nos assets (pacotes de idioma, arquivos de dados) continuam vindo dos assets.
-8. **README e releases** declaram: port não oficial, não afiliado à Kairosoft, requer que o usuário possua o jogo e forneça o próprio APK, não distribui assets nem binários originais.
-9. O CI recusa formatos proibidos e arquivos acima de 2 MB. Não existe exceção "só para teste".
+- o runtime e o coletor de lixo (`src/runtime/`, `src/kairo/common/`);
+- a KairoLibrary traduzida (`src/kairo/common/generated/`);
+- a plataforma e os backends (`src/kairo/api/`, `src/kairo/platform/`, `src/main/`);
+- a infraestrutura do jogo dentro de `src/game/`: `game_generated_runtime.hpp`,
+  `game_generated_forward.hpp`, `bootstrap_*`, `PlsPortGeneratedBootstrap.*`;
+- as ferramentas de build e de verificação (`tools/`, `tests/`, `CMakeLists.txt`),
+  exceto para corrigir um erro óbvio de uma ferramenta, explicado no relatório.
 
-Se uma tarefa parecer exigir violar uma dessas regras, pare e pergunte.
+Se uma tarefa exigir mexer em qualquer um desses lugares, **pare e explique** ao
+usuário o que precisa mudar e por quê, antes de mudar.
 
-## 3. Arquitetura
+**Nunca use o tradutor arquivado** (`tools/translator-archived/`): ele regeneraria
+`src/game/` e apagaria o trabalho feito à mão. `tools/translate` recusa rodar.
 
-| Camada | Origem | Tratamento |
+## 3. Regras de conteúdo (invioláveis; prevalecem sobre tudo)
+
+1. O repositório contém só código de engenharia reversa e código novo. **Nenhum asset
+   do jogo** entra no Git nem em arquivo distribuído: imagens, sprites, fontes, áudio,
+   dados, pacotes de idioma, cenas — nem originais, nem convertidos, nem embutidos em
+   código. **Capturas de tela, saves e logs com conteúdo do jogo ficam fora do Git**
+   (use `build/`, que é ignorado).
+2. Os assets vêm só do **APK do próprio usuário**, em tempo de build, verificado pelo
+   SHA-256 de `docs/apk.md`. Nunca baixe, procure ou indique onde obter o APK.
+3. Nenhum binário do jogo original ou do Unity entra no repositório ou no build.
+4. Nada de marca: o port se declara não oficial; ícones e textos de apresentação são
+   originais.
+5. Os literais que já estão no C# reconstruído (textos e arrays constantes) fazem
+   parte do código e ficam no C++. Textos e dados que estão nos assets continuam vindo
+   dos assets.
+6. O CI (`.github/workflows/content-policy.yml`) recusa formatos proibidos e arquivos
+   acima de 2 MB. `python tools/check_repository.py --staged` faz a mesma conferência
+   antes do commit.
+
+## 4. Mapa do repositório
+
+| Caminho | O que é | Você pode editar? |
 |---|---|---|
-| Jogo (`Assembly-CSharp`, 1.958 métodos) | C# reconstruído | Traduzido para C++ |
-| KairoLibrary portável (coleções, streams, utilitários) | C# reconstruído | Traduzida pelo mesmo tradutor |
-| API Kairo de plataforma (desenho, imagens, texto, som, armazenamento, entrada, formulários) | Reimplementação | Código novo em `src/kairo/`, com backends: nulo (medição), SDL (PC), CTR (3DS) |
-| Runtime (strings UTF-16, arrays, exceções, coletor, colação e formatação numérica do Mono) | Código novo e componentes do Mono sob licença registrada | `src/runtime/` |
-| Serviços Android (anúncios, cobrança, rede, licenciamento, notificações) | Removidos | Políticas offline documentadas em `docs/design/services.md` |
+| `src/game/` | o jogo: uma unidade `.hpp`/`.cpp` por classe C# (402 arquivos) | **sim** (exceto a infraestrutura, seção 2) |
+| `src/kairo/common/generated/` | KairoLibrary traduzida (biblioteca da Kairosoft usada pelo jogo) | não, sem aprovação |
+| `src/kairo/common/` | runtime gerenciado: strings, arrays, delegates, exceções, inicialização de tipos (`semantic_runtime.hpp`), diagnóstico (`diagnostic_profile.hpp`) | não, sem aprovação |
+| `src/runtime/` | coletor de lixo (`tracing_gc.*`), tipos numéricos (`numeric_types.hpp`), referências | não, sem aprovação |
+| `src/kairo/api/`, `src/kairo/platform/{null,sdl,ctr}/` | interface da plataforma e backends (nulo, PC/SDL, 3DS) | não, sem aprovação |
+| `src/main/` | pontos de entrada (PC, nulo) e janelas das duas telas no PC | não, sem aprovação |
+| `reference/` | **C# reconstruído** (submódulo, tag `v1.0.0-csharp-reconstruction`): a referência de comportamento | **somente leitura** |
+| `tests/routes/` | roteiros que jogam o jogo no PC (`*.route`) | sim, para roteiros novos |
+| `tests/repository/`, `tests/kairo/`, `tests/translator/` | testes do repositório, da plataforma e do runtime | não, sem aprovação |
+| `tools/` | build, execução e verificação (`tools/dev.py` é a porta de entrada) | não, sem aprovação |
+| `tools/translator-archived/` | tradutor aposentado | **somente leitura; nunca executar** |
+| `config/` | dados e recibos lidos e escritos pelas ferramentas | não edite à mão |
+| `docs/` | documentação; índice em `docs/README.md` (vigente × histórico) | sim, os vigentes |
+| `docs/history/` | registro da Fase 2 (antigo AGENTS.md, congelamento, livro-razão) | somente leitura |
+| `build/` | tudo o que é local: builds, assets convertidos, saves, logs (fora do Git) | gerado |
 
-O PC é alvo de desenvolvimento, não de distribuição.
+## 5. Ambiente e comandos
 
-### Decisões de runtime já tomadas
+Windows, MSVC + CMake + Ninja (PC), devkitARM + libctru (3DS), emulador Azahar.
+Inventário em `docs/toolchain.md`. Os caminhos locais do APK e da pasta `Managed`
+extraída dele ficam em `build/dev-local.json` (fora do Git) ou nas variáveis
+`PLS_APK` e `PLS_MANAGED`.
 
-- **Memória:** coletor de lixo próprio por rastreamento. Marcar e varrer, sem mover objetos; preciso no heap (mapas de ponteiros por tipo gerados pelo tradutor); conservador em pilhas e registradores, com ponteiros internos reconhecidos; referências emitidas como ponteiros comuns, sem contagem e sem barreira de escrita; coleta só em pontos seguros (fim de frame acima de um limite, transições de tela, carregamentos, chamadas a `GC.Collect` do fonte); threads de trabalho cooperativas. O bdwgc serve apenas de referência de desempenho no PC.
-- **Recursos nativos:** onde o original libera explicitamente, a liberação é imediata; o restante é liberado na coleta, com coleta garantida nas transições de tela.
-- **Semântica:** strings UTF-16 com colação do Mono; inteiros com wrap; ordem de avaliação do C#; formatação numérica do Mono; verificações de nulo e de limites preservadas.
-- **Ponto flutuante:** a referência é o Android ARM (armeabi-v7a). A regra de emissão é definida pela leitura do JIT do Mono e só é adotada após confirmação em aparelho.
-- **Áudio** em streaming; **texturas** sem perda até medição que exija outra coisa; **fontes** rasterizadas a partir do TTF do APK.
-- **Serviços offline:** registro local, cobrança indisponível sem conceder itens pagos e sem remover estado do save, anúncios removidos.
+**Um comando para o ciclo de edição: `python tools/dev.py <subcomando>`**
 
-### Orçamento
+| Subcomando | O que faz | Tempo nesta máquina |
+|---|---|---|
+| `build` | build do PC (diagnóstico, Release) a partir de `src/game` | 17 s depois de editar um `.cpp`; 2 s sem mudança; 13–15 min do zero |
+| `run [--save 31\|50]` | roda no PC com as duas telas do 3DS em janelas (até 600 s); `--save 31` começa antes da 1ª partida, `--save 50` depois | build + jogo |
+| `check [--all]` | checks rápidos: mapa do coletor e raízes, código de apoio, literais, formatação dos arquivos alterados (`--all`: todos) | ~5 s, mais ~0,5 s por arquivo alterado (formatação); `--all`: ~4 min |
+| `routes` | os roteiros do jogo (87 execuções) com estresse moderado do coletor | ~3 h |
+| `full` | verificação completa (`tools/verify_phase2.py --full`) | ~20 min (105 checks) |
+| `arm` | build do 3DS (`build/frozen-arm/null_game.3dsx`, backend nulo) | ~30 min do zero |
 
-O jogo pede 20 quadros por segundo (`Main.OnUpdate`, `SetTargetFps(20)`): **50 ms por frame**. Lógica mais API precisam caber nisso no New 3DS, com folga para a GPU. A medição que decide é no aparelho real; o emulador não reproduz a velocidade do hardware.
+Recompilar no PC depois de editar um `.cpp` do jogo: ~17 s. Depois de editar um
+`.hpp` muito incluído: ~6 min (`main.AppData.hpp`, 52 unidades) (detalhes e propostas em
+`docs/notes/rebuild-times.md`).
 
-## 4. Marcos
+A máquina tem 8 GB: rode **um trabalho pesado por vez** (build, roteiros, emulador).
 
-### Fase 2 — Tradução fiel (concluída em 2026-11-23)
+## 6. Como ler o código do jogo
 
-Termina no congelamento, que exige os cinco critérios abaixo, todos comprovados por script ou medição:
+Cada classe C# virou uma `struct` em `namespace pls::game::<namespace C#>`. Cada
+método traz antes um comentário `// M:<DocID>` (o identificador do método no C#,
+ex.: `// M:game.Team.Update`). Para ver o original, procure o mesmo método em
+`reference/` (C# reconstruído). As regras completas de manutenção estão em
+`docs/maintaining-game-code.md`.
 
-1. **Tradução completa:** 1.958 de 1.958 métodos do jogo compilando, nenhum slot virtual pendente, as políticas offline integradas aos chamadores. **Cumprido e aprovado pelo usuário em 2026-11-14** (1.860 emitidos, 0 rejeitados, 0 slots; livro-razão com os estados `embedded`, `no-body` e `policy` aceitos).
-2. **Coletor aplicado e desempenho confirmado:** no **New 3DS real**, com backend nulo, em três execuções: (a) nenhum frame acima de 50 ms em jogo estável, isto é, nas janelas de partida e de menu parado, incluindo coletas por volume; (b) pausas de coleta em trocas de tela principal e em carregamentos toleradas até 150 ms; (c) partida com média abaixo de 20 ms. O benchmark classifica cada coleta como volume, transição, carregamento ou explícita (`JSystem.Gc` do fonte) e relata os grupos separadamente. Coletas explícitas do fonte disparadas no `Finish` de uma janela (ex.: `JSystem.Gc` em `SubForm.Finish`) são transição, toleradas até 150 ms: pontos de coleta do jogo original, acionados quando o jogador fecha uma janela. Também são transição, com o mesmo limite, as duas coletas explícitas da partida em `GameManager`: no meio do tempo de jogo (`GameManager.Update`, `GameManager.cs:446`) e no reinício após gol (`GameManager.ChangeState(0)`, `GameManager.cs:507`); o benchmark registra a origem de cada coleta explícita pelo método C# que a pediu (decisão do usuário, 2026-11-23). Jogo estável é partida e tela parada, limite 50 ms. (Alterado pelo usuário em 2026-11-12, em 2026-11-13 e na rodada seguinte de 2026-11-13; quando três execuções do v6 confirmarem a classificação e os limites, o critério fica cumprido, com a medição com vídeo refeita na Fase 4; a antiga exigência de razão C++/Mono ≤ 1 nos kernels virou melhoria opcional em `docs/backlog.md`.) A medição com vídeo real é refeita na Fase 4.
-3. **Jogo percorrido de ponta a ponta no PC:** roteiro de cobertura em `docs/coverage-plan.md` (todas as telas, uma temporada completa, saves, todos os tipos de evento) executado sem erro, com a cobertura de execução por método registrada. Métodos nunca alcançados são listados e justificados. **Escopo (decisão do usuário, 2026-11-14):** o critério exige executar os métodos alcançáveis no port segundo a análise estática (`tools/callgraph`, `docs/coverage-never-reached.md`); ficam fora os inalcançáveis no original (entre eles `FriendForm`, `MatchForm`, `LineupForm`, `RestoreForm`), os só de depuração e os cortados por política. No build de diagnóstico, executar um método assim classificado gera alerta e o reclassifica como alcançável.
-4. **Fidelidade resolvida (4a):** tudo o que afeta o código gerado — regra de ponto flutuante confirmada em aparelho Android; divergências de `ref`/`out` e trigonometria (`JMath.Sin(-0)`) resolvidas ou documentadas com decisão do usuário. A **comparação de telas com o original (4b)** saiu do congelamento e foi para a Fase 4, junto da medição com vídeo real, porque depende da camada de plataforma, que continua editável depois do congelamento. (Decisão do usuário, 2026-11-16.)
-5. **Código legível:** o tradutor emite C++ adequado a manutenção manual: um arquivo por classe, nomes originais de tipos, membros e parâmetros, sem ruído de runtime visível além do necessário, formatação consistente. O usuário aprova uma amostra antes da geração final.
+| Elemento | O que é | O que não se pode quebrar |
+|---|---|---|
+| `pls::cs::Ref<T>` | referência a objeto gerenciado; é um ponteiro comum `T*` (sem contagem). Nulo é `Ref<T>{}` | o objeto só vive enquanto o coletor o alcança (seção 7) |
+| `require(x)` | devolve `x` ou lança a `NullReferenceException` do C# | todo acesso a membro de referência passa por `require`; não troque por `x->` |
+| `is_null(x)`, `x.is_null()` | teste de nulo (`x == null` do C#) | — |
+| `pls::cs::Int32`, `Int64` | inteiros com o comportamento do C#: estouro com volta, `/` e `%` lançam as exceções do C# | não troque por `int`: estouro de `int` é indefinido em C++ |
+| `pls::cs::Single`, `Double`, `FloatEval` | `float`/`double` do C#. Aritmética de `float` é avaliada em binary64 (`FloatEval`) e estreitada para `float` ao guardar, ao passar argumento e ao retornar: a regra do Mono no ARM | guarde em `Single`; não acumule em `double`; nada de `-ffast-math`; `/fp:strict` no PC |
+| `pls::cs::to_int32(x)`, `cast_integral<T>(x)` | conversões explícitas do C# (`(int)f`, `(short)i`) | use estas, não `static_cast`: o resultado de valores fora da faixa segue o C# |
+| `pls::cs::Array<T>` (`IntArray`, `StringArray`...) | array gerenciado. `a[i]` e `a.get_Item(i)` checam limites; `Array::make(n)`, `Array::from({...})` | não remova checagem; em array de referências use `set_Item` (checa covariância) |
+| `pls::cs::String`, `literal(u"...")` | string UTF-16 do C#; `literal` cria a constante uma vez | comparação e ordenação de texto pelas funções `culture_*`/`string_*` (colação do Mono) |
+| `create(...)` / `create_init(self, ...)` | `new Classe(...)`: `create` aloca (`make_ref`) e chama `create_init`, que inicializa campos, chama a base e roda o corpo do construtor | chame sempre `create`; a ordem campos → base → corpo é a do C# |
+| `ensure_initialized()` e estáticos | construtor estático do C#. Cada estático é uma função de acesso (`Classe::campo_()`) que inicializa o tipo antes; o valor mora em `static ... Classe_campo_storage` no `.cpp` | estático novo: função de acesso + armazenamento + raiz (seção 7) |
+| `trace_edges(visitor)` | lista, para o coletor, os campos de referência do objeto | todo campo de referência entra aqui (seção 7) |
+| `PLS_MANAGED_CLASS("ns.Classe", Classe, Base, interfaces...)` | identidade do tipo para `is`, `as`, casts e `GetType()` | classe nova, base ou interface nova: atualize a linha |
+| `PLS_DELEGATE_SLOTS(Base, {"Slot", "M:..."}, ...)` | para cada `override`, qual método C# um delegate criado a partir dele representa | `override` novo: acrescente a entrada |
+| `Delegate<R(Args...)>::from_closure(identidade, "M:...:N", lambda, capturados...)` | lambda do C# como delegate | todo valor gerenciado usado pela lambda vai também na lista final `capturados...` (é por ela que o coletor o enxerga) |
+| blocos `{ auto cs_target = ...; auto cs_arg0 = ...; ... }` (`cs_target`, `cs_index`, `cs_value`, `cs_arg*`, `cs_left`, `cs_right`, `cs_receiver`) | fixam a ordem de avaliação do C# onde o C++ não a garante (argumentos, lados de um operador, alvo de uma atribuição) | ao editar um trecho desses, mantenha a ordem: avalie em variáveis, na ordem do C#, antes de combinar |
+| `pls::diagnostic::api_call([&]() -> decltype(auto) { return ...; })` | chamada à plataforma ou à KairoLibrary; no build de diagnóstico, mede o tempo dela | mantenha o embrulho nas chamadas à plataforma; não muda o resultado |
+| `PLS_METHOD_SCOPE("Assembly-CSharp", "M:...", game)` | no build de diagnóstico, registra a chamada do método (cobertura, salvaguarda, perfil); some no build normal | método novo do jogo: acrescente com um DocID novo (ex.: `M:game.Team.MyNewMethod`), para a cobertura dos roteiros o enxergar |
+| `pls::cs::run_finally(corpo, finally)`, `capture_exception(e)` | `try/finally` e `catch` do C# | não troque `finally` por destrutor (RAII) se o bloco puder lançar |
+| `pls::cs::box(x)` / `unbox<T>(o)` | boxing do C# (valor → `object`) | `box` aloca; evite em código por quadro (seção 7) |
 
-### Congelamento
+## 7. Regras ao editar
 
-Cumpridos os cinco critérios e com aprovação explícita do usuário:
+**Campo de referência novo entra em `trace_edges`.** Referência é `Ref<...>`, `String`,
+`Array<...>`, `Delegate<...>`, `List`/`Dictionary`:
 
-1. Gere o C++ pela última vez e rode a verificação completa.
-2. Marque a tag `v1.0.0-faithful`. Ela é a versão fiel: comportamento do original, sem melhorias.
-3. Mova o tradutor para `tools/translator-archived/`, somente leitura, com nota explicando que não deve mais ser executado sobre `src/game/`.
-4. A partir daqui `src/game/` é código-fonte editável.
+```cpp
+// .hpp
+pls::cs::Ref<Player> captain_{};
+// .cpp, em Team::trace_edges
+pls::cs::trace_value(captain_, visitor);
+```
 
-O congelamento é sem volta na prática. Na dúvida, atrase-o. Nunca o execute sem a aprovação do usuário.
+Esquecer isso faz o coletor liberar um objeto ainda em uso (falha aleatória, longe
+da causa). Pego por `dev.py check` (mapa do coletor).
 
-**Feito em 2026-11-23**, com aprovação do usuário: `src/game/` e `src/kairo/common/generated/` substituídos pela árvore legível validada (corpos idênticos; cabeçalho de código mantido à mão; macros `PLS_METHOD_SCOPE` mantidas para o diagnóstico); tradutor em `tools/translator-archived/`; livro-razão de tradução (`PROGRESS.md`, `config/phase2-*`) congelado como registro; destino dos checks conforme `docs/notes/freeze-audit.md`, seção 7. Nota da versão: `docs/release-notes/v1.0.0-faithful.md`.
+**Estático de referência novo entra nas raízes** (`GcRootProvider` do `.cpp`, dentro
+de `cs_init_..._slow`):
 
-### Fase 3 — Design para o 3DS (decisão do usuário)
+```cpp
+static StringArray Team_names_storage{};
+// em static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor) { ... });
+pls::cs::trace_value(Team_names_storage, visitor);
+```
 
-Propostas em `docs/design/` para divisão das duas telas (400×240 sem toque, 320×240 com toque), escala, controles por botões e circle pad, teclado do sistema e legibilidade das fontes. Pode ser prototipada no PC com duas janelas nas resoluções do 3DS. Nada é implementado sem a escolha do usuário.
+Pego por `dev.py check` (raízes).
 
-### Fase 4 — Backend 3DS
+**Nenhuma referência gerenciada fora do que o coletor enxerga.** O coletor vê: campos
+listados em `trace_edges`, estáticos nas raízes, variáveis locais na pilha. Ele **não**
+vê: `std::vector<Ref<T>>`, `std::map`, membros de `struct` C++ comum (que não deriva
+de `pls::cs::Object`), `static` local sem raiz, capturas de lambda que não estão na
+lista `capturados...` de `from_closure`. Para guardar várias referências use
+`pls::cs::Array`, `List` ou `Dictionary` gerenciados.
 
-Vídeo pela GPU (citro2d/citro3d), som (ndsp), toque e botões, arquivos e saves no SD, empacotamento `.3dsx` e `.cia` sem assets. Validação em hardware. Inclui refazer no New 3DS real a medição de desempenho do critério 2 com vídeo e áudio reais.
+**Ordem de avaliação só importa onde há efeito.** `a + b` com dois campos é seguro;
+`f() + g()`, `x = h(y++)` ou argumentos que lançam exceção não são: avalie em
+variáveis, na ordem do C#:
 
-### Fase 5 — Melhorias e 3DS antigo
+```cpp
+pls::cs::Int32 first = NextId();      // C#: Use(NextId(), NextId());
+pls::cs::Int32 second = NextId();
+Use(first, second);
+```
 
-Melhorias de jogo pedidas pelo usuário, feitas no C++ após o congelamento, cada uma em commits próprios e descrita em `docs/changes-from-original.md`. Suporte ao 3DS antigo conforme medição.
+**Texto novo passa pelo mecanismo de tradução do jogo.** Os textos do jogo são
+literais em japonês. Todo texto desenhado ou medido (`Graphics::DrawString`,
+`Font::StringWidth`) passa por `Language::TranslateText`, que o troca pelo texto do
+pacote de idioma dos assets do APK; quando o texto é composto antes de desenhar, o
+jogo chama o mesmo mecanismo com `MyFormBase::LT(texto)`. Texto novo: escreva-o como
+literal, desenhe-o pelos mesmos caminhos e, se for composto, passe por `LT(...)`.
+**Um texto novo não tem tradução no pacote de idioma do APK** e aparece como escrito;
+como resolver isso (tabela própria do port, idioma) é decisão do usuário — pergunte
+antes de acrescentar texto visível.
 
-## 5. Regras de trabalho
+**Nada de alocação por quadro em caminho quente.** O jogo roda a 20 quadros por
+segundo (50 ms por quadro). Os métodos chamados a cada quadro (`Update`, `Draw`,
+`_draw` das formas, `Team::Update`, `Player::Update`, desenho de campo) não devem
+ganhar `create`, `make_ref`, `Array::make`, concatenação de `String`, `box` nem
+`std::string`/`std::vector` novos. Cada alocação aproxima a próxima coleta (pausa de
+dezenas de ms). Prepare os objetos antes (no `Init`, num campo) e reutilize. As
+alocações que o original já fazia ficam como estão.
 
-### Antes do congelamento (registro; não valem mais desde 2026-11-23)
+**Checagens obrigatórias.** Nenhuma verificação de nulo (`require`) ou de limites
+(`[]`, `get_Item`, `set_Item`) é removida sem aprovação do usuário.
 
-1. **A lógica do jogo não é alterada.** Bugs do original são preservados.
-2. **`src/game/` é gerado.** Se o tradutor erra, corrija o tradutor e regenere. Nenhuma edição manual.
-3. **Nenhuma melhoria de jogo** é implementada, mesmo que pedida de passagem; registre-a em `docs/backlog.md` para a Fase 5.
-4. **Nenhuma verificação de nulo ou de limites é removida** sem aprovação do usuário.
-5. **Meça antes de otimizar.** Otimizações entram no runtime, na API ou no emissor, nunca na lógica, e cada uma tem medição antes e depois.
+**Threads.** Não crie threads por fora de `pls::cs::Thread` (nem `std::thread`, nem
+`threadCreate` da libctru). O runtime supõe que todas as threads gerenciadas rodam
+no mesmo núcleo do 3DS.
 
-### Depois do congelamento
+**Formatação.** O estilo está em `src/game/.clang-format`. Depois de editar:
+`python tools/format_game_code.py` (só espaços; ele recusa qualquer outra mudança).
 
-6. **`src/game/` é código-fonte editado à mão; o tradutor não é mais executado** (`tools/translator-archived/`, somente leitura; `tools/translate` recusa). Toda mudança de comportamento em relação à tag `v1.0.0-faithful` é intencional, isolada em commit próprio e registrada em `docs/changes-from-original.md`. Regras de manutenção do código: `docs/maintaining-game-code.md`.
-7. Correções de fidelidade descobertas depois são feitas à mão e registradas como tais.
-8. **Mudança no formato de save exige decisão do usuário** (inclusive sobre compatibilidade com os saves do Android).
-9. O runtime (`src/runtime/`, coletor incluído) pode evoluir depois do congelamento sem alterar o código do jogo, desde que a interface usada pelo código gerado se mantenha. (Decisão do usuário, 2026-11-13; ex.: a reforma do coletor em `docs/backlog.md`.)
-9a. **Antes de cada checkpoint** (além da regra 11): os checks do código do jogo — mapa do coletor e raízes (`tests/repository/test_gc_field_tracing.py src/game src/kairo/common/generated`), código de apoio (`tools/check_readable_support.py`) e literais (`tools/check_readable_literals.py`); a verificação completa que resta (`tools/verify_phase2.py --full`, sem os checks arquivados com o tradutor); e o conjunto de roteiros do critério 3 com estresse moderado do coletor (`tools/run_readable_routes.py --frozen`), aceito com a mesma cobertura e 0 alertas.
-9b. **Pendências abertas no congelamento, com dono:** teste numérico do critério 4a em aparelho Android (usuário); `AppData.DrawMoney2` e `MapMain.UpdateTrainingCoatNum` (cobertura por log textual, quando houver vídeo); comparação de telas com o Android e medição com vídeo e som no New 3DS (Fase 4); reforma do coletor, grafias de `Graphics` e coleções `Vector` (A.4e/A.4d) (`docs/backlog.md`).
+**Método e classe novos.** Comentário `// M:<DocID>` antes da definição;
+`PLS_METHOD_SCOPE` no início do corpo; classe nova com `PLS_MANAGED_CLASS`,
+`trace_edges` (se tiver campos de referência), `create`/`create_init`. O build
+encontra sozinho todo `src/game/*.cpp` (não mexa no `CMakeLists.txt`). Modelos
+completos em `docs/maintaining-game-code.md`.
 
-### Sempre
+## 8. O que exige decisão do usuário
 
-9. **Fato ou hipótese.** Afirmações sobre o comportamento citam o método do C# reconstruído ou a medição. O que não foi verificado é `UNKNOWN`.
-10. **Estados gerados, não declarados.** `PROGRESS.md` e os CSVs vêm dos scripts.
-11. **Cadência de verificação:** entre checkpoints, só os testes do componente alterado. A verificação completa roda antes de publicar um checkpoint. Publique a cada marco e sempre antes de encerrar a sessão; não deixe trabalho local sem verificação de uma sessão para outra.
-12. **Dependências:** bibliotecas de código aberto com licença permissiva (MIT, BSD, zlib, Apache 2, Unicode) estão pré-autorizadas em `build/deps/`, a partir da fonte oficial, com versão e hash em `docs/toolchain.md` e licença em `THIRD_PARTY.md`. Licenças copyleft e instalações no sistema exigem pergunta. Componentes já autorizados: SDL2, FreeType, libogg, libvorbis, colação e formatação numérica do Mono (incluindo as tabelas sob LGPL v2, mantidas separadas), devkitPro e Azahar.
-13. **Pare e pergunte** para: decisões de design, qualquer coisa que toque a seção 2, dependência fora da regra 12, remoção de verificações, mudança que dependa de suposição sobre threads, e o congelamento.
-14. **Não pare** para confirmar hipóteses técnicas: teste-as. Hipóteses refutadas ficam registradas e não se repetem.
-15. **Protocolo de sessão:** ao começar, leia `PROGRESS.md` e os últimos commits, confirme o APK local pelo hash e rode os testes do componente em que vai trabalhar. Ao terminar, regenere `PROGRESS.md`, publique o checkpoint verificado e relate.
+Pare e pergunte antes de:
 
-## 6. Registro de progresso
+- **mudar o formato de save** (`Serialize`/`Deserialize`, campos gravados, chaves e
+  versões do `RecordStore`) — inclusive a compatibilidade com saves do Android;
+- **mudar regras e números do jogo**: valores, tabelas, preços, probabilidades,
+  fórmulas, tempos, dificuldade;
+- **remover uma funcionalidade** do original, mesmo que pareça morta;
+- **qualquer mudança fora de `src/game/`** (seção 2);
+- remover uma verificação de nulo ou de limites;
+- acrescentar texto visível (seção 7) ou mudar telas e controles;
+- qualquer coisa que toque as regras de conteúdo (seção 3);
+- usar uma dependência nova.
 
-`PROGRESS.md` é gerado e mostra, nesta ordem:
+Não pare para confirmar uma hipótese técnica: teste-a e relate.
 
-1. **Os cinco critérios do congelamento**, cada um com estado (`pendente`, `em andamento`, `cumprido`) e a evidência.
-2. Tradução: métodos `todo`, `translated`, `runs`, `verified`.
-3. Fronteira da KairoLibrary: `todo`, `stub`, `implemented`, `verified`.
-4. Desempenho: CPU por frame no PC (backend nulo) e no ARM, razão contra o Mono nos kernels, coletas e duração, tamanho do binário.
-5. Assets por tipo e estado do pipeline.
+## 9. Toda mudança de comportamento
 
-## 7. Relatórios
+- Em **commit próprio**, separado de arrumação e formatação.
+- Registrada em **`docs/changes-from-original.md`**: o que mudou em relação à tag
+  `v1.0.0-faithful`, por quê, quem decidiu, e como verificar.
+- O que for pedido de passagem e não decidido vai para `docs/backlog.md`.
+- O comportamento de referência é o do C# em `reference/` (e da tag
+  `v1.0.0-faithful`). Um bug do original só é corrigido por decisão do usuário.
 
-Oito seções, como nas fases anteriores: progresso, o que foi feito, hipóteses (confirmadas, refutadas, inconclusivas, com evidência), pendências, toolchain, componentes externos, bloqueios, recomendação. Inclua sempre a tabela dos cinco critérios do congelamento, resultados negativos, e o que depende do usuário. Números exatos; `UNKNOWN` para o que não foi medido.
+## 10. Antes de cada commit e antes de publicar
+
+Entre commits pequenos: `python tools/dev.py build` e `python tools/dev.py check`.
+
+Antes de publicar (push) — o ciclo do checkpoint:
+
+1. `python tools/dev.py check --all` (mapa do coletor, raízes, código de apoio,
+   literais, formatação de tudo);
+2. `python tools/dev.py full` (verificação completa);
+3. `python tools/dev.py routes` (87 execuções de roteiro; aceito quando o comando diz
+   PASS: os 85 que a reexecução do código canônico conclui também concluídos, 0 alertas
+   — as 2 restantes, `actions.route` a partir do save 95 e `dialogs-exit.route`, não
+   concluem em reexecução nem no canônico);
+4. `python tools/dev.py arm` (o 3DS compila);
+5. `python tools/check_repository.py --staged`.
+
+Relate o resultado de cada passo com números. Se um passo falhar, não publique: relate.
+Uma falha intermitente conhecida de um roteiro (tempo esgotado na parada de threads
+do coletor, `tests/routes/saves.route`) se repete uma vez com `dev.py routes --resume`;
+se falhar de novo, é falha. A máquina não pode dormir durante os roteiros (uma
+suspensão trava o quadro em curso e o roteiro falha): `dev.py routes` e `dev.py full`
+pedem ao Windows que não suspenda enquanto rodam.
+
+## 11. Como relatar
+
+Em português, com números exatos. `UNKNOWN` para o que não foi medido ou verificado;
+hipóteses refutadas também entram. Para um trabalho de uma sessão, oito seções:
+progresso, o que foi feito, hipóteses (confirmadas, refutadas, inconclusivas, com
+evidência), pendências, toolchain, componentes externos, bloqueios, recomendação —
+sempre com os resultados negativos e o que depende do usuário.
+
+## 12. Onde procurar mais
+
+- `docs/README.md` — índice: o que é vigente e o que é histórico.
+- `docs/maintaining-game-code.md` — receitas de edição (classe, campo, estático,
+  literal, chamada à plataforma, delegate), as macros e os erros comuns.
+- `docs/changes-from-original.md`, `docs/backlog.md`, `docs/plan-next-phases.md`.
+- `docs/design/phase3-decision.md` — decisão de telas e controles do 3DS.
+- `docs/benchmark-hardware.md` — como medir no New 3DS.
+- Pacote de código para revisão externa: `python tools/make_review_bundle.py ITEM ...`
+  (arquivos, `Classe::Método` ou DocID; saída em `build/review/`).

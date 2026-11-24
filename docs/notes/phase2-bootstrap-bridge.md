@@ -1,7 +1,7 @@
 # Ponte gerada de inicialização e diagnóstico Release
 
 Continuidade posterior ao checkpoint af66d13. Os números das tentativas abaixo
-são históricos; a cobertura vigente vem dos recibos e de PROGRESS.md gerados.
+são históricos; a cobertura vigente vem dos recibos e de docs/history/PROGRESS-phase2.md gerados.
 
 ## Ordem e procedência
 

@@ -8,7 +8,7 @@ Novo repositório público: https://github.com/Tim-campy/pocket-league-story-3ds
 | Tradução Assembly-CSharp | **1.958 métodos** cadastrados; 97 fontes medidos | 1958 `todo`, zero traduzidos |
 | Assets | **1.189 arquivos de dados do APK; 1.489 objetos Unity; 1.337 membros internos** | 44 grupos `inventoried`; zero conversões e zero carregamentos no alvo |
 
-Não houve tradutor, reimplementação, backend, design de telas, pacote 3DS, execução do jogo ou teste em emulador. O trabalho encerra no limite de preparação/inventário solicitado, com os UNKNOWN abaixo explicitados. `PROGRESS.md` e os CSVs são gerados por scripts.
+Não houve tradutor, reimplementação, backend, design de telas, pacote 3DS, execução do jogo ou teste em emulador. O trabalho encerra no limite de preparação/inventário solicitado, com os UNKNOWN abaixo explicitados. `docs/history/PROGRESS-phase2.md` e os CSVs são gerados por scripts.
 
 # 2. O QUE FOI FEITO NESTA RODADA
 
@@ -159,4 +159,4 @@ Memória/formato de textura/streaming dependem de fidelidade e medidas futuras; 
 2. Preparar SDL2 SDK com autorização e, só então, iniciar a Fase 2 com fixtures próprias para exceções, closures, arrays, aritmética e strings, seguida das 254 entradas portáveis. Nenhum tradutor é implementado por esta recomendação.
 3. Preservar imagens sem escolher compressão com perda agora; planejar a medição de residência/streaming e atlas quando houver backend. Os 26,262207 MiB de PNGs e os 34,499989 MiB de PCM estimado justificam essa prioridade. O inventário e os UNKNOWN permitem medir o antigo cedo sem comprometer o New.
 
-Documentos centrais: `README.md`, `docs/apk.md`, `docs/toolchain.md`, `docs/boundary.md`, `docs/csharp-subset.md`, `docs/assets.md`, `PROGRESS.md`. Inventários e relatórios auxiliares estão em config/; conteúdo integral somente nos diretórios locais ignorados.
+Documentos centrais: `README.md`, `docs/apk.md`, `docs/toolchain.md`, `docs/boundary.md`, `docs/history/csharp-subset.md`, `docs/assets.md`, `docs/history/PROGRESS-phase2.md`. Inventários e relatórios auxiliares estão em config/; conteúdo integral somente nos diretórios locais ignorados.

@@ -1,7 +1,7 @@
 # 1. PROGRESSO
 
 Rodada iniciada em `3f4ddf9`. Verificação completa aprovada: 117/117 checks,
-incluindo regeneração de PROGRESS.md. Política de conteúdo aprovada sobre
+incluindo regeneração de docs/history/PROGRESS-phase2.md. Política de conteúdo aprovada sobre
 1263 entradas do índice, sem violações. O commit que contém este relatório
 é o checkpoint da rodada.
 

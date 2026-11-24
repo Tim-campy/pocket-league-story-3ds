@@ -1,7 +1,7 @@
 # Continuidade local após a418890
 
 Registro da rodada iniciada em a418890. O marco do menu de gestão passou na
-verificação completa: 99/99 checks, 101 recibos autenticados. `PROGRESS.md` foi
+verificação completa: 99/99 checks, 101 recibos autenticados. `docs/history/PROGRESS-phase2.md` foi
 regenerado pelos scripts a partir desse conjunto coerente.
 
 ## Build e emissor

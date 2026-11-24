@@ -25,8 +25,8 @@ Próximo passo proposto: backend 3DS com vídeo e som (Fase 4,
   áudio no 3DS ficam para a Fase 4.
 
 O estado de cada critério do congelamento, com números e pendências, ficou registrado
-em [PROGRESS.md](PROGRESS.md) (livro-razão da Fase 2, congelado). A auditoria do
-congelamento está em [docs/notes/freeze-audit.md](docs/notes/freeze-audit.md).
+em [docs/history/PROGRESS-phase2.md](docs/history/PROGRESS-phase2.md) (livro-razão da Fase 2, congelado). A auditoria do
+congelamento está em [docs/history/freeze-audit.md](docs/history/freeze-audit.md).
 
 ## Como funciona
 
@@ -43,7 +43,7 @@ congelamento está em [docs/notes/freeze-audit.md](docs/notes/freeze-audit.md).
    - o **legível**, com nomes e tipos do C#, que vira o código mantido depois
      do congelamento.
 
-   A amostra do modo legível fica em [docs/readable-sample/](docs/readable-sample/).
+   Para revisão externa: `python tools/make_review_bundle.py ...` (código copiado de `src/game`).
 3. **Código do jogo** (`src/game/`): a última saída do tradutor, em modo legível, é
    desde o congelamento o código-fonte do jogo, mantido à mão
    ([docs/maintaining-game-code.md](docs/maintaining-game-code.md)).
@@ -104,12 +104,12 @@ As regras completas do projeto estão em [AGENTS.md](AGENTS.md).
 
 ## Documentação
 
-- [Contrato do tradutor](docs/translator.md) e [subconjunto de C#](docs/csharp-subset.md)
+- Índice (vigente × histórico): [docs/README.md](docs/README.md)
+- Ciclo de edição do jogo: `python tools/dev.py build|run|check|routes|full|arm` ([AGENTS.md](AGENTS.md), seção 5)
 - [Manutenção do código do jogo](docs/maintaining-game-code.md)
-- [Fronteira da KairoLibrary](docs/boundary.md) e [assets](docs/assets.md)
-- [Cobertura](docs/coverage-plan.md) e [métodos nunca alcançados](docs/coverage-never-reached.md)
 - [Mudanças em relação ao original](docs/changes-from-original.md) e [backlog](docs/backlog.md)
-- Relatórios técnicos em [docs/notes/](docs/notes/)
+- [Plano das próximas fases](docs/plan-next-phases.md)
+- Registro da Fase 2 (tradutor, livro-razão, congelamento): [docs/history/](docs/history/)
 
 ## Licenças
 

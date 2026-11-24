@@ -4,7 +4,7 @@
 
 Verificação completa final: **89/89 checks PASS**, **88 recibos** conferidos
 por hash, sem perdas de métodos compilados nem retiradas de qualificação sob
-o mesmo juiz. O recibo é config/phase2-verification.json; PROGRESS.md e os CSVs
+o mesmo juiz. O recibo é config/phase2-verification.json; docs/history/PROGRESS-phase2.md e os CSVs
 foram regenerados somente depois dos testes.
 
 | Medida | cde8988 | af66d13, consolidação inicial | 22453c7 | Atual |
@@ -26,7 +26,7 @@ diretamente ao inventário ampliado. Compilação não equivale a execução em 
 
 Portáveis: 2.617/2.618 observações qualificadas; Sin(-0) não foi normalizado.
 A fronteira conserva 252 verified, um implemented e 522 todo, de 775 símbolos.
-Estados e PROGRESS.md são gerados, não editados.
+Estados e docs/history/PROGRESS-phase2.md são gerados, não editados.
 
 ## 2. O QUE FOI FEITO NESTA RODADA
 

@@ -10,9 +10,9 @@ flutuante. O resultado do ensaio em ramo separado fica na seção 6.
 
 | Critério | Estado | Evidência |
 |---|---|---|
-| 1. Tradução completa | **cumprido** (aprovado em 2026-11-14) | `PROGRESS.md`; 1.860 métodos emitidos, 0 rejeitados, 0 slots virtuais pendentes; `config/phase2-game-translation.json` |
+| 1. Tradução completa | **cumprido** (aprovado em 2026-11-14) | `docs/history/PROGRESS-phase2.md`; 1.860 métodos emitidos, 0 rejeitados, 0 slots virtuais pendentes; `config/phase2-game-translation.json` |
 | 2. Coletor e desempenho | **cumprido** — canônico (v6, 2026-11-14) e legível (três execuções com `result.txt`, 2026-11-20; marcado pela regra do usuário) | `docs/benchmark-hardware.md`; legível: `build/c6b-sd-readable/execucao-1..3`, `tools/hardware_window_report.py` |
-| 3. Percurso completo no PC | **cumprido** (aprovado em 2026-11-16) | `PROGRESS.md` (1.044/1.248 alcançáveis); C6b: legível = canônico na união de cobertura (1.573 métodos, `build/c6b-route-compare.json`) |
+| 3. Percurso completo no PC | **cumprido** (aprovado em 2026-11-16) | `docs/history/PROGRESS-phase2.md` (1.044/1.248 alcançáveis); C6b: legível = canônico na união de cobertura (1.573 métodos, `build/c6b-route-compare.json`) |
 | 4a. Fidelidade do código gerado | **em andamento** | regra de ponto flutuante confirmada em emulador Android ARM; `ref` de campo nulo e `JMath.Sin(-0)` decididos; `BeforeFieldInit` e construtores iguais ao Mono (`type-init-translated`); falta a repetição em aparelho Android (`docs/notes/criterion4a-status.md`) |
 | 4b. Telas | movido para a Fase 4 (decisão de 2026-11-16) | — |
 | 5. Código legível e aprovado | **cumprido** (marcado pela regra do usuário de 2026-11-20, com o benchmark dentro do critério 2) | `docs/notes/readable-final-pass.md` (A1–A7, C6b etapas 1–4); jogo inteiro compila no PC e no ARM, roda os roteiros do critério 3, verificação completa 126/126 |
@@ -345,6 +345,6 @@ Procedimento da seção 4, como no ensaio 3:
 | PC a partir da árvore congelada (`--frozen-diagnostic`) | partida (127 passos, 19 estados, `rs/0003`) e menu (180 passos, 331 estados, `rs/0003`) idênticos à árvore validada; 0 alertas |
 | ARM a partir da árvore congelada (`--frozen`) | `.3dsx` 7.281.448 B; código de máquina dos 5 kernels e de `TitleForm::_draw` idêntico ao da árvore validada |
 | Checks | os 25 ligados ao tradutor arquivados (`ARCHIVED_AT_FREEZE` em `tools/verify_phase2.py`, os mesmos do ensaio 3); `test_diagnostic_leaf_manifest` foi com o tradutor; entram `game-gc-map-and-roots`, `game-support-code` e `game-literals` sobre o código mantido |
-| Livro-razão | `PROGRESS.md` e `config/phase2-*` ficam como registro da Fase 2 (não regenerados) |
+| Livro-razão | `docs/history/PROGRESS-phase2.md` e `config/phase2-*` ficam como registro da Fase 2 (não regenerados) |
 | Regras | `AGENTS.md` e `CLAUDE.md` atualizados para a segunda metade |
 | Nota da versão | `docs/release-notes/v1.0.0-faithful.md` |

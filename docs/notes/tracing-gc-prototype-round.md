@@ -2,7 +2,7 @@
 
 ## 1. PROGRESSO
 
-Consolidacao publicada: **d3420d2**, sucessor de 009287d, com **109/109 checks PASS** e gate de conteudo **1.202 entradas / zero violacoes**. Inclui buffer de verificacao de assets no heap, resolucao de caminhos SD com fallback e cache autenticado do auditor Android. PROGRESS.md foi regenerado pela verificacao.
+Consolidacao publicada: **d3420d2**, sucessor de 009287d, com **109/109 checks PASS** e gate de conteudo **1.202 entradas / zero violacoes**. Inclui buffer de verificacao de assets no heap, resolucao de caminhos SD com fallback e cache autenticado do auditor Android. docs/history/PROGRESS-phase2.md foi regenerado pela verificacao.
 
 **Parada pelo item 2g:** nenhum dos quatro kernels com referencias atingiu razao coletor proprio/Mono <= 1. O runtime/emissor de producao nao foram convertidos. A elisao metodo a metodo nao foi generalizada. Experimento e este relatorio ficam locais; nao houve segundo checkpoint apos a consolidacao.
 

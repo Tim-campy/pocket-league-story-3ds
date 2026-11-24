@@ -530,9 +530,9 @@
   },
   "native_concurrent_fields": {
     "status": "PASS",
-    "assertions": 727,
+    "assertions": 706,
     "writer_iterations": 2000,
-    "collections_while_writer_registered": 104,
+    "collections_while_writer_registered": 101,
     "whole_method_lock": false,
     "game_boot": false
   },
@@ -639,7 +639,7 @@
   },
   "native_executable": {
     "path": "build/forms-tests/forms-fixtures.exe",
-    "sha256": "089e0ada462996e3616909d54768689433a47e11b85aa3d894e38370200f9985"
+    "sha256": "1e5a3341576c934394d842678deec1edf281bd676a0a780c1e086fe6a8fe735f"
   },
   "limits": [
     "KairoBase and SurfaceManager null, same-thread source fixtures; Execute and OnDraw require explicit execution bridge.",

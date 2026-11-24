@@ -56,8 +56,8 @@ consolidação. O rascunho local translator/bootstrap_source.py permanece fora
 do checkpoint até ser integrado e testado com sua definição. Nenhum novo corpo
 de boot foi introduzido para antecipar a próxima etapa.
 
-Provas: config/phase2-verification.json, config/phase2-checkpoint-comparison.json,
-config/phase2-progress.json e os recibos individuais. PROGRESS.md e CSVs foram
+Provas: config/phase2-verification.json, docs/history/config/phase2-checkpoint-comparison.json,
+docs/history/config/phase2-progress.json e os recibos individuais. docs/history/PROGRESS-phase2.md e CSVs foram
 regenerados pelos scripts. A revisão específica da licença da colação e a
 continuidade do boot ocorrerão depois deste checkpoint.
 

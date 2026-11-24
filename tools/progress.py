@@ -144,7 +144,7 @@ def assets_document(asset,phase2=None):
         '**A lista completa por classe, sem reproduzir os valores, está em '
         '[config/visible-text-counts.csv](../config/visible-text-counts.csv)**. '
         '[Metodologia e fixtures](csharp-subset.md). A decisão posterior do usuário permite os literais já presentes no C# reconstruído no C++ gerado. Textos, tabelas e fontes provenientes dos assets continuam exclusivamente no pipeline do APK próprio. '
-        'Language._translateText conserva sua lógica e recebe a tabela dos assets. O tradutor existe e sua cobertura comprovada é relatada em PROGRESS.md; tradução completa e boot ainda não foram alcançados.','',
+        'Language._translateText conserva sua lógica e recebe a tabela dos assets. O tradutor existe e sua cobertura comprovada é relatada em docs/history/PROGRESS-phase2.md; tradução completa e boot ainda não foram alcançados.','',
         '## Reprodução e provas','',
         '```powershell',"python tools/extract-assets --apk 'CAMINHO_DO_SEU_APK' --extract",
         "python tools/inventory_custom_formats.py --apk 'CAMINHO_DO_SEU_APK'",
@@ -215,7 +215,7 @@ def main():
         '- Classificação de visibilidade de 1.770 literais App e 2.837 Kairo ainda UNKNOWN; nenhum valor foi publicado.',
         '- Memória de pico, atlas de fontes e tempo de CPU ainda não medidos; o 3DS antigo não foi descartado.',
         '- SDL2 SDK, devkitPro/devkitARM/libctru/citro2d/citro3d/tex3ds e Azahar não encontrados; instalação depende de autorização futura.',
-        '', 'Documentos: [fronteira](docs/boundary.md), [C#](docs/csharp-subset.md), [assets](docs/assets.md), '
+        '', 'Documentos: [fronteira](docs/boundary.md), [C#](docs/history/csharp-subset.md), [assets](docs/assets.md), '
         '[toolchain](docs/toolchain.md), [serviços offline](docs/notes/offline-behavior.md).','']
     if phase2:
         replace={
@@ -242,7 +242,7 @@ def main():
             'translated significa apenas que o corpo C++ gerado compilou em objeto, com produtor, fontes, headers, compilador e objeto ancorados por hash. Não comprova link completo, bootstrap executado, chamada de todas as APIs ou comportamento em aparelho. runs depende dos recibos de retorno normal; verified exige comparação de comportamento. As contagens atuais estão no inventário acima.',
             'O vínculo do jogo usa tipo declarante, nome, todos os tipos de parâmetros e retorno; construtores retornam System.Void. Não há vínculo só por aridade. Correspondências ambíguas, assinaturas abertas e DocIDs sem identidade IL única ficam registrados como UNKNOWN no recibo. Métodos gerados/auxiliares do IL não são contados como traduzidos por haver uma declaração fonte relacionada.',
             'Provas de framework/SDL, fontes e áudio não equivalem a bindings do jogo. Somente IDs explícitos exercitados por um oráculo de API promovem a fronteira. Alterações transitórias em produtores/headers/gerados suspendem a publicação inteira; preserva-se o último conjunto consistente de documentos/CSVs até os recibos serem regenerados.',
-            '', 'Recibos e hashes conferidos pelo gerador: [resumo](config/phase2-progress.json), [portáveis](config/phase2-translation.json), [diferencial](config/phase2-portable-differential.json), [imagens](config/phase2-image-tests.json).', '']
+            '', 'Recibos e hashes conferidos pelo gerador: [resumo](docs/history/config/phase2-progress.json), [portáveis](config/phase2-translation.json), [diferencial](docs/history/config/phase2-portable-differential.json), [imagens](config/phase2-image-tests.json).', '']
     if phase2:
         if phase2.get('culture'):
             culture=phase2['culture']
@@ -254,7 +254,7 @@ def main():
                 lines.append(f"  Payload de tabelas: {proof['logical_table_payload_bytes']} bytes ({proof['mit_resource_bytes']} MIT/X11 + {proof['lgpl_character_bytes']} GNU Library GPLv2); licenças/proveniência separadas em [THIRD_PARTY.md](THIRD_PARTY.md). Footprint no 3DS não medido.")
         lines.append('')
     assets_document(a,phase2)
-    (ROOT/'PROGRESS.md').write_text('\n'.join(lines),encoding='utf-8',newline='\n')
+    (ROOT/'docs/history/PROGRESS-phase2.md').write_text('\n'.join(lines),encoding='utf-8',newline='\n')
     print(json.dumps(dict(boundary_symbols=len(boundary),translation_methods=len(translation),asset_groups=len(assets),
                           boundary_states=dict(Counter(r['estado'] for r in boundary)),translation_states=dict(Counter(r['estado'] for r in translation)))))
 

@@ -1,0 +1,4 @@
+{
+  "about": "Text literals of src/game that are not in the reconstructed C#: each one was decided by the user and is recorded in docs/changes-from-original.md. tools/check_readable_literals.py accepts exactly these. Entry: {\"text\": \"...\", \"change\": \"docs/changes-from-original.md#<entry>\"}.",
+  "literals": []
+}

@@ -1,8 +1,7 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "game_generated_forward.hpp"
+
 namespace pls::game {
 namespace kairo::unity::ui::Image {
 inline constexpr pls::cs::Int32 OPT_REF = 0;
@@ -29,12 +28,18 @@ pls::cs::String GetFileFormat(pls::cs::Array<std::uint8_t> data);
 
 pls::cs::Array<pls::cs::Int32> GetPaletteInfo(pls::cs::Array<std::uint8_t> data);
 
-void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self,pls::cs::Ref<generated::java::io::InputStream> stream,pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> images);
+void LoadOptimize(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Ref<generated::java::io::InputStream> stream,
+                  pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> images);
 
-void LoadOptimizeByteArray(pls::cs::Ref<pls::kairo::Image> self,pls::cs::Array<std::uint8_t> data,pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> images);
+void LoadOptimizeByteArray(pls::cs::Ref<pls::kairo::Image> self, pls::cs::Array<std::uint8_t> data,
+                           pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> images);
 
-pls::cs::Array<std::uint8_t> OverwritePaletteData(pls::cs::Array<std::uint8_t> image,pls::cs::Array<std::uint8_t> palette,pls::cs::Int32 imageOffset,pls::cs::Int32 paletteOffset,pls::cs::Int32 colors);
+pls::cs::Array<std::uint8_t> OverwritePaletteData(pls::cs::Array<std::uint8_t> image,
+                                                  pls::cs::Array<std::uint8_t> palette,
+                                                  pls::cs::Int32 imageOffset, pls::cs::Int32 paletteOffset,
+                                                  pls::cs::Int32 colors);
 
-pls::cs::Array<std::uint8_t> OverwritePaletteData(pls::cs::Array<std::uint8_t> image,pls::cs::Array<std::uint8_t> palette);
+pls::cs::Array<std::uint8_t> OverwritePaletteData(pls::cs::Array<std::uint8_t> image,
+                                                  pls::cs::Array<std::uint8_t> palette);
 } // namespace kairo::unity::ui::Image
 }

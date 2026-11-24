@@ -1,26 +1,25 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "portable_generated_forward.hpp"
+
 namespace pls::generated {
 namespace java::lang {
 
 struct JRuntime : pls::cs::Object {
-void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-PLS_MANAGED_CLASS("java.lang.JRuntime", JRuntime, pls::cs::Object)
+    void trace_edges(const pls::cs::EdgeVisitor& visitor) const override;
+    PLS_MANAGED_CLASS("java.lang.JRuntime", JRuntime, pls::cs::Object)
 
-static void ensure_initialized();
+    static void ensure_initialized();
 
-static pls::cs::Ref<JRuntime>& instance();
+    static pls::cs::Ref<JRuntime>& instance();
 
-static void create_init(pls::cs::Ref<JRuntime> self);
+    static void create_init(pls::cs::Ref<JRuntime> self);
 
-static pls::cs::Ref<JRuntime> create();
+    static pls::cs::Ref<JRuntime> create();
 
-static pls::cs::Ref<JRuntime> GetRuntime();
+    static pls::cs::Ref<JRuntime> GetRuntime();
 
-void Gc();
+    void Gc();
 };
 } // namespace java::lang
 }

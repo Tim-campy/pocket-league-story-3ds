@@ -1,8 +1,7 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "game_generated_forward.hpp"
+
 namespace pls::game {
 namespace kairo::unity::util::Language {
 inline constexpr pls::cs::Int32 JAPANESE = 0;
@@ -44,11 +43,12 @@ void Init();
 
 void LoadLanguagePack(pls::cs::Array<std::uint8_t> data);
 
-pls::cs::String LT(pls::cs::String text,pls::cs::String arg);
+pls::cs::String LT(pls::cs::String text, pls::cs::String arg);
 
-void MakeLangPackTemplate(bool japanese,pls::cs::Int32 version,pls::cs::String& file,pls::cs::String& data);
+void MakeLangPackTemplate(bool japanese, pls::cs::Int32 version, pls::cs::String& file,
+                          pls::cs::String& data);
 
-bool SetLanguagePack(pls::cs::String file,pls::cs::Array<std::uint8_t> data,bool save);
+bool SetLanguagePack(pls::cs::String file, pls::cs::Array<std::uint8_t> data, bool save);
 
 void SetSoftLabelTable(pls::cs::Array<pls::cs::Array<pls::cs::String>> softlabelTable);
 

@@ -1,8 +1,7 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "portable_generated_forward.hpp"
+
 namespace pls::generated {
 namespace kairo::unity::io::AssetReader {
 inline constexpr pls::cs::Int32 DPI_LDPI = 0;
@@ -20,7 +19,7 @@ pls::cs::Array<pls::cs::String>& DPI_FOLDERS();
 
 bool& encrypt_();
 
-pls::cs::Dictionary<pls::cs::String,bool>& filelist_();
+pls::cs::Dictionary<pls::cs::String, bool>& filelist_();
 
 pls::cs::String& language_();
 

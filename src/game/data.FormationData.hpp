@@ -1,54 +1,56 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "data.BaseData.hpp"
 #include "game_generated_forward.hpp"
+
 namespace pls::game {
 namespace data {
 
 struct FormationData : BaseData {
-void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-PLS_MANAGED_CLASS("data.FormationData", FormationData, BaseData)
-pls::cs::String name_{};
-pls::cs::Array<pls::cs::Array<pls::cs::Int32>> formation_{};
-pls::cs::String explain_{};
-pls::cs::Int32 state_{};
-bool new_{};
-static constexpr pls::cs::Int32 FLAG_INIT = 1;static constexpr pls::cs::Int32 FLAG_EDIT = 2;static constexpr pls::cs::Int32 STATE_NOT_FOUND = 0;static constexpr pls::cs::Int32 STATE_FOUND = 1;
-static void ensure_initialized();
+    void trace_edges(const pls::cs::EdgeVisitor& visitor) const override;
+    PLS_MANAGED_CLASS("data.FormationData", FormationData, BaseData)
+    pls::cs::String name_{};
+    pls::cs::Array<pls::cs::Array<pls::cs::Int32>> formation_{};
+    pls::cs::String explain_{};
+    pls::cs::Int32 state_{};
+    bool new_{};
+    static constexpr pls::cs::Int32 FLAG_INIT = 1;
+    static constexpr pls::cs::Int32 FLAG_EDIT = 2;
+    static constexpr pls::cs::Int32 STATE_NOT_FOUND = 0;
+    static constexpr pls::cs::Int32 STATE_FOUND = 1;
+    static void ensure_initialized();
 
-static pls::cs::Ref<main::AppData>& apdat_();
+    static pls::cs::Ref<main::AppData>& apdat_();
 
-static pls::cs::Ref<game::UserData>& udat_();
+    static pls::cs::Ref<game::UserData>& udat_();
 
-static void create_init(pls::cs::Ref<FormationData> self);
+    static void create_init(pls::cs::Ref<FormationData> self);
 
-static void create_init(pls::cs::Ref<FormationData> self,pls::cs::String src);
+    static void create_init(pls::cs::Ref<FormationData> self, pls::cs::String src);
 
-static pls::cs::Ref<FormationData> create();
+    static pls::cs::Ref<FormationData> create();
 
-static pls::cs::Ref<FormationData> create(pls::cs::String src);
+    static pls::cs::Ref<FormationData> create(pls::cs::String src);
 
-void Init();
+    void Init();
 
-void Load(pls::cs::String src);
+    void Load(pls::cs::String src);
 
-void NewGame();
+    void NewGame();
 
-void Serialize(pls::cs::Ref<generated::java::io::OutputStream> os);
+    void Serialize(pls::cs::Ref<generated::java::io::OutputStream> os);
 
-void Deserialize(pls::cs::Ref<generated::java::io::InputStream> stream);
+    void Deserialize(pls::cs::Ref<generated::java::io::InputStream> stream);
 
-void ChangeState(pls::cs::Int32 state);
+    void ChangeState(pls::cs::Int32 state);
 
-static void UpdateStamemRole();
+    static void UpdateStamemRole();
 
-static bool IsExistNew();
+    static bool IsExistNew();
 
-static void RemoveNew();
+    static void RemoveNew();
 
-bool IsNew();
+    bool IsNew();
 };
 } // namespace data
 }

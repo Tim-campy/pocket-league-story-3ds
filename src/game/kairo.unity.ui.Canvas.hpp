@@ -1,8 +1,7 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "game_generated_forward.hpp"
+
 namespace pls::game {
 namespace kairo::unity::ui::Canvas {
 inline constexpr pls::cs::Int32 KEYID_0 = 0;
@@ -72,11 +71,12 @@ inline constexpr pls::cs::Int32 KEY_RELEASED_EVENT = 2;
 inline constexpr pls::cs::Int32 KEY_PRESSED_EVENT = 3;
 inline constexpr pls::cs::Int32 KEYBUFFER_SIZE = 60;
 
-void Fullscreen(pls::cs::Ref<pls::kairo::Canvas> self,bool enable);
+void Fullscreen(pls::cs::Ref<pls::kairo::Canvas> self, bool enable);
 
 pls::cs::Ref<ad::AdMobView> GetAdMobView(pls::cs::Ref<pls::kairo::Canvas> self);
 
-pls::cs::String ImeOnBlock(pls::cs::Ref<pls::kairo::Canvas> self,pls::cs::String text,pls::cs::Int32 displayMode,pls::cs::Int32 inputMode);
+pls::cs::String ImeOnBlock(pls::cs::Ref<pls::kairo::Canvas> self, pls::cs::String text,
+                           pls::cs::Int32 displayMode, pls::cs::Int32 inputMode);
 
 bool IsGetStatusBarHeight(pls::cs::Ref<pls::kairo::Canvas> self);
 
@@ -86,7 +86,7 @@ bool IsLinearFilterEnable(pls::cs::Ref<pls::kairo::Canvas> self);
 
 bool OpenBrowser(pls::cs::String url);
 
-void SetLinearFilterEnable(pls::cs::Ref<pls::kairo::Canvas> self,bool enable);
+void SetLinearFilterEnable(pls::cs::Ref<pls::kairo::Canvas> self, bool enable);
 
 void VersionUp(pls::cs::String url);
 

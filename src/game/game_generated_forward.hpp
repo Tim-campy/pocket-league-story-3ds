@@ -1,21 +1,23 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "game_generated_runtime.hpp"
+
 namespace pls::game {
 namespace analytics {
 
 struct AnalyticsTracker;
 } // namespace analytics
+
 namespace BuildInfos {
 
 struct BuildInfo;
 } // namespace BuildInfos
+
 namespace cfg {
 
 struct MyConfig;
 } // namespace cfg
+
 namespace data {
 
 struct BaseData;
@@ -52,6 +54,7 @@ struct TradeData;
 
 struct TrainingData;
 } // namespace data
+
 namespace form {
 
 struct BootForm;
@@ -74,6 +77,7 @@ struct SubForm;
 
 struct TitleForm;
 } // namespace form
+
 namespace game {
 
 struct Ball;
@@ -108,6 +112,7 @@ struct TPlayer;
 
 struct UserData;
 } // namespace game
+
 namespace java::lang {
 
 struct JRunnable;
@@ -116,26 +121,31 @@ struct JShort;
 
 struct JThread;
 } // namespace java::lang
+
 namespace kairo::unity::ad {
 
 struct AdMobView;
 } // namespace kairo::unity::ad
+
 namespace kairo::unity::analytics {
 
 struct AnalyticsTracker_AnalyticsData;
 } // namespace kairo::unity::analytics
+
 namespace kairo::unity::graphics {
 
 struct Rectangle;
 
 struct RectangleF;
 } // namespace kairo::unity::graphics
+
 namespace kairo::unity::io {
 
 struct Http_HttpThread;
 
 struct HttpObject;
 } // namespace kairo::unity::io
+
 namespace kairo::unity::panel {
 
 struct Button;
@@ -148,6 +158,7 @@ struct Label;
 
 struct TextBox;
 } // namespace kairo::unity::panel
+
 namespace kairo::unity::surface {
 
 struct SurfaceBase;
@@ -166,10 +177,12 @@ struct TouchEvent;
 
 struct TouchOption;
 } // namespace kairo::unity::surface
+
 namespace kairo::unity::system::appli {
 
 struct GameAppli;
 } // namespace kairo::unity::system::appli
+
 namespace kairo::unity::system {
 
 struct GameDataRecord;
@@ -186,26 +199,31 @@ struct KairoBase_ConnectTask;
 
 struct KairoBase_KairoDummy;
 } // namespace kairo::unity::system
+
 namespace kairo::unity::system::lineup::ui {
 
 struct LineupData;
 
 struct LineupManager;
 } // namespace kairo::unity::system::lineup::ui
+
 namespace kairo::unity::system::notification::ui {
 
 struct NotifyManager;
 } // namespace kairo::unity::system::notification::ui
+
 namespace kairo::unity::system::payment {
 
 struct IllegalPurchaseException;
 
 struct PaymentDataRecord;
 } // namespace kairo::unity::system::payment
+
 namespace kairo::unity::system::tapjoy::ui {
 
 struct ITapjoy;
 } // namespace kairo::unity::system::tapjoy::ui
+
 namespace kairo::unity::ui {
 
 struct Balloon;
@@ -242,6 +260,7 @@ struct TextLayout_TextBlock;
 
 struct UIException;
 } // namespace kairo::unity::ui
+
 namespace kairo::unity::util {
 
 struct KairoException;
@@ -254,10 +273,12 @@ struct NotPermitException;
 
 struct SecureByteArray;
 } // namespace kairo::unity::util
+
 namespace kfw::panel {
 
 struct MainPanel;
 } // namespace kfw::panel
+
 namespace main {
 
 struct AppData;
@@ -268,14 +289,17 @@ struct Main;
 
 struct WebBox;
 } // namespace main
+
 namespace panel {
 
 struct MainPanel;
 } // namespace panel
+
 namespace PlsPortGeneratedBootstrap {
 
 struct Source_ImageTaskState;
 } // namespace PlsPortGeneratedBootstrap
+
 namespace surface {
 
 struct GamePad;
@@ -288,10 +312,12 @@ struct TouchEffect;
 
 struct TouchEffectManager;
 } // namespace surface
+
 namespace system::billing {
 
 struct MyBilling;
 } // namespace system::billing
+
 namespace system::billing::ui {
 
 struct ApplyTask;
@@ -308,6 +334,7 @@ struct Receipt;
 
 struct StoreBase;
 } // namespace system::billing::ui
+
 namespace system::billing::util {
 
 struct IabHelper;
@@ -320,6 +347,7 @@ struct Purchase;
 
 struct SkuDetails;
 } // namespace system::billing::util
+
 namespace system::form {
 
 struct BillingForm;
@@ -342,10 +370,12 @@ struct MatchForm_UserRecord;
 
 struct RestoreForm;
 } // namespace system::form
+
 namespace system::friend_ {
 
 struct MyFriend;
 } // namespace system::friend_
+
 namespace system::friend_::ui {
 
 struct Friend;
@@ -354,38 +384,46 @@ struct FriendData;
 
 struct FriendPlayTimeData;
 } // namespace system::friend_::ui
+
 namespace system {
 
 struct KairoService;
 
 struct KairoText;
 } // namespace system
+
 namespace system::lineup {
 
 struct MyLineup;
 } // namespace system::lineup
+
 namespace system::notification {
 
 struct MyNotify;
 } // namespace system::notification
+
 namespace system::panel {
 
 struct InputPanel;
 } // namespace system::panel
+
 namespace system::surface {
 
 struct GameBanner;
 } // namespace system::surface
+
 namespace system::tapjoy {
 
 struct MyTapjoy;
 } // namespace system::tapjoy
+
 namespace system::tapjoy::ui {
 
 struct Tapjoy;
 } // namespace system::tapjoy::ui
 
 struct TJPlacement;
+
 namespace UnityEngine::Purchasing {
 
 struct IExtensionProvider;

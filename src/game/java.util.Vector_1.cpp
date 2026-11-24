@@ -1,6 +1,4 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #include "generated/java.util.Vector_1.hpp"
 #include "java.util.Vector_1.hpp"
 #include "generated/java.util.Vector_1_templates.hpp"
@@ -12,6 +10,6 @@ namespace pls::game {
 namespace java::util::Vector {
 
 // Concrete compile receipt: M:java.util.Vector`1.Contains(`0) [int]
-template bool Contains<std::int32_t>(pls::cs::Ref<kl_util::Vector_2<std::int32_t>>,std::int32_t);
+template bool Contains<std::int32_t>(pls::cs::Ref<kl_util::Vector_2<std::int32_t>>, std::int32_t);
 } // namespace java::util::Vector
 }

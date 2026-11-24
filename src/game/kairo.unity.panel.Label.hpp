@@ -1,28 +1,27 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "game_generated_forward.hpp"
 #include "kairo.unity.panel.Component.hpp"
+
 namespace pls::game {
 namespace kairo::unity::panel {
 
 struct Label : Component {
-void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-PLS_MANAGED_CLASS("kairo.unity.panel.Label", Label, Component)
-pls::cs::String text_{};
+    void trace_edges(const pls::cs::EdgeVisitor& visitor) const override;
+    PLS_MANAGED_CLASS("kairo.unity.panel.Label", Label, Component)
+    pls::cs::String text_{};
 
-static void ensure_initialized();
+    static void ensure_initialized();
 
-static void create_init(pls::cs::Ref<Label> self,pls::cs::String text);
+    static void create_init(pls::cs::Ref<Label> self, pls::cs::String text);
 
-static pls::cs::Ref<Label> create(pls::cs::String text);
+    static pls::cs::Ref<Label> create(pls::cs::String text);
 
-pls::cs::Int32 GetWidth();
+    pls::cs::Int32 GetWidth();
 
-pls::cs::Int32 GetHeight();
+    pls::cs::Int32 GetHeight();
 
-void SetLocation(pls::cs::Int32 x,pls::cs::Int32 y);
+    void SetLocation(pls::cs::Int32 x, pls::cs::Int32 y);
 };
 } // namespace kairo::unity::panel
 }

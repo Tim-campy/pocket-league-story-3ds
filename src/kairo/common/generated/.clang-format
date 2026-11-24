@@ -1,0 +1,33 @@
+# Layout of the game code (src/game, src/kairo/common/generated). Whitespace only:
+# every option that could add, remove or reorder tokens or rewrite comments is off,
+# so formatting never changes the compiled code (proof: tools/cpp_tokens.py).
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 110
+NamespaceIndentation: None
+AccessModifierOffset: -4
+PointerAlignment: Left
+SpaceAfterTemplateKeyword: false
+BreakBeforeBraces: Attach
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortBlocksOnASingleLine: Never
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortLambdasOnASingleLine: Inline
+SeparateDefinitionBlocks: Always
+MaxEmptyLinesToKeep: 1
+# --- never change tokens or comments ---
+BreakStringLiterals: false
+SortIncludes: Never
+ReflowComments: false
+FixNamespaceComments: false
+InsertBraces: false
+RemoveBracesLLVM: false
+RemoveParentheses: Leave
+RemoveSemicolon: false
+QualifierAlignment: Leave
+IntegerLiteralSeparator:
+  Binary: 0
+  Decimal: 0
+  Hex: 0

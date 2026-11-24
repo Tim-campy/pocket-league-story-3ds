@@ -1,8 +1,7 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "game_generated_forward.hpp"
+
 namespace pls::game {
 namespace kairo::unity::ui::Graphics {
 inline constexpr pls::cs::Int32 AQUA = -16711681;
@@ -41,29 +40,42 @@ inline constexpr pls::cs::Int32 BLEND_COLOR = 1;
 inline constexpr pls::cs::Int32 BLEND_LIGHT = 2;
 inline constexpr pls::cs::Int32 BLEND_GRAYSCALE = 3;
 
-void DrawRect2(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::Single x,pls::cs::Single y,pls::cs::Single width,pls::cs::Single height);
+void DrawRect2(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Single x, pls::cs::Single y,
+               pls::cs::Single width, pls::cs::Single height);
 
-void DrawStringTextFormatStringFloat(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::Ref<TextFormat> lf,pls::cs::String str,pls::cs::Single x,pls::cs::Single y);
+void DrawStringTextFormatStringFloat(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextFormat> lf,
+                                     pls::cs::String str, pls::cs::Single x, pls::cs::Single y);
 
-void DrawString(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::Int64 v,pls::cs::Single x,pls::cs::Single y,pls::cs::Int32 anchor);
+void DrawString(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Int64 v, pls::cs::Single x,
+                pls::cs::Single y, pls::cs::Int32 anchor);
 
-void DrawString(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::Int64 v,pls::cs::Single x,pls::cs::Single y);
+void DrawString(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Int64 v, pls::cs::Single x,
+                pls::cs::Single y);
 
-void DrawString2(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::Ref<TextFormat> lf,pls::cs::String str,pls::cs::Single x,pls::cs::Single y,pls::cs::Int32 anchor);
+void DrawString2(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextFormat> lf, pls::cs::String str,
+                 pls::cs::Single x, pls::cs::Single y, pls::cs::Int32 anchor);
 
-void DrawString2(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::String str,pls::cs::Single x,pls::cs::Single y,pls::cs::Int32 anchor);
+void DrawString2(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::String str, pls::cs::Single x,
+                 pls::cs::Single y, pls::cs::Int32 anchor);
 
-void DrawString2(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::String str,pls::cs::Single x,pls::cs::Single y);
+void DrawString2(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::String str, pls::cs::Single x,
+                 pls::cs::Single y);
 
-void DrawStringBold(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::Ref<TextFormat> lf,pls::cs::String str,pls::cs::Single x,pls::cs::Single y,pls::cs::Int32 color,pls::cs::Int32 anchor);
+void DrawStringBold(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextFormat> lf, pls::cs::String str,
+                    pls::cs::Single x, pls::cs::Single y, pls::cs::Int32 color, pls::cs::Int32 anchor);
 
-void DrawStringBold(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::String str,pls::cs::Single x,pls::cs::Single y,pls::cs::Int32 color,pls::cs::Int32 anchor);
+void DrawStringBold(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::String str, pls::cs::Single x,
+                    pls::cs::Single y, pls::cs::Int32 color, pls::cs::Int32 anchor);
 
-void DrawStringBold2(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::Ref<TextFormat> lf,pls::cs::String str,pls::cs::Single x,pls::cs::Single y,pls::cs::Int32 color,pls::cs::Int32 anchor);
+void DrawStringBold2(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextFormat> lf,
+                     pls::cs::String str, pls::cs::Single x, pls::cs::Single y, pls::cs::Int32 color,
+                     pls::cs::Int32 anchor);
 
-void DrawText(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::Ref<TextFormat> lf,pls::cs::String str,pls::cs::Single x,pls::cs::Single y,pls::cs::Single width,pls::cs::Int32 anchor);
+void DrawText(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::Ref<TextFormat> lf, pls::cs::String str,
+              pls::cs::Single x, pls::cs::Single y, pls::cs::Single width, pls::cs::Int32 anchor);
 
-void DrawText(pls::cs::Ref<pls::kairo::Graphics> self,pls::cs::String str,pls::cs::Single x,pls::cs::Single y,pls::cs::Single width,pls::cs::Int32 anchor);
+void DrawText(pls::cs::Ref<pls::kairo::Graphics> self, pls::cs::String str, pls::cs::Single x,
+              pls::cs::Single y, pls::cs::Single width, pls::cs::Int32 anchor);
 
 pls::cs::Int32 GetColorOfName(pls::cs::Int32 name);
 

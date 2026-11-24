@@ -13,7 +13,7 @@ A field missing from ``trace_edges`` lets the collector free an object that is
 still reachable; this check catches it when the C++ is edited by hand after the
 freeze (it becomes mandatory then). Run:
     python tests/repository/test_gc_field_tracing.py [folder ...]
-Default folders: docs/readable-sample (and src/game when it holds readable units).
+Default folders: src/game and src/kairo/common/generated.
 """
 from pathlib import Path
 import re
@@ -54,12 +54,30 @@ def _body(text, start):
     raise ValueError('unbalanced braces')
 
 
+def _without_macro_calls(body):
+    """Drop support-macro invocations, which end without ';' and would otherwise be
+    glued to the next declaration (hiding the first field after them; found 2026-11-23)."""
+    out, i = [], 0
+    for m in re.finditer(r'\bPLS_MANAGED_CLASS\s*\(', body):
+        if m.start() < i:
+            continue
+        depth, j = 0, m.end() - 1
+        while j < len(body):
+            depth += {'(': 1, ')': -1}.get(body[j], 0)
+            j += 1
+            if depth == 0:
+                break
+        out.append(body[i:m.start()]); i = j
+    out.append(body[i:])
+    return ''.join(out)
+
+
 def struct_fields(header):
     """{struct: [(type, name)]} for instance data members of each struct."""
     result = {}
     for match in re.finditer(r'\bstruct\s+(\w+)\s*(?::[^{]*)?\{', header):
         name = match.group(1)
-        body = _body(header, match.start())
+        body = _without_macro_calls(_body(header, match.start()))
         fields = []
         depth = 0
         # One declaration per ';' at nesting depth 0 (a wrapped type spans lines).
@@ -129,11 +147,8 @@ def check_folder(folder):
 
 
 def default_folders():
-    folders = [ROOT / 'docs/readable-sample']
-    game = ROOT / 'src/game'
-    if any(game.glob('*.hpp')) and 'readable mode' in next(game.glob('*.hpp')).read_text(encoding='utf-8')[:200]:
-        folders.append(game)
-    return folders
+    # The maintained game code (since v1.0.0-faithful); no dependency on header text.
+    return [ROOT / 'src/game', ROOT / 'src/kairo/common/generated']
 
 
 class GcFieldTracing(unittest.TestCase):

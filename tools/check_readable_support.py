@@ -33,6 +33,17 @@ def classes(text):
         yield m.group(1), m.group(2), text[m.end():i - 1]
 
 
+def declared_name(segment):
+    """Name of the function whose parameter list ends at the last ')' of segment."""
+    end = segment.rindex(')'); depth = 0
+    for i in range(end, -1, -1):
+        depth += {')': 1, '(': -1}.get(segment[i], 0)
+        if depth == 0:
+            m = re.search(r'(\w+)\s*$', segment[:i])
+            return m.group(1) if m else None
+    return None
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--readable', type=Path, help='Readable tree with game/ and include/generated/ (default: src/game and src/kairo/common/generated)')
@@ -45,12 +56,16 @@ def main():
             for name, bases, body in classes(text):
                 report['classes'] += 1
                 where = f'{header.relative_to(header.parents[1]).as_posix()}: {name}'
-                identity = re.search(r'PLS_MANAGED_CLASS\((?:\([^;]*?\)|"[^"]*"), (\w+),', body)
+                identity = re.search(r'PLS_MANAGED_CLASS\(\s*(?:\([^;]*?\)|"[^"]*")\s*,\s*(\w+)\s*,', body)
                 if not identity or identity.group(1) != name:
                     report['problems'].append(where + ': no PLS_MANAGED_CLASS naming the class'); continue
                 table = re.search(r'PLS_DELEGATE_SLOTS\((.*?)\);', body, re.S)
-                methods = set(re.findall(r'\{"[^"]*", "M:[^"(]*\.([^".(]+)(?:\(|")', table.group(1))) if table else set()
-                for member in re.findall(r'^[^\n;{}]*?\b(\w+)\([^;{}\n]*\)[ \t]*(?:const[ \t]*)?override[ \t]*;', body, re.M):
+                methods = set(re.findall(r'\{\s*"[^"]*"\s*,\s*"M:[^"(]*\.([^".(]+)(?:\(|")', table.group(1))) if table else set()
+                # Declarations may span lines (clang-format): the name is the identifier before the
+                # parameter list closed by the last ")" of the declaration.
+                overrides = [declared_name(seg) for seg in
+                             re.findall(r'(?<=[;{}])([^;{}]*?\)\s*(?:const\s*)?)override\s*;', body)]
+                for member in [m for m in overrides if m]:
                     if member in RUNTIME_HOOKS: continue
                     report['slots'] += 1
                     if member not in methods and not any(member.startswith(m) for m in methods):

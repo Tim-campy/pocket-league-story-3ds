@@ -1,8 +1,7 @@
-// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
-// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
-// Rules: docs/maintaining-game-code.md
+// From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "game_generated_forward.hpp"
+
 namespace pls::game {
 namespace kairo::unity::io::Http {
 inline constexpr pls::cs::Int32 HTTP_OK = 0;
@@ -20,9 +19,10 @@ pls::cs::List<pls::cs::Ref<Http_HttpThread>>& httpThreads_();
 
 pls::cs::Ref<pls::cs::Object>& lock_();
 
-pls::cs::Array<pls::cs::Array<std::uint8_t>> Connect(pls::cs::String url,pls::cs::Array<std::uint8_t> send,bool check,bool split);
+pls::cs::Array<pls::cs::Array<std::uint8_t>> Connect(pls::cs::String url, pls::cs::Array<std::uint8_t> send,
+                                                     bool check, bool split);
 
-pls::cs::Array<std::uint8_t> Connect(pls::cs::String url,pls::cs::Array<std::uint8_t> send,bool check);
+pls::cs::Array<std::uint8_t> Connect(pls::cs::String url, pls::cs::Array<std::uint8_t> send, bool check);
 
 bool get_IsRetryEnable();
 

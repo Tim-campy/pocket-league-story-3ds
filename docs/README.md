@@ -36,6 +36,7 @@ atualize, só leia.
 | [notes/route-runner-design.md](notes/route-runner-design.md) | formato dos roteiros (`tests/routes/*.route`) |
 | [notes/verification-groups.md](notes/verification-groups.md) | grupos da verificação completa |
 | [notes/rebuild-times.md](notes/rebuild-times.md) | tempos de recompilação e propostas |
+| [notes/route-speed-2026-11-24.md](notes/route-speed-2026-11-24.md) | tempo dos roteiros: medição, `--jobs`, `--smoke`, `--affected`, suspensão |
 | [notes/formatting-2026-11-23.md](notes/formatting-2026-11-23.md), [notes/pls-api-2026-11-24.md](notes/pls-api-2026-11-24.md) | como provar que uma mudança é só de forma (tokens, objetos), com os dois casos feitos |
 | [notes/gc-root-inventory.md](notes/gc-root-inventory.md), [notes/gc-stress.md](notes/gc-stress.md) | raízes do coletor fora do jogo; modo de estresse |
 | [notes/mono-arm-float-rule.md](notes/mono-arm-float-rule.md) | a regra de ponto flutuante |

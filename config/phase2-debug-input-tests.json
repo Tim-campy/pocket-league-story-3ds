@@ -210,7 +210,7 @@
   },
   "native_executable": {
     "path": "build/debug-input-tests/debug-input-fixtures.exe",
-    "sha256": "70dfecb694d2d443be023754fda8355046c1b46fef94915d68e9feb0a3b1386d"
+    "sha256": "cf7b5079a2dd9b37b687fa609caa7e3a4f9b988f573aa1437e27ae6641a10c88"
   },
   "external_api_metadata": {
     "sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",

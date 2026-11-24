@@ -24,6 +24,26 @@ def record_attempt(attempt,history_path):
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def append_attempt(history_path,attempt):
+    """Append one attempt to the history file under an exclusive lock, re-reading it first:
+    parallel route runs (tools/run_readable_routes.py --jobs) write the same history."""
+    import msvcrt,os
+    history_path=Path(history_path);lock_path=history_path.with_name(history_path.name+'.lock')
+    with open(lock_path,'a+b')as lock:
+        for _ in range(6000):
+            try:lock.seek(0);msvcrt.locking(lock.fileno(),msvcrt.LK_NBLCK,1);break
+            except OSError:time.sleep(0.05)
+        else:raise RuntimeError('history lock busy: '+str(lock_path))
+        try:
+            history=json.loads(history_path.read_text(encoding='utf-8'))if history_path.exists()else dict(operation='generated-game-build-and-boot-attempts',attempts=[])
+            history['attempts'].append(attempt)
+            temporary=history_path.with_name(history_path.name+f'.{os.getpid()}.tmp')
+            temporary.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
+            os.replace(temporary,history_path)
+        finally:
+            lock.seek(0);msvcrt.locking(lock.fileno(),msvcrt.LK_UNLCK,1)
+
+
 def source_list_record(rows,folder=None):
     """Digest and count in the shared history; full list only in the private attempt folder."""
     canonical=json.dumps(rows,sort_keys=True,separators=(',',':'))
@@ -266,6 +286,7 @@ def main():
     parser.add_argument('--gc-stress-poison',action='store_true',help='Diagnostic runs with --gc-stress-every: poison and quarantine dead object bodies')
     parser.add_argument('--gc-stress-quarantine-mb',type=int,default=256,help='Poisoned bodies kept unreused up to this many MiB (8 GB host: keep small)')
     parser.add_argument('--trace-method',action='append',default=[],help='Diagnostic runs: print the method stack at the first call of this DocID (repeatable; reported apart from reachability alerts)')
+    parser.add_argument('--no-build',action='store_true',help='Diagnostic runs: do not configure, compile or probe; run the existing pc_game.exe (tools/run_readable_routes.py builds once, then runs in parallel)')
     parser.add_argument('--fast',action='store_true',help='Diagnostic runs with --virtual-clock only: no real-time frame pacing')
     parser.add_argument('--dual-screen',type=int,metavar='SCALE',help='Phase 3 prototype: 400x240 top + 320x240 bottom windows at this integer scale (1..6)')
     parser.add_argument('--dual-capture',metavar='DIR:EVERY',help='With --dual-screen: write both screens as BMP every N frames to DIR (keep under build/, never in Git)')
@@ -276,7 +297,7 @@ def main():
         if not args.diagnostic_route.is_file():parser.error('Route file not found')
     if args.ui_trace and(not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run):parser.error('--ui-trace requires a diagnostic run')
     if args.fast and(not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run or args.virtual_clock is None):parser.error('--fast requires a diagnostic run with --virtual-clock')
-    if not 1<=args.run_seconds<=600:parser.error('--run-seconds must be1..600')
+    if not 1<=args.run_seconds<=(3600 if args.no_build else 600):parser.error('--run-seconds must be 1..600 (1..3600 with --no-build: parallel route replays run slower per process)')
     if args.diagnostic_dismiss_popups_until_frame is not None and(not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run or not 300<=args.diagnostic_dismiss_popups_until_frame<=12000):parser.error('Popup replay requires a private run and a final frame300..12000')
     if args.diagnostic_save_from_attempt is not None and(not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run or args.diagnostic_save_from_attempt<1):parser.error('Private save reuse requires a diagnostic run and an earlier positive attempt number')
     if args.diagnostic_unlabeled_popups_only and args.diagnostic_dismiss_popups_until_frame is None:parser.error('Unlabeled-only mode requires popup replay')
@@ -343,10 +364,13 @@ def main():
     build_name='pc-frozen-diagnostic'if args.frozen_diagnostic else 'pc-readable-diagnostic'if readable_root else 'pc-diagnostic'if diagnostic_folder else 'pc'
     if args.configuration=='Release':build_name+='-release'
     folder=ROOT/'build'/build_name;folder.mkdir(parents=True,exist_ok=True)
-    prefix_probe=showincludes_prefix(folder/'compiler-prefix-probe',env)
+    if args.no_build:
+        if not (args.run and (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic)):parser.error('--no-build is for diagnostic runs')
+        if not (folder/'pc_game.exe').is_file():parser.error('--no-build needs an existing build: run without it once')
+    prefix_probe=dict(prefix='',compiler_sha256=None)if args.no_build else showincludes_prefix(folder/'compiler-prefix-probe',env)
     prefix_policy=dict(version=1,prefix=prefix_probe['prefix'],compiler_sha256=prefix_probe['compiler_sha256'])
     policy_file=folder/'compiler-prefix-policy.json'
-    clean=not policy_file.exists()or json.loads(policy_file.read_text(encoding='utf8'))!=prefix_policy
+    clean=False if args.no_build else not policy_file.exists()or json.loads(policy_file.read_text(encoding='utf8'))!=prefix_policy
     commands=[[CMAKE,'-S',ROOT,'-B',folder,'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE='+args.configuration,'-DSDL2_DIR='+str(sdk),'-DPLS_DIAGNOSTIC_GAME_DIR='+(str(diagnostic_folder)if diagnostic_folder else ''),'-DPLS_PORTABLE_GENERATED_DIR='+str(portable_dir),'-DPLS_GAME_SOURCE_DIR='+str(ROOT/'src/game'),'-DPLS_MSVC_SHOWINCLUDES_PREFIX='+prefix_probe['prefix']],
               [CMAKE,'--build',folder,'--parallel',str(build_jobs(args.jobs)),*(['--clean-first']if clean or args.fixtures_only else []),*([]if args.fixtures_only else ['--target','pc_game'])]]
     if args.fixtures_only:commands.append([CMAKE.parent/'ctest.exe','--test-dir',folder,'--output-on-failure'])
@@ -355,7 +379,9 @@ def main():
         history=json.loads(attempts.read_text(encoding='utf-8')) if attempts.exists() else dict(operation='generated-game-build-and-boot-attempts',attempts=[])
         attempt=dict(number=next_attempt_number(history,folder),configuration=args.configuration,apk_sha256=APK_SHA,generated_game_sources=source_list_record([dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted((ROOT/'src/game').rglob('*.cpp'))]),game_boot=False,title_verified=False,menu_verified=False,metrics_requested=args.metrics,metrics_recorded=False)
         attempt_folder=folder/'attempts'/str(attempt['number'])
-        attempt_folder.mkdir(parents=True,exist_ok=False)
+        for _ in range(1000):
+            try:attempt_folder.mkdir(parents=True,exist_ok=False);break
+            except FileExistsError:attempt['number']+=1;attempt_folder=folder/'attempts'/str(attempt['number'])
         if args.diagnostic_save_from_attempt is not None:
             # A readable run reuses a save from the canonical diagnostic history.
             import os
@@ -407,6 +433,7 @@ def main():
         manifest.write_text(json.dumps(inputs_before,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
         attempt['source_inputs']=dict(path=manifest.relative_to(ROOT).as_posix(),sha256=digest(manifest),files=len(inputs_before))
         attempt['generated_game_sources']=source_list_record([dict(path=p,sha256=h) for p,h in inputs_before.items() if p.startswith('src/game/')],attempt_folder)
+    if args.no_build:commands=[]
     for index,command in enumerate(commands):
         step_started=time.perf_counter_ns()
         result=subprocess.run([str(p) for p in command],cwd=ROOT,env=env,capture_output=True)
@@ -422,7 +449,7 @@ def main():
                 messages=(result.stdout+result.stderr).decode('utf-8',errors='replace')
                 diagnostics=[line for line in messages.splitlines() if re.search(r'(error [A-Z]+\d+|fatal error|undefined reference)',line)]
                 attempt.update(stage='configure-failed' if index==0 else 'compile-or-link-failed',exit_code=result.returncode,diagnostics=diagnostics[:8],log_sha256=digest(folder/f'step-{index}.log'))
-                history['attempts'].append(record_attempt(attempt,attempts));attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
+                append_attempt(attempts,record_attempt(attempt,attempts))
             raise RuntimeError(f'Native build failed; see {folder}/step-{index}.log')
     portable_unit=next(iter(sorted(portable_dir.glob('portable_generated_type_*.cpp'))),None) or next(iter(sorted(portable_dir.glob('*.cpp'))))
     required={'CMakeFiles/pls_semantics.dir/src/kairo/common/semantic_runtime.cpp.obj':ROOT/'src/kairo/common/semantic_runtime.hpp',
@@ -432,14 +459,16 @@ def main():
         game_unit=next(iter(sorted(game_folder.glob('game_generated_type_*.cpp'))),game_folder/'game_generated.cpp')
         if readable_root or args.frozen_diagnostic:game_unit=game_folder/'main.Main.cpp'  # readable units are one per class
         required['CMakeFiles/pc_game.dir/'+game_unit.relative_to(ROOT).as_posix()+'.obj']=ROOT/'src/kairo/common/semantic_runtime.hpp'
-    dependency_audit=audit_ninja_dependencies(folder,required,env)
-    policy_file.write_text(json.dumps(prefix_policy,indent=2)+'\n',encoding='utf8',newline='\n')
+    if args.no_build:dependency_audit=dict(skipped='--no-build: the executable was built and audited by the run that built it')
+    else:
+        dependency_audit=audit_ninja_dependencies(folder,required,env)
+        policy_file.write_text(json.dumps(prefix_policy,indent=2)+'\n',encoding='utf8',newline='\n')
     if not args.fixtures_only:
         inputs_after=source_snapshot(diagnostic_folder=diagnostic_folder,diagnostic_source=diagnostic_source)
         if inputs_before!=inputs_after:
             changed=sorted(p for p in set(inputs_before)|set(inputs_after) if inputs_before.get(p)!=inputs_after.get(p))
             attempt.update(stage='concurrent-source-change',exit_code=0,changed_inputs=changed,game_boot=False)
-            history['attempts'].append(record_attempt(attempt,attempts));attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
+            append_attempt(attempts,record_attempt(attempt,attempts))
             raise RuntimeError('Native inputs changed during compilation; no process was launched. Retry after the producers are stable.')
         attempt.update(stage='linked',exit_code=0,dependency_audit=dependency_audit,clean_for_dependency_policy=clean)
         if args.run:
@@ -486,13 +515,13 @@ def main():
                 try:collect(attempt,attempt_folder,history)
                 except Exception as error:
                     attempt.update(stage='execution-receipt-failed',execution_receipt_error=type(error).__name__+': '+str(error))
-                    history['attempts'].append(record_attempt(attempt,attempts));attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf8',newline='\n')
+                    append_attempt(attempts,record_attempt(attempt,attempts))
                     raise
             if args.metrics:
                 attempt['metrics_log_summary']=metric_log_summary((attempt_folder/'game-run.stderr').read_bytes())
                 attempt['metrics_recorded']=attempt['metrics_log_summary']['records']>0
                 attempt['frame_captures']=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p),bytes=p.stat().st_size)for p in sorted((attempt_folder/'frames').glob('frame-*.bmp'))]
-        history['attempts'].append(record_attempt(attempt,attempts));attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
+        append_attempt(attempts,record_attempt(attempt,attempts))
         print(json.dumps(attempt));return
     result=dict(native_fixtures='PASS',game_boot=False,title=False,menu=False,match=False,dependency_audit=dependency_audit,
                 compiler='existing MSVC',sdl2='2.32.10',game_assets_used=False)

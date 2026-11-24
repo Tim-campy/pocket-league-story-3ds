@@ -652,7 +652,7 @@
   "native_gc_thread_policy": {
     "assertions": 9,
     "worker_snapshots": 2000,
-    "collections": 19,
+    "collections": 14,
     "sticky_after_end": true,
     "snapshot_survives_overwrite": true,
     "old_target_collected_after_overwrite": true,
@@ -728,7 +728,7 @@
   "current_restored_after_nested_paint": false,
   "native_executable": {
     "path": "build/graphics-current-tests/graphics-current-fixtures.exe",
-    "sha256": "55f88791262f964a4464069250e3cc81360e67fe6652fe16ef54ad6425d025cc"
+    "sha256": "474dda1003fd42d0b12a2346eacf483d0607a6d712f4a3830865caeb13bbac9a"
   },
   "verified_boundary_ids": [],
   "limits": [

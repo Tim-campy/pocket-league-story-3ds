@@ -17,3 +17,18 @@ comentários, nomes locais) não entram: não mudam o código de máquina.
 | Largura de 400 na tela de cima | O mapa ocupa 400×240 no protótipo atual; a limitação observada em B.4 é histórica, não um bloqueio atual da gestão | B.4, 2026-11-17 | Confirmado no PC, tentativa 656 (2026-11-24); partida e CTR não verificados nessa execução |
 | L/R | Zoom no mapa (pinça sintetizada) | B.7, 2026-11-17 | Feito no protótipo PC em 2026-11-19; CTR pendente |
 | Serviços Android | Removidos, com políticas offline (registro local; cobrança indisponível sem conceder itens pagos; anúncios removidos) | decisões da Fase 2 | Feito |
+
+## Entrada independente do circle pad — 2026-11-24
+
+Autorização explícita do usuário: fornecer dois eixos inteiros por quadro na API,
+sem alterar runtime, coletor, formulários ou desenho. `read_circle_pad()` em
+`src/kairo/api/circle_pad.hpp` retorna `CirclePadState { x, y }`, na faixa
+−32767 a +32767; positivo significa direita/baixo. A zona morta SDL é 12000
+por eixo, com reescala linear do restante da faixa. I/J/K/L fornecem inclinação
+máxima; teclas opostas se cancelam. Sem produtor (nulo/CTR), o estado é zero.
+
+O PC deixa de sintetizar arraste a partir do circle pad. Este commit prepara a
+entrada; o consumo pela câmera do jogo entra no commit seguinte. L/R mantêm o
+caminho de pinça existente. Verificação: build, check, smoke e teste local dos
+65536 valores SDL (faixa, zona morta, monotonicidade e leitura atômica dos eixos).
+Não altera textos do jogo nem o formato de save.

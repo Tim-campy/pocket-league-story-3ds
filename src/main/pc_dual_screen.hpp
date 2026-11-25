@@ -5,7 +5,7 @@
 //   * bottom window 320x240 shows touchable button labels and a provisional panel;
 //   * keyboard (and an SDL game controller) mapped as 3DS buttons.
 // No generated method is called and no game state is written: buttons become
-// the Canvas keys and pointer events the original game already accepts.
+// Canvas keys, zoom pointer events, and the per-frame circle pad API.
 #include <SDL.h>
 #include <array>
 #include <cstdint>
@@ -42,7 +42,7 @@ public:
     // Keyboard/controller/bottom-window events (top-window mouse stays with the game).
     // Returns true when the event was consumed as a 3DS button.
     bool handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t top_window);
-    // Per frame: circle pad -> synthesized camera drag on the management map.
+    // Per frame: publish the circle pad sample separately from touch input.
     void update(kairo::Canvas& canvas, kairo::FormManagerBase* manager);
     void draw(kairo::Canvas& canvas, kairo::FormManagerBase* manager);
     void capture(const std::filesystem::path& folder, std::uint64_t frame, const std::vector<std::uint8_t>& top_rgba);
@@ -67,11 +67,10 @@ private:
     int resets_ = 0, last_resets_ = 0;
     bool gpad_touch_ = false;  // a bottom-screen touch is being forwarded to the game
     std::array<bool, static_cast<int>(Button::Count)> held_{};
-    std::int32_t pad_x_ = 0, pad_y_ = 0;  // circle pad, -1..1 per axis (keys) or scaled stick
-    bool dragging_ = false;
+    std::array<bool, 4> pad_keys_{}; // I, J, K, L, tracked independently
+    std::int32_t pad_x_ = 0, pad_y_ = 0; // raw controller axes
     bool pinching_ = false;
     int pinch_d_ = 0;  // distance between the two synthesized fingers
-    int drag_x_ = 0, drag_y_ = 0;
     std::int32_t pressed_soft_[3] = {0, 0, 0};  // soft key held by B, X, Y
     std::string last_action_;
     kairo::PortDialog* dialog_ = nullptr;

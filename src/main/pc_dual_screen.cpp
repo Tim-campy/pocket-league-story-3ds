@@ -8,6 +8,7 @@
 #include "font.hpp"
 #include "managed_collation.hpp"
 #include "application.hpp"
+#include "circle_pad.hpp"
 
 namespace pls::pc::dual {
 namespace {
@@ -95,6 +96,7 @@ Host::Host(int scale) : scale_(std::max(1, scale)) {
     panel_ = kairo::Image::FromRgba(bottom_width, bottom_height, std::vector<std::uint8_t>(bottom_width * bottom_height * 4));
 }
 Host::~Host() {
+    kairo::detail::publish_circle_pad({});
     if (controller_) SDL_GameControllerClose(controller_);
     if (renderer_) SDL_DestroyRenderer(renderer_);
     if (window_) SDL_DestroyWindow(window_);
@@ -146,10 +148,10 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
         if (event.key.repeat) return key_button(event.key.keysym.sym, button) || event.key.keysym.sym == SDLK_i || event.key.keysym.sym == SDLK_j || event.key.keysym.sym == SDLK_k || event.key.keysym.sym == SDLK_l;
         const bool down = event.type == SDL_KEYDOWN;
         const auto sym = event.key.keysym.sym;
-        if (sym == SDLK_i) { pad_y_ = down ? -1 : (pad_y_ == -1 ? 0 : pad_y_); return true; }
-        if (sym == SDLK_k) { pad_y_ = down ? 1 : (pad_y_ == 1 ? 0 : pad_y_); return true; }
-        if (sym == SDLK_j) { pad_x_ = down ? -1 : (pad_x_ == -1 ? 0 : pad_x_); return true; }
-        if (sym == SDLK_l) { pad_x_ = down ? 1 : (pad_x_ == 1 ? 0 : pad_x_); return true; }
+        if (sym == SDLK_i) { pad_keys_[0] = down; return true; }
+        if (sym == SDLK_j) { pad_keys_[1] = down; return true; }
+        if (sym == SDLK_k) { pad_keys_[2] = down; return true; }
+        if (sym == SDLK_l) { pad_keys_[3] = down; return true; }
         if (!key_button(sym, button)) return false;
         press(button, down, canvas);
         return true;
@@ -160,8 +162,15 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
         press(button, event.type == SDL_CONTROLLERBUTTONDOWN, canvas);
         return true;
     case SDL_CONTROLLERAXISMOTION:
-        if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) pad_x_ = event.caxis.value > 12000 ? 1 : event.caxis.value < -12000 ? -1 : 0;
-        if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) pad_y_ = event.caxis.value > 12000 ? 1 : event.caxis.value < -12000 ? -1 : 0;
+        if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) pad_x_ = event.caxis.value;
+        if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) pad_y_ = event.caxis.value;
+        return true;
+    case SDL_CONTROLLERDEVICEREMOVED:
+        if (controller_ && event.cdevice.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller_))) {
+            SDL_GameControllerClose(controller_); controller_ = nullptr;
+            pad_x_ = pad_y_ = 0;
+            kairo::detail::publish_circle_pad({});
+        }
         return true;
     case SDL_CONTROLLERDEVICEADDED:
         if (!controller_) controller_ = SDL_GameControllerOpen(event.cdevice.which);
@@ -194,6 +203,10 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
     case SDL_MOUSEMOTION:
         return event.motion.windowID != top_window;
     case SDL_WINDOWEVENT:
+        if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+            pad_keys_.fill(false); pad_x_ = pad_y_ = 0;
+            kairo::detail::publish_circle_pad({});
+        }
         return event.window.windowID != top_window;
     default:
         return false;
@@ -214,32 +227,16 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
             if (last != text) { last = text; std::fprintf(stderr, "PLS_LAYOUT %s\n", text); }
         }
     }
-    // Circle pad (option i of the feasibility study): the drag the original map
-    // accepts (GameForm.OnTouchCamera: DOWN, GRID_DRAG beyond 4 px, UP), started at
-    // the view centre so that no CLICK is produced. Only while the map is on top.
     auto top = manager ? manager->GetTopForm() : nullptr;
     const bool map = top && top->managed_type_name().find("GameForm") != std::string::npos;
-    const bool moving = map && (pad_x_ || pad_y_);
-    using Kind = platform::Input::Kind;
-    if (moving) {
-        constexpr int cx = top_width / 2, cy = 23 + (top_height - 23) / 2, step = 6;
-        if (!dragging_) {
-            dragging_ = true; drag_x_ = cx; drag_y_ = cy;
-            canvas.host_event(platform::Input{Kind::pointer_down, drag_x_, drag_y_});
-            // First move goes past the 4 px click threshold at once.
-            drag_x_ -= pad_x_ * 5; drag_y_ -= pad_y_ * 5;
-        } else { drag_x_ -= pad_x_ * step; drag_y_ -= pad_y_ * step; }
-        canvas.host_event(platform::Input{Kind::pointer_move, drag_x_, drag_y_});
-        // Re-centre before the pointer leaves the top screen.
-        if (drag_x_ < 8 || drag_x_ > top_width - 8 || drag_y_ < 31 || drag_y_ > top_height - 8) {
-            canvas.host_event(platform::Input{Kind::pointer_up, drag_x_, drag_y_});
-            dragging_ = false;
-        }
-        last_action_ = "circle pad";
-    } else if (dragging_) {
-        canvas.host_event(platform::Input{Kind::pointer_up, drag_x_, drag_y_});
-        dragging_ = false;
-    }
+    const int key_x = int(pad_keys_[3]) - int(pad_keys_[1]);
+    const int key_y = int(pad_keys_[2]) - int(pad_keys_[0]);
+    const kairo::CirclePadState pad{
+        pad_keys_[1] || pad_keys_[3] ? key_x * kairo::circle_pad_max : kairo::normalize_circle_pad_axis(pad_x_),
+        pad_keys_[0] || pad_keys_[2] ? key_y * kairo::circle_pad_max : kairo::normalize_circle_pad_axis(pad_y_)};
+    kairo::detail::publish_circle_pad(dialog_ ? kairo::CirclePadState{} : pad);
+    const bool moving = map && (pad.x || pad.y);
+    if (moving) last_action_ = "circle pad";
     // L/R (decision B.7 of 2026-11-17): the two-finger pinch the original map
     // accepts (SurfaceBase pinch -> GameForm.OnTouchCamera case 12, pinchScaleValue_),
     // centred on the view: R spreads the fingers (zoom in), L brings them closer.
@@ -258,7 +255,7 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
             if (button != Button::Count && (frame == first || frame == last + 1)) held_[static_cast<int>(button)] = frame == first;
         }
     }
-    const int zoom = map && !dragging_ ? (held_[static_cast<int>(Button::R)] ? 1 : 0) - (held_[static_cast<int>(Button::L)] ? 1 : 0) : 0;
+    const int zoom = map && !moving ? (held_[static_cast<int>(Button::R)] ? 1 : 0) - (held_[static_cast<int>(Button::L)] ? 1 : 0) : 0;
     constexpr int pcx = top_width / 2, pcy = 23 + (top_height - 23) / 2;
     auto pinch_event = [&](std::int32_t action, bool two) {
         auto ids = two ? cs::Array<std::int32_t>::from({0, 1}) : cs::Array<std::int32_t>::from({0});

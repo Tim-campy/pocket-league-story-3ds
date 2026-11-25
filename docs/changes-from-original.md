@@ -12,7 +12,7 @@ comentários, nomes locais) não entram: não mudam o código de máquina.
 | Registro de eventos com custo do fim do mês | O registro de eventos passa a incluir o custo de fim de mês | B.5, 2026-11-17 | Fase 3, etapa 2 (pendente) |
 | Idioma padrão | Console em idioma diferente de japonês e inglês inicia em inglês | B.6, 2026-11-17 | Fase 3 (pendente; a escolha atual do idioma está em `docs/design/`) |
 | Botões do 3DS | B aciona só o rótulo de voltar e não age no mapa nem na partida; START abre o diálogo de encerramento (`DoTerminationDialog`), inclusive no título | B.2, 2026-11-17 | Protótipo da etapa 1 (`src/main/pc_dual_screen.cpp`, feito) |
-| Circle pad | Câmera independente na gestão; cursor fica oculto ao ultrapassar a margem e acompanha logicamente o centro; primeira entrada de cursor apenas o revela; direcional rola continuamente na margem; sem ação na partida | B.1 e decisões de 2026-11-24/25 | Etapa 2 no PC; entrada CTR neutra até a Fase 4; regras finais abaixo |
+| Circle pad | Câmera independente na gestão; cursor fica oculto ao ultrapassar a margem e acompanha logicamente o centro; direcional revela e move, A apenas revela; direcional rola continuamente na margem; sem ação na partida | B.1 e decisões de 2026-11-24/25 | Etapa 2 no PC; entrada CTR neutra até a Fase 4; regras finais abaixo |
 | Barra de rótulos (`GamePad`) | Vai para a tela de baixo | B.3, 2026-11-17 | Feito no protótipo PC em 2026-11-20; confirmado na tentativa 656; CTR pendente |
 | Largura de 400 na tela de cima | O mapa ocupa 400×240 no protótipo atual; a limitação observada em B.4 é histórica, não um bloqueio atual da gestão | B.4, 2026-11-17 | Confirmado no PC, tentativa 656 (2026-11-24); partida e CTR não verificados nessa execução |
 | L/R | Zoom no mapa (pinça sintetizada) | B.7, 2026-11-17 | Feito no protótipo PC em 2026-11-19; CTR pendente |
@@ -195,6 +195,9 @@ exigem a conferência visual indicada no roteiro manual acima.
 
 ## Cursor oculto durante a exploração — 2026-11-25
 
+O bloqueio da primeira pressão do direcional descrito nesta seção foi substituído
+pelo ajuste seguinte; a ocultação e o comportamento de A continuam aprovados.
+
 Decisão do usuário após testar a rolagem contínua. Quando circle pad ou zoom
 ultrapassam a margem de 60×30, o cursor deixa de ser desenhado. Enquanto oculto,
 sua posição lógica acompanha continuamente o centro limitado às bordas do mapa,
@@ -258,3 +261,23 @@ foi corrigida a expectativa, sem mudar o jogo, e a repetição passou.
 Aceite local: build e check aprovados (185 listas, 178 classes, 296 slots,
 4231 literais, zero problemas); smoke em 212 s, 10/10 execuções, zero alertas,
 zero lacunas e nenhuma repetição por suspensão. Sem push nesta entrega.
+
+## Direcional revela e move imediatamente — 2026-11-25
+
+Decisão do usuário após testar o cursor oculto, esclarecida como movimento normal
+na primeira pressão, sem salto de um lote inteiro: o direcional revela o cursor
+no centro lógico e já executa o movimento contínuo existente no mesmo quadro.
+Segurar a seta continua o movimento/repetição normal, inclusive a rolagem suave
+na margem. A primeira pressão de A continua apenas revelando, sem abrir janela
+nem confirmar construção; A precisa ser solto antes de uma nova confirmação.
+Construção usa o mesmo movimento. A janela de demolição já aberta mantém o alvo
+fixo e congela o movimento, como antes. Sem alteração de save, textos ou velocidade.
+
+Para conferir, rode o comando de teste da seção anterior, use I/J/K/L até ocultar
+o cursor e segure uma seta: ele deve aparecer e começar a mover imediatamente.
+Oculte novamente e segure A: deve apenas aparecer. Q/W continuam dando zoom.
+
+Verificado no PC: A manteve câmera/cursor em x=1116 sem abrir janela; a primeira
+seta mantida moveu o cursor de x=732 para x=950 e iniciou a rolagem da câmera
+até x=810. Build e check passaram; smoke 10/10, zero alertas e lacunas, 172 s.
+Capturas e saves locais: `build/camera-validation/hidden-immediate-revision-r1`.

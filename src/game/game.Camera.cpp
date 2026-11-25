@@ -1584,8 +1584,8 @@ void Camera::PanManagement() {
         managementCursorRevealHeld_ = false;
     if (managementCursorHidden_ && cursorInput) {
         managementCursorHidden_ = false;
-        // Consume the whole first press, including held-key repeats.
-        managementCursorRevealHeld_ = true;
+        // Only confirmation consumes the first press; directions move immediately.
+        managementCursorRevealHeld_ = PLS_API(require(canvas_)->CheckKeyState(1048576));
         flg_disp = true;
         cursorCnt_ = 0;
         Collision(pls::cs::to_int32(require(Camera::cursor_pos())->x_),

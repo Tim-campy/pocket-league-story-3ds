@@ -19,6 +19,7 @@ atualize, só leia.
 | [backlog.md](backlog.md) | pedidos e ideias ainda não decididos (inclui reforma do coletor, A.4d/A.4e) |
 | [plan-next-phases.md](plan-next-phases.md) | proposta das Fases 4 e 5 (não executada) |
 | [design/phase4-video.md](design/phase4-video.md) | bloco de vídeo: contrato, etapas, riscos e estado da primeira entrega |
+| [notes/phase4-video-device-test.md](notes/phase4-video-device-test.md) | teste privado do título GPU no aparelho, instalação e evidências |
 | [design/phase3-decision.md](design/phase3-decision.md) | **decisão** de telas e controles do 3DS (2026-11-16) |
 | [design/phase3-prototype.md](design/phase3-prototype.md) | protótipo das duas telas no PC (`dev.py run`) |
 | [design/dialogs.md](design/dialogs.md), [design/focus.md](design/focus.md), [design/services.md](design/services.md) | decisões de diálogos, foco/suspensão e serviços removidos |

@@ -16,6 +16,16 @@ Na última rodada publicada: actions/save 95 = 1.830,8 s; lots/save 106 =
 a causa do aumento continua UNKNOWN; investigar carga, esperas e progresso
 por quadro, sem atribuir a diferença à câmera sem evidência.
 
+## Diálogo compartilhado — coordenadas de toque no PC com duas telas
+
+Inspeção de código em 2026-11-25: `PortDialog::Draw` usa as dimensões do alvo,
+mas `PortDialog::hit` usa os campos fixos 240×280. O host PC desenha esse diálogo
+na inferior 320×240 e encaminha o toque local diretamente. A reprodução
+interativa desse desvio no PC ainda não foi feita. O bloco CTR trata os botões
+pelos retângulos de `ButtonBox(320, 240)` no próprio adaptador; não modifica
+`port_dialog.cpp` nem amplia o escopo autorizado. Corrigir o componente
+compartilhado e verificar seu comportamento no PC depende de decisão futura.
+
 ## Câmera — suporte no executor de roteiros (decisão pendente)
 
 Registrado em 2026-11-25 por pedido do usuário. O executor não injeta os eixos

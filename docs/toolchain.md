@@ -1,5 +1,17 @@
 # Ferramentas do port — inventário do ambiente
 
+## Fase 4 — seleção para o vídeo (2026-11-25)
+
+citro3d **1.7.1-2**, biblioteca 1.7.1, licença
+[zlib](https://github.com/devkitPro/citro3d/blob/master/LICENSE): selecionada
+para o backend GPU. citro2d **1.7.0-1**, biblioteca 1.7.0, licença
+[zlib](https://github.com/devkitPro/citro2d/blob/master/LICENSE): instalada,
+autorizada se justificada, ainda não ligada neste bloco. O plano começa com
+citro3d para preservar os modos e lotes já existentes sem outra camada 2D.
+Os hashes da instalação constam do inventário ARM abaixo. O inventário inicial
+é histórico; suas linhas NOT_FOUND não descrevem a instalação atual.
+Plano e resultados: [design/phase4-video.md](design/phase4-video.md).
+
 Inventário inicial e atualização da Fase 2. Caminhos refletem esta máquina. `NOT_FOUND_WITHIN_SEARCH` significa não encontrada nos limites consultados, não uma busca universal do disco. SDL2 e as bibliotecas FreeType/Ogg/Vorbis foram preparados localmente após as respectivas autorizações; as demais ferramentas abaixo já existiam ou tiveram autorização na Fase 1.
 
 | Ferramenta | Estado | Versão medida | Papel |

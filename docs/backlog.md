@@ -3,6 +3,19 @@
 Itens registrados para tratamento posterior. Nada aqui está autorizado a
 mudar a lógica do jogo antes do congelamento.
 
+## Verificação — recibos rastreados e duração dos roteiros
+
+Registrado em 2026-11-25 por pedido do usuário. A verificação completa reescreve
+51 recibos rastreados e deixa a árvore suja. Investigar como separar evidências
+locais geradas dos recibos de referência, sem perder rastreabilidade. Nenhuma
+alteração nas ferramentas está autorizada por este registro.
+
+Os roteiros longos passaram de cerca de 1.100 s para 1.900 s entre rodadas.
+Na última rodada publicada: actions/save 95 = 1.830,8 s; lots/save 106 =
+1.904,2 s. O limite paralelo foi ampliado para 1.950 s com autorização, mas
+a causa do aumento continua UNKNOWN; investigar carga, esperas e progresso
+por quadro, sem atribuir a diferença à câmera sem evidência.
+
 ## Câmera — suporte no executor de roteiros (decisão pendente)
 
 Registrado em 2026-11-25 por pedido do usuário. O executor não injeta os eixos

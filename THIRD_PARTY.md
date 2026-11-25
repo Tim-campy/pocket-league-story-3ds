@@ -1,5 +1,17 @@
 # Third-party notices
 
+## Nintendo 3DS GPU libraries (zlib)
+
+Selected for the Phase 4 video backend: devkitPro citro3d package **1.7.1-2**
+(library 1.7.1), under the
+[zlib license](https://github.com/devkitPro/citro3d/blob/master/LICENSE),
+copyright fincs. citro2d **1.7.0-1** (library 1.7.0) is installed and approved
+conditionally, under the same
+[license](https://github.com/devkitPro/citro2d/blob/master/LICENSE); it is not
+yet linked by this block. No library source is copied into the game.
+Installed archive hashes are recorded in [docs/toolchain.md](docs/toolchain.md).
+Game assets are not part of these libraries.
+
 ## Mono class-library collation (MIT/X11)
 
 The native cultural string component adapts Mono's `SimpleCollator`,

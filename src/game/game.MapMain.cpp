@@ -1325,7 +1325,8 @@ void MapMain::Draw_tenantAround(pls::cs::Ref<pls::kairo::Graphics> g) {
                      auto cs_right = require(tenant)->address_[1] - 1;
                      return cs_left == cs_right;
                  }())) &&
-                require(require(apdat_)->camera)->flg_disp) {
+                require(require(apdat_)->camera)->flg_disp &&
+                !require(require(apdat_)->camera)->managementCursorHidden_) {
                 flag = true;
             }
             pls::cs::Ref<pls::kairo::Image> image = pls::cs::Ref<pls::kairo::Image>{};

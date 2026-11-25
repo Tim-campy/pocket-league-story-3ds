@@ -12,7 +12,7 @@ comentários, nomes locais) não entram: não mudam o código de máquina.
 | Registro de eventos com custo do fim do mês | O registro de eventos passa a incluir o custo de fim de mês | B.5, 2026-11-17 | Fase 3, etapa 2 (pendente) |
 | Idioma padrão | Console em idioma diferente de japonês e inglês inicia em inglês | B.6, 2026-11-17 | Fase 3 (pendente; a escolha atual do idioma está em `docs/design/`) |
 | Botões do 3DS | B aciona só o rótulo de voltar e não age no mapa nem na partida; START abre o diálogo de encerramento (`DoTerminationDialog`), inclusive no título | B.2, 2026-11-17 | Protótipo da etapa 1 (`src/main/pc_dual_screen.cpp`, feito) |
-| Circle pad | Câmera independente na gestão; cursor vai ao centro ao ultrapassar a margem; direcional rola continuamente na margem; sem ação na partida | B.1 e decisões de 2026-11-24/25 | Etapa 2 no PC; entrada CTR neutra até a Fase 4; regras finais abaixo |
+| Circle pad | Câmera independente na gestão; cursor fica oculto ao ultrapassar a margem e acompanha logicamente o centro; primeira entrada de cursor apenas o revela; direcional rola continuamente na margem; sem ação na partida | B.1 e decisões de 2026-11-24/25 | Etapa 2 no PC; entrada CTR neutra até a Fase 4; regras finais abaixo |
 | Barra de rótulos (`GamePad`) | Vai para a tela de baixo | B.3, 2026-11-17 | Feito no protótipo PC em 2026-11-20; confirmado na tentativa 656; CTR pendente |
 | Largura de 400 na tela de cima | O mapa ocupa 400×240 no protótipo atual; a limitação observada em B.4 é histórica, não um bloqueio atual da gestão | B.4, 2026-11-17 | Confirmado no PC, tentativa 656 (2026-11-24); partida e CTR não verificados nessa execução |
 | L/R | Zoom no mapa (pinça sintetizada) | B.7, 2026-11-17 | Feito no protótipo PC em 2026-11-19; CTR pendente |
@@ -133,7 +133,10 @@ Regressão completa em 2026-11-25: 87 execuções, 86 concluídas; apenas
 `lots.route`/save 106 concluiu em 1029,9 s e `actions.route`/save 95 em 1147,8 s.
 Nenhum alerta de salvaguarda ou lacuna de tradução nos resultados individuais.
 
-## Câmera na gestão — regras finais, 2026-11-25
+## Câmera na gestão — rolagem contínua, 2026-11-25
+
+A regra de salto visível abaixo foi substituída pela seção seguinte; velocidade,
+margens, limites e rolagem contínua permanecem aprovados.
 
 Decisão do usuário após testar no PC. A velocidade aprovada permanece em
 `management_pan_pixels_per_frame = 6`, dividida pelo zoom (120 pixels/s por eixo
@@ -189,3 +192,69 @@ e evidência de compatibilidade do save: [verificação de 2026-11-25](notes/cam
 O usuário autorizou as medições com a carga externa existente; não são resultados
 de máquina ociosa. Construção/demolição e interrupção da inércia de toque ainda
 exigem a conferência visual indicada no roteiro manual acima.
+
+## Cursor oculto durante a exploração — 2026-11-25
+
+Decisão do usuário após testar a rolagem contínua. Quando circle pad ou zoom
+ultrapassam a margem de 60×30, o cursor deixa de ser desenhado. Enquanto oculto,
+sua posição lógica acompanha continuamente o centro limitado às bordas do mapa,
+sem procurar um lote válido e sem deslocar a câmera para buscar o cursor.
+Enquanto estiver dentro da margem, mover a câmera preserva o cursor visível no
+mesmo ponto. Velocidade e rolagem do direcional não mudam.
+
+A primeira pressão de direcional ou A apenas revela o cursor no centro: não
+move nem abre janela/constrói. Essa pressão fica consumida até soltar as teclas
+dirigidas ao cursor; só uma nova pressão executa o comando normal. Menus e
+diálogos continuam congelando o movimento. A partida não usa essa regra.
+
+Conforme aprovação explícita do usuário para as informações associadas:
+
+- Somem o destaque do lote, os marcadores de jogador/técnico e a ficha do jogador
+  sob o cursor. Ao revelar, a seleção é recalculada no centro atual.
+- Na construção, o marcador do local some, o tipo escolhido é preservado e A
+  continua necessário para confirmar depois de revelar. Os demais lotes mantêm
+  seus contornos neutros; instalações existentes não somem.
+- Avisos antigos da construção são substituídos pela instrução genérica já
+  existente para escolher o local. Não há texto novo.
+- Rótulos de salvar/menu/voltar e informações gerais (dinheiro, data, pesquisa,
+  acontecimentos) permanecem; não descrevem um alvo selecionado.
+- A demolição usa a janela original com alvo fixo, sem prévia móvel. O primeiro
+  A revela; o seguinte pode abrir a janela do alvo atual. Uma janela já aberta
+  conserva o alvo e a confirmação, sem movimento de câmera ou cursor.
+
+Dois booleanos transitórios controlam ocultação e consumo da pressão; nenhum
+entra no save. Deserialize apenas reinicia esses estados e a exibição do cursor;
+a sequência de leituras e todos os bytes serializados permanecem inalterados.
+Ao carregar, o cursor reaparece. Não há alocação nova por quadro.
+
+Teste manual:
+
+```
+python tools/dev.py run --save 50 --seconds 600 --route tests/routes/camera-manual.route --capture build/captures/cursor-hidden:20
+```
+
+I/J/K/L: passe da margem e continue movendo; nenhum cursor deve saltar à vista.
+Pressione e segure A ou uma seta: apenas revela, inclusive durante a repetição.
+Solte e pressione novamente: ação/movimento normal. Repita com Q/W (zoom),
+construção e bordas. Salve com Z enquanto oculto e recarregue: cursor visível,
+na posição lógica central gravada. Confira que ficha, destaque e avisos antigos
+não indicam um alvo enquanto o cursor está oculto.
+
+Verificação local: entrada mantida de A/seta apenas revelou, e a pressão seguinte
+moveu de x=780 para x=837 com a câmera em x=780. Oculto, o cursor acompanhou o
+centro; na borda direita ficou em x=1195 com câmera em x=1200, respeitando o
+limite anterior. Zoom preservou a câmera. Save feito oculto recarregou visível:
+a primeira seta já moveu. Capturas confirmaram ocultação/retorno do cursor e do
+destaque, com salvar/menu preservados na inferior. Evidências locais:
+`build/camera-validation/hidden-revision-r2` e `hidden-reload-revision-r1`.
+Construção/demolição foram revisadas no código; conferência visual pelo usuário
+permanece no roteiro acima. O executor continua sem asserções dessas invariantes.
+
+Resultados negativos: a primeira compilação foi recusada por alteração de fonte
+durante o build; a repetição estável passou. O primeiro auxiliar de interação
+esperava igualdade exata de câmera/cursor na borda, ignorando o limite de x=1195;
+foi corrigida a expectativa, sem mudar o jogo, e a repetição passou.
+
+Aceite local: build e check aprovados (185 listas, 178 classes, 296 slots,
+4231 literais, zero problemas); smoke em 212 s, 10/10 execuções, zero alertas,
+zero lacunas e nenhuma repetição por suspensão. Sem push nesta entrega.

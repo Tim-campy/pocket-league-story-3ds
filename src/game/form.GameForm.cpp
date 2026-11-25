@@ -1009,10 +1009,12 @@ bool GameForm::Update() {
         if (state_ == 0 || state_ == 1) {
             require(require(apdat_)->camera)->PanManagement();
             // Construction accepts the D-pad without enabling the map's touch inertia.
-            if (state_ == 0 || PLS_API(require(canvas_)->CheckKeyState(65536)) ||
-                PLS_API(require(canvas_)->CheckKeyState(131072)) ||
-                PLS_API(require(canvas_)->CheckKeyState(262144)) ||
-                PLS_API(require(canvas_)->CheckKeyState(524288))) {
+            if (!require(require(apdat_)->camera)->managementCursorHidden_ &&
+                !require(require(apdat_)->camera)->managementCursorRevealHeld_ &&
+                (state_ == 0 || PLS_API(require(canvas_)->CheckKeyState(65536)) ||
+                 PLS_API(require(canvas_)->CheckKeyState(131072)) ||
+                 PLS_API(require(canvas_)->CheckKeyState(262144)) ||
+                 PLS_API(require(canvas_)->CheckKeyState(524288)))) {
                 require(require(apdat_)->camera)->Update_pos();
             } else {
                 require(require(apdat_)->camera)->cursorPressCnt_ = 0;
@@ -1113,7 +1115,8 @@ bool GameForm::_update(pls::cs::Int32 frameCount) {
             if (LEAGUE_SCHEDULE_UPDATECNT > 0) {
                 --LEAGUE_SCHEDULE_UPDATECNT;
             }
-            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
+            if (!require(require(apdat_)->camera)->managementCursorRevealHeld_ &&
+                PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 pls::cs::Ref<SubForm> subForm = OepnWindowFromMainDisp();
                 if (!is_null(subForm)) {
                     return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(subForm));
@@ -1134,7 +1137,8 @@ bool GameForm::_update(pls::cs::Int32 frameCount) {
                     SetBuildBtmMessage(literal(u"設置場所を選択して下さい。"), 0);
                 }
             }
-            if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
+            if (!require(require(apdat_)->camera)->managementCursorRevealHeld_ &&
+                PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 bool flag = false;
                 pls::cs::Int32 num = 0;
                 for (pls::cs::Int32 n = 0; n < require(udat_)->tenants_.length(); ++n) {

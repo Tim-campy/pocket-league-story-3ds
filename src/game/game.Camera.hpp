@@ -25,6 +25,8 @@ struct Camera : pls::cs::Object {
     pls::cs::Ref<Tenant> old_subTenant_{};
     pls::cs::Array<pls::cs::Int32> CURSOR_LIMIT_OFF{};
     bool flg_disp{};
+    bool managementCursorHidden_{};
+    bool managementCursorRevealHeld_{};
     pls::cs::Int32 cnt_autoFocus{};
     pls::cs::Int32 TIME_AUTOFOCUS{};
     pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> limit_pos_lt{};

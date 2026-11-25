@@ -1363,6 +1363,10 @@ void Camera::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
         Camera::save_pos() = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
         Camera::save_cursorPos() = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
         Camera::cursor_pos() = PLS_API(kl_unity_util::StreamUtil::ReadVector3D(stream));
+        managementCursorHidden_ = false;
+        managementCursorRevealHeld_ = false;
+        flg_disp = true;
+        cursorCnt_ = 0;
     }
 }
 
@@ -1401,7 +1405,7 @@ void Camera::DrawTest(pls::cs::Ref<pls::kairo::Graphics> g) {
 void Camera::DrawCursor(pls::cs::Ref<pls::kairo::Graphics> g) {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.DrawCursor(kairo.unity.ui.Graphics)", game);
     {
-        if (!(flg_disp)) {
+        if (managementCursorHidden_ || !(flg_disp)) {
             return;
         }
         if (!(cursorCnt_ < 80)) {
@@ -1560,6 +1564,8 @@ void Camera::PanManagement() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.PanManagement", game);
     const auto pad = PLS_API(pls::kairo::read_circle_pad());
     if (pad.x != 0 || pad.y != 0) {
+        flg_disp = true;
+        cursorCnt_ = 0;
         const auto gameForm = require(apdat_)->frmGame_;
         const auto touchSpeed = require(gameForm)->touchCameraSpeed_;
         if (require(touchSpeed)->x_ != 0.0f || require(touchSpeed)->z_ != 0.0f) {
@@ -1572,6 +1578,19 @@ void Camera::PanManagement() {
         SetCameraRect();
     }
     KeepManagementCursorVisible();
+    const bool cursorInput =
+        PLS_API(require(canvas_)->CheckKeyState(65536 | 131072 | 262144 | 524288 | 1048576));
+    if (!cursorInput)
+        managementCursorRevealHeld_ = false;
+    if (managementCursorHidden_ && cursorInput) {
+        managementCursorHidden_ = false;
+        // Consume the whole first press, including held-key repeats.
+        managementCursorRevealHeld_ = true;
+        flg_disp = true;
+        cursorCnt_ = 0;
+        Collision(pls::cs::to_int32(require(Camera::cursor_pos())->x_),
+                  pls::cs::to_int32(require(Camera::cursor_pos())->y_));
+    }
 }
 
 // M:game.Camera.KeepManagementCursorVisible
@@ -1592,9 +1611,12 @@ void Camera::KeepManagementCursorVisible() {
     const pls::cs::Single max_x = require(camera)->x_ + right;
     const pls::cs::Single min_y = require(camera)->y_ - below;
     const pls::cs::Single max_y = require(camera)->y_ + above;
-    if (require(cursor)->x_ >= min_x && require(cursor)->x_ <= max_x && require(cursor)->y_ <= max_y &&
-        require(cursor)->y_ >= min_y)
+    if (!managementCursorHidden_ && require(cursor)->x_ >= min_x && require(cursor)->x_ <= max_x &&
+        require(cursor)->y_ <= max_y && require(cursor)->y_ >= min_y)
         return;
+    if (!managementCursorHidden_ && require(gameForm)->state_ == 1)
+        require(gameForm)->SetBuildBtmMessage(literal(u"設置場所を選択して下さい。"), 0);
+    managementCursorHidden_ = true;
     require(gameForm)->SetCursorPosition(pls::cs::to_int32(require(camera)->x_),
                                          pls::cs::to_int32(require(camera)->y_));
     subPlayer_ = pls::cs::Ref<TPlayer>{};
@@ -1602,7 +1624,6 @@ void Camera::KeepManagementCursorVisible() {
     subTenant_ = pls::cs::Ref<Tenant>{};
     cursorCnt_ = 0;
     flg_disp = true;
-    Collision(pls::cs::to_int32(require(cursor)->x_), pls::cs::to_int32(require(cursor)->y_));
 }
 
 // M:game.Camera.Update_normal

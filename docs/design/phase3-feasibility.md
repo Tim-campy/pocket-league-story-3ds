@@ -20,7 +20,7 @@ Tipos de toque (`KL/kairo/unity/surface/TouchEvent.cs`): 0 DOWN, 1 UP, 5 CLICK,
 | b. Menus na inferior | etapa 2 | cada janela é um formulário próprio, mas todos desenham numa única superfície de 240×240 lógicos; ~3–5 dias de plataforma + ajustes nos menus |
 | c. Registro | etapa 2 | três pontos de gancho cobrem tudo; textos já vêm dos assets; só na sessão (sem mudar o save) |
 | d. Painel da partida | etapa 2 (leitura) | placar, tempo, tática, fôlego, aura, ações por jogador já existem; posse e chutes do time precisam ser somados |
-| e. 400×240 | sim, com ressalva | o jogo roda em 400×240 sem mudança, mas o **protótipo mostrou** que a área do jogo continua com 240 de largura (faixas de 80 px), inclusive no mapa; a barra `GamePad` toma ~48 px de altura em cima ([phase3-prototype.md](phase3-prototype.md)) |
+| e. 400×240 | confirmado para o mapa no PC atual | tentativa 656 (2026-11-24): mapa em 400×240 e `GamePad` na inferior; as limitações de largura e barra observadas em 2026-11-17/18 são históricas ([phase3-prototype.md](phase3-prototype.md)); partida e CTR não verificados nessa execução |
 
 ## a. Controles
 
@@ -181,6 +181,11 @@ estado 6). Tudo isso é leitura de campos públicos: o painel não muda a lógic
 mas precisa do código do jogo legível (etapa 2).
 
 ## e. Layout em 400×240
+
+**Atualização de 2026-11-24:** a tentativa 656 confirma o mapa em 400×240,
+com a barra `GamePad` na inferior. A hipótese de limitação atual do mapa a
+240 pixels foi refutada. As observações de 2026-11-17 abaixo ficam como histórico;
+não justificam uma nova alteração de largura na gestão. A inspeção não incluiu a partida.
 
 - Escala: `GetScaleRatio(240,240)` → área lógica 400×240 na superior e 320×240
   na inferior, ambas na escala 1.

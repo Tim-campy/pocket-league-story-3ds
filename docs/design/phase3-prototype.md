@@ -1,6 +1,6 @@
 # Fase 3 — protótipo de duas telas no PC (etapa 1, só plataforma)
 
-Estado: **protótipo funcionando (2026-11-17).** Decisão: [phase3-decision.md](phase3-decision.md).
+Estado: **protótipo funcionando; inspeção atualizada em 2026-11-24.** Decisão: [phase3-decision.md](phase3-decision.md).
 Estudo: [phase3-feasibility.md](phase3-feasibility.md). Nenhuma linha do código do jogo
 mudou: o protótipo está em `src/main/pc_dual_screen.{hpp,cpp}`, `src/main/pc_main.cpp`
 e `src/kairo/platform/sdl/backend.{hpp,cpp}`.
@@ -8,14 +8,12 @@ e `src/kairo/platform/sdl/backend.{hpp,cpp}`.
 ## Como rodar
 
 ```
-python tools/build_pc.py --apk APK --diagnostic-generated build/<snapshot> --configuration Release \
-  --run --run-seconds 90 --diagnostic-save-from-attempt 50 --virtual-clock 1767225600000,1000,50 \
-  --diagnostic-route tests/routes/menu-explore.route --dual-screen 2 --dual-capture build/<pasta>:10
+python tools/dev.py run --save 50 --seconds 60 --route tests/routes/menu-explore.route --capture build/captures/inspecao:40
 ```
 
-- `--dual-screen N`: janela de cima 400×240 e de baixo 320×240, ampliadas N vezes
+- `--scale N`: janela de cima 400×240 e de baixo 320×240, ampliadas N vezes
   (pixels inteiros, sem filtro).
-- `--dual-capture DIR:K`: grava as duas telas em BMP a cada K quadros. Só em
+- `--capture DIR:K`: grava as duas telas em BMP a cada K quadros. Só em
   `build/`, nunca no Git (são imagens do jogo).
 - Teclado (padrão do Azahar para os botões): A = `A`, B = `S`, X = `Z`, Y = `X`,
   L = `Q`, R = `W`, START = `M`, SELECT = `N`. Direcional = setas; circle pad =
@@ -33,7 +31,7 @@ python tools/build_pc.py --apk APK --diagnostic-generated build/<snapshot> --con
 | START | diálogo de sair do jogo |
 | Direcional | setas do jogo (seguradas: o cursor acelera como no original) |
 | Circle pad | no mapa, o arraste de câmera que o original aceita (opção i do estudo); o cursor acompanha o centro |
-| L/R | **não ligado ainda** (o zoom exige pinça com dois dedos simulados) |
+| L/R | zoom no mapa por pinça sintetizada; ligado em 2026-11-19 |
 
 A tela de baixo mostra os botões com o significado atual, a tela de cima do jogo,
 os rótulos e a última entrada. Os rótulos aparecem traduzidos pela própria tradução
@@ -54,8 +52,15 @@ Execução: tentativas de diagnóstico 220 (300 s, 188 quadros capturados) e 221
   mapa, B fica inativo, X é "Save" e Y é "Menu"; num menu, Y e B são "Back".
 - A janela de baixo tem toque próprio e não interfere no toque da de cima.
 
-**Ruim / a resolver:**
-1. **A área do jogo continua com 240 de largura.** A vista do mapa e as janelas
+**Estado atual (2026-11-24):** tentativa 656, save 50, 60,125 s, 26 pares de
+capturas em `build/captures/etapa2-inspecao-20261124/`. O mapa ocupa 400×240
+(quadro 360); menus ainda cobrem e escurecem o mapa (quadro 240). A inferior
+mostra os rótulos e diagnóstico, sem registro ou painel. O roteiro longo foi
+interrompido pelo limite de 60 s; não é uma validação completa de `menu-explore`.
+Partida, desempenho no 3DS e toque nos rótulos não foram verificados nessa inspeção.
+
+**Investigações anteriores e pendências:**
+1. **Histórico de 2026-11-17/18, superado para o mapa pela inspeção acima:** a vista do mapa e as janelas
    ficam num quadro de 240 centralizado, com faixas pretas de 80 px de cada lado.
    Isso **corrige o estudo**: a afirmação de que o mapa aproveita os 400 de largura
    não se confirmou. O `SurfaceManager` (KairoLibrary) dimensiona a `GameView` em
@@ -83,7 +88,7 @@ Execução: tentativas de diagnóstico 220 (300 s, 188 quadros capturados) e 221
    - O próprio jogo tem caminho largo (`GameForm.GetTopBarOffT` e afins testam
      `GetGameWidth() > 240`), o que indica que o original previa vistas mais
      largas que 240; o teste de mapa e partida em 400 depende dessa mudança.
-2. **A barra de rótulos (Save/Menu) toma os ~48 px de baixo da tela de cima.** Essa
+2. **Histórico, resolvido no PC em B.3 abaixo:** a barra de rótulos (Save/Menu) tomava os ~48 px de baixo da tela de cima. Essa
    barra é a superfície `GamePad` do próprio jogo, uma segunda superfície que ele já
    desenha abaixo da vista. Levar a `GamePad` para a tela de baixo daria os rótulos
    traduzidos e tocáveis do próprio jogo e liberaria a altura em cima. É o caminho
@@ -110,5 +115,7 @@ Execução: tentativas de diagnóstico 220 (300 s, 188 quadros capturados) e 221
    num quadro de 240 centralizado (o ícone de idioma continua em cima: é da
    `GameView`). **Tela de baixo:** só os botões dos cantos (Save/Menu, Back, Site/Quit)
    a 80 %, pequenos e um pouco borrados; o resto fica vazio (espaço para a etapa 2).
-5. Painel provisório com sobreposição de texto em dois botões (L/R, START).
+5. O painel provisório anterior tinha sobreposição em L/R e START. No caminho
+   atual da `GamePad`, a inferior mostra a barra e duas linhas de diagnóstico;
+   os rótulos a 80 % continuam pequenos. Registro e painel da partida são futuros.
 6. Não medido: desempenho do desenho duplo; leitura no tamanho real do 3DS.

@@ -185,8 +185,9 @@ def cmd_routes(a):
         shutil.move(state, keep); print('estado anterior guardado em', keep.relative_to(ROOT))
     # Wall-clock cap of one replay: 600 s serially (the historical value); in parallel each game
     # runs slower (measured 2026-11-24 on this machine: x1.40 max with 2 jobs, x2.09 with 4, x2.31
-    # with 6), so the cap grows with N. It only stops a runaway run; it is not a criterion.
-    cap = round(600 * (1 + 0.45 * (max(1, a.jobs) - 1)))
+    # with 6). Leave headroom for actions/save 95 and lots/save 106: 1950 s with 4 jobs.
+    # It only stops a runaway run; it is not a criterion.
+    cap = round(600 * (1 + 0.75 * (max(1, a.jobs) - 1)))
     args = ['--apk', apk, '--frozen', '--gc-stress-every', a.stress_every, '--jobs', a.jobs, '--state', state, '--run-seconds', cap]
     if a.only: args += ['--only', *a.only]
     if keys is not None and not full: args += ['--keys', *keys]

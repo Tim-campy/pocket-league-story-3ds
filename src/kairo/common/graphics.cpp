@@ -7,6 +7,7 @@
 #include "font.hpp"
 #include "../platform/sdl/font.hpp"
 #include "arc_raster.hpp"
+#include "gpu_arc.hpp"
 #include "mesh.hpp"
 #include <cmath>
 namespace pls::kairo {
@@ -54,6 +55,7 @@ cs::Ref<Image> Image::FromRgba(std::int32_t width,std::int32_t height,std::vecto
     auto result=cs::make_ref<Image>();result->width_=width;result->height_=height;result->rgba_=std::move(rgba);result->alive_=true;track_created(result,false);return result;
 }
 void Image::assign_pixels(std::vector<std::uint8_t> bytes,bool tiled){
+    gpu_image_.reset();
     if(tiled){
         try{(void)assets::ctr_texture::validate(bytes,std::uint32_t(width_),std::uint32_t(height_));}
         catch(const std::invalid_argument& error){throw cs::IOException(error.what());}
@@ -64,6 +66,10 @@ void Image::assign_pixels(std::vector<std::uint8_t> bytes,bool tiled){
     }
 }
 void Image::ensure_linear()const{
+    if(platform::gpu_drawing&&gpu_image_&&gpu_image_->rendered){
+        platform::gpu_drawing->readback(const_cast<Image&>(*this),rgba_);
+        std::vector<std::uint8_t>().swap(ctr_rgba_);return;
+    }
     if(ctr_rgba_.empty())return;
     const auto layout=assets::ctr_texture::validate(ctr_rgba_,std::uint32_t(width_),std::uint32_t(height_));
     rgba_=assets::ctr_texture::linear(ctr_rgba_,layout);
@@ -84,6 +90,7 @@ cs::Ref<Image> Image::Load(cs::Array<std::uint8_t> bytes,Format format,Filter fi
 const std::vector<std::uint8_t>& Image::pixels()const{if(!alive_)throw cs::ObjectDisposedException();ensure_linear();return rgba_;}
 std::int32_t Image::GetAlphaType(){
     if(alpha_==0)return 1;if(alpha_<255)return 2;if(alpha_type_!=-1)return alpha_type_;
+    if(gpu_image_&&gpu_image_->rendered)ensure_linear();
     std::size_t transparent=0,partial=0,opaque=0;
     const auto count=[&](std::uint8_t alpha){if(alpha<3)++transparent;else if(alpha<255)++partial;else ++opaque;};
     if(ctr_rgba_.empty()){for(std::size_t i=3;i<rgba_.size();i+=4)count(rgba_[i]);}
@@ -96,7 +103,7 @@ std::int32_t Image::GetAlphaType(){
 cs::Ref<Graphics> Image::GetGraphics(){return alive_?cs::make_ref<Graphics>(pls::cs::dynamic_pointer_cast<Image>(shared_from_this())):nullptr;}
 void Image::SetAlpha(std::int32_t alpha){
     // Preserve the original guard, including its surprising direction (Image.cs:888).
-    if(!alive_||alpha_!=alpha)return;ensure_linear();alpha_=alpha;auto a=std::uint8_t(std::clamp<std::int32_t>(alpha,0,255));for(std::size_t i=3;i<rgba_.size();i+=4)rgba_[i]=a;
+    if(!alive_||alpha_!=alpha)return;ensure_linear();alpha_=alpha;auto a=std::uint8_t(std::clamp<std::int32_t>(alpha,0,255));for(std::size_t i=3;i<rgba_.size();i+=4)rgba_[i]=a;gpu_image_.reset();
 }
 void Image::SetTransparentEnabled(bool enabled){
     if(!alive_)throw cs::ObjectDisposedException();ensure_linear();auto c=channels(transparent_);bool was_rgb=!alpha_format(format);
@@ -105,7 +112,7 @@ void Image::SetTransparentEnabled(bool enabled){
         else if(rgba_[i]==c[0]&&rgba_[i+1]==c[1]&&rgba_[i+2]==c[2])rgba_[i+3]=0;
         else if(was_rgb)rgba_[i+3]=255;
     }
-    if(!enabled)format=Format::RGB24;else if(was_rgb)format=Format::ARGB32;
+    if(!enabled)format=Format::RGB24;else if(was_rgb)format=Format::ARGB32;gpu_image_.reset();
 }
 Graphics::Graphics(cs::Ref<Image> target,bool display_context):target_(cs::nonnull(target)),is_gui_(display_context),font_(cs::make_ref<Font>()),source_render_(display_context?nullptr:target_){ClearRenderRect();}
 cs::Ref<MeshManager> Graphics::GetMeshManager(){if(!mesh_manager_)mesh_manager_=cs::make_ref<MeshManager>(pls::cs::dynamic_pointer_cast<Graphics>(shared_from_this()));return mesh_manager_;}
@@ -126,7 +133,6 @@ void Graphics::ResetRender(){
     font_->SetFace(2);font_->SetSize(0);font_->SetStyle(0);
     color_=GetColorOfRGB(0,0,0);origin_x_=origin_y_=0;scale_=100.0f;
     world_={1,0,0,0,1,0,0,0,1};mode_={0,255,0};ClearRenderRect();
-    if(is_gui_&&display_reset_hook)display_reset_hook(*this);
 }
 void Graphics::BeginGLRender(bool clip_enable){
     if(!is_gui_)return;
@@ -167,7 +173,14 @@ void Graphics::DrawPreparedString(cs::String text,float x,float y,std::int32_t a
             if(c==u'\n'){cursor=position[0];baseline+=raster.metrics().line_height;previous_glyph=0;continue;}
             const auto& glyph=raster.glyph(c,style);cursor+=raster.kerning(previous_glyph,glyph.glyph_index);
             {PLS_PROFILE_AREA(raster);
-            for(int gy=0;gy<glyph.height;++gy)for(int gx=0;gx<glyph.width;++gx){auto value=tint;value[3]=std::uint8_t(unsigned(tint[3])*glyph.rgba8[(std::size_t(gy)*glyph.width+gx)*4+3]/255);pixel(coord(cursor+float(glyph.left+gx)),coord(baseline-float(glyph.top)+float(gy)),value);}
+            if(platform::gpu_drawing){
+                platform::GpuQuad q;q.clip=clip_;q.mode=mode_;q.blend=blend_;q.color=tint;
+                const float left=float(coord(cursor+float(glyph.left))),top=float(coord(baseline-float(glyph.top)));
+                q.vertices={platform::GpuVertex{left,top,0,0},{left+glyph.width,top,float(glyph.width),0},
+                            {left+glyph.width,top+glyph.height,float(glyph.width),float(glyph.height)},
+                            {left,top+glyph.height,0,float(glyph.height)}};
+                if(glyph.width&&glyph.height)platform::gpu_drawing->glyph(*target_,glyph.rgba8,glyph.width,glyph.height,q);
+            }else for(int gy=0;gy<glyph.height;++gy)for(int gx=0;gx<glyph.width;++gx){auto value=tint;value[3]=std::uint8_t(unsigned(tint[3])*glyph.rgba8[(std::size_t(gy)*glyph.width+gx)*4+3]/255);pixel(coord(cursor+float(glyph.left+gx)),coord(baseline-float(glyph.top)+float(gy)),value);}
             }
             cursor+=glyph.advance_x;previous_glyph=glyph.glyph_index;
         }
@@ -239,6 +252,7 @@ void Graphics::PushRenderMode(std::int32_t op,std::int32_t src,std::int32_t dst)
 void Graphics::PopRenderMode(){if(modes_.empty())return;auto m=modes_.back();modes_.pop_back();SetRenderMode(m[0],m[1],m[2]);}
 void Graphics::pixel(int x,int y,std::array<std::uint8_t,4> c,bool textured){
     if constexpr(null_render_backend)return;
+    if(platform::gpu_drawing)throw cs::NotSupportedException("Unrouted GPU pixel operation");
     if(!target_->alive_)throw cs::ObjectDisposedException();
     if(x<0||y<0||x>=target_->width_||y>=target_->height_||float(x)<clip_[0]||float(y)<clip_[1]||float(x)>=clip_[0]+clip_[2]||float(y)>=clip_[1]+clip_[3])return;
     if(mesh_manager_&&mesh_manager_->capturing()){mesh_manager_->Record(x,y,c);return;}
@@ -270,9 +284,24 @@ void Graphics::pixel(int x,int y,std::array<std::uint8_t,4> c,bool textured){
     if(mode_[2]<255)pass(source_alpha*float(255-mode_[2])/255.0f,1.0f,2);
     if(mode_[1]>0)pass(source_alpha*float(mode_[1])/255.0f,1.0f,mode_[0]==1?1:3);
 }
+platform::GpuQuad Graphics::gpu_quad(float x,float y,float w,float h,float sx,float sy,float sw,float sh)const{
+    platform::GpuQuad q;
+    const std::array<std::array<float,2>,4> positions{point(x,y),point(x+w,y),point(x+w,y+h),point(x,y+h)};
+    for(std::size_t i=0;i<4;++i){
+        float u=(i==1||i==2)?1.0f:0.0f,v=i>=2?1.0f:0.0f;
+        if(flip_mode_&1)u=1-u;if(flip_mode_&2)v=1-v;
+        q.vertices[i]={positions[i][0],positions[i][1],sx+u*sw,sy+v*sh};
+    }
+    q.clip=clip_;q.mode=mode_;q.blend=blend_;return q;
+}
+void Graphics::submit_gpu(Image* image,platform::GpuQuad q){
+    if(!target_->alive_)throw cs::ObjectDisposedException();
+    if(mesh_manager_&&mesh_manager_->capturing())throw cs::NotSupportedException("GPU mesh dispatch not installed");
+    platform::gpu_drawing->quad(*target_,image,q);
+}
 void Graphics::FillRect(float x,float y,float w,float h){
     begin_primitive();
-    const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{auto c=channels(color_);quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float,float){pixel(xx,yy,c);});},[&]{if(transformed)end_render_matrix();});
+    const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{auto c=channels(color_);if(platform::gpu_drawing){auto q=gpu_quad(x,y,w,h);q.color=c;submit_gpu(nullptr,q);return;}quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float,float){pixel(xx,yy,c);});},[&]{if(transformed)end_render_matrix();});
 }
 void Graphics::DrawRect(float x,float y,float w,float h){DrawLine(x,y,x+w,y);DrawLine(x+w,y,x+w,y+h);DrawLine(x+w,y+h,x,y+h);DrawLine(x,y+h,x,y);}
 void Graphics::DrawArc(float x,float y,float w,float h,float start,float sweep,float stroke){PLS_PROFILE_AREA(raster);
@@ -283,7 +312,15 @@ void Graphics::DrawArc(float x,float y,float w,float h,float start,float sweep,f
         auto map=[&](float a,float b){auto p=point(a,b);return geometry::ArcPoint{p[0],p[1]};};
         auto paint=[&](int a,int b){pixel(a,b,color);};
         geometry::ArcRasterSink sink(target_->GetWidth(),target_->GetHeight(),map,paint);
-        if constexpr(!null_render_backend)try{geometry::draw_arc({x,y,w,h,start,sweep,stroke},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
+        if(platform::gpu_drawing){
+            auto emit=[&](const std::array<geometry::ArcPoint,4>& vertices){
+                platform::GpuQuad q;q.clip=clip_;q.mode=mode_;q.blend=blend_;q.color=color;
+                for(std::size_t i=0;i<4;++i)q.vertices[i]={vertices[i].x,vertices[i].y,0,0};
+                submit_gpu(nullptr,q);
+            };
+            geometry::ArcGpuSink gpu_sink(map,emit);
+            geometry::draw_arc({x,y,w,h,start,sweep,stroke},IsRenderGUIMode(),gpu_sink);
+        }else if constexpr(!null_render_backend)try{geometry::draw_arc({x,y,w,h,start,sweep,stroke},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
         if(graphics_runtime.shape_drawn)graphics_runtime.shape_drawn();
     },[&]{if(transformed)end_render_matrix();});
 }
@@ -295,7 +332,15 @@ void Graphics::FillArc(float x,float y,float w,float h,float start,float sweep){
         auto map=[&](float a,float b){auto p=point(a,b);return geometry::ArcPoint{p[0],p[1]};};
         auto paint=[&](int a,int b){pixel(a,b,color);};
         geometry::ArcRasterSink sink(target_->GetWidth(),target_->GetHeight(),map,paint);
-        if constexpr(!null_render_backend)try{geometry::fill_arc({x,y,w,h,start,sweep,1.0f},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
+        if(platform::gpu_drawing){
+            auto emit=[&](const std::array<geometry::ArcPoint,4>& vertices){
+                platform::GpuQuad q;q.clip=clip_;q.mode=mode_;q.blend=blend_;q.color=color;
+                for(std::size_t i=0;i<4;++i)q.vertices[i]={vertices[i].x,vertices[i].y,0,0};
+                submit_gpu(nullptr,q);
+            };
+            geometry::ArcGpuSink gpu_sink(map,emit);
+            geometry::fill_arc({x,y,w,h,start,sweep,1.0f},IsRenderGUIMode(),gpu_sink);
+        }else if constexpr(!null_render_backend)try{geometry::fill_arc({x,y,w,h,start,sweep,1.0f},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
     },[&]{if(transformed)end_render_matrix();});
     if(graphics_runtime.shape_drawn)graphics_runtime.shape_drawn();
 }
@@ -306,6 +351,19 @@ void Graphics::DrawLine(float x,float y,float x2,float y2,float width){PLS_PROFI
     if(length>float(std::max(target_->width_,target_->height_))*4)throw cs::NotSupportedException("Unbounded line needs geometric clipping");
     auto steps=std::max(1,int(std::ceil(length)));auto c=channels(color_);auto radius=std::max<std::int32_t>(0,coord(width*std::fabs(scale_)/200.0f));
     if(radius>std::max(target_->width_,target_->height_))throw cs::NotSupportedException("Very wide lines need geometric clipping");
+    if(platform::gpu_drawing){
+        platform::GpuQuad q;q.clip=clip_;q.mode=mode_;q.blend=blend_;q.color=c;
+        if(dx==0||dy==0){
+            const float left=std::floor(std::min(a[0],b[0]))-radius,top=std::floor(std::min(a[1],b[1]))-radius;
+            const float right=std::floor(std::max(a[0],b[0]))+radius+1,bottom=std::floor(std::max(a[1],b[1]))+radius+1;
+            q.vertices={platform::GpuVertex{left,top,0,0},{right,top,0,0},{right,bottom,0,0},{left,bottom,0,0}};
+        }else{
+            const float norm=std::hypot(dx,dy),half=float(radius)+0.5f,px=-dy*half/norm,py=dx*half/norm;
+            q.vertices={platform::GpuVertex{a[0]+px,a[1]+py,0,0},{b[0]+px,b[1]+py,0,0},
+                        {b[0]-px,b[1]-py,0,0},{a[0]-px,a[1]-py,0,0}};
+        }
+        submit_gpu(nullptr,q);return;
+    }
     for(int i=0;i<=steps;++i){auto xx=coord(std::floor(a[0]+dx*float(i)/float(steps))),yy=coord(std::floor(a[1]+dy*float(i)/float(steps)));for(int v=-radius;v<=radius;++v)for(int u=-radius;u<=radius;++u){auto px=std::int64_t(xx)+u,py=std::int64_t(yy)+v;if(px>=0&&py>=0&&px<target_->width_&&py<target_->height_)pixel(int(px),int(py),c);}}
 }
 void Graphics::DrawImage(cs::Ref<Image> image,float x,float y){if(image)DrawScaledImage(image,x,y,float(image->GetWidth()),float(image->GetHeight()),0,0,image->GetWidth(),image->GetHeight());}
@@ -314,14 +372,15 @@ void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,floa
     if(!image||w==0||h==0||!std::isfinite(x+y+w+h))return;
     image->Use();if(!image->native_resident())return;
     if(image->filter!=Image::Filter::Point)throw cs::NotSupportedException("Bilinear sampler not implemented yet");
-    std::vector<std::uint8_t> source;if constexpr(!null_render_backend){PLS_PROFILE_AREA(raster);source=image->pixels();} // CPU sampler snapshot preserves overlapping draws.
+    std::vector<std::uint8_t> source;if constexpr(!null_render_backend){if(!platform::gpu_drawing){PLS_PROFILE_AREA(raster);source=image->pixels();}} // CPU sampler snapshot preserves overlapping draws.
     begin_primitive(image);
     const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{
     if(is_gui_&&image->source_has_touch_tasks()){
         if(!graphics_runtime.image_touches)throw cs::NotSupportedException("Generated image touch presentation callback missing");
         graphics_runtime.image_touches(pls::cs::dynamic_pointer_cast<Graphics>(shared_from_this()),image,x-float(sx),y-float(sy));
     }
-    quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float tx,float ty){
+    if(platform::gpu_drawing)submit_gpu(image,gpu_quad(x,y,w,h,float(sx),float(sy),float(sw),float(sh)));
+    else quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float tx,float ty){
         if(flip_mode_&1)tx=1.0f-tx;if(flip_mode_&2)ty=1.0f-ty;
         auto u=std::int64_t(sx)+std::int64_t(std::floor(tx*float(sw)));auto v=std::int64_t(sy)+std::int64_t(std::floor(ty*float(sh)));
         u=std::clamp<std::int64_t>(u,0,image->width_-1);v=std::clamp<std::int64_t>(v,0,image->height_-1);auto i=(std::size_t(v)*image->width_+std::size_t(u))*4;

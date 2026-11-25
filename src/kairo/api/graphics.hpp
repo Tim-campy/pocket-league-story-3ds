@@ -5,6 +5,7 @@
 #include "managed_shared_field.hpp"
 #include "matrix4.hpp"
 #include "screen.hpp"
+#include "gpu_draw.hpp"
 #include <array>
 namespace pls::kairo {
 class Graphics;
@@ -51,6 +52,7 @@ class Image : public cs::Object {
     cs::String file_,palette_file_;
     std::int32_t rs_id_{-1},rc_id_{-1};
     mutable std::vector<std::uint8_t> rgba_,ctr_rgba_;
+    mutable std::shared_ptr<platform::GpuImage> gpu_image_;
     void assign_pixels(std::vector<std::uint8_t>,bool tiled);
     void ensure_linear()const;
     std::int32_t alpha_type_{-1};
@@ -122,6 +124,11 @@ public:
     bool source_has_touch_tasks()const{return bool(touch_tasks_);}
     void trace_edges(const cs::EdgeVisitor&)const override;
     const std::vector<std::uint8_t>& pixels()const;
+    std::shared_ptr<platform::GpuImage>& gpu_image()const{return gpu_image_;}
+    const std::vector<std::uint8_t>& gpu_source(bool& tiled)const {
+        if(!alive_)throw cs::ObjectDisposedException();
+        tiled=!ctr_rgba_.empty();return tiled?ctr_rgba_:rgba_;
+    }
 };
 class Offscreen : public cs::Object {
     struct State;std::unique_ptr<State> state_;
@@ -178,6 +185,8 @@ class Graphics : public cs::Object {
     cs::Array<float> image_clip_=cs::Array<float>::make(4);
     inline static cs::Array<std::int32_t> anchor_result_=cs::Array<std::int32_t>::make(2);
     void pixel(int,int,std::array<std::uint8_t,4>,bool textured=false);
+    platform::GpuQuad gpu_quad(float,float,float,float,float=0,float=0,float=0,float=0)const;
+    void submit_gpu(Image*,platform::GpuQuad);
     std::array<float,2> point(float,float)const;
     void update_world();
     void update_screen();
@@ -240,11 +249,6 @@ public:
     std::int32_t GetOriginY()const{return origin_y_;}
     void PushOrigin();void PushOrigin(std::int32_t,std::int32_t,bool=false);void PopOrigin();
     void Scale(float s){scale_=s;update_world();}
-    // Phase 3 prototype (two screens): a host may redirect the drawing of one game
-    // surface to another image. The game resets the display graphics before each
-    // surface (SurfaceManagerBase.Draw); the hook sees every such reset. Empty by
-    // default: no effect on the single-screen hosts.
-    static inline std::function<void(Graphics&)> display_reset_hook{};
     // The host resolves surface identity, never draw order or reset count.
     static inline platform::Screen (*surface_screen)(const void*) = nullptr;
     static inline std::function<void(Graphics&,platform::Screen,const void*)> screen_target_hook{};

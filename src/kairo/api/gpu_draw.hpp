@@ -30,6 +30,7 @@ public:
     virtual void glyph(kairo::Image&,const std::vector<std::uint8_t>&,
                        int width,int height,const GpuQuad&) = 0;
     virtual void clear(kairo::Image&,std::uint32_t rgba) = 0;
+    virtual void begin_mesh(kairo::Image&) = 0;
     virtual void readback(kairo::Image&,std::vector<std::uint8_t>&) = 0;
 };
 // Installed by the drawing host before starting the application. CPU/null hosts

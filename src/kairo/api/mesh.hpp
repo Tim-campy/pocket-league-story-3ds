@@ -18,6 +18,7 @@ public:
         cs::Ref<Image> image{};
         std::int32_t blend_color{};
         std::vector<Fragment> fragments;
+        std::vector<platform::GpuQuad> gpu_quads;
     };
     struct ActivePass {
         std::size_t batch{};
@@ -41,6 +42,7 @@ public:
     void BeginMesh();
     void BeginPrimitive(cs::Ref<Image>,std::array<std::uint8_t,4>,std::array<std::int32_t,3>,std::array<std::int32_t,2>,bool);
     void Record(std::int32_t,std::int32_t,std::array<std::uint8_t,4>);
+    void RecordGpu(platform::GpuQuad);
     bool capturing()const{return capture_;}void capture(bool value){capture_=value;}
     float current_depth()const{return current_depth_;}float front_depth()const{return front_depth_;}
     Commands take_commands(){active_.clear();return std::move(batches_);}

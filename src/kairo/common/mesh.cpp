@@ -43,7 +43,7 @@ void MeshManager::BeginPrimitive(cs::Ref<Image> image,std::array<std::uint8_t,4>
         const auto constant=(flags&0x20U)?blend[1]:0;
         auto it=std::find_if(batches_.begin(),batches_.end(),[&](const Batch&batch){return batch.shader_flags==flags&&batch.image==image&&batch.blend_color==constant&&batch.queue==queue;});
         std::size_t index=std::size_t(it-batches_.begin());
-        if(it==batches_.end())batches_.push_back({flags,queue,type,filter,image,constant,{}});
+        if(it==batches_.end())batches_.push_back({flags,queue,type,filter,image,constant,{},{}});
         current_depth_-=0.1f;
         active_.push_back({index,current_depth_,alpha_ratio,actual,blend});
     }
@@ -55,7 +55,27 @@ void MeshManager::Record(std::int32_t x,std::int32_t y,std::array<std::uint8_t,4
         batches_[pass.batch].fragments.push_back({x,y,color,pass.depth,pass.mode,pass.blend});
     }}catch(const std::bad_alloc&){throw cs::OutOfMemoryException();}
 }
+void MeshManager::RecordGpu(platform::GpuQuad quad){
+    try{for(const auto&pass:active_){
+        auto&batch=batches_[pass.batch];
+        quad.depth=pass.depth;quad.mode=pass.mode;quad.blend=pass.blend;
+        quad.alpha_type=batch.alpha_type;quad.filter=batch.filter;quad.alpha_test_scale=pass.alpha_ratio;
+        quad.depth_test=true;quad.depth_write=batch.alpha_type!=2;
+        batch.gpu_quads.push_back(quad);
+    }}catch(const std::bad_alloc&){throw cs::OutOfMemoryException();}
+}
 void MeshManager::Render(const cs::Ref<Image>&target,const Commands&dynamic,const Commands&statics){
+    if(platform::gpu_drawing){
+        auto image=cs::nonnull(target);platform::gpu_drawing->begin_mesh(*image);
+        struct Item{const Batch*batch;std::size_t manager,index;};std::vector<Item> sorted;
+        for(std::size_t manager=0;manager<2;++manager){const auto&commands=manager?statics:dynamic;for(std::size_t index=0;index<commands.size();++index)sorted.push_back({&commands[index],manager,index});}
+        std::sort(sorted.begin(),sorted.end(),[](const Item&a,const Item&b){if(a.batch->queue!=b.batch->queue)return a.batch->queue<b.batch->queue;if(a.manager!=b.manager)return a.manager<b.manager;return a.index>b.index;});
+        for(const auto&item:sorted){const auto&batch=*item.batch;
+            if(batch.image){batch.image->Use();batch.image->source_drawn();}
+            for(const auto&quad:batch.gpu_quads)platform::gpu_drawing->quad(*image,batch.image,quad);
+        }
+        return;
+    }
     if constexpr(null_render_backend){cs::nonnull(target);for(const auto*commands:{&dynamic,&statics})for(const auto&batch:*commands)if(batch.image){batch.image->Use();batch.image->source_drawn();}return;}
     auto image=cs::nonnull(target);auto painter=cs::make_ref<Graphics>(image);painter->ClearClip();
     struct Item{const Batch*batch;std::size_t manager,index;};std::vector<Item> sorted;
@@ -74,5 +94,5 @@ void MeshManager::Render(const cs::Ref<Image>&target,const Commands&dynamic,cons
     }
 }
 void MeshManager::trace_edges(const cs::EdgeVisitor&visit)const{cs::trace_value(graphics_,visit);for(const auto&batch:batches_)cs::trace_value(batch.image,visit);}
-void MeshManager::memory_ranges(const memory::RangeVisitor&visit)const{visit(batches_.data(),batches_.capacity()*sizeof(Batch),memory::Category::managed_heap);for(const auto&batch:batches_)visit(batch.fragments.data(),batch.fragments.capacity()*sizeof(Fragment),memory::Category::managed_heap);}
+void MeshManager::memory_ranges(const memory::RangeVisitor&visit)const{visit(batches_.data(),batches_.capacity()*sizeof(Batch),memory::Category::managed_heap);for(const auto&batch:batches_){visit(batch.fragments.data(),batch.fragments.capacity()*sizeof(Fragment),memory::Category::managed_heap);visit(batch.gpu_quads.data(),batch.gpu_quads.capacity()*sizeof(platform::GpuQuad),memory::Category::managed_heap);}}
 }

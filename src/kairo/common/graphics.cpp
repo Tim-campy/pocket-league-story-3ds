@@ -296,7 +296,7 @@ platform::GpuQuad Graphics::gpu_quad(float x,float y,float w,float h,float sx,fl
 }
 void Graphics::submit_gpu(Image* image,platform::GpuQuad q){
     if(!target_->alive_)throw cs::ObjectDisposedException();
-    if(mesh_manager_&&mesh_manager_->capturing())throw cs::NotSupportedException("GPU mesh dispatch not installed");
+    if(mesh_manager_&&mesh_manager_->capturing()){mesh_manager_->RecordGpu(q);return;}
     platform::gpu_drawing->quad(*target_,image,q);
 }
 void Graphics::FillRect(float x,float y,float w,float h){

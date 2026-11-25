@@ -281,3 +281,18 @@ Verificado no PC: A manteve câmera/cursor em x=1116 sem abrir janela; a primeir
 seta mantida moveu o cursor de x=732 para x=950 e iniciou a rolagem da câmera
 até x=810. Build e check passaram; smoke 10/10, zero alertas e lacunas, 172 s.
 Capturas e saves locais: `build/camera-validation/hidden-immediate-revision-r1`.
+
+## 2026-11-25 — remover a ação Site do título
+
+Decisão explícita do usuário durante o primeiro bloco de vídeo da Fase 4:
+remover a funcionalidade de abrir o site pelo título, em vez de adiar um
+navegador para o 3DS. `TitleForm` deixa de mostrar o rótulo esquerdo Site e
+de processar seus dois caminhos de abertura. A tecla X fica sem ação nesse
+estado do título; as demais funções de X em outras telas continuam iguais.
+O rótulo direito de sair continua presente. Não há texto novo nem alteração
+de formato ou conteúdo do save.
+
+Verificar no PC e no 3DS: abrir o título, conferir a ausência de Site na barra,
+apertar X e conferir que nenhum navegador abre; sair continua disponível.
+Esta alteração visual é separada da comparação de capturas que verifica a
+neutralidade do novo contrato de telas e dos encaixes de GPU no backend PC.

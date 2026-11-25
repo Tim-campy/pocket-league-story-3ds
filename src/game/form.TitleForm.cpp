@@ -91,7 +91,7 @@ static PLS_NOINLINE void cs_init_e31f80000513fe82_slow(pls::cs::TypeInitFlag& fl
             "F:form.TitleForm.title_anime", [&]() { return IntArray::from({10, 53, 78}); });
         TitleForm_softLabels__storage =
             pls::cs::evaluate_type_initializer_field("F:form.TitleForm.softLabels_", [&]() {
-                return IntArray2::from({IntArray::from({5, 1}), IntArray::from({0, 2})});
+                return IntArray2::from({IntArray::from({0, 1}), IntArray::from({0, 2})});
             });
         TitleForm_IMG_SL_storage = pls::cs::evaluate_type_initializer_field("F:form.TitleForm.IMG_SL", [&]() {
             return IntArray2::from(
@@ -321,10 +321,6 @@ bool TitleForm::Update() {
                     dialog_ = pls::cs::Ref<SubForm>{};
                     return PLS_API(require(formMan_)->RemoveAllForms());
                 }
-                if (require(dialog_)->value1_ == 1 && require(dialog_)->result__SubForm == 0) {
-                    dialog_ = pls::cs::Ref<SubForm>{};
-                    kairo::unity::ui::Canvas::OpenBrowser(kl_cfg::Config::URL_SITE());
-                }
                 dialog_ = pls::cs::Ref<SubForm>{};
             }
             if (require(apdat_)->IsPushSoftLabel(1)) {
@@ -332,10 +328,6 @@ bool TitleForm::Update() {
                 dialog_ = SubForm::MakeDialog(literal(u"ゲームを終了します"), buttons, 1);
                 require(dialog_)->value1_ = 0;
                 return PLS_API(require(formMan_)->Push(dialog_));
-            }
-            if (require(apdat_)->IsPushSoftLabel(5)) {
-                kairo::unity::ui::Canvas::OpenBrowser(kl_cfg::Config::URL_SITE());
-                return true;
             }
             if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
                 if (!kl_cfg::Config::TRIAL_VERSION()) {

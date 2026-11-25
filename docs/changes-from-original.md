@@ -296,3 +296,28 @@ Verificar no PC e no 3DS: abrir o título, conferir a ausência de Site na barra
 apertar X e conferir que nenhum navegador abre; sair continua disponível.
 Esta alteração visual é separada da comparação de capturas que verifica a
 neutralidade do novo contrato de telas e dos encaixes de GPU no backend PC.
+
+## 2026-11-25 — raiz explícita de assets no ROMFS do vídeo CTR
+
+Autorizado pelo usuário: o backend de vídeo fornece `romfs:/` ao catálogo,
+sem trocar o diretório global. Apenas esse build reconhece a raiz ROMFS;
+PC e benchmark nulo conservam seus caminhos. O catálogo mantém confinamento,
+existência, tamanho e autenticação pelos mesmos caminhos de validação.
+Saves e configurações continuam em `/pls-video/preferences/` no SD.
+
+O benchmark anterior usa assets separados no SD. O protótipo de vídeo os
+embute no ROMFS para que o teste privado no aparelho use um único `.3dsx`,
+com o conjunto autenticado correspondente ao executável. Isso não é uma
+otimização de desempenho demonstrada. O arquivo cresce pelo payload e pelo
+índice/alinhamento do ROMFS; os dados continuam sendo lidos conforme usados,
+não se presume que todo o pacote fique residente em RAM. Tamanho, boot e
+memória serão registrados no relatório do bloco.
+
+O `.3dsx` contém assets do APK do usuário: somente em `build/`, nunca no Git,
+anexos, publicação ou CI. Uma distribuição futura deve fornecer ferramentas
+para montar o pacote localmente a partir do APK do próprio usuário, não o
+pacote com assets. `.gitignore` ignora `build/` e `*.3dsx`; o check de conteúdo
+recusa ambos mesmo se forem adicionados à força.
+
+Verificar: smoke e capturas do PC; no Azahar, ler ROMFS e criar/carregar save
+e gravar configuração no SD na mesma execução, sem alterar o diretório.

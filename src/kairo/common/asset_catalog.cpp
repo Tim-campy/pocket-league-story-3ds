@@ -18,6 +18,17 @@ constexpr char expected[]="d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e
 std::uint64_t number(std::istream& f,int bytes){std::uint64_t n{};for(int i=0;i<bytes;++i){int c=f.get();if(c<0)throw cs::EndOfStreamException("Truncated private asset index");n|=std::uint64_t(c)<<(i*8);}return n;}
 std::string text(std::istream& f,std::size_t n){if(n>1048576)throw cs::IOException("Asset index field too long");std::string s(n,'\0');if(n&&!f.read(s.data(),std::streamsize(n)))throw cs::EndOfStreamException();return s;}
 std::string field(std::istream& f){return text(f,std::size_t(number(f,4)));}
+std::filesystem::path catalog_root(const std::filesystem::path& root){
+#if defined(__3DS__) && defined(PLS_CTR_VIDEO)
+    // ROMFS is read-only and has no symlinks. canonical() treats its device
+    // prefix as a relative POSIX path; keep the backend's explicit root.
+    if(root.native()=="romfs:/"){
+        if(!std::filesystem::is_directory(root))throw cs::IOException("ROMFS asset root is missing");
+        return root;
+    }
+#endif
+    return std::filesystem::canonical(root);
+}
 std::filesystem::path canonical_asset_path(const std::filesystem::path& root,const std::filesystem::path& relative,[[maybe_unused]]bool prepared){
 #if defined(__3DS__)
     // libctru's SD archive has no symlinks: stat and lstat use archive_stat.
@@ -28,6 +39,12 @@ std::filesystem::path canonical_asset_path(const std::filesystem::path& root,con
         if(part=="."||part==".."||part.native().find(':')!=std::string::npos||part.native().find('\\')!=std::string::npos)normal=false;
     auto candidate=root/relative;
     const auto* device=GetDeviceOpTab(candidate.c_str());
+#if defined(PLS_CTR_VIDEO)
+    if(normal&&root.native()=="romfs:/"&&device&&device->name&&std::strcmp(device->name,"romfs")==0){
+        if(!std::filesystem::is_regular_file(candidate))throw cs::IOException("ROMFS asset is missing");
+        return candidate;
+    }
+#endif
     if(normal&&device&&device->name&&std::strcmp(device->name,"sdmc")==0){
         // SD preparation validated every payload and libctru has no symlinks.
         // Opening still checks existence and read() still checks the extent.
@@ -39,7 +56,7 @@ std::filesystem::path canonical_asset_path(const std::filesystem::path& root,con
     return std::filesystem::canonical(root/relative);
 }
 }
-Catalog::Catalog(std::filesystem::path root,ReadValidation validation):root_(std::filesystem::canonical(root)){
+Catalog::Catalog(std::filesystem::path root,ReadValidation validation):root_(catalog_root(root)){
     if(validation==ReadValidation::PreparedCatalog){
         // Windows preparation may produce CRLF. Read bytes on every host so
         // tests exercise the same line-ending handling as libctru/newlib.

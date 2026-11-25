@@ -46,8 +46,8 @@ namespace game {
 
 namespace {
 constexpr float management_pan_pixels_per_frame = 6.0f;
-constexpr float management_lot_margin_x = 120.0f;
-constexpr float management_lot_margin_y = 60.0f;
+constexpr float management_lot_margin_x = 60.0f;
+constexpr float management_lot_margin_y = 30.0f;
 }
 
 void Camera::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
@@ -1559,38 +1559,50 @@ void Camera::SetCameraRect() {
 void Camera::PanManagement() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.PanManagement", game);
     const auto pad = PLS_API(pls::kairo::read_circle_pad());
-    if (pad.x == 0 && pad.y == 0)
-        return;
-    const auto gameForm = require(apdat_)->frmGame_;
-    const pls::cs::Single step = management_pan_pixels_per_frame * 100.0f / require(gameForm)->scale_;
-    require(Camera::pos())->x_ += step * pls::cs::Single(pad.x) / pls::kairo::circle_pad_max;
-    require(Camera::pos())->y_ -= step * pls::cs::Single(pad.y) / pls::kairo::circle_pad_max;
-    SetCameraRect();
+    if (pad.x != 0 || pad.y != 0) {
+        const auto gameForm = require(apdat_)->frmGame_;
+        const auto touchSpeed = require(gameForm)->touchCameraSpeed_;
+        if (require(touchSpeed)->x_ != 0.0f || require(touchSpeed)->z_ != 0.0f) {
+            PLS_API(require(touchSpeed)->Set(0.0f, 0.0f, 0.0f));
+            PLS_API(require(require(gameForm)->touchCameraDecimal_)->Set(0.0f, 0.0f, 0.0f));
+        }
+        const pls::cs::Single step = management_pan_pixels_per_frame * 100.0f / require(gameForm)->scale_;
+        require(Camera::pos())->x_ += step * pls::cs::Single(pad.x) / pls::kairo::circle_pad_max;
+        require(Camera::pos())->y_ -= step * pls::cs::Single(pad.y) / pls::kairo::circle_pad_max;
+        SetCameraRect();
+    }
+    KeepManagementCursorVisible();
 }
 
-// M:game.Camera.ReframeManagementCursor
-void Camera::ReframeManagementCursor() {
-    PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.ReframeManagementCursor", game);
+// M:game.Camera.KeepManagementCursorVisible
+void Camera::KeepManagementCursorVisible() {
+    PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.KeepManagementCursorVisible", game);
     const auto gameForm = require(apdat_)->frmGame_;
     const auto view = surface::GameView::GetInstance();
     const pls::cs::Single zoom = require(gameForm)->scale_ / 100.0f;
-    const pls::cs::Single left = (require(view)->GetGameWidth() / 2 - form::GameForm::VIEW_X()) / zoom;
-    const pls::cs::Single right = (require(view)->GetGameWidth() / 2) / zoom;
-    const pls::cs::Single above = (require(view)->GetGameHeight() / 2 - form::GameForm::VIEW_Y()) / zoom;
-    const pls::cs::Single below = (require(view)->GetGameHeight() / 2) / zoom;
-    const pls::cs::Single margin_x = management_lot_margin_x;
-    const pls::cs::Single margin_y = management_lot_margin_y;
+    const pls::cs::Int32 width = require(view)->GetGameWidth();
+    const pls::cs::Int32 height = require(view)->GetGameHeight();
+    const pls::cs::Single left = (width / 2 - form::GameForm::VIEW_X()) / zoom - management_lot_margin_x;
+    const pls::cs::Single right = (width / 2) / zoom - management_lot_margin_x;
+    const pls::cs::Single above = (height / 2 - form::GameForm::VIEW_Y()) / zoom - management_lot_margin_y;
+    const pls::cs::Single below = (height / 2) / zoom - management_lot_margin_y;
     const auto cursor = Camera::cursor_pos();
     const auto camera = Camera::pos();
-    if (require(cursor)->x_ < require(camera)->x_ - left)
-        require(camera)->x_ = require(cursor)->x_ + left - margin_x;
-    else if (require(cursor)->x_ >= require(camera)->x_ + right)
-        require(camera)->x_ = require(cursor)->x_ - right + margin_x;
-    if (require(cursor)->y_ > require(camera)->y_ + above)
-        require(camera)->y_ = require(cursor)->y_ - above + margin_y;
-    else if (require(cursor)->y_ <= require(camera)->y_ - below)
-        require(camera)->y_ = require(cursor)->y_ + below - margin_y;
-    SetCameraRect();
+    const pls::cs::Single min_x = require(camera)->x_ - left;
+    const pls::cs::Single max_x = require(camera)->x_ + right;
+    const pls::cs::Single min_y = require(camera)->y_ - below;
+    const pls::cs::Single max_y = require(camera)->y_ + above;
+    if (require(cursor)->x_ >= min_x && require(cursor)->x_ <= max_x && require(cursor)->y_ <= max_y &&
+        require(cursor)->y_ >= min_y)
+        return;
+    require(gameForm)->SetCursorPosition(pls::cs::to_int32(require(camera)->x_),
+                                         pls::cs::to_int32(require(camera)->y_));
+    subPlayer_ = pls::cs::Ref<TPlayer>{};
+    subSvisor_ = pls::cs::Ref<TPlayer>{};
+    subTenant_ = pls::cs::Ref<Tenant>{};
+    cursorCnt_ = 0;
+    flg_disp = true;
+    Collision(pls::cs::to_int32(require(cursor)->x_), pls::cs::to_int32(require(cursor)->y_));
 }
 
 // M:game.Camera.Update_normal
@@ -1638,7 +1650,6 @@ void Camera::Update_normal() {
             num = -num3;
         }
         PLS_API(require(v)->Set(num, num2, 0.0f));
-        PLS_API(require(Camera::cursor_pos())->Add(v));
         if (num == 0 && num2 == 0) {
             cursorPressCnt_ = 0;
             pls::cs::Ref<kl_util3d::Vector3D> touchCameraSpeed_ =
@@ -1672,8 +1683,63 @@ void Camera::Update_normal() {
         } else {
             ++cursorPressCnt_;
             flg_disp = true;
+            const auto gameForm = require(apdat_)->frmGame_;
+            const auto touchSpeed = require(gameForm)->touchCameraSpeed_;
+            if (require(touchSpeed)->x_ != 0.0f || require(touchSpeed)->z_ != 0.0f) {
+                PLS_API(require(touchSpeed)->Set(0.0f, 0.0f, 0.0f));
+                PLS_API(require(require(gameForm)->touchCameraDecimal_)->Set(0.0f, 0.0f, 0.0f));
+            }
+            const auto view = surface::GameView::GetInstance();
+            const auto camera = Camera::pos();
+            const auto cursor = Camera::cursor_pos();
+            const pls::cs::Single zoom = require(gameForm)->scale_ / 100.0f;
+            const pls::cs::Single step = management_pan_pixels_per_frame / zoom;
+            const pls::cs::Int32 width = require(view)->GetGameWidth();
+            const pls::cs::Int32 height = require(view)->GetGameHeight();
+            const pls::cs::Single left =
+                (width / 2 - form::GameForm::VIEW_X()) / zoom - management_lot_margin_x;
+            const pls::cs::Single right = (width / 2) / zoom - management_lot_margin_x;
+            const pls::cs::Single above =
+                (height / 2 - form::GameForm::VIEW_Y()) / zoom - management_lot_margin_y;
+            const pls::cs::Single below = (height / 2) / zoom - management_lot_margin_y;
+            pls::cs::Single min_x = require(camera)->x_ - left;
+            pls::cs::Single max_x = require(camera)->x_ + right;
+            pls::cs::Single min_y = require(camera)->y_ - below;
+            pls::cs::Single max_y = require(camera)->y_ + above;
+            const bool scroll_x =
+                (num < 0 && require(cursor)->x_ <= min_x) || (num > 0 && require(cursor)->x_ >= max_x);
+            const bool scroll_y =
+                (num2 < 0 && require(cursor)->y_ <= min_y) || (num2 > 0 && require(cursor)->y_ >= max_y);
+            if (scroll_x)
+                require(camera)->x_ += num > 0 ? step : pls::cs::Single(-step);
+            if (scroll_y)
+                require(camera)->y_ += num2 > 0 ? step : pls::cs::Single(-step);
             SetCameraRect();
-            ReframeManagementCursor();
+            min_x = require(camera)->x_ - left;
+            max_x = require(camera)->x_ + right;
+            min_y = require(camera)->y_ - below;
+            max_y = require(camera)->y_ + above;
+            // At the margin, the cursor advances only as far as the camera opens space.
+            if (scroll_x) {
+                require(cursor)->x_ = num > 0 ? max_x : min_x;
+            } else {
+                pls::cs::Single x = require(cursor)->x_ + pls::cs::Single(num);
+                if (x < min_x)
+                    x = min_x;
+                if (x > max_x)
+                    x = max_x;
+                require(cursor)->x_ = x;
+            }
+            if (scroll_y) {
+                require(cursor)->y_ = num2 > 0 ? max_y : min_y;
+            } else {
+                pls::cs::Single y = require(cursor)->y_ + pls::cs::Single(num2);
+                if (y < min_y)
+                    y = min_y;
+                if (y > max_y)
+                    y = max_y;
+                require(cursor)->y_ = y;
+            }
         }
     }
 }

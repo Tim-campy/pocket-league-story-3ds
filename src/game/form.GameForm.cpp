@@ -935,7 +935,6 @@ void GameForm::ChangeState(pls::cs::Int32 state) {
 
         } else {
             if (state_ == 1) {
-                require(require(apdat_)->camera)->ReframeManagementCursor();
                 SetBuildBtmMessage(literal(u"設置場所を選択して下さい。"), 0);
             } else if (state_ == 2) {
                 if (!is_null(require(require(apdat_)->camera)->subPlayer_)) {
@@ -1115,7 +1114,6 @@ bool GameForm::_update(pls::cs::Int32 frameCount) {
                 --LEAGUE_SCHEDULE_UPDATECNT;
             }
             if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
-                require(require(apdat_)->camera)->ReframeManagementCursor();
                 pls::cs::Ref<SubForm> subForm = OepnWindowFromMainDisp();
                 if (!is_null(subForm)) {
                     return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(subForm));
@@ -1137,7 +1135,6 @@ bool GameForm::_update(pls::cs::Int32 frameCount) {
                 }
             }
             if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
-                require(require(apdat_)->camera)->ReframeManagementCursor();
                 bool flag = false;
                 pls::cs::Int32 num = 0;
                 for (pls::cs::Int32 n = 0; n < require(udat_)->tenants_.length(); ++n) {
@@ -2502,6 +2499,9 @@ void GameForm::OnTouchCamera(pls::cs::Int32 type, pls::cs::Int32 v,
         pls::cs::Int32 num6 = (require(e)->y - GameForm::VIEW_Y()) * 100 / scale_;
         switch (type) {
         case 0: {
+            touchPinching_ = false;
+            touchCursorX_ = pls::cs::to_int32(require(game::Camera::cursor_pos())->x_);
+            touchCursorY_ = pls::cs::to_int32(require(game::Camera::cursor_pos())->y_);
             PLS_API(kl_unity_util::FastVector_2_RemoveAllElements(require(touchCameraPoint_)));
             PLS_API(require(touchCameraSpeed_)->Set(0.0f, 0.0f, 0.0f));
             touchDragCamera_ = true;
@@ -2561,6 +2561,8 @@ void GameForm::OnTouchCamera(pls::cs::Int32 type, pls::cs::Int32 v,
             break;
         }
         case 5: {
+            if (touchPinching_)
+                break;
             require(require(apdat_)->camera)->flg_disp = true;
             if (PLS_API(kl_unity_util::FastVector_2_Size(require(touchCameraPoint_))) == 0) {
                 require(require(apdat_)->camera)->old_subPlayer_ =
@@ -2605,6 +2607,10 @@ void GameForm::OnTouchCamera(pls::cs::Int32 type, pls::cs::Int32 v,
         }
         case 12: {
             {
+                if (!touchPinching_) {
+                    SetCursorPosition(touchCursorX_, touchCursorY_);
+                    touchPinching_ = true;
+                }
                 touchBuildDrag_ = false;
                 pinchScaleValue_ = ([&]() -> pls::cs::Int32 {
                     pls::cs::Int32 cs_arg0 = pinchScaleValue_ + require(e)->pinch;
@@ -2725,6 +2731,7 @@ void GameForm::SetScale(pls::cs::Int32 scale) {
             pls::cs::Int32 gameHeight = GetGameHeight();
             scale_ = scale;
             ResetOffscreen();
+            require(require(apdat_)->camera)->KeepManagementCursorVisible();
         }
     }
 }

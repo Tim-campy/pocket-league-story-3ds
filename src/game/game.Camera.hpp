@@ -223,7 +223,7 @@ struct Camera : pls::cs::Object {
 
     void PanManagement();
 
-    void ReframeManagementCursor();
+    void KeepManagementCursorVisible();
 
     void Update_normal();
 

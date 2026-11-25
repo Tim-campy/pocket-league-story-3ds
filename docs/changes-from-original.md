@@ -12,7 +12,7 @@ comentários, nomes locais) não entram: não mudam o código de máquina.
 | Registro de eventos com custo do fim do mês | O registro de eventos passa a incluir o custo de fim de mês | B.5, 2026-11-17 | Fase 3, etapa 2 (pendente) |
 | Idioma padrão | Console em idioma diferente de japonês e inglês inicia em inglês | B.6, 2026-11-17 | Fase 3 (pendente; a escolha atual do idioma está em `docs/design/`) |
 | Botões do 3DS | B aciona só o rótulo de voltar e não age no mapa nem na partida; START abre o diálogo de encerramento (`DoTerminationDialog`), inclusive no título | B.2, 2026-11-17 | Protótipo da etapa 1 (`src/main/pc_dual_screen.cpp`, feito) |
-| Circle pad | Câmera independente na gestão; direcional reenquadra só fora da vista; sem ação na partida | B.1 e autorização de 2026-11-24 | Etapa 2 no PC; entrada CTR neutra até a Fase 4; detalhes e testes abaixo |
+| Circle pad | Câmera independente na gestão; cursor vai ao centro ao ultrapassar a margem; direcional rola continuamente na margem; sem ação na partida | B.1 e decisões de 2026-11-24/25 | Etapa 2 no PC; entrada CTR neutra até a Fase 4; regras finais abaixo |
 | Barra de rótulos (`GamePad`) | Vai para a tela de baixo | B.3, 2026-11-17 | Feito no protótipo PC em 2026-11-20; confirmado na tentativa 656; CTR pendente |
 | Largura de 400 na tela de cima | O mapa ocupa 400×240 no protótipo atual; a limitação observada em B.4 é histórica, não um bloqueio atual da gestão | B.4, 2026-11-17 | Confirmado no PC, tentativa 656 (2026-11-24); partida e CTR não verificados nessa execução |
 | L/R | Zoom no mapa (pinça sintetizada) | B.7, 2026-11-17 | Feito no protótipo PC em 2026-11-19; CTR pendente |
@@ -33,7 +33,10 @@ caminho de pinça existente. Verificação: build, check, smoke e teste local do
 65536 valores SDL (faixa, zona morta, monotonicidade e leitura atômica dos eixos).
 Não altera textos do jogo nem o formato de save.
 
-## Câmera independente na gestão — 2026-11-24
+## Câmera independente na gestão — primeira versão, 2026-11-24 (histórico)
+
+As regras desta primeira versão foram substituídas pelas decisões de 2026-11-25
+registradas ao final deste documento. Os testes abaixo descrevem aquela versão.
 
 Decisão explícita do usuário, primeiro item da etapa 2. O circle pad desloca
 somente a câmera na gestão, inclusive durante a construção. O direcional move
@@ -129,3 +132,60 @@ Regressão completa em 2026-11-25: 87 execuções, 86 concluídas; apenas
 4176 s e teve dois cortes por tempo. Repetidos sem alterar código ou prazo:
 `lots.route`/save 106 concluiu em 1029,9 s e `actions.route`/save 95 em 1147,8 s.
 Nenhum alerta de salvaguarda ou lacuna de tradução nos resultados individuais.
+
+## Câmera na gestão — regras finais, 2026-11-25
+
+Decisão do usuário após testar no PC. A velocidade aprovada permanece em
+`management_pan_pixels_per_frame = 6`, dividida pelo zoom (120 pixels/s por eixo
+a 20 quadros/s). O direcional move o cursor até a margem e, enquanto continua
+pressionado para fora, desloca a câmera nessa mesma velocidade; o cursor só
+avança conforme a câmera abre espaço. Não há salto ou animação nova da câmera.
+Uma entrada no circle pad ou no direcional cancela a inércia residual do arraste
+de toque, para ela não puxar a câmera de volta ao cursor. O arraste sem essa
+intervenção continua funcionando.
+
+O circle pad move só a câmera enquanto o cursor permanece na região segura.
+Ao ultrapassar essa região, o cursor abandona a posição antiga e vai para o
+centro da tela, limitado pelas bordas já existentes do cursor. O usuário aprovou
+`management_lot_margin_x = 60` e `management_lot_margin_y = 30`: metade da
+extensão projetada do lote, para mantê-lo inteiro visível inclusive a 200%.
+Consideram-se 400×240 e os 23 pixels da barra superior.
+
+Se o centro não tiver um lote selecionável, não se procura outro lote nem se
+move a câmera; não se confirma construção/demolição sem alvo válido. A prévia
+de construção acompanha o cursor, preserva o tipo escolhido e ainda exige A
+para construir. Menus e diálogos suspendem o movimento; a confirmação de
+demolição mantém seu `tenantId_`, sem trocar de alvo. A partida segue inalterada.
+
+Zoom L/R mantém a câmera e só leva o cursor ao centro se ele ultrapassar a nova
+margem. O começo da pinça deixa de selecionar o ponto do toque sintetizado:
+ao reconhecer a pinça, o jogo restaura o cursor anterior e ignora o clique final
+do gesto. Os campos temporários desse gesto não entram no save.
+
+`ReframeManagementCursor` e todas as suas chamadas em A e na entrada/confirmação
+da construção foram removidos. `KeepManagementCursorVisible` ajusta somente
+o cursor. Não há regra especial restante para buscar um cursor distante.
+`Serialize`/`Deserialize`, formato de save e textos visíveis não mudam.
+
+Teste manual da regra atual:
+
+```
+python tools/dev.py run --save 50 --seconds 600 --route tests/routes/camera-manual.route --capture build/captures/camera-revision:20
+```
+
+1. I/J/K/L: a câmera move; o cursor permanece até a margem e então vai ao centro.
+2. Segure uma seta: na margem, a câmera deve rolar continuamente, sem salto;
+   o cursor espera espaço e nunca sai da vista. Repita nos quatro sentidos.
+3. Q/W: confira os limites de zoom. A câmera não busca o cursor.
+4. X abre o menu, S volta. Com menu/diálogo aberto, I/J/K/L não movem nada.
+5. Na construção, confira o salto da prévia e confirme apenas com A. Na janela
+   de demolição, confira que o alvo permanece o mesmo.
+6. Confira bordas/cantos e salve com Z; ao recarregar, o cursor deve estar visível.
+
+A limitação do executor foi registrada em `docs/backlog.md` para decisão do usuário.
+
+Perfil de três execuções por cenário/versão, comparação dos timeouts anteriores
+e evidência de compatibilidade do save: [verificação de 2026-11-25](notes/camera-profile-2026-11-25.md).
+O usuário autorizou as medições com a carga externa existente; não são resultados
+de máquina ociosa. Construção/demolição e interrupção da inércia de toque ainda
+exigem a conferência visual indicada no roteiro manual acima.

@@ -65,6 +65,9 @@ struct GameForm : MyFormBase {
     pls::cs::Ref<generated::kairo::unity::util::FastVector> touchCameraPoint_{};
     bool touchDragCamera_{};
     bool touchBuildDrag_{};
+    bool touchPinching_{};
+    pls::cs::Int32 touchCursorX_{};
+    pls::cs::Int32 touchCursorY_{};
     pls::cs::Array<pls::cs::Int32> getScaleRange_tmp{};
     pls::cs::String ToString() override;
     bool Init() override;

@@ -3,6 +3,15 @@
 Itens registrados para tratamento posterior. Nada aqui está autorizado a
 mudar a lógica do jogo antes do congelamento.
 
+## Câmera — suporte no executor de roteiros (decisão pendente)
+
+Registrado em 2026-11-25 por pedido do usuário. O executor não injeta os eixos
+do circle pad nem observa câmera, cursor e lote selecionado. Assim, a câmera
+tem roteiro de preparo e teste manual, sem asserções dessas invariantes na
+suíte. Para decisão: acrescentar essa entrada e essas observações ao diagnóstico,
+com testes de rolagem nas margens, salto do cursor para o centro, zoom, construção
+e menus. Não implementado; exige autorização para alterar a infraestrutura.
+
 ## Fase 3, etapa 2 — primeira alteração: largura de 400 na tela de cima
 
 Registrado em 2026-11-18 (decisão do usuário, item 3: só leitura, aplicar

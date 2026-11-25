@@ -9,6 +9,8 @@
 #include "managed_collation.hpp"
 #include "application.hpp"
 #include "circle_pad.hpp"
+#include "surface.SurfaceManager.hpp"
+#include "surface.GamePad.hpp"
 
 namespace pls::pc::dual {
 namespace {
@@ -96,6 +98,7 @@ Host::Host(int scale) : scale_(std::max(1, scale)) {
     panel_ = kairo::Image::FromRgba(bottom_width, bottom_height, std::vector<std::uint8_t>(bottom_width * bottom_height * 4));
 }
 Host::~Host() {
+    end_game_draw();
     kairo::detail::publish_circle_pad({});
     if (controller_) SDL_GameControllerClose(controller_);
     if (renderer_) SDL_DestroyRenderer(renderer_);
@@ -178,7 +181,9 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
     case SDL_MOUSEBUTTONDOWN:
     case SDL_MOUSEBUTTONUP: {
         if (event.button.windowID == top_window) return dialog_ != nullptr;
-        const int x = event.button.x / scale_, y = event.button.y / scale_;
+        const platform::ScreenPoint point{platform::Screen::bottom,
+                                         event.button.x / scale_, event.button.y / scale_};
+        const int x = point.x, y = point.y;
         if (dialog_) {
             if (event.type == SDL_MOUSEBUTTONDOWN) dialog_->PointerDown(x, y); else dialog_->PointerUp(x, y);
             return true;
@@ -280,30 +285,24 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
 }
 
 
-// Surface order (SurfaceManager.Setup): GameView, GamePad, GameBanner. The game resets
-// the display graphics before drawing each one (SurfaceManagerBase.Draw); the first
-// reset of the frame is the Canvas paint itself, so the GamePad is the third.
-static int gpad_reset_index() {
-    static const int value = std::getenv("PLS_PC_GPAD_RESET") ? std::atoi(std::getenv("PLS_PC_GPAD_RESET")) : 3;
-    return value;
-}
 void Host::begin_game_draw(cs::Ref<kairo::Image> display) {
     display_ = display;
     gpad_image_ = kairo::Image::FromRgba(top_width, top_height, std::vector<std::uint8_t>(std::size_t(top_width) * top_height * 4, 0));
-    resets_ = 0; routed_ = nullptr;
-    kairo::Graphics::display_reset_hook = [this](kairo::Graphics& g) {
+    kairo::Graphics::surface_screen = [](const void* identity) {
+        const auto pad = static_cast<game::kairo::unity::surface::SurfaceBase*>(game::surface::SurfaceManager::gpad_());
+        return identity && identity == pad ? platform::Screen::bottom : platform::Screen::top;
+    };
+    kairo::Graphics::screen_target_hook = [this](kairo::Graphics& g, platform::Screen screen, const void* surface) {
         const auto target = g.target();
-        if (target != display_ && target != gpad_image_) return;
-        ++resets_;
-        if (resets_ == gpad_reset_index()) { g.retarget(gpad_image_); routed_ = &g; }
-        else if (routed_ && resets_ == gpad_reset_index() + 1) { routed_->retarget(display_); routed_ = nullptr; }
+        if (target != display_ && target != gpad_image_ && target != panel_) return;
+        // Only the legacy GamePad keeps a 400x240 intermediate. Direct bottom
+        // drawing uses its native 320x240 target and local coordinates.
+        g.retarget(screen == platform::Screen::top ? display_ : surface ? gpad_image_ : panel_);
     };
 }
 void Host::end_game_draw() {
-    if (routed_) { routed_->retarget(display_); routed_ = nullptr; }
-    kairo::Graphics::display_reset_hook = nullptr;
-    if (std::getenv("PLS_PC_LAYOUT_TRACE") && resets_ != last_resets_) std::fprintf(stderr, "PLS_DISPLAY_RESETS %d\n", resets_);
-    last_resets_ = resets_;
+    kairo::Graphics::screen_target_hook = nullptr;
+    kairo::Graphics::surface_screen = nullptr;
 }
 
 void Host::draw(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {

@@ -63,8 +63,6 @@ private:
     SDL_GameController* controller_ = nullptr;
     cs::Ref<kairo::Image> panel_;
     cs::Ref<kairo::Image> display_, gpad_image_;
-    kairo::Graphics* routed_ = nullptr;
-    int resets_ = 0, last_resets_ = 0;
     bool gpad_touch_ = false;  // a bottom-screen touch is being forwarded to the game
     std::array<bool, static_cast<int>(Button::Count)> held_{};
     std::array<bool, 4> pad_keys_{}; // I, J, K, L, tracked independently

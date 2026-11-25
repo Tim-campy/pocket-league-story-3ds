@@ -105,12 +105,17 @@ Partida, desempenho no 3DS e toque nos rótulos não foram verificados nessa ins
    zoom aplicado. Teste sem teclado: `PLS_PC_DUAL_HOLD="R:700-760,L:1000-1060"`.
    **B.3 feito (2026-11-20):** a plataforma redireciona o desenho da superfície
    `GamePad` para uma imagem própria, mostrada na tela de baixo a 80 % (320×192).
-   Mecanismo: o jogo reinicia o `Graphics` de exibição antes de cada superfície
-   (`SurfaceManagerBase.Draw`, ordem `GameView`, `GamePad`, `GameBanner`; medido: 4
-   reinícios por quadro, o primeiro é o do `Canvas`); o gancho
-   `Graphics::display_reset_hook` (vazio fora do protótipo) troca o alvo no 3º e o
-   devolve no 4º. Toque na tela de baixo vai ao jogo só onde a `GamePad` desenhou
+   **Atualização da Fase 4 (2026-11-25):** `SurfaceManagerBase::Draw` informa a
+   identidade da superfície à API de telas e restaura o destino depois de desenhar,
+   inclusive em exceção. O host associa `GamePad` à inferior; não conta reinícios
+   de `Graphics`. O intermediário da barra conserva 400×240 e a composição a 80 %;
+   o destino direto da inferior usa 320×240. Toque na tela de baixo vai ao jogo só onde a `GamePad` desenhou
    (alfa ≠ 0), convertido para as coordenadas dela (não testado por roteiro: `UNKNOWN`).
+   Comparação com o executável publicado anterior ao contrato: 160 quadros do
+   título em cada tela, alinhados no primeiro quadro do título e com relógio
+   virtual; **320/320 capturas idênticas, 0 pixels diferentes**. Evidência local:
+   `build/phase4-video/title-comparison.json` e capturas `before-anchored`/
+   `after-anchored` na mesma pasta. Não é comparação com o Android ou o 3DS.
    **Tela de cima sem a barra:** mapa e menus limpos nos 400×240; título com a arte
    num quadro de 240 centralizado (o ícone de idioma continua em cima: é da
    `GameView`). **Tela de baixo:** só os botões dos cantos (Save/Menu, Back, Site/Quit)

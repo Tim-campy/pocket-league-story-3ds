@@ -247,15 +247,18 @@ public:
     static inline std::function<void(Graphics&)> display_reset_hook{};
     // The host resolves surface identity, never draw order or reset count.
     static inline platform::Screen (*surface_screen)(const void*) = nullptr;
-    static inline std::function<void(Graphics&,platform::Screen)> screen_target_hook{};
+    static inline std::function<void(Graphics&,platform::Screen,const void*)> screen_target_hook{};
     platform::Screen SelectSurface(const void* identity) {
         const auto previous=destination_screen_;
-        if(is_gui_&&surface_screen)SelectScreen(surface_screen(identity));
+        if(is_gui_&&surface_screen){
+            destination_screen_=surface_screen(identity);
+            if(screen_target_hook)screen_target_hook(*this,destination_screen_,identity);
+        }
         return previous;
     }
     void SelectScreen(platform::Screen screen) {
         destination_screen_=screen;
-        if(is_gui_&&screen_target_hook)screen_target_hook(*this,screen);
+        if(is_gui_&&screen_target_hook)screen_target_hook(*this,screen,nullptr);
     }
     platform::Screen screen()const{return destination_screen_;}
     void retarget(cs::Ref<Image> image){target_=cs::nonnull(std::move(image));}

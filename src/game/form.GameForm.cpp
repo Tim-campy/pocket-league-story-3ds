@@ -935,6 +935,7 @@ void GameForm::ChangeState(pls::cs::Int32 state) {
 
         } else {
             if (state_ == 1) {
+                require(require(apdat_)->camera)->ReframeManagementCursor();
                 SetBuildBtmMessage(literal(u"設置場所を選択して下さい。"), 0);
             } else if (state_ == 2) {
                 if (!is_null(require(require(apdat_)->camera)->subPlayer_)) {
@@ -1006,8 +1007,17 @@ bool GameForm::Update() {
         }
         errFunc_ = 1;
         errLine_ = 0;
-        if (state_ == 0) {
-            require(require(apdat_)->camera)->Update_pos();
+        if (state_ == 0 || state_ == 1) {
+            require(require(apdat_)->camera)->PanManagement();
+            // Construction accepts the D-pad without enabling the map's touch inertia.
+            if (state_ == 0 || PLS_API(require(canvas_)->CheckKeyState(65536)) ||
+                PLS_API(require(canvas_)->CheckKeyState(131072)) ||
+                PLS_API(require(canvas_)->CheckKeyState(262144)) ||
+                PLS_API(require(canvas_)->CheckKeyState(524288))) {
+                require(require(apdat_)->camera)->Update_pos();
+            } else {
+                require(require(apdat_)->camera)->cursorPressCnt_ = 0;
+            }
         }
         for (pls::cs::Int32 i = 0; (i < num); ++i) {
             if ((_update(i))) {
@@ -1105,6 +1115,7 @@ bool GameForm::_update(pls::cs::Int32 frameCount) {
                 --LEAGUE_SCHEDULE_UPDATECNT;
             }
             if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
+                require(require(apdat_)->camera)->ReframeManagementCursor();
                 pls::cs::Ref<SubForm> subForm = OepnWindowFromMainDisp();
                 if (!is_null(subForm)) {
                     return PLS_API(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(subForm));
@@ -1126,6 +1137,7 @@ bool GameForm::_update(pls::cs::Int32 frameCount) {
                 }
             }
             if (PLS_API(require(canvas_)->CheckKeyPulse(1048576))) {
+                require(require(apdat_)->camera)->ReframeManagementCursor();
                 bool flag = false;
                 pls::cs::Int32 num = 0;
                 for (pls::cs::Int32 n = 0; n < require(udat_)->tenants_.length(); ++n) {

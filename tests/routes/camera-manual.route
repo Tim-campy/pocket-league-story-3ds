@@ -1,0 +1,16 @@
+# Manual camera test setup, starting with faithful save 50.
+# The runner cannot inject circle pad axes or inspect camera/cursor/lot state.
+# After reaching management, use I/J/K/L, arrows, Q/W, X, Z, A and S manually.
+# The long wait leaves time for interaction; this is not an automated assertion.
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=900
+wait frames=10000
+end

@@ -28,6 +28,7 @@
 #include "kairo.unity.ui.ResourceManager.hpp"
 #include "main.AppData.hpp"
 #include "surface.GameView.hpp"
+#include "circle_pad.hpp"
 #include "generated/java.util.JTool_templates.hpp"
 #include "generated/java.util.Vector_1_templates.hpp"
 
@@ -42,6 +43,12 @@ using IntArray2 = pls::cs::Array<pls::cs::Array<pls::cs::Int32>>;
 
 namespace pls::game {
 namespace game {
+
+namespace {
+constexpr float management_pan_pixels_per_frame = 6.0f;
+constexpr float management_lot_margin_x = 120.0f;
+constexpr float management_lot_margin_y = 60.0f;
+}
 
 void Camera::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
     pls::cs::Object::trace_edges(visitor);
@@ -1430,70 +1437,47 @@ void Camera::SetCameraRect() {
         } else {
             if ([&]() -> bool {
                     auto cs_left = require(Camera::pos())->x_;
-                    auto cs_right = pls::cs::Single((CAMERA_RECT[0][0] + 120));
+                    auto cs_right = pls::cs::Single((CAMERA_RECT[0][0]));
                     return cs_left < cs_right;
                 }()) {
                 {
                     auto cs_target = Camera::pos();
-                    pls::cs::Single cs_value = CAMERA_RECT[0][0] + 120;
+                    pls::cs::Single cs_value = CAMERA_RECT[0][0];
                     require(cs_target)->x_ = cs_value;
                 }
             }
             if ([&]() -> bool {
                     auto cs_left = require(Camera::pos())->x_;
-                    auto cs_right = pls::cs::Single((CAMERA_RECT[1][0] - 120));
+                    auto cs_right = pls::cs::Single((CAMERA_RECT[1][0]));
                     return cs_left > cs_right;
                 }()) {
                 {
                     auto cs_target = Camera::pos();
-                    pls::cs::Single cs_value = CAMERA_RECT[1][0] - 120;
+                    pls::cs::Single cs_value = CAMERA_RECT[1][0];
                     require(cs_target)->x_ = cs_value;
                 }
             }
             if ([&]() -> bool {
                     auto cs_left = require(Camera::pos())->y_;
-                    auto cs_right = pls::cs::Single((CAMERA_RECT[1][1] + 120));
+                    auto cs_right = pls::cs::Single((CAMERA_RECT[1][1]));
                     return cs_left < cs_right;
                 }()) {
                 {
                     auto cs_target = Camera::pos();
-                    pls::cs::Single cs_value = CAMERA_RECT[1][1] + 120;
+                    pls::cs::Single cs_value = CAMERA_RECT[1][1];
                     require(cs_target)->y_ = cs_value;
                 }
             }
             if ([&]() -> bool {
                     auto cs_left = require(Camera::pos())->y_;
-                    auto cs_right = pls::cs::Single((CAMERA_RECT[0][1] - 120));
+                    auto cs_right = pls::cs::Single((CAMERA_RECT[0][1]));
                     return cs_left > cs_right;
                 }()) {
                 {
                     auto cs_target = Camera::pos();
-                    pls::cs::Single cs_value = CAMERA_RECT[0][1] - 120;
+                    pls::cs::Single cs_value = CAMERA_RECT[0][1];
                     require(cs_target)->y_ = cs_value;
                 }
-            }
-            pls::cs::Ref<surface::GameView> gameView = surface::GameView::GetInstance();
-            pls::cs::Int32 gameWidth = require(gameView)->GetGameWidth();
-            pls::cs::Int32 gameHeight = require(gameView)->GetGameHeight();
-            if (require(Camera::cursor_pos())->x_ <
-                require(Camera::pos())->x_ - pls::cs::Single((gameWidth / 2))) {
-                require(Camera::cursor_pos())->x_ =
-                    require(Camera::pos())->x_ - pls::cs::Single((gameWidth / 2));
-            }
-            if (require(Camera::cursor_pos())->x_ >
-                require(Camera::pos())->x_ + pls::cs::Single((gameWidth / 2))) {
-                require(Camera::cursor_pos())->x_ =
-                    require(Camera::pos())->x_ + pls::cs::Single((gameWidth / 2));
-            }
-            if (require(Camera::cursor_pos())->y_ <
-                require(Camera::pos())->y_ - pls::cs::Single((gameHeight / 2))) {
-                require(Camera::cursor_pos())->y_ =
-                    require(Camera::pos())->y_ - pls::cs::Single((gameHeight / 2));
-            }
-            if (require(Camera::cursor_pos())->y_ >
-                require(Camera::pos())->y_ + pls::cs::Single((gameHeight / 2 - form::GameForm::VIEW_Y()))) {
-                require(Camera::cursor_pos())->y_ =
-                    require(Camera::pos())->y_ + pls::cs::Single((gameHeight / 2 - form::GameForm::VIEW_Y()));
             }
             if ([&]() -> bool {
                     auto cs_left = require(Camera::cursor_pos())->x_;
@@ -1569,6 +1553,44 @@ void Camera::SetCameraRect() {
             }
         }
     }
+}
+
+// M:game.Camera.PanManagement
+void Camera::PanManagement() {
+    PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.PanManagement", game);
+    const auto pad = PLS_API(pls::kairo::read_circle_pad());
+    if (pad.x == 0 && pad.y == 0)
+        return;
+    const auto gameForm = require(apdat_)->frmGame_;
+    const pls::cs::Single step = management_pan_pixels_per_frame * 100.0f / require(gameForm)->scale_;
+    require(Camera::pos())->x_ += step * pls::cs::Single(pad.x) / pls::kairo::circle_pad_max;
+    require(Camera::pos())->y_ -= step * pls::cs::Single(pad.y) / pls::kairo::circle_pad_max;
+    SetCameraRect();
+}
+
+// M:game.Camera.ReframeManagementCursor
+void Camera::ReframeManagementCursor() {
+    PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.ReframeManagementCursor", game);
+    const auto gameForm = require(apdat_)->frmGame_;
+    const auto view = surface::GameView::GetInstance();
+    const pls::cs::Single zoom = require(gameForm)->scale_ / 100.0f;
+    const pls::cs::Single left = (require(view)->GetGameWidth() / 2 - form::GameForm::VIEW_X()) / zoom;
+    const pls::cs::Single right = (require(view)->GetGameWidth() / 2) / zoom;
+    const pls::cs::Single above = (require(view)->GetGameHeight() / 2 - form::GameForm::VIEW_Y()) / zoom;
+    const pls::cs::Single below = (require(view)->GetGameHeight() / 2) / zoom;
+    const pls::cs::Single margin_x = management_lot_margin_x;
+    const pls::cs::Single margin_y = management_lot_margin_y;
+    const auto cursor = Camera::cursor_pos();
+    const auto camera = Camera::pos();
+    if (require(cursor)->x_ < require(camera)->x_ - left)
+        require(camera)->x_ = require(cursor)->x_ + left - margin_x;
+    else if (require(cursor)->x_ >= require(camera)->x_ + right)
+        require(camera)->x_ = require(cursor)->x_ - right + margin_x;
+    if (require(cursor)->y_ > require(camera)->y_ + above)
+        require(camera)->y_ = require(cursor)->y_ - above + margin_y;
+    else if (require(cursor)->y_ <= require(camera)->y_ - below)
+        require(camera)->y_ = require(cursor)->y_ + below - margin_y;
+    SetCameraRect();
 }
 
 // M:game.Camera.Update_normal
@@ -1650,7 +1672,8 @@ void Camera::Update_normal() {
         } else {
             ++cursorPressCnt_;
             flg_disp = true;
-            PLS_API(require(Camera::pos())->Set(Camera::cursor_pos()));
+            SetCameraRect();
+            ReframeManagementCursor();
         }
     }
 }

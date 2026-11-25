@@ -221,6 +221,10 @@ struct Camera : pls::cs::Object {
 
     void SetCameraRect();
 
+    void PanManagement();
+
+    void ReframeManagementCursor();
+
     void Update_normal();
 
     static void SetDrawCenter(pls::cs::Int32 viewX, pls::cs::Int32 viewY, pls::cs::Int32 viewW,

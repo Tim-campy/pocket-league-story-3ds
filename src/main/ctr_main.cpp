@@ -17,6 +17,8 @@
 #include "kairo/platform/null/sound.hpp"
 #include "kairo/platform/sdl/globalization.hpp"
 #include "kairo/platform/ctr/ctr_gpu.hpp"
+#include "kairo/platform/ctr/ctr_input.hpp"
+#include "circle_pad.hpp"
 #include "surface.SurfaceManager.hpp"
 #include "surface.GamePad.hpp"
 #include <3ds.h>
@@ -63,8 +65,31 @@ public:
         gpu.clear(*bottom,0x181c24ff);composition->ResetRender();
         composition->DrawScaledImage(labels,0,0,320,192,0,0,400,240);
     }
-    std::int32_t Present(const kairo::DialogRequest&)override{
-        throw cs::NotSupportedException("CTR dialog input is not installed");
+    std::int32_t Present(const kairo::DialogRequest& request)override{
+        ++modal_epoch;kairo::detail::publish_circle_pad({});gpu.end_frame();
+        kairo::PortDialog dialog(request);int pressed=-1,touch_x=0,touch_y=0;
+        const auto hit=[&](int x,int y){
+            for(std::size_t i=0;i<request.buttons.size();++i){const auto box=dialog.ButtonBox(i,320,240);if(x>=box.x&&x<box.x+box.w&&y>=box.y&&y<box.y+box.h)return int(i);}
+            return -1;
+        };
+        cs::run_finally([&]{
+            while(!dialog.Done()){
+                const auto start=Clock::now();
+                if(!aptMainLoop()){dialog.Handle(kairo::PortDialog::Command::cancel);break;}
+                hidScanInput();const auto down=hidKeysDown(),up=hidKeysUp();
+                using Command=kairo::PortDialog::Command;
+                if(down&KEY_B)dialog.Handle(Command::cancel);
+                else if(down&KEY_A)dialog.Handle(Command::confirm);
+                else if(down&(KEY_DLEFT|KEY_DUP))dialog.Handle(Command::left);
+                else if(down&(KEY_DRIGHT|KEY_DDOWN))dialog.Handle(Command::right);
+                if(hidKeysHeld()&KEY_TOUCH){touchPosition point{};hidTouchRead(&point);touch_x=point.px;touch_y=point.py;}
+                if(down&KEY_TOUCH){pressed=hit(touch_x,touch_y);if(pressed>=0&&!dialog.Done())while(dialog.Selected()!=pressed)dialog.Handle(Command::right);}
+                if(up&KEY_TOUCH){if(pressed>=0&&hit(touch_x,touch_y)==pressed)dialog.Handle(Command::confirm);pressed=-1;}
+                gpu.begin_frame();gpu.clear(*bottom,0x181c24ff);dialog.Draw(bottom);gpu.present(*top,*bottom);gpu.end_frame();
+                {cs::GcNativeBlockingScope idle;kairo::UnityApplication::pace(start);}
+            }
+        },[&]{gpu.begin_frame();kairo::Canvas::GetInstance()->ClearKeyBuffer();});
+        const auto result=dialog.Result();std::fprintf(stderr,"PLS_VIDEO_DIALOG type=%d result=%d\n",request.type,result);std::fflush(stderr);return result;
     }
 };
 struct Sample {std::uint64_t logic{},draw{},wait{},upload{},readback{},frame{},other{};};
@@ -211,9 +236,11 @@ int main(){
             app->host_orientation_writer([&](auto value){orientation=value;});app->host_fullscreen_writer([](bool){});
             pls::game::configure_application(app);
             gpu.begin_frame();app->host_start();gpu.end_frame();
-            TitleProfile profile;bool title_seen=false;
+            TitleProfile profile;bool title_seen=false;pls::ctr::Input input;
             while(aptMainLoop()&&!app->IsTermination()){
                 const auto start=Clock::now();gpu.begin_frame();
+                const auto modal_epoch=screens->modal_epoch;
+                input.poll(*canvas,app->GetFormManager(),*screens->labels);
                 const auto logic_start=Clock::now();const auto logic_wait_start=gpu.wait_time();app->host_update();const auto logic_wall=elapsed(logic_start);
                 const auto draw_wait_start=gpu.wait_time();
                 const auto logic_wait=draw_wait_start-logic_wait_start;
@@ -226,7 +253,7 @@ int main(){
                 const auto draw=elapsed(draw_start);const auto metrics=gpu.profile();
                 pls::cs::gc_frame_end();assets.age_retained();
                 auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;
-                const bool title=form&&form->GetId()==1;
+                const bool title=form&&form->GetId()==1&&modal_epoch==screens->modal_epoch;
                 if(title&&!title_seen){title_seen=true;std::fprintf(stderr,"PLS_VIDEO_TITLE boot_ms=%.3f\n",double(elapsed(boot_start))/1e6);std::fflush(stderr);}
                 const auto draw_wait=metrics.wait_ns-draw_wait_start;
                 const auto draw_cpu=draw>draw_wait?draw-draw_wait:0;

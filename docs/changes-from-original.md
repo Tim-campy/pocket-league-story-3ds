@@ -345,3 +345,21 @@ Verificação: autoteste GPU de recorte assimétrico, cores, alfa, tons de
 cinza, amostragem de alvo, sobreposição e descarte; título no Azahar;
 comparação das capturas PC e smoke. Perfil e instruções do aparelho em
 `docs/design/phase4-video.md` e `docs/notes/phase4-video-device-test.md`.
+
+## 2026-11-25 — entrada nativa no primeiro vídeo CTR
+
+Autorização do usuário para o bloco de vídeo: A/B/X/Y, START, direcional,
+L/R, circle pad e toque inferior passam pelo HID do console. Mantêm o
+mapeamento do protótipo PC; o analógico publica `read_circle_pad` e não
+simula direcional. L/R conservam a pinça na gestão, com eventos preparados
+na inicialização e rastreados por uma raiz, sem alocar a cada quadro.
+
+START apresenta a confirmação existente na inferior; botões e toque usam
+coordenadas locais 320×240. O toque na barra original mantém o caminho do
+jogo: a confirmação de saída desse caminho ainda aparece na superior.
+Não se moveu menu ou diálogo do jogo neste bloco. PC e nulo não mudam.
+
+Verificação no Azahar: seleção do título, HiScores e retorno por B/Y,
+START com A/B/direcional e toque, X sem Site, L/R e circle pad sem movimento
+no título. Gestão/partida e calibração física do analógico dependem do
+aceite do aparelho. Sem alteração de texto, regra ou formato de save.

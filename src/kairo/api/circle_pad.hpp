@@ -9,7 +9,7 @@ inline constexpr std::int32_t circle_pad_max = 32767;
 inline constexpr std::int32_t circle_pad_dead_zone = 12000;
 
 namespace detail {
-// One coherent, allocation-free sample. Null and CTR leave it neutral.
+// One coherent, allocation-free sample. Null leaves it neutral; SDL/CTR publish it.
 inline std::atomic<std::uint32_t> circle_pad_sample{0};
 inline void publish_circle_pad(CirclePadState state) {
     const auto x = static_cast<std::uint32_t>(state.x) & 0xffffu;

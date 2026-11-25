@@ -83,6 +83,8 @@ void Image::Unuse(){
         auto self=pls::cs::dynamic_pointer_cast<Image>(shared_from_this());auto raw=cs::raw(self);
         app->RunOnUiThread(cs::Delegate<void()>::bind(std::move(self),"Image.Unuse",[raw]{raw->Unuse();}),true);return;
     }
+    // Native handle destruction queues GPU release; it never frees GPU memory here.
+    gpu_image_.reset();
     alive_=false;std::vector<std::uint8_t>().swap(rgba_);std::vector<std::uint8_t>().swap(ctr_rgba_);
     release_count=cs::add_i32(release_count,1);
     auto found=std::find_if(source_images.begin(),source_images.end(),[&](const auto& image){return cs::raw(image)==this;});if(found!=source_images.end())source_images.erase(found);
@@ -90,6 +92,8 @@ void Image::Unuse(){
 }
 void Image::Dispose(){
     Unuse();if(alive_){area(cs::neg_i32(cs::mul_i32(width_,height_)));release_count=cs::add_i32(release_count,1);}
+    // Native handle destruction queues GPU release; it never frees GPU memory here.
+    gpu_image_.reset();
     alive_=false;std::vector<std::uint8_t>().swap(rgba_);std::vector<std::uint8_t>().swap(ctr_rgba_);source_bytes_={};source_loader_={};file_={};palette_file_={};images_={};optimize_={};width_=height_=0;disposed_=true;
 }
 void Image::SetSourceImageMaxCount(std::int32_t value){max_count=value;}

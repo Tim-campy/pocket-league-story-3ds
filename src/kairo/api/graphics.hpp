@@ -4,6 +4,7 @@
 #include "asset_catalog.hpp"
 #include "managed_shared_field.hpp"
 #include "matrix4.hpp"
+#include "screen.hpp"
 #include <array>
 namespace pls::kairo {
 class Graphics;
@@ -147,6 +148,7 @@ class Graphics : public cs::Object {
     cs::Ref<MeshManager> mesh_manager_{};
     inline static cs::SharedField<cs::Ref<Graphics>> current_{};
     cs::Ref<Image> target_{};
+    platform::Screen destination_screen_{platform::Screen::top};
     bool is_gui_{},gl_render_{},clip_enabled_{};
     std::int32_t gl_render_count_{};
     std::vector<bool> clip_enabled_stack_;
@@ -243,6 +245,19 @@ public:
     // surface (SurfaceManagerBase.Draw); the hook sees every such reset. Empty by
     // default: no effect on the single-screen hosts.
     static inline std::function<void(Graphics&)> display_reset_hook{};
+    // The host resolves surface identity, never draw order or reset count.
+    static inline platform::Screen (*surface_screen)(const void*) = nullptr;
+    static inline std::function<void(Graphics&,platform::Screen)> screen_target_hook{};
+    platform::Screen SelectSurface(const void* identity) {
+        const auto previous=destination_screen_;
+        if(is_gui_&&surface_screen)SelectScreen(surface_screen(identity));
+        return previous;
+    }
+    void SelectScreen(platform::Screen screen) {
+        destination_screen_=screen;
+        if(is_gui_&&screen_target_hook)screen_target_hook(*this,screen);
+    }
+    platform::Screen screen()const{return destination_screen_;}
     void retarget(cs::Ref<Image> image){target_=cs::nonnull(std::move(image));}
     float GetScale()const{return scale_;}
     void SetClip(float,float,float,float);void ClipRect(float,float,float,float,bool=true);

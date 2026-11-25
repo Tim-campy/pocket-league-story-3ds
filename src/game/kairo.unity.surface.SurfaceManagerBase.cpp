@@ -497,10 +497,16 @@ void SurfaceManagerBase::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             if (flag) {
                 PLS_API(require(g)->BeginGLRender(SurfaceManagerBase::autoGLRenderClipEnable_()));
             }
-            require(PLS_API(require(surfaceList_)->ElementAt(i)))->OnDraw(g);
-            if (flag) {
-                PLS_API(require(g)->EndGLRender(false));
-            }
+            auto surface = require(PLS_API(require(surfaceList_)->ElementAt(i)));
+            auto previousScreen = PLS_API(require(g)->SelectSurface(surface));
+            pls::cs::run_finally(
+                [&]() {
+                    surface->OnDraw(g);
+                    if (flag) {
+                        PLS_API(require(g)->EndGLRender(false));
+                    }
+                },
+                [&]() { PLS_API(require(g)->SelectScreen(previousScreen)); });
         }
         if (kl_cfg::Config::DEBUG() && PLS_API(require(surfaceList_)->Size()) > 0 &&
             (paintRects_.get_Count() > 0)) {

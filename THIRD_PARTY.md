@@ -12,6 +12,11 @@ yet linked by this block. No library source is copied into the game.
 Installed archive hashes are recorded in [docs/toolchain.md](docs/toolchain.md).
 Game assets are not part of these libraries.
 
+Build-only packaging uses the installed devkitPro **3dstools 1.3.1-3**
+package (`3dsxtool`, `smdhtool`), licensed **ISC** according to its package
+metadata. Its executables are not included in the port. The SMDH icon and
+presentation text are original to this project; game assets remain private.
+
 ## Mono class-library collation (MIT/X11)
 
 The native cultural string component adapts Mono's `SimpleCollator`,

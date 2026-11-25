@@ -1,0 +1,13 @@
+.fvec transform[4]
+.out clip_position position
+.out fragment_color color
+.out image_coordinate texcoord0
+.proc main
+    dp4 clip_position.x, transform[0], v0
+    dp4 clip_position.y, transform[1], v0
+    dp4 clip_position.z, transform[2], v0
+    dp4 clip_position.w, transform[3], v0
+    mov fragment_color, v1
+    mov image_coordinate.xy, v2
+    end
+.end

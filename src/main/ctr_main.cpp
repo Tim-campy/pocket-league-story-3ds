@@ -1,0 +1,247 @@
+#include "game_entry.hpp"
+#include "main.AppData.hpp"
+#include "kairo.unity.util.Property.hpp"
+#include "asset_catalog.hpp"
+#include "canvas_back.hpp"
+#include "canvas.hpp"
+#include "font.hpp"
+#include "graphics.hpp"
+#include "mesh.hpp"
+#include "services.hpp"
+#include "storage.hpp"
+#include "capture.hpp"
+#include "runtime_memory.hpp"
+#include "text_input.hpp"
+#include "managed_collation.hpp"
+#include "port_dialog.hpp"
+#include "kairo/platform/null/sound.hpp"
+#include "kairo/platform/sdl/globalization.hpp"
+#include "kairo/platform/ctr/ctr_gpu.hpp"
+#include "surface.SurfaceManager.hpp"
+#include "surface.GamePad.hpp"
+#include <3ds.h>
+#include <array>
+#include <chrono>
+#include <cstdio>
+#include <filesystem>
+#include <fstream>
+
+extern "C" { u32 __ctru_linear_heap_size=24*1024*1024; extern u32 __ctru_heap_size; }
+namespace {
+using namespace pls;
+using Clock=std::chrono::steady_clock;
+std::uint64_t elapsed(Clock::time_point start){return std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count();}
+class Text final:public kairo::TextInputPresenter {
+public:void Begin(cs::String,std::int32_t,std::int32_t)override{}bool Blocking()const override{return false;}
+};
+class Screens final:public kairo::DialogPresenter {
+public:
+    ctr::Gpu& gpu;
+    cs::Ref<kairo::Image> top{},labels{},bottom{};
+    cs::Ref<kairo::Graphics> composition{};
+    std::uint64_t modal_epoch{};
+    explicit Screens(ctr::Gpu& backend):gpu(backend){
+        top=kairo::Image::FromRgba(400,240,std::vector<std::uint8_t>(400*240*4));
+        labels=kairo::Image::FromRgba(400,240,std::vector<std::uint8_t>(400*240*4));
+        bottom=kairo::Image::FromRgba(320,240,std::vector<std::uint8_t>(320*240*4));
+        composition=cs::make_ref<kairo::Graphics>(bottom,true);
+    }
+    void trace_edges(const cs::EdgeVisitor& visit)const override{
+        cs::trace_value(top,visit);cs::trace_value(labels,visit);cs::trace_value(bottom,visit);cs::trace_value(composition,visit);
+    }
+    void install(){
+        kairo::Graphics::surface_screen=[](const void* identity){
+            const auto pad=static_cast<game::kairo::unity::surface::SurfaceBase*>(game::surface::SurfaceManager::gpad_());
+            return identity&&identity==pad?platform::Screen::bottom:platform::Screen::top;
+        };
+        kairo::Graphics::screen_target_hook=[this](kairo::Graphics& g,platform::Screen screen,const void* surface){
+            if(g.target()!=top&&g.target()!=labels&&g.target()!=bottom)return;
+            g.retarget(screen==platform::Screen::top?top:surface?labels:bottom);
+        };
+    }
+    void compose(){
+        gpu.clear(*bottom,0x181c24ff);composition->ResetRender();
+        composition->DrawScaledImage(labels,0,0,320,192,0,0,400,240);
+    }
+    std::int32_t Present(const kairo::DialogRequest&)override{
+        throw cs::NotSupportedException("CTR dialog input is not installed");
+    }
+};
+struct Sample {std::uint64_t logic{},draw{},wait{},upload{},readback{},frame{},other{};};
+class TitleProfile {
+    std::unique_ptr<std::array<Sample,300>> samples_=std::make_unique<std::array<Sample,300>>();
+    std::size_t title_frames_{},count_{};
+    bool written_{};
+    std::filesystem::path path_;
+public:
+    TitleProfile(){for(int n=1;n<10000;++n){auto path=std::filesystem::path("sdmc:/pls-video")/("profile-"+std::to_string(n)+".csv");if(!std::filesystem::exists(path)){path_=path;return;}}throw std::runtime_error("No free video profile slot");}
+    bool frame(bool title,Sample sample,const ctr::VideoProfile& gpu){
+        if(written_||!title)return false;
+        if(++title_frames_<=60)return false;
+        samples_->at(count_++)=sample;
+        if(count_!=samples_->size())return false;
+        std::ofstream output(path_);if(!output)throw std::runtime_error("Cannot write video profile");
+        output<<"frame,logic_ns,draw_cpu_ns,gpu_wait_ns,upload_ns,readback_ns,frame_ns,other_cpu_ns\n";
+        for(std::size_t i=0;i<count_;++i){const auto& s=(*samples_)[i];output<<i<<','<<s.logic<<','<<s.draw<<','<<s.wait<<','<<s.upload<<','<<s.readback<<','<<s.frame<<','<<s.other<<'\n';}
+        output.flush();if(!output)throw std::runtime_error("Video profile write failed");
+        written_=true;
+        const auto heap=kairo::native_heap_payload();
+        std::fprintf(stderr,"PLS_VIDEO_MEMORY normal_busy=%llu normal_free=%llu linear_free=%lu vram_free=%lu\n",static_cast<unsigned long long>(heap.busy_bytes),static_cast<unsigned long long>(heap.free_bytes),static_cast<unsigned long>(linearSpaceFree()),static_cast<unsigned long>(vramSpaceFree()));
+        std::fprintf(stderr,"PLS_VIDEO_PROFILE frames=%u path=%s texture_bytes=%u vram_bytes=%u peak_texture_bytes=%u peak_vram_bytes=%u\n",unsigned(count_),path_.string().c_str(),unsigned(gpu.texture_bytes),unsigned(gpu.vram_bytes),unsigned(gpu.peak_texture_bytes),unsigned(gpu.peak_vram_bytes));std::fflush(stderr);
+        return true;
+    }
+    void capture(const kairo::Image& top,const kairo::Image& bottom){
+        kairo::write_capture_png(path_.parent_path()/(path_.stem().string()+"-top.png"),top);
+        kairo::write_capture_png(path_.parent_path()/(path_.stem().string()+"-bottom.png"),bottom);
+        std::fprintf(stderr,"PLS_VIDEO_CAPTURE=PASS\n");std::fflush(stderr);
+    }
+};
+void storage_check(assets::Catalog& assets){
+    // Opt-in diagnostic on a private SD fixture, never on ordinary device boots.
+    const auto entries=assets.entries(assets::Kind::image);
+    if(entries.empty()||assets.path(*entries.front()).native().find("romfs:/")!=0)
+        throw std::runtime_error("Storage check did not use explicit ROMFS");
+    assets.verify(*entries.front());
+    const auto asset=assets.read(*entries.front());
+    if(asset.size()!=entries.front()->size)throw std::runtime_error("ROMFS read extent mismatch");
+    auto store=kairo::RecordStore::OpenRecordStore(0);
+    if(store->ExistRecord(2))throw std::runtime_error("Storage fixture must have an empty destination record");
+    const auto original=store->ReadRecord(3);
+    auto data=cs::nonnull(game::main::AppData::GetInstance());
+    data->LoadGame(0,true);
+    const auto name=cs::nonnull(data->save_)->strs[0];
+    const auto money=cs::nonnull(data->save_)->lngs[0];
+    game::main::AppData::currentSaveSlot_()=1;
+    data->SaveGame(false);
+    const auto saved=store->ReadRecord(2);
+    if(!saved.length())throw std::runtime_error("New save is empty");
+    data->LoadGame(1,false);
+    if(cs::nonnull(data->save_)->strs[0]!=name||cs::nonnull(data->save_)->lngs[0]!=money)
+        throw std::runtime_error("New save did not restore game values");
+    const auto retained=store->ReadRecord(3);
+    if(retained.length()!=original.length())throw std::runtime_error("Source save changed");
+    for(int i=0;i<original.length();++i)if(original.at(i)!=retained.at(i))throw std::runtime_error("Source save changed");
+    constexpr int volume=3; // Existing SYSSAVEI_BGM_LEVEL, not a new setting.
+    const int expected=cs::nonnull(data->sysSave_)->ints[volume]==0?1:0;
+    cs::nonnull(data->sysSave_)->ints[volume]=expected;data->SaveSystem();
+    cs::nonnull(data->sysSave_)->ints[volume]=-1;
+    if(!data->LoadSystem()||cs::nonnull(data->sysSave_)->ints[volume]!=expected)
+        throw std::runtime_error("Configuration did not round-trip on SD");
+    std::fprintf(stderr,"PLS_VIDEO_STORAGE=PASS romfs_bytes=%u source_record=3 source_bytes=%d new_record=2 new_bytes=%d config_record=0 source_unchanged=1\n",unsigned(asset.size()),original.length(),saved.length());
+    std::fflush(stderr);
+}
+
+void gpu_check(ctr::Gpu& gpu){
+    auto source=kairo::Image::FromRgba(2,2,{255,0,0,255,0,255,0,255,0,0,255,255,255,255,255,255});
+    auto target=kairo::Image::FromRgba(8,8,std::vector<std::uint8_t>(8*8*4));
+    auto g=cs::make_ref<kairo::Graphics>(target,true);
+    gpu.begin_frame();gpu.clear(*target,0x000000ff);
+    g->SetClip(3,2,2,2);g->DrawScaledImage(source,2,1,4,4,0,0,2,2);
+    const auto& pixels=target->pixels();
+    for(int y=0;y<8;++y)for(int x=0;x<8;++x){
+        std::array<unsigned,4> expected{0,0,0,255};
+        if(y==2&&x==3)expected={255,0,0,255};
+        if(y==2&&x==4)expected={0,255,0,255};
+        if(y==3&&x==3)expected={0,0,255,255};
+        if(y==3&&x==4)expected={255,255,255,255};
+        for(int c=0;c<4;++c)if(pixels[(y*8+x)*4+c]!=expected[c])throw std::runtime_error("GPU self-check color/clip/readback mismatch at "+std::to_string(x)+","+std::to_string(y)+","+std::to_string(c)+" got "+std::to_string(pixels[(y*8+x)*4+c]));
+    }
+    auto copied=kairo::Image::FromRgba(8,8,std::vector<std::uint8_t>(8*8*4));
+    auto copy_graphics=cs::make_ref<kairo::Graphics>(copied,true);
+    copy_graphics->DrawImage(target,0,0);
+    if(copied->pixels()!=pixels)throw std::runtime_error("GPU self-check render target sampling mismatch");
+    copied->Dispose();
+    g->ClearClip();g->SetColor(255,0,0,128);g->FillRect(0,0,1,1);
+    const auto& blended=target->pixels();
+    if(blended[0]<127||blended[0]>129||blended[1]||blended[2]||blended[3]!=255)throw std::runtime_error("GPU self-check alpha mismatch");
+    g->SetBlendMode(3);g->DrawImage(source,0,0);
+    const auto& grey=target->pixels();
+    for(int y=0;y<2;++y)for(int x=0;x<2;++x)for(int c=0;c<3;++c){
+        const int expected=x==1&&y==1?255:85;
+        if(std::abs(int(grey[(y*8+x)*4+c])-expected)>2)throw std::runtime_error("GPU self-check grayscale mismatch");
+    }
+    auto back=kairo::Image::FromRgba(1,1,{255,0,0,255});
+    auto front=kairo::Image::FromRgba(1,1,{0,0,255,255});
+    auto recorded=cs::make_ref<kairo::Graphics>(target,false);
+    auto mesh=recorded->GetMeshManager();mesh->capture(true);recorded->ResetRender();
+    recorded->DrawImage(back,0,0);recorded->DrawImage(front,0,0);
+    gpu.clear(*target,0x000000ff);
+    kairo::MeshManager::Render(target,mesh->commands(),{});
+    const auto& layered=target->pixels();
+    if(layered[0]||layered[1]||layered[2]!=255||layered[3]!=255)throw std::runtime_error("GPU self-check mesh depth mismatch");
+    back->Dispose();front->Dispose();
+    source->Dispose();target->Dispose();gpu.end_frame();
+    std::fprintf(stderr,"PLS_VIDEO_SELF_CHECK=PASS pixels=64 alpha=1 deferred_release=1\n");std::fflush(stderr);
+}
+}
+int main(){
+    const auto boot_start=Clock::now();
+    osSetSpeedupEnable(true);
+    std::filesystem::create_directories("sdmc:/pls-video");
+    if(!std::freopen("sdmc:/pls-video/stdout.log","w",stdout)||!std::freopen("sdmc:/pls-video/stderr.log","w",stderr))return 2;
+    try{
+        if(R_FAILED(romfsInit()))throw std::runtime_error("ROMFS initialization failed");
+        pls::cs::GcMutatorScope mutator;
+        pls::cs::install_mono_collation_character_data();pls::cs::set_default_collation_culture({1033,{9},"en",false});
+        pls::sdl::install_globalization_backend();
+        // The SD override is an opt-in diagnostic comparison, never a cwd change.
+        const char* asset_root=std::filesystem::exists("/pls-video/use-sd-assets.flag")?"/pls-video/assets":"romfs:/";
+        pls::assets::Catalog assets(asset_root,pls::assets::ReadValidation::PreparedCatalog);pls::kairo::install_asset_catalog(&assets);
+        std::fprintf(stderr,"PLS_VIDEO_ASSET_ROOT=%s\n",asset_root);std::fflush(stderr);
+        const std::filesystem::path preferences="/pls-video/preferences";
+        pls::services::OfflineServices services(preferences);pls::services::install(&services);services.device_id();
+        pls::kairo::configure_storage(preferences,&assets);pls::kairo::configure_capture("/pls-video/captures");
+        auto sound=pls::cs::make_ref<pls::null_backend::Sound>();pls::kairo::configure_sound(&assets,sound);
+        pls::kairo::install_text_input(pls::cs::make_ref<Text>());
+        pls::ctr::Gpu gpu;pls::platform::gpu_drawing=&gpu;
+        bool new_model=false;const auto model_result=APT_CheckNew3DS(&new_model);
+        std::fprintf(stderr,"PLS_VIDEO_MODEL new3ds=%d result=%ld normal_heap_reserved=%lu linear_heap_reserved=%lu region_capacity=%lu\n",int(new_model),long(model_result),static_cast<unsigned long>(__ctru_heap_size),static_cast<unsigned long>(__ctru_linear_heap_size),static_cast<unsigned long>(osGetMemRegionSize(MEMREGION_APPLICATION)));std::fflush(stderr);
+        try{
+            gpu_check(gpu);
+            auto screens=pls::cs::make_ref<Screens>(gpu);screens->install();
+            pls::kairo::install_dialog_service(screens,pls::cs::Delegate<pls::cs::Array<pls::cs::String>(std::int32_t)>::from_static("port-dialog-labels",[](std::int32_t type){
+                return type<=2?pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"OK")})
+                    :type==3?pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"Yes"),pls::cs::String(u"No")})
+                    :pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"Yes"),pls::cs::String(u"No"),pls::cs::String(u"Cancel")});}));
+            auto canvas=pls::kairo::Canvas::GetInstance();pls::kairo::install_canvas_back_key();canvas->host_display(screens->top,pls::cs::make_ref<pls::kairo::Font>());
+            auto app=pls::game::create_application();app->host_configure(400,240,pls::cs::String::from_utf8(preferences.u8string()),[]{});
+            pls::kairo::WindowOrientation orientation=pls::kairo::WindowOrientation::landscape_left;
+            app->host_orientation_reset([&]{orientation=pls::kairo::WindowOrientation::landscape_left;});
+            app->host_orientation_reader([&]{return orientation==pls::kairo::WindowOrientation::auto_rotation?pls::kairo::WindowOrientation::landscape_left:orientation;});
+            app->host_orientation_writer([&](auto value){orientation=value;});app->host_fullscreen_writer([](bool){});
+            pls::game::configure_application(app);
+            gpu.begin_frame();app->host_start();gpu.end_frame();
+            TitleProfile profile;bool title_seen=false;
+            while(aptMainLoop()&&!app->IsTermination()){
+                const auto start=Clock::now();gpu.begin_frame();
+                const auto logic_start=Clock::now();const auto logic_wait_start=gpu.wait_time();app->host_update();const auto logic_wall=elapsed(logic_start);
+                const auto draw_wait_start=gpu.wait_time();
+                const auto logic_wait=draw_wait_start-logic_wait_start;
+                const auto logic=logic_wall>logic_wait?logic_wall-logic_wait:0;
+                const auto draw_start=Clock::now();
+                pls::kairo::Offscreen::RenderAll();
+                if(!pls::kairo::Offscreen::LastRenderError().empty())throw std::runtime_error(pls::kairo::Offscreen::LastRenderError());
+                gpu.clear(*screens->labels,0);app->host_draw();pls::kairo::Offscreen::EndFrame();
+                screens->compose();gpu.present(*screens->top,*screens->bottom);gpu.end_frame();
+                const auto draw=elapsed(draw_start);const auto metrics=gpu.profile();
+                pls::cs::gc_frame_end();assets.age_retained();
+                auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;
+                const bool title=form&&form->GetId()==1;
+                if(title&&!title_seen){title_seen=true;std::fprintf(stderr,"PLS_VIDEO_TITLE boot_ms=%.3f\n",double(elapsed(boot_start))/1e6);std::fflush(stderr);}
+                const auto draw_wait=metrics.wait_ns-draw_wait_start;
+                const auto draw_cpu=draw>draw_wait?draw-draw_wait:0;
+                const auto frame=elapsed(start),accounted=logic+draw_cpu+metrics.wait_ns;
+                if(profile.frame(title,{logic,draw_cpu,metrics.wait_ns,metrics.upload_ns,metrics.readback_ns,frame,frame>accounted?frame-accounted:0},metrics)){
+                    profile.capture(*screens->top,*screens->bottom);
+                    if(std::filesystem::exists("/pls-video/storage-check.flag")){
+                        gpu.begin_frame();storage_check(assets);gpu.end_frame();break;
+                    }
+                }
+                pls::kairo::UnityApplication::pace(start);
+            }
+            gpu.begin_frame();app->host_stop();gpu.end_frame();
+        }catch(...){pls::kairo::Graphics::screen_target_hook=nullptr;pls::kairo::Graphics::surface_screen=nullptr;pls::platform::gpu_drawing=nullptr;throw;}
+        pls::kairo::Graphics::screen_target_hook=nullptr;pls::kairo::Graphics::surface_screen=nullptr;pls::platform::gpu_drawing=nullptr;
+        romfsExit();return 0;
+    }catch(const std::exception& error){std::fprintf(stderr,"PLS_VIDEO_ERROR %s\n",error.what());std::fflush(stderr);return 1;}
+}

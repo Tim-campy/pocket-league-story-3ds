@@ -321,3 +321,27 @@ recusa ambos mesmo se forem adicionados à força.
 
 Verificar: smoke e capturas do PC; no Azahar, ler ROMFS e criar/carregar save
 e gravar configuração no SD na mesma execução, sem alterar o diretório.
+
+## 2026-11-25 — primeiro backend de vídeo GPU no 3DS
+
+Decisão do usuário para a primeira entrega da Fase 4: o título usa citro3d
+na tela superior 400×240; a barra original é composta na inferior 320×240.
+O destino vem da identidade da superfície, não da contagem de reinícios de
+Graphics. PC e nulo conservam a rasterização anterior. Não há som, teclado
+do sistema, mudança de regras ou formato de save neste bloco.
+
+Imagens, texto e primitivas seguem o backend GPU; recursos nativos só são
+liberados na thread de desenho, fora do quadro e após a conclusão dos
+comandos. A ordem das profundidades é remapeada para preservar diferenças
+que o formato float24 da GPU não representa na escala original. Gestão e
+partida ainda não têm aceite de vídeo: dependem do teste do título no aparelho.
+
+Apresentação própria no Homebrew Launcher, autorizada pelo usuário: título
+“Dual Screen Port”, descrição “Unofficial port - video test”, autor
+“Port contributors” e ícone geométrico original de duas telas. O ícone é
+gerado em `build/`; não usa marca nem arte do jogo.
+
+Verificação: autoteste GPU de recorte assimétrico, cores, alfa, tons de
+cinza, amostragem de alvo, sobreposição e descarte; título no Azahar;
+comparação das capturas PC e smoke. Perfil e instruções do aparelho em
+`docs/design/phase4-video.md` e `docs/notes/phase4-video-device-test.md`.

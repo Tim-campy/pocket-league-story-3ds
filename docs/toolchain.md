@@ -12,6 +12,11 @@ Os hashes da instalação constam do inventário ARM abaixo. O inventário inici
 é histórico; suas linhas NOT_FOUND não descrevem a instalação atual.
 Plano e resultados: [design/phase4-video.md](design/phase4-video.md).
 
+Empacotamento local: **3dstools 1.3.1-3**, licença **ISC** declarada pelo
+pacman; `3dsxtool` embute ROMFS e `smdhtool` gera metadados próprios do port.
+Pacote já instalado no devkitPro, sem instalação adicional. O `.3dsx` com
+assets é privado e nunca segue para publicação ou CI.
+
 Inventário inicial e atualização da Fase 2. Caminhos refletem esta máquina. `NOT_FOUND_WITHIN_SEARCH` significa não encontrada nos limites consultados, não uma busca universal do disco. SDL2 e as bibliotecas FreeType/Ogg/Vorbis foram preparados localmente após as respectivas autorizações; as demais ferramentas abaixo já existiam ou tiveram autorização na Fase 1.
 
 | Ferramenta | Estado | Versão medida | Papel |

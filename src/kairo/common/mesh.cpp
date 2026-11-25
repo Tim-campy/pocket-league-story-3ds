@@ -70,9 +70,19 @@ void MeshManager::Render(const cs::Ref<Image>&target,const Commands&dynamic,cons
         struct Item{const Batch*batch;std::size_t manager,index;};std::vector<Item> sorted;
         for(std::size_t manager=0;manager<2;++manager){const auto&commands=manager?statics:dynamic;for(std::size_t index=0;index<commands.size();++index)sorted.push_back({&commands[index],manager,index});}
         std::sort(sorted.begin(),sorted.end(),[](const Item&a,const Item&b){if(a.batch->queue!=b.batch->queue)return a.batch->queue<b.batch->queue;if(a.manager!=b.manager)return a.manager<b.manager;return a.index>b.index;});
+        // Keep exact source ordering without losing small depth steps in PICA's float24 vertices.
+        // Native values only; capacity is reused across frames and contains no managed reference.
+        static thread_local std::vector<float> depths;depths.clear();
+        for(const auto&item:sorted)for(const auto&quad:item.batch->gpu_quads)depths.push_back(quad.depth);
+        std::sort(depths.begin(),depths.end());depths.erase(std::unique(depths.begin(),depths.end()),depths.end());
+        if(depths.size()>32768)throw cs::NotSupportedException("GPU depth rank limit exceeded");
         for(const auto&item:sorted){const auto&batch=*item.batch;
             if(batch.image){batch.image->Use();batch.image->source_drawn();}
-            for(const auto&quad:batch.gpu_quads)platform::gpu_drawing->quad(*image,batch.image,quad);
+            for(auto quad:batch.gpu_quads){
+                const auto rank=std::lower_bound(depths.begin(),depths.end(),quad.depth)-depths.begin();
+                quad.depth=float(rank+1)/float(depths.size()+1);
+                platform::gpu_drawing->quad(*image,batch.image,quad);
+            }
         }
         return;
     }

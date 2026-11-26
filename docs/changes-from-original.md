@@ -420,3 +420,19 @@ a abertura da gestão falha no Azahar ao alocar um alvo 1024×512 na VRAM.
 O diagnóstico está em `notes/phase4-video-second-status.md`; a política de
 alocação não foi alterada. O perfil dessas telas foi implementado, mas ainda
 não validado nelas.
+
+## 2026-11-26 — profundidade compartilhada no backend CTR (passo 2)
+
+Após inventário, o usuário autorizou compartilhar a profundidade usada pelos
+meshes e reorganizar a VRAM, preservando formato e resolução. Um buffer de
+profundidade de 24 bits de 1024×512 substitui os buffers individuais. Cores
+grandes e apresentação ficam no banco A; profundidade e cores pequenas, no B.
+PC, backend nulo, jogo, runtime e coletor não mudam. Descarte de alvos usados
+continua depois da conclusão dos comandos, na thread de desenho.
+
+No Azahar, o autoteste passou e o save 50 abriu gestão, menu e diálogo. Foram
+capturados os zooms 100 e 75. VRAM medida: 5.934.080 bytes ocupados, 357.376
+livres. Essa folga não satisfaz o mínimo de 1 MB decidido pelo usuário;
+portanto foi acionado o passo 3 já autorizado. Evidências privadas em
+`build/phase4-video/shared-depth-management-3/`. A comparação completa com PC
+e a execução física com gestão/partida continuam pendentes.

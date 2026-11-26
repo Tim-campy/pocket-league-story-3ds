@@ -19,6 +19,7 @@ using Clock=std::chrono::steady_clock;
 std::uint64_t elapsed(Clock::time_point start){return std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count();}
 constexpr u32 rgba8(u32 r,u32 g,u32 b,u32 a){return r|(g<<8)|(b<<16)|(a<<24);}
 constexpr std::size_t glyph_budget=1024*1024;
+constexpr std::size_t shared_depth_bytes=1024*512*3;
 constexpr u32 transfer_flags=GX_TRANSFER_FLIP_VERT(0)|GX_TRANSFER_OUT_TILED(0)|GX_TRANSFER_RAW_COPY(0)|
     GX_TRANSFER_IN_FORMAT(GX_TRANSFER_FMT_RGBA8)|GX_TRANSFER_OUT_FORMAT(GX_TRANSFER_FMT_RGB8)|GX_TRANSFER_SCALING(GX_TRANSFER_SCALE_NO);
 
@@ -27,6 +28,7 @@ struct Allocation {
     C3D_RenderTarget* target{};
     Allocation* next{};
     bool allocated{},retired{};
+    unsigned id{};
 };
 // This queue contains native allocations only. Image destruction may happen on
 // another thread; GPU deletion is exclusively performed by the drawing host.
@@ -34,6 +36,7 @@ struct Lifetime {
     std::mutex mutex;
     Allocation* head{};
     bool closed{},pending{};
+    bool inventory{};
     void retire(Allocation* value)noexcept{
         std::lock_guard<std::mutex> lock(mutex);
         if(closed){delete value;return;}
@@ -50,6 +53,7 @@ struct Lifetime {
         while(*link){
             auto* value=*link;
             if(value->retired||closing){
+                if(inventory)std::fprintf(stderr,"PLS_VIDEO_FREE id=%u bytes=%lu target=%d\n",value->id,static_cast<unsigned long>(value->texture.size),int(value->target!=nullptr));
                 release(*value);*link=value->next;
                 if(value->retired)delete value;
             }else link=&value->next;
@@ -80,6 +84,8 @@ struct Gpu::State {
     C3D_RenderTarget* top{};
     C3D_RenderTarget* bottom{};
     C3D_RenderTarget* current{};
+    void* shared_depth{};
+    unsigned next_id{};
     bool open{};
     bool boot_trace{};
     bool graphics_ready{},gpu_ready{},program_ready{};
@@ -103,6 +109,7 @@ struct Gpu::State {
             glyph_cache.clear();lifetime->drain(true);
             if(top)C3D_RenderTargetDelete(top);
             if(bottom)C3D_RenderTargetDelete(bottom);
+            if(shared_depth)vramFree(shared_depth);
             if(program_ready)shaderProgramFree(&program);
             if(shader)DVLB_Free(shader);
             C3D_Fini();
@@ -120,7 +127,21 @@ struct Gpu::State {
         try{result=std::make_shared<NativeImage>(lifetime,allocation);}
         catch(...){lifetime->retire(allocation);throw;}
         const auto w=assets::ctr_texture::extent(width),h=assets::ctr_texture::extent(height);
-        allocation->allocated=target?C3D_TexInitVRAM(&allocation->texture,w,h,GPU_RGBA8):C3D_TexInit(&allocation->texture,w,h,GPU_RGBA8);
+        allocation->id=++next_id;
+        if(target&&std::size_t(w)*h*3>shared_depth_bytes){
+            std::fprintf(stderr,"PLS_VIDEO_ALLOCATION_FAILURE target=1 logical=%dx%d texture=%dx%d depth_requested=%lu depth_capacity=%lu\n",width,height,w,h,static_cast<unsigned long>(w*h*3),static_cast<unsigned long>(shared_depth_bytes));std::fflush(stderr);
+            throw std::runtime_error("GPU target exceeds shared depth capacity");
+        }
+        if(target){
+            // Keep large colors with the display buffers in A; depth and small colors fit B.
+            void* color=vramAllocAt(w*h*4,w*h>512*256?VRAM_ALLOC_A:VRAM_ALLOC_B);
+            if(color){
+                // Let citro3d initialize its public descriptor, then replace the unused backing.
+                allocation->allocated=C3D_TexInit(&allocation->texture,w,h,GPU_RGBA8);
+                if(allocation->allocated){linearFree(allocation->texture.data);allocation->texture.data=color;}
+                else vramFree(color);
+            }
+        }else allocation->allocated=C3D_TexInit(&allocation->texture,w,h,GPU_RGBA8);
         if(!allocation->allocated){
             std::fprintf(stderr,"PLS_VIDEO_ALLOCATION_FAILURE target=%d logical=%dx%d texture=%dx%d requested_bytes=%lu linear_free=%lu vram_free=%lu\n",
                 int(target),width,height,w,h,static_cast<unsigned long>(w*h*4),static_cast<unsigned long>(linearSpaceFree()),static_cast<unsigned long>(vramSpaceFree()));
@@ -135,9 +156,12 @@ struct Gpu::State {
         C3D_TexSetFilter(&allocation->texture,GPU_NEAREST,GPU_NEAREST);
         C3D_TexSetWrap(&allocation->texture,GPU_CLAMP_TO_EDGE,GPU_CLAMP_TO_EDGE);
         if(target){
-            allocation->target=C3D_RenderTargetCreateFromTex(&allocation->texture,GPU_TEXFACE_2D,0,GPU_RB_DEPTH24);
+            allocation->target=C3D_RenderTargetCreateFromTex(&allocation->texture,GPU_TEXFACE_2D,0,-1);
             if(!allocation->target)throw std::runtime_error("GPU render target allocation failed");
+            // Meshes render consecutively and clear depth before each complete batch sequence.
+            C3D_FrameBufDepth(&allocation->target->frameBuf,shared_depth,GPU_RB_DEPTH24);
         }
+        if(lifetime->inventory){std::fprintf(stderr,"PLS_VIDEO_ALLOC id=%u target=%d requested=%dx%d texture=%dx%d color_bytes=%lu shared_depth_bytes=%lu linear_free=%lu vram_free=%lu\n",allocation->id,int(target),width,height,w,h,static_cast<unsigned long>(allocation->texture.size),static_cast<unsigned long>(target?shared_depth_bytes:0),static_cast<unsigned long>(linearSpaceFree()),static_cast<unsigned long>(vramSpaceFree()));std::fflush(stderr);}
         return result;
     }
     void upload(Allocation& value,const std::vector<std::uint8_t>& pixels,int width,int height,bool tiled){
@@ -190,6 +214,7 @@ struct Gpu::State {
         if(result&&(!target||result->allocation->target))return result;
         if(result&&target)image.gpu_image().reset();
         result=create(image.GetWidth(),image.GetHeight(),target);
+        if(lifetime->inventory)std::fprintf(stderr,"PLS_VIDEO_IMAGE id=%u format=%d name=%s\n",result->allocation->id,int(image.format),image.name_.is_null()?"":image.name_.utf8().c_str());
         bool tiled=false;const auto& bytes=image.gpu_source(tiled);
         upload(*result->allocation,bytes,image.GetWidth(),image.GetHeight(),tiled);
         image.gpu_image()=result;
@@ -309,6 +334,7 @@ void Gpu::State::draw(Allocation* source,const platform::GpuQuad& quad,int width
 
 Gpu::Gpu():state_(std::make_unique<State>()){
     auto& s=*state_;
+    if(auto* flag=std::fopen("sdmc:/pls-video/inventory.flag","rb")){s.lifetime->inventory=true;std::fclose(flag);}
     gfxInitDefault();s.graphics_ready=true;
     if(!C3D_Init(1024*1024))throw std::runtime_error("citro3d initialization failed");
     s.gpu_ready=true;
@@ -326,6 +352,16 @@ Gpu::Gpu():state_(std::make_unique<State>()){
     s.top=C3D_RenderTargetCreate(240,400,GPU_RB_RGBA8,-1);
     s.bottom=C3D_RenderTargetCreate(240,320,GPU_RB_RGBA8,-1);
     if(!s.top||!s.bottom)throw std::runtime_error("Screen render target allocation failed");
+    for(auto* target:{s.top,s.bottom}){
+        auto& fb=target->frameBuf;
+        const auto bytes=C3D_CalcColorBufSize(fb.width,fb.height,GPU_RB_RGBA8);
+        void* color=vramAllocAt(bytes,VRAM_ALLOC_A);
+        if(!color){std::fprintf(stderr,"PLS_VIDEO_ALLOCATION_FAILURE display=%ux%u requested_bytes=%lu bank=A\n",unsigned(fb.width),unsigned(fb.height),static_cast<unsigned long>(bytes));std::fflush(stderr);throw std::runtime_error("GPU display bank allocation failed");}
+        // The display target has not been submitted or drawn yet.
+        vramFree(fb.colorBuf);C3D_FrameBufColor(&fb,color,GPU_RB_RGBA8);
+    }
+    s.shared_depth=vramAllocAt(shared_depth_bytes,VRAM_ALLOC_B);
+    if(!s.shared_depth){std::fprintf(stderr,"PLS_VIDEO_ALLOCATION_FAILURE shared_depth_bytes=%lu vram_free=%lu\n",static_cast<unsigned long>(shared_depth_bytes),static_cast<unsigned long>(vramSpaceFree()));std::fflush(stderr);throw std::runtime_error("GPU shared depth allocation failed");}
     C3D_RenderTargetSetOutput(s.top,GFX_TOP,GFX_LEFT,transfer_flags);
     C3D_RenderTargetSetOutput(s.bottom,GFX_BOTTOM,GFX_LEFT,transfer_flags);
 }
@@ -398,6 +434,7 @@ void Gpu::readback(kairo::Image& image,std::vector<std::uint8_t>& output){
     s.trace("readback.begin");
     if(!texture||!texture->allocation->target)throw std::runtime_error("GPU readback requires a render target");
     const auto start=Clock::now();const bool reopen=s.open;
+    if(s.lifetime->inventory)std::fprintf(stderr,"PLS_VIDEO_READBACK id=%u\n",texture->allocation->id);
     s.wait_boundary();
     const auto& tex=texture->allocation->texture;
     void* bytes=linearAlloc(tex.size);if(!bytes)throw std::bad_alloc();
@@ -445,11 +482,11 @@ void Gpu::present(kairo::Image& top,kairo::Image& bottom){
 VideoProfile Gpu::profile()const{
     auto& s=*state_;auto result=s.metrics;
     result.glyph_cache_bytes=s.glyph_bytes;result.glyph_cache_entries=s.glyph_cache.size();
-    result.vram_bytes=(400+320)*240*4;
+    result.vram_bytes=(400+320)*240*4+shared_depth_bytes;
     {
         std::lock_guard<std::mutex> lock(s.lifetime->mutex);
         for(auto* p=s.lifetime->head;p;p=p->next)if(p->allocated){
-            if(p->target)result.vram_bytes+=p->texture.size+C3D_CalcDepthBufSize(p->texture.width,p->texture.height,GPU_RB_DEPTH24);
+            if(p->target)result.vram_bytes+=p->texture.size;
             else result.texture_bytes+=p->texture.size;
         }
     }

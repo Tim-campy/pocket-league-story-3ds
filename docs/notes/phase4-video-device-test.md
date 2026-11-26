@@ -4,7 +4,7 @@ Escopo: título e barra de rótulos. Não iniciar campanha, gestão ou partida
 nesta entrega. O desempenho do Azahar não comprova o desempenho do console.
 
 Validado no Azahar: título GPU, barra inferior, entrada e armazenamento
-ROMFS/SD. O teste abaixo é o aceite pendente no aparelho físico.
+ROMFS/SD. O teste abaixo documenta o aceite realizado no aparelho físico.
 
 **Reteste físico passou com `2542b15`:** título, controles básicos, oito
 sondagens GPU, autoteste e 300 amostras, com capturas das duas telas. As três
@@ -19,13 +19,14 @@ O rastreamento permanece para comparar as próximas execuções.
 ## Instalação
 
 Depois da validação do artefato indicada em `docs/design/phase4-video.md`,
-copiar `build/phase4-ctr/ctr_video.3dsx` para
+copiar a cópia aprovada `build/phase4-video/title-approved.3dsx` para
 `/3ds/pls-video/ctr_video.3dsx` no SD. Abrir pelo Homebrew Launcher já
 instalado. Os assets autenticados do APK do usuário estão no ROMFS desse
 arquivo; não é necessário copiá-los separadamente. O arquivo é privado,
 fica em `build/` e não pode ser publicado.
 
-Revisão atual de diagnóstico para substituir o anterior no mesmo caminho:
+Revisão aprovada (o build de trabalho da segunda entrega tem uma falha conhecida
+na gestão e não deve substituir esta cópia para jogar):
 **48.742.900 bytes**, SHA-256
 `ab63a1685518657ceb6eb77f4e2aa3d8c91d7fc269c1473cd8a897fc61404b25`.
 Ela verifica limpeza, desenho sem textura e desenho com textura separadamente,

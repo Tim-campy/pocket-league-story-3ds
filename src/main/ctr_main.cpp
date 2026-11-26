@@ -1,4 +1,5 @@
 #include "game_entry.hpp"
+#include "label_touch.hpp"
 #include "main.AppData.hpp"
 #include "kairo.unity.util.Property.hpp"
 #include "asset_catalog.hpp"
@@ -279,7 +280,7 @@ int main(){
                 const auto gc_before=cs::tracing_heap().statistics_and_reset_pause_peak();
                 gpu.begin_frame();
                 const auto modal_epoch=screens->modal_epoch;
-                input.poll(*canvas,app->GetFormManager(),*screens->labels);
+                input.poll(*canvas,app->GetFormManager(),*screens->labels,pls::host::send_label_touch);
                 const bool profile_requested=(hidKeysDown()&KEY_SELECT)!=0;
                 const auto logic_start=Clock::now();const auto logic_wait_start=gpu.wait_time();app->host_update();const auto logic_wall=elapsed(logic_start);
                 const auto draw_wait_start=gpu.wait_time();

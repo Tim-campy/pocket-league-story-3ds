@@ -18,6 +18,15 @@ as áreas de toque usam as mesmas dimensões do desenho. Textos, ações e ordem
 permanecem. Os diagnósticos exclusivos do PC ficam em y=144/160, acima da barra.
 O caminho de uma tela dos roteiros/backend nulo mantém o layout anterior.
 
+Os hosts encaminham o toque inferior diretamente a GamePad.OnReceiveTouchEvent,
+preservando sua fila de eventos e o efeito visual do botão. O despachante antigo
+enviava o mesmo ponto a todas as superfícies: coordenadas locais iguais podiam
+atingir a superior. O perfil do primeiro teste registrou 4 chamadas de toque em
+GameView; no teste isolado foram zero. Menu, Back e Save foram acionados pelo
+mouse, e Save mostrou a confirmação existente de gravação. Um erro do helper
+local de mouse (posição real diferente no release) também foi corrigido durante
+o diagnóstico; os logs temporários foram removidos do código.
+
 Comparação do título: 160/160 quadros superiores idênticos, zero pixels
 diferentes. Evidência: `build/phase4-video/adjustments-native-title-comparison.json`.
 

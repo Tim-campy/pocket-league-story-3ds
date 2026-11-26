@@ -1,5 +1,6 @@
 // Phase 3 prototype, stage 1 (platform only). See pc_dual_screen.hpp.
 #include "pc_dual_screen.hpp"
+#include "label_touch.hpp"
 #include "screen_layout.hpp"
 #include "zoom.hpp"
 #include <algorithm>
@@ -204,12 +205,11 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
         }
         if (gpad_image_) {
             const int gx = x, gy = y;
-            using Kind = platform::Input::Kind;
             if (event.type == SDL_MOUSEBUTTONDOWN) {
                 const auto& px = gpad_image_->pixels();
                 const bool drawn = gx >= 0 && gy >= 0 && gx < bottom_width && gy < bottom_height && px[(std::size_t(gy) * bottom_width + gx) * 4 + 3] != 0;
-                if (drawn) { gpad_touch_ = true; canvas.host_event(platform::Input{Kind::pointer_down, gx, gy}); last_action_ = "GamePad touch"; }
-            } else if (gpad_touch_) { gpad_touch_ = false; canvas.host_event(platform::Input{Kind::pointer_up, gx, gy}); }
+                if (drawn) { gpad_touch_ = true; host::send_label_touch(kairo::MotionEvent::ACTION_DOWN, point); last_action_ = "GamePad touch"; }
+            } else if (gpad_touch_) { gpad_touch_ = false; host::send_label_touch(kairo::MotionEvent::ACTION_UP, point); }
             return true;
         }
         for (const auto& box : boxes)

@@ -3,6 +3,7 @@
 #include "forms.hpp"
 #include <array>
 #include "menu_stick.hpp"
+#include "screen.hpp"
 namespace pls::ctr {
 class Input {
     std::array<int,3> soft_{};
@@ -15,6 +16,7 @@ public:
     ~Input();
     Input(const Input&) = delete;
     Input& operator=(const Input&) = delete;
-    void poll(kairo::Canvas&,kairo::FormManagerBase*,kairo::Image& labels);
+    void poll(kairo::Canvas&,kairo::FormManagerBase*,kairo::Image& labels,
+              void (*label_touch)(int,platform::ScreenPoint));
 };
 }

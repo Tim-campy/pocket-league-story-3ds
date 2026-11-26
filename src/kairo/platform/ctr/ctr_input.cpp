@@ -32,7 +32,8 @@ Input::~Input() {
     kairo::detail::publish_c_stick({});
     if (c_stick_available_) irrstExit();
 }
-void Input::poll(kairo::Canvas& canvas,kairo::FormManagerBase* manager,kairo::Image& labels){
+void Input::poll(kairo::Canvas& canvas,kairo::FormManagerBase* manager,kairo::Image& labels,
+                 void (*label_touch)(int,platform::ScreenPoint)){
     hidScanInput();const auto down=hidKeysDown(),up=hidKeysUp(),held=hidKeysHeld();
     struct Key{u32 physical;int logical;};
     const Key keys[]={{KEY_A,kairo::Canvas::KEY_SELECT},{KEY_DUP,kairo::Canvas::KEY_UP},{KEY_DDOWN,kairo::Canvas::KEY_DOWN},{KEY_DLEFT,kairo::Canvas::KEY_LEFT},{KEY_DRIGHT,kairo::Canvas::KEY_RIGHT}};
@@ -72,12 +73,12 @@ void Input::poll(kairo::Canvas& canvas,kairo::FormManagerBase* manager,kairo::Im
         if(local.x>=0&&local.x<320&&local.y>=0&&local.y<240){
             const auto& pixels=labels.pixels();
             if(pixels[(std::size_t(touch_y_)*320+touch_x_)*4+3]){
-                touch_=true;canvas.host_event({platform::Input::Kind::pointer_down,touch_x_,touch_y_});
+                touch_=true;label_touch(kairo::MotionEvent::ACTION_DOWN,local);
             }
         }
     }
     if((held&KEY_TOUCH)&&touch_){touchPosition point{};hidTouchRead(&point);touch_x_=int(point.px);touch_y_=int(point.py);}
-    if((up&KEY_TOUCH)&&touch_){touch_=false;canvas.host_event({platform::Input::Kind::pointer_up,touch_x_,touch_y_});}
+    if((up&KEY_TOUCH)&&touch_){touch_=false;label_touch(kairo::MotionEvent::ACTION_UP,{platform::Screen::bottom,touch_x_,touch_y_});}
     if((down&KEY_START)&&manager){kairo::detail::publish_circle_pad({});manager->ShowTerminationDialog();canvas.ClearKeyBuffer();}
 }
 }

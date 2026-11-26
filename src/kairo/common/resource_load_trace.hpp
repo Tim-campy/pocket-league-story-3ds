@@ -1,6 +1,6 @@
 #pragma once
 #include <cstddef>
-#if defined(__3DS__) && defined(PLS_NULL_BACKEND)
+#if defined(__3DS__) && (defined(PLS_NULL_BACKEND) || defined(PLS_CTR_VIDEO))
 #include <array>
 #include <atomic>
 #include <chrono>

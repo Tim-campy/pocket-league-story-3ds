@@ -39,8 +39,32 @@ A presença dos arquivos no SD foi confirmada depois de reiniciar o servidor
 FTP. A ausência aparente era da visualização por FTP, não evidência de falha
 de gravação; nenhum ajuste de armazenamento foi necessário. Arquivos privados
 em `build/phase4-ctr/pls-video/`, resumo calculado em
-`build/phase4-video/hardware-title-profile.json`. Faltam duas repetições para
-o conjunto de três execuções previsto no roteiro do aparelho.
+`build/phase4-video/hardware-title-profile.json`.
+
+### Três execuções físicas concluídas
+
+O usuário organizou as evidências em `build/phase4-ctr/pls-video/Teste 1`,
+`Teste 2` e `Teste 3`. Cada CSV contém 300 quadros consecutivos (0–299),
+com conteúdo distinto. Todos os logs têm oito sondagens PASS, autoteste
+PASS e captura PASS; nenhum marcador de erro. As duas novas capturas de
+cada teste foram inspecionadas, sem corrupção aparente no título/barra.
+
+| Teste | Boot (s) | Lógica média (ms) | Desenho CPU médio (ms) | Espera GPU média (ms) | Total médio (ms) | Total P95 (ms) | Total máximo (ms) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 28,412287 | 0,223903 | 2,553290 | 0,003824 | 4,023155 | 4,195562 | 4,741506 |
+| 2 | 16,929875 | 0,225440 | 2,595432 | 0,003875 | 4,103349 | 4,276327 | 4,961773 |
+| 3 | 16,807537 | 0,226781 | 2,523661 | 0,003995 | 4,034414 | 4,252151 | 4,789755 |
+
+Conjunto: 900 amostras, zero totais acima de 50 ms. As definições de tempo
+e os limites de escopo da primeira medição continuam válidos. Causa da
+diferença de boot entre a primeira execução e as seguintes: UNKNOWN;
+não foi feito experimento que separe cache, estado persistido e condições
+de inicialização. Não confundir essa diferença com custo por quadro.
+VRAM usada permaneceu em 3.443.712 bytes nas três execuções; texturas em
+memória linear: 5.370.112, 5.435.648 e 5.435.648 bytes, respectivamente.
+Resumo reproduzível local em `build/phase4-video/hardware-three-runs.json`.
+Concluídas as três repetições do título; nenhuma alteração de código ou
+novo binário foi necessária. Gestão/partida e publicação não foram iniciadas.
 
 **Histórico da primeira falha física:** no primeiro teste do usuário, o New 3DS XL ficou
 com tela preta por cerca de cinco minutos, sem responder ao HOME. Os arquivos

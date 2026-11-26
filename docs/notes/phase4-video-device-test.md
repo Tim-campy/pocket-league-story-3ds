@@ -7,8 +7,10 @@ Validado no Azahar: título GPU, barra inferior, entrada e armazenamento
 ROMFS/SD. O teste abaixo é o aceite pendente no aparelho físico.
 
 **Reteste físico passou com `2542b15`:** título, controles básicos, oito
-sondagens GPU, autoteste e 300 amostras, com capturas das duas telas. Há uma
-execução física registrada; faltam duas repetições. O primeiro teste havia
+sondagens GPU, autoteste e 300 amostras, com capturas das duas telas. As três
+execuções físicas estão registradas: 900 amostras, nenhum total acima de
+50 ms; maior total 4,961773 ms, excluindo a pausa para manter 20 fps.
+Resultados por execução em `docs/design/phase4-video.md`. O primeiro teste havia
 falhado com tela preta no autoteste GPU. Usar a revisão indicada abaixo.
 Se continuar preta após 30 segundos, não é necessário esperar cinco minutos:
 conservar `sd:/pls-video/stderr.log` da raiz do cartão, fora da pasta `3ds`.

@@ -33,6 +33,28 @@ GPU_BOOT depois de SELF_CHECK=PASS. SHA-256 do novo `.3dsx`:
 Esse resultado não confirma correção no hardware: é necessário recuperar o
 novo `stderr.log` do aparelho. Nada foi publicado.
 
+Reteste físico após desligamento completo (2026-11-26): os uploads do alvo e
+da textura de origem retornaram. A última linha é `boundary.submitted`, na
+espera anterior ao primeiro readback; `readback.copy.begin` não foi alcançado.
+Essa submissão contém limpeza e desenho juntos, portanto ainda não identifica
+qual deles trava. Evidência preservada em
+`build/phase4-video/hardware-boot/cold-trace-stderr.log`. Uma tentativa anterior
+deixou a pasta vazia; sem confirmação de desligamento completo, ela não basta
+para atribuir uma nova causa ao programa.
+
+A próxima revisão separa, no autoteste, limpeza, retângulo sem textura e
+retângulo texturizado, primeiro num alvo 64×64 e depois 8×8. Cada operação tem
+readback e validação dos pixels antes de avançar. O autoteste original segue
+intacto depois dessas sondagens. Nenhuma alteração de shader, desenho do
+jogo, regras ou saves foi feita com base numa causa ainda não demonstrada.
+
+Revisão das sondagens: ARM 46,3 s, build PC 3,0 s, check 3,2 s; smoke 10/10,
+zero alertas, 180,0 s. Azahar: limpeza/cor/textura verificadas nos dois
+tamanhos, descarte concluído, autoteste original PASS e 300 quadros do título.
+O rastreamento não aparece depois do autoteste. Pacote privado: 48.742.908
+bytes, SHA-256 `dbf681961dd22d1491bd7646dd3ef03b5c742c0d8a2b2b4a51f545f208441724`.
+O aceite e a identificação da causa física continuam pendentes do aparelho.
+
 ## Contrato de telas implementado
 
 Na API da plataforma, `Screen::top` identifica 400×240 e `Screen::bottom`

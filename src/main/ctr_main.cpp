@@ -160,6 +160,27 @@ void gpu_check(ctr::Gpu& gpu){
     const auto stage=[](const char* name){std::fprintf(stderr,"PLS_VIDEO_SELF_CHECK_STAGE %s\n",name);std::fflush(stderr);};
     stage("allocate");gpu.trace_boot(true);
     auto source=kairo::Image::FromRgba(2,2,{255,0,0,255,0,255,0,255,0,0,255,255,255,255,255,255});
+    // Separate fill, rasterization and sampling before the original combined test.
+    for(const int edge:{64,8}){
+        const auto probe_stage=[&](const char* operation){std::fprintf(stderr,"PLS_VIDEO_GPU_PROBE edge=%d %s\n",edge,operation);std::fflush(stderr);};
+        auto probe=kairo::Image::FromRgba(edge,edge,std::vector<std::uint8_t>(edge*edge*4));
+        auto paint=cs::make_ref<kairo::Graphics>(probe,true);
+        probe_stage("clear.begin");gpu.begin_frame();gpu.clear(*probe,0x000000ff);
+        const auto& cleared=probe->pixels();
+        for(std::size_t i=0;i<cleared.size();++i)if(cleared[i]!=(i%4==3?255:0))throw std::runtime_error("GPU probe clear mismatch");
+        probe_stage("clear.pass");
+        probe_stage("solid.begin");paint->SetColor(255,0,0,255);paint->FillRect(3,2,2,2);
+        const auto& solid=probe->pixels();const auto pixel=(std::size_t(2)*edge+3)*4;
+        if(solid[pixel]!=255||solid[pixel+1]||solid[pixel+2]||solid[pixel+3]!=255)throw std::runtime_error("GPU probe solid mismatch");
+        probe_stage("solid.pass");
+        probe_stage("texture.begin");paint->SetColor(255,255,255,255);paint->SetClip(3,2,2,2);paint->DrawScaledImage(source,2,1,4,4,0,0,2,2);
+        const auto& sampled=probe->pixels();
+        const std::array<std::array<unsigned,4>,4> colors{{{255,0,0,255},{0,255,0,255},{0,0,255,255},{255,255,255,255}}};
+        for(int y=0;y<2;++y)for(int x=0;x<2;++x)for(int c=0;c<4;++c)
+            if(sampled[((y+2)*edge+x+3)*4+c]!=colors[y*2+x][c])throw std::runtime_error("GPU probe texture mismatch");
+        probe_stage("texture.pass");probe->Dispose();gpu.end_frame();
+        probe_stage("dispose.pass");
+    }
     auto target=kairo::Image::FromRgba(8,8,std::vector<std::uint8_t>(8*8*4));
     auto g=cs::make_ref<kairo::Graphics>(target,true);
     stage("clear");gpu.begin_frame();gpu.clear(*target,0x000000ff);

@@ -372,3 +372,10 @@ das operações desse teste, para distinguir desenho, transferência e espera.
 O rastreamento desliga quando o autoteste termina; não altera regras, texto,
 save ou o caminho CPU. Pode acrescentar tempo de I/O durante o autoteste.
 A causa física ainda não foi identificada; não se declara a falha corrigida.
+
+Em 2026-11-26, o log físico localizou a espera depois de submeter limpeza e
+primeiro desenho, antes da cópia de readback. O autoteste passou a verificar
+essas operações separadamente, com e sem textura, em alvos 64×64 e 8×8,
+antes do teste original. São sondagens de boot, sem mudança no desenho do
+jogo nem trabalho adicional nos quadros seguintes. A correção física segue
+pendente de identificar a operação que não termina.

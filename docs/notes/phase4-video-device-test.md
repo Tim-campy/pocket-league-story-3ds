@@ -21,14 +21,12 @@ instalado. Os assets autenticados do APK do usuário estão no ROMFS desse
 arquivo; não é necessário copiá-los separadamente. O arquivo é privado,
 fica em `build/` e não pode ser publicado.
 
-Artefato anterior, validado apenas no Azahar e reprovado no aparelho:
-48.739.932 bytes; SHA-256
-`80fb2ef949dd22cdb647d6fef7b94fd8ab7841d96d29b904cf20c6d1e43dceed`.
-
-Revisão de diagnóstico para substituir o anterior no mesmo caminho:
-**48.741.456 bytes**, SHA-256
-`40012df14ebfea502412baee6e3207745ae2f7d765173c172e3c947e9ec87ed5`.
-Ela acrescenta marcadores ao autoteste, sem mudar desenho ou remover checks.
+Revisão atual de diagnóstico para substituir o anterior no mesmo caminho:
+**48.742.908 bytes**, SHA-256
+`dbf681961dd22d1491bd7646dd3ef03b5c742c0d8a2b2b4a51f545f208441724`.
+Ela verifica limpeza, desenho sem textura e desenho com textura separadamente,
+em alvos 64×64 e 8×8, antes do autoteste original. Não muda o desenho do jogo.
+Começar o teste com o console completamente desligado; ligar e abrir o Launcher.
 No Homebrew Launcher, identificação própria “Dual Screen Port” e ícone
 geométrico de duas telas, sem marca ou arte do jogo.
 

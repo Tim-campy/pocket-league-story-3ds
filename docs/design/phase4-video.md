@@ -5,7 +5,44 @@ GPU, com rótulos na inferior e entrada básica. Gestão e partida só depois do
 teste no New 3DS XL. O caminho CPU do PC e o backend nulo permanecem disponíveis.
 Este documento distingue o projeto abaixo dos resultados medidos ao final.
 
-**Aceite físico reprovado:** no primeiro teste do usuário, o New 3DS XL ficou
+**Reteste físico do título passou em 2026-11-26:** com a revisão `2542b15`,
+o usuário confirmou título, controles básicos, Quit e HiScores no New 3DS XL.
+Os arquivos recuperados confirmam as oito sondagens, o autoteste e as duas
+capturas, todos PASS. A espera no primeiro desenho não reapareceu nessa
+execução após escrever a saída inteira do shader. O mecanismo exato da
+falha anterior não foi isolado adicionalmente. Gestão e partida continuam
+fora do aceite. Não houve push.
+
+Medição física, **uma execução**, 60 quadros de aquecimento e 300 amostras:
+
+| Parcela | Média (ms) | P95 (ms) | Máximo (ms) |
+|---|---:|---:|---:|
+| Lógica | 0,223903 | 0,231254 | 0,251402 |
+| Desenho CPU | 2,553290 | 2,664798 | 3,280512 |
+| Espera GPU | 0,003824 | 0,004438 | 0,005729 |
+| Outros trabalhos CPU | 1,242138 | 1,354598 | 1,555783 |
+| Trabalho total por quadro | 4,023155 | 4,195562 | 4,741506 |
+
+O total exclui a espera deliberada para manter 20 fps. Espera GPU é tempo
+bloqueado da CPU, não tempo de execução da GPU; esta trabalha também durante
+o intervalo entre quadros. Todos os 300 totais ficaram abaixo de 50 ms,
+somente neste título. Não extrapolar para gestão, partida ou 3DS original.
+Tempo até o título: 28412,287 ms, incluindo autotestes e logs de diagnóstico.
+O boot sem essas sondagens ainda é UNKNOWN. VRAM usada: 3.443.712 bytes;
+texturas em memória linear: 5.370.112 bytes; heap normal ocupado no ponto
+de medição: 39.461.448 bytes (não é pico global).
+
+As capturas físicas foram inspecionadas: título na superior 400×240 e barra
+na inferior 320×240, sem inversão ou corrupção aparente. O log também contém
+amostras não neutras do circle pad; não haver movimento no título é esperado.
+A presença dos arquivos no SD foi confirmada depois de reiniciar o servidor
+FTP. A ausência aparente era da visualização por FTP, não evidência de falha
+de gravação; nenhum ajuste de armazenamento foi necessário. Arquivos privados
+em `build/phase4-ctr/pls-video/`, resumo calculado em
+`build/phase4-video/hardware-title-profile.json`. Faltam duas repetições para
+o conjunto de três execuções previsto no roteiro do aparelho.
+
+**Histórico da primeira falha física:** no primeiro teste do usuário, o New 3DS XL ficou
 com tela preta por cerca de cinco minutos, sem responder ao HOME. Os arquivos
 recuperados em `build/phase4-ctr/pls-video/` contêm `PLS_VIDEO_ASSET_ROOT=romfs:/`
 e `PLS_VIDEO_MODEL new3ds=1 result=0`, mas não `PLS_VIDEO_SELF_CHECK=PASS`.
@@ -410,8 +447,10 @@ Uploads/readbacks podem sincronizar a GPU; carga/primeiro uso podem pausar.
 Essas pausas ainda precisam ser medidas no aparelho e nas transições futuras.
 
 Aceite final do título e autorização para gestão/partida dependem do usuário.
-Desempenho físico New 3DS e 3DS original: **UNKNOWN**. Não há alegação de
-cumprimento do orçamento de 50 ms com base no emulador.
+Na entrega inicial, desempenho físico New 3DS e 3DS original: **UNKNOWN**.
+A primeira medição física posterior do New 3DS está no início deste documento;
+o 3DS original segue sem medição. Não há alegação de cumprimento do orçamento
+de 50 ms com base no emulador.
 Uma sondagem com o modelo antigo do Azahar também completou 300 quadros:
 boot 18295,263 ms; desenho CPU médio 3,073093 ms; espera 0,005148 ms;
 quadro 4,141056 ms. Ela só prova execução nessa configuração do emulador,

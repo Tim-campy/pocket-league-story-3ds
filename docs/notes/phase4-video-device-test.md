@@ -6,11 +6,13 @@ nesta entrega. O desempenho do Azahar não comprova o desempenho do console.
 Validado no Azahar: título GPU, barra inferior, entrada e armazenamento
 ROMFS/SD. O teste abaixo é o aceite pendente no aparelho físico.
 
-**Primeiro teste físico falhou:** tela preta no autoteste GPU. Para investigar,
-usar a revisão com rastreamento de boot indicada no relatório mais recente.
+**Reteste físico passou com `2542b15`:** título, controles básicos, oito
+sondagens GPU, autoteste e 300 amostras, com capturas das duas telas. Há uma
+execução física registrada; faltam duas repetições. O primeiro teste havia
+falhado com tela preta no autoteste GPU. Usar a revisão indicada abaixo.
 Se continuar preta após 30 segundos, não é necessário esperar cinco minutos:
 conservar `sd:/pls-video/stderr.log` da raiz do cartão, fora da pasta `3ds`.
-O rastreamento localiza a operação pendente; ainda não é uma correção confirmada.
+O rastreamento permanece para comparar as próximas execuções.
 
 ## Instalação
 
@@ -62,7 +64,9 @@ Enviar os `profile-N.csv`, `profile-N-top.png`, `profile-N-bottom.png` e
 `stderr.log` de `/pls-video/`. O CSV e as capturas recebem um novo número a
 cada execução; `stderr.log` e `stdout.log` são sobrescritos na inicialização,
 portanto copiar os logs entre execuções. São arquivos privados com conteúdo
-do jogo: não entram no Git.
+do jogo: não entram no Git. Se a listagem FTP não mostrar arquivos, reiniciar
+o servidor FTP e reconectar o cliente antes de concluir que a gravação falhou:
+isso revelou os arquivos do primeiro teste físico bem-sucedido.
 
 As colunas de lógica CPU, desenho CPU e espera da GPU são separadas.
 Upload/readback são subconjuntos instrumentados, não parcelas adicionais

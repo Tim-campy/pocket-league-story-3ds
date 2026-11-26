@@ -85,6 +85,8 @@ struct Gpu::State {
     bool graphics_ready{},gpu_ready{},program_ready{};
     bool opaque_target{};
     VideoProfile metrics{};
+    const C3D_Tex* previous_texture{};
+    bool texture_seen{};
     std::map<std::uint64_t,std::shared_ptr<NativeImage>> glyph_cache;
     std::size_t glyph_bytes{};
     mutable std::size_t peak_texture{},peak_vram{};
@@ -171,6 +173,7 @@ struct Gpu::State {
         }catch(...){if(value.target)linearFree(staging);throw;}
         if(value.target)linearFree(staging);
         metrics.upload_ns+=elapsed(start);
+        ++metrics.uploads;metrics.upload_bytes+=texture.size;
     }
     std::shared_ptr<NativeImage> image(kairo::Image& image,bool target){
         auto result=native(image);
@@ -218,6 +221,8 @@ void Gpu::State::draw(Allocation* source,const platform::GpuQuad& quad,int width
     if(quad.filter==1)C3D_AlphaTest(true,GPU_GEQUAL,253);
     else if(quad.filter==2)C3D_AlphaTest(true,GPU_LEQUAL,252);
     else C3D_AlphaTest(quad.alpha_type==1,GPU_GEQUAL,3);
+    const auto* selected_texture=source?&source->texture:nullptr;
+    if(!texture_seen||selected_texture!=previous_texture){++metrics.texture_switches;previous_texture=selected_texture;texture_seen=true;}
     C3D_TexBind(0,source?&source->texture:nullptr);
     for(int i=0;i<6;++i)C3D_TexEnvInit(C3D_GetTexEnv(i));
     C3D_TexEnvBufUpdate(C3D_Both,0);
@@ -317,7 +322,7 @@ Gpu::Gpu():state_(std::make_unique<State>()){
 Gpu::~Gpu()=default;
 void Gpu::trace_boot(bool enabled){state_->boot_trace=enabled;}
 void Gpu::begin_frame(){
-    auto& s=*state_;s.metrics={};
+    auto& s=*state_;s.metrics={};s.previous_texture=nullptr;s.texture_seen=false;
     s.trace("frame.begin.wait");
     const auto start=Clock::now();
     if(!C3D_FrameBegin(0))throw std::runtime_error("GPU begin frame failed");
@@ -429,6 +434,7 @@ void Gpu::present(kairo::Image& top,kairo::Image& bottom){
 }
 VideoProfile Gpu::profile()const{
     auto& s=*state_;auto result=s.metrics;
+    result.glyph_cache_bytes=s.glyph_bytes;result.glyph_cache_entries=s.glyph_cache.size();
     result.vram_bytes=(400+320)*240*4;
     {
         std::lock_guard<std::mutex> lock(s.lifetime->mutex);

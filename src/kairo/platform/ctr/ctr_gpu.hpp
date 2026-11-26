@@ -6,6 +6,8 @@
 namespace pls::ctr {
 struct VideoProfile {
     std::uint64_t wait_ns{}, upload_ns{}, readback_ns{}, quads{}, glyphs{};
+    std::uint64_t texture_switches{}, uploads{}, upload_bytes{};
+    std::size_t glyph_cache_bytes{}, glyph_cache_entries{};
     std::size_t texture_bytes{}, vram_bytes{}, peak_texture_bytes{}, peak_vram_bytes{};
 };
 class Gpu final : public platform::GpuDrawing {

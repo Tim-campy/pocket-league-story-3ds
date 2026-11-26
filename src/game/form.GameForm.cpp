@@ -11,6 +11,7 @@
 #include "form.DebugForm.hpp"
 #include "form.FormManager.hpp"
 #include "form.GameForm.hpp"
+#include "zoom.hpp"
 #include "form.MyFormBase.hpp"
 #include "form.SoccerForm.hpp"
 #include "form.SubForm.hpp"
@@ -63,6 +64,9 @@ using IntArray2 = pls::cs::Array<pls::cs::Array<pls::cs::Int32>>;
 
 namespace pls::game {
 namespace form {
+namespace {
+constexpr int management_zoom_percent_per_frame = 2; // 40 percentage points/s at 20 Hz.
+}
 
 void GameForm::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
     MyFormBase::trace_edges(visitor);
@@ -1007,6 +1011,11 @@ bool GameForm::Update() {
         errFunc_ = 1;
         errLine_ = 0;
         if (state_ == 0 || state_ == 1) {
+            const int zoom = PLS_API(pls::kairo::read_zoom_direction());
+            if (zoom != 0) {
+                SetScale(scale_ + zoom * management_zoom_percent_per_frame);
+                pinchScaleValue_ = scale_ > 100 ? scale_ + 40 : scale_;
+            }
             require(require(apdat_)->camera)->PanManagement();
             // Construction accepts the D-pad without enabling the map's touch inertia.
             if (!require(require(apdat_)->camera)->managementCursorHidden_ &&

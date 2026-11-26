@@ -1,6 +1,7 @@
 // Phase 3 prototype, stage 1 (platform only). See pc_dual_screen.hpp.
 #include "pc_dual_screen.hpp"
 #include "screen_layout.hpp"
+#include "zoom.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <stdexcept>
@@ -103,6 +104,7 @@ Host::~Host() {
     platform::configure_separate_screens(false);
     end_game_draw();
     kairo::detail::publish_circle_pad({});
+    kairo::detail::publish_zoom_direction(0);
     if (controller_) SDL_GameControllerClose(controller_);
     if (renderer_) SDL_DestroyRenderer(renderer_);
     if (window_) SDL_DestroyWindow(window_);
@@ -212,6 +214,8 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
     case SDL_WINDOWEVENT:
         if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
             pad_keys_.fill(false); pad_x_ = pad_y_ = 0;
+            held_[static_cast<int>(Button::L)] = held_[static_cast<int>(Button::R)] = false;
+            kairo::detail::publish_zoom_direction(0);
             kairo::detail::publish_circle_pad({});
         }
         return event.window.windowID != top_window;
@@ -244,11 +248,9 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
     kairo::detail::publish_circle_pad(dialog_ ? kairo::CirclePadState{} : pad);
     const bool moving = map && (pad.x || pad.y);
     if (moving) last_action_ = "circle pad";
-    // L/R (decision B.7 of 2026-11-17): the two-finger pinch the original map
-    // accepts (SurfaceBase pinch -> GameForm.OnTouchCamera case 12, pinchScaleValue_),
-    // centred on the view: R spreads the fingers (zoom in), L brings them closer.
+    // L/R publish a held direction; the game owns the zoom speed and limits.
     // Prototype test hook: PLS_PC_DUAL_HOLD="R:600-640,L:700-720" holds buttons on
-    // those update frames (no keyboard needed to exercise the pinch).
+    // those update frames (no keyboard needed to exercise zoom).
     {
         static std::uint64_t frame = 0; ++frame;
         static const std::string spec = std::getenv("PLS_PC_DUAL_HOLD") ? std::getenv("PLS_PC_DUAL_HOLD") : "";
@@ -262,27 +264,10 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
             if (button != Button::Count && (frame == first || frame == last + 1)) held_[static_cast<int>(button)] = frame == first;
         }
     }
-    const int zoom = map && !moving ? (held_[static_cast<int>(Button::R)] ? 1 : 0) - (held_[static_cast<int>(Button::L)] ? 1 : 0) : 0;
-    constexpr int pcx = top_width / 2, pcy = 23 + (top_height - 23) / 2;
-    auto pinch_event = [&](std::int32_t action, bool two) {
-        auto ids = two ? cs::Array<std::int32_t>::from({0, 1}) : cs::Array<std::int32_t>::from({0});
-        auto positions = two ? cs::Array<float>::from({float(pcx - pinch_d_ / 2), float(pcy), float(pcx + pinch_d_ / 2), float(pcy)})
-                             : cs::Array<float>::from({float(pcx - pinch_d_ / 2), float(pcy)});
-        canvas.OnTouchEvent(cs::make_ref<kairo::MotionEvent>(action, ids, positions, cs::Array<float>{}));
-    };
+    const int zoom = map && !dialog_ ? (held_[static_cast<int>(Button::R)] ? 1 : 0) - (held_[static_cast<int>(Button::L)] ? 1 : 0) : 0;
+    kairo::detail::publish_zoom_direction(zoom);
     if (zoom) {
-        if (!pinching_) {
-            pinching_ = true; pinch_d_ = 80;
-            pinch_event(kairo::MotionEvent::ACTION_DOWN, false);
-            pinch_event(kairo::MotionEvent::ACTION_POINTER_2_DOWN, true);
-        }
-        pinch_d_ = std::clamp(pinch_d_ + zoom * 6, 20, 220);
-        pinch_event(kairo::MotionEvent::ACTION_MOVE, true);
         last_action_ = zoom > 0 ? "zoom +" : "zoom -";
-    } else if (pinching_) {
-        pinch_event(kairo::MotionEvent::ACTION_POINTER_2_UP, true);
-        pinch_event(kairo::MotionEvent::ACTION_UP, false);
-        pinching_ = false;
     }
 }
 

@@ -497,3 +497,19 @@ Verificar: `python tools/dev.py run --save 50`, comparar as duas capturas e
 tocar em cada rótulo no PC e no Azahar, incluindo salvar, menu, voltar e sair.
 O borrado vinha das reduções sucessivas do GamePad e da composição da inferior;
 as chamadas a SetLinearFilterEnable já eram inertes no port.
+
+## 2026-11-26 — zoom contínuo por L/R
+
+Por decisão do usuário, segurar L/R passa a diminuir/aumentar a escala livre
+do mapa, em vez de sintetizar uma pinça de alcance limitado. A constante
+`management_zoom_percent_per_frame`, em `form.GameForm.cpp`, vale 2: 40 pontos
+percentuais por segundo a 20 quadros/s. Os limites existentes continuam 75–200
+nas duas telas; pressionar L e R juntos produz direção neutra.
+
+O zoom original já aceita escala inteira livre, não uma lista de níveis fixos.
+SetScale reaproveita seu array e seus alvos; nenhuma alocação por quadro foi
+adicionada. A pinça de toque existente permanece. Cursor oculto, margem 60×30,
+rolagem de borda, saves e partida conservam suas regras.
+
+Verificar: no mapa do save 50, segurar Q/W no PC, ou L/R no console, até os dois
+limites; soltar interrompe imediatamente. Circle pad e zoom podem atuar juntos.

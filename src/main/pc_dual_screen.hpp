@@ -5,7 +5,7 @@
 //   * bottom window 320x240 shows touchable button labels and a provisional panel;
 //   * keyboard (and an SDL game controller) mapped as 3DS buttons.
 // No generated method is called and no game state is written: buttons become
-// Canvas keys, zoom pointer events, and the per-frame circle pad API.
+// Canvas keys and per-frame circle pad / zoom samples.
 #include <SDL.h>
 #include <array>
 #include <cstdint>
@@ -67,8 +67,6 @@ private:
     std::array<bool, static_cast<int>(Button::Count)> held_{};
     std::array<bool, 4> pad_keys_{}; // I, J, K, L, tracked independently
     std::int32_t pad_x_ = 0, pad_y_ = 0; // raw controller axes
-    bool pinching_ = false;
-    int pinch_d_ = 0;  // distance between the two synthesized fingers
     std::int32_t pressed_soft_[3] = {0, 0, 0};  // soft key held by B, X, Y
     std::string last_action_;
     kairo::PortDialog* dialog_ = nullptr;

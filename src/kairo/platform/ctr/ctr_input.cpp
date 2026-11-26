@@ -1,5 +1,6 @@
 #include "ctr_input.hpp"
 #include "circle_pad.hpp"
+#include "c_stick.hpp"
 #include "zoom.hpp"
 #include "screen.hpp"
 #include "application.hpp"
@@ -8,11 +9,28 @@
 #include <algorithm>
 #include <cstdio>
 
+// Make IR optional: a missing service must not abort libctru's startup.
+extern "C" bool hidShouldUseIrrst(void) { return false; }
+
 namespace pls::ctr {
 namespace {
 bool back(const std::u16string& label){return label==u"back"||label==u"\x623b\x308b";}
 bool menu(const std::u16string& label){return label==u"menu"||label==u"\xff92\xff86\xff6d\xff70";}
 std::u16string lower(const cs::String& value){return value.is_null()?std::u16string():cs::culture_to_lower(value).code_units();}
+}
+Input::Input() {
+    bool new_model = false;
+    Result result = APT_CheckNew3DS(&new_model);
+    if (R_SUCCEEDED(result) && new_model) {
+        result = irrstInit();
+        c_stick_available_ = R_SUCCEEDED(result);
+    }
+    std::fprintf(stderr,"PLS_VIDEO_CSTICK available=%d result=%ld\n",int(c_stick_available_),long(result));
+    std::fflush(stderr);
+}
+Input::~Input() {
+    kairo::detail::publish_c_stick({});
+    if (c_stick_available_) irrstExit();
 }
 void Input::poll(kairo::Canvas& canvas,kairo::FormManagerBase* manager,kairo::Image& labels){
     hidScanInput();const auto down=hidKeysDown(),up=hidKeysUp(),held=hidKeysHeld();
@@ -37,6 +55,13 @@ void Input::poll(kairo::Canvas& canvas,kairo::FormManagerBase* manager,kairo::Im
     kairo::detail::publish_circle_pad(pad);
     const auto form=manager?manager->GetTopForm():nullptr;
     const bool map=form&&form->GetId()==9;
+    circlePosition cstick{};
+    if (c_stick_available_) irrstCstickRead(&cstick);
+    const auto stick_axis=[](int raw){constexpr int radius=154;return std::clamp(raw,-radius,radius)*kairo::c_stick_max/radius;};
+    kairo::detail::publish_c_stick(map?kairo::normalize_c_stick({stick_axis(cstick.dx),stick_axis(-int(cstick.dy))}):kairo::CStickState{});
+    if (form && form->GetId()!=9 && form->GetId()!=2) {
+        if (const int key=menu_stick_.update(pad)) canvas.KeyClick(key);
+    } else menu_stick_.reset();
     if(down||up){std::fprintf(stderr,"PLS_VIDEO_INPUT down=%lu up=%lu pad=%d,%d form=%d\n",static_cast<unsigned long>(down),static_cast<unsigned long>(up),pad.x,pad.y,form?form->GetId():-1);std::fflush(stderr);}
     const int zoom=map?int(bool(held&KEY_R))-int(bool(held&KEY_L)):0;
     kairo::detail::publish_zoom_direction(zoom);

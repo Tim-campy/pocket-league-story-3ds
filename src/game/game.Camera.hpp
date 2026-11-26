@@ -1,6 +1,7 @@
 // From the reconstructed C# (reference/); maintained by hand since v1.0.0-faithful.
 #pragma once
 #include "game_generated_forward.hpp"
+#include "c_stick.hpp"
 
 namespace pls::game {
 namespace game {
@@ -27,6 +28,8 @@ struct Camera : pls::cs::Object {
     bool flg_disp{};
     bool managementCursorHidden_{};
     bool managementCursorRevealHeld_{};
+    pls::kairo::CStickRepeat managementStick_{};
+    int managementStickKeys_{};
     pls::cs::Int32 cnt_autoFocus{};
     pls::cs::Int32 TIME_AUTOFOCUS{};
     pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> limit_pos_lt{};

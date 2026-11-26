@@ -531,3 +531,29 @@ Verificar capturas estáticas em 100%, 130%, 150%, 170% e 200%, antes/depois,
 em `build/`. A ampliação fracionária mantém contornos nítidos, mas distribui
 pixels desigualmente e pode oscilar durante rolagem. Desenho direto de sprites
 na escala final e filtros alternativos continuam propostas, não implementações.
+
+## 2026-11-26 — C-Stick no cursor e circle pad na seleção
+
+Por decisão do usuário, o C-Stick reproduz o movimento contínuo do direcional
+na gestão; o pedido inicial de saltos lote a lote foi substituído explicitamente.
+O direcional tem prioridade quando ambos são usados. As direções retas seguem
+os eixos da tela; diagonais usam a mesma proporção 2:1 e a mesma aceleração do
+direcional. Sua implementação e a rolagem suave na margem permanecem iguais.
+
+`src/kairo/api/c_stick.hpp` centraliza faixa 32767, zona morta radial 8000,
+cadência máxima 20 Hz e histerese de 5 graus além da borda de cada um dos oito
+setores. Após a zona morta, a cadência é proporcional à inclinação; na máxima,
+há movimento em todo quadro, igual ao direcional seguro. A primeira inclinação
+revela e move o cursor oculto; A continua apenas revelando. Não há referência
+gerenciada nova nem alocação por quadro; Serialize/Deserialize não mudam.
+
+PC: analógico direito ou T/F/G/H (cima/esquerda/baixo/direita). CTR: serviço IR
+opcional, inicializado só no New 3DS; sem serviço ou no modelo original, leitura
+neutra. Circle pad continua na câmera da gestão e agora seleciona nos menus e
+diálogos, pela plataforma; atraso inicial de 6 quadros, repetição a cada 3,
+direção cardinal dominante. C-Stick não atua nos menus nem na partida.
+
+Verificar com `python tools/dev.py run --save 50`: cursor, câmera independente,
+revelação, construção, bordas em 200%, prioridade do direcional e seleção de
+menu por I/J/K/L. No aparelho, conferir também inclinação leve e ausência de
+efeito na partida; repetir no modelo original para a leitura neutra.

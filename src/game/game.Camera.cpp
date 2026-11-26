@@ -854,7 +854,7 @@ void Camera::Update_pos() {
                     if (cursorCnt_ < 80) {
                         ++cursorCnt_;
                     }
-                    if (flag || flag2 || flag3 || flag4) {
+                    if (flag || flag2 || flag3 || flag4 || managementStickKeys_ != 0) {
                         subPlayer_ = pls::cs::Ref<TPlayer>{};
                         subSvisor_ = pls::cs::Ref<TPlayer>{};
                         cursorCnt_ = 0;
@@ -1562,6 +1562,14 @@ void Camera::SetCameraRect() {
 // M:game.Camera.PanManagement
 void Camera::PanManagement() {
     PLS_METHOD_SCOPE("Assembly-CSharp", "M:game.Camera.PanManagement", game);
+    const bool dpad = PLS_API(require(canvas_)->CheckKeyState(65536 | 131072 | 262144 | 524288));
+    if (dpad) {
+        PLS_API(managementStick_.reset());
+        managementStickKeys_ = 0;
+    } else {
+        const auto stick = PLS_API(pls::kairo::read_c_stick());
+        managementStickKeys_ = PLS_API(managementStick_.update(stick));
+    }
     const auto pad = PLS_API(pls::kairo::read_circle_pad());
     if (pad.x != 0 || pad.y != 0) {
         flg_disp = true;
@@ -1579,7 +1587,8 @@ void Camera::PanManagement() {
     }
     KeepManagementCursorVisible();
     const bool cursorInput =
-        PLS_API(require(canvas_)->CheckKeyState(65536 | 131072 | 262144 | 524288 | 1048576));
+        PLS_API(require(canvas_)->CheckKeyState(65536 | 131072 | 262144 | 524288 | 1048576)) ||
+        managementStickKeys_ != 0;
     if (!cursorInput)
         managementCursorRevealHeld_ = false;
     if (managementCursorHidden_ && cursorInput) {
@@ -1649,6 +1658,15 @@ void Camera::Update_normal() {
         bool flag2 = PLS_API(require(canvas_)->CheckKeyState(524288));
         bool flag3 = PLS_API(require(canvas_)->CheckKeyState(65536));
         bool flag4 = PLS_API(require(canvas_)->CheckKeyState(262144));
+        if (!flag && !flag2 && !flag3 && !flag4 && managementStick_.held) {
+            // Keep the D-pad acceleration counter between slower analog pulses.
+            if (!managementStickKeys_)
+                return;
+            flag = (managementStickKeys_ & 131072) != 0;
+            flag2 = (managementStickKeys_ & 524288) != 0;
+            flag3 = (managementStickKeys_ & 65536) != 0;
+            flag4 = (managementStickKeys_ & 262144) != 0;
+        }
         if (flag4 && flag) {
             num = num4 / 1;
             num2 = num4 / 2;

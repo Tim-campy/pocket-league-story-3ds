@@ -1020,7 +1020,8 @@ bool GameForm::Update() {
             // Construction accepts the D-pad without enabling the map's touch inertia.
             if (!require(require(apdat_)->camera)->managementCursorHidden_ &&
                 !require(require(apdat_)->camera)->managementCursorRevealHeld_ &&
-                (state_ == 0 || PLS_API(require(canvas_)->CheckKeyState(65536)) ||
+                (state_ == 0 || require(require(apdat_)->camera)->managementStick_.held ||
+                 PLS_API(require(canvas_)->CheckKeyState(65536)) ||
                  PLS_API(require(canvas_)->CheckKeyState(131072)) ||
                  PLS_API(require(canvas_)->CheckKeyState(262144)) ||
                  PLS_API(require(canvas_)->CheckKeyState(524288)))) {

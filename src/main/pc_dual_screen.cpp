@@ -105,6 +105,7 @@ Host::~Host() {
     end_game_draw();
     kairo::detail::publish_circle_pad({});
     kairo::detail::publish_zoom_direction(0);
+    kairo::detail::publish_c_stick({});
     if (controller_) SDL_GameControllerClose(controller_);
     if (renderer_) SDL_DestroyRenderer(renderer_);
     if (window_) SDL_DestroyWindow(window_);
@@ -153,13 +154,17 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
     switch (event.type) {
     case SDL_KEYDOWN:
     case SDL_KEYUP: {
-        if (event.key.repeat) return key_button(event.key.keysym.sym, button) || event.key.keysym.sym == SDLK_i || event.key.keysym.sym == SDLK_j || event.key.keysym.sym == SDLK_k || event.key.keysym.sym == SDLK_l;
+        if (event.key.repeat) return key_button(event.key.keysym.sym, button) || event.key.keysym.sym == SDLK_i || event.key.keysym.sym == SDLK_j || event.key.keysym.sym == SDLK_k || event.key.keysym.sym == SDLK_l || event.key.keysym.sym == SDLK_t || event.key.keysym.sym == SDLK_f || event.key.keysym.sym == SDLK_g || event.key.keysym.sym == SDLK_h;
         const bool down = event.type == SDL_KEYDOWN;
         const auto sym = event.key.keysym.sym;
         if (sym == SDLK_i) { pad_keys_[0] = down; return true; }
         if (sym == SDLK_j) { pad_keys_[1] = down; return true; }
         if (sym == SDLK_k) { pad_keys_[2] = down; return true; }
         if (sym == SDLK_l) { pad_keys_[3] = down; return true; }
+        if (sym == SDLK_t) { stick_keys_[0] = down; return true; }
+        if (sym == SDLK_f) { stick_keys_[1] = down; return true; }
+        if (sym == SDLK_g) { stick_keys_[2] = down; return true; }
+        if (sym == SDLK_h) { stick_keys_[3] = down; return true; }
         if (!key_button(sym, button)) return false;
         press(button, down, canvas);
         return true;
@@ -172,11 +177,15 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
     case SDL_CONTROLLERAXISMOTION:
         if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) pad_x_ = event.caxis.value;
         if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) pad_y_ = event.caxis.value;
+        if (event.caxis.axis == SDL_CONTROLLER_AXIS_RIGHTX) stick_x_ = event.caxis.value;
+        if (event.caxis.axis == SDL_CONTROLLER_AXIS_RIGHTY) stick_y_ = event.caxis.value;
         return true;
     case SDL_CONTROLLERDEVICEREMOVED:
         if (controller_ && event.cdevice.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller_))) {
             SDL_GameControllerClose(controller_); controller_ = nullptr;
             pad_x_ = pad_y_ = 0;
+            stick_x_ = stick_y_ = 0;
+            kairo::detail::publish_c_stick({});
             kairo::detail::publish_circle_pad({});
         }
         return true;
@@ -216,6 +225,9 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
             pad_keys_.fill(false); pad_x_ = pad_y_ = 0;
             held_[static_cast<int>(Button::L)] = held_[static_cast<int>(Button::R)] = false;
             kairo::detail::publish_zoom_direction(0);
+            stick_keys_.fill(false); stick_x_ = stick_y_ = 0;
+            kairo::detail::publish_c_stick({});
+            menu_stick_.reset();
             kairo::detail::publish_circle_pad({});
         }
         return event.window.windowID != top_window;
@@ -246,6 +258,15 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
         pad_keys_[1] || pad_keys_[3] ? key_x * kairo::circle_pad_max : kairo::normalize_circle_pad_axis(pad_x_),
         pad_keys_[0] || pad_keys_[2] ? key_y * kairo::circle_pad_max : kairo::normalize_circle_pad_axis(pad_y_)};
     kairo::detail::publish_circle_pad(dialog_ ? kairo::CirclePadState{} : pad);
+    const kairo::CStickState stick = kairo::normalize_c_stick({
+        stick_keys_[1] || stick_keys_[3] ? (int(stick_keys_[3]) - int(stick_keys_[1])) * kairo::c_stick_max : stick_x_,
+        stick_keys_[0] || stick_keys_[2] ? (int(stick_keys_[2]) - int(stick_keys_[0])) * kairo::c_stick_max : stick_y_});
+    kairo::detail::publish_c_stick(map && !dialog_ ? stick : kairo::CStickState{});
+    if (top && top->GetId() != 9 && top->GetId() != 2 && !dialog_) {
+        if (const int key = menu_stick_.update(pad)) canvas.KeyClick(key);
+    } else {
+        menu_stick_.reset();
+    }
     const bool moving = map && (pad.x || pad.y);
     if (moving) last_action_ = "circle pad";
     // L/R publish a held direction; the game owns the zoom speed and limits.
@@ -282,8 +303,7 @@ void Host::begin_game_draw(cs::Ref<kairo::Image> display) {
     kairo::Graphics::screen_target_hook = [this](kairo::Graphics& g, platform::Screen screen, const void* surface) {
         const auto target = g.target();
         if (target != display_ && target != gpad_image_ && target != panel_) return;
-        // Only the legacy GamePad keeps a 400x240 intermediate. Direct bottom
-        // drawing uses its native 320x240 target and local coordinates.
+        // Both bottom destinations use native 320x240 pixels and local coordinates.
         g.retarget(screen == platform::Screen::top ? display_ : surface ? gpad_image_ : panel_);
     };
 }
@@ -351,6 +371,11 @@ void Host::draw(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
 
 void Host::draw_dialog() {
     if (!dialog_) return;
+    const kairo::CirclePadState pad{
+        pad_keys_[1] || pad_keys_[3] ? (int(pad_keys_[3]) - int(pad_keys_[1])) * kairo::circle_pad_max : kairo::normalize_circle_pad_axis(pad_x_),
+        pad_keys_[0] || pad_keys_[2] ? (int(pad_keys_[2]) - int(pad_keys_[0])) * kairo::circle_pad_max : kairo::normalize_circle_pad_axis(pad_y_)};
+    const int key = menu_stick_.update(pad, 3); // modal loop runs at approximately 60 Hz
+    if (key && !dialog_->Done()) dialog_->Handle(key == 65536 || key == 131072 ? kairo::PortDialog::Command::left : kairo::PortDialog::Command::right);
     auto g = cs::make_ref<kairo::Graphics>(panel_, true);
     g->ResetRender();
     g->SetColor(24, 28, 36); g->FillRect(0.0f, 0.0f, float(bottom_width), float(bottom_height));

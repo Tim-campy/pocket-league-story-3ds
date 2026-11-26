@@ -29,6 +29,7 @@
 #include "resource_load_trace.hpp"
 #include <3ds.h>
 #include <array>
+#include <algorithm>
 #include <chrono>
 #include <cstdio>
 #include <filesystem>
@@ -88,6 +89,7 @@ public:
     std::int32_t Present(const kairo::DialogRequest& request)override{
         ++modal_epoch;kairo::detail::publish_circle_pad({});gpu.end_frame();
         kairo::PortDialog dialog(request);int pressed=-1,touch_x=0,touch_y=0;
+        kairo::MenuStickRepeat menu_stick;
         const auto hit=[&](int x,int y){
             for(std::size_t i=0;i<request.buttons.size();++i){const auto box=dialog.ButtonBox(i,320,240);if(x>=box.x&&x<box.x+box.w&&y>=box.y&&y<box.y+box.h)return int(i);}
             return -1;
@@ -102,6 +104,10 @@ public:
                 else if(down&KEY_A)dialog.Handle(Command::confirm);
                 else if(down&(KEY_DLEFT|KEY_DUP))dialog.Handle(Command::left);
                 else if(down&(KEY_DRIGHT|KEY_DDOWN))dialog.Handle(Command::right);
+                circlePosition pad{};hidCircleRead(&pad);
+                const auto axis=[](int raw){return kairo::normalize_circle_pad_axis(std::clamp(raw,-154,154)*kairo::circle_pad_max/154);};
+                const int analog_key=menu_stick.update({axis(pad.dx),axis(-int(pad.dy))});
+                if(analog_key&&!dialog.Done())dialog.Handle(analog_key==65536||analog_key==131072?Command::left:Command::right);
                 if(hidKeysHeld()&KEY_TOUCH){touchPosition point{};hidTouchRead(&point);touch_x=point.px;touch_y=point.py;}
                 if(down&KEY_TOUCH){pressed=hit(touch_x,touch_y);if(pressed>=0&&!dialog.Done())while(dialog.Selected()!=pressed)dialog.Handle(Command::right);}
                 if(up&KEY_TOUCH){if(pressed>=0&&hit(touch_x,touch_y)==pressed)dialog.Handle(Command::confirm);pressed=-1;}

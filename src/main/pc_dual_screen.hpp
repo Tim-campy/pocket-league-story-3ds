@@ -16,6 +16,8 @@
 #include "forms.hpp"
 #include "graphics.hpp"
 #include "port_dialog.hpp"
+#include "c_stick.hpp"
+#include "menu_stick.hpp"
 
 namespace pls::pc::dual {
 constexpr int top_width = 400, top_height = 240, bottom_width = 320, bottom_height = 240;
@@ -48,7 +50,7 @@ public:
     void capture(const std::filesystem::path& folder, std::uint64_t frame, const std::vector<std::uint8_t>& top_rgba);
     int scale() const { return scale_; }
     // Port dialogs go to the bottom screen (decision item 5); the top keeps the game.
-    void set_dialog(kairo::PortDialog* dialog) { dialog_ = dialog; }
+    void set_dialog(kairo::PortDialog* dialog) { dialog_ = dialog; menu_stick_.reset(); }
     void draw_dialog();
     // B.3: the game's GamePad surface (soft label bar/buttons) is drawn into its own
     // image and shown on the bottom screen; the top keeps GameView only.
@@ -67,6 +69,9 @@ private:
     std::array<bool, static_cast<int>(Button::Count)> held_{};
     std::array<bool, 4> pad_keys_{}; // I, J, K, L, tracked independently
     std::int32_t pad_x_ = 0, pad_y_ = 0; // raw controller axes
+    std::array<bool, 4> stick_keys_{}; // T, F, G, H: up, left, down, right
+    std::int32_t stick_x_ = 0, stick_y_ = 0;
+    kairo::MenuStickRepeat menu_stick_{};
     std::int32_t pressed_soft_[3] = {0, 0, 0};  // soft key held by B, X, Y
     std::string last_action_;
     kairo::PortDialog* dialog_ = nullptr;

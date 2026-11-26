@@ -458,3 +458,24 @@ livres. Essa folga não satisfaz o mínimo de 1 MB decidido pelo usuário;
 portanto foi acionado o passo 3 já autorizado. Evidências privadas em
 `build/phase4-video/shared-depth-management-3/`. A comparação completa com PC
 e a execução física com gestão/partida continuam pendentes.
+
+## 2026-11-26 — alvos de trabalho reutilizados e aceite da segunda entrega
+
+O passo 2 deixou apenas 357.376 bytes de VRAM livres. Conforme a autorização
+condicional do usuário, o passo 3 passou a reutilizar um alvo de cor de trabalho
+na VRAM, mantendo os resultados dos alvos lógicos em texturas na memória linear.
+A GPU copia os resultados ao trocar de alvo; formato RGBA32 e resolução foram
+preservados. Liberação continua no ponto seguro da thread de desenho. Não foram
+alterados o jogo, o backend PC, o nulo, o coletor nem o formato dos saves.
+
+O usuário confirmou no New 3DS XL: novo jogo, gestão, menus, partida completa e
+salvar/carregar. A sessão recebida mostrou 4.361.216 bytes usados de VRAM e
+1.930.240 livres; pico observado de memória linear 16.946.432 bytes, com
+8.219.392 livres. O título fez 6 cópias por quadro, média de 1,443838 ms.
+São resultados de uma sessão; as janelas específicas de gestão/menu/partida
+ainda precisam ser medidas. Houve quadros e coletas acima dos orçamentos.
+
+Evidências e limites: [medição física](notes/phase4-video-n3ds-second-delivery.md),
+[inventário](notes/phase4-video-target-inventory.md) e
+[teste no aparelho](notes/phase4-video-gameplay-device-test.md). Os arquivos com
+assets, capturas, saves e logs permanecem somente em `build/`.

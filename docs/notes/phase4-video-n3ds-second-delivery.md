@@ -33,6 +33,14 @@ O orçamento de 150 ms foi excedido no aparelho. Os registros globais não traze
 a decomposição completa de cada quadro nem identificam a tela de cada linha GPU.
 Não é possível afirmar quais telas estáveis excederam 50 ms ou culpar cópias.
 
+“Estável” no agregado significa ausência de transição marcada, não ausência de
+coleta automática. A maior coleta ocorreu no quadro 2.667, cujo total foi
+480,620178 ms. A transição máxima, no quadro 1.530, incluiu três coletas de
+172,487233, 269,014482 e 100,318175 ms; elas não explicam todo o quadro.
+Em todos os 13.907 registros GPU, o máximo de cópia foi 4,820213 ms e o máximo
+de espera GPU foi 17,907756 ms, em amostras diferentes. A decomposição CPU dos
+quadros extremos não foi capturada.
+
 VRAM: 4.361.216 bytes usados, mínimo livre 1.930.240. Memória linear: pico
 observado 16.946.432 bytes, mínimo livre 8.219.392, incluindo transições.
 Na janela do título, o registro ao final tem 15.561.472 bytes lineares livres;
@@ -71,6 +79,9 @@ e preservar cada sessão separadamente, conforme o roteiro de teste do aparelho.
 
 O backend **já** copia ao alternar de destino, não a cada primitiva. O título
 alterna os três alvos lógicos durante cada quadro, gerando 6 transferências.
+`activate()` já evita salvar alvos sem escrita (`dirty`), e `clear()` já
+dispensa restaurar o conteúdo anterior. O ganho proposto exige reconhecer
+conteúdo repetido ou cobertura integral além desses casos existentes.
 Para reduzir isso, a proposta é conservar o resultado de alvos cujo conteúdo
 não mudou, começando pelos rótulos, e dispensar restauração quando houver
 sobrescrita integral comprovada. Requer invalidar por texto/estado/toque e

@@ -386,3 +386,37 @@ da saída de coordenadas do shader CTR, conservando `xy`, como os exemplos
 do devkitPro. É uma tentativa isolada de compatibilidade dentro do bloco
 de vídeo autorizado; sua eficácia física ainda precisa ser verificada.
 PC, regras, texto e saves não mudam. Mantidas todas as sondagens anteriores.
+
+O teste posterior do usuário no New 3DS XL confirmou o título e os controles
+previstos nessa tela. Três execuções completaram o autoteste e 900 quadros
+medidos, sem quadro acima de 50 ms. A primeira entrega foi aprovada e publicada
+em `6e5e7d3`. Isso confirma a correção observada no aparelho; não prova a causa
+interna do travamento anterior da GPU.
+
+## 2026-11-26 — perfil da segunda entrega de vídeo
+
+A pedido do usuário, o host CTR permite medir gestão e partida pelo botão
+SELECT, sem ação no jogo: 60 quadros de aquecimento e 300 amostras, seguidas
+por CSV e capturas das duas telas no SD. O título conserva a janela automática.
+Uma mudança de formulário, tipo de janela, zoom ou diálogo modal cancela a
+janela; movimento da câmera não cancela. Não há indicador nem texto novo na
+tela. A escrita das capturas pode causar uma pausa de diagnóstico fora da
+janela medida. Menus e diálogos do jogo continuam na superior.
+
+O perfil separa lógica, desenho CPU, espera GPU e total sem o limitador de
+20 fps; registra comandos, trocas de textura, uploads, memória e coletas.
+Observa a posição da câmera para distinguir rolagem de analógico pressionado
+contra a borda. Não altera câmera, cursor, regras nem formato de save.
+
+Os medidores internos de assets e inicialização de fontes ficam ligados só
+durante o boot CTR. O arquivo vazio `/pls-video/boot-trace-off.flag` permite
+comparar o custo deles no mesmo executável; depois do título ficam desligados
+em ambos os casos. PC e backend nulo mantêm seus caminhos anteriores.
+
+Verificação: build/check/smoke do PC, comparação de capturas, build CTR e
+execução no Azahar; tempos de emulação não representam o aparelho. As três
+execuções de gestão e partida no New 3DS XL ainda não podem ser solicitadas:
+a abertura da gestão falha no Azahar ao alocar um alvo 1024×512 na VRAM.
+O diagnóstico está em `notes/phase4-video-second-status.md`; a política de
+alocação não foi alterada. O perfil dessas telas foi implementado, mas ainda
+não validado nelas.

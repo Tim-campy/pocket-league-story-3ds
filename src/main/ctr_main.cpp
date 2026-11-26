@@ -21,6 +21,11 @@
 #include "circle_pad.hpp"
 #include "surface.SurfaceManager.hpp"
 #include "surface.GamePad.hpp"
+#include "form.GameForm.hpp"
+#include "game.Camera.hpp"
+#include "form.SubForm.hpp"
+#include "ctr_frame_profile.hpp"
+#include "resource_load_trace.hpp"
 #include <3ds.h>
 #include <array>
 #include <chrono>
@@ -33,6 +38,19 @@ namespace {
 using namespace pls;
 using Clock=std::chrono::steady_clock;
 std::uint64_t elapsed(Clock::time_point start){return std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count();}
+ctr::FrameScene frame_scene(kairo::FormManagerBase* manager){
+    ctr::FrameScene scene;
+    const auto form=manager?manager->GetTopForm():nullptr;
+    scene.form=form?form->GetId():-1;
+    if(auto* sub=dynamic_cast<game::form::SubForm*>(form))scene.subform=cs::nonnull(sub)->type_;
+    if(auto* map=dynamic_cast<game::form::GameForm*>(form)){
+        scene.scale=cs::nonnull(map)->scale_;
+        const auto position=game::game::Camera::camera_spos();
+        if(!position.is_null()&&position.length()>=2){scene.camera_x=position[0];scene.camera_y=position[1];}
+    }
+    const auto pad=kairo::read_circle_pad();scene.pad_x=pad.x;scene.pad_y=pad.y;
+    return scene;
+}
 class Text final:public kairo::TextInputPresenter {
 public:void Begin(cs::String,std::int32_t,std::int32_t)override{}bool Blocking()const override{return false;}
 };
@@ -90,35 +108,6 @@ public:
             }
         },[&]{gpu.begin_frame();kairo::Canvas::GetInstance()->ClearKeyBuffer();});
         const auto result=dialog.Result();std::fprintf(stderr,"PLS_VIDEO_DIALOG type=%d result=%d\n",request.type,result);std::fflush(stderr);return result;
-    }
-};
-struct Sample {std::uint64_t logic{},draw{},wait{},upload{},readback{},frame{},other{};};
-class TitleProfile {
-    std::unique_ptr<std::array<Sample,300>> samples_=std::make_unique<std::array<Sample,300>>();
-    std::size_t title_frames_{},count_{};
-    bool written_{};
-    std::filesystem::path path_;
-public:
-    TitleProfile(){for(int n=1;n<10000;++n){auto path=std::filesystem::path("sdmc:/pls-video")/("profile-"+std::to_string(n)+".csv");if(!std::filesystem::exists(path)){path_=path;return;}}throw std::runtime_error("No free video profile slot");}
-    bool frame(bool title,Sample sample,const ctr::VideoProfile& gpu){
-        if(written_||!title)return false;
-        if(++title_frames_<=60)return false;
-        samples_->at(count_++)=sample;
-        if(count_!=samples_->size())return false;
-        std::ofstream output(path_);if(!output)throw std::runtime_error("Cannot write video profile");
-        output<<"frame,logic_ns,draw_cpu_ns,gpu_wait_ns,upload_ns,readback_ns,frame_ns,other_cpu_ns\n";
-        for(std::size_t i=0;i<count_;++i){const auto& s=(*samples_)[i];output<<i<<','<<s.logic<<','<<s.draw<<','<<s.wait<<','<<s.upload<<','<<s.readback<<','<<s.frame<<','<<s.other<<'\n';}
-        output.flush();if(!output)throw std::runtime_error("Video profile write failed");
-        written_=true;
-        const auto heap=kairo::native_heap_payload();
-        std::fprintf(stderr,"PLS_VIDEO_MEMORY normal_busy=%llu normal_free=%llu linear_free=%lu vram_free=%lu\n",static_cast<unsigned long long>(heap.busy_bytes),static_cast<unsigned long long>(heap.free_bytes),static_cast<unsigned long>(linearSpaceFree()),static_cast<unsigned long>(vramSpaceFree()));
-        std::fprintf(stderr,"PLS_VIDEO_PROFILE frames=%u path=%s texture_bytes=%u vram_bytes=%u peak_texture_bytes=%u peak_vram_bytes=%u\n",unsigned(count_),path_.string().c_str(),unsigned(gpu.texture_bytes),unsigned(gpu.vram_bytes),unsigned(gpu.peak_texture_bytes),unsigned(gpu.peak_vram_bytes));std::fflush(stderr);
-        return true;
-    }
-    void capture(const kairo::Image& top,const kairo::Image& bottom){
-        kairo::write_capture_png(path_.parent_path()/(path_.stem().string()+"-top.png"),top);
-        kairo::write_capture_png(path_.parent_path()/(path_.stem().string()+"-bottom.png"),bottom);
-        std::fprintf(stderr,"PLS_VIDEO_CAPTURE=PASS\n");std::fflush(stderr);
     }
 };
 void storage_check(assets::Catalog& assets){
@@ -227,28 +216,39 @@ void gpu_check(ctr::Gpu& gpu){
 }
 int main(){
     const auto boot_start=Clock::now();
+    auto boot_stage_start=boot_start;
+    std::array<std::uint64_t,7> boot_stages{};
+    const auto boot_stage=[&](std::size_t index){boot_stages.at(index)=elapsed(boot_stage_start);boot_stage_start=Clock::now();};
+    std::uint64_t boot_upload_ns=0,boot_wait_ns=0,boot_frames=0,boot_logic_ns=0,boot_draw_ns=0,boot_pacing_ns=0;
     osSetSpeedupEnable(true);
     std::filesystem::create_directories("sdmc:/pls-video");
     if(!std::freopen("sdmc:/pls-video/stdout.log","w",stdout)||!std::freopen("sdmc:/pls-video/stderr.log","w",stderr))return 2;
+    const bool load_meter=!std::filesystem::exists("sdmc:/pls-video/boot-trace-off.flag");
+    pls::diagnostic::resource_event_list.store(false,std::memory_order_relaxed);
+    pls::diagnostic::enable_resource_events(load_meter);
+    boot_stage(0);
     try{
         if(R_FAILED(romfsInit()))throw std::runtime_error("ROMFS initialization failed");
         pls::cs::GcMutatorScope mutator;
         pls::cs::install_mono_collation_character_data();pls::cs::set_default_collation_culture({1033,{9},"en",false});
         pls::sdl::install_globalization_backend();
+        boot_stage(1);
         // The SD override is an opt-in diagnostic comparison, never a cwd change.
         const char* asset_root=std::filesystem::exists("/pls-video/use-sd-assets.flag")?"/pls-video/assets":"romfs:/";
         pls::assets::Catalog assets(asset_root,pls::assets::ReadValidation::PreparedCatalog);pls::kairo::install_asset_catalog(&assets);
         std::fprintf(stderr,"PLS_VIDEO_ASSET_ROOT=%s\n",asset_root);std::fflush(stderr);
+        boot_stage(2);
         const std::filesystem::path preferences="/pls-video/preferences";
         pls::services::OfflineServices services(preferences);pls::services::install(&services);services.device_id();
         pls::kairo::configure_storage(preferences,&assets);pls::kairo::configure_capture("/pls-video/captures");
         auto sound=pls::cs::make_ref<pls::null_backend::Sound>();pls::kairo::configure_sound(&assets,sound);
         pls::kairo::install_text_input(pls::cs::make_ref<Text>());
-        pls::ctr::Gpu gpu;pls::platform::gpu_drawing=&gpu;
+        boot_stage(3);
+        pls::ctr::Gpu gpu;pls::platform::gpu_drawing=&gpu;boot_stage(4);
         bool new_model=false;const auto model_result=APT_CheckNew3DS(&new_model);
         std::fprintf(stderr,"PLS_VIDEO_MODEL new3ds=%d result=%ld normal_heap_reserved=%lu linear_heap_reserved=%lu region_capacity=%lu\n",int(new_model),long(model_result),static_cast<unsigned long>(__ctru_heap_size),static_cast<unsigned long>(__ctru_linear_heap_size),static_cast<unsigned long>(osGetMemRegionSize(MEMREGION_APPLICATION)));std::fflush(stderr);
         try{
-            gpu_check(gpu);
+            gpu_check(gpu);boot_stage(5);
             auto screens=pls::cs::make_ref<Screens>(gpu);screens->install();
             pls::kairo::install_dialog_service(screens,pls::cs::Delegate<pls::cs::Array<pls::cs::String>(std::int32_t)>::from_static("port-dialog-labels",[](std::int32_t type){
                 return type<=2?pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"OK")})
@@ -262,14 +262,20 @@ int main(){
             app->host_orientation_writer([&](auto value){orientation=value;});app->host_fullscreen_writer([](bool){});
             pls::game::configure_application(app);
             gpu.begin_frame();app->host_start();gpu.end_frame();
-            TitleProfile profile;bool title_seen=false;pls::ctr::Input input;
+            const auto app_init_gpu=gpu.profile();
+            ctr::FrameProfile profile;bool title_seen=false;pls::ctr::Input input;
+            boot_stage(6);
             while(aptMainLoop()&&!app->IsTermination()){
-                const auto start=Clock::now();gpu.begin_frame();
+                const auto start=Clock::now();
+                const auto scene_before=frame_scene(app->GetFormManager());
+                const auto gc_before=cs::tracing_heap().statistics_and_reset_pause_peak();
+                gpu.begin_frame();
                 const auto modal_epoch=screens->modal_epoch;
                 input.poll(*canvas,app->GetFormManager(),*screens->labels);
+                const bool profile_requested=(hidKeysDown()&KEY_SELECT)!=0;
                 const auto logic_start=Clock::now();const auto logic_wait_start=gpu.wait_time();app->host_update();const auto logic_wall=elapsed(logic_start);
                 const auto draw_wait_start=gpu.wait_time();
-                const auto logic_wait=draw_wait_start-logic_wait_start;
+                const auto logic_wait=draw_wait_start>=logic_wait_start?draw_wait_start-logic_wait_start:0;
                 const auto logic=logic_wall>logic_wait?logic_wall-logic_wait:0;
                 const auto draw_start=Clock::now();
                 pls::kairo::Offscreen::RenderAll();
@@ -280,18 +286,40 @@ int main(){
                 pls::cs::gc_frame_end();assets.age_retained();
                 auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;
                 const bool title=form&&form->GetId()==1&&modal_epoch==screens->modal_epoch;
-                if(title&&!title_seen){title_seen=true;std::fprintf(stderr,"PLS_VIDEO_TITLE boot_ms=%.3f\n",double(elapsed(boot_start))/1e6);std::fflush(stderr);}
-                const auto draw_wait=metrics.wait_ns-draw_wait_start;
+                if(!title_seen){
+                    ++boot_frames;boot_upload_ns+=metrics.upload_ns;boot_wait_ns+=metrics.wait_ns;
+                    boot_logic_ns+=logic_wall;boot_draw_ns+=draw;
+                    if(title){
+                        const auto title_ns=elapsed(boot_start),loading_ns=elapsed(boot_stage_start);
+                        title_seen=true;
+                        std::fprintf(stderr,"PLS_VIDEO_TITLE boot_ms=%.3f\n",double(title_ns)/1e6);
+                        std::fprintf(stderr,"PLS_VIDEO_BOOT meter=%d total_ns=%llu files_ns=%llu runtime_ns=%llu catalog_ns=%llu services_ns=%llu gpu_init_ns=%llu diagnostics_ns=%llu app_init_ns=%llu app_init_upload_ns=%llu loading_ns=%llu loading_frames=%llu loading_logic_wall_ns=%llu loading_draw_wall_ns=%llu loading_gpu_wait_ns=%llu loading_upload_ns=%llu loading_pacing_ns=%llu\n",
+                            int(load_meter),title_ns,boot_stages[0],boot_stages[1],boot_stages[2],boot_stages[3],boot_stages[4],boot_stages[5],boot_stages[6],app_init_gpu.upload_ns,loading_ns,boot_frames,boot_logic_ns,boot_draw_ns,boot_wait_ns,boot_upload_ns,boot_pacing_ns);
+                        // Flush after the final boot frame; no resource timers during gameplay.
+                        pls::diagnostic::flush_resource_events();pls::diagnostic::enable_resource_events(false);
+                        std::fflush(stderr);
+                    }
+                }
+                const auto draw_wait=metrics.wait_ns>=draw_wait_start?metrics.wait_ns-draw_wait_start:0;
                 const auto draw_cpu=draw>draw_wait?draw-draw_wait:0;
+                const auto gc_after=cs::tracing_heap().statistics();
+                auto scene=frame_scene(manager);
+                scene.moving=scene.form==9&&scene_before.form==9&&(scene.camera_x!=scene_before.camera_x||scene.camera_y!=scene_before.camera_y);
+                const bool interaction=modal_epoch!=screens->modal_epoch;
                 const auto frame=elapsed(start),accounted=logic+draw_cpu+metrics.wait_ns;
-                if(profile.frame(title,{logic,draw_cpu,metrics.wait_ns,metrics.upload_ns,metrics.readback_ns,frame,frame>accounted?frame-accounted:0},metrics)){
+                if(profile_requested&&title_seen&&!interaction)profile.request(scene);
+                if(title_seen&&profile.frame(scene,{logic,draw_cpu,metrics.wait_ns,metrics.upload_ns,metrics.readback_ns,frame,frame>accounted?frame-accounted:0},metrics,
+                                 gc_before,gc_after,scene_before.form!=scene.form||scene_before.subform!=scene.subform,interaction)){
                     profile.capture(*screens->top,*screens->bottom);
                     if(std::filesystem::exists("/pls-video/storage-check.flag")){
                         gpu.begin_frame();storage_check(assets);gpu.end_frame();break;
                     }
                 }
+                const auto pacing_start=Clock::now();
                 pls::kairo::UnityApplication::pace(start);
+                if(!title_seen)boot_pacing_ns+=elapsed(pacing_start);
             }
+            profile.write_summary();
             gpu.begin_frame();app->host_stop();gpu.end_frame();
         }catch(...){
             // Report before GPU teardown, which can itself wait on a stalled queue.

@@ -1,6 +1,9 @@
 #include "../../common/diagnostic_profile.hpp"
 #include "../../common/render_mode.hpp"
 #include "font.hpp"
+#if defined(__3DS__) && defined(PLS_CTR_VIDEO)
+#include "resource_load_trace.hpp"
+#endif
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_SYNTHESIS_H
@@ -28,15 +31,24 @@ struct RasterFont::Impl {
     std::list<std::uint64_t> lru;
     Impl(const std::filesystem::path& path,int height,std::size_t budget):pixel_height(height),limit(budget) {
         if(height<=0||budget==0)throw std::invalid_argument("Invalid font size or cache budget");
+#if defined(__3DS__) && defined(PLS_CTR_VIDEO)
+        diagnostic::ResourceTimer timing("font-init-total",0);
+#endif
         std::ifstream file(path,std::ios::binary);
         if(!file)throw std::runtime_error("Cannot read local TTF");
         source.assign(std::istreambuf_iterator<char>(file),std::istreambuf_iterator<char>());
+#if defined(__3DS__) && defined(PLS_CTR_VIDEO)
+        timing.step("font-file-read");
+#endif
         if(source.empty()||source.size()>static_cast<std::size_t>(std::numeric_limits<FT_Long>::max()))throw std::invalid_argument("Invalid TTF extent");
         ft_check(FT_Init_FreeType(&library));
         try {
             ft_check(FT_New_Memory_Face(library,source.data(),static_cast<FT_Long>(source.size()),0,&face));
             ft_check(FT_Select_Charmap(face,FT_ENCODING_UNICODE));
             ft_check(FT_Set_Pixel_Sizes(face,0,static_cast<FT_UInt>(height)));
+#if defined(__3DS__) && defined(PLS_CTR_VIDEO)
+            timing.step("font-face-init");timing.finish();
+#endif
         } catch(...) {if(face)FT_Done_Face(face);FT_Done_FreeType(library);throw;}
     }
     ~Impl(){FT_Done_Face(face);FT_Done_FreeType(library);}

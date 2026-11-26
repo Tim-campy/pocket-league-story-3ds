@@ -19,6 +19,7 @@
 #include "kairo/platform/ctr/ctr_gpu.hpp"
 #include "kairo/platform/ctr/ctr_input.hpp"
 #include "circle_pad.hpp"
+#include "screen_layout.hpp"
 #include "surface.SurfaceManager.hpp"
 #include "surface.GamePad.hpp"
 #include "form.GameForm.hpp"
@@ -61,8 +62,9 @@ public:
     cs::Ref<kairo::Graphics> composition{};
     std::uint64_t modal_epoch{};
     explicit Screens(ctr::Gpu& backend):gpu(backend){
+        platform::configure_separate_screens(true);
         top=kairo::Image::FromRgba(400,240,std::vector<std::uint8_t>(400*240*4));
-        labels=kairo::Image::FromRgba(400,240,std::vector<std::uint8_t>(400*240*4));
+        labels=kairo::Image::FromRgba(320,240,std::vector<std::uint8_t>(320*240*4));
         bottom=kairo::Image::FromRgba(320,240,std::vector<std::uint8_t>(320*240*4));
         composition=cs::make_ref<kairo::Graphics>(bottom,true);
     }
@@ -81,7 +83,7 @@ public:
     }
     void compose(){
         gpu.clear(*bottom,0x181c24ff);composition->ResetRender();
-        composition->DrawScaledImage(labels,0,0,320,192,0,0,400,240);
+        composition->DrawScaledImage(labels,0,0,320,240,0,0,320,240);
     }
     std::int32_t Present(const kairo::DialogRequest& request)override{
         ++modal_epoch;kairo::detail::publish_circle_pad({});gpu.end_frame();

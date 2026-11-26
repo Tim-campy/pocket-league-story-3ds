@@ -1,5 +1,6 @@
 // Phase 3 prototype, stage 1 (platform only). See pc_dual_screen.hpp.
 #include "pc_dual_screen.hpp"
+#include "screen_layout.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <stdexcept>
@@ -86,6 +87,7 @@ Meaning meaning(kairo::Canvas& canvas) {
 }
 
 Host::Host(int scale) : scale_(std::max(1, scale)) {
+    platform::configure_separate_screens(true);
     if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) == 0)
         for (int i = 0; i < SDL_NumJoysticks() && !controller_; ++i)
             if (SDL_IsGameController(i)) controller_ = SDL_GameControllerOpen(i);
@@ -98,6 +100,7 @@ Host::Host(int scale) : scale_(std::max(1, scale)) {
     panel_ = kairo::Image::FromRgba(bottom_width, bottom_height, std::vector<std::uint8_t>(bottom_width * bottom_height * 4));
 }
 Host::~Host() {
+    platform::configure_separate_screens(false);
     end_game_draw();
     kairo::detail::publish_circle_pad({});
     if (controller_) SDL_GameControllerClose(controller_);
@@ -189,12 +192,11 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
             return true;
         }
         if (gpad_image_) {
-            // Bottom-screen point -> GamePad coordinates (the image is shown at 80 %).
-            const int gx = x * top_width / bottom_width, gy = y * top_width / bottom_width;
+            const int gx = x, gy = y;
             using Kind = platform::Input::Kind;
             if (event.type == SDL_MOUSEBUTTONDOWN) {
                 const auto& px = gpad_image_->pixels();
-                const bool drawn = gx >= 0 && gy >= 0 && gx < top_width && gy < top_height && px[(std::size_t(gy) * top_width + gx) * 4 + 3] != 0;
+                const bool drawn = gx >= 0 && gy >= 0 && gx < bottom_width && gy < bottom_height && px[(std::size_t(gy) * bottom_width + gx) * 4 + 3] != 0;
                 if (drawn) { gpad_touch_ = true; canvas.host_event(platform::Input{Kind::pointer_down, gx, gy}); last_action_ = "GamePad touch"; }
             } else if (gpad_touch_) { gpad_touch_ = false; canvas.host_event(platform::Input{Kind::pointer_up, gx, gy}); }
             return true;
@@ -287,7 +289,7 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
 
 void Host::begin_game_draw(cs::Ref<kairo::Image> display) {
     display_ = display;
-    gpad_image_ = kairo::Image::FromRgba(top_width, top_height, std::vector<std::uint8_t>(std::size_t(top_width) * top_height * 4, 0));
+    gpad_image_ = kairo::Image::FromRgba(bottom_width, bottom_height, std::vector<std::uint8_t>(std::size_t(bottom_width) * bottom_height * 4, 0));
     kairo::Graphics::surface_screen = [](const void* identity) {
         const auto pad = static_cast<game::kairo::unity::surface::SurfaceBase*>(game::surface::SurfaceManager::gpad_());
         return identity && identity == pad ? platform::Screen::bottom : platform::Screen::top;
@@ -323,11 +325,10 @@ void Host::draw(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
         if (active) g->DrawString(cs::String::from_utf8(meaning_text), float(box.x + 40), float(box.y + (box.h - 12) / 2), 0);
     };
     if (gpad_image_) {
-        // The GamePad surface at 80 % (400x240 -> 320x192), at the top of the screen.
-        g->DrawScaledImage(gpad_image_, 0.0f, 0.0f, float(bottom_width), float(top_height * bottom_width / top_width), 0, 0, top_width, top_height);
+        g->DrawScaledImage(gpad_image_, 0.0f, 0.0f, float(bottom_width), float(bottom_height), 0, 0, bottom_width, bottom_height);
         g->SetColor(130, 136, 148);
-        g->DrawPreparedString(cs::String::from_utf8("Screen: " + std::string(manager && manager->GetTopForm() ? manager->GetTopForm()->managed_type_name() : "-")), 8.0f, 200.0f, 0);
-        g->DrawPreparedString(cs::String::from_utf8("Last input: " + (last_action_.empty() ? std::string("-") : last_action_)), 8.0f, 216.0f, 0);
+        g->DrawPreparedString(cs::String::from_utf8("Screen: " + std::string(manager && manager->GetTopForm() ? manager->GetTopForm()->managed_type_name() : "-")), 8.0f, 144.0f, 0);
+        g->DrawPreparedString(cs::String::from_utf8("Last input: " + (last_action_.empty() ? std::string("-") : last_action_)), 8.0f, 160.0f, 0);
         present();
         return;
     }

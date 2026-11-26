@@ -14,6 +14,7 @@
 #include "surface.GamePad.hpp"
 #include "surface.GameView.hpp"
 #include "surface.SurfaceManager.hpp"
+#include "screen_layout.hpp"
 #include "surface.TouchEffectManager.hpp"
 #include "system.KairoService.hpp"
 #include "system.billing.MyBilling.hpp"
@@ -449,10 +450,19 @@ void SurfaceManager::AdjustSurfaceLayout() {
                 require(cs_receiver)->SetLocation(cs_arg0, cs_arg1);
             }
         }
-        require(SurfaceManager::gpad_())->SetSize(width, num3);
+        const bool separateScreens = PLS_API(pls::platform::has_separate_screens());
+        if (separateScreens) {
+            const auto bottom = PLS_API(pls::platform::screen_extent(pls::platform::Screen::bottom));
+            require(SurfaceManager::gpad_())->SetSize(bottom.width, bottom.height);
+            require(SurfaceManager::gpad_())->SetScaleRatio(100.0f);
+        } else {
+            require(SurfaceManager::gpad_())->SetSize(width, num3);
+        }
         {
             auto cs_receiver = SurfaceManager::gpad_();
-            pls::cs::Int32 cs_arg0 = (width - require(SurfaceManager::gpad_())->GetWidth()) / 2;
+            pls::cs::Int32 cs_arg0 = separateScreens
+                                         ? pls::cs::Int32(0)
+                                         : (width - require(SurfaceManager::gpad_())->GetWidth()) / 2;
             require(cs_receiver)->SetLocation(cs_arg0, 0);
         }
         if (require(SurfaceManager::view_())->GetY() < 0) {

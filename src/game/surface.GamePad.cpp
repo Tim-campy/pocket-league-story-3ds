@@ -25,6 +25,7 @@
 #include "kairo.unity.ui.IApplication.hpp"
 #include "main.AppData.hpp"
 #include "surface.GamePad.hpp"
+#include "screen_layout.hpp"
 #include "surface.GameView.hpp"
 #include "surface.SurfaceManager.hpp"
 #include "surface.TouchEffect.hpp"
@@ -511,6 +512,10 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                                             x + pls::cs::Single((array2[5] + array2[1])) / 2.0f - 1.0f;
                                         pls::cs::Single num4 =
                                             y + pls::cs::Single((array2[6] + array2[2])) / 2.0f - 1.0f;
+                                        if (mode_ == 2 && PLS_API(pls::platform::has_separate_screens())) {
+                                            num3 = pls::cs::to_int32(num3);
+                                            num4 = pls::cs::to_int32(num4);
+                                        }
                                         if (id == 5) {
                                             bool linearFilterEnable =
                                                 kairo::unity::ui::Canvas::IsLinearFilterEnable(
@@ -629,6 +634,14 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                                 PLS_API(require(topForm)->GetId()) == 5) {
                                 num7 += 30.0f;
                                 num5 -= 30.0f;
+                            }
+                            if (mode_ == 2 && PLS_API(pls::platform::has_separate_screens()) &&
+                                (id == 0 || id == 1 || id == 5)) {
+                                const auto button = GamePad::TEXTURES()[imgId];
+                                num7 = x + pls::cs::Single(button[1]);
+                                num8 = y + pls::cs::Single(button[2]);
+                                num5 = button[5];
+                                num6 = button[6];
                             }
                             pls::cs::Ref<kairo::unity::surface::TouchComponent> touchComponent =
                                 AddTouchComponent(id, pls::cs::to_int32(num7), pls::cs::to_int32(num8),
@@ -1054,9 +1067,15 @@ void GamePad::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         DrawVersion(g);
                     } else {
                         if (mode_ == 2) {
-                            pls::cs::Int32 num12 = 0;
-                            pls::cs::Int32 num13 = num3 - 85;
-                            pls::cs::Int32 num14 = num4 - 46;
+                            const bool separateScreens = PLS_API(pls::platform::has_separate_screens());
+                            pls::cs::Int32 num12 = separateScreens ? pls::platform::label_bar::x : 0;
+                            pls::cs::Int32 num13 = separateScreens
+                                                       ? pls::cs::Int32(pls::platform::label_bar::x +
+                                                                        pls::platform::label_bar::width - 85)
+                                                       : num3 - 85;
+                            pls::cs::Int32 num14 =
+                                separateScreens ? pls::cs::Int32(pls::platform::label_bar::button_y - 7)
+                                                : num4 - 46;
                             if (IsSmallSideView()) {
                                 num13 = num3 - 83;
                             } else {

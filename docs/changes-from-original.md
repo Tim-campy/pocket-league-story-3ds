@@ -479,3 +479,21 @@ Evidências e limites: [medição física](notes/phase4-video-n3ds-second-delive
 [inventário](notes/phase4-video-target-inventory.md) e
 [teste no aparelho](notes/phase4-video-gameplay-device-test.md). Os arquivos com
 assets, capturas, saves e logs permanecem somente em `build/`.
+
+## 2026-11-26 — rótulos na resolução nativa da tela inferior
+
+Por decisão do usuário, a superfície GamePad das duas telas passa a desenhar
+diretamente em 320×240, com escala 100%, posições inteiras e a fonte existente
+de 14 pixels. A plataforma deixa de reduzir 400×240 para 320×192. Textos, ordem,
+ações e saves permanecem iguais. O caminho de uma tela usado pelos roteiros e
+pelo backend nulo conserva o layout anterior; a superior não muda.
+
+As constantes `label_bar` de `src/kairo/api/screen_layout.hpp` reservam y=176,
+altura=64, largura=320. Sobram 176 pixels acima para conteúdo futuro. Os botões
+usam as áreas efetivamente desenhadas; os diagnósticos já existentes do PC
+ficam acima da barra. Não foi acrescentado texto ao jogo.
+
+Verificar: `python tools/dev.py run --save 50`, comparar as duas capturas e
+tocar em cada rótulo no PC e no Azahar, incluindo salvar, menu, voltar e sair.
+O borrado vinha das reduções sucessivas do GamePad e da composição da inferior;
+as chamadas a SetLinearFilterEnable já eram inertes no port.

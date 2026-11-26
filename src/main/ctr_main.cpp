@@ -157,12 +157,16 @@ void storage_check(assets::Catalog& assets){
 }
 
 void gpu_check(ctr::Gpu& gpu){
+    const auto stage=[](const char* name){std::fprintf(stderr,"PLS_VIDEO_SELF_CHECK_STAGE %s\n",name);std::fflush(stderr);};
+    stage("allocate");gpu.trace_boot(true);
     auto source=kairo::Image::FromRgba(2,2,{255,0,0,255,0,255,0,255,0,0,255,255,255,255,255,255});
     auto target=kairo::Image::FromRgba(8,8,std::vector<std::uint8_t>(8*8*4));
     auto g=cs::make_ref<kairo::Graphics>(target,true);
-    gpu.begin_frame();gpu.clear(*target,0x000000ff);
+    stage("clear");gpu.begin_frame();gpu.clear(*target,0x000000ff);
+    stage("draw.clip");
     g->SetClip(3,2,2,2);g->DrawScaledImage(source,2,1,4,4,0,0,2,2);
-    const auto& pixels=target->pixels();
+    stage("read.clip");const auto& pixels=target->pixels();
+    stage("verify.clip");
     for(int y=0;y<8;++y)for(int x=0;x<8;++x){
         std::array<unsigned,4> expected{0,0,0,255};
         if(y==2&&x==3)expected={255,0,0,255};
@@ -171,21 +175,21 @@ void gpu_check(ctr::Gpu& gpu){
         if(y==3&&x==4)expected={255,255,255,255};
         for(int c=0;c<4;++c)if(pixels[(y*8+x)*4+c]!=expected[c])throw std::runtime_error("GPU self-check color/clip/readback mismatch at "+std::to_string(x)+","+std::to_string(y)+","+std::to_string(c)+" got "+std::to_string(pixels[(y*8+x)*4+c]));
     }
-    auto copied=kairo::Image::FromRgba(8,8,std::vector<std::uint8_t>(8*8*4));
+    stage("copy.target");auto copied=kairo::Image::FromRgba(8,8,std::vector<std::uint8_t>(8*8*4));
     auto copy_graphics=cs::make_ref<kairo::Graphics>(copied,true);
     copy_graphics->DrawImage(target,0,0);
     if(copied->pixels()!=pixels)throw std::runtime_error("GPU self-check render target sampling mismatch");
     copied->Dispose();
-    g->ClearClip();g->SetColor(255,0,0,128);g->FillRect(0,0,1,1);
+    stage("alpha");g->ClearClip();g->SetColor(255,0,0,128);g->FillRect(0,0,1,1);
     const auto& blended=target->pixels();
     if(blended[0]<127||blended[0]>129||blended[1]||blended[2]||blended[3]!=255)throw std::runtime_error("GPU self-check alpha mismatch");
-    g->SetBlendMode(3);g->DrawImage(source,0,0);
+    stage("grayscale");g->SetBlendMode(3);g->DrawImage(source,0,0);
     const auto& grey=target->pixels();
     for(int y=0;y<2;++y)for(int x=0;x<2;++x)for(int c=0;c<3;++c){
         const int expected=x==1&&y==1?255:85;
         if(std::abs(int(grey[(y*8+x)*4+c])-expected)>2)throw std::runtime_error("GPU self-check grayscale mismatch");
     }
-    auto back=kairo::Image::FromRgba(1,1,{255,0,0,255});
+    stage("depth");auto back=kairo::Image::FromRgba(1,1,{255,0,0,255});
     auto front=kairo::Image::FromRgba(1,1,{0,0,255,255});
     auto recorded=cs::make_ref<kairo::Graphics>(target,false);
     auto mesh=recorded->GetMeshManager();mesh->capture(true);recorded->ResetRender();
@@ -194,8 +198,9 @@ void gpu_check(ctr::Gpu& gpu){
     kairo::MeshManager::Render(target,mesh->commands(),{});
     const auto& layered=target->pixels();
     if(layered[0]||layered[1]||layered[2]!=255||layered[3]!=255)throw std::runtime_error("GPU self-check mesh depth mismatch");
-    back->Dispose();front->Dispose();
+    stage("dispose");back->Dispose();front->Dispose();
     source->Dispose();target->Dispose();gpu.end_frame();
+    gpu.trace_boot(false);
     std::fprintf(stderr,"PLS_VIDEO_SELF_CHECK=PASS pixels=64 alpha=1 deferred_release=1\n");std::fflush(stderr);
 }
 }
@@ -267,7 +272,14 @@ int main(){
                 pls::kairo::UnityApplication::pace(start);
             }
             gpu.begin_frame();app->host_stop();gpu.end_frame();
-        }catch(...){pls::kairo::Graphics::screen_target_hook=nullptr;pls::kairo::Graphics::surface_screen=nullptr;pls::platform::gpu_drawing=nullptr;throw;}
+        }catch(...){
+            // Report before GPU teardown, which can itself wait on a stalled queue.
+            try{throw;}
+            catch(const std::exception& error){std::fprintf(stderr,"PLS_VIDEO_ERROR_BEFORE_GPU_TEARDOWN %s\n",error.what());}
+            catch(...){std::fprintf(stderr,"PLS_VIDEO_ERROR_BEFORE_GPU_TEARDOWN unknown exception\n");}
+            std::fflush(stderr);
+            pls::kairo::Graphics::screen_target_hook=nullptr;pls::kairo::Graphics::surface_screen=nullptr;pls::platform::gpu_drawing=nullptr;throw;
+        }
         pls::kairo::Graphics::screen_target_hook=nullptr;pls::kairo::Graphics::surface_screen=nullptr;pls::platform::gpu_drawing=nullptr;
         romfsExit();return 0;
     }catch(const std::exception& error){std::fprintf(stderr,"PLS_VIDEO_ERROR %s\n",error.what());std::fflush(stderr);return 1;}

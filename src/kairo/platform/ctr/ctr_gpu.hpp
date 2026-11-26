@@ -14,6 +14,7 @@ class Gpu final : public platform::GpuDrawing {
 public:
     Gpu();
     ~Gpu() override;
+    void trace_boot(bool enabled);
     void begin_frame();
     void present(kairo::Image& top,kairo::Image& labels);
     void end_frame();

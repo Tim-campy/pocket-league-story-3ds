@@ -363,3 +363,12 @@ Verificação no Azahar: seleção do título, HiScores e retorno por B/Y,
 START com A/B/direcional e toque, X sem Site, L/R e circle pad sem movimento
 no título. Gestão/partida e calibração física do analógico dependem do
 aceite do aparelho. Sem alteração de texto, regra ou formato de save.
+
+### Diagnóstico após a primeira falha física do vídeo
+
+O New 3DS XL do usuário parou no autoteste GPU, depois dos registros de ROMFS
+e modelo do console. Acrescentados marcadores com flush no SD antes/depois
+das operações desse teste, para distinguir desenho, transferência e espera.
+O rastreamento desliga quando o autoteste termina; não altera regras, texto,
+save ou o caminho CPU. Pode acrescentar tempo de I/O durante o autoteste.
+A causa física ainda não foi identificada; não se declara a falha corrigida.

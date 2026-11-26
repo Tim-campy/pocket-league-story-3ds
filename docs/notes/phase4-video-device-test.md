@@ -6,6 +6,12 @@ nesta entrega. O desempenho do Azahar não comprova o desempenho do console.
 Validado no Azahar: título GPU, barra inferior, entrada e armazenamento
 ROMFS/SD. O teste abaixo é o aceite pendente no aparelho físico.
 
+**Primeiro teste físico falhou:** tela preta no autoteste GPU. Para investigar,
+usar a revisão com rastreamento de boot indicada no relatório mais recente.
+Se continuar preta após 30 segundos, não é necessário esperar cinco minutos:
+conservar `sd:/pls-video/stderr.log` da raiz do cartão, fora da pasta `3ds`.
+O rastreamento localiza a operação pendente; ainda não é uma correção confirmada.
+
 ## Instalação
 
 Depois da validação do artefato indicada em `docs/design/phase4-video.md`,
@@ -15,8 +21,14 @@ instalado. Os assets autenticados do APK do usuário estão no ROMFS desse
 arquivo; não é necessário copiá-los separadamente. O arquivo é privado,
 fica em `build/` e não pode ser publicado.
 
-Artefato validado: 48.739.932 bytes; SHA-256
+Artefato anterior, validado apenas no Azahar e reprovado no aparelho:
+48.739.932 bytes; SHA-256
 `80fb2ef949dd22cdb647d6fef7b94fd8ab7841d96d29b904cf20c6d1e43dceed`.
+
+Revisão de diagnóstico para substituir o anterior no mesmo caminho:
+**48.741.456 bytes**, SHA-256
+`40012df14ebfea502412baee6e3207745ae2f7d765173c172e3c947e9ec87ed5`.
+Ela acrescenta marcadores ao autoteste, sem mudar desenho ou remover checks.
 No Homebrew Launcher, identificação própria “Dual Screen Port” e ícone
 geométrico de duas telas, sem marca ou arte do jogo.
 

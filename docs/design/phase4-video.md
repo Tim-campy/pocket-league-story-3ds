@@ -5,6 +5,34 @@ GPU, com rótulos na inferior e entrada básica. Gestão e partida só depois do
 teste no New 3DS XL. O caminho CPU do PC e o backend nulo permanecem disponíveis.
 Este documento distingue o projeto abaixo dos resultados medidos ao final.
 
+**Aceite físico reprovado:** no primeiro teste do usuário, o New 3DS XL ficou
+com tela preta por cerca de cinco minutos, sem responder ao HOME. Os arquivos
+recuperados em `build/phase4-ctr/pls-video/` contêm `PLS_VIDEO_ASSET_ROOT=romfs:/`
+e `PLS_VIDEO_MODEL new3ds=1 result=0`, mas não `PLS_VIDEO_SELF_CHECK=PASS`.
+Portanto SD, catálogo e construtor GPU foram alcançados; a parada está no
+autoteste GPU ou na limpeza de uma falha dele, antes de iniciar o jogo. A hipótese inicial de falha antes
+da criação dos logs foi refutada. A chamada exata e a causa permanecem UNKNOWN.
+
+Revisão de diagnóstico: registros `PLS_VIDEO_SELF_CHECK_STAGE` e
+`PLS_VIDEO_GPU_BOOT` antes/depois de submissão, espera, upload e readback,
+com flush imediato. Desativados ao terminar o autoteste. Nenhuma tentativa
+de contornar o teste, mudar o tamanho dos alvos ou trocar os assets sem
+evidência. O resultado anterior do Azahar não é aceite do aparelho.
+Exceções também são registradas antes da destruição do backend, para não
+perder a mensagem se a limpeza ficar esperando a GPU. O citro3d 1.7.1
+[aguarda a fila em FrameBegin e em destruição de alvos](https://github.com/devkitPro/citro3d/blob/v1.7.1/source/renderqueue.c);
+isso é um caminho possível, não uma causa física já demonstrada.
+
+Validação da revisão de diagnóstico: ARM final 61,4 s; build PC 4,9 s;
+check 7,6 s; smoke 10/10, zero alertas, 211,2 s. Azahar completou o autoteste,
+chegou ao título e registrou 300 quadros. Uma checagem dos logs confirmou
+as dez etapas, transferências com início/fim pareados e nenhum marcador
+GPU_BOOT depois de SELF_CHECK=PASS. SHA-256 do novo `.3dsx`:
+`40012df14ebfea502412baee6e3207745ae2f7d765173c172e3c947e9ec87ed5`,
+48.741.456 bytes. Evidência local em `build/phase4-video/hardware-boot-trace/`.
+Esse resultado não confirma correção no hardware: é necessário recuperar o
+novo `stderr.log` do aparelho. Nada foi publicado.
+
 ## Contrato de telas implementado
 
 Na API da plataforma, `Screen::top` identifica 400×240 e `Screen::bottom`

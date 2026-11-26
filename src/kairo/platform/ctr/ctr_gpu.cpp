@@ -8,6 +8,7 @@
 #include <chrono>
 #include <cmath>
 #include <cstring>
+#include <cstdio>
 #include <map>
 #include <mutex>
 #include <stdexcept>
@@ -80,12 +81,17 @@ struct Gpu::State {
     C3D_RenderTarget* bottom{};
     C3D_RenderTarget* current{};
     bool open{};
+    bool boot_trace{};
     bool graphics_ready{},gpu_ready{},program_ready{};
     bool opaque_target{};
     VideoProfile metrics{};
     std::map<std::uint64_t,std::shared_ptr<NativeImage>> glyph_cache;
     std::size_t glyph_bytes{};
     mutable std::size_t peak_texture{},peak_vram{};
+
+    void trace(const char* stage)const{
+        if(boot_trace){std::fprintf(stderr,"PLS_VIDEO_GPU_BOOT %s\n",stage);std::fflush(stderr);}
+    }
 
     ~State(){
         if(gpu_ready){
@@ -125,6 +131,7 @@ struct Gpu::State {
     void upload(Allocation& value,const std::vector<std::uint8_t>& pixels,int width,int height,bool tiled){
         const auto start=Clock::now();
         auto& texture=value.texture;
+        if(boot_trace){std::fprintf(stderr,"PLS_VIDEO_GPU_BOOT upload target=%d logical=%dx%d texture=%ux%u bytes=%lu\n",int(value.target!=nullptr),width,height,unsigned(texture.width),unsigned(texture.height),static_cast<unsigned long>(texture.size));std::fflush(stderr);}
         void* staging=value.target?linearAlloc(texture.size):texture.data;
         if(!staging)throw std::bad_alloc();
         try{
@@ -155,7 +162,9 @@ struct Gpu::State {
                 // Close/wait first so the temporary upload buffer can be freed.
                 const bool reopen=open;wait_boundary();
                 const auto wait=Clock::now();
+                trace("upload.copy.begin");
                 C3D_SyncTextureCopy(static_cast<u32*>(staging),0,static_cast<u32*>(texture.data),0,texture.size,8);
+                trace("upload.copy.end");
                 if(reopen){if(!C3D_FrameBegin(0))throw std::runtime_error("GPU upload resume failed");open=true;}
                 metrics.wait_ns+=elapsed(wait);
             }
@@ -184,9 +193,12 @@ struct Gpu::State {
         current=target;
     }
     void wait_boundary(){
+        trace("boundary.begin");
         if(open){C3D_FrameEnd(0);open=false;}
+        trace("boundary.submitted");
         const auto start=Clock::now();
         if(!C3D_FrameBegin(0))throw std::runtime_error("GPU frame wait failed");
+        trace("boundary.completed");
         metrics.wait_ns+=elapsed(start);
         // An empty submission closes the frame, allowing RenderTargetDelete.
         C3D_FrameEnd(0);current=nullptr;
@@ -303,10 +315,13 @@ Gpu::Gpu():state_(std::make_unique<State>()){
     C3D_RenderTargetSetOutput(s.bottom,GFX_BOTTOM,GFX_LEFT,transfer_flags);
 }
 Gpu::~Gpu()=default;
+void Gpu::trace_boot(bool enabled){state_->boot_trace=enabled;}
 void Gpu::begin_frame(){
     auto& s=*state_;s.metrics={};
+    s.trace("frame.begin.wait");
     const auto start=Clock::now();
     if(!C3D_FrameBegin(0))throw std::runtime_error("GPU begin frame failed");
+    s.trace("frame.begin.ready");
     s.metrics.wait_ns=elapsed(start);
     s.open=true;s.current=nullptr;
 }
@@ -331,10 +346,12 @@ void Gpu::quad(kairo::Image& target,kairo::Image* source,const platform::GpuQuad
     destination->rendered=true;
 }
 void Gpu::clear(kairo::Image& image,std::uint32_t color){
+    state_->trace("clear.begin");
     auto destination=state_->image(image,true);
     C3D_FrameSplit(0);
     C3D_RenderTargetClear(destination->allocation->target,C3D_CLEAR_ALL,color,0);
     destination->rendered=true;
+    state_->trace("clear.queued");
 }
 void Gpu::begin_mesh(kairo::Image& image){
     auto destination=state_->image(image,true);
@@ -363,6 +380,7 @@ void Gpu::glyph(kairo::Image& target,const std::vector<std::uint8_t>& bytes,int 
 }
 void Gpu::readback(kairo::Image& image,std::vector<std::uint8_t>& output){
     auto& s=*state_;auto texture=native(image);
+    s.trace("readback.begin");
     if(!texture||!texture->allocation->target)throw std::runtime_error("GPU readback requires a render target");
     const auto start=Clock::now();const bool reopen=s.open;
     s.wait_boundary();
@@ -370,7 +388,9 @@ void Gpu::readback(kairo::Image& image,std::vector<std::uint8_t>& output){
     void* bytes=linearAlloc(tex.size);if(!bytes)throw std::bad_alloc();
     try{
         const auto wait=Clock::now();
+        s.trace("readback.copy.begin");
         C3D_SyncTextureCopy(static_cast<u32*>(tex.data),0,static_cast<u32*>(bytes),0,tex.size,8);
+        s.trace("readback.copy.end");
         s.metrics.wait_ns+=elapsed(wait);
         GSPGPU_InvalidateDataCache(bytes,tex.size);
         const auto* input=static_cast<const std::uint8_t*>(bytes);
@@ -389,6 +409,7 @@ void Gpu::readback(kairo::Image& image,std::vector<std::uint8_t>& output){
         s.metrics.wait_ns+=elapsed(wait);s.open=true;
     }
     s.metrics.readback_ns+=elapsed(start);
+    s.trace("readback.end");
 }
 void Gpu::present(kairo::Image& top,kairo::Image& bottom){
     auto& s=*state_;

@@ -22,10 +22,12 @@ arquivo; não é necessário copiá-los separadamente. O arquivo é privado,
 fica em `build/` e não pode ser publicado.
 
 Revisão atual de diagnóstico para substituir o anterior no mesmo caminho:
-**48.742.908 bytes**, SHA-256
-`dbf681961dd22d1491bd7646dd3ef03b5c742c0d8a2b2b4a51f545f208441724`.
+**48.742.900 bytes**, SHA-256
+`ab63a1685518657ceb6eb77f4e2aa3d8c91d7fc269c1473cd8a897fc61404b25`.
 Ela verifica limpeza, desenho sem textura e desenho com textura separadamente,
-em alvos 64×64 e 8×8, antes do autoteste original. Não muda o desenho do jogo.
+em alvos 64×64 e 8×8, antes do autoteste original. Esta revisão escreve a
+saída de coordenadas inteira no shader, preservando os valores `xy` do desenho.
+O teste anterior passou na limpeza 64×64, mas travou no desenho sólido.
 Começar o teste com o console completamente desligado; ligar e abrir o Launcher.
 No Homebrew Launcher, identificação própria “Dual Screen Port” e ícone
 geométrico de duas telas, sem marca ou arte do jogo.

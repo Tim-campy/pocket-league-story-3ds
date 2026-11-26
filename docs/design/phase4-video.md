@@ -55,6 +55,35 @@ O rastreamento não aparece depois do autoteste. Pacote privado: 48.742.908
 bytes, SHA-256 `dbf681961dd22d1491bd7646dd3ef03b5c742c0d8a2b2b4a51f545f208441724`.
 O aceite e a identificação da causa física continuam pendentes do aparelho.
 
+Retorno físico das sondagens (2026-11-26): `edge=64 clear.pass` foi atingido,
+incluindo upload, limpeza e readback. O log para em `boundary.submitted`
+depois de `edge=64 solid.begin`. Portanto a falha ocorre na conclusão do
+primeiro desenho sólido, antes do teste texturizado e do alvo 8×8. Isso
+refuta a limpeza ou a cópia de readback como operação bloqueada nesta execução;
+não identifica ainda qual estado/instrução do desenho causa a espera.
+Log preservado em `build/phase4-video/hardware-boot/probes-v1-stderr.log`.
+
+Próxima alteração controlada: escrever o registrador inteiro da saída de
+coordenadas do shader (`mov image_coordinate, v2`), em vez de somente `xy`.
+O [shader oficial do citro2d](https://github.com/devkitPro/citro2d/blob/master/source/render2d.v.pica)
+também escreve essa saída inteira. As coordenadas `xy` usadas pelo desenho
+não mudam; `zw` passam a ser escritos com os zeros já enviados pelo host.
+Trata-se de hipótese de compatibilidade física, ainda UNKNOWN, não de causa
+confirmada. Nenhuma outra operação GPU ou sondagem foi alterada.
+
+Validação local dessa alteração: ARM 43,7 s, PC 2,8 s, check 2,9 s, PASS.
+Smoke: 10/10, zero alertas, nenhuma repetição, 193,6 s, PASS.
+Azahar 2126.2: oito sondagens PASS, autoteste original PASS, 300 quadros;
+boot 18137,098 ms, desenho CPU médio 3,170208 ms, espera 0,005151 ms.
+Esses tempos não representam o aparelho. Capturas inspecionadas: barra
+inferior idêntica à revisão anterior; superior com 2066 pixels diferentes
+nas capturas não sincronizadas (personagens animados em posições distintas),
+portanto não é prova de igualdade quadro a quadro. A primeira comparação
+por Python não rodou por falta de Pillow; usada System.Drawing já instalada.
+Artefato privado: 48.742.900 bytes, SHA-256
+`ab63a1685518657ceb6eb77f4e2aa3d8c91d7fc269c1473cd8a897fc61404b25`.
+Evidência em `build/phase4-video/shader-output/`; validação física pendente.
+
 ## Contrato de telas implementado
 
 Na API da plataforma, `Screen::top` identifica 400×240 e `Screen::bottom`

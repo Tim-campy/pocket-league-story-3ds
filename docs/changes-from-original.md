@@ -379,3 +379,10 @@ essas operações separadamente, com e sem textura, em alvos 64×64 e 8×8,
 antes do teste original. São sondagens de boot, sem mudança no desenho do
 jogo nem trabalho adicional nos quadros seguintes. A correção física segue
 pendente de identificar a operação que não termina.
+
+O retorno dessas sondagens passou na limpeza/readback 64×64 e parou no
+primeiro desenho sólido. A revisão seguinte escreve todos os componentes
+da saída de coordenadas do shader CTR, conservando `xy`, como os exemplos
+do devkitPro. É uma tentativa isolada de compatibilidade dentro do bloco
+de vídeo autorizado; sua eficácia física ainda precisa ser verificada.
+PC, regras, texto e saves não mudam. Mantidas todas as sondagens anteriores.

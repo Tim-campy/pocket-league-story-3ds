@@ -8,6 +8,6 @@
     dp4 clip_position.z, transform[2], v0
     dp4 clip_position.w, transform[3], v0
     mov fragment_color, v1
-    mov image_coordinate.xy, v2
+    mov image_coordinate, v2
     end
 .end

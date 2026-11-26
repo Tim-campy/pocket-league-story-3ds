@@ -121,7 +121,17 @@ struct Gpu::State {
         catch(...){lifetime->retire(allocation);throw;}
         const auto w=assets::ctr_texture::extent(width),h=assets::ctr_texture::extent(height);
         allocation->allocated=target?C3D_TexInitVRAM(&allocation->texture,w,h,GPU_RGBA8):C3D_TexInit(&allocation->texture,w,h,GPU_RGBA8);
-        if(!allocation->allocated)throw std::runtime_error("GPU texture allocation failed: "+std::to_string(w)+"x"+std::to_string(h));
+        if(!allocation->allocated){
+            std::fprintf(stderr,"PLS_VIDEO_ALLOCATION_FAILURE target=%d logical=%dx%d texture=%dx%d requested_bytes=%lu linear_free=%lu vram_free=%lu\n",
+                int(target),width,height,w,h,static_cast<unsigned long>(w*h*4),static_cast<unsigned long>(linearSpaceFree()),static_cast<unsigned long>(vramSpaceFree()));
+            {
+                std::lock_guard<std::mutex> lock(lifetime->mutex);
+                for(auto* item=lifetime->head;item;item=item->next)if(item->allocated)
+                    std::fprintf(stderr,"PLS_VIDEO_LIVE_TEXTURE target=%d size=%ux%u bytes=%lu retired=%d\n",int(item->target!=nullptr),unsigned(item->texture.width),unsigned(item->texture.height),static_cast<unsigned long>(item->texture.size),int(item->retired));
+            }
+            std::fflush(stderr);
+            throw std::runtime_error("GPU texture allocation failed: "+std::to_string(w)+"x"+std::to_string(h));
+        }
         C3D_TexSetFilter(&allocation->texture,GPU_NEAREST,GPU_NEAREST);
         C3D_TexSetWrap(&allocation->texture,GPU_CLAMP_TO_EDGE,GPU_CLAMP_TO_EDGE);
         if(target){

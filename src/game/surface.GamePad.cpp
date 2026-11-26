@@ -521,15 +521,16 @@ void GamePad::AddTouch(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Single x, 
                                                 kairo::unity::ui::Canvas::IsLinearFilterEnable(
                                                     require(canvas_));
                                             kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_),
-                                                                                            true);
+                                                                                            false);
                                             DrawImage(g, num3 - 27.0f, num4 - 10.0f,
                                                       ((PLS_API(kl_lang::JSystem::CurrentTimeMillis()) %
                                                             pls::cs::Int64(800) <
                                                         pls::cs::cast_integral<pls::cs::Int64>(400)))
                                                           ? 15
                                                           : 16);
-                                            kairo::unity::ui::Canvas::SetLinearFilterEnable(
-                                                require(canvas_), linearFilterEnable);
+                                            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_),
+                                                                                            false);
+                                            (void)linearFilterEnable;
                                             num3 += 12.0f;
                                         }
                                         if (array[4] == 7) {
@@ -1249,13 +1250,14 @@ bool GamePad::DrawSoftLabel(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Singl
         pls::cs::Single num8 = y + pls::cs::Single((array2[6] + array2[2])) * sideViewRatio / 2.0f - 1.0f;
         if (id == 5) {
             bool linearFilterEnable = kairo::unity::ui::Canvas::IsLinearFilterEnable(require(canvas_));
-            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), true);
+            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), false);
             DrawSoftLabelImage(g, num7 - 27.0f * sideViewRatio, num8 - 10.0f * sideViewRatio,
                                ((PLS_API(kl_lang::JSystem::CurrentTimeMillis()) % pls::cs::Int64(800) <
                                  pls::cs::cast_integral<pls::cs::Int64>(400)))
                                    ? 15
                                    : 16);
-            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), linearFilterEnable);
+            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), false);
+            (void)linearFilterEnable;
             num7 += 12.0f * sideViewRatio;
         }
         PLS_API(([&]() -> void {

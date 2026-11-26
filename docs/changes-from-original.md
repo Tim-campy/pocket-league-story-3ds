@@ -513,3 +513,21 @@ rolagem de borda, saves e partida conservam suas regras.
 
 Verificar: no mapa do save 50, segurar Q/W no PC, ou L/R no console, até os dois
 limites; soltar interrompe imediatamente. Circle pad e zoom podem atuar juntos.
+
+## 2026-11-26 — política explícita de ampliação sem filtro
+
+O usuário decidiu desligar a suavização do port para a pixel art em 400×240,
+também no PC. As nove chamadas a SetLinearFilterEnable em TitleForm, MyFormBase,
+AppData e GamePad passam false (oito alteradas; uma já fazia isso), preservando
+avaliações e checagens existentes.
+O campo de configuração continua sendo lido/gravado como antes; não muda o save.
+
+Diagnóstico: o setter já é vazio no C# reconstruído e no port; os backends
+atuais já amostram por vizinho mais próximo. Portanto esta mudança explicita
+a política, sem atribuir a ela uma diferença visual que não existia. A
+cobertura antialias dos glifos FreeType é independente e permanece.
+
+Verificar capturas estáticas em 100%, 130%, 150%, 170% e 200%, antes/depois,
+em `build/`. A ampliação fracionária mantém contornos nítidos, mas distribui
+pixels desigualmente e pode oscilar durante rolagem. Desenho direto de sprites
+na escala final e filtros alternativos continuam propostas, não implementações.

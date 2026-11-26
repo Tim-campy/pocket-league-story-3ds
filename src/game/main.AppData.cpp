@@ -1412,7 +1412,8 @@ void AppData::NewGame(pls::cs::Int32 slot, pls::cs::String name) {
         {
             auto cs_receiver = AppData::canvas_();
             bool cs_arg0 = require(save_)->ints[12] == 1;
-            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(cs_receiver), cs_arg0);
+            (void)cs_arg0; // Preserve the legacy setting and validation; rendering stays unfiltered.
+            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(cs_receiver), false);
         }
         try {
             SaveSystem();
@@ -1886,7 +1887,8 @@ void AppData::LoadGame(pls::cs::Int32 slot, bool auto_) {
         {
             auto cs_receiver = AppData::canvas_();
             bool cs_arg0 = require(save_)->ints[12] == 1;
-            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(cs_receiver), cs_arg0);
+            (void)cs_arg0; // Preserve the legacy setting and validation; rendering stays unfiltered.
+            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(cs_receiver), false);
         }
         require(frmGame_)->SetAllDraw();
     }

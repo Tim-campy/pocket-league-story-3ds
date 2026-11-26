@@ -232,7 +232,9 @@ bool TitleForm::Init() {
             PLS_API(require(currentApp)->GetHeight()) <= 480) {
             num = 1;
         }
-        kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), num == 1);
+        // The 400x240 port keeps pixel-art enlargement unfiltered.
+        (void)num;
+        kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), false);
         if (!cfg::MyConfig::SMART_PASS() && !cfg::MyConfig::AMAZON() && !kl_cfg::Config::TRIAL_VERSION() &&
             !kl_cfg::Config::ADMOB_ENABLE()) {
             try {

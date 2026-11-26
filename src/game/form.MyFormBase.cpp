@@ -621,7 +621,7 @@ void MyFormBase::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
         }
         case 393216: {
             require(require(apdat_)->save_)->ints[12] = value;
-            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), value == 1);
+            kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), false);
             PLS_API(require(formMan_)->DrawAllForms());
             break;
         }

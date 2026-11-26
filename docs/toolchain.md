@@ -136,6 +136,28 @@ A autorização posterior do usuário permitiu preparar FreeType, libogg e libvo
 
 ## FreeType, Ogg e Vorbis locais
 
+Conferência de 2026-11-26: FreeType 2.15.0 já estava ligado estaticamente no PC
+em `0b9d3e7` (8/11) e no runtime nulo/ARM em `b2acf47` (10/11), antes do bloco
+de vídeo. `tools/null-benchmark/CMakeLists.txt` naquele commit contém
+`target_link_libraries(null_runtime PUBLIC Freetype::Freetype)`; o mapa local
+`build/frozen-arm/null_game.map` confirma objetos de `libfreetype.a` no ELF.
+O alvo CTR reutilizou essa dependência, habilitando rasterização além das
+métricas. Não foi uma biblioteca nova introduzida pela Fase 4 de vídeo.
+
+Licença usada: FreeType License (FTL), com crédito ao FreeType Team, conforme
+os arquivos LICENSE.TXT/FTL.TXT preservados no SDK local. As fontes TTF vêm dos
+assets do APK autenticado do usuário; a biblioteca não fornece essas fontes.
+O índice `THIRD_PARTY.md` omitia FreeType, SDL2, Ogg/Vorbis e libctru; a
+conferência acrescenta esses componentes e os runtimes C/C++ da toolchain.
+Não altera dependências ou executáveis.
+
+Alternativa sem FreeType no aparelho: gerar previamente no PC atlas de glifos
+e tabelas de métricas a partir dos TTF do APK, para os tamanhos/estilos usados,
+e substituir o leitor/rasterizador de fontes no alvo CTR. Exige tratar japonês,
+texto dinâmico, cache, tamanhos e métricas; aumenta dados gerados e requer
+comparação visual. Não foi implementada; trocar pela fonte do sistema também
+mudaria métricas e aparência. O escopo para essa substituição seria outra decisão.
+
 `python tools/setup_media_deps.py` baixa somente os três arquivos HTTPS fixados abaixo, verifica seus SHA-256 publicados e verifica cada arquivo da árvore extraída contra o tar original antes de compilar. Uma árvore em cache alterada ou com arquivos extras é recusada. Os fontes ficam em `build/deps/sources/`, builds em `build/deps/media-build/` e o prefixo de desenvolvimento em `build/deps/native-media/`.
 
 | Fonte oficial fixado | SHA-256 do arquivo |

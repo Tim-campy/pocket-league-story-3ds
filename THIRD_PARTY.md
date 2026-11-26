@@ -1,5 +1,57 @@
 # Third-party notices
 
+## FreeType 2.15.0 (FreeType License)
+
+This software is based in part on the work of the FreeType Team.
+The project uses the FreeType License (FTL), rather than the alternative GPLv2
+license; see [upstream licensing](https://freetype.org/license.html).
+The unchanged license and copyright notices are retained by the local SDK in
+`build/deps/native-media/share/licenses/freetype/{LICENSE.TXT,FTL.TXT}` and
+must accompany any future binary redistribution as required by those notices.
+
+Official source archive:
+[freetype-2.15.0.tar.xz](https://download.savannah.gnu.org/releases/freetype/freetype-2.15.0.tar.xz),
+SHA-256 `93cd47eb719c325107f2d3cf087d06299e944c3b48a40b55537302304dea1dd5`.
+Built locally as a static library for MSVC and ARM11; no Unity library is used.
+The PC linkage dates to `0b9d3e7` (2026-11-08); the null/ARM benchmark already
+linked FreeType in `b2acf47` (2026-11-10). The Phase 4 video target reuses this
+dependency for glyph rasterization, in addition to metrics. It did not introduce
+FreeType to ARM. TTF files are separate game assets extracted only from the
+user's authenticated APK, never shipped by this repository or by FreeType.
+
+## SDL2 and Xiph media libraries
+
+These existing Phase 2 dependencies were missing from this notice index:
+
+| Component | Target | License / upstream notice |
+|---|---|---|
+| SDL2 2.32.10 | PC, SDK DLL | [zlib](https://github.com/libsdl-org/SDL/blob/release-2.32.10/LICENSE.txt), Sam Lantinga and contributors |
+| libogg 1.3.6 | PC, static | [BSD-3-Clause](https://github.com/xiph/ogg/blob/v1.3.6/COPYING), Xiph.org Foundation |
+| libvorbis and libvorbisfile 1.3.7 | PC, static | [BSD-3-Clause](https://github.com/xiph/vorbis/blob/v1.3.7/COPYING), Xiph.org Foundation |
+
+Source archives, hashes and build options are in `config/media-sdk.json` and
+`docs/toolchain.md`; complete Xiph notices remain under the local SDK's
+`share/licenses/{ogg,vorbis}/COPYING`. The CTR video build does not link SDL2,
+Ogg or Vorbis and has no audio device. Reusing source files from the `sdl/`
+directory does not mean linking SDL2 on the console.
+
+## Console and compiler runtime dependencies
+
+libctru **2.7.1-1** is linked by the ARM targets, including video. Its
+[README license](https://github.com/devkitPro/libctru#license) is the zlib-style
+grant; the installed devkitPro package labels it `custom`. It predates the
+video block. Package provenance is recorded in `docs/toolchain.md`.
+
+ARM binaries also link the devkitARM r68 C/C++ support libraries (newlib,
+libstdc++ and libgcc). They are toolchain components, not new game dependencies.
+GCC runtime components carry GPL terms with the
+[GCC Runtime Library Exception](https://www.gnu.org/licenses/gcc-exception-3.1.html);
+newlib has [per-file notices](https://sourceware.org/newlib/COPYING.NEWLIB),
+not one blanket project license. PC binaries use the Microsoft C/C++ runtime
+under the installed Visual Studio toolchain terms. Preserve applicable runtime
+notices when preparing a future distribution; this repository distributes no
+game binary or SDK runtime.
+
 ## Nintendo 3DS GPU libraries (zlib)
 
 Selected for the Phase 4 video backend: devkitPro citro3d package **1.7.1-2**

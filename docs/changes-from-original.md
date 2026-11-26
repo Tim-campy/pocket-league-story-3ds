@@ -1,5 +1,27 @@
 # Mudanças em relação ao original
 
+## Alvos de trabalho da GPU CTR — 2026-11-26
+
+Decisão explícita do usuário após o inventário: preservar RGBA8, resolução e
+profundidade, com pelo menos 1 MiB de VRAM livre. O passo menor compartilhou
+DEPTH24 e organizou os bancos, mas deixou apenas 357.376 bytes livres na gestão.
+O passo seguinte reutiliza uma cor 1024×512 na VRAM e mantém cada resultado em
+textura linear, copiando pela GPU ao trocar de destino. A profundidade continua
+compartilhada; não há estêncil. Não altera jogo, saves, PC ou backend nulo.
+
+As cópias terminam antes da reutilização; descarte de texturas e vistas continua
+após os comandos em ponto seguro da thread de desenho. Leitura de pixels e
+desenho do alvo sobre si mesmo preservam o caminho de snapshot. Falha de
+alocação informa alvo, dimensões e memória livre no log. Verificar pelo autoteste
+GPU no boot, capturas das duas telas e perfis; inventário e resultados em
+`notes/phase4-video-target-inventory.md`.
+
+O perfil CTR acrescenta contagem, bytes e duração das cópias, sem gravação no SD
+por quadro. Um buffer nativo de 16.384 amostras é gravado em `gpu-profile-N.csv`
+ao sair normalmente. Sessões de medição devem durar menos de 13 minutos; o log
+informa `dropped` quando esse limite é ultrapassado. Não confundir esse limite
+do diagnóstico com limite para jogar.
+
 Lista do que o port faz de forma diferente do Pocket League Story original
 (Android) e da tag `v1.0.0-faithful`, que o reproduz. Cada item tem a decisão do
 usuário que o autoriza e a etapa em que entra. Uma mudança de comportamento no

@@ -26,11 +26,16 @@ execuções no aparelho. O desempenho dessas telas com vídeo é **UNKNOWN** at�
 receber as medições; o perfil do título não representa o custo da partida.
 Esta entrega para antes do push, para revisão do usuário.
 
-**Bloqueio reproduzido no Azahar:** ao carregar o save 50, o alvo de render
-1024×512 não cabe na política atual de VRAM. Cor e profundidade requerem
-3.670.016 bytes adicionais; há 2.847.744 bytes livres. Gestão e partida ainda
-não estão prontas para teste físico. Diagnóstico, opções e medições do boot:
-`notes/phase4-video-second-status.md`. Nenhuma otimização foi aplicada.
+**Memória de vídeo:** o inventário confirmou uso de profundidade e ausência de
+estêncil. Compartilhar DEPTH24 permitiu abrir a gestão, mas deixou 357.376 bytes
+livres. O passo seguinte autorizado reutiliza cor na VRAM e guarda resultados
+em texturas lineares com cópias GPU: gestão e partida abriram no Azahar com
+1.930.240 bytes livres. Novo jogo com nomes padrão, partida completa e
+salvar/recarregar passaram no Azahar; sete telas foram comparadas por amostras
+com o PC, sem afirmar igualdade de estados animados. Medições no aparelho
+ainda pendentes. Evidências em `notes/phase4-video-target-inventory.md` e
+`notes/phase4-video-gameplay-measurements.md`; instalação e três execuções em
+`notes/phase4-video-gameplay-device-test.md`.
 
 Menus, registro e painel na inferior, som e teclado do sistema ficam para depois.
 A ampliação temporária do papel e os encaixes autorizados estão propostos em
@@ -50,7 +55,7 @@ sair; barra de rótulos tocável na tela inferior.
 
 | Bloco | Entrega jogável | Sessões | Riscos | Depende do usuário |
 |---|---|---|---|---|
-| 4.1 Vídeo na GPU (citro3d), tela superior | título aprovado; gestão e partida pendentes | 3–4 | desempenho do desenho e alvos intermediários na VRAM de 6 MiB; viewport 400×240 e legibilidade do texto | decidir a política de memória e testar no New 3DS |
+| 4.1 Vídeo na GPU (citro3d), tela superior | título aprovado; gestão e partida validadas no Azahar, aguardando aparelho | 3–4 | desempenho do desenho e das cópias; viewport 400×240 e legibilidade do texto | testar e medir três vezes no New 3DS |
 | 4.2 Entrada completa e tela inferior | todos os controles do design; barra de rótulos tocável na inferior; toque mapeado | 2 | mapeamento do toque da inferior para os "botões" que o jogo espera; repetição de tecla e duplo toque no ritmo do original | aprovar a sensação dos controles no aparelho |
 | 4.3 Som (ndsp) | música e efeitos em streaming do Vorbis do APK | 2 | custo de decodificação Vorbis no ARM11 (thread no núcleo do sistema ou decodificação antecipada); latência dos efeitos | ouvir no aparelho |
 | 4.4 Saves e ciclo de vida | salvar e carregar no cartão; suspensão (HOME, tampa fechada) sem perder estado; START sai salvando | 1–2 | escrita atômica no SD (queda de energia); APT/suspensão com threads do jogo | testar suspender e retomar no aparelho |

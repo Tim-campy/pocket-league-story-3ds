@@ -3,6 +3,10 @@
 Escopo: título e barra de rótulos. Não iniciar campanha, gestão ou partida
 nesta entrega. O desempenho do Azahar não comprova o desempenho do console.
 
+Este documento conserva o teste da **primeira entrega aprovada**. Para o novo
+executável privado de gestão/partida e os saves de teste, usar
+`phase4-video-gameplay-device-test.md`.
+
 Validado no Azahar: título GPU, barra inferior, entrada e armazenamento
 ROMFS/SD. O teste abaixo documenta o aceite realizado no aparelho físico.
 
@@ -25,8 +29,8 @@ instalado. Os assets autenticados do APK do usuário estão no ROMFS desse
 arquivo; não é necessário copiá-los separadamente. O arquivo é privado,
 fica em `build/` e não pode ser publicado.
 
-Revisão aprovada (o build de trabalho da segunda entrega tem uma falha conhecida
-na gestão e não deve substituir esta cópia para jogar):
+Revisão aprovada da primeira entrega, preservada separadamente do build de
+trabalho da segunda entrega:
 **48.742.900 bytes**, SHA-256
 `ab63a1685518657ceb6eb77f4e2aa3d8c91d7fc269c1473cd8a897fc61404b25`.
 Ela verifica limpeza, desenho sem textura e desenho com textura separadamente,

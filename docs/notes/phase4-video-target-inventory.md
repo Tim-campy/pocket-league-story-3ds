@@ -101,3 +101,86 @@ para gestão/menu/partida com um offscreen cai para **5.934.080 bytes**, deixand
 gestão, mas ainda não cumpra a folga solicitada. O gatilho do passo 3 será
 confirmado pela execução, sem apresentar estes cálculos como medição.
 Adotado o limiar conservador de 1 MiB (1.048.576 bytes) para o pedido de 1 MB.
+
+## Resultado dos caminhos autorizados
+
+O passo 2 (`1c64e5f`) compartilha DEPTH24 de 1.572.864 bytes no banco B;
+cores pequenas ficam em B e apresentações/cores grandes em A. Gestão, menu e
+zoom abriram no Azahar, com **5.934.080 bytes usados e 357.376 livres**. Isso
+confirmou o gatilho do passo 3. Build/check/smoke: PASS, respectivamente
+3,1 s / 2,9 s / 185,2 s, 10/10 execuções e zero alertas.
+
+No passo 3, uma cor de trabalho de 2.097.152 bytes ocupa A junto às duas
+apresentações (691.200 bytes). DEPTH24 compartilhado permanece em B. Cada alvo
+lógico mantém sua textura RGBA8 linear; nenhuma dimensão ou formato muda.
+Vistas citro3d não são donas dos buffers compartilhados. A troca de alvo
+conclui os comandos, copia o resultado sujo VRAM→linear e restaura linear→VRAM
+quando necessário. Clear completo dispensa a restauração. As transferências
+são feitas pela GPU e concluídas antes de reutilizar a memória. Leitura de
+pixels conserva snapshot, invalidação do cache CPU e destilagem existentes.
+
+| Tela | VRAM anterior, bytes | Passo 2, bytes | Passo 3, bytes | Folga final, bytes |
+|---|---:|---:|---:|---:|
+| Título | 3.443.712 medidos | 3.836.928 medidos | 4.361.216 medidos | 1.930.240 |
+| Gestão | 7.113.728 calculados, não cabe | 5.934.080 medidos | 4.361.216 medidos | 1.930.240 |
+| Menu sobre gestão | 7.113.728 calculados | 5.934.080 medidos | 4.361.216 medidos | 1.930.240 |
+| Partida | 7.113.728 calculados | 5.934.080 calculados | 4.361.216 medidos | 1.930.240 |
+
+A reserva fixa aumenta o uso do título, mas limita a VRAM nas telas maiores.
+Folga acima do requisito: **881.664 bytes**. Memória linear tem heap de
+25.165.824 bytes nesta configuração; não confundir espaço livre nele com
+memória normal do runtime. Picos por quadro incluem alocações e temporários
+observados pelo backend; não são soma dos tamanhos de todos os assets.
+
+Pico linear anterior por tela: **UNKNOWN**. O título anterior tinha
+17.101.568 bytes livres no instante registrado, equivalentes a 8.064.256
+usados; não havia contador de mínimo transitório para chamá-lo de pico.
+Gestão/menu/partida não chegavam a completar um quadro antes da mudança.
+Não há comparação honesta de picos dessas telas contra uma execução anterior
+que falhava na alocação; os tamanhos calculados de VRAM estão identificados
+como tal na tabela. Os mínimos lineares por quadro do passo 3 são medidos.
+
+| Janela do Azahar, 300 quadros | Pico linear usado, bytes | Linear livre no pico, bytes | Cópias/quadro | Bytes copiados/quadro | Cópia média, ms |
+|---|---:|---:|---:|---:|---:|
+| Título | 9.571.584 | 15.594.240 | 6 | 3.145.728 | 0,857500 |
+| Gestão 100%, parada | 12.209.408 | 12.956.416 | 8 | 7.340.032 | 1,151779 |
+| Menu da gestão | 12.566.784 | 12.599.040 | 8 | 7.340.032 | 1,151779 |
+| Gestão 75%, parada | 12.599.552 | 12.566.272 | 8 | 7.340.032 | 1,151596 |
+| Gestão 75%, rolando (264/300 quadros) | 12.698.368 | 12.467.456 | 8 | 7.340.032 | 1,151201 |
+| Partida, repetição curta | 13.047.808 | 12.118.016 | 8 | 7.340.032 | 1,153802 |
+
+O custo da cópia inclui a espera da própria transferência síncrona; a espera
+dos comandos anteriores é contada separadamente dentro de gpu_wait_ns. Não
+somar copy_ns novamente ao total do quadro. Evidência privada:
+`build/phase4-video/work-target-management/joined-profiles.json`.
+
+Incluindo os quadros de carga/transição fora das janelas estáveis, o pico linear
+observado foi 12.903.168 bytes na sessão de gestão EN (12.262.656 livres) e
+**14.905.088 bytes** ao entrar na partida (10.260.736 livres), ainda com
+1.930.240 bytes de VRAM livres. O pico JP foi 12.821.504 bytes usados,
+12.344.320 livres. Esses mínimos vêm de `gpu-profile-1.csv`, não apenas do
+contador de texturas ao final da carga. Capturas fora das janelas usam um
+temporário linear de 524.288 bytes por tela e não entram no perfil por quadro.
+
+Tempos físicos de cópia: **UNKNOWN**. A sessão longa da partida excedeu
+16.384 registros: 13.040 descartados. Seus perfis de lógica/desenho continuam
+válidos. A repetição curta (`work-target-match-short`) teve 3.208 registros,
+zero descartados, e a janela de 300 quadros entrou na tabela acima.
+
+Inventário de instâncias efetivamente observadas na repetição: 239 alocações,
+10 alvos (incluindo os temporários do autoteste) e 138 imagens identificadas
+pelos hashes dos payloads nativos, cruzados com os membros do catálogo. Lista
+individual em `build/phase4-video/work-target-match-short/allocation-inventory.csv`.
+As demais entradas sem nome são glifos/auxiliares nativos; o CSV conserva
+dimensões, bytes, leitura e liberação observadas, sem inventar nome de asset.
+
+Comparação preliminar passo 2→3: inferior idêntica no título, mapa 100% e 75%;
+superior com 1.873 / 4.962 / 961 pixels diferentes, respectivamente. Os estados
+animados e datas não estão sincronizados. Isso **não prova igualdade integral**;
+o menu tem 4.451 pixels diferentes na superior e 20 na inferior. Capturas e
+contagem estão em `build/phase4-video/memory-policy-pixels.json`. Autoteste GPU
+passou antes e depois, incluindo profundidade, mistura, recorte e readback.
+As sete telas foram inspecionadas contra o PC; dois recortes estáticos de
+11.200 pixels cada, nos zooms 100% e 75%, foram idênticos. Detalhes e limites
+em `phase4-video-gameplay-measurements.md`. Equivalência integral determinística
+e desempenho físico permanecem **UNKNOWN**.

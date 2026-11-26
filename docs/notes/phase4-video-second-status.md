@@ -3,8 +3,9 @@
 ## Estado
 
 A primeira entrega foi aprovada no New 3DS XL e publicada em `6e5e7d3`, com
-CI Content policy verde. A segunda está local e **bloqueada na abertura da
-gestão**. Não entregar o build atual como versão jogável além do título.
+CI Content policy verde. A segunda está local. O bloqueio de memória da gestão
+foi superado pelos dois passos autorizados; gestão e partida abriram no Azahar.
+A validação completa e o desempenho físico ainda estão pendentes.
 
 | Ciclo anterior ao push da primeira entrega | Resultado | Tempo |
 |---|---|---:|
@@ -73,7 +74,8 @@ O inventário inicial está em `phase4-video-target-inventory.md`.
 
 Não se pode simplesmente renderizar diretamente numa textura linear:
 [citro3d 1.7.1, renderqueue.c](https://github.com/devkitPro/citro3d/blob/v1.7.1/source/renderqueue.c)
-exige VRAM em `C3D_RenderTargetCreateFromTex`. Nenhuma opção foi implementada,
+exige VRAM em `C3D_RenderTargetCreateFromTex`. A seção acima preserva o diagnóstico
+anterior à autorização. O resultado dos passos implementados está no inventário;
 nenhum caminho CPU foi usado para contornar a falha, e o jogo não foi alterado.
 
 Evidência privada: `build/phase4-video/gameplay-allocation-repro/` e

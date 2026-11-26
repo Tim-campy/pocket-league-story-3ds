@@ -14,8 +14,8 @@ Na seção 1, registrar a câmera independente publicada e a primeira entrega de
 vídeo aprovada no New 3DS XL: título na GPU, barra de rótulos inferior tocável,
 entrada CTR, ROMFS privado e autoteste GPU. Atualizar os trechos que dizem que
 o 3DS só tem backend nulo ou que câmera independente ainda não existe.
-Gestão e partida com vídeo entram como segunda entrega bloqueada pela alocação
-dos alvos intermediários na VRAM; som,
+Gestão e partida com vídeo entram como segunda entrega em validação, com alvos
+de trabalho na VRAM e resultados lineares autorizados após inventário; som,
 teclado do sistema, idioma do console e menus na inferior continuam pendentes.
 
 Na seção 10, explicitar comparação das duas telas no PC, perfil separado de

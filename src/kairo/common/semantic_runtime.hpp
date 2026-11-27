@@ -262,11 +262,14 @@ void gc_collect(std::int32_t generation=2);
 // source collection ran inside a form Finish (source "Finish <type>"); loading: the
 // volume threshold was due inside a loading safe point; volume: due at a frame end.
 enum class GcTrigger:std::uint8_t{explicit_call=0,volume=1,transition=2,loading=3};
-struct GcEvent{std::uint64_t sequence=0;GcTrigger trigger=GcTrigger::explicit_call;std::uint64_t pause_ns=0;char source[48]{};};
+struct GcEvent{std::uint64_t sequence=0;GcTrigger trigger=GcTrigger::explicit_call;std::uint64_t pause_ns=0;char source[48]{};
+    std::uint64_t bytes_before=0,bytes_after=0,objects_before=0,objects_after=0;};
 // source: static text naming the transition (form type); copied, may be null.
 void gc_request_collection(const char* source=nullptr);
 // Collections after `sequence`, oldest first; a bounded ring keeps the last 64.
 std::vector<GcEvent> gc_events_after(std::uint64_t sequence);
+// No allocation. Keep the newest events that fit; count overwritten/skipped events.
+std::size_t gc_events_after(std::uint64_t sequence,GcEvent* output,std::size_t capacity,std::uint64_t& dropped);
 // Platform context for explicit collections (e.g. "Finish form.SubForm");
 // copied into the event source. Null clears it. UI thread only.
 void gc_context(const char* context);

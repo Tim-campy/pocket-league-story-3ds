@@ -144,6 +144,19 @@ std::vector<GcEvent> gc_events_after(std::uint64_t sequence){
     for(auto s=std::max(first,sequence);s<gc_event_sequence;++s)result.push_back(gc_event_ring[s%gc_event_ring.size()]);
     return result;
 }
+std::size_t gc_events_after(std::uint64_t sequence,GcEvent* output,std::size_t capacity,std::uint64_t& dropped){
+    std::lock_guard<std::mutex>lock(gc_event_mutex);
+    const auto oldest=gc_event_sequence>gc_event_ring.size()?gc_event_sequence-gc_event_ring.size():0;
+    dropped=oldest>sequence?oldest-sequence:0;
+    auto first=std::max(oldest,sequence);
+    if(first>=gc_event_sequence)return 0;
+    if(!output)capacity=0;
+    const auto count=std::min<std::uint64_t>(gc_event_sequence-first,capacity);
+    dropped+=gc_event_sequence-first-count;
+    first=gc_event_sequence-count;
+    for(std::size_t i=0;i<count;++i)output[i]=gc_event_ring[(first+i)%gc_event_ring.size()];
+    return static_cast<std::size_t>(count);
+}
 namespace {
 void gc_collect_as(GcTrigger trigger,const char* source){
     ensure_gc_thread();
@@ -158,6 +171,7 @@ void gc_collect_as(GcTrigger trigger,const char* source){
     {std::lock_guard<std::mutex>lock(tracing_stats_mutex);tracing_last={before.objects,after.last_roots,freed,freed};}
     {std::lock_guard<std::mutex>lock(gc_event_mutex);auto& event=gc_event_ring[gc_event_sequence%gc_event_ring.size()];
      event=GcEvent{};event.sequence=++gc_event_sequence;event.trigger=trigger;event.pause_ns=after.last_pause_ns;
+     event.bytes_before=before.bytes;event.bytes_after=after.bytes;event.objects_before=before.objects;event.objects_after=after.objects;
      if(source){std::size_t i=0;for(;source[i]&&i+1<sizeof(event.source);++i)event.source[i]=source[i];event.source[i]=0;}}
 #if defined(PLS_GC_TRACE)
     // Diagnostic build only: one line per collection, after the pause clock.

@@ -551,3 +551,65 @@ anterior foram arquivados com hashes em `before-final-receipts/`, na pasta
 privada da revisão, antes de restaurar apenas esses arquivos gerados. O
 registro e a documentação formam o commit seguinte. Nenhum push até completar
 o ciclo obrigatório.
+
+## 2026-11-27 — 13. Integração publicada e perfil físico analisado
+
+A integração e os commits de perfil automático, zoom inteiro e cache já
+testados no aparelho foram publicados até d587023. CI Content policy verde.
+Árvore limpa no push; nenhum asset, save, captura ou `.3dsx` foi publicado.
+
+Ciclo final, sem editar arquivos durante as verificações:
+- check --all: PASS, 138,0 s, 517 arquivos e zero diferenças de formatação;
+- full: 105/105 PASS, 1.295,3 s, zero adiados, atestação final aprovada;
+- routes completo: PASS, 2.668,3 s; 87 executados, 86 concluídos e somente
+  dialogs-exit com saída esperada; zero alertas e zero lacunas de tradução;
+  cinco cenários PASS, incluindo salvar e recarregar em processos separados;
+  portão de cobertura aprovado, com as quatro exceções históricas documentadas;
+- actions/save 95: 1.114,3 s; lots/save 106: 1.174,6 s; sem retomada;
+- ARM nulo: PASS, 1.133,1 s; CTR vídeo: PASS, 51,8 s;
+- autoteste GPU, título e saída com perfil no Azahar: PASS, 30,0 s;
+- check_repository --staged: PASS, 49,3 s, zero violações.
+
+Os 75 recibos regenerados foram arquivados com hashes em `final-receipts/`
+na pasta privada de revisão e restaurados ao conteúdo rastreado. A prova
+em clone limpo e os 87 hashes estão descritos na seção 12.
+
+Complemento à investigação histórica da seção 10: a leitura do diff atribui
+a regra de levar o cursor distante ao centro a fa1d866; 7c4f875 acrescenta
+a ocultação. Não foi encontrada regressão de câmera recarregada. Os três
+executáveis históricos indisponíveis não foram reconstruídos.
+
+Perfil físico: 9.060 quadros, 116 coletas, zero eventos descartados; 213 quadros
+acima de 50 ms e 80 acima de 150 ms. A partida estável teve 2.850 quadros, nenhum
+acima de 50 ms. Maior coleta: 308,906 ms; maior quadro: 3.533,859 ms. Gravações
+do perfil chegam a 26,936 s fora dos quadros medidos. Análise e propostas,
+sem otimizações de runtime/coletor, em
+`docs/notes/phase4-profile-session-2026-11-27.md`; tabelas completas privadas
+em `build/phase4-video/state-route-review/hardware-tables.md`.
+
+O trabalho seguinte é somente local: zoom fracionário com ampliação inteira
+2× e redução linear, autorizado pelo usuário. Não faz parte do push acima.
+
+## 2026-11-27 — 14. Zoom fracionário local e correção do perfil de movimento
+
+Zoom implementado em 2c2ebe2, sem push. Fixture: 588 asserções PASS; smoke:
+191,5 s, 10/10 roteiros e cinco cenários PASS, zero alertas. Capturas do PC
+confirmam igualdade byte a byte em 100%/200%, na inferior e na barra superior.
+Nove níveis e sequências de rolagem foram capturados no PC e Azahar. O CTR
+usa 2 MiB lineares extras, sem VRAM extra; folga medida de 1.930.240 bytes.
+Em fracionários acima de 100%, 3 cópias/3 MiB por quadro a mais; custo dessas
+cópias no emulador de aproximadamente 0,44 ms, sem equivalência ao aparelho.
+
+A análise encontrou um erro no diagnóstico já publicado: `frame_scene`
+observava `Camera::camera_spos`, armazenamento intermediário reutilizado,
+em vez de `Camera::pos`. Não é falha do movimento do jogo. Corrigida somente
+a leitura do host CTR; a comparação usa float e o CSV mantém coordenadas
+inteiras. Metadados `camera_position_version=2`; o analisador avisa sobre
+os CSV antigos sem descartar os tempos por formulário. Sete testes do leitor
+passaram; no Azahar, 29/29 quadros de circle pad pleno foram marcados como
+movimento. Runtime, coletor e jogo não foram alterados por essa correção.
+
+Instruções e limitações da entrega em `docs/notes/phase4-fractional-zoom.md`.
+É necessária nova sessão física para separar corretamente mapa parado e
+rolando e medir o filtro. Os totais da sessão anterior, coletas e tempos por
+formulário permanecem válidos. Não houve novo push após d587023.

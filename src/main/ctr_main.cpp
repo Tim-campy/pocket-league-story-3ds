@@ -12,6 +12,7 @@
 #include "storage.hpp"
 #include "capture.hpp"
 #include "map_zoom_sample.hpp"
+#include "kairo.unity.m3d4.util3d.Vector3D.hpp"
 #include "runtime_memory.hpp"
 #include "text_input.hpp"
 #include "managed_collation.hpp"
@@ -51,8 +52,8 @@ ctr::FrameScene frame_scene(kairo::FormManagerBase* manager){
     if(auto* sub=dynamic_cast<game::form::SubForm*>(form))scene.subform=cs::nonnull(sub)->type_;
     if(auto* map=dynamic_cast<game::form::GameForm*>(form)){
         scene.state=cs::nonnull(map)->state_;scene.scale=cs::nonnull(map)->scale_;
-        const auto position=game::game::Camera::camera_spos();
-        if(!position.is_null()&&position.length()>=2){scene.camera_x=position[0];scene.camera_y=position[1];}
+        const auto position=game::game::Camera::pos();
+        if(position){scene.camera_x=position->x_;scene.camera_y=position->y_;}
     }
     if(auto* match=dynamic_cast<game::form::SoccerForm*>(form)){
         scene.state=cs::nonnull(match)->state_;

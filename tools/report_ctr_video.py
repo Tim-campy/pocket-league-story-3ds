@@ -91,6 +91,8 @@ def report(directory):
             warnings.append('GC CSV and last checkpoint metadata disagree.')
         if any(metadata.get(key, 0) for key in ('frame_dropped', 'gc_dropped', 'asset_dropped')):
             warnings.append('Profile has explicitly counted discarded records.')
+        if metadata.get('camera_position_version', 1) < 2:
+            warnings.append('Legacy camera scratch coordinates: camera/moving groups are unreliable; per-form timings remain valid.')
         sessions.append({'session': prefix, 'metadata': metadata, 'warnings': warnings,
                          'scenes': scenes, 'gc_events': events})
     if not sessions:

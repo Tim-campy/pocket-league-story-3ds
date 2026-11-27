@@ -15,7 +15,8 @@
 namespace pls::ctr {
 struct FrameScene {
     int form{}, subform{-1}, state{-1}, match_state{-1}, possession{-1};
-    int scale{}, pad_x{}, pad_y{}, camera_x{}, camera_y{};
+    int scale{}, pad_x{}, pad_y{};
+    float camera_x{}, camera_y{}; // Detect motion smaller than one world unit too.
     bool moving{};
 };
 inline bool scene_changed(const FrameScene& a,const FrameScene& b){
@@ -119,7 +120,7 @@ public:
             if(!out)throw std::runtime_error("Cannot open automatic video frames");
             if(!written_)out<<"frame,form_id,subform,state,match_state,possession,scale,moving,transition,interaction,boot,from_form,from_subform,from_state,from_match_state,pad_x,pad_y,camera_x,camera_y,marker,logic_ns,draw_cpu_ns,gpu_wait_ns,frame_ns,other_cpu_ns,profile_ns,collections,gc_ns,gc_max_ns,accounting_ns,asset_reads,asset_ns,asset_bytes,image_ns,stream_ns,uploads,upload_bytes,upload_ns,readback_ns,target_creations,texture_creations,created_bytes,create_ns,copies,copy_ns,copy_bytes,draw_calls,texture_switches,texture_bytes,vram_bytes,min_linear_free,min_vram_free,label_cache_hits,label_cache_misses\n";
             for(std::size_t i=0;i<count_;++i){const auto& r=buffer_->frames[i];const auto& s=r.scene;const auto& b=r.before;const auto& t=r.sample;const auto& g=r.gpu;const auto& a=r.assets;
-                csv(out,r.number,s.form,s.subform,s.state,s.match_state,s.possession,s.scale,s.moving,r.transition,r.interaction,r.boot,b.form,b.subform,b.state,b.match_state,s.pad_x,s.pad_y,s.camera_x,s.camera_y,r.marker,t.logic,t.draw,t.wait,t.frame,t.other,r.profile_ns,r.collections,r.gc_ns,r.gc_max_ns,r.accounting_ns,a.reads,a.ns,a.bytes,a.image_ns,a.stream_ns,g.uploads,g.upload_bytes,g.upload_ns,g.readback_ns,g.target_creations,g.texture_creations,g.created_bytes,g.create_ns,g.copies,g.copy_ns,g.copy_bytes,g.quads,g.texture_switches,g.texture_bytes,g.vram_bytes,g.min_linear_free,g.min_vram_free,g.label_cache_hits,g.label_cache_misses);
+                csv(out,r.number,s.form,s.subform,s.state,s.match_state,s.possession,s.scale,s.moving,r.transition,r.interaction,r.boot,b.form,b.subform,b.state,b.match_state,s.pad_x,s.pad_y,int(s.camera_x),int(s.camera_y),r.marker,t.logic,t.draw,t.wait,t.frame,t.other,r.profile_ns,r.collections,r.gc_ns,r.gc_max_ns,r.accounting_ns,a.reads,a.ns,a.bytes,a.image_ns,a.stream_ns,g.uploads,g.upload_bytes,g.upload_ns,g.readback_ns,g.target_creations,g.texture_creations,g.created_bytes,g.create_ns,g.copies,g.copy_ns,g.copy_bytes,g.quads,g.texture_switches,g.texture_bytes,g.vram_bytes,g.min_linear_free,g.min_vram_free,g.label_cache_hits,g.label_cache_misses);
             }
             out.close();if(!out)throw std::runtime_error("Automatic video frames write failed");
         }
@@ -135,7 +136,7 @@ public:
         written_+=count_;gc_written_+=gc_count_;count_=gc_count_=0;
         const auto duration=elapsed(start);flush_ns_+=duration;flush_max_ns_=std::max(flush_max_ns_,duration);++flushes_;
         std::ofstream meta(prefix_.string()+"-meta.txt");
-        meta<<"version=1\ndetailed="<<detailed_<<"\nframes="<<frames_<<"\nwritten="<<written_<<"\nframe_dropped="<<frame_dropped_
+        meta<<"version=1\ncamera_position_version=2\ndetailed="<<detailed_<<"\nframes="<<frames_<<"\nwritten="<<written_<<"\nframe_dropped="<<frame_dropped_
             <<"\nasset_dropped="<<asset_dropped_<<"\ngc_events="<<gc_written_<<"\ngc_dropped="<<gc_dropped_<<"\nprofile_ns="<<profile_ns_<<"\nprofile_max_ns="<<profile_max_ns_
             <<"\ncheckpoint_seconds="<<checkpoint_seconds<<"\nflushes="<<flushes_<<"\nflush_data_ns="<<flush_ns_<<"\nflush_data_max_ns="<<flush_max_ns_<<"\nbuffer_bytes="<<sizeof(Buffers)<<'\n';
         meta.close();if(!meta)throw std::runtime_error("Automatic video metadata write failed");

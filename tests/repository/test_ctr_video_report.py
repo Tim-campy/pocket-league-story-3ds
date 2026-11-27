@@ -46,7 +46,7 @@ class VideoReportTests(unittest.TestCase):
         with (folder / f'{session}-gc.csv').open('w', newline='') as stream:
             writer = csv.DictWriter(stream, fieldnames=list(event))
             writer.writeheader(); writer.writerow(event)
-        (folder / f'{session}-meta.txt').write_text('written=26\nframe_dropped=0\ngc_dropped=0\n')
+        (folder / f'{session}-meta.txt').write_text('camera_position_version=2\nwritten=26\nframe_dropped=0\ngc_dropped=0\n')
 
     def test_groups_worst_gc_and_sessions(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -78,10 +78,19 @@ class VideoReportTests(unittest.TestCase):
     def test_discards_are_reported(self):
         with tempfile.TemporaryDirectory() as temp:
             folder = Path(temp); self.fixture(folder, 'video-1')
-            (folder / 'video-1-meta.txt').write_text('written=26\nframe_dropped=1\ngc_dropped=2\n')
+            (folder / 'video-1-meta.txt').write_text('camera_position_version=2\nwritten=26\nframe_dropped=1\ngc_dropped=2\n')
             warnings = reporter.report(folder)['sessions'][0]['warnings']
             self.assertEqual(len(warnings), 1)
             self.assertIn('discarded', warnings[0])
+
+    def test_legacy_camera_warning_does_not_discard_timings(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp); self.fixture(folder, 'video-1')
+            (folder / 'video-1-meta.txt').write_text('written=26\n')
+            session = reporter.report(folder)['sessions'][0]
+            self.assertIn('camera/moving', session['warnings'][0])
+            self.assertEqual(sum(s['frames'] for s in session['scenes']), 26)
+            self.assertEqual(session['scenes'][0]['times']['frame_ns']['max_ms'], 250)
 
     def test_between_frame_event_is_preserved_without_wrong_attribution(self):
         with tempfile.TemporaryDirectory() as temp:

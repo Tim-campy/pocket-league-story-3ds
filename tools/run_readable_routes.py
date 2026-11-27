@@ -36,6 +36,18 @@ def awake_seconds():
     return value.value / 1e7
 
 
+def previous_durations(build):
+    """Seconds per run key from the last full set: c6b-route-set-frozen.json, or the newest dated
+    backup when dev.py routes has just moved it away (which it does before every new full set,
+    so reading only that file left the longest-first order empty)."""
+    candidates = [build / 'c6b-route-set-frozen.json'] + sorted(build.glob('c6b-route-set-frozen-2*.json'), key=lambda p: p.name, reverse=True)
+    for path in candidates:
+        if path.is_file():
+            try: return {k: r.get('seconds') or 0 for k, r in json.loads(path.read_text(encoding='utf-8'))['runs'].items()}
+            except (ValueError, KeyError): continue
+    return {}
+
+
 def keep_awake():
     if os.name == 'nt': ctypes.windll.kernel32.SetThreadExecutionState(0x80000000 | 0x00000001)
 
@@ -93,8 +105,7 @@ def main():
     variant = ['--readable-diagnostic', str(args.readable)] if args.readable else ['--frozen-diagnostic'] if args.frozen else ['--diagnostic-generated', str(args.canonical_snapshot)]
     pending = [a for a in rows if not (args.compare_only or str(a['number']) in state['runs'] and state['runs'][str(a['number'])].get('status') == 'done')]
     # Longest first (durations of the last full set), so the long routes do not end the batch alone.
-    previous = ROOT / 'build/c6b-route-set-frozen.json'
-    durations = {k: r.get('seconds') or 0 for k, r in json.loads(previous.read_text(encoding='utf-8'))['runs'].items()} if previous.exists() else {}
+    durations = previous_durations(ROOT / 'build')
     pending.sort(key=lambda a: -durations.get(str(a['number']), 0))
     if pending:
         # One build before the runs; the runs only execute it (no concurrent CMake/Ninja).

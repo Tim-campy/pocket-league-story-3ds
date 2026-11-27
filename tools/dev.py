@@ -6,6 +6,8 @@
     python tools/dev.py check [--all]      # fast checks of the game code
     python tools/dev.py routes [--jobs 4] [--smoke | --affected [--since REF]] [--resume] [--only NAME ...]
                                            # the route set (87 runs), moderate GC stress
+    python tools/dev.py scenarios [--only NAME ...]
+                                           # state-driven routes tests/routes/*-state.route (pass/fail on game state)
     python tools/dev.py full               # complete verification (verify_phase2.py --full)
     python tools/dev.py arm                # 3DS build (.3dsx, null backend)
     python tools/dev.py ci [COMMIT]        # CI result of a published commit (GitHub API)
@@ -110,9 +112,33 @@ def keep_awake():
         ctypes.windll.kernel32.SetThreadExecutionState(0x80000000 | 0x00000001)  # ES_CONTINUOUS | ES_SYSTEM_REQUIRED
 
 
+# Methods the canonical (pre-freeze) runs completed that no replay reaches, not even the replay of
+# the canonical code itself (build/c6b-route-set-canonical.json; docs/notes/readable-emitter-pass-
+# 2026-11-22.md, "zoom.route"): only canonical attempts 334/335 of zoom.route, on 2026-11-19 code,
+# switched the GamePad to full screen. Any other lost method fails the full set.
+NEVER_REPLAYED = {
+    'M:kairo.unity.ui.Canvas.Fullscreen(System.Boolean)', 'M:surface.GamePad.SetMode(System.Int32)',
+    'M:kairo.unity.surface.SurfaceBase.GetTouchOffset',
+    'M:surface.GameView.OnTouchCamera(System.Int32,System.Int32,kairo.unity.surface.TouchEvent)',
+}
+
+
+def lost_coverage(only_canonical, scenario_methods):
+    """Methods the canonical runs completed and this set did not, minus those the state-driven
+    scenarios completed and those no replay ever reached (NEVER_REPLAYED)."""
+    return sorted(set(only_canonical) - set(scenario_methods) - NEVER_REPLAYED)
+
+
 # Fixed short set (dev.py routes --smoke): title, menu, a match, saving and loading, new game.
 SMOKE_KEYS = ['126', '196', '177', '175', '430', '145', '67', '138', '139', '171']
 GAME_INFRA = ('game_generated_runtime.hpp', 'game_generated_forward.hpp', 'bootstrap_', 'PlsPortGeneratedBootstrap.')
+
+
+def doc_class(doc):
+    """Class of a member DocID: 'M:game.Team.Update(System.Int32)' -> 'game.Team' (the .cpp stem).
+    The prefix (M:, P:) must go: comparing 'M:game.Team' with 'game.Team' never matched, so a
+    change outside a method or in a new method selected no route at all (fixed 2026-11-27)."""
+    return doc.split(':', 1)[-1].split('(')[0].rsplit('.', 1)[0]
 
 
 def method_ranges(lines):
@@ -155,12 +181,12 @@ def affected_selection(since, names=None):
         if not counters.exists(): return None, [f'cobertura da execução {key} ausente → conjunto completo']
         ids = {r['id'] for r in json.loads(counters.read_text(encoding='utf8')) if r.get('completed', 0) > 0 or r.get('calls', 0) > 0}
         seen |= ids
-        if ids & methods or any(i.split('(')[0].rsplit('.', 1)[0] in classes for i in ids): keys.append(key)
+        if ids & methods or any(doc_class(i) in classes for i in ids): keys.append(key)
     unseen = sorted(m for m in methods if m not in seen)
     if unseen: reasons.append(f'métodos sem cobertura em nenhum roteiro (novos ou nunca executados): {unseen[:5]}' + (' → todo método das classes deles' if unseen else ''))
     for doc in unseen:
-        klass = doc[2:].split('(')[0].rsplit('.', 1)[0]
-        keys += [k for k, run in runs.items() if k not in keys and any(i.split('(')[0].rsplit('.', 1)[0] == klass for i in
+        klass = doc_class(doc)
+        keys += [k for k, run in runs.items() if k not in keys and any(doc_class(i) == klass for i in
                  {r['id'] for r in json.loads((ROOT / 'build/pc-frozen-diagnostic-release/attempts' / str(run.get('readable_attempt')) / 'readable-method-counters.json').read_text(encoding='utf8'))})]
     reasons.insert(0, f'métodos alterados: {sorted(methods)[:8]}{" ..." if len(methods) > 8 else ""}; classes inteiras: {sorted(classes)}')
     return sorted(set(keys), key=int), reasons
@@ -192,6 +218,10 @@ def cmd_routes(a):
     if a.only: args += ['--only', *a.only]
     if keys is not None and not full: args += ['--keys', *keys]
     code = run(tool('tools/run_readable_routes.py', *args), label)
+    # The state-driven scenarios (tests/routes/*-state.route) are part of every set: the replay of
+    # the canonical history never runs a new route file. Skipped with --only (a partial run).
+    scenario_failed, scenario_methods = run_scenarios(apk) if not a.only else ([], set())
+    if scenario_failed: code = code or 1
     if state.exists():
         current = json.loads(state.read_text(encoding='utf8'))
         union = current.get('union', {})
@@ -199,16 +229,24 @@ def cmd_routes(a):
         # Two replays (actions.route from save 95, dialogs-exit.route) never complete in
         # replay, canonical included; every route completed there must complete here.
         # Compared by (route, save): run numbers follow the latest original run of each route.
-        baseline = ROOT / 'build/c6b-route-set-canonical.json'
+        # The pairs are versioned in tests/routes/replay/canonical-coverage.json (replay_done).
+        baseline = ROOT / 'build/c6b-route-set-canonical.json'; versioned = ROOT / 'tests/routes/replay/canonical-coverage.json'
         key = lambda r: (r['route'], r.get('save'))
         ran = {key(r) for r in current['runs'].values()}
-        expected = ({key(r) for r in json.loads(baseline.read_text(encoding='utf8'))['runs'].values() if r['status'] == 'done'}
-                    if baseline.exists() else ran)
+        expected = ({key(r) for r in json.loads(baseline.read_text(encoding='utf8'))['runs'].values() if r['status'] == 'done'} if baseline.exists()
+                    else {tuple(pair) for pair in json.loads(versioned.read_text(encoding='utf8')).get('replay_done', [])} or ran if versioned.exists() else ran)
         if not full: expected &= ran
         done = {key(r) for r in current['runs'].values() if r['status'] == 'done'}
         missing = sorted(f'{route} (save {save})' for route, save in expected - done if not a.only or route in a.only)
         reruns = sum(len(r.get('suspended_reruns') or []) for r in current['runs'].values())
         ok = not missing and not union.get('safeguard_alerts') and not union.get('translation_gaps')
+        # Coverage gate (2026-11-27): finishing every route is not enough; demolish.route ended
+        # without demolishing and the set still passed. Enforced on the full set, where the union
+        # covers every canonical run; subsets only report it.
+        lost = lost_coverage(union.get('only_canonical') or [], scenario_methods)
+        print(f'cobertura perdida (métodos do canônico que nada mais executou): {lost if lost else "nenhuma"}'
+              + ('' if full and not a.only else ' (subconjunto: só aviso)'))
+        if full and not a.only and lost: ok = False
         print('roteiros:', json.dumps({k: union.get(k) for k in ('runs', 'routes_done', 'safeguard_alerts', 'readable', 'canonical')}),
               f'esperados concluídos: {len(expected)}; faltando: {missing}; refeitos por suspensão: {reruns}', 'PASS' if ok and code == 0 else 'FAIL')
         if not ok: code = code or 1

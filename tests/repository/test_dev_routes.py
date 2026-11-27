@@ -21,6 +21,38 @@ dev = load('dev_under_test', 'tools/dev.py')
 routes = load('routes_under_test', 'tools/run_readable_routes.py')
 
 
+class AffectedSelection(unittest.TestCase):
+    def test_doc_class_drops_the_member_prefix(self):
+        self.assertEqual(dev.doc_class('M:game.Team.Update(System.Int32)'), 'game.Team')
+        self.assertEqual(dev.doc_class('P:system.form.HttpForm.ResultData.Value'), 'system.form.HttpForm.ResultData')
+        self.assertEqual(dev.doc_class('M:data.BaseData.#ctor'), 'data.BaseData')
+
+    def test_change_outside_a_method_selects_the_runs_of_its_class(self):
+        # Before the fix a constant above the first `// M:` line selected no route at all.
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            game = root / 'src/game'; game.mkdir(parents=True)
+            (game / 'game.Camera.cpp').write_text('constexpr float pan = 6.0f;\n// M:game.Camera.Update\nvoid Update() {}\n', encoding='utf8')
+            attempts = root / 'build/pc-frozen-diagnostic-release/attempts'
+            for number, ids in ((1, ['M:game.Camera.Update']), (2, ['M:game.Team.Update'])):
+                (attempts / str(number)).mkdir(parents=True)
+                (attempts / str(number) / 'readable-method-counters.json').write_text(json.dumps([dict(id=i, calls=1, completed=1) for i in ids]))
+            (root / 'build/c6b-route-set-frozen.json').write_text(json.dumps(dict(runs={'10': dict(readable_attempt=1), '20': dict(readable_attempt=2)})))
+            real_root, real_run = dev.ROOT, dev.subprocess.run
+            dev.ROOT = root
+            dev.subprocess.run = lambda command, *a, **k: types.SimpleNamespace(stdout='@@ -1 +1 @@\n-x\n+y\n')
+            try: keys, reasons = dev.affected_selection('HEAD', names={'src/game/game.Camera.cpp'})
+            finally: dev.ROOT, dev.subprocess.run = real_root, real_run
+        self.assertEqual(keys, ['10'], reasons)
+
+
+class CoverageGate(unittest.TestCase):
+    def test_lost_methods_fail_unless_scenarios_or_never_replayed(self):
+        lost = dev.lost_coverage(['M:game.Tenant.DestructTenant', 'M:surface.GamePad.SetMode(System.Int32)', 'M:form.GameForm.SetScale(System.Int32)'],
+                                 {'M:form.GameForm.SetScale(System.Int32)'})
+        self.assertEqual(lost, ['M:game.Tenant.DestructTenant'])
+
+
 class ScenarioVerdict(unittest.TestCase):
     """A scenario that reached `end` but failed afterwards must not pass (review of 2026-11-27)."""
     GOOD = dict(number=1, route_result=dict(status='done', frame=10, last_step=3, timeout=None), process_exit_code=0, exit_code=0,
@@ -55,6 +87,17 @@ class SaveReload(unittest.TestCase):
         self.assertEqual(dev.saved_game_differences(state,{**state,'money':0}),['money'])
         self.assertTrue(dev.saved_game_differences(state,None))
 
+
+class Durations(unittest.TestCase):
+    def test_newest_dated_backup_is_used_when_the_state_was_moved(self):
+        with tempfile.TemporaryDirectory() as folder:
+            build = Path(folder)
+            (build / 'c6b-route-set-frozen-20261126-010000.json').write_text(json.dumps(dict(runs={'1': dict(seconds=5)})))
+            (build / 'c6b-route-set-frozen-20261127-010000.json').write_text(json.dumps(dict(runs={'1': dict(seconds=900)})))
+            (build / 'c6b-route-set-frozen-subset.json').write_text(json.dumps(dict(runs={'1': dict(seconds=1)})))
+            self.assertEqual(routes.previous_durations(build), {'1': 900})
+            (build / 'c6b-route-set-frozen.json').write_text(json.dumps(dict(runs={'1': dict(seconds=42)})))
+            self.assertEqual(routes.previous_durations(build), {'1': 42})
 
 
 if __name__ == '__main__': unittest.main()

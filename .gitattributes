@@ -9,3 +9,5 @@
 *.yml text eol=lf
 tools/progress text eol=lf
 tools/extract-assets text eol=lf
+# Historical replay hashes cover their original bytes, including CRLF.
+tests/routes/replay/*.route -text

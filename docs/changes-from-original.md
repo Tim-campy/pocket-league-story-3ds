@@ -558,15 +558,30 @@ revelação, construção, bordas em 200%, prioridade do direcional e seleção 
 menu por I/J/K/L. No aparelho, conferir também inclinação leve e ausência de
 efeito na partida; repetir no modelo original para a leitura neutra.
 
-## 2026-11-26 ? toque inferior isolado da superior
+## 2026-11-26 — toque inferior isolado da superior
 
 Como parte da barra nativa autorizada, os hosts PC e CTR encaminham seus eventos
-de toque diretamente ? superf?cie GamePad, em coordenadas locais. O caminho
-anterior distribu?a o mesmo ponto tamb?m ? GameView, cuja ?rea se sobrep?e
-? inferior quando cada tela tem sua pr?pria origem. A fila e o efeito de toque
-do GamePad continuam sendo os existentes; n?o se alteraram runtime, coletor,
-formul?rios, regras ou saves. As aloca??es por evento s?o as mesmas do adaptador
-anterior, sem trabalho/aloca??o adicional nos quadros sem toque.
+de toque diretamente à superfície GamePad, em coordenadas locais. O caminho
+anterior distribuía o mesmo ponto também à GameView, cuja área se sobrepõe
+à inferior quando cada tela tem sua própria origem. A fila e o efeito de toque
+do GamePad continuaram sendo os existentes nesta revisão; não se alteraram runtime,
+coletor, formulários, regras ou saves. As alocações por evento são as mesmas do
+adaptador anterior, sem trabalho/alocação adicional nos quadros sem toque.
 
-Verificar cada r?tulo na inferior no PC e no Azahar: Menu abre o menu, Back
-volta, Save salva e Quit sai; a a??o n?o seleciona um alvo na superior.
+Verificar cada rótulo na inferior no PC e no Azahar: Menu abre o menu, Back
+volta, Save salva e Quit sai; a ação não seleciona um alvo na superior.
+
+## 2026-11-27 — suprimir a animação global do toque dos rótulos
+
+Por decisão do usuário após o teste no New 3DS XL, GamePad.OnTouchEvent não
+cria a animação global de toque quando as telas são separadas. Essa animação
+era desenhada por SurfaceManager.Draw depois das superfícies, no destino
+superior restaurado, usando as coordenadas antigas do botão. O realce do
+próprio botão pressionado continua na inferior. O modo de uma tela conserva
+o comportamento anterior; textos, ações e saves não mudam.
+
+Verificar Save/Menu/Back/Quit por toque no PC e no Azahar: o botão responde
+na inferior e nenhuma cópia animada aparece na superior. Os efeitos de toque
+da GameView pertencem à própria tela superior; os rótulos não enviam eventos
+a ela. O desenho de áreas de toque de depuração depende de visibleTouchRange_,
+desligado no layout de rótulos, e não é ativado por esses botões.

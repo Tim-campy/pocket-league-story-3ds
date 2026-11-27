@@ -840,7 +840,8 @@ void GamePad::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> evt) 
         }
         }
         if (type == 5 && (require(component)->paintX != 2147483647 /* Int32.MaxValue */) &&
-            GamePad::COMPONENTS()[id][5] != -1 && id != 21 && id != 22) {
+            GamePad::COMPONENTS()[id][5] != -1 && id != 21 && id != 22 &&
+            !PLS_API(pls::platform::has_separate_screens())) {
             IntArray array = GamePad::TEXTURES()[GamePad::COMPONENTS()[id][5]];
             pls::cs::Ref<pls::kairo::Image> image = GamePad::images_().get_Item(array[0]);
             auto cs_left_284 = pls::cs::Single(PLS_API(require(image)->GetWidth()));

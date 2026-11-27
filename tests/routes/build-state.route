@@ -1,0 +1,27 @@
+# Build on vacant tenant 5; verify payment and construction states.
+# save=200
+# Run: python tools/dev.py scenarios --only demolish-state
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=900 optional
+watchdog frames=600
+wait form=GameForm map_state=0 tenant=5 tenant_state=0 timeout=900
+cursor to tenant=5 timeout=600
+expect selected=5
+mark
+key SELECT
+wait window=61 timeout=300
+key SELECT
+wait window=62 timeout=120
+key SELECT
+wait tenant=5 tenant_state=2 money=less timeout=300
+wait tenant=5 tenant_state=1 timeout=4000
+expect money=less
+end

@@ -1,0 +1,30 @@
+# Management zoom on save 50 (L/R held): 3 percentage points per frame, no snap
+# far from 100/200, snap to 100 or 200 when released within 6 points of them,
+# limit 200. Fails on any other scale or when the game stops changing.
+# save=50
+# Run: python tools/dev.py scenarios --only zoom-state
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=900 optional
+watchdog frames=600
+wait map_state=0 scale=100 stable=10 timeout=300
+# 10 frames of R: 100 -> 130; released far from 100/200, it stays.
+hold R frames=10
+wait scale=130 stable=20 timeout=60
+# 9 frames of L: 130 -> 103; released within 6 points of 100, it snaps to 100.
+hold L frames=9
+wait scale=100 stable=20 timeout=60
+# Long R: stops at the 200 limit.
+hold R frames=60
+wait scale=200 stable=20 timeout=60
+# 2 frames of L: 200 -> 194; it snaps back to 200.
+hold L frames=2
+wait scale=200 stable=20 timeout=60
+end

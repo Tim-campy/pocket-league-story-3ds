@@ -1,0 +1,15 @@
+# Reload the MANUAL save and confirm the load dialog.
+# save=50
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=60
+key SELECT
+wait form=SubForm timeout=300
+wait frames=30
+key SELECT
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=900
+wait form=GameForm map_state=0 scale=100 stable=10 timeout=300
+expect hidden=false
+end

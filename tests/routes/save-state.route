@@ -1,0 +1,24 @@
+# Save an independent camera position, then reload it in a fresh process.
+# reload=save-load-check.route
+# save=50
+# Run: python tools/dev.py scenarios --only zoom-state
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=900 optional
+watchdog frames=600
+wait form=GameForm map_state=0 scale=100 stable=10 timeout=300
+# Move the camera independently before saving.
+hold CP x=32767 frames=4
+key SOFT1
+wait window=16 timeout=120
+wait frames=40
+key SELECT
+wait form=GameForm map_state=0 timeout=300
+end

@@ -313,8 +313,8 @@ def main():
             frames.append(int(match[1]))
         if frames!=sorted(set(frames))or set(frames)&set(args.diagnostic_select_frame or []):parser.error('Scripted key frames must increase without duplicates or legacy SELECT collisions')
     if not args.fixtures_only:
-        if not args.apk or not args.apk.is_file():parser.error('ForneÃƒÂ§a seu prÃƒÂ³prio APK local com --apk. Nenhum jogo ÃƒÂ© baixado.')
-        if hashlib.sha256(args.apk.read_bytes()).hexdigest()!=APK_SHA:parser.error('APK diferente; confirme a versÃƒÂ£o no pipeline antes de compilar.')
+        if not args.apk or not args.apk.is_file():parser.error('Forneça seu próprio APK local com --apk. Nenhum jogo é baixado.')
+        if hashlib.sha256(args.apk.read_bytes()).hexdigest()!=APK_SHA:parser.error('APK diferente; confirme a versão no pipeline antes de compilar.')
     sdk=ROOT/'build/deps/SDL2-2.32.10/cmake'
     if not sdk.is_dir():parser.error('SDL2 development SDK missing; no dependency is installed automatically.')
     env=environment()
@@ -386,7 +386,7 @@ def main():
             # A readable run reuses a save from the canonical diagnostic history.
             import os
             save_build=Path(os.environ.get('PLS_SAVE_SOURCE_BUILD',str(ROOT/'build/pc-diagnostic-release')))
-            source_history=json.loads((save_build.parents[1]/'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))if args.frozen_diagnostic else json.loads((ROOT/'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))if readable_root else history
+            source_history=history if args.frozen_diagnostic and save_build.resolve()==folder.resolve() else json.loads((save_build.parents[1]/'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))if args.frozen_diagnostic else json.loads((ROOT/'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))if readable_root else history
             previous=next((row for row in source_history['attempts']if row['number']==args.diagnostic_save_from_attempt),None)
             if previous is None or previous.get('diagnostic_only')is not True or previous.get('apk_sha256')!=APK_SHA:raise ValueError('Save source must be an authenticated earlier own diagnostic attempt')
             attempt['restored_private_preferences']=restore_private_preferences(folder,args.diagnostic_save_from_attempt,attempt['number'],ROOT/('build/pc-diagnostic-'+args.configuration.lower()).replace('-debug','')if False else(ROOT/'build/pc-diagnostic-release'if args.configuration=='Release'else ROOT/'build/pc-diagnostic')if readable_root else save_build if args.frozen_diagnostic else None)

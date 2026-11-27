@@ -1,0 +1,42 @@
+# Independent management camera, cursor visibility and analog controls.
+# save=50
+# Run: python tools/dev.py scenarios --only zoom-state
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=900 optional
+watchdog frames=600
+wait form=GameForm map_state=0 scale=100 stable=10 timeout=300
+# Small camera pan preserves a visible cursor and its selected lot.
+mark
+hold CP x=32767 frames=2
+expect cursor=same selected=same camera=changed hidden=false
+# A long pan makes the cursor hidden; A reveals without acting.
+hold CP x=32767 frames=80
+expect hidden=true
+mark
+key SELECT
+wait frames=1
+expect form=GameForm hidden=false cursor=same camera=same
+# Move the camera back; the first directional input reveals and moves.
+hold CP x=-32767 frames=80
+expect hidden=true
+mark
+key RIGHT
+wait frames=1
+expect hidden=false cursor=changed camera=same
+# C-Stick uses the directional movement while the camera remains independent.
+mark
+hold CS x=32767 frames=2
+expect hidden=false cursor=changed camera=same
+# Holding the direction eventually scrolls at the margin.
+mark
+hold RIGHT frames=80 hidden=false max_pan=6
+expect hidden=false camera=changed
+end

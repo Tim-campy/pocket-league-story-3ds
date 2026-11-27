@@ -215,6 +215,102 @@ def cmd_routes(a):
     return code
 
 
+def scenario_failures(returncode, attempt):
+    """Why a scenario run is not a PASS (empty list: PASS). Reaching `end` is not enough
+    (review of 2026-11-27): the tool and the game process must exit 0, the run must not hit
+    a time limit, and the diagnostic build must report no translation gap or GC alert."""
+    reasons = []
+    result = attempt.get('route_result') or {}
+    if returncode != 0: reasons.append(f'ferramenta saiu com {returncode}')
+    if not attempt: return reasons + ['sem linha da tentativa']
+    if result.get('status') != 'done':
+        timeout = result.get('timeout')
+        try: note = json.loads(timeout).get('note') if timeout else None
+        except ValueError: note = timeout
+        reasons.append(note or f'roteiro {result.get("status")}')
+    elif result.get('timeout'): reasons.append('roteiro concluído com timeout registrado')
+    if attempt.get('process_exit_code') != 0: reasons.append(f'jogo saiu com {attempt.get("process_exit_code")}')
+    if attempt.get('exit_code', 0) != 0: reasons.append(f'exit_code {attempt.get("exit_code")}')
+    if attempt.get('stage') != 'process-executed': reasons.append(f'estágio {attempt.get("stage")}')
+    if attempt.get('translation_gap_detected'): reasons.append('lacuna de tradução')
+    if attempt.get('reachability_alerts'): reasons.append(f'{len(attempt["reachability_alerts"])} alertas do coletor')
+    if attempt.get('stopped_at_timeout'): reasons.append(f'parado pelo limite de tempo ({attempt.get("stopped_reason")})')
+    if attempt.get('trap_count'): reasons.append(f'{attempt["trap_count"]} armadilhas')
+    return reasons
+
+
+def last_scenario_game(number):
+    log = ROOT / 'build/pc-frozen-diagnostic-release/attempts' / str(number) / 'game-run.stderr'
+    state = None
+    for line in log.read_text(encoding='utf8').splitlines():
+        if line.startswith('PLS_GAME_STATE='):
+            game = json.loads(line.split('=', 1)[1])['game']
+            if game.get('valid'): state = game
+    return state
+
+
+def saved_game_differences(before, after):
+    if not before or not after: return ['foto de jogo ausente']
+    return [key for key in ('money', 'tenants', 'cursor', 'camera') if before.get(key) != after.get(key)]
+
+
+def run_scenarios(apk, only=None, seconds=300):
+    """Run the state-driven routes (tests/routes/*-state.route), each from the save named by
+    its `# save=N` line, on the dual-screen PC build at CPU speed. A route passes only when it
+    reaches `end`: its expect/wait/cursor steps fail on the game state itself (see
+    docs/notes/route-runner-design.md, "Roteiros orientados a estado").
+    Returns (failed route names, methods completed by the scenario runs)."""
+    import re
+    routes = sorted((ROOT / 'tests/routes').glob('*-state.route'))
+    if only: routes = [r for r in routes if r.stem in only or r.name in only]
+    if not routes: print('scenarios: nenhum roteiro'); return ['(nenhum)'], set()
+    if run(tool('tools/build_pc.py', '--apk', apk, '--frozen-diagnostic', '--configuration', 'Release'), 'build PC'): return ['(build)'], set()
+    failed = []; covered = set()
+    for route in routes:
+        save = re.search(r'^# save=(\d+)\s*$', route.read_text(encoding='utf8'), re.M)
+        if not save: print(f'{route.name}: falta a linha "# save=N"'); failed.append(route.name); continue
+        command = tool('tools/build_pc.py', '--apk', apk, '--frozen-diagnostic', '--configuration', 'Release', '--run', '--no-build',
+                       '--run-seconds', seconds, '--dual-screen', 1, '--diagnostic-save-from-attempt', save.group(1),
+                       '--diagnostic-route', route, '--virtual-clock', '1767225600000,1000,50', '--fast')
+        started = time.time()
+        process = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, encoding='utf8', errors='replace')
+        rows = [json.loads(l) for l in process.stdout.splitlines() if l.startswith('{') and '"number"' in l]
+        attempt = rows[-1] if rows else {}
+        reasons = scenario_failures(process.returncode, attempt)
+        scenario_covered = set()
+        if reasons: failed.append(route.name)
+        else:  # a failed scenario never feeds the coverage gate of dev.py routes
+            counters = ROOT / 'build/pc-frozen-diagnostic-release/attempts' / str(attempt.get('number')) / 'readable-method-counters.json'
+            if counters.is_file(): scenario_covered = {r['id'] for r in json.loads(counters.read_text(encoding='utf8')) if r.get('completed', 0) > 0}
+            else: failed.append(route.name); reasons = ['sem readable-method-counters.json']
+        reload_match = re.search(r'^# reload=([a-z0-9-]+\.route)\s*$', route.read_text(encoding='utf8'), re.M)
+        if not reasons and reload_match:
+            reload_route = route.parent / reload_match.group(1)
+            command[command.index('--diagnostic-route') + 1] = str(reload_route)
+            command[command.index('--diagnostic-save-from-attempt') + 1] = str(attempt['number'])
+            env = dict(os.environ, PLS_SAVE_SOURCE_BUILD=str(ROOT / 'build/pc-frozen-diagnostic-release'))
+            reload_process = subprocess.run(command, cwd=ROOT, env=env, capture_output=True, text=True, encoding='utf8', errors='replace')
+            reload_rows = [json.loads(l) for l in reload_process.stdout.splitlines() if l.startswith('{') and '"number"' in l]
+            reloaded = reload_rows[-1] if reload_rows else {}
+            reasons = scenario_failures(reload_process.returncode, reloaded)
+            if not reasons:
+                different = saved_game_differences(last_scenario_game(attempt['number']), last_scenario_game(reloaded['number']))
+                if different: reasons = ['save recarregado difere: ' + ', '.join(different)]
+            print(f"reload: tentativa {attempt['number']} -> {reloaded.get('number')}", flush=True)
+            if reasons: failed.append(route.name)
+        if not reasons: covered |= scenario_covered
+        note = '' if not reasons else ' ' + '; '.join(reasons)
+        print(f'{route.name} (save {save.group(1)}): {"PASS" if not reasons else "FAIL"} em {time.time() - started:.0f} s, tentativa {attempt.get("number")}{note}', flush=True)
+    print('scenarios:', 'PASS' if not failed else 'FAIL ' + ', '.join(failed))
+    return failed, covered
+
+
+def cmd_scenarios(a):
+    apk, _ = local_paths()
+    failed, _ = run_scenarios(apk, a.only, a.seconds)
+    return 1 if failed else 0
+
+
 def cmd_full(a):
     apk, managed = local_paths(need_managed=True)
     keep_awake()
@@ -299,6 +395,9 @@ def main():
     p.add_argument('--smoke', action='store_true', help='conjunto fixo curto: título, menu, uma partida, salvar e carregar, novo jogo (~2 min com 4 jobs)')
     p.add_argument('--affected', action='store_true', help='só os roteiros que executam os métodos alterados desde --since (sem cobertura ou fora de src/game/*.cpp: conjunto completo)')
     p.add_argument('--since', default='@{upstream}', help='referência para --affected (padrão: o último commit publicado)')
+    p = sub.add_parser('scenarios'); p.set_defaults(func=cmd_scenarios)
+    p.add_argument('--only', nargs='*', help='nomes dos roteiros (com ou sem .route)')
+    p.add_argument('--seconds', type=int, default=300, help='limite de tempo de cada roteiro')
     sub.add_parser('full').set_defaults(func=cmd_full)
     sub.add_parser('arm').set_defaults(func=cmd_arm)
     p = sub.add_parser('ci'); p.set_defaults(func=cmd_ci); p.add_argument('commit', nargs='?', default='HEAD')

@@ -1,0 +1,29 @@
+# Demolish the Gift Shop of save 200 (tenant 6, data 4, cells x 14..15, y 10..11)
+# with the state-driven verbs. The route fails if the cursor never selects it,
+# if it is not demolished, or if the game state stops changing while waiting.
+# save=200
+# Run: python tools/dev.py scenarios --only demolish-state
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=900 optional
+watchdog frames=600
+wait map_state=0 tenant=6 tenant_state=1 timeout=900
+mark
+cursor to tenant=6 timeout=600
+expect selected=6
+key SELECT
+wait form=SubForm timeout=120
+wait frames=20
+key SOFT1
+wait frames=30
+key SELECT
+wait frames=60
+wait tenant=6 tenant_state=0 timeout=900
+end

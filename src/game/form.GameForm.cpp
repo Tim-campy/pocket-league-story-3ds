@@ -65,7 +65,7 @@ using IntArray2 = pls::cs::Array<pls::cs::Array<pls::cs::Int32>>;
 namespace pls::game {
 namespace form {
 namespace {
-constexpr int management_zoom_percent_per_frame = 2; // 40 percentage points/s at 20 Hz.
+constexpr int management_zoom_percent_per_frame = 3; // 60 percentage points/s at 20 Hz.
 }
 
 void GameForm::trace_edges(const pls::cs::EdgeVisitor& visitor) const {

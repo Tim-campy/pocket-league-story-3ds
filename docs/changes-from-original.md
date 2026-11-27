@@ -571,7 +571,14 @@ adaptador anterior, sem trabalho/alocação adicional nos quadros sem toque.
 Verificar cada rótulo na inferior no PC e no Azahar: Menu abre o menu, Back
 volta, Save salva e Quit sai; a ação não seleciona um alvo na superior.
 
-## 2026-11-27 — suprimir a animação global do toque dos rótulos
+## 2026-11-26 — zoom contínuo a 60 pontos percentuais por segundo
+
+Após aprovar o controle no New 3DS XL, o usuário pediu aumentar
+management_zoom_percent_per_frame de 2 para 3: 60 pontos percentuais por
+segundo a 20 Hz. Mantêm-se os limites, a margem, a ocultação do cursor,
+L+R neutro e os saves. Verificar segurando Q/W no PC ou L/R no aparelho.
+
+## 2026-11-26 — suprimir a animação global do toque dos rótulos
 
 Por decisão do usuário após o teste no New 3DS XL, GamePad.OnTouchEvent não
 cria a animação global de toque quando as telas são separadas. Essa animação

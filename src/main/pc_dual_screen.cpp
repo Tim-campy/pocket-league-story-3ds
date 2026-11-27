@@ -286,7 +286,8 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
         }
     }
     const int zoom = map && !dialog_ ? (held_[static_cast<int>(Button::R)] ? 1 : 0) - (held_[static_cast<int>(Button::L)] ? 1 : 0) : 0;
-    kairo::detail::publish_zoom_direction(zoom);
+    kairo::detail::publish_zoom_direction(zoom, map && !dialog_ &&
+        (held_[static_cast<int>(Button::L)] || held_[static_cast<int>(Button::R)]));
     if (zoom) {
         last_action_ = zoom > 0 ? "zoom +" : "zoom -";
     }

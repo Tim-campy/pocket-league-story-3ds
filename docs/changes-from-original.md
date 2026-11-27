@@ -607,3 +607,20 @@ com o diretório copiado. Detalhes, custos e limitações em
 `docs/notes/phase4-automatic-video-profile.md` e
 `docs/notes/phase4-gc-event-diagnostics.md`. Esta revisão permanece local.
 
+## Zoom inteiro exato e encaixe ao soltar L/R — 2026-11-27
+
+Decisão do usuário após o teste dos controles: nas duas telas do port, a gestão
+em 100% e 200% usa destino igual ao recorte multiplicado por 1 ou 2. Em 200%,
+108 linhas viram 216, em vez de serem esticadas para 217; a linha indivisível
+restante fica com a cor de fundo existente. Não há filtro adicional.
+
+Ao soltar L/R a até `management_zoom_snap_margin = 6` pontos de 100% ou 200%,
+o zoom converge para esse valor com a velocidade já aprovada de 3 pontos por
+quadro. Nova pressão ou pinça cancela o encaixe. L e R juntos são movimento
+neutro, mas não contam como soltura. Os limites, a margem da câmera e a regra
+do cursor oculto permanecem. Nenhum texto nem formato de save muda.
+
+Verificar: `python tools/dev.py run --save 50`; segurar Q/W, soltar perto de
+100%/200%, conferir encaixe, pixels e cursor. Capturas privadas antes/depois
+em `build/phase4-video/exact-zoom-{before,after}/`.
+

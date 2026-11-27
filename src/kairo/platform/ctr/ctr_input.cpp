@@ -64,7 +64,7 @@ void Input::poll(kairo::Canvas& canvas,kairo::FormManagerBase* manager,kairo::Im
         if (const int key=menu_stick_.update(pad)) canvas.KeyClick(key);
     } else menu_stick_.reset();
     const int zoom=map?int(bool(held&KEY_R))-int(bool(held&KEY_L)):0;
-    kairo::detail::publish_zoom_direction(zoom);
+    kairo::detail::publish_zoom_direction(zoom,map && (held & (KEY_L|KEY_R)));
     if(down&KEY_TOUCH){
         touchPosition point{};hidTouchRead(&point);
         const platform::ScreenPoint local{platform::Screen::bottom,int(point.px),int(point.py)};

@@ -38,6 +38,8 @@ struct GameForm : MyFormBase {
     pls::cs::Int64 offMoney_{};
     pls::cs::Int32 offSeason_{};
     pls::cs::Int32 scale_{};
+    bool managementZoomHeld_{};
+    pls::cs::Int32 managementZoomSnapTarget_{};
     pls::cs::Int32 pinchScaleValue_{};
     bool buildTrackX_{};
     bool buildTrachY_{};

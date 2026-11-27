@@ -12,6 +12,7 @@
 #include "form.FormManager.hpp"
 #include "form.GameForm.hpp"
 #include "zoom.hpp"
+#include "screen_layout.hpp"
 #include "form.MyFormBase.hpp"
 #include "form.SoccerForm.hpp"
 #include "form.SubForm.hpp"
@@ -66,6 +67,7 @@ namespace pls::game {
 namespace form {
 namespace {
 constexpr int management_zoom_percent_per_frame = 3; // 60 percentage points/s at 20 Hz.
+constexpr int management_zoom_snap_margin = 6;
 }
 
 void GameForm::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
@@ -431,6 +433,8 @@ bool GameForm::Init() {
         ChangeState(0);
         SetAllDraw();
         scale_ = 100;
+        managementZoomHeld_ = false;
+        managementZoomSnapTarget_ = 0;
         pinchScaleValue_ = 120;
         InitOffscreen();
         script_ = kl_java_util::Vector::create();
@@ -1012,9 +1016,30 @@ bool GameForm::Update() {
         errLine_ = 0;
         if (state_ == 0 || state_ == 1) {
             const int zoom = PLS_API(pls::kairo::read_zoom_direction());
+            const bool zoomHeld = PLS_API(pls::kairo::read_zoom_held());
+            if (zoomHeld) {
+                managementZoomSnapTarget_ = 0;
+            } else if (managementZoomHeld_) {
+                if (scale_ >= 100 - management_zoom_snap_margin &&
+                    scale_ <= 100 + management_zoom_snap_margin) {
+                    managementZoomSnapTarget_ = 100;
+                } else if (scale_ >= 200 - management_zoom_snap_margin &&
+                           scale_ <= 200 + management_zoom_snap_margin) {
+                    managementZoomSnapTarget_ = 200;
+                }
+            }
+            managementZoomHeld_ = zoomHeld;
             if (zoom != 0) {
                 SetScale(scale_ + zoom * management_zoom_percent_per_frame);
                 pinchScaleValue_ = scale_ > 100 ? scale_ + 40 : scale_;
+            } else if (managementZoomSnapTarget_ != 0) {
+                const auto delta = main::AppData::Clamp(managementZoomSnapTarget_ - scale_,
+                                                        -management_zoom_percent_per_frame,
+                                                        management_zoom_percent_per_frame);
+                SetScale(scale_ + delta);
+                pinchScaleValue_ = scale_ > 100 ? scale_ + 40 : scale_;
+                if (scale_ == managementZoomSnapTarget_)
+                    managementZoomSnapTarget_ = 0;
             }
             require(require(apdat_)->camera)->PanManagement();
             // Construction accepts the D-pad without enabling the map's touch inertia.
@@ -1727,6 +1752,12 @@ void GameForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             pls::cs::Int32 cs_arg6 = GameForm::VIEW_Y();
             pls::cs::Int32 cs_arg7 = GetGameWidth();
             pls::cs::Int32 cs_arg8 = GetGameHeight();
+            if (PLS_API(pls::platform::has_separate_screens()) && (scale_ == 100 || scale_ == 200)) {
+                const auto factor = scale_ / 100;
+                // Leave an indivisible edge row in the background instead of stretching pixels.
+                cs_arg3 = cs_arg7 * factor;
+                cs_arg4 = cs_arg8 * factor;
+            }
             require(g)->DrawScaledImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6,
                                         cs_arg7, cs_arg8);
         }()));
@@ -2621,6 +2652,8 @@ void GameForm::OnTouchCamera(pls::cs::Int32 type, pls::cs::Int32 v,
         }
         case 12: {
             {
+                managementZoomSnapTarget_ = 0;
+                managementZoomHeld_ = false;
                 if (!touchPinching_) {
                     SetCursorPosition(touchCursorX_, touchCursorY_);
                     touchPinching_ = true;

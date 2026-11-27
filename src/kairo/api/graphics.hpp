@@ -192,6 +192,7 @@ class Graphics : public cs::Object {
     void update_screen();
     bool begin_render_matrix(float&,float&);void end_render_matrix();
     void begin_primitive(cs::Ref<Image> image={});
+    void draw_scaled_image(cs::Ref<Image>,float,float,float,float,std::int32_t,std::int32_t,std::int32_t,std::int32_t,int);
 public:
     explicit Graphics(cs::Ref<Image>,bool display_context=false);
     static void trace_static_roots(const cs::EdgeVisitor&visitor){current_.trace_edges(visitor);cs::trace_value(anchor_result_,visitor);}
@@ -294,6 +295,7 @@ public:
     void DrawImage(cs::Ref<Image>,float,float);
     void DrawImage(cs::Ref<Image>,float,float,std::int32_t,std::int32_t,std::int32_t,std::int32_t);
     void DrawScaledImage(cs::Ref<Image>,float,float,float,float,std::int32_t,std::int32_t,std::int32_t,std::int32_t);
+    void DrawScaledMapImage(cs::Ref<Image>,float,float,float,float,std::int32_t,std::int32_t,std::int32_t,std::int32_t,std::int32_t);
     void CopyArea(std::int32_t,std::int32_t,std::int32_t,std::int32_t,std::int32_t,std::int32_t){} // Source body is empty.
     void Dispose(bool=false){} // CPU commands are immediate; no cached meshes to clear.
     cs::Ref<Image> target()const{return target_;}

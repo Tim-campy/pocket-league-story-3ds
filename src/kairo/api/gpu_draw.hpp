@@ -14,7 +14,7 @@ struct GpuQuad {
     std::array<std::int32_t,3> mode{0,255,0};
     std::array<std::int32_t,2> blend{};
     float depth{}, alpha_test_scale{1};
-    int alpha_type{}, filter{};
+    int alpha_type{}, filter{}, sampling{}; // 0: nearest; 1: linear; 2: nearest 2x then linear.
     bool depth_test{}, depth_write{};
 };
 // Contains only native resources. Destruction queues release; it never invokes
@@ -36,4 +36,5 @@ public:
 // Installed by the drawing host before starting the application. CPU/null hosts
 // leave it empty. No managed reference is retained by this interface.
 inline GpuDrawing* gpu_drawing = nullptr;
+inline bool smooth_map_zoom = true;
 }

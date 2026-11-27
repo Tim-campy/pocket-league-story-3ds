@@ -643,3 +643,25 @@ Verificar no CTR pelo autoteste permanente `label_cache=1`, pelos contadores
 normal. Os handles guardados são nativos; sua liberação continua enfileirada
 no ponto seguro da thread de desenho, sem referências gerenciadas ocultas.
 
+## Zoom fracionário da gestão — 2026-11-27
+
+Decisão do usuário: somente a cena do mapa usa ampliação inteira 2× sem filtro
+seguida de redução linear entre 100% e 200%; abaixo de 100%, redução linear.
+Em 100% e 200% permanece o desenho exato anterior, inclusive a linha de fundo
+indivisível. Interface, cursor, tela inferior e partida não recebem o filtro.
+Os limites, encaixe, velocidade do zoom e regras de câmera não mudam. Não há
+texto novo nem alteração de save.
+
+O PC calcula a amostragem equivalente sem imagem intermediária adicional.
+O CTR reutiliza o buffer de trabalho de VRAM e conserva o passo intermediário
+numa textura RGBA8 1024×512 em memória linear (2 MiB), sem profundidade.
+Não há alocação nova por quadro nesse caminho. O intermediário é reservado
+no boot e liberado pelo mesmo mecanismo seguro das outras texturas nativas.
+
+Para comparar, iniciar o CTR com `SD:/pls-video/map-nearest.flag` volta ao
+modo anterior; remover o arquivo e reiniciar ativa o filtro, que é o padrão.
+No PC, a variável `PLS_PC_MAP_NEAREST=1` faz a mesma comparação. Capturas e
+medições ficam em `build/phase4-video/fractional-*`. Escalas fracionárias têm
+suavização dos contornos; não equivalem a pixels inteiros nem eliminam a
+discretização do movimento que já acontece antes da ampliação.
+

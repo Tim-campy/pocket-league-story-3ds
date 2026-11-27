@@ -11,6 +11,7 @@
 #include "services.hpp"
 #include "storage.hpp"
 #include "capture.hpp"
+#include "map_zoom_sample.hpp"
 #include "runtime_memory.hpp"
 #include "text_input.hpp"
 #include "managed_collation.hpp"
@@ -215,6 +216,21 @@ void gpu_check(ctr::Gpu& gpu){
         const int expected=x==1&&y==1?255:85;
         if(std::abs(int(grey[(y*8+x)*4+c])-expected)>2)throw std::runtime_error("GPU self-check grayscale mismatch");
     }
+    if(platform::smooth_map_zoom){
+        stage("map-zoom");g->SetBlendMode(0);g->SetColor(255,255,255,255);
+        for(const int scale:{75,150}){
+            const int edge=scale<100?1:3;
+            gpu.clear(*target,0x000000ff);
+            g->DrawScaledMapImage(source,0,0,float(edge),float(edge),0,0,2,2,scale);
+            const auto& filtered=target->pixels();
+            for(int y=0;y<edge;++y)for(int x=0;x<edge;++x){
+                const auto expected=kairo::map_zoom_sample(source->pixels().data(),2,2,0,0,2,2,
+                    (float(x)+.5f)/edge,(float(y)+.5f)/edge,scale<100?1:2);
+                for(int c=0;c<4;++c)if(std::abs(int(filtered[(y*8+x)*4+c])-int(expected[c]))>2)
+                    throw std::runtime_error("GPU map zoom differs from CPU sampling");
+            }
+        }
+    }
     stage("depth");auto back=kairo::Image::FromRgba(1,1,{255,0,0,255});
     auto front=kairo::Image::FromRgba(1,1,{0,0,255,255});
     auto recorded=cs::make_ref<kairo::Graphics>(target,false);
@@ -273,6 +289,7 @@ int main(){
         auto sound=pls::cs::make_ref<pls::null_backend::Sound>();pls::kairo::configure_sound(&assets,sound);
         pls::kairo::install_text_input(pls::cs::make_ref<Text>());
         boot_stage(3);
+        pls::platform::smooth_map_zoom=!std::filesystem::exists("sdmc:/pls-video/map-nearest.flag");
         pls::ctr::Gpu gpu;pls::platform::gpu_drawing=&gpu;boot_stage(4);
         bool new_model=false;const auto model_result=APT_CheckNew3DS(&new_model);
         std::fprintf(stderr,"PLS_VIDEO_MODEL new3ds=%d result=%ld normal_heap_reserved=%lu linear_heap_reserved=%lu region_capacity=%lu\n",int(new_model),long(model_result),static_cast<unsigned long>(__ctru_heap_size),static_cast<unsigned long>(__ctru_linear_heap_size),static_cast<unsigned long>(osGetMemRegionSize(MEMREGION_APPLICATION)));std::fflush(stderr);
@@ -360,6 +377,7 @@ int main(){
                         kairo::write_capture_png(path,*entry.second);
                     }
                     gpu.end_frame();
+                    std::fprintf(stderr,"PLS_VIDEO_CAPTURE frame=%llu scale=%d form=%d\n",profile.frames(),scene.scale,scene.form);std::fflush(stderr);
                 }
                 const auto pacing_start=Clock::now();
                 pls::kairo::UnityApplication::pace(start);

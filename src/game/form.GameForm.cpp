@@ -1758,8 +1758,8 @@ void GameForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 cs_arg3 = cs_arg7 * factor;
                 cs_arg4 = cs_arg8 * factor;
             }
-            require(g)->DrawScaledImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6,
-                                        cs_arg7, cs_arg8);
+            require(g)->DrawScaledMapImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6,
+                                           cs_arg7, cs_arg8, scale_);
         }()));
         errLine_ = 15;
         if (require(view_)->CheckFirstTouch(17)) {

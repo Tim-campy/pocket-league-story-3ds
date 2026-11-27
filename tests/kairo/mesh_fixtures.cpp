@@ -1,4 +1,5 @@
 #include "mesh.hpp"
+#include "map_zoom_sample.hpp"
 #include <iostream>
 using namespace pls;
 namespace {
@@ -7,6 +8,29 @@ cs::Ref<kairo::Image> target(){return kairo::Image::FromRgba(16,16,std::vector<s
 std::array<int,4> pixel(const cs::Ref<kairo::Image>&image,int x,int y){const auto&i=image->pixels();const auto at=std::size_t(y*16+x)*4;return {i[at],i[at+1],i[at+2],i[at+3]};}
 }
 int main(){
+ // Compare the allocation-free sampler against an explicitly expanded image.
+ std::vector<std::uint8_t> pattern(7*5*4),expanded(14*10*4);
+ for(std::size_t i=0;i<pattern.size();++i)pattern[i]=std::uint8_t((i*37+19)%256);
+ for(int y=0;y<10;++y)for(int x=0;x<14;++x)for(int c=0;c<4;++c)
+     expanded[(y*14+x)*4+c]=pattern[((y/2)*7+x/2)*4+c];
+ for(int scale:{75,85,100,115,130,150,170,185,200}){
+     const int width=7*scale/100,height=5*scale/100;
+     for(int y=0;y<height;++y)for(int x=0;x<width;++x){
+         const float tx=(float(x)+.5f)/float(width),ty=(float(y)+.5f)/float(height);
+         check(kairo::map_zoom_sample(pattern.data(),7,5,0,0,7,5,tx,ty,2)==
+               kairo::map_zoom_sample(expanded.data(),14,10,0,0,14,10,tx,ty,1));
+     }
+ }
+ // Crop edges clamp to the crop, not the neighbouring image texels.
+ check(kairo::map_zoom_sample(pattern.data(),7,5,2,1,1,1,0,1,2)==
+       (std::array<std::uint8_t,4>{pattern[36],pattern[37],pattern[38],pattern[39]}));
+ auto map_source=kairo::Image::FromRgba(2,2,{255,0,0,255,0,255,0,255,0,0,255,255,255,255,255,255});
+ for(int scale:{100,200}){
+     auto nearest=target(),smooth=target();
+     nearest->GetGraphics()->DrawScaledImage(map_source,1,1,float(scale/50),float(scale/50),0,0,2,2);
+     smooth->GetGraphics()->DrawScaledMapImage(map_source,1,1,float(scale/50),float(scale/50),0,0,2,2,scale);
+     check(nearest->pixels()==smooth->pixels());
+ }
  auto image=target();auto g=cs::make_ref<kairo::Graphics>(image);auto mesh=g->GetMeshManager();mesh->capture(true);g->ResetRender();
  check(mesh->current_depth()==1498976.0f);mesh->SetDepth(100);check(mesh->current_depth()==749900.0f);mesh->SetDepth(0,true);check(mesh->current_depth()==1500000.0f&&mesh->front_depth()==749900.0f);mesh->SetDepthFront();check(mesh->current_depth()==749900.0f);
  g->ResetRender();mesh->SetDepth(100);g->SetColor(255,0,0);g->FillRect(1,1,8,8);mesh->SetDepth(0);g->SetColor(0,0,255);g->FillRect(1,1,8,8);

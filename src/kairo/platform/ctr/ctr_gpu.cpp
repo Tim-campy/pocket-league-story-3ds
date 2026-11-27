@@ -100,6 +100,7 @@ struct Gpu::State {
     const C3D_Tex* previous_texture{};
     bool texture_seen{};
     std::map<std::uint64_t,std::shared_ptr<NativeImage>> glyph_cache;
+    std::shared_ptr<NativeImage> map_zoom;
     std::size_t glyph_bytes{};
     mutable std::size_t peak_texture{},peak_vram{};
     struct LabelCommand {
@@ -123,7 +124,7 @@ struct Gpu::State {
         }
         return a.color==b.color&&a.clip==b.clip&&a.mode==b.mode&&a.blend==b.blend&&
             a.depth==b.depth&&a.alpha_test_scale==b.alpha_test_scale&&a.alpha_type==b.alpha_type&&
-            a.filter==b.filter&&a.depth_test==b.depth_test&&a.depth_write==b.depth_write;
+            a.filter==b.filter&&a.sampling==b.sampling&&a.depth_test==b.depth_test&&a.depth_write==b.depth_write;
     }
     bool is_labels(const std::shared_ptr<NativeImage>& image)const{
         return labels.target&&image&&labels.target->allocation==image->allocation;
@@ -177,7 +178,7 @@ struct Gpu::State {
             C3D_FrameEnd(0);
             if(!C3D_FrameBegin(0))std::terminate();
             C3D_FrameEnd(0);
-            glyph_cache.clear();lifetime->drain(true);
+            map_zoom.reset();glyph_cache.clear();lifetime->drain(true);
             if(top)C3D_RenderTargetDelete(top);
             if(bottom)C3D_RenderTargetDelete(bottom);
             if(shared_depth)vramFree(shared_depth);
@@ -189,7 +190,7 @@ struct Gpu::State {
         if(graphics_ready)gfxExit();
     }
 
-    std::shared_ptr<NativeImage> create(int width,int height,bool target){
+    std::shared_ptr<NativeImage> create(int width,int height,bool target,bool depth=true){
         const auto creation_start=Clock::now();
         auto* allocation=new Allocation;
         {
@@ -229,7 +230,7 @@ struct Gpu::State {
                 throw std::runtime_error("GPU render target allocation failed");
             }
             // Meshes render consecutively and clear depth before each complete batch sequence.
-            C3D_FrameBufDepth(&allocation->target->frameBuf,shared_depth,GPU_RB_DEPTH24);
+            if(depth)C3D_FrameBufDepth(&allocation->target->frameBuf,shared_depth,GPU_RB_DEPTH24);
         }
         if(lifetime->inventory){std::fprintf(stderr,"PLS_VIDEO_ALLOC id=%u target=%d requested=%dx%d texture=%dx%d color_bytes=%lu shared_depth_bytes=%lu linear_free=%lu vram_free=%lu\n",allocation->id,int(target),width,height,w,h,static_cast<unsigned long>(allocation->texture.size),static_cast<unsigned long>(target?shared_depth_bytes:0),static_cast<unsigned long>(linearSpaceFree()),static_cast<unsigned long>(vramSpaceFree()));std::fflush(stderr);}
         ++metrics.texture_creations;if(target)++metrics.target_creations;
@@ -331,6 +332,7 @@ void Gpu::State::draw(Allocation* source,const platform::GpuQuad& quad,int width
     else if(quad.filter==2)C3D_AlphaTest(true,GPU_LEQUAL,252);
     else C3D_AlphaTest(quad.alpha_type==1,GPU_GEQUAL,3);
     const auto* selected_texture=source?&source->texture:nullptr;
+    if(source){const auto filter=quad.sampling==1?GPU_LINEAR:GPU_NEAREST;C3D_TexSetFilter(&source->texture,filter,filter);}
     if(!texture_seen||selected_texture!=previous_texture){++metrics.texture_switches;previous_texture=selected_texture;texture_seen=true;}
     C3D_TexBind(0,source?&source->texture:nullptr);
     for(int i=0;i<6;++i)C3D_TexEnvInit(C3D_GetTexEnv(i));
@@ -440,6 +442,7 @@ Gpu::Gpu():state_(std::make_unique<State>()){
     if(!s.work_color){std::fprintf(stderr,"PLS_VIDEO_ALLOCATION_FAILURE work_color=1024x512 requested_bytes=%lu vram_free=%lu\n",static_cast<unsigned long>(work_color_bytes),static_cast<unsigned long>(vramSpaceFree()));std::fflush(stderr);throw std::runtime_error("GPU work color allocation failed");}
     C3D_RenderTargetSetOutput(s.top,GFX_TOP,GFX_LEFT,transfer_flags);
     C3D_RenderTargetSetOutput(s.bottom,GFX_BOTTOM,GFX_LEFT,transfer_flags);
+    if(platform::smooth_map_zoom)s.map_zoom=s.create(1024,512,true,false);
 }
 Gpu::~Gpu()=default;
 void Gpu::trace_boot(bool enabled){state_->boot_trace=enabled;}
@@ -486,11 +489,33 @@ void Gpu::quad(kairo::Image& target,kairo::Image* source,const platform::GpuQuad
     }else if(source)texture=s.image(*source,false);
     const bool opaque=target.format==kairo::Image::Format::RGB24||target.format==kairo::Image::Format::RGB565;
     if(s.is_labels(destination)&&s.queue_label(texture,quad,opaque))return;
+    auto final_quad=quad;
+    if(quad.sampling==2){
+        if(!texture||!s.map_zoom)throw std::runtime_error("Map zoom source or scratch target missing");
+        const auto& v=quad.vertices;
+        const float width=std::abs(v[1].u-v[0].u)*2,height=std::abs(v[3].v-v[0].v)*2;
+        if(width<=0||height<=0||width>1024||height>512)throw std::runtime_error("Map zoom crop exceeds 1024x512 scratch");
+        auto first=quad;first.sampling=0;first.color={255,255,255,255};first.mode={0,255,0};first.blend={};
+        first.depth_test=false;first.depth_write=false;first.filter=0;first.alpha_type=0;
+        first.clip={0,0,width,height};
+        first.vertices={platform::GpuVertex{0,0,v[0].u,v[0].v},{width,0,v[1].u,v[1].v},
+                        {width,height,v[2].u,v[2].v},{0,height,v[3].u,v[3].v}};
+        auto* scratch=s.map_zoom->allocation;
+        s.activate(scratch,false);s.select(scratch->target,1024,512,false);
+        C3D_FrameSplit(0);C3D_RenderTargetClear(scratch->target,C3D_CLEAR_COLOR,0xff,0);
+        s.opaque_target=true;s.draw(texture->allocation,first,1024,512,false);s.dirty=true;
+        final_quad.sampling=1;
+        final_quad.vertices[0].u=0;final_quad.vertices[0].v=0;
+        final_quad.vertices[1].u=width;final_quad.vertices[1].v=0;
+        final_quad.vertices[2].u=width;final_quad.vertices[2].v=height;
+        final_quad.vertices[3].u=0;final_quad.vertices[3].v=height;
+        texture=s.map_zoom;
+    }
     ++destination->allocation->revision;
     s.activate(destination->allocation);
     s.opaque_target=target.format==kairo::Image::Format::RGB24||target.format==kairo::Image::Format::RGB565;
     s.select(destination->allocation->target,destination->allocation->texture.width,destination->allocation->texture.height,false);
-    s.draw(texture?texture->allocation:nullptr,quad,destination->allocation->texture.width,destination->allocation->texture.height,false);
+    s.draw(texture?texture->allocation:nullptr,final_quad,destination->allocation->texture.width,destination->allocation->texture.height,false);
     destination->rendered=true;
     s.dirty=true;
 }

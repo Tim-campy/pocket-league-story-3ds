@@ -8,6 +8,7 @@
 #include "../platform/sdl/font.hpp"
 #include "arc_raster.hpp"
 #include "gpu_arc.hpp"
+#include "map_zoom_sample.hpp"
 #include "mesh.hpp"
 #include <cmath>
 namespace pls::kairo {
@@ -369,6 +370,13 @@ void Graphics::DrawLine(float x,float y,float x2,float y2,float width){PLS_PROFI
 void Graphics::DrawImage(cs::Ref<Image> image,float x,float y){if(image)DrawScaledImage(image,x,y,float(image->GetWidth()),float(image->GetHeight()),0,0,image->GetWidth(),image->GetHeight());}
 void Graphics::DrawImage(cs::Ref<Image> image,float x,float y,std::int32_t sx,std::int32_t sy,std::int32_t w,std::int32_t h){if(image)DrawScaledImage(image,x,y,float(w),float(h),sx,sy,w,h);}
 void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,float h,std::int32_t sx,std::int32_t sy,std::int32_t sw,std::int32_t sh){
+    draw_scaled_image(image,x,y,w,h,sx,sy,sw,sh,0);
+}
+void Graphics::DrawScaledMapImage(cs::Ref<Image> image,float x,float y,float w,float h,std::int32_t sx,std::int32_t sy,std::int32_t sw,std::int32_t sh,std::int32_t scale){
+    const int sampling=platform::smooth_map_zoom?(scale<100?1:(scale>100&&scale<200?2:0)):0;
+    draw_scaled_image(image,x,y,w,h,sx,sy,sw,sh,sampling);
+}
+void Graphics::draw_scaled_image(cs::Ref<Image> image,float x,float y,float w,float h,std::int32_t sx,std::int32_t sy,std::int32_t sw,std::int32_t sh,int sampling){
     if(!image||w==0||h==0||!std::isfinite(x+y+w+h))return;
     image->Use();if(!image->native_resident())return;
     if(image->filter!=Image::Filter::Point)throw cs::NotSupportedException("Bilinear sampler not implemented yet");
@@ -379,9 +387,10 @@ void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,floa
         if(!graphics_runtime.image_touches)throw cs::NotSupportedException("Generated image touch presentation callback missing");
         graphics_runtime.image_touches(pls::cs::dynamic_pointer_cast<Graphics>(shared_from_this()),image,x-float(sx),y-float(sy));
     }
-    if(platform::gpu_drawing)submit_gpu(image,gpu_quad(x,y,w,h,float(sx),float(sy),float(sw),float(sh)));
+    if(platform::gpu_drawing){auto q=gpu_quad(x,y,w,h,float(sx),float(sy),float(sw),float(sh));q.sampling=sampling;submit_gpu(image,q);}
     else quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float tx,float ty){
         if(flip_mode_&1)tx=1.0f-tx;if(flip_mode_&2)ty=1.0f-ty;
+        if(sampling&&sw>0&&sh>0){pixel(xx,yy,map_zoom_sample(source.data(),image->width_,image->height_,sx,sy,sw,sh,tx,ty,sampling),true);return;}
         auto u=std::int64_t(sx)+std::int64_t(std::floor(tx*float(sw)));auto v=std::int64_t(sy)+std::int64_t(std::floor(ty*float(sh)));
         u=std::clamp<std::int64_t>(u,0,image->width_-1);v=std::clamp<std::int64_t>(v,0,image->height_-1);auto i=(std::size_t(v)*image->width_+std::size_t(u))*4;
         pixel(xx,yy,{source[i],source[i+1],source[i+2],source[i+3]},true);

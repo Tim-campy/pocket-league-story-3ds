@@ -179,6 +179,7 @@ struct FinalMetrics {
 struct FinalProfile {~FinalProfile(){if(pls::diagnostic::enabled.load()){std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);pls::diagnostic::dump(std::cerr);const auto stress=pls::cs::gc_stress_summary();if(!stress.empty())std::cerr<<"PLS_GC_STRESS="<<stress<<std::endl;}}};
 }
 int main(int argc,char** argv){
+    pls::platform::smooth_map_zoom=std::getenv("PLS_PC_MAP_NEAREST")==nullptr;
     if(argc!=2){std::cerr<<"Provide the authenticated local asset directory.\n";return 2;}
     pls::pc::RunMetrics metrics(pls::pc::metrics_enabled_from_environment(),std::cerr);
 #if defined(PLS_DIAGNOSTIC_BUILD)

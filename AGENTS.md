@@ -16,9 +16,10 @@ tipos, textos. A tag **`v1.0.0-faithful`** é a versão fiel ao original. Daqui 
 o jogo é adaptado ao 3DS, e o código C++ do jogo em `src/game/` é código-fonte
 mantido à mão. O tradutor foi aposentado.
 
-Hoje o jogo roda inteiro no PC (SDL2, build de diagnóstico, com as duas telas do 3DS
-em janelas) e no 3DS com backend nulo (sem vídeo e sem som; serve de benchmark).
-Vídeo, som e controles no 3DS são a próxima fase (`docs/plan-next-phases.md`).
+Hoje o jogo roda no PC (SDL2, diagnóstico, duas janelas) e no New 3DS XL com
+vídeo GPU, controles e saves no SD, aprovados em teste físico. O backend nulo
+continua disponível para benchmark. Som e teclado do sistema continuam pendentes
+(`docs/plan-next-phases.md`).
 
 ### Design decidido para o 3DS (resumo; completo em `docs/design/phase3-decision.md`)
 
@@ -32,11 +33,12 @@ Vídeo, som e controles no 3DS são a próxima fase (`docs/plan-next-phases.md`)
 - **Idioma:** o do console ao iniciar (japonês ou inglês; outro idioma → inglês), com
   painel para trocar.
 
-Já existe **só no PC** (protótipo, `src/main/pc_dual_screen.cpp`, `docs/design/phase3-prototype.md`):
-duas janelas; A/B/X/Y/START/direcional ligados aos rótulos do jogo; circle pad como arraste
-de câmera; L/R como pinça de zoom; barra de rótulos (`GamePad`) e diálogos na inferior.
-Não existe: nada disso no 3DS (backend nulo: sem vídeo, som nem entrada); menus, registro e
-painel na inferior (etapa 2, muda o jogo); câmera independente; `swkbd`; idioma do console.
+Já existem no PC e no backend CTR: destinos explícitos para as duas telas,
+jogo na superior, barra de rótulos nativa 320×240 na inferior, botões, toque nos
+rótulos, câmera independente pelo circle pad, cursor pelo direcional/C-Stick e
+zoom contínuo por L/R. Menus e janelas do jogo continuam na superior. O cursor
+fica oculto se sair da margem; A revela sem agir, direcional revela e move.
+Menus, registro e painel na inferior, `swkbd` e idioma do console continuam pendentes.
 Mudanças decididas: `docs/changes-from-original.md`.
 
 ### Orçamentos no New 3DS
@@ -46,13 +48,24 @@ Mudanças decididas: `docs/changes-from-original.md`.
   9,7–10,6 ms por quadro; menu 6,5–6,7 ms; maior quadro sem coleta ≤ 12,2 ms.
 - **Transições e coletas explícitas** (fechar janela, `GameManager.ChangeState(0)`):
   até **150 ms** (medido: pausa ≤ 114 ms, quadro ≤ 124 ms).
-- **O custo de desenho no 3DS ainda não foi medido** (o backend é nulo). Toda mudança
-  que acrescente trabalho por quadro come a margem que o desenho vai precisar.
+- **Vídeo medido no New 3DS XL:** há quadros e coletas acima dos orçamentos.
+  O perfil automático separa lógica, desenho e espera GPU durante a sessão;
+  consulte `docs/notes/phase4-automatic-video-profile.md`. Não use números do
+  Azahar como desempenho do aparelho.
 
 ## 2. Seu papel e seus limites
 
 **Você edita o código do jogo: `src/game/`** (as classes `*.hpp`/`*.cpp` com nomes
 como `form.TitleForm`, `game.Team`, `data.SponsorData`).
+
+Durante o bloco de vídeo da Fase 4, o usuário ampliou temporariamente o papel
+para a plataforma, hosts e build CTR, com encaixes específicos escritos à mão
+no desenho e no catálogo de assets. A revisão de roteiros também autoriza
+`src/main/`, `tests/` e `tools/`. Essas autorizações não liberam o runtime, o
+coletor nem `src/kairo/common/generated/`: o único encaixe de runtime aprovado
+é o diagnóstico descrito em `docs/notes/phase4-gc-event-diagnostics.md`.
+Consulte as decisões da sessão para o escopo exato; ao terminar o bloco,
+retire esta ampliação temporária.
 
 Sem aprovação explícita do usuário **você não edita**:
 
@@ -105,6 +118,7 @@ usuário o que precisa mudar e por quê, antes de mudar.
 | `tools/` | build, execução e verificação; `tools/dev.py` é a porta de entrada e `tools/README.md` diz o que é vigente | não, sem aprovação |
 | `tools/translator-archived/`, `tools/archived/` | tradutor aposentado e ferramentas da Fase 2 que nada usa | **somente leitura; nunca executar** |
 | `config/` | dados e recibos lidos e escritos pelas ferramentas | não edite à mão |
+| `changes.md` (raiz) | registro de trabalho entre agentes (roteiros orientados a estado e o que veio depois) | **só acrescentar seções no fim**; nunca mover, renomear ou reescrever (seção 7) |
 | `docs/` | documentação; índice em `docs/README.md` (vigente × histórico) | sim, os vigentes |
 | `docs/history/` | registro da Fase 2 (antigo AGENTS.md, congelamento, livro-razão) | somente leitura |
 | `build/` | tudo o que é local (fora do Git): builds, dependências, saves e roteiros de referência, resultados; `dev.py clean` apaga só o que é seguro | gerado |
@@ -124,10 +138,12 @@ extraída dele ficam em `build/dev-local.json` (fora do Git) ou nas variáveis
 | `build` | build do PC (diagnóstico, Release) a partir de `src/game` | 17 s depois de editar um `.cpp`; 2 s sem mudança; 15–17 min do zero |
 | `run [--save 31\|50]` | roda no PC com as duas telas do 3DS em janelas (até 600 s); `--save 31` começa antes da 1ª partida, `--save 50` depois | build + jogo |
 | `check [--all]` | checks rápidos: mapa do coletor e raízes, código de apoio, literais, formatação dos arquivos alterados (`--all`: todos) | ~5 s, mais ~0,5 s por arquivo alterado (formatação); `--all`: ~4 min |
-| `routes [--smoke \| --affected] [--jobs 4]` | roteiros do jogo com estresse moderado do coletor, 4 ao mesmo tempo: `--smoke` = 10 execuções fixas (título, menu, partida, salvar/carregar, novo jogo); `--affected` = só as que executam os métodos alterados desde o último push; sem opção = conjunto completo (87 execuções) | smoke ~3 min; completo ~65 min |
+| `routes [--smoke \| --affected] [--jobs 4]` | roteiros do jogo com estresse moderado do coletor, 4 ao mesmo tempo: `--smoke` = 10 execuções fixas (título, menu, partida, salvar/carregar, novo jogo); `--affected` = só as que executam os métodos alterados desde o último push; sem opção = conjunto completo (87 execuções). Todo conjunto roda também `scenarios`; o completo falha se um método que o código canônico executava não for mais executado (nem pelos cenários); roteiros e cobertura canônica versionados em `tests/routes/replay/` | smoke ~3 min; completo ~65 min |
+| `scenarios [--only NOME]` | roteiros orientados a estado (`tests/routes/*-state.route`, save na linha `# save=N`): falham pelo estado do jogo (instalação demolida, zoom, seleção), não só por chegar ao fim; formato em `docs/notes/route-runner-design.md` | depende dos cenários |
 | `full` | verificação completa (`tools/verify_phase2.py --full`) | ~20 min (105 checks) |
 | `arm` | build do 3DS (`build/frozen-arm/null_game.3dsx`, backend nulo) | ~30–40 min do zero |
 | `ci [COMMIT]` | resultado do CI de um commit publicado | segundos |
+| `backup PASTA [--restore]` | copia (ou restaura, conferindo SHA-256) os saves de teste de que os roteiros partem para uma pasta **fora** do repositório; saves nunca entram no Git | segundos |
 | `clean [--apply]` | apaga tentativas de roteiro antigas, pacotes de revisão e capturas antigos (só lista sem `--apply`) | segundos |
 
 Recompilar: ~17 s por `.cpp`; um `.hpp` muito incluído, ~6 min (`main.AppData.hpp`, 52
@@ -139,6 +155,19 @@ A máquina tem 8 GB: rode **um trabalho pesado por vez** (build, roteiros, emula
 os roteiros e a verificação completa, **tampa aberta e notebook na tomada**: com a tampa
 fechada, a queda para a bateria suspende a máquina (o executor refaz a execução atingida,
 mas o tempo se perde).
+
+Build de vídeo CTR, com assets nativos autenticados já preparados localmente:
+
+```powershell
+$videoLocal = Get-Content build/dev-local.json -Raw | ConvertFrom-Json
+python tools/build_arm11_null.py --apk $videoLocal.apk --frozen --video-assets build/ctr-assets-native-v1 --output build/phase4-ctr
+```
+
+Saída privada: `build/phase4-ctr/ctr_video.3dsx`. Contém assets do APK: nunca
+publicar ou enviar ao CI. O autoteste GPU roda a cada boot; exigir
+`PLS_VIDEO_SELF_CHECK=PASS` em `/pls-video/stderr.log`. `dev.py arm` continua
+construindo o backend nulo. O perfil automático grava `video-N-*` em
+`/pls-video/`; analisar com `python tools/report_ctr_video.py PASTA`.
 
 ### Testar no PC uma mudança de tela ou de controle
 
@@ -319,6 +348,34 @@ nessa lista e não gera alerta); classe nova com `PLS_MANAGED_CLASS`,
 `trace_edges` (se tiver campos de referência), `create`/`create_init`. O build
 encontra sozinho todo `src/game/*.cpp` (não mexa no `CMakeLists.txt`). Modelos
 completos em `docs/maintaining-game-code.md`.
+
+**`changes.md` fica na raiz (decisão do usuário, 2026-11-27).** É o registro de trabalho
+que um agente deixa para o próximo. Não mova, não renomeie, não divida e não reescreva
+seções antigas. Acrescente uma seção no fim com a data, o que foi feito, por quê e como
+foi conferido. Correção de algo já registrado entra numa seção nova que cite a antiga.
+
+**Codificação dos textos: UTF-8 sem BOM, fim de linha LF.** Em 2026-11-27 um agente
+regravou `tools/dev.py` e `tools/build_pc.py` com o português corrompido
+("repositório" → "repositÃƒÂ³rio": UTF-8 lido como cp1252 e regravado) e com CRLF, e
+foi preciso reverter. Para não repetir:
+
+- Edite com as ferramentas de edição de arquivo do agente (Edit/Write), que preservam
+  o conteúdo. Use script só para mudanças mecânicas.
+- **PowerShell 5.1** (o desta máquina): não faça `Get-Content` + `Set-Content`/`Out-File`
+  num arquivo de texto do repositório. `Get-Content` lê UTF-8 sem BOM como ANSI;
+  `Set-Content` grava em ANSI; `-Encoding utf8` grava **com** BOM. Se precisar, use
+  `[IO.File]::ReadAllText($p, [Text.Encoding]::UTF8)` e
+  `[IO.File]::WriteAllText($p, $t, (New-Object Text.UTF8Encoding $false))`.
+- **Python no Windows:** `read_text(encoding='utf-8')` e
+  `write_text(t, encoding='utf-8', newline='\n')`, ou `read_bytes`/`write_bytes`. Sem
+  `newline='\n'`, `write_text` grava CRLF.
+- **Git Bash:** um heredoc `<<'EOF'` com `\\` dentro de um script Python pode chegar com
+  uma barra só (visto nesta máquina). Para script com barras invertidas, grave o script
+  num arquivo com a ferramenta Write e rode o arquivo.
+- **Confira depois de editar:** `grep -c 'Ã\|Â' ARQUIVO` dá 0 num arquivo que não tinha
+  esses caracteres (é a marca da corrupção); `file ARQUIVO` não mostra "CRLF"; e
+  `git diff --stat` não mostra o arquivo inteiro alterado por uma mudança pequena.
+  `.gitattributes` normaliza o LF no commit, mas não conserta texto corrompido.
 
 ## 8. O que exige decisão do usuário
 

@@ -78,3 +78,78 @@ wait depth=2 timeout=120 optional
 wait frames=40
 end
 ```
+
+## Roteiros orientados a estado (2026-11-27)
+
+Motivo: a foto acima só mostra a interface, então os roteiros tocavam por
+coordenada e esperavam por contagem de quadros. Depois da câmera separada do
+cursor, `demolish.route` passou a terminar sem demolir nada e o conjunto deu
+PASS (registro completo em `changes.md`).
+
+**Foto do mapa** (`GameState` em `diagnostic_route.hpp`, preenchida por
+`capture_game` em `pc_main.cpp`): só quando há um GameForm com câmera e dados do
+usuário; lida de campos e armazenamento estático, sem chamar método gerado e sem
+alocar objeto gerenciado. Campos: `map_state` (`GameForm::state_`), `scale`,
+cursor e câmera (`Camera::cursor_pos/pos`), endereço do cursor
+(`Camera::camera_address`), cursor escondido, instalação selecionada
+(`Camera::subTenant_->id_`, -1 nenhuma), dinheiro (`save_->lngs[0]`) e a lista de
+instalações `[id, estado, x, y, dado]` (`UserData::tenants_`; estado 0 vazio,
+1 pronta, 2 em obra, 3 demolindo). Ela não entra em `PLS_UI_STATE` nem na
+assinatura, então os roteiros só de interface registram exatamente o mesmo de
+antes. Roteiros que usam a foto registram `PLS_GAME_STATE={"frame":F,"game":{...}}`
+a cada mudança, e `PLS_ROUTE_TIMEOUT` passa a trazer `"game"`.
+
+**Condições novas** (em `wait`, `expect`, `when`): `scale=N`, `map_state=N`,
+`selected=N|-`, `tenant=N [tenant_state=S]`, `money=less|more|same|changed`
+(contra o último `mark`). Sem foto válida, elas são falsas. `wait` com condição
+de jogo fecha avisos do jogo enquanto espera (regra do `dismiss`: SubForm sem
+rótulo → SELECT, com rótulo → SOFT2, a cada 18 quadros).
+
+**Verbos novos:**
+- `cursor to tenant=N [timeout=F]`: leva o cursor com as setas até o jogo
+  selecionar N. A direção vem do endereço do cursor: a instalação ocupa as
+  células x..x+1, y-1..y (`Camera::Collision`); medido no mapa, RIGHT aumenta x
+  e y do endereço e UP aumenta y e diminui x; nos empates alterna as duas
+  teclas. Fecha avisos no caminho. Falha com "cursor did not reach tenant N"
+  ou "unknown tenant N".
+- `hold L|R frames=N`: segura o botão de zoom do 3DS por N quadros e solta
+  (`PLS_PC_SCRIPTED_ZOOM=quadro:R|L|release`; publicado depois do host de duas
+  telas, então funciona com e sem `--dual-screen`).
+- `mark`: guarda o dinheiro atual para `money=`.
+- `watchdog frames=N`: a partir daí, um passo de espera falha se nem a
+  interface nem a foto mudarem por N quadros (0 desliga). Escolha N maior que a
+  pausa legítima mais longa do roteiro.
+
+**Rodar:** `python tools/dev.py scenarios [--only NOME]` roda
+`tests/routes/*-state.route`, cada um no save da sua linha `# save=N`, em duas
+telas e sem esperar o relógio (`--fast`); dá PASS só se todos chegarem a `end`.
+Esses roteiros também entram em `dev.py routes`, exceto com `--only`. O conjunto
+completo soma sua cobertura e reprova métodos canônicos perdidos fora da lista
+justificada `NEVER_REPLAYED`.
+Primeiros cenários: `demolish-state.route` (save 200, Gift Shop, 15 s) e
+`zoom-state.route` (save 50, 12 s). Os dois foram conferidos ao contrário:
+trocar a tecla de demolir por voltar, ou esperar um zoom errado, faz o roteiro
+falhar.
+
+## Ampliação da revisão: câmera, construção e save
+
+`hold CP x=N y=N frames=F` e `hold CS x=N y=N frames=F` publicam os eixos
+normalizados da API (-32767..32767), positivos para direita/baixo. O executor
+solta em zero ao terminar. Não simulam o hardware nem testam a zona morta física.
+`hold RIGHT|LEFT|UP|DOWN frames=F` mantém a tecla lógica. Condições de jogo no
+`hold` são verificadas em cada quadro, inclusive na soltura; `max_pan=N` limita
+cada componente do deslocamento da câmera entre quadros, para detectar saltos.
+
+`mark` também guarda câmera, cursor e seleção. `cursor=same|changed`,
+`camera=same|changed` e `selected=same|changed` comparam com essa marca;
+`hidden=true|false` testa a visibilidade. `window=N` distingue o tipo da SubForm
+no topo, sem mudar a linha antiga de UI.
+
+`build-state.route` exige estado vazio, entrada nas janelas 61/62, gasto de
+dinheiro e transições da instalação 0 → 2 → 1. `camera-state.route` verifica pan
+independente, ocultação, A/direcional, C-Stick e rolagem limitada por quadro.
+O cenário de salvar tem `# reload=save-load-check.route`: uma segunda instância
+carrega os arquivos gravados pela primeira, por meio do histórico autenticado
+do build de diagnóstico. A comparação do estado fica no executor de cenários;
+os arquivos privados permanecem em `build/`. A recarga escolhe o save manual;
+UP nessa tela escolheria o autosave antigo e invalidaria a comparação.

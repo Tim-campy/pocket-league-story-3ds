@@ -31,14 +31,16 @@ pelos retângulos de `ButtonBox(320, 240)` no próprio adaptador; não modifica
 `port_dialog.cpp` nem amplia o escopo autorizado. Corrigir o componente
 compartilhado e verificar seu comportamento no PC depende de decisão futura.
 
-## Câmera — suporte no executor de roteiros (decisão pendente)
+## Câmera — suporte no executor de roteiros (concluído)
 
-Registrado em 2026-11-25 por pedido do usuário. O executor não injeta os eixos
-do circle pad nem observa câmera, cursor e lote selecionado. Assim, a câmera
-tem roteiro de preparo e teste manual, sem asserções dessas invariantes na
-suíte. Para decisão: acrescentar essa entrada e essas observações ao diagnóstico,
-com testes de rolagem nas margens, salto do cursor para o centro, zoom, construção
-e menus. Não implementado; exige autorização para alterar a infraestrutura.
+Registrado em 2026-11-25; autorizado e implementado em 2026-11-27. O executor
+injeta circle pad e C-Stick pela API normal e observa câmera, cursor, ocultação,
+lote, dinheiro e instalações. `camera-state.route` confere pan sem mover o
+cursor, ocultação, revelação com A e direcional, C-Stick e rolagem na margem
+sem salto. `zoom-state.route`, `build-state.route` e `save-state.route`
+conferem zoom, construção e recarga em outro processo. Os cinco cenários
+(incluindo demolição) passaram em 98,1 s. O teste físico continua necessário
+para sensação dos controles e aparência, mas a câmera já tem asserções automáticas.
 
 ## Fase 3, etapa 2 — primeira alteração: largura de 400 na tela de cima
 

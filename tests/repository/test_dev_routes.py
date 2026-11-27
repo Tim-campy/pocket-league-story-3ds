@@ -88,6 +88,63 @@ class SaveReload(unittest.TestCase):
         self.assertTrue(dev.saved_game_differences(state,None))
 
 
+class BackupRestore(unittest.TestCase):
+    """backup --restore validates the whole manifest before copying (review of 2026-11-27:
+    the name ../../../escaped.txt overwrote a file outside the saves folder and returned 0)."""
+    def setUp(self):
+        import hashlib
+        self.temp = tempfile.TemporaryDirectory(); base = Path(self.temp.name)
+        self.backup = base / 'outside/pls-private-saves'; self.saves = base / 'saves'; self.saves.mkdir()
+        self.victim = base / 'escaped.txt'; self.victim.write_text('original', encoding='utf8')
+        (self.backup / '50/preferences').mkdir(parents=True)
+        (self.backup / '50/preferences/rs').mkdir()
+        self.payload = b'save bytes'; (self.backup / '50/preferences/rs/0').write_bytes(self.payload)
+        self.sha = hashlib.sha256(self.payload).hexdigest()
+        self.real_saves = dev.SAVES; dev.SAVES = self.saves
+
+    def tearDown(self):
+        dev.SAVES = self.real_saves; self.temp.cleanup()
+
+    def restore(self, saves):
+        (self.backup / 'manifest.json').write_text(json.dumps(dict(saves=saves)), encoding='utf8')
+        return dev.cmd_backup(types.SimpleNamespace(folder=str(self.backup.parent), restore=True))
+
+    def test_valid_manifest_restores_identical_files(self):
+        self.assertEqual(self.restore({'50': {'rs/0': self.sha}}), 0)
+        self.assertEqual((self.saves / '50/preferences/rs/0').read_bytes(), self.payload)
+
+    def test_escaping_names_write_nothing_and_fail(self):
+        # The external file exists as a source too, so only the path rule can stop it.
+        (self.backup / '50/preferences/../../../escaped.txt').resolve().write_text('original', encoding='utf8')
+        import hashlib
+        sha = hashlib.sha256(b'original').hexdigest()
+        for name in ('../../../escaped.txt', '/abs/file', 'C:/x', 'rs\\0', 'rs//0', './rs/0', ''):
+            with self.subTest(name):
+                self.assertEqual(self.restore({'50': {'rs/0': self.sha, name: sha}}), 1)
+                self.assertFalse((self.saves / '50').exists(), 'a valid file of the same manifest was copied')
+                self.assertEqual(self.victim.read_text(encoding='utf8'), 'original')
+
+    def test_invalid_numbers_hashes_and_copies_fail(self):
+        for saves in ({'../50': {'rs/0': self.sha}}, {'050': {'rs/0': self.sha}}, {'0': {'rs/0': self.sha}},
+                      {'50': {'rs/0': 'x' * 64}}, {'50': {'rs/0': '0' * 64}}, {'50': {'rs/missing': self.sha}}, {'50': {}}, {}):
+            with self.subTest(saves):
+                self.assertEqual(self.restore(saves) if saves else self.restore({'50': 'x'}), 1)
+                self.assertFalse((self.saves / '50').exists())
+
+    def test_existing_save_is_never_overwritten(self):
+        (self.saves / '50/preferences/rs').mkdir(parents=True); (self.saves / '50/preferences/rs/0').write_bytes(b'newer')
+        self.assertEqual(self.restore({'50': {'rs/0': self.sha}}), 1)
+        self.assertEqual((self.saves / '50/preferences/rs/0').read_bytes(), b'newer')
+
+    def test_link_in_the_backup_is_refused(self):
+        import os
+        outside = Path(self.temp.name) / 'secret'; outside.write_bytes(self.payload)
+        try: os.symlink(outside, self.backup / '50/preferences/rs/link')
+        except (OSError, NotImplementedError): self.skipTest('no symlink privilege on this machine')
+        self.assertEqual(self.restore({'50': {'rs/0': self.sha, 'rs/link': self.sha}}), 1)
+        self.assertFalse((self.saves / '50').exists())
+
+
 class Durations(unittest.TestCase):
     def test_newest_dated_backup_is_used_when_the_state_was_moved(self):
         with tempfile.TemporaryDirectory() as folder:

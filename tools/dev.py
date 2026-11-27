@@ -12,6 +12,8 @@
     python tools/dev.py arm                # 3DS build (.3dsx, null backend)
     python tools/dev.py ci [COMMIT]        # CI result of a published commit (GitHub API)
     python tools/dev.py clean [--apply]    # delete old attempts, review bundles, captures (safe only)
+    python tools/dev.py backup DIR [--restore]
+                                           # private test saves to/from DIR outside the repository (never Git)
 
 Local paths (never committed): the APK and the extracted Managed folder come from the
 environment (PLS_APK, PLS_MANAGED) or from build/dev-local.json:
@@ -362,6 +364,108 @@ def cmd_arm(a):
     return code
 
 
+SAVES = ROOT / 'build/pc-diagnostic-release/attempts'
+
+
+def route_saves():
+    """Save attempts the route tooling needs: those of the replayed canonical runs, the
+    `# save=N` lines of tests/routes/*-state.route and the dev.py run choices (31, 50)."""
+    import re
+    sys.path.insert(0, str(ROOT / 'tools'))
+    from run_readable_routes import chosen_runs
+    history = json.loads((ROOT / 'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))
+    numbers = {(a.get('restored_private_preferences') or {}).get('source_attempt') for a in chosen_runs(ROOT, history)}
+    for route in (ROOT / 'tests/routes').glob('*-state.route'):
+        numbers |= {int(n) for n in re.findall(r'^# save=(\d+)\s*$', route.read_text(encoding='utf8'), re.M)}
+    return sorted(n for n in numbers | {31, 50} if n)
+
+
+def linked(path):
+    """Symbolic link or Windows junction (a junction is not a symlink to Path.is_symlink)."""
+    return path.is_symlink() or (hasattr(path, 'is_junction') and path.is_junction())
+
+
+def restore_plan(target, saves_root, manifest):
+    """Validate a backup manifest completely before anything is copied (review of 2026-11-27:
+    a name like ../../../x escaped the saves folder and overwrote a file). Returns (copies,
+    restored, skipped, problems); copies are (source, destination) pairs, empty on any problem.
+    Rules: positive decimal save numbers; relative POSIX names without '..', empty parts,
+    backslashes or drives; 64-hex SHA-256; source and destination resolve inside their own
+    save folder; no links on the way; every source matches its hash; an existing save is
+    only compared, never overwritten."""
+    import hashlib, re
+    from pathlib import PurePosixPath
+    digest = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+    problems, copies, restored, skipped = [], [], 0, 0
+    saves = manifest.get('saves') if isinstance(manifest, dict) else None
+    if not isinstance(saves, dict): return [], 0, 0, ['manifesto sem "saves"']
+    backup_root, saves_root = Path(target).resolve(), Path(saves_root).resolve()
+    for number, files in saves.items():
+        if not (isinstance(number, str) and number.isascii() and number.isdecimal() and int(number) > 0 and str(int(number)) == number):
+            problems.append(f'número de save inválido: {number!r}'); continue
+        if not isinstance(files, dict) or not files: problems.append(f'{number}: lista de arquivos inválida'); continue
+        source_base = backup_root / number / 'preferences'; destination_base = saves_root / number / 'preferences'
+        if any(linked(p) for p in (backup_root / number, source_base, saves_root / number, destination_base) if p.exists()):
+            problems.append(f'{number}: pasta é link'); continue
+        pairs = []
+        for name, sha in files.items():
+            parts = PurePosixPath(name).parts if isinstance(name, str) else ()
+            if (not isinstance(name, str) or not name or '\\' in name or ':' in name or name.startswith('/') or not parts
+                    or PurePosixPath(name).as_posix() != name or any(part in ('', '.', '..') for part in parts)):
+                problems.append(f'{number}: nome inválido {name!r}'); continue
+            if not (isinstance(sha, str) and re.fullmatch(r'[0-9a-f]{64}', sha)): problems.append(f'{number}/{name}: hash inválido'); continue
+            source, destination = source_base.joinpath(*parts), destination_base.joinpath(*parts)
+            on_path = [source_base.joinpath(*parts[:i + 1]) for i in range(len(parts))]
+            if any(linked(p) for p in on_path if p.exists() or p.is_symlink()): problems.append(f'{number}/{name}: link na cópia'); continue
+            if not source.resolve().is_relative_to(source_base.resolve()) or not destination.resolve().is_relative_to(destination_base.resolve()):
+                problems.append(f'{number}/{name}: caminho escapa da pasta do save'); continue
+            if not source.is_file(): problems.append(f'{number}/{name}: ausente no backup'); continue
+            if digest(source) != sha: problems.append(f'{number}/{name}: cópia corrompida'); continue
+            pairs.append((source, destination, sha))
+        if len(pairs) != len(files): continue
+        if destination_base.exists():
+            skipped += 1
+            if not all(d.is_file() and not linked(d) and digest(d) == sha for _, d, sha in pairs):
+                problems.append(f'{number} (já existe e difere; não sobrescrito)')
+            continue
+        copies += [(s, d) for s, d, _ in pairs]; restored += 1
+    return ([] if problems else copies), restored, skipped, problems
+
+
+def cmd_backup(a):
+    """Copy (or --restore) the private test saves the routes start from. They are game data,
+    so they never go to Git (AGENTS.md section 3): the folder must be outside the repository.
+    A manifest with the SHA-256 of every file is written and checked on restore."""
+    import hashlib
+    folder = Path(a.folder).resolve()
+    if folder == ROOT or folder.is_relative_to(ROOT): print('backup: a pasta precisa ficar fora do repositório (saves não entram no Git)'); return 1
+    target = folder / 'pls-private-saves'; digest = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+    if a.restore:
+        try: manifest = json.loads((target / 'manifest.json').read_text(encoding='utf-8'))
+        except (OSError, ValueError) as error: print(f'backup --restore: manifesto ilegível ({error})'); return 1
+        copies, restored, skipped, bad = restore_plan(target, SAVES, manifest)
+        if bad:  # all or nothing: an invalid manifest never writes a file
+            print(f'backup --restore: nada copiado; problemas: {", ".join(bad)}'); return 1
+        for source, destination in copies:
+            destination.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(source, destination)
+        print(f'backup --restore: {restored} restaurados, {skipped} já presentes')
+        return 0
+    saves = {}; missing = []
+    for number in route_saves():
+        source = SAVES / str(number) / 'preferences'
+        if not source.is_dir(): missing.append(number); continue
+        if any(linked(p) for p in source.rglob('*')): print(f'backup: o save {number} contém link; recusado'); return 1
+        files = {p.relative_to(source).as_posix(): digest(p) for p in sorted(source.rglob('*')) if p.is_file()}
+        for name in files:
+            (target / str(number) / 'preferences' / name).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source / name, target / str(number) / 'preferences' / name)
+        saves[str(number)] = files
+    (target / 'manifest.json').write_text(json.dumps(dict(apk_sha256_doc='docs/apk.md', created=datetime.datetime.now().isoformat(timespec='seconds'),
+                                                          saves=saves), indent=2) + '\n', encoding='utf-8')
+    print(f'backup: {len(saves)} saves em {target}', f'; ausentes em build/: {missing}' if missing else '')
+    return 1 if missing else 0
+
+
 def cmd_clean(a):
     """Delete only what is safe and regenerable: old route attempts (not cited by a kept route-set
     state), old review bundles and capture folders, dated backups of route-set states."""
@@ -439,6 +543,9 @@ def main():
     sub.add_parser('full').set_defaults(func=cmd_full)
     sub.add_parser('arm').set_defaults(func=cmd_arm)
     p = sub.add_parser('ci'); p.set_defaults(func=cmd_ci); p.add_argument('commit', nargs='?', default='HEAD')
+    p = sub.add_parser('backup'); p.set_defaults(func=cmd_backup)
+    p.add_argument('folder', help='pasta FORA do repositório que recebe (ou fornece, com --restore) pls-private-saves/')
+    p.add_argument('--restore', action='store_true', help='copiar de volta para build/ os saves que faltam, conferindo o SHA-256')
     p = sub.add_parser('clean'); p.set_defaults(func=cmd_clean)
     p.add_argument('--apply', action='store_true', help='apagar de fato (sem isso, só lista)')
     p.add_argument('--keep', type=int, default=30, help='tentativas de roteiro mais recentes a manter (além das citadas)')

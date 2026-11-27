@@ -19,6 +19,8 @@ atualize, só leia.
 | [backlog.md](backlog.md) | pedidos e ideias ainda não decididos (inclui reforma do coletor, A.4d/A.4e) |
 | [plan-next-phases.md](plan-next-phases.md) | estado das Fases 4 e 5: concluído, bloqueios e próximas entregas |
 | [design/phase4-video.md](design/phase4-video.md) | bloco de vídeo: contrato, etapas, riscos e estado da primeira entrega |
+| [notes/phase4-automatic-video-profile.md](notes/phase4-automatic-video-profile.md) | perfil contínuo por tela, leitura no PC e limites da sessão anterior |
+| [notes/phase4-gc-event-diagnostics.md](notes/phase4-gc-event-diagnostics.md) | diagnóstico autorizado de heap/objetos por coleta, sem alteração do algoritmo |
 | [notes/phase4-video-device-test.md](notes/phase4-video-device-test.md) | teste privado do título GPU no aparelho, instalação e evidências |
 | [notes/phase4-video-second-status.md](notes/phase4-video-second-status.md) | publicação do título, perfil do boot e diagnóstico inicial de VRAM |
 | [notes/phase4-video-target-inventory.md](notes/phase4-video-target-inventory.md) | inventário, profundidade compartilhada, alvos reutilizados e custo das cópias |

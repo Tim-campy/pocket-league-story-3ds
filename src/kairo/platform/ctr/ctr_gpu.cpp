@@ -101,40 +101,15 @@ struct Gpu::State {
     std::map<std::uint64_t,std::shared_ptr<NativeImage>> glyph_cache;
     std::size_t glyph_bytes{};
     mutable std::size_t peak_texture{},peak_vram{};
-    struct CopySample {
-        std::uint64_t wait{},quads{},switches{},copies{},copy_ns{},copy_bytes{};
-        std::size_t linear_free{},vram_free{},min_linear_free{},min_vram_free{};
-    };
-    // shortcut: 16384 samples per session; extend only if profiling sessions exceed 13 minutes.
-    std::unique_ptr<std::array<CopySample,16384>> copy_samples=std::make_unique<std::array<CopySample,16384>>();
-    std::size_t copy_sample_count{},copy_samples_dropped{};
-
     void observe_memory(){
         metrics.min_linear_free=std::min(metrics.min_linear_free,std::size_t(linearSpaceFree()));
         metrics.min_vram_free=std::min(metrics.min_vram_free,std::size_t(vramSpaceFree()));
     }
-    void save_copy_profile()noexcept{
-        char path[96]{};std::FILE* file=nullptr;
-        for(int n=1;n<10000;++n){
-            std::snprintf(path,sizeof(path),"sdmc:/pls-video/gpu-profile-%d.csv",n);
-            if(auto* existing=std::fopen(path,"rb")){std::fclose(existing);continue;}
-            file=std::fopen(path,"w");break;
-        }
-        if(!file){std::fprintf(stderr,"PLS_VIDEO_COPY_PROFILE=FAIL open\n");return;}
-        std::fprintf(file,"sample,gpu_wait_ns,draw_calls,texture_switches,copies,copy_ns,copy_bytes,linear_free,vram_free,min_linear_free,min_vram_free\n");
-        for(std::size_t i=0;i<copy_sample_count;++i){const auto& r=copy_samples->at(i);
-            std::fprintf(file,"%lu,%llu,%llu,%llu,%llu,%llu,%llu,%lu,%lu,%lu,%lu\n",static_cast<unsigned long>(i),r.wait,r.quads,r.switches,r.copies,r.copy_ns,r.copy_bytes,static_cast<unsigned long>(r.linear_free),static_cast<unsigned long>(r.vram_free),static_cast<unsigned long>(r.min_linear_free),static_cast<unsigned long>(r.min_vram_free));
-        }
-        const bool failed=std::ferror(file)!=0;const int closed=std::fclose(file);
-        std::fprintf(stderr,"PLS_VIDEO_COPY_PROFILE=%s rows=%lu dropped=%lu path=%s\n",failed||closed?"FAIL":"PASS",static_cast<unsigned long>(copy_sample_count),static_cast<unsigned long>(copy_samples_dropped),path);std::fflush(stderr);
-    }
-
     void trace(const char* stage)const{
         if(boot_trace){std::fprintf(stderr,"PLS_VIDEO_GPU_BOOT %s\n",stage);std::fflush(stderr);}
     }
 
     ~State(){
-        save_copy_profile();
         if(gpu_ready){
             C3D_FrameEnd(0);
             if(!C3D_FrameBegin(0))std::terminate();
@@ -152,6 +127,7 @@ struct Gpu::State {
     }
 
     std::shared_ptr<NativeImage> create(int width,int height,bool target){
+        const auto creation_start=Clock::now();
         auto* allocation=new Allocation;
         {
             std::lock_guard<std::mutex> lock(lifetime->mutex);
@@ -193,6 +169,8 @@ struct Gpu::State {
             C3D_FrameBufDepth(&allocation->target->frameBuf,shared_depth,GPU_RB_DEPTH24);
         }
         if(lifetime->inventory){std::fprintf(stderr,"PLS_VIDEO_ALLOC id=%u target=%d requested=%dx%d texture=%dx%d color_bytes=%lu shared_depth_bytes=%lu linear_free=%lu vram_free=%lu\n",allocation->id,int(target),width,height,w,h,static_cast<unsigned long>(allocation->texture.size),static_cast<unsigned long>(target?shared_depth_bytes:0),static_cast<unsigned long>(linearSpaceFree()),static_cast<unsigned long>(vramSpaceFree()));std::fflush(stderr);}
+        ++metrics.texture_creations;if(target)++metrics.target_creations;
+        metrics.created_bytes+=allocation->texture.size;metrics.create_ns+=elapsed(creation_start);
         return result;
     }
     void upload(Allocation& value,const std::vector<std::uint8_t>& pixels,int width,int height,bool tiled){
@@ -527,7 +505,6 @@ void Gpu::present(kairo::Image& top,kairo::Image& bottom){
 VideoProfile Gpu::profile()const{
     auto& s=*state_;auto result=s.metrics;
     s.observe_memory();result.min_linear_free=s.metrics.min_linear_free;result.min_vram_free=s.metrics.min_vram_free;
-    if(s.copy_sample_count<s.copy_samples->size())s.copy_samples->at(s.copy_sample_count++)={result.wait_ns,result.quads,result.texture_switches,result.copies,result.copy_ns,result.copy_bytes,linearSpaceFree(),vramSpaceFree(),result.min_linear_free,result.min_vram_free};else ++s.copy_samples_dropped;
     result.glyph_cache_bytes=s.glyph_bytes;result.glyph_cache_entries=s.glyph_cache.size();
     result.vram_bytes=(400+320)*240*4+shared_depth_bytes+work_color_bytes;
     {

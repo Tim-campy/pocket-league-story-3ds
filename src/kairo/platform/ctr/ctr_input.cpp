@@ -63,7 +63,6 @@ void Input::poll(kairo::Canvas& canvas,kairo::FormManagerBase* manager,kairo::Im
     if (form && form->GetId()!=9 && form->GetId()!=2) {
         if (const int key=menu_stick_.update(pad)) canvas.KeyClick(key);
     } else menu_stick_.reset();
-    if(down||up){std::fprintf(stderr,"PLS_VIDEO_INPUT down=%lu up=%lu pad=%d,%d form=%d\n",static_cast<unsigned long>(down),static_cast<unsigned long>(up),pad.x,pad.y,form?form->GetId():-1);std::fflush(stderr);}
     const int zoom=map?int(bool(held&KEY_R))-int(bool(held&KEY_L)):0;
     kairo::detail::publish_zoom_direction(zoom);
     if(down&KEY_TOUCH){

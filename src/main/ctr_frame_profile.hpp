@@ -1,125 +1,145 @@
 #pragma once
 #include "kairo/platform/ctr/ctr_gpu.hpp"
 #include "runtime_memory.hpp"
-#include "capture.hpp"
-#include "font.hpp"
-#include <3ds.h>
-#include <array>
+#include "resource_load_trace.hpp"
 #include <algorithm>
-#include <cstdio>
+#include <array>
+#include <chrono>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <memory>
 #include <stdexcept>
 
 namespace pls::ctr {
 struct FrameScene {
-    int form{}, subform{-1}, scale{}, pad_x{}, pad_y{}, camera_x{}, camera_y{};
+    int form{}, subform{-1}, state{-1}, match_state{-1}, possession{-1};
+    int scale{}, pad_x{}, pad_y{}, camera_x{}, camera_y{};
     bool moving{};
 };
+inline bool scene_changed(const FrameScene& a,const FrameScene& b){
+    return a.form!=b.form||a.subform!=b.subform||a.state!=b.state||a.match_state!=b.match_state;
+}
 struct FrameSample {
-    std::uint64_t logic{}, draw{}, wait{}, upload{}, readback{}, frame{}, other{};
-    std::uint64_t quads{}, texture_switches{}, glyphs{}, uploads{}, upload_bytes{};
-    std::uint64_t collections{}, gc_ns{}, gc_max_ns{};
-    bool transition{}, interaction{};
-    FrameScene scene{};
+    std::uint64_t logic{},draw{},wait{},upload{},readback{},frame{},other{};
 };
-// Fixed native sample storage; no managed references are retained here.
+// Native values only. The fixed buffers are allocated once, before gameplay.
 class FrameProfile {
-    static constexpr std::size_t sample_count=300, warmup_count=60;
-    std::unique_ptr<std::array<FrameSample,sample_count>> samples_=std::make_unique<std::array<FrameSample,sample_count>>();
-    struct Collection {std::uint64_t frame{}, wall_ns{};bool interaction{};cs::GcEvent event{};};
-    std::unique_ptr<std::array<Collection,512>> events_=std::make_unique<std::array<Collection,512>>();
-    std::size_t count_{}, warmup_{}, event_count_{}, dropped_{};
-    std::uint64_t frames_{}, gc_seen_{}, max_stable_{}, max_transition_{}, max_pause_{}, over_budget_{};
-    bool started_{}, active_{};
-    FrameScene expected_{};
-    std::filesystem::path path_, summary_path_;
+    using Clock=std::chrono::steady_clock;
+    static constexpr std::size_t frame_capacity=4096,gc_capacity=1024;
+    static constexpr int checkpoint_seconds=120;
+    struct Resources {std::uint64_t reads{},ns{},bytes{},image_ns{},stream_ns{},dropped{};};
+    struct Row {
+        std::uint64_t number{},profile_ns{},collections{},gc_ns{},gc_max_ns{},accounting_ns{};
+        FrameScene before{},scene{};FrameSample sample{};VideoProfile gpu{};Resources assets{};
+        bool transition{},interaction{},marker{},boot{};
+    };
+    struct Collection {std::uint64_t frame{};FrameScene scene{};cs::GcEvent event{};};
+    struct Buffers {std::array<Row,frame_capacity> frames{};std::array<Collection,gc_capacity> gc{};std::array<cs::GcEvent,64> events{};};
+    std::unique_ptr<Buffers> buffer_=std::make_unique<Buffers>();
+    std::filesystem::path prefix_;
+    Clock::time_point checkpoint_=Clock::now();
+    std::size_t count_{},gc_count_{};
+    std::uint64_t frames_{},written_{},gc_written_{},gc_seen_{},gc_dropped_{},frame_dropped_{},asset_dropped_{};
+    std::uint64_t profile_ns_{},profile_max_ns_{},flush_ns_{},flush_max_ns_{},flushes_{};
+    bool started_{},marker_{},detailed_{},resources_started_{};
 
-    void choose_path(){
-        for(int n=1;n<10000;++n){
-            auto p=std::filesystem::path("sdmc:/pls-video")/("profile-"+std::to_string(n)+".csv");
-            if(!std::filesystem::exists(p)){path_=p;return;}
+    static std::uint64_t elapsed(Clock::time_point start){return std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count();}
+    static Resources take_resources(){
+        Resources result;
+        std::lock_guard<std::mutex> lock(diagnostic::resource_event_mutex);
+        for(std::size_t i=0;i<diagnostic::resource_aggregate_count;++i){
+            const auto& e=diagnostic::resource_aggregates[i];
+            if(!std::strcmp(e.stage,"catalog-total")){result.reads+=e.count;result.ns+=e.ns;result.bytes+=e.bytes;}
+            else if(!std::strcmp(e.stage,"image-load-total")||!std::strcmp(e.stage,"image-use-total"))result.image_ns+=e.ns;
+            else if(!std::strcmp(e.stage,"stream-prepare-total"))result.stream_ns+=e.ns;
         }
-        throw std::runtime_error("No free video profile slot");
+        result.dropped=diagnostic::resource_aggregate_dropped;
+        diagnostic::resource_aggregate_dropped=0;
+        diagnostic::resource_aggregate_count=0;
+        return result;
+    }
+    template<class... Values> static void csv(std::ostream& out,Values... values){
+        bool first=true;((out<<(first?(first=false,""):",")<<values),...);out<<'\n';
     }
 public:
-    FrameProfile(){
-        for(int n=1;n<10000;++n){
-            auto p=std::filesystem::path("sdmc:/pls-video")/("session-"+std::to_string(n)+".txt");
-            if(!std::filesystem::exists(p)){summary_path_=p;break;}
+    explicit FrameProfile(bool detailed):detailed_(detailed){
+        for(int i=1;i<10000;++i){
+            auto p=std::filesystem::path("sdmc:/pls-video")/("video-"+std::to_string(i));
+            if(!std::filesystem::exists(p.string()+"-frames.csv")&&!std::filesystem::exists(p.string()+"-gc.csv")&&
+               !std::filesystem::exists(p.string()+"-meta.txt")){prefix_=p;break;}
         }
-        if(summary_path_.empty())throw std::runtime_error("No free video session slot");
-    }
-    void request(FrameScene scene){
-        if(active_)return;
-        choose_path();expected_=scene;warmup_=count_=0;active_=true;
-        std::fprintf(stderr,"PLS_VIDEO_WINDOW_BEGIN path=%s form=%d subform=%d scale=%d warmup=60 samples=300\n",path_.string().c_str(),scene.form,scene.subform,scene.scale);
-        std::fflush(stderr);
-    }
-    bool frame(FrameScene scene,FrameSample sample,const VideoProfile& gpu,
-               const gc::Statistics& before,const gc::Statistics& after,bool changed,bool interaction){
-        if(!started_){
-            if(scene.form!=1)return false;
-            for(const auto& e:cs::gc_events_after(gc_seen_))gc_seen_=e.sequence;
-            started_=true;request(scene);return false;
+        if(prefix_.empty())throw std::runtime_error("No free automatic video profile slot");
+        if(detailed_){
+            const auto n=cs::gc_events_after(0,buffer_->events.data(),buffer_->events.size(),gc_dropped_);
+            for(std::size_t i=0;i<n;++i){const auto& e=buffer_->events[i];gc_seen_=e.sequence;buffer_->gc[gc_count_++]={0,FrameScene{-1},e};}
         }
+    }
+    void request(FrameScene){marker_=true;}
+    std::uint64_t frames()const{return frames_;}
+    bool detailed()const{return detailed_;}
+    void frame(FrameScene before,FrameScene scene,FrameSample sample,const VideoProfile& gpu,
+               const gc::Statistics& gc_before,const gc::Statistics& gc_after,bool interaction,bool boot){
+        const auto start=Clock::now();
+        if(!started_){started_=true;checkpoint_=start;}
+        resources_started_=resources_started_||!boot;
         ++frames_;
-        sample.scene=scene;sample.interaction=interaction;sample.transition=changed;
-        sample.quads=gpu.quads;sample.texture_switches=gpu.texture_switches;sample.glyphs=gpu.glyphs;
-        sample.uploads=gpu.uploads;sample.upload_bytes=gpu.upload_bytes;
-        sample.collections=after.collections-before.collections;sample.gc_ns=after.pause_ns-before.pause_ns;
-        sample.gc_max_ns=after.interval_max_pause_ns;
-        if(sample.collections){
-            // The existing API allocates only on a collection frame, after timing.
-            for(const auto& e:cs::gc_events_after(gc_seen_)){
-                gc_seen_=e.sequence;
-                if(e.trigger==cs::GcTrigger::transition||e.trigger==cs::GcTrigger::loading)sample.transition=true;
-                max_pause_=std::max(max_pause_,e.pause_ns);
-                if(event_count_<events_->size())events_->at(event_count_++)={frames_,sample.frame,interaction,e};else ++dropped_;
+        if(count_==frame_capacity){++frame_dropped_;return;}
+        auto& row=buffer_->frames[count_++];row={};
+        row.number=frames_;row.before=before;row.scene=scene;row.sample=sample;row.gpu=gpu;
+        row.boot=boot;row.transition=boot||scene_changed(before,scene);row.interaction=interaction;row.marker=marker_;marker_=false;
+        row.collections=gc_after.collections-gc_before.collections;
+        row.accounting_ns=gc_after.accounting_ns-gc_before.accounting_ns;
+        row.gc_ns=gc_after.pause_ns-gc_before.pause_ns;row.gc_max_ns=gc_after.interval_max_pause_ns;
+        if(detailed_){
+            if(resources_started_){row.assets=take_resources();asset_dropped_+=row.assets.dropped;}
+            std::uint64_t lost=0;
+            const auto n=cs::gc_events_after(gc_seen_,buffer_->events.data(),buffer_->events.size(),lost);
+            gc_dropped_+=lost;
+            const auto outside=n>row.collections?n-row.collections:0;
+            for(std::size_t i=0;i<n;++i){
+                const auto& e=buffer_->events[i];gc_seen_=e.sequence;
+                const bool in_frame=i>=outside;
+                if(in_frame&&(e.trigger==cs::GcTrigger::transition||e.trigger==cs::GcTrigger::loading))row.transition=true;
+                if(gc_count_<gc_capacity)buffer_->gc[gc_count_++]={in_frame?frames_:0,in_frame?scene:before,e};else ++gc_dropped_;
             }
         }
-        if(!interaction){
-            auto& maximum=sample.transition?max_transition_:max_stable_;
-            maximum=std::max(maximum,sample.frame);
-            if(!sample.transition&&sample.frame>50000000)++over_budget_;
-        }
-        if(!active_)return false;
-        if(interaction||scene.form!=expected_.form||scene.subform!=expected_.subform||scene.scale!=expected_.scale){
-            std::fprintf(stderr,"PLS_VIDEO_WINDOW_CANCEL form=%d subform=%d scale=%d\n",scene.form,scene.subform,scene.scale);
-            std::fflush(stderr);active_=false;return false;
-        }
-        if(warmup_++<warmup_count)return false;
-        samples_->at(count_++)=sample;
-        if(count_!=sample_count)return false;
-        std::ofstream output(path_);if(!output)throw std::runtime_error("Cannot write video profile");
-        output<<"frame,form_id,subform,scale,pad_x,pad_y,camera_x,camera_y,moving,transition,logic_ns,draw_cpu_ns,gpu_wait_ns,upload_ns,readback_ns,frame_ns,other_cpu_ns,draw_calls,texture_switches,glyphs,uploads,upload_bytes,collections,gc_ns,gc_max_ns\n";
-        for(std::size_t i=0;i<count_;++i){const auto& s=samples_->at(i);
-            output<<i<<','<<s.scene.form<<','<<s.scene.subform<<','<<s.scene.scale<<','<<s.scene.pad_x<<','<<s.scene.pad_y<<','<<s.scene.camera_x<<','<<s.scene.camera_y<<','<<s.scene.moving<<','<<s.transition<<','
-                <<s.logic<<','<<s.draw<<','<<s.wait<<','<<s.upload<<','<<s.readback<<','<<s.frame<<','<<s.other<<','
-                <<s.quads<<','<<s.texture_switches<<','<<s.glyphs<<','<<s.uploads<<','<<s.upload_bytes<<','<<s.collections<<','<<s.gc_ns<<','<<s.gc_max_ns<<'\n';
-        }
-        output.close();if(!output)throw std::runtime_error("Video profile write failed");
-        const auto heap=kairo::native_heap_payload();std::size_t font_bytes=0;
-        kairo::visit_font_memory([&](const void*,std::size_t size,memory::Category){font_bytes+=size;});
-        std::fprintf(stderr,"PLS_VIDEO_PROFILE frames=300 path=%s form=%d subform=%d scale=%d texture_bytes=%lu vram_bytes=%lu peak_sampled_texture_bytes=%lu peak_sampled_vram_bytes=%lu glyph_cache_bytes=%lu glyph_cache_entries=%lu font_cpu_ranges_bytes=%lu normal_busy=%llu normal_free=%llu linear_free=%lu vram_free=%lu\n",
-            path_.string().c_str(),scene.form,scene.subform,scene.scale,static_cast<unsigned long>(gpu.texture_bytes),static_cast<unsigned long>(gpu.vram_bytes),static_cast<unsigned long>(gpu.peak_texture_bytes),static_cast<unsigned long>(gpu.peak_vram_bytes),static_cast<unsigned long>(gpu.glyph_cache_bytes),static_cast<unsigned long>(gpu.glyph_cache_entries),static_cast<unsigned long>(font_bytes),static_cast<unsigned long long>(heap.busy_bytes),static_cast<unsigned long long>(heap.free_bytes),static_cast<unsigned long>(linearSpaceFree()),static_cast<unsigned long>(vramSpaceFree()));
-        std::fflush(stderr);active_=false;return true;
+        row.profile_ns=elapsed(start);profile_ns_+=row.profile_ns;profile_max_ns_=std::max(profile_max_ns_,row.profile_ns);
+        // Include sampling in the busy-frame budget; checkpoint I/O is reported separately.
+        row.sample.frame+=row.profile_ns;row.sample.other+=row.profile_ns;
     }
-    void capture(const kairo::Image& top,const kairo::Image& bottom){
-        kairo::write_capture_png(path_.parent_path()/(path_.stem().string()+"-top.png"),top);
-        kairo::write_capture_png(path_.parent_path()/(path_.stem().string()+"-bottom.png"),bottom);
-        std::fprintf(stderr,"PLS_VIDEO_CAPTURE=PASS path=%s\n",path_.string().c_str());std::fflush(stderr);
-        write_summary();
+    bool checkpoint_due()const{
+        return started_&&(count_+1>=frame_capacity||gc_count_+64>=gc_capacity||Clock::now()-checkpoint_>=std::chrono::seconds(checkpoint_seconds));
     }
     void write_summary(){
-        std::ofstream out(summary_path_);if(!out)throw std::runtime_error("Cannot write video session");
-        out<<"PLS_VIDEO_SESSION frames="<<frames_<<" max_stable_ns="<<max_stable_<<" stable_over_50ms="<<over_budget_
-           <<" max_transition_ns="<<max_transition_<<" max_gc_pause_ns="<<max_pause_<<" gc_events="<<event_count_<<" dropped="<<dropped_<<'\n';
-        for(std::size_t i=0;i<event_count_;++i){const auto& r=events_->at(i);
-            out<<"PLS_VIDEO_GC frame="<<r.frame<<" trigger="<<int(r.event.trigger)<<" pause_ns="<<r.event.pause_ns<<" frame_ns="<<r.wall_ns<<" interaction="<<r.interaction<<" source="<<r.event.source<<'\n';
+        const auto start=Clock::now();
+        {
+            std::ofstream out(prefix_.string()+"-frames.csv",std::ios::app);
+            if(!out)throw std::runtime_error("Cannot open automatic video frames");
+            if(!written_)out<<"frame,form_id,subform,state,match_state,possession,scale,moving,transition,interaction,boot,from_form,from_subform,from_state,from_match_state,pad_x,pad_y,camera_x,camera_y,marker,logic_ns,draw_cpu_ns,gpu_wait_ns,frame_ns,other_cpu_ns,profile_ns,collections,gc_ns,gc_max_ns,accounting_ns,asset_reads,asset_ns,asset_bytes,image_ns,stream_ns,uploads,upload_bytes,upload_ns,readback_ns,target_creations,texture_creations,created_bytes,create_ns,copies,copy_ns,copy_bytes,draw_calls,texture_switches,texture_bytes,vram_bytes,min_linear_free,min_vram_free,label_cache_hits,label_cache_misses\n";
+            for(std::size_t i=0;i<count_;++i){const auto& r=buffer_->frames[i];const auto& s=r.scene;const auto& b=r.before;const auto& t=r.sample;const auto& g=r.gpu;const auto& a=r.assets;
+                csv(out,r.number,s.form,s.subform,s.state,s.match_state,s.possession,s.scale,s.moving,r.transition,r.interaction,r.boot,b.form,b.subform,b.state,b.match_state,s.pad_x,s.pad_y,s.camera_x,s.camera_y,r.marker,t.logic,t.draw,t.wait,t.frame,t.other,r.profile_ns,r.collections,r.gc_ns,r.gc_max_ns,r.accounting_ns,a.reads,a.ns,a.bytes,a.image_ns,a.stream_ns,g.uploads,g.upload_bytes,g.upload_ns,g.readback_ns,g.target_creations,g.texture_creations,g.created_bytes,g.create_ns,g.copies,g.copy_ns,g.copy_bytes,g.quads,g.texture_switches,g.texture_bytes,g.vram_bytes,g.min_linear_free,g.min_vram_free,g.label_cache_hits,g.label_cache_misses);
+            }
+            out.close();if(!out)throw std::runtime_error("Automatic video frames write failed");
         }
-        out.close();if(!out)throw std::runtime_error("Video session write failed");
+        {
+            std::ofstream out(prefix_.string()+"-gc.csv",std::ios::app);
+            if(!out)throw std::runtime_error("Cannot open automatic video GC events");
+            if(!flushes_)out<<"frame,form_id,subform,state,match_state,sequence,trigger,pause_ns,bytes_before,bytes_after,objects_before,objects_after,source\n";
+            for(std::size_t i=0;i<gc_count_;++i){const auto& r=buffer_->gc[i];const auto& e=r.event;
+                csv(out,r.frame,r.scene.form,r.scene.subform,r.scene.state,r.scene.match_state,e.sequence,int(e.trigger),e.pause_ns,e.bytes_before,e.bytes_after,e.objects_before,e.objects_after,std::quoted(e.source));
+            }
+            out.close();if(!out)throw std::runtime_error("Automatic video GC write failed");
+        }
+        written_+=count_;gc_written_+=gc_count_;count_=gc_count_=0;
+        const auto duration=elapsed(start);flush_ns_+=duration;flush_max_ns_=std::max(flush_max_ns_,duration);++flushes_;
+        std::ofstream meta(prefix_.string()+"-meta.txt");
+        meta<<"version=1\ndetailed="<<detailed_<<"\nframes="<<frames_<<"\nwritten="<<written_<<"\nframe_dropped="<<frame_dropped_
+            <<"\nasset_dropped="<<asset_dropped_<<"\ngc_events="<<gc_written_<<"\ngc_dropped="<<gc_dropped_<<"\nprofile_ns="<<profile_ns_<<"\nprofile_max_ns="<<profile_max_ns_
+            <<"\ncheckpoint_seconds="<<checkpoint_seconds<<"\nflushes="<<flushes_<<"\nflush_data_ns="<<flush_ns_<<"\nflush_data_max_ns="<<flush_max_ns_<<"\nbuffer_bytes="<<sizeof(Buffers)<<'\n';
+        meta.close();if(!meta)throw std::runtime_error("Automatic video metadata write failed");
+        checkpoint_=Clock::now();
     }
 };
 }

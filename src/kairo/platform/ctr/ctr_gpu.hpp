@@ -9,6 +9,8 @@ struct VideoProfile {
     std::uint64_t wait_ns{}, upload_ns{}, readback_ns{}, quads{}, glyphs{};
     std::uint64_t texture_switches{}, uploads{}, upload_bytes{};
     std::uint64_t copies{}, copy_ns{}, copy_bytes{};
+    std::uint64_t target_creations{},texture_creations{},created_bytes{},create_ns{};
+    std::uint64_t label_cache_hits{},label_cache_misses{};
     std::size_t min_linear_free{std::numeric_limits<std::size_t>::max()}, min_vram_free{std::numeric_limits<std::size_t>::max()};
     std::size_t glyph_cache_bytes{}, glyph_cache_entries{};
     std::size_t texture_bytes{}, vram_bytes{}, peak_texture_bytes{}, peak_vram_bytes{};

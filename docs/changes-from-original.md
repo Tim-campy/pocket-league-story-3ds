@@ -592,3 +592,18 @@ na inferior e nenhuma cópia animada aparece na superior. Os efeitos de toque
 da GameView pertencem à própria tela superior; os rótulos não enviam eventos
 a ela. O desenho de áreas de toque de depuração depende de visibleTouchRange_,
 desligado no layout de rótulos, e não é ativado por esses botões.
+# Perfil contínuo do vídeo (2026-11-27)
+
+Decisão do usuário: substituir as janelas de diagnóstico acionadas por SELECT
+por registro automático da sessão no build CTR. O host distingue formulários,
+estados, carregamento, transição e interação, e grava os dados fora dos quadros
+medidos, a cada 120 segundos e ao sair. SELECT apenas marca um quadro. Não há
+texto novo no jogo nem alteração do formato dos saves. A leitura das coletas
+usa buffer fixo e os números de heap/objetos que o runtime já calculava.
+
+Verificação: jogar normalmente, salvar e sair pelo jogo; copiar os arquivos
+`video-N-*` de `/pls-video` no SD e executar `python tools/report_ctr_video.py`
+com o diretório copiado. Detalhes, custos e limitações em
+`docs/notes/phase4-automatic-video-profile.md` e
+`docs/notes/phase4-gc-event-diagnostics.md`. Esta revisão permanece local.
+

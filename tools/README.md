@@ -26,6 +26,7 @@ Tempos e regras de uso: `AGENTS.md`, seção 5.
 | `make_review_bundle.py` | pacote de código para revisão externa (`build/review/`) |
 | `saves/diff_record.py` | diferenças campo a campo entre dois saves |
 | `run_arm11_null.py`, `prepare_arm11_sd.py`, `benchmark_report.py` | Azahar e benchmark no New 3DS (`docs/benchmark-hardware.md`) |
+| `report_ctr_video.py` | tabelas por tela, percentis e coletas dos arquivos `video-N-*` do perfil automático CTR |
 | `profiling/` | perfis e comparação de código de máquina (`compare_arm_functions.py`) |
 | `perf_bisect.py` | bissecção de regressão de desempenho |
 

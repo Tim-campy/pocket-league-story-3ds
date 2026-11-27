@@ -26,6 +26,8 @@
 #include "form.GameForm.hpp"
 #include "game.Camera.hpp"
 #include "form.SubForm.hpp"
+#include "form.SoccerForm.hpp"
+#include "game.GameManager.hpp"
 #include "ctr_frame_profile.hpp"
 #include "resource_load_trace.hpp"
 #include <3ds.h>
@@ -47,9 +49,14 @@ ctr::FrameScene frame_scene(kairo::FormManagerBase* manager){
     scene.form=form?form->GetId():-1;
     if(auto* sub=dynamic_cast<game::form::SubForm*>(form))scene.subform=cs::nonnull(sub)->type_;
     if(auto* map=dynamic_cast<game::form::GameForm*>(form)){
-        scene.scale=cs::nonnull(map)->scale_;
+        scene.state=cs::nonnull(map)->state_;scene.scale=cs::nonnull(map)->scale_;
         const auto position=game::game::Camera::camera_spos();
         if(!position.is_null()&&position.length()>=2){scene.camera_x=position[0];scene.camera_y=position[1];}
+    }
+    if(auto* match=dynamic_cast<game::form::SoccerForm*>(form)){
+        scene.state=cs::nonnull(match)->state_;
+        const auto match_manager=game::game::GameManager::instance();
+        if(match_manager){scene.match_state=cs::nonnull(match_manager)->state_;scene.possession=cs::nonnull(match_manager)->gameState_;}
     }
     const auto pad=kairo::read_circle_pad();scene.pad_x=pad.x;scene.pad_y=pad.y;
     return scene;
@@ -116,7 +123,7 @@ public:
                 {cs::GcNativeBlockingScope idle;kairo::UnityApplication::pace(start);}
             }
         },[&]{gpu.begin_frame();kairo::Canvas::GetInstance()->ClearKeyBuffer();});
-        const auto result=dialog.Result();std::fprintf(stderr,"PLS_VIDEO_DIALOG type=%d result=%d\n",request.type,result);std::fflush(stderr);return result;
+        return dialog.Result();
     }
 };
 void storage_check(assets::Catalog& assets){
@@ -272,10 +279,14 @@ int main(){
             pls::game::configure_application(app);
             gpu.begin_frame();app->host_start();gpu.end_frame();
             const auto app_init_gpu=gpu.profile();
-            ctr::FrameProfile profile;bool title_seen=false;pls::ctr::Input input;
+            ctr::FrameProfile profile(!std::filesystem::exists("sdmc:/pls-video/profile-minimal.flag"));
+            const bool storage_check_requested=std::filesystem::exists("sdmc:/pls-video/storage-check.flag");
+            int storage_check_countdown=360;
+            bool title_seen=false;pls::ctr::Input input;
             boot_stage(6);
             while(aptMainLoop()&&!app->IsTermination()){
                 const auto start=Clock::now();
+                const bool boot_frame=!title_seen;
                 const auto scene_before=frame_scene(app->GetFormManager());
                 const auto gc_before=cs::tracing_heap().statistics_and_reset_pause_peak();
                 gpu.begin_frame();
@@ -304,8 +315,10 @@ int main(){
                         std::fprintf(stderr,"PLS_VIDEO_TITLE boot_ms=%.3f\n",double(title_ns)/1e6);
                         std::fprintf(stderr,"PLS_VIDEO_BOOT meter=%d total_ns=%llu files_ns=%llu runtime_ns=%llu catalog_ns=%llu services_ns=%llu gpu_init_ns=%llu diagnostics_ns=%llu app_init_ns=%llu app_init_upload_ns=%llu loading_ns=%llu loading_frames=%llu loading_logic_wall_ns=%llu loading_draw_wall_ns=%llu loading_gpu_wait_ns=%llu loading_upload_ns=%llu loading_pacing_ns=%llu\n",
                             int(load_meter),title_ns,boot_stages[0],boot_stages[1],boot_stages[2],boot_stages[3],boot_stages[4],boot_stages[5],boot_stages[6],app_init_gpu.upload_ns,loading_ns,boot_frames,boot_logic_ns,boot_draw_ns,boot_wait_ns,boot_upload_ns,boot_pacing_ns);
-                        // Flush after the final boot frame; no resource timers during gameplay.
-                        pls::diagnostic::flush_resource_events();pls::diagnostic::enable_resource_events(false);
+                        // Boot details are flushed once; gameplay uses fixed in-memory aggregates.
+                        pls::diagnostic::flush_resource_events();
+                        pls::diagnostic::resource_event_list.store(false,std::memory_order_relaxed);
+                        pls::diagnostic::enable_resource_events(profile.detailed());
                         std::fflush(stderr);
                     }
                 }
@@ -317,17 +330,19 @@ int main(){
                 const bool interaction=modal_epoch!=screens->modal_epoch;
                 const auto frame=elapsed(start),accounted=logic+draw_cpu+metrics.wait_ns;
                 if(profile_requested&&title_seen&&!interaction)profile.request(scene);
-                if(title_seen&&profile.frame(scene,{logic,draw_cpu,metrics.wait_ns,metrics.upload_ns,metrics.readback_ns,frame,frame>accounted?frame-accounted:0},metrics,
-                                 gc_before,gc_after,scene_before.form!=scene.form||scene_before.subform!=scene.subform,interaction)){
-                    profile.capture(*screens->top,*screens->bottom);
-                    if(std::filesystem::exists("/pls-video/storage-check.flag")){
+                profile.frame(scene_before,scene,{logic,draw_cpu,metrics.wait_ns,metrics.upload_ns,metrics.readback_ns,frame,frame>accounted?frame-accounted:0},metrics,gc_before,gc_after,interaction,boot_frame);
+                if(title_seen){
+                    // Diagnostic storage fixture only; ordinary gameplay needs no button or capture.
+                    if(storage_check_requested&&--storage_check_countdown==0){
                         gpu.begin_frame();storage_check(assets);gpu.end_frame();break;
                     }
                 }
+                if(profile.checkpoint_due())profile.write_summary();
                 const auto pacing_start=Clock::now();
                 pls::kairo::UnityApplication::pace(start);
                 if(!title_seen)boot_pacing_ns+=elapsed(pacing_start);
             }
+            pls::diagnostic::enable_resource_events(false);
             profile.write_summary();
             gpu.begin_frame();app->host_stop();gpu.end_frame();
         }catch(...){

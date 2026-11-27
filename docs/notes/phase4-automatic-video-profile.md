@@ -128,5 +128,41 @@ também verificou o checkpoint de 120 s e a saída: duas gravações, 2.680 quad
 Essa pausa de SD deve ser conferida no aparelho; não é escondida no tempo médio.
 Dados: `build/phase4-video/profile-cost-{1,2,3}-{detailed,minimal}/`.
 
+Verificação adicional de partida: `build/phase4-video/automatic-profile-match/`,
+4.315 quadros, 24 coletas, três gravações, zero descartes/avisos. Foram
+1.463 quadros de SoccerForm, com estados 0/6/7/8 e estados 0/1/8 do
+GameManager; preparação, jogo e primeiro gol. Foi encerrada no primeiro tempo,
+não é uma partida completa. O perfil também distinguiu as janelas de preparação
+e a mensagem sobre o gol. A partida completa desta revisão será teste físico.
+
 Não há push deste perfil. A medição física requer jogar normalmente e sair pelo
 jogo; copiar os três arquivos `video-N-*` do mesmo N para a pasta de análise.
+
+## Pacote local para o aparelho
+
+Validação final do código local: `check --all` aprovado em 110,2 s;
+`full`, 105/105 checks em 1.159,8 s; roteiros completos com estresse, PASS em
+2.769,0 s: 87 execuções, 86 concluídas e `dialogs-exit` encerrando o jogo como
+esperado, zero alertas e zero repetições por suspensão. Os 74 recibos gerados
+foram arquivados em `build/phase4-video/final-generated-receipts/` e restaurados.
+Os commits locais são `16a04ae` (diagnóstico de GC), `66a404c` (perfil),
+`1919d52` (zoom exato) e `4553506` (cache). Nenhum deles foi publicado.
+
+`build/phase4-video/automatic-profile-test.3dsx`, código `4553506`,
+48.775.588 bytes, SHA-256
+`c7b4bc248e3f617aaf5e4e54d38d5c5e18b056dae552c448e9e1d8f4e21a86de`.
+Contém assets do APK do usuário: fica somente em `build/`, sem publicação ou CI.
+
+Copiar para `SD:/3ds/pls-video/automatic-profile-test.3dsx`, preservando
+`SD:/pls-video/preferences/`. Remover os sinalizadores de teste
+`profile-minimal.flag`, `labels-no-cache.flag` e `capture-check.flag`, se presentes.
+Jogar normalmente por cerca de 15 minutos: gestão, câmera, zoom, menus, partida
+inteira e salvar. Sair pelo jogo (START e confirmação, ou Quit). SELECT não é
+necessário. Copiar `video-N-frames.csv`, `video-N-gc.csv` e `video-N-meta.txt` do
+mesmo N em `SD:/pls-video/`; se o FTP mostrar uma lista antiga, reiniciar o FTP.
+
+No PC, analisar com
+`python tools/report_ctr_video.py build/phase4-video/n3ds`.
+Para conferir os controles: `python tools/dev.py run --save 50`; Q/W dão zoom,
+setas movem o cursor, I/J/K/L movem a câmera, A confirma, S volta, X abre o menu
+e Z aciona o rótulo esquerdo.

@@ -28,6 +28,13 @@ zero diferenças). Em 191%, fora da margem, a captura mantém 8.946 blocos
 desiguais, igual à revisão anterior. A tentativa tardia de voltar a 100% foi
 bloqueada por um diálogo do jogo; não conta como teste do encaixe inferior.
 
+Repetição específica antecipou a soltura em 98% para antes do diálogo:
+`build/phase4-video/exact-zoom-snap100/`, 118 pares, concluída em 66,38 s.
+Depois do encaixe, duas regiões estáticas (4.000 e 16.000 pixels) coincidiram
+exatamente com a captura inicial em 100%. No CTR, o perfil confirmou
+197% no quadro 754 e 200% no 755. A pressão temporizada destinada a chegar
+a 100% no Azahar terminou em 155%; não é usada como prova desse encaixe.
+
 O primeiro build falhou por faltar `screen_layout.hpp`; inclusão corrigida.
 Build corrigido: 146,4 s; check: 2,6 s; smoke: 10/10, zero alertas, 129,8 s.
 O teste CTR será registrado na entrega. Nada desta revisão foi publicado.

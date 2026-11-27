@@ -43,6 +43,14 @@ medição; não se pode deduzi-las apenas de 114 ms versus 435 ms.
   `stress_and_poison`; primeira compilação/execução por `test_tracing_gc.py`
   em 6,4 s, seguida de quatro execuções do mesmo fixture.
 - PC: build aprovado em 712,0 s; check aprovado em 1,8 s.
-- Ainda pendentes nesta revisão local: verificação completa, roteiros completos
-  com estresse e comparação das funções de coleta do ARM nulo. Nenhum push
-  contendo este diagnóstico está autorizado nesta entrega.
+- ARM nulo: recompilação do objeto de runtime em 15,0 s. As 71 funções de
+  `pls::gc::Heap`, incluindo a coleta, têm bytes e relocações idênticos ao objeto
+  anterior. Na ponte, `gc_collect_as` passa de 916 para 980 bytes para copiar
+  os quatro números e inicializar o evento maior; o novo leitor é outra função.
+  Evidência privada: `build/phase4-video/gc-arm-comparison.json`.
+  Isso compara os objetos ARM; não é uma execução física do novo build nulo.
+- Verificação completa: 105/105 checks aprovados em 1.159,8 s;
+  `check --all` aprovado em 110,2 s.
+- Roteiros completos com estresse: PASS, 87 execuções, 86 concluídas e
+  `dialogs-exit` encerrando o jogo como esperado; zero alertas, zero repetições
+  por suspensão, 2.769,0 s. Nenhum push contendo este diagnóstico foi feito.

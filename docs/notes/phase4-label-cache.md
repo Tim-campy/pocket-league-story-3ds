@@ -42,7 +42,7 @@ foi descartada. O helper local passou a exigir confirmação da gravação antes
 de encerrar o processo do emulador.
 
 Capturas da janela mostraram rótulos ausentes ou preservados indevidamente.
-A hipótese de defeito no cache foi refutada pelas capturas nativas dos alvos,
+A hipótese de defeito no conteúdo do alvo foi refutada pelas capturas nativas,
 nas duas configurações: zero diferenças nos 76.800 pixels do título e do mapa;
 no menu, zero nos 75.520 pixels fora da área do relógio. Só 17 pixels do relógio
 mudaram entre os horários. Conferido tanto o alvo transparente dos rótulos
@@ -50,6 +50,9 @@ quanto a composição final da inferior. Evidência:
 `build/phase4-video/label-cache-native-pixels.json`, capturas nas pastas
 `label-native-check/` e `label-native-off/`. As capturas da janela não são usadas
 como prova de equivalência.
+A tentativa de capturar a área de trabalho não isolou a janela e foi descartada.
+A prova quantitativa cobre os alvos GPU; a apresentação no aparelho com esta
+revisão continua dependendo do teste físico.
 
 ## Captura direta opcional
 

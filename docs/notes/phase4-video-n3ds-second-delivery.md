@@ -71,6 +71,11 @@ variação de 17–28 segundos nem mede o custo ligado/desligado do instrumento.
 
 ## Próxima rodada e proposta, não aplicada
 
+Atualização de 2026-11-27: as instruções de SELECT abaixo são históricas.
+O novo [perfil automático](phase4-automatic-video-profile.md) registra a sessão
+inteira, sem ação do jogador. O [cache dos rótulos](phase4-label-cache.md) foi
+autorizado e implementado localmente; sua medição no aparelho está pendente.
+
 Vale uma nova rodada de três execuções: SELECT em menu da gestão, mapa parado,
 mapa rolando nos dois zooms e partida em andamento; manter cada cenário até
 terminar a janela de 60 quadros de aquecimento + 300 medidos. Diálogo durante

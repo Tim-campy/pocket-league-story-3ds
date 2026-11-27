@@ -10,8 +10,13 @@ Registrado em 2026-11-25 por pedido do usuário. A verificação completa reescr
 locais geradas dos recibos de referência, sem perder rastreabilidade. Nenhuma
 alteração nas ferramentas está autorizada por este registro.
 
+Na rodada local de 2026-11-27, a verificação completa alterou 74 arquivos
+rastreados em `config/`. Os resultados foram preservados com hashes em
+`build/phase4-video/final-generated-receipts/` antes de restaurar somente os
+recibos gerados; a separação permanente continua pendente.
+
 Os roteiros longos passaram de cerca de 1.100 s para 1.900 s entre rodadas.
-Na última rodada publicada: actions/save 95 = 1.830,8 s; lots/save 106 =
+Na rodada então registrada: actions/save 95 = 1.830,8 s; lots/save 106 =
 1.904,2 s. O limite paralelo foi ampliado para 1.950 s com autorização, mas
 a causa do aumento continua UNKNOWN; investigar carga, esperas e progresso
 por quadro, sem atribuir a diferença à câmera sem evidência.

@@ -94,3 +94,27 @@ Remove-Item Env:\PLS_PC_MAP_NEAREST
 
 O pacote novo ainda não foi testado fisicamente. O zoom e a correção do
 diagnóstico permanecem em commits locais, sem push.
+
+## Retorno do aparelho: calibração do autoteste
+
+O pacote de diagnóstico executado no New 3DS XL mediu erro máximo 1 na
+redução a 75%. No caso sintético 2× seguido de redução a 150%, os quatro
+cantos e todos os alfas coincidiram exatamente; seis canais RGB interpolados
+ultrapassaram 2, chegando a 5 em 255. Por exemplo, o esperado (128,128,0,255)
+resultou em (131,123,0,255). No Azahar o erro foi zero.
+
+O autoteste foi calibrado somente para os canais RGB de valor esperado 128
+desse caso sintético de 150%: limite 5. Cantos, alfa, valores não interpolados
+e o caso de 75% conservam o limite 2. A fixture testa os valores físicos e
+rejeita erro 6, ausência de filtro, troca de cantos e corrupção de alfa.
+Não é um limite garantido para todos os pixels do jogo. Precisão de
+interpolação é uma hipótese compatível; o estágio exato da GPU ainda não
+foi isolado.
+
+Nenhum pixel produzido pelo renderer foi alterado. A diferença medida entre
+PC/Azahar e aparelho permanece e passa a ser explícita no critério desse
+autoteste; a alteração evita encerrar o programa por essa diferença conhecida.
+Pacote local para novo teste: `build/phase4-video/zoom-calibrated-test.3dsx`.
+Testar sem `map-nearest.flag`, exigir `PLS_VIDEO_SELF_CHECK=PASS`, conferir
+título e mapa em escalas fracionárias. A validação física desse pacote continua
+pendente; sem push.

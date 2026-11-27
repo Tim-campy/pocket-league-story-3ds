@@ -665,3 +665,10 @@ medições ficam em `build/phase4-video/fractional-*`. Escalas fracionárias tê
 suavização dos contornos; não equivalem a pixels inteiros nem eliminam a
 discretização do movimento que já acontece antes da ampliação.
 
+Calibração física do autoteste (2026-11-27): o New 3DS mediu erro máximo 5
+em canais interpolados do padrão sintético a 150%, com cantos e alfa exatos.
+O host aceita até 5 somente nesses canais do teste; conserva 2 nos demais.
+É correção de verificação no escopo autorizado pelo usuário: evita abortar
+antes do título por essa diferença medida. Renderer, textos e saves não mudam.
+Detalhes e negativos testados em `docs/notes/phase4-fractional-zoom.md`.
+

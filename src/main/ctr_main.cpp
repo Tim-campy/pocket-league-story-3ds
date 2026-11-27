@@ -12,6 +12,7 @@
 #include "storage.hpp"
 #include "capture.hpp"
 #include "map_zoom_sample.hpp"
+#include "ctr_zoom_check.hpp"
 #include "kairo.unity.m3d4.util3d.Vector3D.hpp"
 #include "runtime_memory.hpp"
 #include "text_input.hpp"
@@ -233,9 +234,9 @@ void gpu_check(ctr::Gpu& gpu){
                     scale,x,y,unsigned(expected[0]),unsigned(expected[1]),unsigned(expected[2]),unsigned(expected[3]),
                     unsigned(actual[0]),unsigned(actual[1]),unsigned(actual[2]),unsigned(actual[3]));
                 for(int c=0;c<4;++c){const int error=std::abs(int(actual[c])-int(expected[c]));
-                    max_error=std::max(max_error,error);if(error>2)++mismatches;}
+                    max_error=std::max(max_error,error);if(error>ctr::zoom_check_tolerance(scale,c,expected[c]))++mismatches;}
             }
-            std::fprintf(stderr,"PLS_VIDEO_ZOOM_CHECK scale=%d mismatched_channels=%d max_error=%d tolerance=2\n",scale,mismatches,max_error);
+            std::fprintf(stderr,"PLS_VIDEO_ZOOM_CHECK scale=%d mismatched_channels=%d max_error=%d tolerance=2 interpolated_rgb_tolerance=%d\n",scale,mismatches,max_error,ctr::zoom_check_tolerance(scale,0,128));
             std::fflush(stderr);
             if(mismatches)throw std::runtime_error("GPU map zoom differs from CPU sampling at scale "+std::to_string(scale));
         }

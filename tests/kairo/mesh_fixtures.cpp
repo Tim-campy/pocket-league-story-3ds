@@ -1,5 +1,6 @@
 #include "mesh.hpp"
 #include "map_zoom_sample.hpp"
+#include "../../src/main/ctr_zoom_check.hpp"
 #include <iostream>
 using namespace pls;
 namespace {
@@ -8,6 +9,20 @@ cs::Ref<kairo::Image> target(){return kairo::Image::FromRgba(16,16,std::vector<s
 std::array<int,4> pixel(const cs::Ref<kairo::Image>&image,int x,int y){const auto&i=image->pixels();const auto at=std::size_t(y*16+x)*4;return {i[at],i[at+1],i[at+2],i[at+3]};}
 }
 int main(){
+ // Own synthetic fixture, measured on New 3DS; never APK pixels.
+ const std::array<std::array<int,4>,9> measured{{{255,0,0,255},{131,123,0,255},{0,255,0,255},
+     {124,0,132,255},{127,127,128,255},{132,255,132,255},
+     {0,0,255,255},{127,127,255,255},{255,255,255,255}}};
+ const std::array<std::array<int,4>,9> expected{{{255,0,0,255},{128,128,0,255},{0,255,0,255},
+     {128,0,128,255},{128,128,128,255},{128,255,128,255},
+     {0,0,255,255},{128,128,255,255},{255,255,255,255}}};
+ auto accepted=[](int scale,int c,int want,int got){return std::abs(want-got)<=ctr::zoom_check_tolerance(scale,c,want);};
+ for(int i=0;i<9;++i)for(int c=0;c<4;++c)check(accepted(150,c,expected[i][c],measured[i][c]));
+ check(!accepted(150,0,128,134));check(!accepted(150,1,128,122));
+ check(!accepted(150,0,128,255));check(!accepted(150,1,128,0)); // Nearest cannot pass as linear.
+ check(!accepted(150,0,255,0));check(!accepted(150,2,0,255)); // Swapped corners fail.
+ check(!accepted(150,3,255,252));check(!accepted(150,0,0,3));
+ check(!accepted(75,0,128,131)); // Single-pass tolerance is unchanged.
  // Compare the allocation-free sampler against an explicitly expanded image.
  std::vector<std::uint8_t> pattern(7*5*4),expanded(14*10*4);
  for(std::size_t i=0;i<pattern.size();++i)pattern[i]=std::uint8_t((i*37+19)%256);

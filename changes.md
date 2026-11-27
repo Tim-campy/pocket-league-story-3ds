@@ -637,3 +637,23 @@ execução física sem `map-nearest.flag` para obter os valores ausentes.
 Para voltar provisoriamente ao modo anterior, a flag já existente
 `SD:/pls-video/map-nearest.flag` desliga o filtro e seu teste específico.
 Isso é alternativa de comparação, não uma correção da divergência.
+
+## 2026-11-27 — 16. Valores físicos recebidos e calibração restrita do autoteste
+
+Novos logs preservados em `build/phase4-video/n3ds-zoom-pixel-diagnostic`.
+A 75%, erro máximo 1. A 150%, seis canais interpolados acima de 2, máximo 5;
+cantos e alfa exatos. O valor esperado (128,128,0,255) virou (131,123,0,255).
+O estágio da GPU responsável ainda é UNKNOWN; precisão de interpolação é
+hipótese, não uma causa comprovada.
+
+Corrigido somente o critério do autoteste: limite 5 para RGB esperado 128
+do padrão de 150%; limite 2 nos demais canais/casos. Os pixels desenhados
+permanecem iguais. Testes com os valores sintéticos medidos e negativos para
+erro 6, nearest no lugar de linear, cantos trocados e alfa incorreto. Nenhuma
+mudança no renderer, jogo, runtime, coletor, save ou dependências. O pacote
+de teste fica em `build/phase4-video/zoom-calibrated-test.3dsx`, sem push.
+
+Verificação: fixture 633 asserções; build CTR 126,9 s; Azahar 32,1 s
+(autoteste PASS, título e saída); build PC 3,4 s; check 6,5 s;
+smoke 224 s, 10/10 roteiros, 5/5 cenários e zero alertas. O pacote
+calibrado ainda precisa ser executado no aparelho.

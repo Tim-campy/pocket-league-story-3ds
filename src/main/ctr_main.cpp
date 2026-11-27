@@ -224,12 +224,20 @@ void gpu_check(ctr::Gpu& gpu){
             gpu.clear(*target,0x000000ff);
             g->DrawScaledMapImage(source,0,0,float(edge),float(edge),0,0,2,2,scale);
             const auto& filtered=target->pixels();
+            int mismatches=0,max_error=0;
             for(int y=0;y<edge;++y)for(int x=0;x<edge;++x){
                 const auto expected=kairo::map_zoom_sample(source->pixels().data(),2,2,0,0,2,2,
                     (float(x)+.5f)/edge,(float(y)+.5f)/edge,scale<100?1:2);
-                for(int c=0;c<4;++c)if(std::abs(int(filtered[(y*8+x)*4+c])-int(expected[c]))>2)
-                    throw std::runtime_error("GPU map zoom differs from CPU sampling");
+                const auto* actual=filtered.data()+(y*8+x)*4;
+                std::fprintf(stderr,"PLS_VIDEO_ZOOM_PIXEL scale=%d x=%d y=%d expected=%u,%u,%u,%u actual=%u,%u,%u,%u\n",
+                    scale,x,y,unsigned(expected[0]),unsigned(expected[1]),unsigned(expected[2]),unsigned(expected[3]),
+                    unsigned(actual[0]),unsigned(actual[1]),unsigned(actual[2]),unsigned(actual[3]));
+                for(int c=0;c<4;++c){const int error=std::abs(int(actual[c])-int(expected[c]));
+                    max_error=std::max(max_error,error);if(error>2)++mismatches;}
             }
+            std::fprintf(stderr,"PLS_VIDEO_ZOOM_CHECK scale=%d mismatched_channels=%d max_error=%d tolerance=2\n",scale,mismatches,max_error);
+            std::fflush(stderr);
+            if(mismatches)throw std::runtime_error("GPU map zoom differs from CPU sampling at scale "+std::to_string(scale));
         }
     }
     stage("depth");auto back=kairo::Image::FromRgba(1,1,{255,0,0,255});

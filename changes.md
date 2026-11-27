@@ -613,3 +613,27 @@ Instruções e limitações da entrega em `docs/notes/phase4-fractional-zoom.md`
 É necessária nova sessão física para separar corretamente mapa parado e
 rolando e medir o filtro. Os totais da sessão anterior, coletas e tempos por
 formulário permanecem válidos. Não houve novo push após d587023.
+
+## 2026-11-27 — 15. Falha física no autoteste do zoom fracionário
+
+O usuário informou que o pacote não abriu no New 3DS XL. Os novos logs em
+`build/phase4-video/n3ds` terminam com
+`GPU map zoom differs from CPU sampling`, antes de iniciar o jogo. Cópia
+preservada em `build/phase4-video/n3ds-fractional-boot-failure`.
+
+A sequência mostra que o teste de redução passou e a divergência ocorreu
+na ampliação 2× seguida de redução a 150%. O Azahar havia passado: essa
+aprovação não comprovou a equivalência no hardware. O log antigo não tem
+os pixels, portanto a causa numérica ainda é UNKNOWN.
+
+Acrescentado somente diagnóstico no autoteste do host CTR: dez pixels com
+RGBA esperado/recebido, contagem de canais divergentes e maior erro por caso.
+A tolerância continua 2; nenhuma verificação foi removida, nenhum filtro
+foi alterado. O teste ainda encerra quando encontra divergência. Sem mudança
+no jogo, runtime, coletor, save ou dependências. O pacote de diagnóstico fica
+em `build/phase4-video/zoom-boot-diagnostic.3dsx`, sem push, e precisa de uma
+execução física sem `map-nearest.flag` para obter os valores ausentes.
+
+Para voltar provisoriamente ao modo anterior, a flag já existente
+`SD:/pls-video/map-nearest.flag` desliga o filtro e seu teste específico.
+Isso é alternativa de comparação, não uma correção da divergência.

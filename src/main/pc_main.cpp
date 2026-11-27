@@ -17,6 +17,43 @@
 #include "diagnostic_keys.hpp"
 #if defined(PLS_DIAGNOSTIC_BUILD)
 #include "diagnostic_route.hpp"
+#include "zoom.hpp"
+#include "circle_pad.hpp"
+#include "c_stick.hpp"
+#include "form.GameForm.hpp"
+#include "form.SubForm.hpp"
+#include "game.Camera.hpp"
+#include "game.Tenant.hpp"
+#include "game.UserData.hpp"
+#include "main.AppData.hpp"
+#include "kairo.unity.util.Property.hpp"
+#include "generated/kairo.unity.m3d4.util3d.Vector3D.hpp"
+namespace {
+// Route snapshot of the management map: fields and static storage only, so no
+// counted game method runs and nothing managed is allocated. Valid only while a
+// GameForm with its camera and user data exists (its types are initialized then).
+void capture_game(pls::pc::route::GameState& out,pls::kairo::FormManagerBase* manager){
+    out=pls::pc::route::GameState{};
+    if(!manager)return;
+    pls::game::form::GameForm* map=nullptr;
+    for(std::int32_t i=0,n=manager->GetFormsNum();i<n&&!map;++i)map=dynamic_cast<pls::game::form::GameForm*>(manager->GetForm(i));
+    if(!map||!map->apdat_||!map->udat_||!map->apdat_->camera||!map->apdat_->save_)return;
+    using pls::game::game::Camera;
+    const auto* camera=map->apdat_->camera;
+    const auto cursor=Camera::cursor_pos();const auto position=Camera::pos();const auto address=Camera::camera_address();
+    if(!cursor||!position||address.is_null()||address.length()<2)return;
+    if(auto window=dynamic_cast<pls::game::form::SubForm*>(manager->GetTopForm()))out.window=window->type_;
+    out.valid=true;out.map_state=map->state_;out.scale=map->scale_;
+    out.cursor_x=cursor->x_;out.cursor_y=cursor->y_;out.camera_x=position->x_;out.camera_y=position->y_;
+    out.cursor_ax=address[0];out.cursor_ay=address[1];out.cursor_hidden=camera->managementCursorHidden_;
+    out.selected=camera->subTenant_?std::int32_t(camera->subTenant_->id_):-1;
+    const auto& longs=map->apdat_->save_->lngs;if(!longs.is_null()&&longs.length()>0)out.money=longs[0];
+    const auto& tenants=map->udat_->tenants_;
+    if(!tenants.is_null())for(std::int32_t i=0;i<tenants.length();++i){const auto* t=tenants.get_Item(i);
+        if(!t||t->address_.is_null()||t->address_.length()<2)continue;
+        out.tenants.push_back({t->id_,t->state_,t->address_[0],t->address_[1],t->tenantDataId_});}
+}
+}
 #endif
 #include "diagnostic_profile.hpp"
 #include "dialog_service.hpp"
@@ -260,6 +297,10 @@ int main(int argc,char** argv){
         // game time deterministic), so long coverage routes run at CPU speed.
         const bool fast=std::getenv("PLS_PC_FAST")!=nullptr&&pls::kairo::virtual_clock::active();
         pls::pc::route::UiState ui_state;std::string ui_signature;std::uint64_t route_anchor=0;bool route_anchored=false;
+        // Game-aware routes (route->uses_game()) read and log the map snapshot; UI-only routes run as before.
+        const bool route_game=route&&route->uses_game();std::string game_signature;
+        pls::kairo::CirclePadState route_pad{};pls::kairo::CStickState route_stick{};bool route_pad_active=false,route_stick_active=false;
+        int route_zoom=0; // hold L|R from the route, published after the dual-screen host each frame
         auto capture_ui=[&](std::uint64_t frame){
             ui_state.frame=frame;ui_state.stack.clear();
             if(auto manager=app->GetFormManager()){const auto count=manager->GetFormsNum();
@@ -268,6 +309,7 @@ int main(int argc,char** argv){
                     ui_state.stack.push_back({form->managed_type_name(),form->GetId(),form->GetProcessMode(),left.is_null()?std::string():left.utf8(),right.is_null()?std::string():right.utf8()});}}
             {auto l=canvas->GetSoftLabelL();auto r=canvas->GetSoftLabelR();ui_state.soft_left=l.is_null()?std::string():l.utf8();ui_state.soft_right=r.is_null()?std::string():r.utf8();}
             ui_state.text_panel=text_input->Active();pls::pc::route::derive(ui_state);
+            if(route_game)capture_game(ui_state.game,app->GetFormManager());
         };
 #endif
         while(!app->IsTermination()&&!pls::kairo::host_finish_requested.load()){
@@ -308,7 +350,11 @@ int main(int argc,char** argv){
                 if(action.accept){pls::platform::Input enter{pls::platform::Input::Kind::key_down};enter.key=13;text_input->Handle(enter);std::cerr<<"PLS_PC_SCRIPTED_ACCEPT="<<route_frame<<'\n';}
                 if(action.focus>=0){std::cerr<<"PLS_PC_SCRIPTED_FOCUS="<<route_frame<<':'<<action.focus<<'\n';lock.unlock();app->host_focus(action.focus==1);lock.lock();}
                 if(action.step>=0)std::cerr<<"PLS_ROUTE_STEP={\"step\":"<<action.step<<",\"frame\":"<<presented_frames<<"}\n";
-                if(action.timed_out){std::cerr<<"PLS_ROUTE_TIMEOUT={\"frame\":"<<presented_frames<<",\"note\":\""<<pls::pc::route::json_escape(action.note)<<"\",\"state\":"<<pls::pc::route::to_line(ui_state)<<"}\n";pls::kairo::host_finish_requested=true;}
+                if(action.stick=="CP"){route_pad={action.axis_x,action.axis_y};route_pad_active=true;}
+                if(action.stick=="CS"){route_stick={action.axis_x,action.axis_y};route_stick_active=true;}
+                if(action.zoom==2){route_zoom=0;pls::kairo::detail::publish_zoom_direction(0);std::cerr<<"PLS_PC_SCRIPTED_ZOOM="<<route_frame<<":release\n";}
+                else if(action.zoom){route_zoom=action.zoom;std::cerr<<"PLS_PC_SCRIPTED_ZOOM="<<route_frame<<':'<<(action.zoom>0?"R":"L")<<'\n';}
+                if(action.timed_out){std::cerr<<"PLS_ROUTE_TIMEOUT={\"frame\":"<<presented_frames<<",\"note\":\""<<pls::pc::route::json_escape(action.note)<<"\",\"state\":"<<pls::pc::route::to_line(ui_state);if(route_game)std::cerr<<",\"game\":"<<pls::pc::route::game_line(ui_state.game);std::cerr<<"}\n";pls::kairo::host_finish_requested=true;}
                 if(action.done){std::cerr<<"PLS_ROUTE_DONE="<<presented_frames<<'\n';pls::kairo::host_finish_requested=true;}
             }
             if(dismiss_until&&input_frame>=300&&input_frame<=dismiss_until&&input_frame%18==0&&std::find(select_frames.begin(),select_frames.end(),input_frame)==select_frames.end()&&std::none_of(scripted_keys.begin(),scripted_keys.end(),[&](const auto&key){return key.frame==input_frame;})){
@@ -337,6 +383,11 @@ int main(int argc,char** argv){
             }
             timing.mark(pls::pc::FrameStage::input);
             if(dual){auto manager=app->GetFormManager();dual->update(*canvas,manager);}
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            if(route_zoom)pls::kairo::detail::publish_zoom_direction(route_zoom,true);
+            if(route_pad_active){pls::kairo::detail::publish_circle_pad(route_pad);if(!route_pad.x&&!route_pad.y)route_pad_active=false;}
+            if(route_stick_active){pls::kairo::detail::publish_c_stick(route_stick);if(!route_stick.x&&!route_stick.y)route_stick_active=false;}
+#endif
             app->host_update();
             pls::kairo::Offscreen::RenderAll();
 #if defined(PLS_DIAGNOSTIC_BUILD)
@@ -371,7 +422,8 @@ int main(int argc,char** argv){
 #endif
 #if defined(PLS_DIAGNOSTIC_BUILD)
             if(route||ui_trace){capture_ui(presented_frames+1);auto signature=pls::pc::route::signature(ui_state);
-                if(signature!=ui_signature){ui_signature=std::move(signature);std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_UI_STATE="<<pls::pc::route::to_line(ui_state)<<'\n';}}
+                if(signature!=ui_signature){ui_signature=std::move(signature);std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_UI_STATE="<<pls::pc::route::to_line(ui_state)<<'\n';}
+                if(route_game){auto line=pls::pc::route::game_line(ui_state.game);if(line!=game_signature){game_signature=line;std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_GAME_STATE={\"frame\":"<<(presented_frames+1)<<",\"game\":"<<line<<"}\n";}}}
 #endif
 #if defined(PLS_DIAGNOSTIC_BUILD)
             if(!fast)

@@ -90,5 +90,72 @@ int main(){
     auto line=to_line(state(7,{{"form.SubForm",4,3,"a\"b","c\\d"}}));
     check(line.find("a\\\"b")!=std::string::npos&&line.find("c\\\\d")!=std::string::npos,"labels escaped in state line");
     check(signature(state(1,{{"x",1,1,"",""}}))==signature(state(2,{{"x",1,1,"",""}})),"signature ignores frame");
+    // Game-aware verbs and conditions (map snapshot filled by the host).
+    check(parse_fails("cursor to\nend\n"),"cursor to needs tenant");
+    check(parse_fails("hold X frames=2\nend\n"),"hold accepts only L or R");
+    check(parse_fails("hold R\nend\n"),"hold needs frames");
+    check(parse_fails("expect money=lots\nend\n"),"money needs a known comparison");
+    check(parse_fails("expect tenant_state=0\nend\n"),"tenant_state needs tenant");
+    check(!parse_fails("wait scale=100\nend\n"),"wait accepts a game condition alone");
+    // map(frame, cursor address x, y, selected, money, tenant state); tenant 6 covers cells x 10..11, y 4..5.
+    auto map=[](std::uint64_t f,std::int32_t ax,std::int32_t ay,std::int32_t selected,std::int64_t money,std::int32_t tenant_state){
+        auto s=state(f,{{"form.GameForm",9,3,"Save","Menu"}});auto& g=s.game;g.valid=true;g.map_state=0;g.scale=100;
+        g.cursor_ax=ax;g.cursor_ay=ay;g.cursor_x=float(ax);g.selected=selected;g.money=money;g.tenants={{6,tenant_state,10,5,40}};return s;};
+    const TenantRow six{6,1,10,5,40};
+    check(steer_key(map(0,8,2,-1,0,1).game,six,false)=="RIGHT","below-left in both cells: RIGHT");
+    check(steer_key(map(0,13,7,-1,0,1).game,six,false)=="LEFT","beyond in both cells: LEFT");
+    // One cell off in x only needs UP and LEFT together: ties alternate between the two keys.
+    check(steer_key(map(0,12,4,-1,0,1).game,six,true)=="UP"&&steer_key(map(0,12,4,-1,0,1).game,six,false)=="LEFT","too far in x only: UP/LEFT alternate");
+    check(steer_key(map(0,10,7,-1,0,1).game,six,true)=="DOWN"&&steer_key(map(0,10,7,-1,0,1).game,six,false)=="LEFT","too far in y only: DOWN/LEFT alternate");
+    check(steer_key(map(0,8,9,-1,0,1).game,six,false)=="DOWN","y error larger than x error: DOWN wins");
+    check(steer_key(map(0,11,4,-1,0,1).game,six,false).empty(),"inside the tenant cells: no key");
+    Runner steer(parse_text("cursor to tenant=6 timeout=50\nexpect selected=6\nend\n"));
+    a=steer.step(map(1,8,2,-1,0,1));check(a.key=="RIGHT","cursor to presses the steering key");
+    a=steer.step(map(2,11,4,6,0,1));check(a.done&&!a.timed_out,"cursor to ends when the game selects the tenant");
+    Runner popped(parse_text("cursor to tenant=6 timeout=50\nend\n"));
+    {auto s=map(1,8,2,-1,0,1);s.stack.push_back({"form.SubForm",4,1,"",""});derive(s);a=popped.step(s);}
+    check(a.key=="SELECT","cursor to closes an unlabeled game popup first");
+    Runner lost(parse_text("cursor to tenant=6 timeout=3\nend\n"));
+    for(std::uint64_t f=10;f<15;++f)a=lost.step(map(f,8,2,-1,0,1));
+    check(a.timed_out&&a.note.find("did not reach")!=std::string::npos,"cursor to fails when selection never happens");
+    Runner unknown(parse_text("cursor to tenant=7\nend\n"));
+    a=unknown.step(map(1,0,0,-1,0,1));check(a.timed_out&&a.note.find("unknown tenant")!=std::string::npos,"cursor to fails on an unknown tenant");
+    Runner money(parse_text("mark\nwait tenant=6 tenant_state=0 timeout=5\nexpect money=less\nend\n"));
+    a=money.step(map(1,0,0,-1,1000,1));check(a.key.empty()&&!a.timed_out,"mark stores money, wait holds");
+    a=money.step(map(2,0,0,-1,900,0));check(a.done&&!a.timed_out,"tenant state and money condition pass");
+    Runner same(parse_text("mark\nexpect money=less\nend\n"));
+    a=same.step(map(1,0,0,-1,1000,1));check(a.timed_out&&a.note.find("expect failed")!=std::string::npos,"unchanged money fails expect");
+    Runner hold(parse_text("hold R frames=2\nend\n"));
+    a=hold.step(map(1,0,0,-1,0,1));check(a.zoom==1,"hold R first frame");
+    a=hold.step(map(2,0,0,-1,0,1));check(a.zoom==1,"hold R second frame");
+    a=hold.step(map(3,0,0,-1,0,1));check(a.zoom==2,"hold releases after its frames");
+    Runner ui(parse_text("expect scale=100\nend\n"));
+    a=ui.step(state(1,{{"form.TitleForm",1,3,"",""}}));check(a.timed_out,"game condition fails without a map snapshot");
+    Runner stall(parse_text("watchdog frames=3\nwait tenant=6 tenant_state=0 timeout=100\nend\n"));
+    for(std::uint64_t f=1;f<=5&&!a.done;++f)a=stall.step(map(f,0,0,-1,0,1));
+    check(a.timed_out&&a.note.find("stalled")!=std::string::npos,"watchdog fails a wait with no state change");
+    Runner moving(parse_text("watchdog frames=3\nwait tenant=6 tenant_state=0 timeout=100\nend\n"));
+    a={};for(std::uint64_t f=1;f<=6;++f)a=moving.step(map(f,std::int32_t(f),0,-1,0,1));
+    check(!a.timed_out&&!a.done,"watchdog tolerates a changing state");
+    check(Runner(parse_text("cursor to tenant=6\nend\n")).uses_game()&&!Runner(parse_text("wait frames=2\nend\n")).uses_game(),"uses_game detects game-aware routes");
+    check(to_line(map(1,0,0,-1,0,1))==to_line(state(1,{{"form.GameForm",9,3,"Save","Menu"}})),"UI state line ignores the game snapshot");
+    check(parse_fails("hold CP x=32768 frames=2\nend\n"),"stick rejects out of range");
+    check(parse_fails("expect hidden=maybe\nend\n"),"hidden accepts only boolean");
+    Runner analog(parse_text("hold CP x=32767 y=-123 frames=2\nhold CS x=-321 frames=1\nend\n"));
+    a=analog.step(map(1,0,0,-1,0,1));check(a.stick=="CP"&&a.axis_x==32767&&a.axis_y==-123,"CP first sample");
+    a=analog.step(map(2,0,0,-1,0,1));check(a.stick=="CP"&&a.axis_x==32767,"CP held sample");
+    a=analog.step(map(3,0,0,-1,0,1));check(a.stick=="CP"&&!a.axis_x&&!a.axis_y,"CP release");
+    a=analog.step(map(4,0,0,-1,0,1));check(a.stick=="CS"&&a.axis_x==-321,"CS sample");
+    a=analog.step(map(5,0,0,-1,0,1));check(a.stick=="CS"&&!a.axis_x,"CS release");
+    Runner motion(parse_text("mark\nwait frames=1\nexpect cursor=same camera=changed selected=same hidden=false\nend\n"));
+    auto initial=map(1,1,2,6,100,1);motion.step(initial);initial.frame=2;initial.game.camera_x=5;a=motion.step(initial);check(a.done&&!a.timed_out,"camera moves independently");
+    Runner mismatch(parse_text("mark\nwait frames=1\nexpect cursor=same\nend\n"));
+    initial=map(1,1,2,6,100,1);mismatch.step(initial);initial.frame=2;initial.game.cursor_x+=1;a=mismatch.step(initial);check(a.timed_out,"changed cursor fails same assertion");
+    Runner bounded(parse_text("hold RIGHT frames=3 hidden=false max_pan=6\nend\n"));
+    initial=map(1,0,0,-1,0,1);bounded.step(initial);initial.frame=2;initial.game.camera_x=7;a=bounded.step(initial);
+    check(a.timed_out,"edge scenario rejects camera jumps");
+    Runner hiddenHold(parse_text("hold RIGHT frames=3 hidden=false\nend\n"));
+    initial=map(1,0,0,-1,0,1);hiddenHold.step(initial);initial.frame=2;initial.game.cursor_hidden=true;a=hiddenHold.step(initial);
+    check(a.timed_out,"edge scenario rejects hidden cursor during movement");
     std::cout<<"{\"status\":\"PASS\",\"assertions\":"<<assertions<<"}\n";
 }

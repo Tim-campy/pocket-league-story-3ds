@@ -1,0 +1,40 @@
+# Diagnostic route (no game data): new game from an empty profile.
+# Run without --diagnostic-save-from-attempt. Title START -> save slot screen
+# ("Empty Slot") -> SELECT calls TitleForm.NewGame -> team naming form
+# (0 name, 1 short name, 2 ..., 3 start): each name opens the host text panel
+# (MainPanel -> SimpleTextInput), filled with `type` and confirmed with
+# `accept`; option 3 calls AppData.NewGame and UserData.NewGame.
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=40
+type Sunrays
+wait frames=5
+accept
+wait frames=40
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+type SUN
+wait frames=5
+accept
+wait frames=40
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=120
+dismiss until form=GameForm label_right=* timeout=6000 optional
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+end

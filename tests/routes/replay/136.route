@@ -1,0 +1,15 @@
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=400
+key SOFT1
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+end

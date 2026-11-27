@@ -1,0 +1,12 @@
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=SoccerForm timeout=9000
+wait frames=400
+end

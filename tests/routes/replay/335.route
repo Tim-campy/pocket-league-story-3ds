@@ -1,0 +1,12 @@
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=6000 optional
+wait frames=1300
+end

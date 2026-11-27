@@ -1,0 +1,66 @@
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=SoccerForm timeout=9000
+wait frames=400
+focus off
+wait frames=10
+focus on
+wait frames=30
+tap 48 90
+wait frames=40
+press 222 100
+wait frames=4
+move 222 120
+wait frames=4
+move 222 140
+wait frames=4
+release 222 140
+wait frames=20
+press 222 140
+wait frames=4
+move 222 160
+wait frames=4
+move 222 180
+wait frames=4
+release 222 180
+wait frames=20
+press 222 180
+wait frames=4
+move 222 200
+wait frames=4
+move 222 220
+wait frames=4
+release 222 220
+wait frames=20
+key SOFT2
+wait frames=40
+key SELECT
+wait frames=200
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+end

@@ -1,0 +1,33 @@
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=30
+# cycle 0: apply to the first cup
+dismiss until form=GameForm label_right=* timeout=300 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=40
+key SELECT
+wait frames=40
+dismiss until form=GameForm label_right=* timeout=400 optional
+# one match with the Gift Shop present (any state): SoccerForm.GetGoodsPrice -> TenantData.GetGoodsIncomeRate
+dismiss until form=SoccerForm timeout=7000 optional
+dismiss until form=GameForm label_right=* timeout=7000 optional
+end

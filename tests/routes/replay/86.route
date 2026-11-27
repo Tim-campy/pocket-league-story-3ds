@@ -1,0 +1,153 @@
+# Diagnostic route (no game data): management actions from a mid-game save.
+# Main menu (SubForm type 3): 0 Matches, 1 Special training, 2 Manage, 3 Edit
+# team, 4 Info, 5 Settings. Each block opens the menu with SOFT2, walks to an
+# item, selects the first entry and confirms, then returns to GameForm.
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait form=GameForm label_right=* timeout=600
+dismiss until form=GameForm label_right=* timeout=300 optional
+# A. Matches -> League: register in the first league
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=400 optional
+# B. Manage -> Facilities (third entry): build the first facility
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=400 optional
+# C. Manage -> Fans (second entry)
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=400 optional
+# D. Manage -> Sponsors (fourth entry)
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=400 optional
+# E. Manage -> Trades (first entry)
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=400 optional
+# F. Special training
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=400 optional
+# G. Weeks pass: league matches, events (answers "No" at the year-end question)
+dismiss until form=GameForm label_right=* timeout=200 optional
+when form=SubForm label_right=* key SOFT2
+wait frames=10
+when form=SubForm key RIGHT
+wait frames=10
+when form=SubForm key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=200 optional
+when form=SubForm label_right=* key SOFT2
+wait frames=10
+when form=SubForm key RIGHT
+wait frames=10
+when form=SubForm key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+end

@@ -1,0 +1,84 @@
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=100
+press 120 140
+wait frames=2
+move 120 90
+wait frames=2
+move 120 40
+wait frames=2
+release 120 40
+wait frames=54
+press 120 140
+wait frames=2
+move 120 90
+wait frames=2
+move 120 40
+wait frames=2
+release 120 40
+wait frames=54
+press 120 140
+wait frames=2
+move 120 90
+wait frames=2
+move 120 40
+wait frames=2
+release 120 40
+wait frames=54
+press 120 140
+wait frames=2
+move 70 140
+wait frames=2
+move 20 140
+wait frames=2
+release 20 140
+wait frames=54
+press 120 140
+wait frames=2
+move 70 140
+wait frames=2
+move 20 140
+wait frames=2
+release 20 140
+wait frames=54
+press 120 140
+wait frames=2
+move 70 140
+wait frames=2
+move 20 140
+wait frames=2
+release 20 140
+wait frames=54
+press 120 140
+wait frames=2
+move 120 190
+wait frames=2
+move 120 240
+wait frames=2
+release 120 240
+wait frames=54
+press 120 140
+wait frames=2
+move 120 190
+wait frames=2
+move 120 240
+wait frames=2
+release 120 240
+wait frames=54
+press 120 140
+wait frames=2
+move 120 190
+wait frames=2
+move 120 240
+wait frames=2
+release 120 240
+wait frames=54
+end

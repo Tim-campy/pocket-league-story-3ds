@@ -100,4 +100,19 @@ class Durations(unittest.TestCase):
             self.assertEqual(routes.previous_durations(build), {'1': 42})
 
 
-if __name__ == '__main__': unittest.main()
+class VersionedReplays(unittest.TestCase):
+    def test_every_replayed_canonical_run_has_a_versioned_route_and_coverage(self):
+        history = json.loads((ROOT / 'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))
+        table = json.loads((ROOT / 'tests/routes/replay/canonical-coverage.json').read_text(encoding='utf-8'))
+        rows = routes.chosen_runs(Path(tempfile.gettempdir()) / 'no-private-build', history)  # build/ absent, as in CI
+        self.assertEqual(len(rows), 87)
+        import hashlib
+        for a in rows:
+            text = (ROOT / 'tests/routes/replay' / f'{a["number"]}.route').read_bytes()
+            self.assertEqual(hashlib.sha256(text).hexdigest(), a['route']['sha256'], a['number'])
+            self.assertIn(str(a['number']), table['runs'])
+        self.assertTrue(table['replay_done'])
+
+
+if __name__ == '__main__':
+    unittest.main()

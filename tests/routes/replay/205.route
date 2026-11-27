@@ -1,0 +1,21 @@
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=30
+# Gift Shop (tenant 6, state 1) at (138,92): 65 -> SOFT1 (demolish) -> 66 -> SELECT (yes)
+tap 138 92
+wait frames=60
+key SOFT1
+wait frames=60
+key SELECT
+wait frames=90
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=60
+end

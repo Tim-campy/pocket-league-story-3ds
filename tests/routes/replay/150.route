@@ -1,0 +1,291 @@
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+wait frames=200
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 20 50
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 50 50
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 80 50
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 110 50
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 140 50
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 170 50
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 200 50
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 230 50
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 20 80
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 50 80
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 80 80
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 110 80
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 140 80
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 170 80
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 200 80
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 230 80
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 20 110
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 50 110
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 80 110
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 110 110
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 140 110
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 170 110
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 200 110
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 230 110
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 20 140
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 50 140
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 80 140
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 110 140
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 140 140
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 170 140
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 200 140
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 230 140
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 20 170
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 50 170
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 80 170
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 110 170
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 140 170
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 170 170
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 200 170
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 230 170
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 20 200
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 50 200
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 80 200
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 110 200
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 140 200
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 170 200
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 200 200
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 230 200
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 20 230
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 50 230
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 80 230
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 110 230
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 140 230
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 170 230
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 200 230
+wait frames=8
+key SELECT
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=300 optional
+tap 230 230
+wait frames=8
+key SELECT
+wait frames=30
+end

@@ -1,0 +1,40 @@
+# Diagnostic route (no game data): manual save, play, overwrite.
+# Load the save given by --diagnostic-save-from-attempt, save with the left soft
+# key (GameForm: IsPushSoftLabel(3) -> SubForm(16), AppData.SaveGame), close the
+# result with SELECT, advance three turns (weekly autosave, AppData.SaveGame(true)),
+# then save again over the same slot. A later session started with
+# --diagnostic-save-from-attempt <this attempt> loads what was written here.
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait form=GameForm label_right=* timeout=600
+dismiss until form=GameForm label_right=* timeout=300 optional
+# first manual save
+key SOFT1
+wait form=SubForm timeout=120
+wait frames=40
+key SELECT
+wait form=GameForm label_right=* timeout=200
+# three turns
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+# overwrite
+key SOFT1
+wait form=SubForm timeout=120
+wait frames=40
+key SELECT
+wait form=GameForm label_right=* timeout=200
+wait frames=60
+end

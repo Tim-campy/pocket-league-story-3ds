@@ -1,0 +1,69 @@
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=60
+# options
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+wait frames=130
+key SOFT2
+wait frames=40
+dismiss until form=GameForm label_right=* timeout=600 optional
+# sponsors
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+wait frames=130
+key SOFT2
+wait frames=40
+dismiss until form=GameForm label_right=* timeout=600 optional
+# edit team
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+wait frames=130
+end

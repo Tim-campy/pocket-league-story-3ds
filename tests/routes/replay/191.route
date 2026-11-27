@@ -1,0 +1,106 @@
+# Diagnostic route (no game data), run with --diagnostic-save-from-attempt 107.
+# Options (SubForm 14): BGM/SE track bars dragged along y 99 / 122
+# (GameView.OnTouchTrackBar); Sponsors (SubForm 42): hold the last visible row
+# and drag below the list, then the first row upwards (OnTouchVScrollButton).
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=60
+# Options (14): BGM and SE track bars (y 99 / 122, x 120..180)
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+press 156 99
+wait frames=3
+move 140 99
+wait frames=3
+move 125 99
+wait frames=3
+release 125 99
+wait frames=20
+press 125 99
+wait frames=3
+move 147 99
+wait frames=3
+move 170 99
+wait frames=3
+release 170 99
+wait frames=20
+press 122 122
+wait frames=3
+move 141 122
+wait frames=3
+move 160 122
+wait frames=3
+release 160 122
+wait frames=20
+key SOFT2
+wait frames=40
+dismiss until form=GameForm label_right=* timeout=600 optional
+# Sponsors (42): hold the last visible row (y 171), drag below the list
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+press 120 171
+wait frames=3
+move 120 185
+wait frames=3
+move 120 200
+wait frames=15
+release 120 200
+wait frames=20
+press 120 86
+wait frames=3
+move 120 70
+wait frames=3
+move 120 60
+wait frames=15
+release 120 60
+wait frames=20
+key SOFT2
+wait frames=40
+dismiss until form=GameForm label_right=* timeout=600 optional
+end

@@ -1,0 +1,46 @@
+# Diagnostic route (no game data), run with --diagnostic-save-from-attempt 107
+# (career that reached the end of the game; its system save has a record score
+# and continue data). Covers: BootForm.Resume (focus during boot, before the
+# title anchor), AppData.DrawTrophyEffect (trophy on the title), and
+# TradeData.IsPlayerInMember (new game in an empty slot after the end:
+# UserData.NewGame -> ReflectContinueGameData).
+wait frames=3
+focus off
+wait frames=3
+focus on
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key RIGHT
+wait frames=30
+key SELECT
+wait frames=60
+key SELECT
+wait frames=40
+type Sunrays
+wait frames=5
+accept
+wait frames=40
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+type SUN
+wait frames=5
+accept
+wait frames=40
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=120
+dismiss until form=GameForm label_right=* timeout=6000 optional
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+end

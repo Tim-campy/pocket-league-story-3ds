@@ -1,0 +1,53 @@
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=60
+# drag the camera: finger down 100 px slowly, hold, release (pos.y -230 -> -130)
+press 120 100
+wait frames=2
+move 120 110
+wait frames=2
+move 120 120
+wait frames=2
+move 120 130
+wait frames=2
+move 120 140
+wait frames=2
+move 120 150
+wait frames=2
+move 120 160
+wait frames=2
+move 120 170
+wait frames=2
+move 120 180
+wait frames=2
+move 120 190
+wait frames=2
+move 120 200
+wait frames=2
+wait frames=10
+release 120 200
+wait frames=30
+# office (tenant 7) at (78,100): SubForm 65 without demolish label
+tap 78 100
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=600 optional
+# vacant lot 6 at (138,70): SubForm 61 (build)
+tap 138 70
+wait frames=90
+key SELECT
+wait frames=90
+key SELECT
+wait frames=90
+key SELECT
+wait frames=90
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=60
+end

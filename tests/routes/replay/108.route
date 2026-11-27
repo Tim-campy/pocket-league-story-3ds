@@ -1,0 +1,21 @@
+# Diagnostic route (no game data): new game from an empty profile.
+# Run without --diagnostic-save-from-attempt: START on the title creates a new
+# game (AppData.NewGame and the data NewGame methods), then the opening events
+# are dismissed until management, and a few weeks pass.
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=6000 optional
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=200 optional
+key SELECT
+wait frames=100
+end

@@ -1,0 +1,124 @@
+# Diagnostic route (no game data): lifecycle and touch on every screen.
+# focus off/on resumes the form on top (Resume of TitleForm, RankForm, the save
+# slot screen, BootForm while loading, SoccerForm, GameForm, SubForm, and
+# FormManager/MyFormBase). RankForm page 2 (RIGHT) shows the money score.
+# Taps and drags exercise GameView list, scroll bar, key and camera handlers.
+anchor timeout=2400
+wait frames=104
+focus off
+wait frames=10
+focus on
+wait frames=20
+# Hi Scores (RankForm): page 2, lifecycle, touch, back
+key DOWN
+wait frames=12
+key SELECT
+wait frames=60
+key RIGHT
+wait frames=40
+focus off
+wait frames=10
+focus on
+wait frames=20
+tap 120 140
+wait frames=20
+tap 200 140
+wait frames=20
+key SOFT2
+wait frames=40
+key UP
+wait frames=12
+# START -> save slot screen: lifecycle, then load (lifecycle during loading)
+key SELECT
+wait frames=40
+focus off
+wait frames=10
+focus on
+wait frames=20
+key UP
+wait frames=20
+key SELECT
+wait frames=6
+focus off
+wait frames=6
+focus on
+wait frames=60
+wait not loading stable=20 timeout=900
+# A match day: lifecycle and camera touch/drag inside the match
+focus off
+wait frames=10
+focus on
+wait frames=20
+press 120 140
+wait frames=4
+move 150 160
+wait frames=4
+move 180 180
+wait frames=4
+release 180 180
+wait frames=20
+tap 60 200
+wait frames=20
+dismiss until form=GameForm label_right=* timeout=6000 optional
+# Management: lifecycle, map drag, menu with lifecycle and list touch
+focus off
+wait frames=10
+focus on
+wait frames=20
+press 100 120
+wait frames=4
+move 140 150
+wait frames=4
+release 140 150
+wait frames=20
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+focus off
+wait frames=10
+focus on
+wait frames=20
+tap 60 60
+wait frames=30
+tap 60 100
+wait frames=30
+press 225 80
+wait frames=4
+move 225 160
+wait frames=4
+release 225 160
+wait frames=30
+tap 120 240
+wait frames=30
+dismiss until form=GameForm label_right=* timeout=600 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+focus off
+wait frames=10
+focus on
+wait frames=20
+tap 120 90
+wait frames=20
+tap 120 130
+wait frames=20
+press 228 70
+wait frames=4
+move 228 200
+wait frames=4
+release 228 200
+wait frames=20
+tap 228 220
+wait frames=20
+tap 228 60
+wait frames=20
+dismiss until form=GameForm label_right=* timeout=600 optional
+end

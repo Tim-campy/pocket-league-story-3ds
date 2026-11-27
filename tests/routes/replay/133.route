@@ -1,0 +1,14 @@
+# probe: focus during boot, trophy title, slot screen
+wait frames=3
+focus off
+wait frames=3
+focus on
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key DOWN
+wait frames=30
+key DOWN
+wait frames=30
+end

@@ -1,0 +1,12 @@
+# Diagnostic route (no game data), run with --diagnostic-save-from-attempt 46
+# (its month-end auto save holds a pending delayed event). Loading the auto
+# slot runs AppData.Load -> DelayEvent.Deserialize (AppData.cs:2452-2459).
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=400
+end

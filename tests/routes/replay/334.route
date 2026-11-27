@@ -1,0 +1,5 @@
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=900
+end

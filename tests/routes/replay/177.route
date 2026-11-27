@@ -1,0 +1,31 @@
+# Diagnostic route (no game data): from the post-match save, load the game,
+# reach management and open the main menu; run with --ui-trace to record the
+# UI states used to author the full menu routes.
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait form=GameForm label_right=* timeout=600
+dismiss until form=GameForm label_right=* timeout=600
+key SOFT2
+wait frames=90
+key SELECT
+wait frames=90
+key SOFT2
+wait frames=90
+key DOWN
+wait frames=30
+key SELECT
+wait frames=90
+key SELECT
+wait frames=90
+key SOFT2
+wait frames=90
+key SOFT2
+wait frames=90
+key SOFT2
+wait frames=60
+end

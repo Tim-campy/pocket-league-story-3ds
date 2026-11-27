@@ -1,0 +1,57 @@
+# Diagnostic route (no game data): lifecycle and touch on the title screen.
+# focus off/on -> Main.OnSuspend/OnResume and form Resume; touch on the
+# language icon (top right) -> LanguageForm; touch on the second title item
+# (Hi Scores) -> RankForm; touch on the first item -> load and touch the map.
+# Coordinates are window pixels of the 240x280 PC host.
+anchor timeout=2400
+wait frames=104
+focus off
+wait frames=20
+focus on
+wait frames=40
+tap 218 16
+wait frames=90
+key SOFT2
+wait frames=60
+dismiss until form=TitleForm timeout=200 optional
+wait frames=30
+tap 120 190
+wait frames=120
+key DOWN
+wait frames=20
+key DOWN
+wait frames=20
+key SOFT2
+wait frames=60
+dismiss until form=TitleForm timeout=200 optional
+wait frames=30
+tap 120 170
+wait frames=40
+tap 120 170
+wait frames=40
+tap 120 170
+wait form=GameForm label_right=* timeout=900
+wait frames=30
+tap 150 140
+wait frames=20
+press 120 150
+wait frames=4
+move 140 170
+wait frames=4
+move 160 190
+wait frames=4
+release 160 190
+wait frames=30
+tap 210 262
+wait frames=60
+tap 120 120
+wait frames=40
+tap 120 150
+wait frames=60
+tap 210 262
+wait frames=60
+focus off
+wait frames=20
+focus on
+wait frames=60
+end

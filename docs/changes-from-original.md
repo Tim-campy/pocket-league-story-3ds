@@ -624,3 +624,22 @@ Verificar: `python tools/dev.py run --save 50`; segurar Q/W, soltar perto de
 100%/200%, conferir encaixe, pixels e cursor. Capturas privadas antes/depois
 em `build/phase4-video/exact-zoom-{before,after}/`.
 
+## Reutilização somente da barra inferior no CTR — 2026-11-27
+
+Decisão do usuário: conservar o resultado dos rótulos enquanto seu desenho
+não muda. O backend registra até 128 comandos em buffers nativos fixos e
+compara posição, recorte, cor/alfa, mistura, profundidade, filtro, textura e
+versão dos pixels. Mudança de texto, estado ou toque muda os comandos e
+invalida o resultado. Não muda layout, ações, texto ou save.
+
+O desenho do jogo ainda emite seus comandos; somente o trabalho/cópia da GPU
+da barra é evitado. Fontes mutáveis vindas de outro alvo, desenho sobre si
+mesmo, limpeza explícita e excesso de comandos usam o caminho normal. Nenhum
+outro alvo recebe cache. PC e backend nulo permanecem no caminho existente.
+
+Verificar no CTR pelo autoteste permanente `label_cache=1`, pelos contadores
+`label_cache_hits`/`label_cache_misses` do perfil e pela comparação com
+`/pls-video/labels-no-cache.flag` (diagnóstico). Remover a flag para o teste
+normal. Os handles guardados são nativos; sua liberação continua enfileirada
+no ponto seguro da thread de desenho, sem referências gerenciadas ocultas.
+

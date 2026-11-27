@@ -25,6 +25,7 @@ public:
     void begin_frame();
     void present(kairo::Image& top,kairo::Image& labels);
     void end_frame();
+    void begin_label_frame(kairo::Image&,std::uint32_t,bool enabled);
     VideoProfile profile()const;
     std::uint64_t wait_time()const;
     void quad(kairo::Image&,kairo::Image*,const platform::GpuQuad&)override;

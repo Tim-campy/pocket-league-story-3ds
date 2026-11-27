@@ -31,6 +31,7 @@ struct Allocation {
     Allocation* next{};
     bool allocated{},retired{};
     unsigned id{};
+    std::uint64_t revision{};
 };
 // This queue contains native allocations only. Image destruction may happen on
 // another thread; GPU deletion is exclusively performed by the drawing host.
@@ -101,6 +102,68 @@ struct Gpu::State {
     std::map<std::uint64_t,std::shared_ptr<NativeImage>> glyph_cache;
     std::size_t glyph_bytes{};
     mutable std::size_t peak_texture{},peak_vram{};
+    struct LabelCommand {
+        std::shared_ptr<NativeImage> texture;
+        platform::GpuQuad quad{};
+        std::uint64_t revision{};
+        bool opaque{},depth_clear{},textured{true};
+    };
+    struct LabelCache {
+        static constexpr std::size_t capacity=128;
+        std::array<LabelCommand,capacity> previous{},commands{};
+        std::shared_ptr<NativeImage> target;
+        std::size_t previous_count{},count{};
+        std::uint32_t previous_color{},color{};
+        bool valid{},capturing{};
+    } labels;
+    static bool same_quad(const platform::GpuQuad& a,const platform::GpuQuad& b){
+        for(std::size_t i=0;i<a.vertices.size();++i){
+            const auto& x=a.vertices[i];const auto& y=b.vertices[i];
+            if(x.x!=y.x||x.y!=y.y||x.u!=y.u||x.v!=y.v)return false;
+        }
+        return a.color==b.color&&a.clip==b.clip&&a.mode==b.mode&&a.blend==b.blend&&
+            a.depth==b.depth&&a.alpha_test_scale==b.alpha_test_scale&&a.alpha_type==b.alpha_type&&
+            a.filter==b.filter&&a.depth_test==b.depth_test&&a.depth_write==b.depth_write;
+    }
+    bool is_labels(const std::shared_ptr<NativeImage>& image)const{
+        return labels.target&&image&&labels.target->allocation==image->allocation;
+    }
+    void finish_labels(){
+        if(!labels.capturing)return;
+        labels.capturing=false;
+        bool same=labels.valid&&labels.count==labels.previous_count&&labels.color==labels.previous_color;
+        for(std::size_t i=0;same&&i<labels.count;++i){
+            const auto& a=labels.commands[i];const auto& b=labels.previous[i];
+            same=a.texture==b.texture&&a.revision==b.revision&&a.opaque==b.opaque&&
+                a.depth_clear==b.depth_clear&&a.textured==b.textured&&same_quad(a.quad,b.quad);
+        }
+        if(same){++metrics.label_cache_hits;return;}
+        ++metrics.label_cache_misses;
+        auto* target=labels.target->allocation;
+        activate(target,false);
+        C3D_FrameSplit(0);
+        C3D_RenderTargetClear(target->target,C3D_CLEAR_ALL,labels.color,0);
+        for(std::size_t i=0;i<labels.count;++i){const auto& command=labels.commands[i];
+            if(command.depth_clear){C3D_FrameSplit(0);C3D_RenderTargetClear(target->target,C3D_CLEAR_DEPTH,0,0);continue;}
+            opaque_target=command.opaque;
+            select(target->target,target->texture.width,target->texture.height,false);
+            draw(command.texture?command.texture->allocation:nullptr,command.quad,target->texture.width,target->texture.height,false,command.textured);
+        }
+        dirty=true;labels.target->rendered=true;++target->revision;
+        for(std::size_t i=0;i<labels.count;++i)labels.previous[i]=labels.commands[i];
+        for(std::size_t i=labels.count;i<labels.previous_count;++i)labels.previous[i]={};
+        labels.previous_count=labels.count;labels.previous_color=labels.color;labels.valid=true;
+    }
+    bool queue_label(const std::shared_ptr<NativeImage>& texture,const platform::GpuQuad& quad,bool opaque,bool depth_clear=false,bool textured=true){
+        if(!labels.capturing)return false;
+        // Mutable render sources and oversized batches use the ordinary path.
+        if(labels.count==LabelCache::capacity||(texture&&texture->allocation->target)){
+            finish_labels();labels.valid=false;return false;
+        }
+        labels.commands[labels.count++]={texture,quad,texture?texture->allocation->revision:0,opaque,depth_clear,textured};
+        return true;
+    }
+
     void observe_memory(){
         metrics.min_linear_free=std::min(metrics.min_linear_free,std::size_t(linearSpaceFree()));
         metrics.min_vram_free=std::min(metrics.min_vram_free,std::size_t(vramSpaceFree()));
@@ -174,7 +237,7 @@ struct Gpu::State {
         return result;
     }
     void upload(Allocation& value,const std::vector<std::uint8_t>& pixels,int width,int height,bool tiled){
-        const auto start=Clock::now();auto& texture=value.texture;
+        const auto start=Clock::now();auto& texture=value.texture;++value.revision;
         auto* output=static_cast<std::uint8_t*>(texture.data);
         if(tiled){
             (void)assets::ctr_texture::validate(pixels,width,height);
@@ -198,6 +261,7 @@ struct Gpu::State {
     }
     std::shared_ptr<NativeImage> image(kairo::Image& image,bool target){
         auto result=native(image);
+        if(!target&&is_labels(result))finish_labels();
         if(result&&(!target||result->allocation->target))return result;
         if(result&&target)image.gpu_image().reset();
         result=create(image.GetWidth(),image.GetHeight(),target);
@@ -391,20 +455,38 @@ void Gpu::begin_frame(){
 }
 void Gpu::end_frame(){
     auto& s=*state_;
-    s.activate(nullptr);
+    s.finish_labels();s.activate(nullptr);
     C3D_FrameEnd(0);s.open=false;s.current=nullptr;
     if(s.lifetime->has_pending()){s.wait_boundary();s.lifetime->drain();}
+}
+void Gpu::begin_label_frame(kairo::Image& image,std::uint32_t color,bool enabled){
+    auto& s=*state_;s.finish_labels();
+    for(std::size_t i=0;i<s.labels.count;++i)s.labels.commands[i]={};
+    s.labels.count=0;
+    if(!enabled){
+        for(std::size_t i=0;i<s.labels.previous_count;++i)s.labels.previous[i]={};
+        s.labels.previous_count=0;s.labels.target.reset();s.labels.valid=false;
+        clear(image,color);return;
+    }
+    auto target=s.image(image,true);
+    if(!s.is_labels(target))s.labels.valid=false;
+    s.labels.target=target;s.labels.color=color;s.labels.count=0;s.labels.capturing=true;
+    target->rendered=true;
 }
 void Gpu::quad(kairo::Image& target,kairo::Image* source,const platform::GpuQuad& quad){
     auto& s=*state_;
     auto destination=s.image(target,true);
     std::shared_ptr<NativeImage> texture;
     if(source==&target){
+        if(s.is_labels(destination)){s.finish_labels();s.labels.valid=false;}
         // Preserve the CPU renderer's snapshot semantics for feedback draws.
         const auto& pixels=target.pixels();
         texture=s.create(target.GetWidth(),target.GetHeight(),false);
         s.upload(*texture->allocation,pixels,target.GetWidth(),target.GetHeight(),false);
     }else if(source)texture=s.image(*source,false);
+    const bool opaque=target.format==kairo::Image::Format::RGB24||target.format==kairo::Image::Format::RGB565;
+    if(s.is_labels(destination)&&s.queue_label(texture,quad,opaque))return;
+    ++destination->allocation->revision;
     s.activate(destination->allocation);
     s.opaque_target=target.format==kairo::Image::Format::RGB24||target.format==kairo::Image::Format::RGB565;
     s.select(destination->allocation->target,destination->allocation->texture.width,destination->allocation->texture.height,false);
@@ -415,6 +497,8 @@ void Gpu::quad(kairo::Image& target,kairo::Image* source,const platform::GpuQuad
 void Gpu::clear(kairo::Image& image,std::uint32_t color){
     state_->trace("clear.begin");
     auto destination=state_->image(image,true);
+    if(state_->is_labels(destination)){state_->finish_labels();state_->labels.valid=false;}
+    ++destination->allocation->revision;
     state_->activate(destination->allocation,false);
     C3D_FrameSplit(0);
     C3D_RenderTargetClear(destination->allocation->target,C3D_CLEAR_ALL,color,0);
@@ -424,6 +508,7 @@ void Gpu::clear(kairo::Image& image,std::uint32_t color){
 }
 void Gpu::begin_mesh(kairo::Image& image){
     auto destination=state_->image(image,true);
+    if(state_->is_labels(destination)&&state_->queue_label({},platform::GpuQuad{},false,true))return;
     state_->activate(destination->allocation);
     C3D_FrameSplit(0);
     C3D_RenderTargetClear(destination->allocation->target,C3D_CLEAR_DEPTH,0,0);
@@ -443,6 +528,9 @@ void Gpu::glyph(kairo::Image& target,const std::vector<std::uint8_t>& bytes,int 
         found=s.glyph_cache.emplace(hash,std::move(texture)).first;s.glyph_bytes+=size;
     }
     auto destination=s.image(target,true);
+    const bool opaque=target.format==kairo::Image::Format::RGB24||target.format==kairo::Image::Format::RGB565;
+    if(s.is_labels(destination)&&s.queue_label(found->second,quad,opaque,false,false)){++s.metrics.glyphs;return;}
+    ++destination->allocation->revision;
     s.activate(destination->allocation);
     s.opaque_target=target.format==kairo::Image::Format::RGB24||target.format==kairo::Image::Format::RGB565;
     s.select(destination->allocation->target,destination->allocation->texture.width,destination->allocation->texture.height,false);
@@ -451,6 +539,7 @@ void Gpu::glyph(kairo::Image& target,const std::vector<std::uint8_t>& bytes,int 
 }
 void Gpu::readback(kairo::Image& image,std::vector<std::uint8_t>& output){
     auto& s=*state_;auto texture=native(image);
+    if(s.is_labels(texture))s.finish_labels();
     s.trace("readback.begin");
     if(!texture||!texture->allocation->target)throw std::runtime_error("GPU readback requires a render target");
     const auto start=Clock::now();const bool reopen=s.open;

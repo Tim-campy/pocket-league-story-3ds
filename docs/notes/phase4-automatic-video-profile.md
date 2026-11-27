@@ -17,6 +17,9 @@ Arquivos em `sdmc:/pls-video/`: `video-N-frames.csv`, `video-N-gc.csv` e
 `video-N-meta.txt`. N escolhe um nome livre. SELECT apenas marca um quadro;
 não é necessário nem inicia uma janela de medição. As antigas janelas de
 300 quadros e o buffer separado de 16.384 amostras de cópias foram substituídos.
+Somente com a flag opcional `capture-check.flag`, SELECT também captura os
+alvos para comparação visual, fora do quadro medido. Remover essa flag nas
+sessões de desempenho.
 
 Os buffers nativos são alocados uma vez: 4.096 quadros, 1.024 eventos de coleta
 e 64 eventos temporários. Não guardam referências gerenciadas. A cada 120 s,

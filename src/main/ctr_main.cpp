@@ -224,10 +224,23 @@ void gpu_check(ctr::Gpu& gpu){
     kairo::MeshManager::Render(target,mesh->commands(),{});
     const auto& layered=target->pixels();
     if(layered[0]||layered[1]||layered[2]!=255||layered[3]!=255)throw std::runtime_error("GPU self-check mesh depth mismatch");
+    stage("label-cache");g->SetBlendMode(0);g->SetColor(255,0,0,255);
+    gpu.begin_label_frame(*target,0x000000ff,true);g->FillRect(0,0,1,1);
+    if(target->pixels()[0]!=255)throw std::runtime_error("GPU label cache initial draw mismatch");
+    const auto cache_before=gpu.profile();
+    gpu.begin_label_frame(*target,0x000000ff,true);g->FillRect(0,0,1,1);
+    if(target->pixels()[0]!=255)throw std::runtime_error("GPU label cache retained pixel mismatch");
+    const auto cache_after=gpu.profile();
+    if(cache_after.label_cache_hits!=cache_before.label_cache_hits+1||cache_after.copies!=cache_before.copies)
+        throw std::runtime_error("GPU label cache repeated an unchanged copy");
+    gpu.begin_label_frame(*target,0x000000ff,true);g->FillRect(1,0,1,1);
+    const auto& changed_labels=target->pixels();
+    if(changed_labels[0]!=0||changed_labels[4]!=255)
+        throw std::runtime_error("GPU label cache invalidation mismatch");
     stage("dispose");back->Dispose();front->Dispose();
     source->Dispose();target->Dispose();gpu.end_frame();
     gpu.trace_boot(false);
-    std::fprintf(stderr,"PLS_VIDEO_SELF_CHECK=PASS pixels=64 alpha=1 deferred_release=1\n");std::fflush(stderr);
+    std::fprintf(stderr,"PLS_VIDEO_SELF_CHECK=PASS pixels=64 alpha=1 deferred_release=1 label_cache=1\n");std::fflush(stderr);
 }
 }
 int main(){
@@ -282,6 +295,8 @@ int main(){
             ctr::FrameProfile profile(!std::filesystem::exists("sdmc:/pls-video/profile-minimal.flag"));
             const bool storage_check_requested=std::filesystem::exists("sdmc:/pls-video/storage-check.flag");
             int storage_check_countdown=360;
+            const bool cache_labels=!std::filesystem::exists("sdmc:/pls-video/labels-no-cache.flag");
+            const bool capture_check=std::filesystem::exists("sdmc:/pls-video/capture-check.flag");
             bool title_seen=false;pls::ctr::Input input;
             boot_stage(6);
             while(aptMainLoop()&&!app->IsTermination()){
@@ -300,7 +315,7 @@ int main(){
                 const auto draw_start=Clock::now();
                 pls::kairo::Offscreen::RenderAll();
                 if(!pls::kairo::Offscreen::LastRenderError().empty())throw std::runtime_error(pls::kairo::Offscreen::LastRenderError());
-                gpu.clear(*screens->labels,0);app->host_draw();pls::kairo::Offscreen::EndFrame();
+                gpu.begin_label_frame(*screens->labels,0,cache_labels);app->host_draw();pls::kairo::Offscreen::EndFrame();
                 screens->compose();gpu.present(*screens->top,*screens->bottom);gpu.end_frame();
                 const auto draw=elapsed(draw_start);const auto metrics=gpu.profile();
                 pls::cs::gc_frame_end();assets.age_retained();
@@ -338,6 +353,14 @@ int main(){
                     }
                 }
                 if(profile.checkpoint_due())profile.write_summary();
+                if(capture_check&&profile_requested){
+                    gpu.begin_frame();
+                    for(const auto& entry:{std::pair{"top",screens->top},std::pair{"bottom",screens->bottom},std::pair{"labels",screens->labels}}){
+                        char path[128];std::snprintf(path,sizeof(path),"sdmc:/pls-video/captures/%llu-%s.png",profile.frames(),entry.first);
+                        kairo::write_capture_png(path,*entry.second);
+                    }
+                    gpu.end_frame();
+                }
                 const auto pacing_start=Clock::now();
                 pls::kairo::UnityApplication::pace(start);
                 if(!title_seen)boot_pacing_ns+=elapsed(pacing_start);

@@ -1,7 +1,8 @@
 # Vídeo e controles — revisão local de 2026-11-26
 
 A segunda entrega aprovada no aparelho foi publicada em `8e3eecf`, com CI verde.
-Os ajustes abaixo ficam locais até novo teste do usuário. O executável privado
+Os ajustes abaixo foram aprovados pelo usuário no New 3DS XL, que autorizou
+a publicação. O executável privado
 com assets deve permanecer em `build/`; nada dele vai ao Git ou ao CI.
 
 ## Inferior nativa
@@ -19,7 +20,10 @@ permanecem. Os diagnósticos exclusivos do PC ficam em y=144/160, acima da barra
 O caminho de uma tela dos roteiros/backend nulo mantém o layout anterior.
 
 Os hosts encaminham o toque inferior diretamente a GamePad.OnReceiveTouchEvent,
-preservando sua fila de eventos e o efeito visual do botão. O despachante antigo
+preservando sua fila de eventos e o realce local do botão pressionado. Após o
+teste no aparelho, o usuário pediu suprimir a animação global de toque: ela era
+desenhada na superior, nas coordenadas antigas. O caminho de duas telas agora
+não cria essa animação. O despachante antigo
 enviava o mesmo ponto a todas as superfícies: coordenadas locais iguais podiam
 atingir a superior. O perfil do primeiro teste registrou 4 chamadas de toque em
 GameView; no teste isolado foram zero. Menu, Back e Save foram acionados pelo
@@ -71,7 +75,7 @@ confirmou o problema; ele foi removido. Os fontes foram regravados com datas
 atuais e build/check/smoke e capturas foram repetidos. Não se alteraram tools/.
 
 O zoom original é escala inteira livre. L/R agora publica -1/0/+1 por quadro;
-GameForm usa `management_zoom_percent_per_frame=2` (40 pontos percentuais/s a
+GameForm usa `management_zoom_percent_per_frame=3` (60 pontos percentuais/s a
 20 Hz), mantendo os limites 75–200. L+R é neutro. A pinça existente permanece;
 não há alocação nova por quadro. Margem 60×30, ocultação do cursor e rolagem
 contínua na borda conservam as regras aprovadas.

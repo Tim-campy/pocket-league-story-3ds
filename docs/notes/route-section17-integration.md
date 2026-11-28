@@ -119,3 +119,9 @@ Histórico: PASS em 3036,7 s (50 min 37 s), 87 execuções, 86 concluídas e um 
 Conjunto padrão: PASS em 1447,2 s (24 min 07 s), contra 24 min 49 s registrados pelo outro agente. Reexecuções: 1046 s, 25/25 concluídas, zero alertas; união de 1562 métodos. Seis arquivos e recarga PASS, clear-state em 317 s. Nenhuma perda no portão sobre as 87 execuções canônicas.
 
 Fixture do executor revalidada: 99 asserções PASS. Testes da ferramenta: 17/17 PASS.
+
+O primeiro `full` parou em `offscreen-mesh`: o executor ainda exigia 15 asserções
+de mesh, embora os testes de zoom dos commits 2c2ebe2 e c7e2f4b já executassem
+633. O teste nativo estava PASS. O executor passou a exigir 633 e a calcular o
+total com as 23 de offscreen (656), incluindo `ctr_zoom_check.hpp` nos hashes
+dos insumos. A reexecução específica passou; nenhuma operação de desenho mudou.

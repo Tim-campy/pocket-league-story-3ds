@@ -16,4 +16,4 @@ partir das cópias privadas de `build/` (só se elas existirem):
 
 Os saves de que esses roteiros partem são dados do jogo e não entram no Git:
 `python tools/dev.py backup PASTA` (fora do repositório) e `--restore`.
-Motivo e histórico: `changes.md`.
+Motivo e histórico: `docs/notes/agent-work-log.md`.

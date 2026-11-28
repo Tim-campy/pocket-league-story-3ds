@@ -84,7 +84,7 @@ end
 Motivo: a foto acima só mostra a interface, então os roteiros tocavam por
 coordenada e esperavam por contagem de quadros. Depois da câmera separada do
 cursor, `demolish.route` passou a terminar sem demolir nada e o conjunto deu
-PASS (registro completo em `changes.md`).
+PASS (registro completo em `docs/notes/agent-work-log.md`).
 
 **Foto do mapa** (`GameState` em `diagnostic_route.hpp`, preenchida por
 `capture_game` em `pc_main.cpp`): só quando há um GameForm com câmera e dados do
@@ -104,6 +104,19 @@ a cada mudança, e `PLS_ROUTE_TIMEOUT` passa a trazer `"game"`.
 (contra o último `mark`). Sem foto válida, elas são falsas. `wait` com condição
 de jogo fecha avisos do jogo enquanto espera (regra do `dismiss`: SubForm sem
 rótulo → SELECT, com rótulo → SOFT2, a cada 18 quadros).
+
+**Exceção da regra de dispensa (2026-11-27, `docs/notes/agent-work-log.md` seção 17).** Duas
+janelas de fim de ano têm duas opções, e a primeira abre uma lista que o
+"voltar" fecha, depois o evento pergunta de novo. A regra antiga ficava presa
+nelas até estourar o tempo:
+- 72, "選手を解雇しますか": SELECT em Sim abre a lista 31, e SOFT2 a fecha.
+- 52, "契約延長しますか": "入替え" abre a lista 51 de técnicos.
+
+Nas duas, o executor agora move o cursor com RIGHT até a opção 1 (Não ou
+"延長する") e confirma com SELECT. Isso vale para todo roteiro, inclusive as
+reexecuções históricas: o executor sempre lê a foto do jogo (a janela e a opção
+`select`), mas só os roteiros com condição de jogo registram
+`PLS_GAME_STATE`.
 
 **Verbos novos:**
 - `cursor to tenant=N [timeout=F]`: leva o cursor com as setas até o jogo

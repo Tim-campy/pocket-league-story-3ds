@@ -118,7 +118,7 @@ usuário o que precisa mudar e por quê, antes de mudar.
 | `tools/` | build, execução e verificação; `tools/dev.py` é a porta de entrada e `tools/README.md` diz o que é vigente | não, sem aprovação |
 | `tools/translator-archived/`, `tools/archived/` | tradutor aposentado e ferramentas da Fase 2 que nada usa | **somente leitura; nunca executar** |
 | `config/` | dados e recibos lidos e escritos pelas ferramentas | não edite à mão |
-| `changes.md` (raiz) | registro de trabalho entre agentes (roteiros orientados a estado e o que veio depois) | **só acrescentar seções no fim**; nunca mover, renomear ou reescrever (seção 7) |
+| `docs/notes/agent-work-log.md` | histórico de trabalho entre agentes, transferido da raiz por decisão de 2026-11-28 | acrescente correções e evidências; preserve o histórico |
 | `docs/` | documentação; índice em `docs/README.md` (vigente × histórico) | sim, os vigentes |
 | `docs/history/` | registro da Fase 2 (antigo AGENTS.md, congelamento, livro-razão) | somente leitura |
 | `build/` | tudo o que é local (fora do Git): builds, dependências, saves e roteiros de referência, resultados; `dev.py clean` apaga só o que é seguro | gerado |
@@ -138,7 +138,7 @@ extraída dele ficam em `build/dev-local.json` (fora do Git) ou nas variáveis
 | `build` | build do PC (diagnóstico, Release) a partir de `src/game` | 17 s depois de editar um `.cpp`; 2 s sem mudança; 15–17 min do zero |
 | `run [--save 31\|50]` | roda no PC com as duas telas do 3DS em janelas (até 600 s); `--save 31` começa antes da 1ª partida, `--save 50` depois | build + jogo |
 | `check [--all]` | checks rápidos: mapa do coletor e raízes, código de apoio, literais, formatação dos arquivos alterados (`--all`: todos) | ~5 s, mais ~0,5 s por arquivo alterado (formatação); `--all`: ~4 min |
-| `routes [--smoke \| --affected] [--jobs 4]` | roteiros do jogo com estresse moderado do coletor, 4 ao mesmo tempo: `--smoke` = 10 execuções fixas (título, menu, partida, salvar/carregar, novo jogo); `--affected` = só as que executam os métodos alterados desde o último push; sem opção = conjunto completo (87 execuções). Todo conjunto roda também `scenarios`; o completo falha se um método que o código canônico executava não for mais executado (nem pelos cenários); roteiros e cobertura canônica versionados em `tests/routes/replay/` | smoke ~3 min; completo ~65 min |
+| `routes [--smoke \| --affected \| --history] [--jobs 4]` | roteiros do jogo com estresse moderado do coletor, 4 ao mesmo tempo: `--smoke` = 10 execuções fixas (título, menu, partida, salvar/carregar, novo jogo); `--affected` = só as que executam os métodos alterados desde o último push; sem opção = conjunto completo (25 execuções de `REPLAY_KEYS` em `tools/dev.py`, as que cobrem todos os métodos; `--history` = as 87 do histórico). Todo conjunto roda também os cenários; o smoke exclui `clear-state` (cinco arquivos e uma recarga), os conjuntos de push/histórico incluem os seis arquivos e uma recarga; o completo falha se um método que o código canônico executava, em qualquer das 87 execuções, não for mais executado (nem pelos cenários); roteiros e cobertura canônica versionados em `tests/routes/replay/` | smoke ~3–4 min; completo ~25 min; `--history` ~50 min |
 | `scenarios [--only NOME]` | roteiros orientados a estado (`tests/routes/*-state.route`, save na linha `# save=N`): falham pelo estado do jogo (instalação demolida, zoom, seleção), não só por chegar ao fim; formato em `docs/notes/route-runner-design.md` | depende dos cenários |
 | `full` | verificação completa (`tools/verify_phase2.py --full`) | ~20 min (105 checks) |
 | `arm` | build do 3DS (`build/frozen-arm/null_game.3dsx`, backend nulo) | ~30–40 min do zero |
@@ -349,10 +349,10 @@ nessa lista e não gera alerta); classe nova com `PLS_MANAGED_CLASS`,
 encontra sozinho todo `src/game/*.cpp` (não mexa no `CMakeLists.txt`). Modelos
 completos em `docs/maintaining-game-code.md`.
 
-**`changes.md` fica na raiz (decisão do usuário, 2026-11-27).** É o registro de trabalho
-que um agente deixa para o próximo. Não mova, não renomeie, não divida e não reescreva
-seções antigas. Acrescente uma seção no fim com a data, o que foi feito, por quê e como
-foi conferido. Correção de algo já registrado entra numa seção nova que cite a antiga.
+**Registro entre agentes:** por decisão do usuário em 2026-11-28, o antigo
+`changes.md` foi transferido para `docs/notes/agent-work-log.md`. A regra antiga
+de mantê-lo na raiz foi revogada. Preserve as seções históricas e acrescente
+novas evidências/correções ao fim desse documento.
 
 **Codificação dos textos: UTF-8 sem BOM, fim de linha LF.** Em 2026-11-27 um agente
 regravou `tools/dev.py` e `tools/build_pc.py` com o português corrompido
@@ -411,17 +411,18 @@ ainda não é chamado, nomes locais, formatação e comentários não são.
 
 - **Todo commit:** `python tools/dev.py build` e `python tools/dev.py check`.
 - **Commit que muda comportamento:** também `python tools/dev.py routes --smoke` (~3 min).
-- **Antes de cada push:** `python tools/dev.py check --all`, `python tools/dev.py full`
-  (~20 min), `python tools/dev.py routes --affected` (mudança em `.hpp`, em infraestrutura
-  ou fora de `src/game/*.cpp` vira o conjunto completo sozinha), `python tools/dev.py arm`
-  e `python tools/check_repository.py --staged`.
-- **Conjunto completo com estresse** (`python tools/dev.py routes`, ~65 min) nos marcos:
-  antes de qualquer tag; depois de mudar um cabeçalho incluído por muitas unidades; a cada
-  5 pushes ou uma vez por semana de trabalho, o que vier primeiro.
+- **Antes de cada push:** `python tools/dev.py check --all`, `python tools/dev.py full`,
+  `python tools/dev.py routes` (25 reexecuções com estresse e seis cenários, mais
+  a recarga), `python tools/dev.py arm` e `python tools/check_repository.py --staged`.
+- **Histórico de 87 execuções com estresse:** `python tools/dev.py routes --history`
+  antes de tag; depois de mudança em runtime, coletor ou caminho de desenho da
+  plataforma; e uma vez por semana de trabalho. Mantém os mesmos seis cenários.
+  Cobertura de métodos equivalente não substitui esses percursos adicionais.
 
 Aceite dos roteiros: o comando diz **PASS** — todo roteiro que o código anterior ao
-congelamento conclui também conclui, 0 alertas da salvaguarda. Hoje: 86 de 87 execuções
+congelamento conclui também conclui, 0 alertas da salvaguarda. No histórico (`--history`): 86 de 87 execuções
 concluem; só `dialogs-exit.route` não, porque termina fechando o jogo (igual no original).
+O conjunto padrão roda 25 delas (`REPLAY_KEYS`, `docs/notes/agent-work-log.md` seção 17).
 O quadro exato de cada passo varia alguns quadros entre execuções (a carga de assets
 acontece em tempo real; `docs/notes/route-speed-2026-11-24.md`): é normal.
 

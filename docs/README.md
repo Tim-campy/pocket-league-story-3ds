@@ -45,6 +45,8 @@ atualize, só leia.
 | [assets.md](assets.md) | inventário de assets e memória |
 | [benchmark-hardware.md](benchmark-hardware.md) | como medir no New 3DS |
 | [notes/route-runner-design.md](notes/route-runner-design.md) | formato dos roteiros (`tests/routes/*.route`) |
+| [notes/agent-work-log.md](notes/agent-work-log.md) | registro entre agentes, incluindo a integração do conjunto de 25 e do histórico de 87 |
+| [notes/route-section17-integration.md](notes/route-section17-integration.md) | comparação dos percursos de fim de ano e limites de cobertura/estresse do conjunto de 25 |
 | [notes/verification-groups.md](notes/verification-groups.md) | grupos da verificação completa |
 | [notes/rebuild-times.md](notes/rebuild-times.md) | tempos de recompilação e propostas |
 | [notes/route-speed-2026-11-24.md](notes/route-speed-2026-11-24.md) | tempo dos roteiros: medição, `--jobs`, `--smoke`, `--affected`, suspensão |

@@ -657,3 +657,156 @@ Verificação: fixture 633 asserções; build CTR 126,9 s; Azahar 32,1 s
 (autoteste PASS, título e saída); build PC 3,4 s; check 6,5 s;
 smoke 224 s, 10/10 roteiros, 5/5 cenários e zero alertas. O pacote
 calibrado ainda precisa ser executado no aparelho.
+
+## 2026-11-27 — 17. Roteiros longos: ciclos de fim de ano, cenário do clear e conjunto padrão
+
+Pedido do usuário: rever os roteiros mais demorados e fazê-los reagir ao estado
+do jogo, como nos cenários de zoom e demolição. O usuário também observou dois
+ciclos no fim do ano: "demitir jogador?" e, depois da primeira correção, a
+renovação do técnico.
+
+**Onde ia o tempo.** O último conjunto completo somou 10.244 s de execução (4
+jobs, 2.668 s de relógio). Medido por passo com o log da tentativa 2097
+(lots.route, save 106, 1.175 s, 29.292 quadros):
+- 18.475 quadros ficaram em `dismiss until`;
+- cerca de 25 passos `dismiss until form=GameForm label_right=* timeout=600
+  optional` esperavam os 600 quadros inteiros, sem nunca se cumprir.
+
+O estado da interface mostra o ciclo: janela sem rótulo → SELECT → janela com
+"戻る" → SOFT2 → a mesma pergunta, a cada 18 quadros. O ritmo é de ~25 quadros/s
+com estresse do coletor. Sem estresse, os cenários rodam a ~30 quadros/s: cerca
+de 24 ms por quadro vão para a rasterização por software
+(`PLS_FRAME_PROFILE`, área 2), e não para o coletor.
+
+**Causa, no código do jogo** (`src/game/form.SubForm.cpp`, sem alteração):
+- O evento 37 abre a SubForm 72, "選手を解雇しますか", com Sim/Não e o cursor em
+  Sim. Com mais de 11 jogadores, SELECT abre a lista 31. A regra de dispensa
+  aperta SOFT2 em janela com rótulo, a lista fecha, e o evento pergunta de novo.
+- O evento 38 abre a SubForm 52, "<0>さんと契約延長しますか". A opção 0, "入替え",
+  abre a lista de técnicos 51, que o voltar fecha. A opção 1, "延長する", chama
+  `SupervisorData::ContractSupervisor(id, true, true)`, onde está o
+  `SupervisorData.LvUp` exclusivo do lots/106.
+- Confirmado na tentativa 2238 (só com a primeira correção): 52 → 0 → 51 → 52 em
+  ciclo a partir do quadro 7.478. A pergunta 72 já tinha saído com uma RIGHT e
+  um SELECT.
+
+**Correção no executor** (`src/main/diagnostic_route.hpp`, `pc_main.cpp`):
+- `dismiss_key()` é agora a única regra de dispensa, usada por `dismiss until`
+  e pelas esperas com condição de jogo.
+- Nas janelas 72 e 52, ela aperta RIGHT até `select == 1` e então SELECT.
+- A foto do jogo ganhou `window_select` (o `select_` da SubForm do topo), também
+  registrado em `PLS_GAME_STATE` como `"select"`.
+- A foto passa a ser lida em todo roteiro, inclusive nas reexecuções históricas,
+  porque a regra depende dela. São só leituras de campos, sem chamar métodos do
+  jogo, então não muda a cobertura. `PLS_GAME_STATE` e o `"game"` do timeout
+  continuam só nos roteiros com condição de jogo.
+- Fixture: 99 asserções (eram 94), com a ida a Não ou "延長する", a confirmação,
+  a mesma regra numa espera com condição, e outras janelas sem mudança.
+
+Efeito: as reexecuções históricas não repetem mais esses ciclos. Os textos delas
+continuam intactos (o hash é conferido), e os passos fixos seguintes passam a agir
+num jogo que saiu da pergunta. O portão de cobertura é quem garante que nada se
+perdeu (resultado abaixo).
+
+**Cenário `tests/routes/clear-state.route`** (save 106):
+- O roteiro vai ao mapa e espera, com o vigia em 4.000 quadros, porque uma
+  partida mantém a interface parada por ~3.200 quadros.
+- `dismiss until window=19` deixa o tempo do jogo correr, fechando avisos e
+  jogando as partidas, até abrir a tela de clear (SubForm 19, ano 7, mês 3). Em
+  seguida o roteiro volta ao mapa.
+- Resultado: PASS em 341 s, tentativa 2240. A tela de clear abriu no quadro 8.540;
+  na reexecução 2097 tinha aberto no quadro 26.819.
+- Completou os 8 métodos exclusivos da execução 107: `SetClearPoint`,
+  `Draw_clearPoint`, `Update_clearPoint`, `SupervisorData.LvUp`,
+  `CustomerNumReset`, `RecordReset`, `RotateTestPlayParam` e
+  `SetContinueGameData`.
+
+**Conjunto padrão de `dev.py routes`** (`tools/dev.py`):
+- `REPLAY_KEYS` tem 25 das 87 execuções. Foram escolhidas pelo que cada
+  reexecução completou em **todos** os 4 últimos conjuntos completos, uma
+  cobertura estável, e não pela cobertura canônica. Pela mais longa primeiro, uma
+  execução sai se as que ficam, mais `SMOKE_KEYS` (que sempre ficam) e os
+  cenários, ainda completam todo método que alguma reexecução completa.
+- Saem 62 execuções, que somavam 6.424 s de 10.244 s. As que tinham métodos
+  canônicos exclusivos estão em `REPLACED_BY_SCENARIO`, com o cenário que os
+  completa:
+  - 107 → `clear-state`;
+  - 206 (demolish.route, cuja reexecução nunca demolia) → `demolish-state`;
+  - 335 (zoom.route) → `zoom-state`.
+  As outras só repetiam métodos.
+- Primeira tentativa, descartada: escolher pela cobertura canônica. O conjunto
+  rodou, mas o portão acusou `PlayerData.Start_aura` e `FastVector.LastElement`.
+  Hoje só a reexecução 119 completa o primeiro, e só a 199/200 o segundo. Os
+  canônicos de 95, 117 e 207 também têm `Start_aura`, mas as reexecuções deles não
+  o alcançam. Por isso a escolha usa a cobertura real das reexecuções.
+- `--history` roda as 87, como antes.
+- O portão não confia mais na união do `run_readable_routes`, que só compara as
+  execuções que rodaram. `not_replayed()` exige os métodos canônicos das 87
+  execuções versionadas, rodadas ou não. Sem isso, deixar uma execução de fora
+  apagaria os métodos dela do portão sem aviso.
+- O "esperados concluídos" passa a se limitar ao que rodou sempre que há
+  `--keys`.
+- O limite por cenário passou de 300 s para 900 s. É só uma trava para um
+  roteiro preso: `clear-state` leva ~6 min e estourava os 300 s dentro de
+  `routes`.
+- `previous_durations()` junta os tempos de todos os conjuntos completos
+  guardados, para que `--history` ainda comece pelos mais longos.
+- Testes de CI:
+  - o conjunto padrão contém o smoke e cobre todo método canônico, com só os
+    cenários declarados no lugar das execuções que saem;
+  - `not_replayed` exige o método de uma execução não rodada;
+  - a junção dos tempos funciona.
+
+  São 16 testes PASS.
+- Sem mudança: `Team.SetPositionConnerKick` (escanteio) só aparece em 2 dos 4
+  conjuntos, nas execuções 95 e 106, que ficam. A variação já existia.
+
+Perde-se uma coisa, e ela fica registrada: o estresse do coletor deixa de passar
+pelos caminhos das 62 execuções. Os métodos continuam executados sob estresse
+pelas 25 que ficam; o clear roda sem estresse no cenário. Para o mesmo alcance
+de antes, use `dev.py routes --history` (por exemplo, antes de uma publicação).
+
+**Verificação, com a árvore parada durante a execução:**
+- `python tools/dev.py routes`: PASS em 24 min 49 s de relógio (antes: 2.668 s
+  de reexecuções mais ~98 s de cenários).
+  - Reexecuções: 1.080 s, 25/25 concluídas, zero alertas, zero faltando.
+  - Cenários: 7/7 PASS (clear-state em 322 s, tentativa 2304).
+  - Cobertura perdida: nenhuma, pelo portão novo sobre as 87 execuções.
+- Fixture do executor: 99 asserções PASS. `test_dev_routes.py`: 16 PASS.
+  `dev.py check`: PASS.
+- Não rodei `--history` com a regra de dispensa nova. Rode antes da próxima
+  publicação. As reexecuções que saíram do padrão também passam por essas
+  janelas.
+
+**Próximos alvos.** Ainda são longas as reexecuções 95 (actions/93, 702 s), 106
+(lots/100, 611 s), 116 (remaining/106, 558 s), 117 e 119. Nelas o tempo vai para
+partidas inteiras: os `dismiss until ... timeout=600` esperam enquanto a partida
+corre. Não é ciclo. Métodos que só elas completam hoje:
+- 95: negociação (`SetNegotiateResult`, `GetFeelPtEf*`,
+  `DrawFukidashiBalloon`, `LeagueData.ChangeState`).
+- 106, 116 e 117: um método de toque na partida cada (`SoccerForm.OnTouchCamera`,
+  `TouchEffectManager.RemoveEffect`, `GameView.Set`), mais o `AddCommandRunning*`
+  da 117.
+- 119: `Start_aura`.
+
+Um cenário por tema permite retirá-las como foi feito com a 107.
+
+## 2026-11-28 — 18. Integração da seção 17 e regra de publicação
+
+Por nova decisão explícita do usuário, este registro inteiro foi transferido
+da raiz para docs/notes; as instruções históricas de mantê-lo na raiz foram
+revogadas. Correção da seção 17: "7/7 cenários" significa seis arquivos de
+cenário e uma execução extra de recarga, não sete arquivos.
+
+O smoke exclui clear-state e conserva os cinco cenários curtos com recarga.
+O conjunto de 25 roda antes de todo push; o histórico de 87 roda antes de tag,
+depois de mudança no runtime/coletor/desenho da plataforma e semanalmente.
+O histórico continua exigindo o portão de cobertura sobre as 87 execuções.
+
+Correções verificadas nesta integração: os 2.668,3 s da rodada publicada
+(`state-final-routes.json`) já incluem os cenários; a fase de reexecuções
+levou 2.588 s. Não se deve somar os cenários novamente, como na seção 17.
+Na rodada histórica nova, a seleção de 25 deixa onze métodos sem exercício
+sob estresse: os oito do clear e três do encerramento. A frase da seção 17
+de que os métodos continuam sob estresse deve ser lida com essas exceções.
+Detalhes, percursos e medições em `route-section17-integration.md`.

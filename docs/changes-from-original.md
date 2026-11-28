@@ -672,3 +672,11 @@ O host aceita até 5 somente nesses canais do teste; conserva 2 nos demais.
 antes do título por essa diferença medida. Renderer, textos e saves não mudam.
 Detalhes e negativos testados em `docs/notes/phase4-fractional-zoom.md`.
 
+Aceite físico do usuário (2026-11-28): gestão, controles e zoom fracionário
+aprovados no New 3DS XL, com imagem mais nítida e sem as deformações relatadas.
+Na sessão recebida, as cópias custaram em média **2,57 ms por quadro em
+100%/200%**, contra **5,07 ms nas escalas fracionárias** (diferença de 2,50 ms).
+São grupos da mesma sessão, não um ensaio A/B controlado; a amostra de rolagem
+fracionária tem só três quadros e exige uma sessão mais longa. O flag
+`map-nearest.flag` continua disponível para comparação.
+

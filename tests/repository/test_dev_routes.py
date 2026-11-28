@@ -52,6 +52,14 @@ class CoverageGate(unittest.TestCase):
                                  {'M:form.GameForm.SetScale(System.Int32)'})
         self.assertEqual(lost, ['M:game.Tenant.DestructTenant'])
 
+    def test_runs_left_out_of_the_default_set_still_count(self):
+        # Run 2 is not replayed; its exclusive method C must still be required (not_replayed),
+        # while B, which the replay of run 1 lost but another way reached (only_readable), is not.
+        coverage = dict(methods=['A', 'B', 'C', 'D'], runs={'1': [0, 1], '2': [0, 2]})
+        union = dict(only_canonical=['B'], only_readable=['B'])
+        self.assertEqual(dev.not_replayed(coverage, ['1'], union), ['C'])
+        self.assertEqual(dev.not_replayed(coverage, ['1', '2'], dict(only_canonical=['B'])), ['B'])
+
 
 class ScenarioVerdict(unittest.TestCase):
     """A scenario that reached `end` but failed afterwards must not pass (review of 2026-11-27)."""
@@ -155,9 +163,28 @@ class Durations(unittest.TestCase):
             self.assertEqual(routes.previous_durations(build), {'1': 900})
             (build / 'c6b-route-set-frozen.json').write_text(json.dumps(dict(runs={'1': dict(seconds=42)})))
             self.assertEqual(routes.previous_durations(build), {'1': 42})
+            # A run left out of the newest (default) set keeps its time from an older full set.
+            (build / 'c6b-route-set-frozen-20261127-010000.json').write_text(json.dumps(dict(runs={'1': dict(seconds=900), '2': dict(seconds=7)})))
+            self.assertEqual(routes.previous_durations(build), {'1': 42, '2': 7})
 
 
 class VersionedReplays(unittest.TestCase):
+    def test_smoke_excludes_only_the_long_clear_scenario(self):
+        all_routes = set(dev.scenario_routes())
+        smoke = set(dev.scenario_routes(smoke=True))
+        self.assertEqual({r.name for r in all_routes - smoke}, {'clear-state.route'})
+        self.assertEqual(len(smoke), 5)
+
+    def test_default_replay_set_keeps_every_canonical_method(self):
+        # A run outside REPLAY_KEYS may only take exclusive methods away when a scenario replaces it.
+        table = json.loads((ROOT / 'tests/routes/replay/canonical-coverage.json').read_text(encoding='utf-8'))
+        runs = {k: set(v) for k, v in table['runs'].items()}
+        self.assertTrue(set(dev.SMOKE_KEYS) <= set(dev.REPLAY_KEYS) <= set(runs))
+        self.assertFalse(set(dev.REPLACED_BY_SCENARIO) & set(dev.REPLAY_KEYS))
+        for name in dev.REPLACED_BY_SCENARIO.values(): self.assertTrue((ROOT / 'tests/routes' / f'{name}.route').is_file(), name)
+        kept = set().union(*(runs[k] for k in list(dev.REPLAY_KEYS) + list(dev.REPLACED_BY_SCENARIO)))
+        self.assertEqual(set().union(*runs.values()) - kept, set())
+
     def test_every_replayed_canonical_run_has_a_versioned_route_and_coverage(self):
         history = json.loads((ROOT / 'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))
         table = json.loads((ROOT / 'tests/routes/replay/canonical-coverage.json').read_text(encoding='utf-8'))

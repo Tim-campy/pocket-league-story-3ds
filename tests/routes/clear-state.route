@@ -1,0 +1,22 @@
+# Game clear of save 106 (year 7, month 3): let game time run on the map, closing
+# popups and playing matches, until the clear screen (SubForm 19) opens; then back to
+# the map. Replaces the replay of lots.route (save 106, 1175 s under GC stress), whose
+# only exclusive methods were this year change, clear screen and contract renewal.
+# Fails if the clear screen never opens or the game stops changing while waiting.
+# save=106
+# Run: python tools/dev.py scenarios --only clear-state
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+# A match keeps the UI and map state still for up to ~3200 frames.
+watchdog frames=4000
+dismiss until window=19 timeout=40000
+wait frames=60
+dismiss until form=GameForm label_right=* map_state=0 timeout=6000
+end

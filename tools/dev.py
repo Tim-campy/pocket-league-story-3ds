@@ -131,6 +131,31 @@ def lost_coverage(only_canonical, scenario_methods):
     return sorted(set(only_canonical) - set(scenario_methods) - NEVER_REPLAYED)
 
 
+def not_replayed(coverage, ran_keys, union):
+    """Canonical methods of every versioned run (not only the replayed ones) that the replays did
+    not complete. The union of run_readable_routes compares only the runs it replayed, so without
+    this a run left out of the default set (REPLAY_KEYS) would silently drop its methods from the gate.
+    Replayed = (canonical of the replayed runs - only_canonical) | only_readable."""
+    methods = coverage['methods']
+    every = {methods[i] for row in coverage['runs'].values() for i in row}
+    ran = {methods[i] for key in ran_keys for i in coverage['runs'].get(key, [])}
+    replayed = (ran - set(union.get('only_canonical') or [])) | set(union.get('only_readable') or [])
+    return sorted(every - replayed)
+
+
+# Default replay set (other agent, 2026-11-27; docs/notes/agent-work-log.md section 17): 25 of 87 historical
+# runs. Chosen from what each replay completed in every one of the last 4 full sets (stable
+# coverage, not the canonical one: run 119 alone completes Start_aura today, 199 FastVector.LastElement),
+# longest first out while the kept runs (SMOKE_KEYS always kept) and the scenarios still complete
+# the required canonical methods. The 62 left out took 6424 s of 10244 s in the reference run. The gate still
+# requires the canonical methods of all 87 runs (not_replayed); --history replays all 87.
+REPLAY_KEYS = ['67', '86', '95', '106', '114', '116', '117', '119', '126', '128', '138', '139', '142', '145', '157',
+               '171', '175', '177', '187', '193', '196', '199', '207', '208', '430']
+# Runs left out although they had exclusive canonical methods: the scenario named here completes
+# them (tests/routes/<name>.route; the gate fails if it does not).
+REPLACED_BY_SCENARIO = {'107': 'clear-state',    # lots.route/save 106: 1175 s -> 341 s
+                        '206': 'demolish-state', # demolish.route/save 200 (its replay never demolished)
+                        '335': 'zoom-state'}     # zoom.route/save 50
 # Fixed short set (dev.py routes --smoke): title, menu, a match, saving and loading, new game.
 SMOKE_KEYS = ['126', '196', '177', '175', '430', '145', '67', '138', '139', '171']
 GAME_INFRA = ('game_generated_runtime.hpp', 'game_generated_forward.hpp', 'bootstrap_', 'PlsPortGeneratedBootstrap.')
@@ -198,7 +223,7 @@ def cmd_routes(a):
     apk, _ = local_paths()
     keep_awake()
     full = not (a.smoke or a.affected)
-    keys = None
+    keys = None if a.history else REPLAY_KEYS
     if a.smoke: keys = SMOKE_KEYS; label = 'roteiros (smoke)'
     elif a.affected:
         keys, reasons = affected_selection(a.since)
@@ -206,7 +231,8 @@ def cmd_routes(a):
         if keys is None: full = True; label = 'roteiros (conjunto completo, pedido por --affected)'
         elif not keys: print('affected: nenhum roteiro a rodar'); return 0
         else: label = f'roteiros afetados ({len(keys)})'
-    if full: label = 'roteiros com estresse moderado (conjunto completo)'
+    if full: label = 'roteiros com estresse moderado (conjunto completo' + (', histórico inteiro)' if a.history else ')')
+    if full and keys is None and not a.history: keys = REPLAY_KEYS
     state = ROOT / ('build/c6b-route-set-frozen.json' if full else 'build/c6b-route-set-frozen-subset.json')
     if state.exists() and not (a.resume and full):
         keep = state.with_name(state.stem + f'-{datetime.datetime.now():%Y%m%d-%H%M%S}.json')
@@ -218,11 +244,11 @@ def cmd_routes(a):
     cap = round(600 * (1 + 0.75 * (max(1, a.jobs) - 1)))
     args = ['--apk', apk, '--frozen', '--gc-stress-every', a.stress_every, '--jobs', a.jobs, '--state', state, '--run-seconds', cap]
     if a.only: args += ['--only', *a.only]
-    if keys is not None and not full: args += ['--keys', *keys]
+    if keys is not None: args += ['--keys', *keys]
     code = run(tool('tools/run_readable_routes.py', *args), label)
     # The state-driven scenarios (tests/routes/*-state.route) are part of every set: the replay of
     # the canonical history never runs a new route file. Skipped with --only (a partial run).
-    scenario_failed, scenario_methods = run_scenarios(apk) if not a.only else ([], set())
+    scenario_failed, scenario_methods = run_scenarios(apk, smoke=a.smoke) if not a.only else ([], set())
     if scenario_failed: code = code or 1
     if state.exists():
         current = json.loads(state.read_text(encoding='utf8'))
@@ -237,7 +263,7 @@ def cmd_routes(a):
         ran = {key(r) for r in current['runs'].values()}
         expected = ({key(r) for r in json.loads(baseline.read_text(encoding='utf8'))['runs'].values() if r['status'] == 'done'} if baseline.exists()
                     else {tuple(pair) for pair in json.loads(versioned.read_text(encoding='utf8')).get('replay_done', [])} or ran if versioned.exists() else ran)
-        if not full: expected &= ran
+        if keys is not None: expected &= ran
         done = {key(r) for r in current['runs'].values() if r['status'] == 'done'}
         missing = sorted(f'{route} (save {save})' for route, save in expected - done if not a.only or route in a.only)
         reruns = sum(len(r.get('suspended_reruns') or []) for r in current['runs'].values())
@@ -245,7 +271,9 @@ def cmd_routes(a):
         # Coverage gate (2026-11-27): finishing every route is not enough; demolish.route ended
         # without demolishing and the set still passed. Enforced on the full set, where the union
         # covers every canonical run; subsets only report it.
-        lost = lost_coverage(union.get('only_canonical') or [], scenario_methods)
+        # Full set: every versioned canonical run counts, replayed or not (not_replayed).
+        lost = lost_coverage(not_replayed(json.loads(versioned.read_text(encoding='utf8')), current['runs'], union) if full and versioned.exists()
+                             else union.get('only_canonical') or [], scenario_methods)
         print(f'cobertura perdida (métodos do canônico que nada mais executou): {lost if lost else "nenhuma"}'
               + ('' if full and not a.only else ' (subconjunto: só aviso)'))
         if full and not a.only and lost: ok = False
@@ -294,15 +322,21 @@ def saved_game_differences(before, after):
     return [key for key in ('money', 'tenants', 'cursor', 'camera') if before.get(key) != after.get(key)]
 
 
-def run_scenarios(apk, only=None, seconds=300):
+def scenario_routes(only=None, smoke=False):
+    routes = sorted((ROOT / 'tests/routes').glob('*-state.route'))
+    if only: routes = [r for r in routes if r.stem in only or r.name in only]
+    if smoke: routes = [r for r in routes if r.stem != 'clear-state']
+    return routes
+
+
+def run_scenarios(apk, only=None, seconds=900, smoke=False):
     """Run the state-driven routes (tests/routes/*-state.route), each from the save named by
     its `# save=N` line, on the dual-screen PC build at CPU speed. A route passes only when it
     reaches `end`: its expect/wait/cursor steps fail on the game state itself (see
     docs/notes/route-runner-design.md, "Roteiros orientados a estado").
     Returns (failed route names, methods completed by the scenario runs)."""
     import re
-    routes = sorted((ROOT / 'tests/routes').glob('*-state.route'))
-    if only: routes = [r for r in routes if r.stem in only or r.name in only]
+    routes = scenario_routes(only, smoke)
     if not routes: print('scenarios: nenhum roteiro'); return ['(nenhum)'], set()
     if run(tool('tools/build_pc.py', '--apk', apk, '--frozen-diagnostic', '--configuration', 'Release'), 'build PC'): return ['(build)'], set()
     failed = []; covered = set()
@@ -534,12 +568,13 @@ def main():
     p.add_argument('--resume', action='store_true', help='continuar o conjunto interrompido em vez de começar de novo')
     p.add_argument('--only', nargs='*'); p.add_argument('--stress-every', type=int, default=50)
     p.add_argument('--jobs', type=int, default=4, help='roteiros ao mesmo tempo (padrão 4: ~210 MB e 1 núcleo cada; 7,7 GB e 8 núcleos nesta máquina)')
-    p.add_argument('--smoke', action='store_true', help='conjunto fixo curto: título, menu, uma partida, salvar e carregar, novo jogo (~2 min com 4 jobs)')
+    p.add_argument('--history', action='store_true', help='as 87 reexecuções do histórico, não só REPLAY_KEYS (~50 min com 4 jobs; padrão de 25: ~25 min)')
+    p.add_argument('--smoke', action='store_true', help='10 reexecuções e cenários curtos, sem clear-state (~3–4 min com 4 jobs)')
     p.add_argument('--affected', action='store_true', help='só os roteiros que executam os métodos alterados desde --since (sem cobertura ou fora de src/game/*.cpp: conjunto completo)')
     p.add_argument('--since', default='@{upstream}', help='referência para --affected (padrão: o último commit publicado)')
     p = sub.add_parser('scenarios'); p.set_defaults(func=cmd_scenarios)
     p.add_argument('--only', nargs='*', help='nomes dos roteiros (com ou sem .route)')
-    p.add_argument('--seconds', type=int, default=300, help='limite de tempo de cada roteiro')
+    p.add_argument('--seconds', type=int, default=900, help='limite de tempo de cada roteiro (só para um roteiro preso; clear-state leva ~6 min)')
     sub.add_parser('full').set_defaults(func=cmd_full)
     sub.add_parser('arm').set_defaults(func=cmd_arm)
     p = sub.add_parser('ci'); p.set_defaults(func=cmd_ci); p.add_argument('commit', nargs='?', default='HEAD')

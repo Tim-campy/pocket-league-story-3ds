@@ -101,11 +101,15 @@ def previous_durations(build):
     backup when dev.py routes has just moved it away (which it does before every new full set,
     so reading only that file left the longest-first order empty)."""
     candidates = [build / 'c6b-route-set-frozen.json'] + sorted(build.glob('c6b-route-set-frozen-2*.json'), key=lambda p: p.name, reverse=True)
+    # Newest value per run: the default set (dev.py REPLAY_KEYS) leaves most runs out, so
+    # dev.py routes --history takes theirs from an older full set.
+    durations = {}
     for path in candidates:
         if path.is_file():
-            try: return {k: r.get('seconds') or 0 for k, r in json.loads(path.read_text(encoding='utf-8'))['runs'].items()}
+            try: runs = json.loads(path.read_text(encoding='utf-8'))['runs']
             except (ValueError, KeyError): continue
-    return {}
+            for k, r in runs.items(): durations.setdefault(k, r.get('seconds') or 0)
+    return durations
 
 
 def keep_awake():

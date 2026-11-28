@@ -58,6 +58,15 @@ int main(){
     a=dismiss.step(state(0,{{"form.GameForm",9,3,"",""},{"form.SubForm",4,3,"",""}}));check(a.key=="SELECT","unlabeled dialog dismissed with SELECT");
     a=dismiss.step(state(18,{{"form.GameForm",9,3,"",""},{"form.SubForm",4,3,"","Back"}}));check(a.key=="SOFT2","labeled window dismissed with SOFT2");
     a=dismiss.step(state(20,{{"form.GameForm",9,3,"",""}}));check(a.done,"dismiss ends when the main form is on top");
+    // Year-end "dismiss a player?" (SubForm 72): move to No, then confirm; never SELECT on Yes (it loops via list 31).
+    {Runner fire(parse_text("dismiss until form=GameForm timeout=100\nend\n"));
+        auto ask=state(0,{{"form.GameForm",9,3,"",""},{"form.SubForm",4,3,"",""}});ask.game.valid=true;ask.game.window=72;ask.game.window_select=0;
+        a=fire.step(ask);check(a.key=="RIGHT","dismiss-player window: cursor on Yes moves to No");
+        ask.frame=18;ask.game.window_select=1;a=fire.step(ask);check(a.key=="SELECT","dismiss-player window: No confirmed");
+        Runner wait_fire(parse_text("wait map_state=0 timeout=100\nend\n"));ask.frame=0;ask.game.window_select=0;
+        a=wait_fire.step(ask);check(a.key=="RIGHT","game-condition wait uses the same dismissal rule");
+        auto coach=ask;coach.game.window=52;a=Runner(parse_text("dismiss until form=GameForm timeout=100\nend\n")).step(coach);check(a.key=="RIGHT","renew-coach window: cursor on Change moves to Renew");
+        auto other=ask;other.game.window=31;a=Runner(parse_text("dismiss until form=GameForm timeout=100\nend\n")).step(other);check(a.key=="SELECT","other windows keep the SELECT rule");}
     Runner match(parse_text("dismiss until form=GameForm timeout=100\nend\n"));
     a=match.step(state(0,{{"form.SoccerForm",2,1,"L","R"}}));check(a.key=="SELECT","match screen without dialog gets SELECT (kickoff)");
     a=match.step(state(5,{{"form.SoccerForm",2,1,"L","R"}}));check(a.key.empty(),"match SELECT paced every 18 frames");

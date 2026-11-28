@@ -42,7 +42,7 @@ void capture_game(pls::pc::route::GameState& out,pls::kairo::FormManagerBase* ma
     const auto* camera=map->apdat_->camera;
     const auto cursor=Camera::cursor_pos();const auto position=Camera::pos();const auto address=Camera::camera_address();
     if(!cursor||!position||address.is_null()||address.length()<2)return;
-    if(auto window=dynamic_cast<pls::game::form::SubForm*>(manager->GetTopForm()))out.window=window->type_;
+    if(auto window=dynamic_cast<pls::game::form::SubForm*>(manager->GetTopForm())){out.window=window->type_;out.window_select=window->select_;}
     out.valid=true;out.map_state=map->state_;out.scale=map->scale_;
     out.cursor_x=cursor->x_;out.cursor_y=cursor->y_;out.camera_x=position->x_;out.camera_y=position->y_;
     out.cursor_ax=address[0];out.cursor_ay=address[1];out.cursor_hidden=camera->managementCursorHidden_;
@@ -310,7 +310,8 @@ int main(int argc,char** argv){
                     ui_state.stack.push_back({form->managed_type_name(),form->GetId(),form->GetProcessMode(),left.is_null()?std::string():left.utf8(),right.is_null()?std::string():right.utf8()});}}
             {auto l=canvas->GetSoftLabelL();auto r=canvas->GetSoftLabelR();ui_state.soft_left=l.is_null()?std::string():l.utf8();ui_state.soft_right=r.is_null()?std::string():r.utf8();}
             ui_state.text_panel=text_input->Active();pls::pc::route::derive(ui_state);
-            if(route_game)capture_game(ui_state.game,app->GetFormManager());
+            // Every route: the dismissal rule reads the top window (route::dismiss_key); only game-aware ones log it.
+            if(route)capture_game(ui_state.game,app->GetFormManager());
         };
 #endif
         while(!app->IsTermination()&&!pls::kairo::host_finish_requested.load()){

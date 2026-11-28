@@ -19,7 +19,7 @@ struct FormRow {std::string type;std::int32_t id{-1},mode{-1};std::string left,r
 struct TenantRow {std::int32_t id{},state{},x{},y{},data{};};
 struct GameState {
     bool valid{}; // a GameForm with camera and user data exists
-    std::int32_t window{-1},map_state{-1},scale{-1},selected{-1},cursor_ax{},cursor_ay{};
+    std::int32_t window{-1},window_select{-1},map_state{-1},scale{-1},selected{-1},cursor_ax{},cursor_ay{};
     float cursor_x{},cursor_y{},camera_x{},camera_y{};bool cursor_hidden{};
     std::int64_t money{};std::vector<TenantRow> tenants;
     const TenantRow* tenant(std::int32_t id)const{for(const auto& t:tenants)if(t.id==id)return &t;return nullptr;}
@@ -48,9 +48,21 @@ inline std::string to_line(const UiState& s){
 }
 // Same comparison as the change log: frame excluded.
 inline std::string signature(const UiState& s){auto copy=s;copy.frame=0;return to_line(copy);}
+// Key that closes the top dialog: unlabeled SubForm -> SELECT, labeled -> SOFT2. Exception: the
+// year-end two-choice windows whose first option opens a list that "back" closes, after which the
+// event asks again, so routes looped there until their timeout (lots/save 106: ~15000 frames):
+//   72 "dismiss a player?" (Yes -> player list 31 with more than 11 players): answer No (1);
+//   52 "renew the coach?" (Change -> coach list 51): answer Renew (1).
+// The cursor moves with RIGHT ((select+1)%2), then SELECT confirms.
+// Needs the game snapshot (window, select), which the host fills for every route.
+inline std::string dismiss_key(const UiState& state){
+    const auto& g=state.game;
+    if(g.valid&&(g.window==72||g.window==52))return g.window_select==1?"SELECT":"RIGHT";
+    return state.top()->right.empty()?"SELECT":"SOFT2";
+}
 inline std::string game_line(const GameState& g){
     std::ostringstream o;o<<"{\"valid\":"<<(g.valid?"true":"false");
-    if(g.valid){o<<",\"window\":"<<g.window<<",\"map_state\":"<<g.map_state<<",\"scale\":"<<g.scale<<",\"cursor\":["<<g.cursor_x<<','<<g.cursor_y<<"],\"address\":["<<g.cursor_ax<<','<<g.cursor_ay
+    if(g.valid){o<<",\"window\":"<<g.window<<",\"select\":"<<g.window_select<<",\"map_state\":"<<g.map_state<<",\"scale\":"<<g.scale<<",\"cursor\":["<<g.cursor_x<<','<<g.cursor_y<<"],\"address\":["<<g.cursor_ax<<','<<g.cursor_ay
         <<"],\"camera\":["<<g.camera_x<<','<<g.camera_y<<"],\"hidden\":"<<(g.cursor_hidden?"true":"false")<<",\"selected\":"<<g.selected<<",\"money\":"<<g.money<<",\"tenants\":[";
         for(std::size_t i=0;i<g.tenants.size();++i){const auto& t=g.tenants[i];o<<(i?",":"")<<'['<<t.id<<','<<t.state<<','<<t.x<<','<<t.y<<','<<t.data<<']';}
         o<<']';}
@@ -239,7 +251,7 @@ public:
             auto fail=[&](const std::string& why){action.timed_out=true;action.note=why+" at line "+std::to_string(s.line)+": "+s.text;index_=steps_.size();return action;};
             // Game-condition waits and cursor steering close game popups with the dismiss rule
             // (unlabeled SubForm -> SELECT, labeled -> SOFT2, every 18 frames): events may pop up at any time.
-            auto popup=[&]{if(state.dialog&&waited%18==0){const auto* top=state.top();action.key=top->right.empty()?"SELECT":"SOFT2";}return action;};
+            auto popup=[&]{if(state.dialog&&waited%18==0)action.key=dismiss_key(state);return action;};
             const bool waiting=s.op==Op::anchor||s.op==Op::wait_form||s.op==Op::wait_not_loading||s.op==Op::wait_not_dialog||s.op==Op::dismiss_until||s.op==Op::cursor_to;
             if(waiting&&watchdog_>0&&changed_>=0&&std::int64_t(state.frame)-changed_>=watchdog_)return fail("stalled "+std::to_string(watchdog_)+" frames without a UI or game change");
             switch(s.op){
@@ -295,7 +307,7 @@ public:
                 if(matches(s,state,marked_,&marked_game_)){advance();continue;}
                 if(waited>s.timeout)return timeout();
                 // Same rule as the frame-based dismissal: unlabeled SubForm -> SELECT, labeled -> SOFT2; every 18 frames.
-                if(state.dialog&&waited%18==0){const auto* top=state.top();action.key=top->right.empty()?"SELECT":"SOFT2";}
+                if(state.dialog&&waited%18==0)action.key=dismiss_key(state);
                 // A match screen (SoccerForm main, no dialog) waits for SELECT on its first
                 // item (kickoff) and on result pages; SELECT never moves its cursor.
                 else if(!state.dialog&&waited%18==0&&state.main_window.size()>=10&&state.main_window.compare(state.main_window.size()-10,10,"SoccerForm")==0)action.key="SELECT";
